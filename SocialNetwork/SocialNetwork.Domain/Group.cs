@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
+namespace SocialNetwork.Domain;
 /// <summary>	
 /// Группа.	
 /// </summary>	
@@ -9,7 +11,7 @@ public class Group
 	/// <summary>	
 	/// Идентификатор.	
 	/// </summary>	
-	public int Id { get; set; }
+	public int GroupId { get; set; }
 
 	/// <summary>	
 	/// Название.	
@@ -25,5 +27,20 @@ public class Group
 	/// Дата создания.	
 	/// </summary>	
 	public DateTime CreationDate { get; set; }
+
+	/// <summary>
+	/// Идентификатор создателя.
+	/// </summary>
+	public int UserId { get; set; }
+
+	/// <summary>
+	/// Создатель.
+	/// </summary>
+	public User user { get; set; }
+
+	/// <summary>
+	/// Записи группы.
+	/// </summary>
+	public List<Note> Notes { get; set; }
 	#endregion
 }

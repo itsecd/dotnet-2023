@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 
 namespace SocialNetwork.Domain;
 /// <summary>	
@@ -10,7 +12,7 @@ public class User
 	/// <summary>	
 	/// Идентификатор.	
 	/// </summary>	
-	public int Id { get; set; }
+	public int UserId { get; set; } 
 
 	/// <summary>	
 	/// Имя.	
@@ -40,6 +42,21 @@ public class User
 	/// <summary>	
 	/// Дата регистрации.	
 	/// </summary>	
-	public DateTime RegitrationDate { get; set; }
+	public DateTime RegistrationDate { get; set; }
+
+	/// <summary>
+	/// Записи пользователя.
+	/// </summary>
+	public List<Note> Notes { get; set; }
+
+	/// <summary>
+	/// Группы пользователя.
+	/// </summary>
+	public List<Grops> Groups { get; set; }
+
+	/// <summary>
+	/// Роли пользователя.
+	/// </summary>
+	public List<Roles> Roles { get; set; }
 	#endregion
 }

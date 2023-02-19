@@ -1,14 +1,30 @@
 ﻿using System;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class Class1
+/// <summary>	
+/// Запись.	
+/// </summary>	
+public class Note
 {
-	public Class1()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+	#region Свойства.	
+	/// <summary>	
+	/// Идентификатор.	
+	/// </summary>	
+	public int Id { get; set; }
+
+	/// <summary>	
+	/// Название.	
+	/// </summary>	
+	public string Name { get; set; }
+
+	/// <summary>	
+	/// Описание.	
+	/// </summary>	
+	public string Description { get; set; }
+
+	/// <summary>	
+	/// Дата создания.	
+	/// </summary>	
+	public DateTime CreationDate { get; set; }
+
+	#endregion
 }

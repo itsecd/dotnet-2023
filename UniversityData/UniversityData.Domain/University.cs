@@ -37,5 +37,9 @@ public class University
     /// <summary>
     /// Кафедры университета
     /// </summary>
-    public List<Department>? UniversityDepartmentsData { get; set;  }
+    public List<Department>? UniversityDepartmentsData { get; set; }
+    /// <summary>
+    /// Таблица связи специальность-количетсов групп
+    /// </summary>
+    public List<SpecialtyTableNode>? UniversitySpecialtyTable { get; set; }
 }

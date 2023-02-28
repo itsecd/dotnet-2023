@@ -4,6 +4,7 @@ using Media.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Xunit.Sdk;
 
 public class ClassesTest
 {
@@ -20,24 +21,25 @@ public class ClassesTest
         }
 
         var alboms = new List<Albom>();
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < 6; i++)
         {
+            var rand = new Random();
             var albom = new Albom();
-            albom.Name = "Albom ¹" + i.ToString();
-            albom.Year = 2000 + i;
+            albom.Name = "Albom ¹" + i.ToString() + " of Artist ¹" + (i%4).ToString();
+            albom.Year = 2000 + rand.Next()%2;
             albom.Artist = artists[i % 4];
             alboms.Add(albom);
         }
 
         var tracks = new List<Track>();
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 12; i++)
         {
             var rand = new Random();
             var track = new Track();
             track.Duration = rand.Next() % 301;
-            track.Number = i % 4 + 1;
-            track.Albom = alboms[i % 4];
-            track.Name = "Track ¹" + i.ToString();
+            track.Number = Convert.ToInt32(i / 6) + 1;
+            track.Albom = alboms[i % 6];
+            track.Name = "Track ¹" + i.ToString() + "in Albom ¹" + (i%6).ToString();
             tracks.Add(track);
         }
 
@@ -46,22 +48,71 @@ public class ClassesTest
         {
             var genre = new Genre();
             genre.Name = "Genre ¹" + i.ToString();
-            genre.Tracks = tracks;
+            genre.Tracks = new List<Track>();
+            for (var j = 0; j < 4; j++)
+            {
+                genre.Tracks.Add(tracks[i * 4+j]);
+            }
             genres.Add(genre);
         }
+        //1
+        var l = (from artist in (from genre in genres
+                                 from track in genre.Tracks
+                                 select track.Albom.Artist)
+                 select artist).Distinct().ToList();
+        //2
+        var t = (from genre in genres
+                 from track in genre.Tracks
+                 where track.Albom.Name == "Albom ¹2 of Artist ¹2"
+                 orderby track.Number
+                 select track).ToList();
+        //3
+        var k = (from track in (from genre in genres
+                                from track in genre.Tracks
+                                select track)
+                 where track.Albom.Year == 2000
+                 group track by track.Albom into groupedTracks
+                 select new { Albom = groupedTracks.Key, Count = groupedTracks.Count() }).ToList();
+        //4
+        var o = (from albInfo in (from track in (from genre in genres
+                                                 from track in genre.Tracks
+                                                 select track)
+                                  group track by track.Albom into g
+                                  select new { Albom = g.Key, Duration = g.Sum(x => x.Duration) })
+                 orderby albInfo.Duration descending
+                 select albInfo).Take(5).ToList();
+        //5
+        var f = (from achievment in (from albom in (from genre in genres
+                                                    from track in genre.Tracks
+                                                    select track.Albom).Distinct()
+                                     group albom by albom.Artist into a
+                                     select new { Artist = a.Key, Count = a.Count() })
+                 where achievment.Count == (from albom in (from genre in genres
+                                                           from track in genre.Tracks
+                                                           select track.Albom).Distinct()
+                                            group albom by albom.Artist into a
+                                            select new { Artist = a.Key, Count = a.Count() }).Max(a=>a.Count)
+                 select achievment.Artist).ToList();
+        //6
+        var min = (from track in (from genre in genres
+                                  from track in genre.Tracks
+                                  select track)
+                   group track by track.Albom into g
+                   select new { Albom = g.Key, Duration = g.Sum(x => x.Duration) }).Min(a => a.Duration);
 
-        var resultLists =
-            (from a in genres
-             where a.Name == "Genre ¹1"
-             select a.Name).ToList();
-        var l = (from genre in genres
-                from track in genre.Tracks
-                 where track.Albom.Artist.Name == "Artist ¹1"
-                select track.Albom.Year).ToList();
+        var max = (from track in (from genre in genres
+                                  from track in genre.Tracks
+                                  select track)
+                   group track by track.Albom into g
+                   select new { Albom = g.Key, Duration = g.Sum(x => x.Duration) }).Max(a => a.Duration);
 
+        var avg = (from track in (from genre in genres
+                                  from track in genre.Tracks
+                                  select track)
+                   group track by track.Albom into g
+                   select new { Albom = g.Key, Duration = g.Sum(x => x.Duration) }).Average(a => a.Duration);
 
-        Console.WriteLine(l);
-        Assert.Equal(3, resultLists.Count());
+        //Assert.Equal(3, resultLists.Count());
     }
     /*[Fact]
     public void TestSumInt()

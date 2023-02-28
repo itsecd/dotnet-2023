@@ -68,4 +68,36 @@ public class PoliclinicTest
         Assert.Equal(7, doctor.WorkExperience);
         Assert.Equal(specializationList[0], doctor.Specialization);
     }
+
+    [Fact]
+    public void PatientConstructorTest()
+    {
+        var patient = new PatientType("1234 123456", "Белов Евгений Максимович", new DateTime(1990, 7, 6), "Улица Кирова 231");
+        Assert.Equal("1234 123456", patient.Passport);
+        Assert.Equal("Белов Евгений Максимович", patient.FIO);
+        Assert.Equal(new DateTime(1990, 7, 6), patient.BirthDate);
+        Assert.Equal("Улица Кирова 231", patient.Address);
+    }
+
+    [Fact]
+    public void ReceptionConstructorTest()
+    {
+        var patientList = CreateDefaultPatients();
+        var doctorList = CreateDefaultDoctors();
+        var reception = new ReceptionType(new DateTime(2023, 2, 1, 12, 0, 0), "На лечении", doctorList[0], patientList[0]);
+        Assert.Equal(new DateTime(2023, 2, 1, 12, 0, 0), reception.DateAndTime);
+        Assert.Equal("На лечении", reception.Status);
+        Assert.Equal(doctorList[0], reception.Doctor);
+        Assert.Equal(patientList[0], reception.Patient);
+    }
+    
+    [Fact]
+    public void FirtsRequest()
+    {
+        var doctorList = CreateDefaultDoctors();
+        var requestDoctorList = (from doctor in doctorList
+                                 where doctor.WorkExperience >= 10
+                                 select doctor.FIO).ToList();
+        Assert.Equal(doctorList[1], requestDoctorList);
+    }
 }

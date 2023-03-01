@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Airlines.Domain;
+﻿namespace Airlines.Domain;
 
 /// <summary>
 /// Сlass describing the passenger
@@ -12,7 +6,7 @@ namespace Airlines.Domain;
 public class PassengerClass
 {
     /// <summary>
-    /// Represent a unique ID of passanger
+    /// Represent a unique Id of passanger
     /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
@@ -26,10 +20,11 @@ public class PassengerClass
     /// <summary>
     /// Represent a tickets 
     /// </summary>
-    public List<TicketClass> Tickets { get; set; }=new List<TicketClass>();
-    public PassengerClass(){}
-    public PassengerClass(int passportnumber,string name) { 
-        PassportNumber = passportnumber;
+    public List<TicketClass> Tickets { get; set; } = new List<TicketClass>();
+    public PassengerClass() { }
+    public PassengerClass(int passportNumber, string name)
+    {
+        PassportNumber = passportNumber;
         Name = name;
         Tickets = new List<TicketClass>();
     }

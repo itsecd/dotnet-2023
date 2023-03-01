@@ -6,7 +6,7 @@
 public class TicketClass
 {
     /// <summary>
-    /// Represent a unique ID of ticket
+    /// Represent a unique Id of ticket
     /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
@@ -21,7 +21,7 @@ public class TicketClass
     /// Represent a baggage weight, which passanger can move
     /// </summary>
     public int BaggageWeight { get; set; } = 0;
-    public TicketClass() {}
+    public TicketClass() { }
     public TicketClass(int ticketNumber, string seatNumber, int baggageWeight)
     {
         TicketNumber = ticketNumber;

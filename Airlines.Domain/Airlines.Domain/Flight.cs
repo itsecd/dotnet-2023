@@ -6,9 +6,9 @@
 public class FlightCLass
 {
     /// <summary>
-    /// Represent a unique ID of flight
+    /// Represent a unique Id of flight
     /// </summary>
-    public int ID { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Represent a number of flight
     /// </summary>
@@ -20,19 +20,19 @@ public class FlightCLass
     /// <summary>
     /// Represent a point of departure
     /// </summary>
-    public string Source { get; set; }= string.Empty;
+    public string Source { get; set; } = string.Empty;
     /// <summary>
     /// Represent a point of arrival
     /// </summary>
     public string Destination { get; set; } = string.Empty;
     /// <summary>
-    /// Represent a depature date
+    /// Represent a departure date
     /// </summary>
     public DateOnly DepartureDate { get; set; } = new DateOnly();
     /// <summary>
     /// Represent a arrival date
     /// </summary>
-    public DateOnly ArrivalDate { get; set; }= new DateOnly();
+    public DateOnly ArrivalDate { get; set; } = new DateOnly();
     /// <summary>
     /// Represent a flight duration
     /// </summary>
@@ -44,19 +44,20 @@ public class FlightCLass
     /// <summary>
     /// Represent a list of tickets on this flight
     /// </summary>
-    public List<TicketClass> Tickets { get; set; }= new List<TicketClass> { };
+    public List<TicketClass> Tickets { get; set; } = new List<TicketClass> { };
     public FlightCLass() { }
-    public FlightCLass(int number,string flightcode,string source,
-        string destination,DateOnly departuredate,
-        DateOnly arrivaldate,double flightduration,string airplanetype){
+    public FlightCLass(int number, string flightCode, string source,
+        string destination, DateOnly departureDate,
+        DateOnly arrivalDate, double flightDuration, string airplaneType)
+    {
         Number = number;
-        FlightCode = flightcode;
+        FlightCode = flightCode;
         Source = source;
         Destination = destination;
-        DepartureDate = departuredate;
-        ArrivalDate = arrivaldate;
-        FlightDuration = flightduration;
-        AirplaneType = airplanetype;
+        DepartureDate = departureDate;
+        ArrivalDate = arrivalDate;
+        FlightDuration = flightDuration;
+        AirplaneType = airplaneType;
         Tickets = new List<TicketClass>();
     }
 }

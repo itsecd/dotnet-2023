@@ -2,6 +2,7 @@
 
 public class Genre
 {
-	public string Name { get; set; } = "";
+	public int GenreId { get; set; }
+	public string Name { get; set; } = string.Empty;
 	public List<Track> Tracks { get; set; } 
 }

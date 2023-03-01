@@ -2,7 +2,9 @@
 
 public class Albom
 {
-    public string Name { get; set; } = "";
+    public int AlbomId { get; set; }
+
+    public string Name { get; set; } = string.Empty;
 
     public int Year { get; set; }
 

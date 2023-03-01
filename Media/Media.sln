@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Domain", "Media.Domain\Media.Domain.csproj", "{B3CE6C70-DA6A-416B-9754-3038F9690549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media.Domain", "Media.Domain\Media.Domain.csproj", "{B3CE6C70-DA6A-416B-9754-3038F9690549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artist.Tests", "Artist.Tests\Artist.Tests.csproj", "{8065F315-E204-4984-85CE-00D02E8B78CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artist.Tests", "Artist.Tests\Artist.Tests.csproj", "{8065F315-E204-4984-85CE-00D02E8B78CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

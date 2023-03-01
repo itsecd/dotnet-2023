@@ -8,9 +8,12 @@ public class Artist
     /// <summary>
     /// Имя
     /// </summary>
-    public string Name { get; set; } = "";
+    /// 
+    public int ArtistId { get; set; }
 
-    public string Description { get; set; } = ""; //{ get; init; }
+    public string Name { get; set; } = string.Empty;
+
+    public string Description { get; set; } = string.Empty; //{ get; init; }
 
     /// <summary>   
     /// Метод

@@ -11,7 +11,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetArtistInfo()
+    public void ArtistInfoTest()
     {
         var resultList = (from genre in _fixture.FixtureGenres
                           from track in genre.Tracks
@@ -20,7 +20,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetTracksInfo()
+    public void TracksInfoTest()
     {
         var resultList = (from genre in _fixture.FixtureGenres
                           from track in genre.Tracks
@@ -31,7 +31,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetAlbumsInfo()
+    public void AlbumsInfoTest()
     {
         var resultList = (from track in (from genre in _fixture.FixtureGenres
                                          from track in genre.Tracks
@@ -43,7 +43,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetTopAlbums()
+    public void TopAlbumsTest()
     {
         var resultList = (from AlbumInformation in (from track in (from genre in _fixture.FixtureGenres
                                                                    from track in genre.Tracks
@@ -56,7 +56,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetMaxAlbumArtist()
+    public void MaxAlbumArtistTest()
     {
         var countAlbumList = (from Album in (from genre in _fixture.FixtureGenres
                                              from track in genre.Tracks
@@ -71,7 +71,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     }
 
     [Fact]
-    public void GetAlbumDurationInfo()
+    public void AlbumDurationInfoTest()
     {
         var durationAlbumList = (from track in (from genre in _fixture.FixtureGenres
                                                 from track in genre.Tracks

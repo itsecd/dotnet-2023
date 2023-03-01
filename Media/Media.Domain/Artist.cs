@@ -18,5 +18,5 @@ public class Artist
     /// <summary>
     /// Description is used to store description of the artist
     /// </summary>
-    public string Description { get; set; } = string.Empty; //{ get; init; }
+    public string Description { get; set; } = string.Empty;
 }

@@ -23,5 +23,5 @@ public class Album
     /// <summary>
     /// Artist is used to store the artist this Album belongs to
     /// </summary>
-    public Artist Artist { get; set; }// = null;
+    public Artist Artist { get; set; }
 }

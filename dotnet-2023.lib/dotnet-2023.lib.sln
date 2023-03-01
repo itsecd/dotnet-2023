@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-2023.lib.DataModel", "dotnet-2023.DataModel\dotnet-2023.lib.DataModel.csproj", "{4FB45543-667C-4C67-9B6D-5483DC2CEE07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-2023.DataModel", "dotnet-2023.DataModel\dotnet-2023.DataModel.csproj", "{4FB45543-667C-4C67-9B6D-5483DC2CEE07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Reflection.Metadata;
-
-namespace SocialNetwork.Domain;
+﻿namespace SocialNetwork.Domain;
 
 /// <summary>
 /// Проверяет корректность данных.

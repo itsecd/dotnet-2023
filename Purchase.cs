@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace MusicMarket;
 
@@ -7,10 +9,35 @@ namespace MusicMarket;
 /// </summary>
 public class Purchase 
 {
-    // Список товаров.
-    public List <Product> Products = new();
-    // Дата совершения покупки.
-    public double Data { get; set; }
-    // Покупатель.
+    /// <summary>
+    /// ID Покупки.
+    /// </summary>
+    public int Id;
+
+    /// <summary>
+    /// Список товаров.
+    /// </summary>
+    public List<Product> Products = new();
+
+    /// <summary>
+    /// Дата совершения покупки.
+    /// </summary>
+    public DateTime Date { get; set; }
+
+    /// <summary>
+    /// Покупатель.
+    /// </summary>
     public string СustomerName { get; set; } = string.Empty;
+
+    public Purchase() { }
+
+    public Purchase(int id, List<Product> products, DateTime date, string customerName)
+    {
+        Id = id;
+        Products = products;
+        Date = date;
+        СustomerName = customerName;
+       
+    }
+  
 }

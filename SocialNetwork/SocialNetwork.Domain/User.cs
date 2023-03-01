@@ -9,51 +9,51 @@ public class User
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
-    public int UserId { get; private set; }
+    public int Id { get; set; }
 
     /// <summary>	
     /// Имя.	
     /// </summary>	
-    public string FirstName { get; private set; }
+    public string FirstName { get; set; } = string.Empty;
     /// <summary>	
     /// Фамилия.	
     /// </summary>	
-    public string LastName { get; private set; }
+    public string LastName { get; set; } = string.Empty;
 
     /// <summary>	
     /// Отчество.	
     /// </summary>	
-    public string Patronymic { get; private set; }
+    public string Patronymic { get; set; } = string.Empty;
 
     /// <summary>	
     /// Пол.	
     /// </summary>	
-    public string Gender { get; private set; }
+    public string Gender { get; set; } = string.Empty;
 
     /// <summary>	
     /// Дата рождения.	
     /// </summary>	
-    public DateTime BirthDate { get; private set; }
+    public DateTime? BirthDate { get; set; }
 
     /// <summary>	
     /// Дата регистрации.	
     /// </summary>	
-    public DateTime RegistrationDate { get; private set; }
+    public DateTime? RegistrationDate { get; set; }
 
     /// <summary>
     /// Записи пользователя.
     /// </summary>
-    public List<Note>? Notes { get; private set; }
+    public List<Note>? Notes { get; set; }
 
     /// <summary>
     /// Группы пользователя.
     /// </summary>
-    public List<Group>? Groups { get; private set; }
+    public List<Group>? Groups { get; set; }
 
     /// <summary>
     /// Роли пользователя.
     /// </summary>
-    public List<Role>? Roles { get; private set; }
+    public List<Role>? Roles { get; set; }
     #endregion
 
     #region Конструкторы.
@@ -73,7 +73,7 @@ public class User
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
     /// <exception cref="ArgumentNullException">Объект равен null.</exception>
     public User(int userId, string firstName, string lastName, string patronymic, string gender,
-        DateTime birthDate, DateTime registrationDate, List<Note>? notes, List<Group>? groups,
+        DateTime? birthDate, DateTime? registrationDate, List<Note>? notes, List<Group>? groups,
         List<Role>? roles)  
     {
         #region Валидация входных параметров.
@@ -89,7 +89,7 @@ public class User
         Validator.ListValidate(roles);
         #endregion
 
-        UserId = userId;
+        Id = userId;
         FirstName = firstName;
         LastName = lastName;
         Patronymic = patronymic;
@@ -102,11 +102,9 @@ public class User
     }
 
     /// <summary>
-    /// Создает пользователя с параметрами по умолчанию.
+    /// Создает пользователя без параметров.
     /// </summary>
     public User()
-        : this(1, "Артем", "Стаценко", "Николаевич", "Мужской", new DateTime(2002,7,4), 
-              new DateTime(2012,1,1), new List<Note>(), new List<Group>(), new List<Role>())
     {
     }
     #endregion

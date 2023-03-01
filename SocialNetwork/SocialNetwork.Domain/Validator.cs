@@ -60,7 +60,7 @@ public static class Validator
 	{
 		if (string.IsNullOrEmpty(inputData))
 		{
-			throw new ArgumentNullException("Текст не содержит символов " +
+			throw new ArgumentNullException(nameof(inputData), "Текст не содержит символов " +
 				"или равен null!");
 		}
 	}
@@ -75,7 +75,7 @@ public static class Validator
 	{
 		if (list == null)
 		{
-			throw new ArgumentNullException("Список пустой или равен null!");
+			throw new ArgumentNullException(nameof(list), "Список равен null!");
 		}
 	}
 
@@ -88,7 +88,7 @@ public static class Validator
 	{
 		if (dateTime == null)
 		{
-			throw new ArgumentNullException("Дата равна null!");
+			throw new ArgumentNullException(nameof(dateTime), "Дата равна null!");
 		}
 	}
 
@@ -101,7 +101,7 @@ public static class Validator
 	{
 		if (user == null)
 		{
-			throw new ArgumentNullException("Пользователь равен null!");
+			throw new ArgumentNullException(nameof(user), "Пользователь равен null!");
 		}
 	}
 
@@ -114,7 +114,7 @@ public static class Validator
 	{
 		if (group == null)
 		{
-			throw new ArgumentNullException("Группа равна null!");
+			throw new ArgumentNullException(nameof(group), "Группа равна null!");
 		}
 	}
 	#endregion

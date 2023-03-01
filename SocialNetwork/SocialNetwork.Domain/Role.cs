@@ -9,22 +9,22 @@ public class Role
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
-    public int RoleId { get; private set; }
+    public int Id { get; set; }
 
     /// <summary>	
     /// Название.	
     /// </summary>	
-    public string Name { get; private set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Пользователи, обладающие конкретной ролью.
     /// </summary>
-    public List<User>? Users { get; private set; }
+    public List<User>? Users { get; set; }
 
     /// <summary>
     /// Группы, в которых состоят пользователи, обладающие данной ролью.
     /// </summary>
-    public List<Group>? Groups { get; private set; }
+    public List<Group>? Groups { get; set; }
     #endregion
 
     #region Конструкторы.
@@ -46,10 +46,17 @@ public class Role
         Validator.ListValidate(groups);
         #endregion
 
-        RoleId = roleId;
+        Id = roleId;
         Name = name;
         Users = users;
         Groups = groups;
+    }
+
+    /// <summary>
+    /// Создает роль без параметров.
+    /// </summary>
+    public Role()
+    {
     }
     #endregion
 }

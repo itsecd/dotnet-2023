@@ -19,16 +19,21 @@ public class LinqTests
 			DateTime.Now, new List<Note>(), new List<Group>(), new List<Role>());
 		var usersList = new List<User>();
 		var group = new Group(1, "IT", "IT", DateTime.Now, 1, user, new List<Note>());
-		var result = from c in usersList
-					 from a in c.Groups!
-					 where a.Name == "IT"
-					 orderby c.LastName, c.FirstName, c.Patronymic
-					 select c;
 
 		for (var i = 0; i < size; i++)
 		{
 			usersList.Add(new User(i + 1, $"Артем{i}", $"Стаценко{i}", $"Николаевич{i}", "Мужской", DateTime.Now,
 			DateTime.Now, new List<Note>(), new List<Group>() { group }, new List<Role>()));
+		}
+
+		var result = (from c in usersList
+					  from a in c.Groups!
+					  where a.Name == "IT"
+					  orderby c.LastName, c.FirstName, c.Patronymic
+					  select c).ToList();
+
+		for (var i = 0; i < size; i++)
+		{
 			Assert.Equal(result.ElementAt(i), usersList[i]);
 		}
 	}
@@ -46,16 +51,16 @@ public class LinqTests
 
 		for (var i = 0; i < size; i++) 
 		{
-			group.Notes!.Add(new Note(1, $"Запись{i}", $"Описание записи", DateTime.Now, 1,
+			group.Notes!.Add(new Note(1, $"Запись{i}", "Описание записи", DateTime.Now, 1,
 				new User(), 1, group));
-			notes.Add(new Note(1, $"Запись{i}", $"Описание записи", DateTime.Now, 1,
+			notes.Add(new Note(1, $"Запись{i}", "Описание записи", DateTime.Now, 1,
 				new User(), 1, group));
 		}
 
-		var result = from c in notes
+		var result = (from c in notes
 					 where c.Group!.Name == "IT"
 					 orderby c.Group!.Name
-					 select c;
+					 select c).ToList();
 
 		for (var i = 0; i < size; i++)
 		{
@@ -72,9 +77,9 @@ public class LinqTests
 		var group = new Group(1, "IT", "IT", DateTime.Now, 1,
 			new User(), new List<Note>());
 
-		Assert.True(group.Notes.Count == 0);
+		Assert.True(group.Notes!.Count == 0);
 
-		group.Notes.Add(new Note(1, $"Запись1", $"Описание записи", DateTime.Now, 1,
+		group.Notes.Add(new Note(1, "Запись1", "Описание записи", DateTime.Now, 1,
 				new User(), 1, group));
 
 		Assert.True(group.Notes.Count == 1);
@@ -96,7 +101,7 @@ public class LinqTests
 
 		for (var i = 0; i < size; i++)
 		{
-			notes.Add(new Note(1, $"Запись1", $"Описание записи", DateTime.Now, 1,
+			notes.Add(new Note(1, "Запись", "Описание записи", DateTime.Now, 1,
 				i >= 7 
 				? userSecond 
 				: userFirst, 1, group));
@@ -109,7 +114,7 @@ public class LinqTests
 				Count = a.Count(x => x.User == a.Key.User)
 			})
 			.OrderByDescending(x => x.Count)
-			.Take(5);
+			.Take(5).ToList();
 
 		Assert.True(result.ElementAt(0).User!.Equals(userFirst) && result
 			.ElementAt(1).User!.Equals(userSecond));

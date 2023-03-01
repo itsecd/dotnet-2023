@@ -9,37 +9,37 @@ public class Group
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
-    public int GroupId { get; private set; }
+    public int Id { get; set; }
 
     /// <summary>	
     /// Название.	
     /// </summary>	
-    public string Name { get; private set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>	
     /// Описание.	
     /// </summary>	
-    public string Description { get; private set; }
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>	
     /// Дата создания.	
     /// </summary>	
-    public DateTime? CreationDate { get; private set; }
+    public DateTime? CreationDate { get; set; }
 
     /// <summary>
     /// Идентификатор создателя.
     /// </summary>
-    public int UserId { get; private set; }
+    public int UserId { get; set; }
 
     /// <summary>
     /// Создатель.
     /// </summary>
-    public User? User { get; private set; }
+    public User? User { get; set; }
 
     /// <summary>
     /// Записи группы.
     /// </summary>
-    public List<Note>? Notes { get; private set; }
+    public List<Note>? Notes { get; set; }
     #endregion
 
     #region Конструкторы.
@@ -68,7 +68,7 @@ public class Group
         Validator.ListValidate(notes);
         #endregion
 
-        GroupId = groupId;
+        Id = groupId;
         Name = name;
         Description = description;
         CreationDate = creationDate;
@@ -78,10 +78,9 @@ public class Group
     }
 
     /// <summary>
-    /// Создает группу с помощью параметров по умолчанию.
+    /// Создает группу без параметров.
     /// </summary>
     public Group() 
-        : this(1, "Название группы", "Описание группы", DateTime.Now, 1, new User(), new List<Note>())
     {
     }
     #endregion

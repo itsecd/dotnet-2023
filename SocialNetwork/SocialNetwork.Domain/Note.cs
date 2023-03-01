@@ -9,42 +9,42 @@ public class Note
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
-    public int Id { get; private set; }
+    public int Id { get; set; }
 
     /// <summary>	
     /// Название.	
     /// </summary>	
-    public string Name { get; private set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>	
     /// Описание.	
     /// </summary>	
-    public string Description { get; private set; }
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>	
     /// Дата создания.	
     /// </summary>	
-    public DateTime? CreationDate { get; private set; }
+    public DateTime? CreationDate { get; set; }
 
     /// <summary>
     /// Идентификатор автора.
     /// </summary>
-    public int UserId { get; private set; }
+    public int UserId { get; set; }
 
     /// <summary>
     /// Автор.
     /// </summary>
-    public User? User { get; private set; }
+    public User? User { get; set; }
 
     /// <summary>
     /// Идентификатор группы.
     /// </summary>
-    public int GroupId { get; private set; }
+    public int GroupId { get; set; }
 
     /// <summary>
     /// Группа.
     /// </summary>
-    public Group? Group { get; private set; }
+    public Group? Group { get; set; }
     #endregion
 
     #region Конструкторы.
@@ -86,10 +86,9 @@ public class Note
     }
 
     /// <summary>
-    /// Создает запись с помощью параметров по умолчанию.
+    /// Создает запись без параметров.
     /// </summary>
     public Note()
-        : this(1, "Название записи", "Описание записи", DateTime.Now, 1, new User(), 1, new Group())
     {
     }
     #endregion

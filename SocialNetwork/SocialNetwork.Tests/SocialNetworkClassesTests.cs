@@ -3,28 +3,28 @@ using SocialNetwork.Domain;
 namespace SocialNetwork.Tests;
 
 /// <summary>
-/// Тестирование библиотеки классов сущностей социальной сети.
+/// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ Р±РёР±Р»РёРѕС‚РµРєРё РєР»Р°СЃСЃРѕРІ СЃСѓС‰РЅРѕСЃС‚РµР№ СЃРѕС†РёР°Р»СЊРЅРѕР№ СЃРµС‚Рё.
 /// </summary>
 public class SocialNetworkClassesTests 
 {
-	#region Методы.
+	#region РњРµС‚РѕРґС‹.
 	/// <summary>
-	/// Создание группы с некорректными параметрами в конструкторе.
+	/// РЎРѕР·РґР°РЅРёРµ РіСЂСѓРїРїС‹ СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.
 	/// </summary>
-	/// <param name="groupId">Идентификатор группы.</param>
-	/// <param name="name">Название группы.</param>
-	/// <param name="description">Описание группы.</param>
-	/// <param name="userId">Идентификатор создателя группы.</param>
-	/// <param name="isCorrectUser">Корректный ли пользователь будет указан в конструкторе.</param>
-	/// <param name="isCorrectNotesList">Корректный ли список записей будет указан в конструкторе.</param>
-	/// <param name="exceptionType">Тип исключения, которое должно быть вызвано.</param>
+	/// <param name="groupId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РіСЂСѓРїРїС‹.</param>
+	/// <param name="name">РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹.</param>
+	/// <param name="description">РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹.</param>
+	/// <param name="userId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕР·РґР°С‚РµР»СЏ РіСЂСѓРїРїС‹.</param>
+	/// <param name="isCorrectUser">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ СѓРєР°Р·Р°РЅ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.</param>
+	/// <param name="isCorrectNotesList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє Р·Р°РїРёСЃРµР№ Р±СѓРґРµС‚ СѓРєР°Р·Р°РЅ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.</param>
+	/// <param name="exceptionType">РўРёРї РёСЃРєР»СЋС‡РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІС‹Р·РІР°РЅРѕ.</param>
 	[Theory]
-	[InlineData(-1, "Группа", "Описание группы", 1, true, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, null, "Описание группы", 1, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Группа", null, 1, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Группа", "Описание группы", -1, true, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, "Группа", "Описание группы", 1, false, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Группа", "Описание группы", 1, true, false, typeof(ArgumentNullException))]
+	[InlineData(-1, "Р“СЂСѓРїРїР°", "РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹", 1, true, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, null, "РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹", 1, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "Р“СЂСѓРїРїР°", null, 1, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "Р“СЂСѓРїРїР°", "РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹", -1, true, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, "Р“СЂСѓРїРїР°", "РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹", 1, false, true, typeof(ArgumentNullException))]
+	[InlineData(1, "Р“СЂСѓРїРїР°", "РћРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹", 1, true, false, typeof(ArgumentNullException))]
 	public void InitGroupWithIncorrectValueShouldThrowException(int groupId, string name, string description, 
 		int userId, bool isCorrectUser, bool isCorrectNotesList, Type exceptionType) 
 	{
@@ -46,24 +46,24 @@ public class SocialNetworkClassesTests
 	}
 
 	/// <summary>
-	/// Создание записи с некорректными параметрами в конструкторе.
+	/// РЎРѕР·РґР°РЅРёРµ Р·Р°РїРёСЃРё СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.
 	/// </summary>
-	/// <param name="id">Идентификатор записи.</param>
-	/// <param name="name">Название записи.</param>
-	/// <param name="description">Описание записи.</param>
-	/// <param name="userId">Идентификатор создателя записи.</param>
-	/// <param name="isCorrectUser">Корректный ли пользователя будет указан в конструкторе.</param>
-	/// <param name="groupId">Идентификатор группы.</param>
-	/// <param name="isCorrectGroup">Корректная ли группа будет указана в конструкторе.</param>
-	/// <param name="exceptionType">Тип исключения, которое должно быть вызвано.</param>
+	/// <param name="id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РїРёСЃРё.</param>
+	/// <param name="name">РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё.</param>
+	/// <param name="description">РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё.</param>
+	/// <param name="userId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕР·РґР°С‚РµР»СЏ Р·Р°РїРёСЃРё.</param>
+	/// <param name="isCorrectUser">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Р±СѓРґРµС‚ СѓРєР°Р·Р°РЅ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.</param>
+	/// <param name="groupId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РіСЂСѓРїРїС‹.</param>
+	/// <param name="isCorrectGroup">РљРѕСЂСЂРµРєС‚РЅР°СЏ Р»Рё РіСЂСѓРїРїР° Р±СѓРґРµС‚ СѓРєР°Р·Р°РЅР° РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.</param>
+	/// <param name="exceptionType">РўРёРї РёСЃРєР»СЋС‡РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІС‹Р·РІР°РЅРѕ.</param>
 	[Theory]
-	[InlineData(-1, "Название записи", "Описание записи", 1, true, 1, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, null, "Описание записи", 1, true, 1, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Название записи", null, 1, true, 1, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Название записи", "Описание записи", -1, true, 1, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, "Название записи", "Описание записи", 1,false, 1, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Название записи", "Описание записи", 1, true, -1, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, "Название записи", "Описание записи", 1, true, 1, false, typeof(ArgumentNullException))]
+	[InlineData(-1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", 1, true, 1, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, null, "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", 1, true, 1, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", null, 1, true, 1, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", -1, true, 1, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", 1,false, 1, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", 1, true, -1, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ Р·Р°РїРёСЃРё", "РћРїРёСЃР°РЅРёРµ Р·Р°РїРёСЃРё", 1, true, 1, false, typeof(ArgumentNullException))]
 	public void InitNoteWithIncorrectValueShouldThrowException(int id, string name, string description, int userId,
 		bool isCorrectUser, int groupId, bool isCorrectGroup, Type exceptionType)
 	{
@@ -84,18 +84,18 @@ public class SocialNetworkClassesTests
 	}
 
 	/// <summary>
-	/// Создание роли с некорректными параметрами в конструкторе.
+	/// РЎРѕР·РґР°РЅРёРµ СЂРѕР»Рё СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.
 	/// </summary>
-	/// <param name="roleId">Идентификатор роли.</param>
-	/// <param name="name">Название роли.</param>
-	/// <param name="isCorrectUsersList">Корректный ли список пользователей будет передаваться в конструктор.</param>
-	/// <param name="isCorrectGroupsList">Корректный ли список групп будет передаваться в конструктор.</param>
-	/// <param name="exceptionType">Тип исключения, которое должно быть вызвано.</param>
+	/// <param name="roleId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРѕР»Рё.</param>
+	/// <param name="name">РќР°Р·РІР°РЅРёРµ СЂРѕР»Рё.</param>
+	/// <param name="isCorrectUsersList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.</param>
+	/// <param name="isCorrectGroupsList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє РіСЂСѓРїРї Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.</param>
+	/// <param name="exceptionType">РўРёРї РёСЃРєР»СЋС‡РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІС‹Р·РІР°РЅРѕ.</param>
 	[Theory]
-	[InlineData(-1, "Название роли", true, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(-1, "РќР°Р·РІР°РЅРёРµ СЂРѕР»Рё", true, true, typeof(ArgumentOutOfRangeException))]
 	[InlineData(1, null, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Название роли", false, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Название роли", true, false, typeof(ArgumentNullException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ СЂРѕР»Рё", false, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РќР°Р·РІР°РЅРёРµ СЂРѕР»Рё", true, false, typeof(ArgumentNullException))]
 	public void InitRoleWithIncorrectValueShouldThrowException(int roleId, string name,  
 		bool isCorrectUsersList, bool isCorrectGroupsList, Type exceptionType)
 	{
@@ -116,26 +116,26 @@ public class SocialNetworkClassesTests
 	}
 
 	/// <summary>
-	/// Создание пользователя с некорректными параметрами в конструкторе.
+	/// РЎРѕР·РґР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ.
 	/// </summary>
-	/// <param name="userId">Идентификатор пользователя.</param>
-	/// <param name="firstName">Имя пользователя.</param>
-	/// <param name="lastName">Фамилия пользователя.</param>
-	/// <param name="patronymic">Отчество пользователя.</param>
-	/// <param name="gender">Пол.</param>
-	/// <param name="isCorrectNotesList">Корректный ли список записей будет передаваться в конструктор.</param>
-	/// <param name="isCorrectGroupsList">Корректный ли список групп будет передаваться в конструктор.</param>
-	/// <param name="isCorrectRolesList">Корректный ли список ролей будет передаваться в конструктор.</param>
-	/// <param name="exceptionType">Тип исключения, которое должно быть вызвано.</param>
+	/// <param name="userId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.</param>
+	/// <param name="firstName">РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.</param>
+	/// <param name="lastName">Р¤Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.</param>
+	/// <param name="patronymic">РћС‚С‡РµСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.</param>
+	/// <param name="gender">РџРѕР».</param>
+	/// <param name="isCorrectNotesList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє Р·Р°РїРёСЃРµР№ Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.</param>
+	/// <param name="isCorrectGroupsList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє РіСЂСѓРїРї Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.</param>
+	/// <param name="isCorrectRolesList">РљРѕСЂСЂРµРєС‚РЅС‹Р№ Р»Рё СЃРїРёСЃРѕРє СЂРѕР»РµР№ Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.</param>
+	/// <param name="exceptionType">РўРёРї РёСЃРєР»СЋС‡РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІС‹Р·РІР°РЅРѕ.</param>
 	[Theory]
-	[InlineData(-1, "Имя", "Фамилия", "Отчество", "Пол", true, true, true, typeof(ArgumentOutOfRangeException))]
-	[InlineData(1, null, "Фамилия", "Отчество", "Пол", true, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", null, "Отчество", "Пол", true, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", "Фамилия", null, "Пол", true, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", "Фамилия", "Отчество", null, true, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", false, true, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", true, false, true, typeof(ArgumentNullException))]
-	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", true, true, false, typeof(ArgumentNullException))]
+	[InlineData(-1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", true, true, true, typeof(ArgumentOutOfRangeException))]
+	[InlineData(1, null, "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", true, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", null, "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", true, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", null, "РџРѕР»", true, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", null, true, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", false, true, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", true, false, true, typeof(ArgumentNullException))]
+	[InlineData(1, "РРјСЏ", "Р¤Р°РјРёР»РёСЏ", "РћС‚С‡РµСЃС‚РІРѕ", "РџРѕР»", true, true, false, typeof(ArgumentNullException))]
 	public void InitUserWithIncorrectValueShouldThrowException(int userId, string firstName, 
 		string lastName, string patronymic, string gender, bool isCorrectNotesList, 
 		bool isCorrectGroupsList, bool isCorrectRolesList, Type exceptionType)  

@@ -10,7 +10,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         _fixture = fixture;
     }
     [Fact]
-    public void FirstRequest()
+    public void FlightsInfo()
     {
         var request = (from flight in _fixture.FixtureFlights
                        where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
@@ -18,7 +18,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(1, request);
     }
     [Fact]
-    public void SecondRequest()
+    public void PassaengersWithoutBaggage()
     {
         var request = (from flight in _fixture.FixtureFlights
                        from ticket in _fixture.FixtureTickets
@@ -29,16 +29,18 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(1, request);
     }
     [Fact]
-    public void ThirdRequest()
+    public void FlightsAtSpecifiedPeriod()
     {
-        var compDate = new DateOnly(2023, 3, 2);
+        var firstCompDate = new DateOnly(2023, 3, 2);
+        var secondCompDate = new DateOnly(2023, 4, 2);
         var request = (from flight in _fixture.FixtureFlights
-                       where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(compDate) > 0)
+                       where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
+                       (flight.DepartureDate.CompareTo(secondCompDate) < 0)
                        select flight).Count();
         Assert.Equal(2, request);
     }
     [Fact]
-    public void FourthRequest()
+    public void FlightsWithMaxCountOfPassangers()
     {
         var request = (from flight in _fixture.FixtureFlights
                        where flight != null
@@ -46,10 +48,10 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(5, request);
     }
     [Fact]
-    public void FifthRequest()
+    public void FlightsWithMinFlightDuration()
     {
         var minDuration = (from flight in _fixture.FixtureFlights
-                           orderby flight.FlightDuration ascending
+                           orderby flight.FlightDuration
                            select flight.FlightDuration).Min();
         var request = (from flight in _fixture.FixtureFlights
                        where flight.FlightDuration.CompareTo(minDuration) == 0
@@ -57,12 +59,12 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(1, request);
     }
     [Fact]
-    public void SixthRequest()
+    public void FlightWithMaxAndAvgBaggageAmountFromSpecifiedSource()
     {
-        var tickets = from flight in _fixture.FixtureFlights
-                      from ticket in flight.Tickets
-                      where flight.Source == "Moscow"
-                      select ticket.BaggageWeight;
+        var tickets = (from flight in _fixture.FixtureFlights
+                       from ticket in flight.Tickets
+                       where flight.Source == "Moscow"
+                       select ticket.BaggageWeight).ToList();
         var max = tickets.Max();
         var avg = tickets.Average();
         Assert.Equal(19, max);

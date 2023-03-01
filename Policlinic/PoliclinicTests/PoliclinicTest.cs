@@ -92,12 +92,41 @@ public class PoliclinicTest
     }
     
     [Fact]
-    public void FirtsRequest()
+    public void FirstRequest()
     {
         var doctorList = CreateDefaultDoctors();
         var requestDoctorList = (from doctor in doctorList
                                  where doctor.WorkExperience >= 10
                                  select doctor.FIO).ToList();
-        Assert.Equal(doctorList[1], requestDoctorList);
+        Assert.Equal(doctorList[1].FIO, requestDoctorList[0]);
+    }
+
+    [Fact]
+    public void SecondRequest()
+    {
+        var receptionList = CreateDefaultReceptions();
+        var requestPatientList = (from reception in receptionList
+                                  where reception.Doctor.FIO == "Иванов Иван Иванович"
+                                  orderby reception.Patient.FIO
+                                  select reception.Patient.FIO).ToList();
+        Assert.Equal(receptionList[0].Patient.FIO, requestPatientList[1]);
+        Assert.Equal(receptionList[1].Patient.FIO, requestPatientList[0]);
+    }
+
+    [Fact]
+    public void ThirdRequest()
+    {
+        var receptionList = CreateDefaultReceptions();
+        var requestHealthyPatientList = (from reception in receptionList
+                                  where reception.Status == "Здоров"
+                                  select reception.Patient).ToList();
+        Assert.Equal(receptionList[1].Patient, requestHealthyPatientList[0]);
+        Assert.Equal(receptionList[2].Patient, requestHealthyPatientList[1]);
+    }
+
+    [Fact]
+    public void FourthRequest()
+    {
+
     }
 }

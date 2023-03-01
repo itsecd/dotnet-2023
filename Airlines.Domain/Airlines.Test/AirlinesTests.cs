@@ -10,7 +10,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         _fixture = fixture;
     }
     [Fact]
-    public void FlightsInfo()
+    public void FlightsWthSpecifiedSourceAndDestination()
     {
         var request = (from flight in _fixture.FixtureFlights
                        where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
@@ -59,7 +59,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(1, request);
     }
     [Fact]
-    public void FlightWithMaxAndAvgBaggageAmountFromSpecifiedSource()
+    public void MaxAndAvgBaggageAmountFromSpecifiedSource()
     {
         var tickets = (from flight in _fixture.FixtureFlights
                        from ticket in flight.Tickets

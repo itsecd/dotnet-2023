@@ -87,7 +87,6 @@ public class ServerTest
         };
     }
 
-
     public ServerTest()
     {
         _students = CreateListStudent();

@@ -1,6 +1,7 @@
-﻿using Airlines.Domain;
+﻿namespace Airlines.Test;
 
-namespace Airlines.Tests;
+using Airlines.Domain;
+
 public class AirlinesFixture
 {
     public List<TicketClass> FixtureTickets

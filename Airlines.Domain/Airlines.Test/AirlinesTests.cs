@@ -1,6 +1,4 @@
-using Airlines.Tests;
-
-namespace Airplane.Tests;
+namespace Airlines.Test;
 
 public class ClassesTest : IClassFixture<AirlinesFixture>
 {

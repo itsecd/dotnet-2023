@@ -8,11 +8,9 @@ using System.Collections.Generic;
 
 public class MediaFixture
 {
-    private readonly List<Genre> _genres;
     public List<Genre> FixtureGenres
     {
-        get { return _genres; }
-        init
+        get
         {
             var artists = new List<Artist>();
             for (var i = 0; i < 4; i++)
@@ -60,7 +58,7 @@ public class MediaFixture
                 }
                 genres.Add(genre);
             }
-            _genres = genres;
+            return genres;
         }
     }
 }

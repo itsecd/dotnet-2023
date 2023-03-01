@@ -18,7 +18,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(1, request);
     }
     [Fact]
-    public void PassaengersWithoutBaggage()
+    public void PassengersWithoutBaggage()
     {
         var request = (from flight in _fixture.FixtureFlights
                        from ticket in _fixture.FixtureTickets
@@ -40,7 +40,7 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
         Assert.Equal(2, request);
     }
     [Fact]
-    public void FlightsWithMaxCountOfPassangers()
+    public void FlightsWithMaxCountOfPassengers()
     {
         var request = (from flight in _fixture.FixtureFlights
                        where flight != null

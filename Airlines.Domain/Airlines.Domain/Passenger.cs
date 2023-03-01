@@ -14,19 +14,19 @@ public class PassengerClass
     /// <summary>
     /// Represent a unique ID of passanger
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Represent a passport number 
     /// </summary>
-    public int PassportNumber { get; set; }
+    public int PassportNumber { get; set; } = 0;
     /// <summary>
     /// Represent a passenger name
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Represent a tickets 
     /// </summary>
-    public List<TicketClass> Tickets { get; set; }
+    public List<TicketClass> Tickets { get; set; }=new List<TicketClass>();
     public PassengerClass(){}
     public PassengerClass(int passportnumber,string name) { 
         PassportNumber = passportnumber;

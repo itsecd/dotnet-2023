@@ -24,8 +24,10 @@ public class DataBaseContext : DbContext
     public DbSet<InstituteSpeciality> InstituteSpecialties { get; set; }
     public DbSet<Speciality> Specialties { get; set; }
 
+    public DataBaseContext() : base() { }
     public DataBaseContext(DbContextOptions<DataBaseContext> options)
         : base(options) { }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

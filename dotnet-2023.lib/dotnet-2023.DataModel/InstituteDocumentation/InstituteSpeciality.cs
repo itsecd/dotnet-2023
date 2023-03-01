@@ -14,6 +14,10 @@ namespace dotnet_2023.DataModel.InstituteDocumentation;
 /// </summary>
 public class InstituteSpeciality
 {
+    public InstituteSpeciality()
+    {
+        Key = new Guid().ToString();
+    }
     public InstituteSpeciality(string idSpeciality, string idInstitute)
     {
         Key = new string($"{idSpeciality}_{idInstitute}");
@@ -23,7 +27,7 @@ public class InstituteSpeciality
 
     [Key]
     [Required]
-    public string? Key { get; set; }
+    public string Key { get; set; }
 
     public string? IdSpeciality { get; set; }
     public Speciality? Speciality { get; set; }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.DataBase\dotnet-2023.DataBase.csproj" />
     <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.DataModel\dotnet-2023.DataModel.csproj" />
     <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.lib.FillDataBase\dotnet-2023.lib.FillDataBase.csproj" />
   </ItemGroup>

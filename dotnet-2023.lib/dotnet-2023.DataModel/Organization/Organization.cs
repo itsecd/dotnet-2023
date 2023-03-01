@@ -15,12 +15,13 @@ namespace dotnet_2023.DataModel.Organization;
 public class Organization
 {
     [Required]
-    public string? Id { get; set; } = Guid.NewGuid().ToString();
+    [Key]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? FullName { get; set; }
     public string? Initials { get; set; }
 
-    // TODO: create a regular expression type of "Country. Region. City. Address"
+    // TODO: create a regular expression type of "lalala. Country. Region. City. Address"
     public string? LegalAddress { get; set; }
 
 

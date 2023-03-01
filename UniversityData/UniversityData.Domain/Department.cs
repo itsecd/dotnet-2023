@@ -14,4 +14,10 @@ public class Department
     /// Контактный телефон заведущего кафедрой
     /// </summary>
     public string? DepartmentSupervisorNumber { get; set; }
+
+    public Department(string? departmentName, string? departmentSupervisorNumber)
+    {
+        DepartmentName = departmentName;
+        DepartmentSupervisorNumber = departmentSupervisorNumber;
+    }
 }

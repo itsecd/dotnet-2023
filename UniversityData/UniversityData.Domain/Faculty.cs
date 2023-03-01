@@ -18,4 +18,11 @@ public class Faculty
     /// Количество студентов факультета
     /// </summary>
     public int FaculityStudentsCount { get; set; }
+
+    public Faculty(string? faculityName, int faculityWorkersCount, int faculityStudentsCount)
+    {
+        FaculityName = faculityName;
+        FaculityWorkersCount = faculityWorkersCount;
+        FaculityStudentsCount = faculityStudentsCount;
+    }
 }

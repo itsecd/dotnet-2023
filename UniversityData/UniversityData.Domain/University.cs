@@ -42,4 +42,17 @@ public class University
     /// Таблица связи специальность-количетсов групп
     /// </summary>
     public List<SpecialtyTableNode>? UniversitySpecialtyTable { get; set; }
+
+    public University(string? universityNumber, string? universityName, string? universityAddress, Rector? universityRectorData, string? universityProperty, string? universityConstructionProperty, List<Faculty>? universityFacultiesData, List<Department>? universityDepartmentsData, List<SpecialtyTableNode>? universitySpecialtyTable)
+    {
+        UniversityNumber = universityNumber;
+        UniversityName = universityName;
+        UniversityAddress = universityAddress;
+        UniversityRectorData = universityRectorData;
+        UniversityProperty = universityProperty;
+        UniversityConstructionProperty = universityConstructionProperty;
+        UniversityFacultiesData = universityFacultiesData;
+        UniversityDepartmentsData = universityDepartmentsData;
+        UniversitySpecialtyTable = universitySpecialtyTable;
+    }
 }

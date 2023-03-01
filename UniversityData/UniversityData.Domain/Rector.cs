@@ -31,4 +31,13 @@ public class Rector
     /// </summary>
     public string? RectorPosition { get; set; }
 
+    public Rector(string? rectorName, string? rectorSurname, string? rectorPatronymic, string? rectorDegree, string? rectorTitle, string? rectorPosition)
+    {
+        RectorName = rectorName;
+        RectorSurname = rectorSurname;
+        RectorPatronymic = rectorPatronymic;
+        RectorDegree = rectorDegree;
+        RectorTitle = rectorTitle;
+        RectorPosition = rectorPosition;
+    }
 }

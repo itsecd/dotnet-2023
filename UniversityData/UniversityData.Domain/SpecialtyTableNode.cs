@@ -15,4 +15,9 @@ public class SpecialtyTableNode
     /// </summary>
     public int CountGroups { get; set; }
 
+    public SpecialtyTableNode(Specialty? specialty, int countGroups)
+    {
+        Specialty = specialty;
+        CountGroups = countGroups;
+    }
 }

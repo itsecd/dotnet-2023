@@ -7,6 +7,10 @@ namespace UniversityData.Domain;
 public class Rector
 {
     /// <summary>
+    /// ID
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// Имя ректора
     /// </summary>
     public string? RectorName { get; set; }
@@ -30,6 +34,10 @@ public class Rector
     /// Должность ректора
     /// </summary>
     public string? RectorPosition { get; set; }
+    /// <summary>
+    /// Ссылка на обратную связь
+    /// </summary>
+    public University? RectorUniversity { get; set; }
 
     public Rector(string? rectorName, string? rectorSurname, string? rectorPatronymic, string? rectorDegree, string? rectorTitle, string? rectorPosition)
     {

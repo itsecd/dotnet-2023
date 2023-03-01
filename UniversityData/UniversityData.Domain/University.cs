@@ -7,6 +7,10 @@ namespace UniversityData.Domain;
 public class University
 {
     /// <summary>
+    /// ID
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// Регистрационный номер
     /// </summary>
     public string? UniversityNumber { get; set; }

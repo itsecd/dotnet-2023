@@ -7,6 +7,10 @@ namespace UniversityData.Domain;
 public class Faculty
 {
     /// <summary>
+    /// ID
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// Название факультета
     /// </summary>
     public string? FaculityName { get; set; }
@@ -18,6 +22,10 @@ public class Faculty
     /// Количество студентов факультета
     /// </summary>
     public int FaculityStudentsCount { get; set; }
+    /// <summary>
+    /// Ссылка на обратную связь
+    /// </summary>
+    public University? FaculityUniversity { get; set; }
 
     public Faculty(string? faculityName, int faculityWorkersCount, int faculityStudentsCount)
     {

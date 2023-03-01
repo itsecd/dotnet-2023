@@ -24,7 +24,7 @@ public class Note
     /// <summary>	
     /// Дата создания.	
     /// </summary>	
-    public DateTime CreationDate { get; private set; }
+    public DateTime? CreationDate { get; private set; }
 
     /// <summary>
     /// Идентификатор автора.
@@ -34,7 +34,7 @@ public class Note
     /// <summary>
     /// Автор.
     /// </summary>
-    public User User { get; private set; }
+    public User? User { get; private set; }
 
     /// <summary>
     /// Идентификатор группы.
@@ -44,7 +44,7 @@ public class Note
     /// <summary>
     /// Группа.
     /// </summary>
-    public Group Group { get; private set; }
+    public Group? Group { get; private set; }
     #endregion
 
     #region Конструкторы.
@@ -61,7 +61,7 @@ public class Note
     /// <param name="group">Группа.</param>
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
     /// <exception cref="ArgumentNullException">Объект равен null!</exception>
-    public Note(int id, string name, string description, DateTime creationDate, int userId,
+    public Note(int id, string name, string description, DateTime? creationDate, int userId,
         User? user, int groupId, Group? group)
     {
         #region Валидация входных параметров.

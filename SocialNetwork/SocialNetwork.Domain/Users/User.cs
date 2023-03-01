@@ -43,17 +43,17 @@ public class User
     /// <summary>
     /// Записи пользователя.
     /// </summary>
-    public List<Note> Notes { get; private set; }
+    public List<Note>? Notes { get; private set; }
 
     /// <summary>
     /// Группы пользователя.
     /// </summary>
-    public List<Group> Groups { get; private set; }
+    public List<Group>? Groups { get; private set; }
 
     /// <summary>
     /// Роли пользователя.
     /// </summary>
-    public List<Role> Roles { get; private set; }
+    public List<Role>? Roles { get; private set; }
     #endregion
 
     #region Конструкторы.

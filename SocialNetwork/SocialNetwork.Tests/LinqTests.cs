@@ -20,7 +20,7 @@ public class LinqTests
 		var usersList = new List<User>();
 		var group = new Group(1, "IT", "IT", DateTime.Now, 1, user, new List<Note>());
 		var result = from c in usersList
-					 from a in c.Groups
+					 from a in c.Groups!
 					 where a.Name == "IT"
 					 orderby c.LastName, c.FirstName, c.Patronymic
 					 select c;
@@ -46,15 +46,15 @@ public class LinqTests
 
 		for (var i = 0; i < size; i++) 
 		{
-			group.Notes.Add(new Note(1, $"Запись{i}", $"Описание записи", DateTime.Now, 1,
+			group.Notes!.Add(new Note(1, $"Запись{i}", $"Описание записи", DateTime.Now, 1,
 				new User(), 1, group));
 			notes.Add(new Note(1, $"Запись{i}", $"Описание записи", DateTime.Now, 1,
 				new User(), 1, group));
 		}
 
 		var result = from c in notes
-					 where c.Group.Name == "IT"
-					 orderby c.Group.Name
+					 where c.Group!.Name == "IT"
+					 orderby c.Group!.Name
 					 select c;
 
 		for (var i = 0; i < size; i++)
@@ -111,8 +111,8 @@ public class LinqTests
 			.OrderByDescending(x => x.Count)
 			.Take(5);
 
-		Assert.True(result.ElementAt(0).User.Equals(userFirst) && result
-			.ElementAt(1).User.Equals(userSecond));
+		Assert.True(result.ElementAt(0).User!.Equals(userFirst) && result
+			.ElementAt(1).User!.Equals(userSecond));
 	}
 
 	/// <summary>
@@ -132,14 +132,14 @@ public class LinqTests
 
 			for (var j = 0; j < notesCountInGroups[i]; j++)
 			{
-				groups[i].Notes.Add(new Note());
+				groups[i].Notes!.Add(new Note());
 			}
 		}
 
-		var result = groups.Where(a => a.Notes.Count == groups.Max(a => a.Notes.Count)).ToList();
+		var result = groups.Where(a => a.Notes!.Count == groups.Max(a => a.Notes!.Count)).ToList();
 
-		Assert.True(result.Count == 2 && result[0].Notes.Count == 3 
-			&& result[1].Notes.Count == 3);
+		Assert.True(result.Count == 2 && result[0].Notes!.Count == 3 
+			&& result[1].Notes!.Count == 3);
 	}
 	#endregion
 }

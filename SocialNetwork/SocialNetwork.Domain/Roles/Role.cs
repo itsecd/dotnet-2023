@@ -19,12 +19,12 @@ public class Role
     /// <summary>
     /// Пользователи, обладающие конкретной ролью.
     /// </summary>
-    public List<User> Users { get; private set; }
+    public List<User>? Users { get; private set; }
 
     /// <summary>
     /// Группы, в которых состоят пользователи, обладающие данной ролью.
     /// </summary>
-    public List<Group> Groups { get; private set; }
+    public List<Group>? Groups { get; private set; }
     #endregion
 
     #region Конструкторы.

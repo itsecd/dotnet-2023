@@ -74,7 +74,7 @@ public static class Validator
 	/// <typeparam name="T">Тип элементов списка.</typeparam>
 	/// <param name="list">Список.</param>
 	/// <exception cref="ArgumentNullException">Список пустой или равен null!</exception>
-	public static void ListValidate<T>(List<T> list)
+	public static void ListValidate<T>(List<T>? list)
 	{
 		if (list == null)
 		{
@@ -87,7 +87,7 @@ public static class Validator
 	/// </summary>
 	/// <param name="dateTime">Дата для проверки.</param>
 	/// <exception cref="ArgumentNullException">Последовательность равна null!</exception>
-	public static void DateTimeValidate(DateTime dateTime)
+	public static void DateTimeValidate(DateTime? dateTime)
 	{
 		if (dateTime == null)
 		{
@@ -100,7 +100,7 @@ public static class Validator
 	/// </summary>
 	/// <param name="user">Пользователь, которого необходимо проверить.</param>
 	/// <exception cref="ArgumentNullException">Пользователь равен null!</exception>
-	public static void UserValidate(User user)
+	public static void UserValidate(User? user)
 	{
 		if (user == null)
 		{
@@ -113,7 +113,7 @@ public static class Validator
 	/// </summary>
 	/// <param name="group">Группа, которую необходимо проверить.</param>
 	/// <exception cref="ArgumentNullException">Группа равна null.</exception>
-	public static void GroupValidate(Group group)
+	public static void GroupValidate(Group? group)
 	{
 		if (group == null)
 		{

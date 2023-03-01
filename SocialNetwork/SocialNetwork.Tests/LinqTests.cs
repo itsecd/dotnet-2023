@@ -15,22 +15,22 @@ public class LinqTests
 	public void LinqTestQueryFirst()
 	{
 		var size = 10;
-		var user = new User(20, "Артем", "Стаценко", "Николаевич", "Мужской", DateTime.Now,
+		var userForTest = new User(20, "Артем", "Стаценко", "Николаевич", "Мужской", DateTime.Now,
 			DateTime.Now, new List<Note>(), new List<Group>(), new List<Role>());
 		var usersList = new List<User>();
-		var group = new Group(1, "IT", "IT", DateTime.Now, 1, user, new List<Note>());
+		var group = new Group(1, "IT", "IT", DateTime.Now, 1, userForTest, new List<Note>());
 
 		for (var i = 0; i < size; i++)
 		{
 			usersList.Add(new User(i + 1, $"Артем{i}", $"Стаценко{i}", $"Николаевич{i}", "Мужской", DateTime.Now,
-			DateTime.Now, new List<Note>(), new List<Group>() { group }, new List<Role>()));
+				DateTime.Now, new List<Note>(), new List<Group>() { group }, new List<Role>()));
 		}
 
-		var result = (from c in usersList
-					  from a in c.Groups!
-					  where a.Name == "IT"
-					  orderby c.LastName, c.FirstName, c.Patronymic
-					  select c).ToList();
+		var result = (from user in usersList
+					  from gr in user.Groups!
+					  where gr.Name == "IT"
+					  orderby user.LastName, user.FirstName, user.Patronymic
+					  select user).ToList();
 
 		for (var i = 0; i < size; i++)
 		{
@@ -57,10 +57,10 @@ public class LinqTests
 				new User(), 1, group));
 		}
 
-		var result = (from c in notes
-					 where c.Group!.Name == "IT"
-					 orderby c.Group!.Name
-					 select c).ToList();
+		var result = (from note in notes
+					 where note.Group!.Name == "IT"
+					 orderby note.Group!.Name
+					 select note).ToList();
 
 		for (var i = 0; i < size; i++)
 		{
@@ -107,13 +107,13 @@ public class LinqTests
 				: userFirst, 1, group));
 		}
 
-		var result = notes.GroupBy(e => new { e.User })
-			.Select(a => new
+		var result = notes.GroupBy(element => new { element.User })
+			.Select(newElement => new
 			{
-				a.Key.User,
-				Count = a.Count(x => x.User == a.Key.User)
+				newElement.Key.User,
+				Count = newElement.Count(el => el.User == newElement.Key.User)
 			})
-			.OrderByDescending(x => x.Count)
+			.OrderByDescending(item => item.Count)
 			.Take(5).ToList();
 
 		Assert.True(result.ElementAt(0).User!.Equals(userFirst) && result
@@ -141,7 +141,7 @@ public class LinqTests
 			}
 		}
 
-		var result = groups.Where(a => a.Notes!.Count == groups.Max(a => a.Notes!.Count)).ToList();
+		var result = groups.Where(group => group.Notes!.Count == groups.Max(gr => gr.Notes!.Count)).ToList();
 
 		Assert.True(result.Count == 2 && result[0].Notes!.Count == 3 
 			&& result[1].Notes!.Count == 3);

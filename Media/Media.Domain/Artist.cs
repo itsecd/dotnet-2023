@@ -1,23 +1,23 @@
 ﻿namespace Media.Domain;
 
+
 /// <summary>
-/// Класс Артист
+/// Class Artist is used to store information of the artist
 /// </summary>
 public class Artist
 {
     /// <summary>
-    /// Имя
+    /// ArtistId is used to store a unique identifier 
     /// </summary>
-    /// 
     public int ArtistId { get; set; }
 
+    /// <summary>
+    /// Name is used to store a name of artist
+    /// </summary>
     public string Name { get; set; } = string.Empty;
 
-    public string Description { get; set; } = string.Empty; //{ get; init; }
-
-    /// <summary>   
-    /// Метод
+    /// <summary>
+    /// Description is used to store description of the artist
     /// </summary>
-    /// <param name="r"> параметр </param>
-    /// <returns> Возвращает </returns>
+    public string Description { get; set; } = string.Empty; //{ get; init; }
 }

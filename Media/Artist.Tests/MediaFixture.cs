@@ -1,17 +1,18 @@
 ﻿namespace Artist.Tests;
 
+
 using Media.Domain;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 public class MediaFixture
 {
-    public List<Genre> FixtureGenres {
-        get
+    private readonly List<Genre> _genres;
+    public List<Genre> FixtureGenres
+    {
+        get { return _genres; }
+        init
         {
             var artists = new List<Artist>();
             for (var i = 0; i < 4; i++)
@@ -29,7 +30,7 @@ public class MediaFixture
                 var albom = new Albom();
                 albom.AlbomId = i;
                 albom.Name = "Albom №" + i.ToString() + " of Artist №" + (i % 4).ToString();
-                albom.Year = 2000 + i%4;
+                albom.Year = 2000 + i % 4;
                 albom.Artist = artists[i % 4];
                 alboms.Add(albom);
             }
@@ -39,7 +40,7 @@ public class MediaFixture
             {
                 var track = new Track();
                 track.TrackId = i;
-                track.Duration = i*100 % 301;
+                track.Duration = i * 100 % 301;
                 track.Number = Convert.ToInt32(i / 6) + 1;
                 track.Albom = alboms[i % 6];
                 track.Name = "Track №" + i.ToString() + "in Albom №" + (i % 6).ToString();
@@ -59,7 +60,7 @@ public class MediaFixture
                 }
                 genres.Add(genre);
             }
-            return genres;
+            _genres = genres;
         }
     }
 }

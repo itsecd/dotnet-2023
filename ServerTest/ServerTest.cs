@@ -19,14 +19,14 @@ public class ServerTest
     private List<Student> CreateListStudent()
     {
         return new List<Student>() {
-            new Student(0, "12343C", "Фам Нгок Хунг", new DateOnly(2000, 01, 04), 1),
-            new Student(1, "32543C", "Ла Хоанг Ань", new DateOnly(1998, 12, 12), 2),
-            new Student(2, "23421D", "Нгуен Ван Хоанг", new DateOnly(1999, 06, 29), 2),
-            new Student(3, "32540D", "Данилов Артем", new DateOnly(2002, 05, 05), 1),
-            new Student(4, "34135D", "Куляков Артем", new DateOnly(2002, 06, 21), 0),
-            new Student(5, "23122C", "Гудзенко Игорь", new DateOnly(2002, 04, 17), 0),
-            new Student(6, "32112C", "Никифрова Дарья", new DateOnly(2002, 4, 2), 1),
-            new Student(7, "21223C", "Иванова Юлиана", new DateOnly(2001, 3,6), 1)
+            new Student(0, "12343C", "Pham Ngoc Hung", new DateOnly(2000, 01, 04), 1),
+            new Student(1, "32543C", "La Hoang Anh", new DateOnly(1998, 12, 12), 2),
+            new Student(2, "23421D", "Nguyen Van Hoamg", new DateOnly(1999, 06, 29), 2),
+            new Student(3, "32540D", "Danilov Artyom", new DateOnly(2002, 05, 05), 1),
+            new Student(4, "34135D", "Kulyakov Artyom", new DateOnly(2002, 06, 21), 0),
+            new Student(5, "23122C", "Gudzenko Igor", new DateOnly(2002, 04, 17), 0),
+            new Student(6, "32112C", "Val Renita", new DateOnly(2002, 4, 2), 1),
+            new Student(7, "21223C", "Kelley Jaylynn", new DateOnly(2001, 3,6), 1)
         };
     }
 
@@ -57,12 +57,12 @@ public class ServerTest
     {
         return new List<Subject>()
         {
-            new Subject(0, "Промышленное программирование", 2023),
-            new Subject(1, "База данных", 2023),
-            new Subject(2, "Компьютерная альгебра", 2023),
-            new Subject(3, "Теория информации", 2023),
-            new Subject(4, "Системное программирование", 2022),
-            new Subject(5, "Схемотехника", 2022)
+            new Subject(0, "Industrial programming", 2023),
+            new Subject(1, "Database", 2023),
+            new Subject(2, "Computer algebra", 2023),
+            new Subject(3, "Information theory", 2023),
+            new Subject(4, "System programming", 2022),
+            new Subject(5, "History", 2022)
         };
     }
 
@@ -99,7 +99,7 @@ public class ServerTest
 
     public void TestListStudent()
     {
-        Assert.Equal("Фам Нгок Хунг", _students.ElementAt(0).StudentName);
+        Assert.Equal("Pham Ngoc Hung", _students.ElementAt(0).StudentName);
         Assert.Equal(0, _students.ElementAt(0).StudentId);
         Assert.Equal("12343C", _students.ElementAt(0).Passport);
         Assert.Equal(1, _students.ElementAt(0).ClassID);
@@ -125,8 +125,8 @@ public class ServerTest
     //Test list subject
     public void TestListSubject()
     {
-        Assert.Equal("Системное программирование", _subjects.ElementAt(4).SubjectName);
-        Assert.Equal("Промышленное программирование", _subjects.ElementAt(0).SubjectName);
+        Assert.Equal("System programming", _subjects.ElementAt(4).SubjectName);
+        Assert.Equal("Industrial programming", _subjects.ElementAt(0).SubjectName);
     }
 
     [Fact]
@@ -137,26 +137,26 @@ public class ServerTest
                            join c in _classes on s.ClassID equals c.ClassID
                            select new { Student = s.StudentName, NumberClass = c.Number, LetterClass = c.Letter };
 
-        Assert.Equal("Фам Нгок Хунг", queryStudentClass.ElementAt(0).Student);
+        Assert.Equal("Pham Ngoc Hung", queryStudentClass.ElementAt(0).Student);
         Assert.Equal(6312, queryStudentClass.ElementAt(0).NumberClass);
-        Assert.Equal(6411, queryStudentClass.Where(student => student.Student == "Ла Хоанг Ань").Select(student => student.NumberClass).ElementAt(0));
-        Assert.Equal(6311, queryStudentClass.Where(student => student.Student == "Гудзенко Игорь").Select(student => student.NumberClass).ElementAt(0));
+        Assert.Equal(6411, queryStudentClass.Where(student => student.Student == "La Hoang Anh").Select(student => student.NumberClass).ElementAt(0));
+        Assert.Equal(6311, queryStudentClass.Where(student => student.Student == "Gudzenko Igor").Select(student => student.NumberClass).ElementAt(0));
     }
 
     [Fact]
-    //Test for сertain student reiceved all mark using LINQ
+    //Test for certain student reiceved all mark using LINQ
     // Student Фам Нгок Хунг received 4, 5, 4, 5 
     public void TestStudentReceiveMark()
     {
-        var queryStudentMark = from student in _students where student.StudentName == "Фам Нгок Хунг"
-                          join mark in _marks on student.StudentId equals mark.StudentID
+        var queryStudentMark = from student in _students where student.StudentName == "Pham Ngoc Hung"
+                               join mark in _marks on student.StudentId equals mark.StudentID
                           join subject in _subjects on mark.SubjectID equals subject.SubjectID
                           select new { StudentName = student.StudentName, MarkValue = mark.MarkValue, SubjectName = subject.SubjectName };
         
-        Assert.Equal("Фам Нгок Хунг", queryStudentMark.ElementAt(0).StudentName);
+        Assert.Equal("Pham Ngoc Hung", queryStudentMark.ElementAt(0).StudentName);
         Assert.Equal(4, queryStudentMark.ElementAt(0).MarkValue);
-        Assert.Equal("Промышленное программирование", queryStudentMark.ElementAt(0).SubjectName);
+        Assert.Equal("Industrial programming", queryStudentMark.ElementAt(0).SubjectName);
         Assert.Equal(5, queryStudentMark.ElementAt(1).MarkValue);
-        Assert.Equal("База данных", queryStudentMark.ElementAt(1).SubjectName);
+        Assert.Equal("Database", queryStudentMark.ElementAt(1).SubjectName);
     }
 }

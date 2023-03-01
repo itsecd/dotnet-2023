@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>dotnet_2023.TestConsoleApp</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.DataModel\dotnet-2023.DataModel.csproj" />
+    <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.lib.FillDataBase\dotnet-2023.lib.FillDataBase.csproj" />
+  </ItemGroup>
+
+</Project>

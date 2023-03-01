@@ -1,7 +1,47 @@
-﻿namespace dotnet_2023.DataModel.InstituteDocumentation;
+﻿using dotnet_2023.DataModel.InstitutionStructure;
+using System.ComponentModel.DataAnnotations;
 
+namespace dotnet_2023.DataModel.InstituteDocumentation;
+
+public enum StudyFormat
+{
+    FullTime = 0,
+    Extramural = 1,
+    PartTime = 2
+};
+
+/// <summary>
+/// The class describing the training specialty.
+/// <param name="Code">Study code. Format: X.XX.XX.XX, where:
+///     1st numeric digit corresponds to the code of the field of education;
+///     The 2nd and 3rd digits correspond to the code of the enlarged group;
+///     The 4th and 5th digits correspond to the code of educational level;
+///     6th and 7th digits correspond to the code of the profession, specialty or training area.</param>
+/// <param name="Title">Full name of the specialty</param>
+/// <param name="StudyFormat">Study Format. FullTime - 0, Extramural - 1
+///     PartTime - 2</param>
+/// <param name="Institutes">Institute-Specialty class collection. 
+///     Needed for realization of "many-to-many" relationship. 
+///     Many specialties may be in many institutes.</param>
+/// <param name="Department">Department</param>
+/// <param name="IdDepartment">Id Department</param>
+/// </summary>
 public class Speciality
 {
-    public string? Code { get; set; }
+    [RegularExpression(@"\d.\d\d.\d\d.\d\d")]
+    public string? Code { get; set; } // primary key ?
     public string? Title { get; set; }
+    public StudyFormat? StudyFormat { get; set; }
+
+    /// <summary>
+    /// many-to-many with Institute
+    /// </summary>
+    public ICollection<InstituteSpeciality>? Institutes { get; set; }
+
+
+    /// <summary>
+    /// one-to-many -> One Department Many Specialties
+    /// </summary>
+    public Department? Department { get; set; }
+    public string? IdDepartment { get; set; }
 }

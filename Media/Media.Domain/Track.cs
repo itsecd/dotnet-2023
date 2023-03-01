@@ -1,6 +1,5 @@
 ﻿namespace Media.Domain;
 
-
 /// <summary>
 /// Class Track is used to store information of the track
 /// </summary>
@@ -9,7 +8,7 @@ public class Track
     /// <summary>
     /// TrackId is used to store a unique identifer
     /// </summary>
-    public int TrackId { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Number is used to store the track number in the album
@@ -22,9 +21,9 @@ public class Track
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Albom is used to store the album this track is in
+    /// Album is used to store the album this track is in
     /// </summary>
-    public Albom Albom { get; set; }
+    public Album Album { get; set; }
 
     /// <summary>
     /// Duration is used to store the duration of this track

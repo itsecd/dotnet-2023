@@ -1,6 +1,5 @@
 ﻿namespace Media.Domain;
 
-
 /// <summary>
 /// Class Artist is used to store information of the artist
 /// </summary>
@@ -9,7 +8,7 @@ public class Artist
     /// <summary>
     /// ArtistId is used to store a unique identifier 
     /// </summary>
-    public int ArtistId { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Name is used to store a name of artist

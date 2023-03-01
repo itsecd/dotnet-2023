@@ -1,28 +1,27 @@
 ﻿namespace Media.Domain;
 
-
 /// <summary>
-/// Class Albom is used to store information of the albom
+/// Class Album is used to store information of the Album
 /// </summary>
-public class Albom
+public class Album
 {
     /// <summary>
-    /// AlbomId is used to store a unique identifer
+    /// AlbumId is used to store a unique identifer
     /// </summary>
-    public int AlbomId { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
-    /// Name is used to store a name of albom
+    /// Name is used to store a name of Album
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Year is used to store the year the albom was created
+    /// Year is used to store the year the Album was created
     /// </summary>
     public int Year { get; set; }
 
     /// <summary>
-    /// Artist is used to store the artist this albom belongs to
+    /// Artist is used to store the artist this Album belongs to
     /// </summary>
     public Artist Artist { get; set; }// = null;
 }

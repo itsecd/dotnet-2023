@@ -6,7 +6,7 @@
 public class Artist
 {
     /// <summary>
-    /// ArtistId is used to store a unique identifier 
+    /// Id is used to store a unique identifier 
     /// </summary>
     public int Id { get; set; }
 
@@ -19,4 +19,9 @@ public class Artist
     /// Description is used to store description of the artist
     /// </summary>
     public string Description { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Albums is used to store a list of albums of this artist
+    /// </summary>
+    public List<Album> Albums { get; set; } = new List<Album>();
 }

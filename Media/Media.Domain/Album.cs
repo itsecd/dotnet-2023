@@ -6,7 +6,7 @@
 public class Album
 {
     /// <summary>
-    /// AlbumId is used to store a unique identifer
+    /// Id is used to store a unique identifer
     /// </summary>
     public int Id { get; set; }
 
@@ -21,7 +21,12 @@ public class Album
     public int Year { get; set; }
 
     /// <summary>
-    /// Artist is used to store the artist this Album belongs to
+    /// Tracks is used to store a list of tracks
     /// </summary>
-    public Artist Artist { get; set; }
+    public List<Track> Tracks { get; set; } = new List<Track>();
+
+    /// <summary>
+    /// Genre is used to store information of the genre of the album
+    /// </summary>
+    public Genre Genre { get; set; } = new Genre();
 }

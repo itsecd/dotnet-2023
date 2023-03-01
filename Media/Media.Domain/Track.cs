@@ -6,7 +6,7 @@
 public class Track
 {
     /// <summary>
-    /// TrackId is used to store a unique identifer
+    /// Id is used to store a unique identifer
     /// </summary>
     public int Id { get; set; }
 
@@ -21,9 +21,9 @@ public class Track
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Album is used to store the album this track is in
+    /// AlbumId is used to store the id of the album this track is in
     /// </summary>
-    public Album Album { get; set; }
+    public int AlbumId { get; set; }
 
     /// <summary>
     /// Duration is used to store the duration of this track

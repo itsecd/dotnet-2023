@@ -1,4 +1,5 @@
-namespace Artist.Tests;
+namespace Media.Tests;
+
 using System.Linq;
 
 public class MediaTest : IClassFixture<MediaFixture>
@@ -13,79 +14,62 @@ public class MediaTest : IClassFixture<MediaFixture>
     [Fact]
     public void ArtistInfoTest()
     {
-        var resultList = (from genre in _fixture.FixtureGenres
-                          from track in genre.Tracks
-                          select track.Album.Artist).Distinct().ToList();
-        Assert.Equal(4, resultList.Count());
+        var resultList = (from artist in _fixture.FixtureArtists
+                          select artist).ToList();
+        Assert.Equal(4, resultList.Count);
     }
 
     [Fact]
     public void TracksInfoTest()
     {
-        var resultList = (from genre in _fixture.FixtureGenres
-                          from track in genre.Tracks
-                          where track.Album.Name == "Album ¹0 of Artist ¹0"
+        var resultList = (from album in _fixture.FixtureAlbums
+                          where album.Name == "Album #0"
+                          from track in album.Tracks
                           orderby track.Number
                           select track).ToList();
-        Assert.Equal(2, resultList.Count());
+        Assert.Equal(2, resultList.Count);
     }
 
     [Fact]
     public void AlbumsInfoTest()
     {
-        var resultList = (from track in (from genre in _fixture.FixtureGenres
-                                         from track in genre.Tracks
-                                         select track)
-                          where track.Album.Year == 2000
-                          group track by track.Album into groupedTracks
-                          select new { Album = groupedTracks.Key, Count = groupedTracks.Count() }).ToList();
-        Assert.Equal(2, resultList.Count());
+        var resultList = (from album in _fixture.FixtureAlbums
+                          where album.Year == 2001
+                          select new { Album = album, Count = album.Tracks.Count }).ToList();
+        Assert.Equal(2, resultList.Count);
     }
 
     [Fact]
     public void TopAlbumsTest()
     {
-        var resultList = (from AlbumInformation in (from track in (from genre in _fixture.FixtureGenres
-                                                                   from track in genre.Tracks
-                                                                   select track)
-                                                    group track by track.Album into g
-                                                    select new { Album = g.Key, Duration = g.Sum(x => x.Duration) })
-                          orderby AlbumInformation.Duration descending
-                          select AlbumInformation).Take(5).ToList();
-        Assert.Equal(5, resultList.Count());
+        var resultList = (from album in _fixture.FixtureAlbums
+                          orderby album.Tracks.Sum(x => x.Duration) descending
+                          select new { Album = album, Duration = album.Tracks.Sum(x => x.Duration) }).Take(5).ToList();
+        Assert.Equal(5, resultList.Count);
     }
 
     [Fact]
     public void MaxAlbumArtistTest()
     {
-        var countAlbumList = (from Album in (from genre in _fixture.FixtureGenres
-                                             from track in genre.Tracks
-                                             select track.Album).Distinct()
-                              group Album by Album.Artist into a
-                              select new { Artist = a.Key, Count = a.Count() });
-
-        var resultList = (from achievment in countAlbumList
-                          where achievment.Count == countAlbumList.Max(a => a.Count)
-                          select achievment.Artist).ToList();
-        Assert.Equal(2, resultList.Count());
+        var resultList = (from artist in _fixture.FixtureArtists
+                          where artist.Albums.Count == _fixture.FixtureArtists.Max(x => x.Albums.Count)
+                          select artist).ToList();
+        Assert.Equal(2, resultList.Count);
     }
 
     [Fact]
     public void AlbumDurationInfoTest()
     {
-        var durationAlbumList = (from track in (from genre in _fixture.FixtureGenres
-                                                from track in genre.Tracks
-                                                select track)
-                                 group track by track.Album into g
-                                 select new { Album = g.Key, Duration = g.Sum(x => x.Duration) });
+        var durationAlbumList = (from album in _fixture.FixtureAlbums
+                                 select new { Album = album, Duration = album.Tracks.Sum(x => x.Duration) });
         var min = durationAlbumList.Min(a => a.Duration);
 
         var max = durationAlbumList.Max(a => a.Duration);
 
         var avg = durationAlbumList.Average(a => a.Duration);
 
-        Assert.Equal(196, min);
-        Assert.Equal(598, max);
+        Assert.Equal(100, min);
+        Assert.Equal(500, max);
         Assert.Equal(347.5, avg);
     }
 }

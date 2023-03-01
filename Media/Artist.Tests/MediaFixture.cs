@@ -1,4 +1,4 @@
-﻿namespace Artist.Tests;
+﻿namespace Media.Tests;
 
 using Media.Domain;
 using System;
@@ -10,53 +10,80 @@ public class MediaFixture
     {
         get
         {
-            var artists = new List<Artist>();
-            for (var i = 0; i < 4; i++)
+            var genres = new List<Genre>();
+            for (var i = 0; i < 3; i++)
             {
-                var artist = new Artist();
-                artist.Id = i;
-                artist.Name = "Artist №" + i.ToString();
-                artist.Description = "Description about artist №" + i.ToString();
-                artists.Add(artist);
+                var genre = new Genre();
+                genre.Id = i;
+                genre.Name = "Genre #" + i;
+                genres.Add(genre);
             }
+            return genres;
+        }
+    }
 
-            var Albums = new List<Album>();
-            for (var i = 0; i < 6; i++)
-            {
-                var Album = new Album();
-                Album.Id = i;
-                Album.Name = "Album №" + i.ToString() + " of Artist №" + (i % 4).ToString();
-                Album.Year = 2000 + i % 4;
-                Album.Artist = artists[i % 4];
-                Albums.Add(Album);
-            }
-
+    public List<Track> FixtureTracks
+    {
+        get
+        {
             var tracks = new List<Track>();
             for (var i = 0; i < 12; i++)
             {
                 var track = new Track();
                 track.Id = i;
                 track.Duration = i * 100 % 301;
-                track.Number = Convert.ToInt32(i / 6) + 1;
-                track.Album = Albums[i % 6];
-                track.Name = "Track №" + i.ToString() + "in Album №" + (i % 6).ToString();
+                track.Number = i % 2;
+                track.AlbumId = Convert.ToInt32(i / 2);
+                track.Name = "Track #" + i;
                 tracks.Add(track);
             }
+            return tracks;
+        }
+    }
 
-            var genres = new List<Genre>();
-            for (var i = 0; i < 3; i++)
+    public List<Album> FixtureAlbums
+    {
+        get
+        {
+            var genres = FixtureGenres;
+            var tracks = FixtureTracks;
+            var albums = new List<Album>();
+            for (var i = 0; i < 6; i++)
             {
-                var genre = new Genre();
-                genre.Id = i;
-                genre.Name = "Genre №" + i.ToString();
-                genre.Tracks = new List<Track>();
-                for (var j = 0; j < 4; j++)
+                var album = new Album();
+                album.Id = i;
+                album.Name = "Album #" + i;
+                album.Year = 2000 + i % 4;
+                for (var j = 0; j < 2; j++)
                 {
-                    genre.Tracks.Add(tracks[i * 4 + j]);
+                    album.Tracks.Add(tracks[i * 2 + j]);
                 }
-                genres.Add(genre);
+                album.Genre = genres[i % 3];
+                albums.Add(album);
             }
-            return genres;
+            return albums;
+        }
+    }
+    public List<Artist> FixtureArtists
+    {
+        get
+        {
+            var albums = FixtureAlbums;
+            var artists = new List<Artist>();
+            for (var i = 0; i < 4; i++)
+            {
+                var artist = new Artist();
+                artist.Id = i;
+                artist.Name = "Artist #" + i;
+                artist.Description = "Description about artist #" + i;
+                for (var j = 0; j < (Convert.ToInt32(i + 4) / 6) % 2 + 1; j++)
+                {
+                    artist.Albums.Add(albums.First());
+                    albums.RemoveAt(0);
+                }
+                artists.Add(artist);
+            }
+            return artists;
         }
     }
 }

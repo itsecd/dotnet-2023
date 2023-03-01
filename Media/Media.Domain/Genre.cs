@@ -6,7 +6,7 @@
 public class Genre
 {
     /// <summary>
-    /// GenreId is used to store a unique identifier 
+    /// Id is used to store a unique identifier 
     /// </summary>
     public int Id { get; set; }
 
@@ -14,9 +14,4 @@ public class Genre
     /// Name is used to store a name of genre
     /// </summary>
     public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Tracks is used to store a list of tracks of that genre
-    /// </summary>
-	public List<Track> Tracks { get; set; }
 }

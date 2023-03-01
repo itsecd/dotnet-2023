@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text.RegularExpressions;
-
-namespace SocialNetwork.Domain;
+﻿namespace SocialNetwork.Domain;
 
 /// <summary>	
 /// Запись.	
@@ -67,7 +62,7 @@ public class Note
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
     /// <exception cref="ArgumentNullException">Объект равен null!</exception>
     public Note(int id, string name, string description, DateTime creationDate, int userId,
-        User user, int groupId, Group group)
+        User? user, int groupId, Group? group)
     {
         #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, id);

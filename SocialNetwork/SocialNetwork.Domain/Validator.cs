@@ -16,7 +16,7 @@ public static class Validator
 	/// <exception cref="FormatException">Некорректный форма введенных данных!</exception>
 	public static void IntNumberValidate(string inputData)
 	{
-		if (!int.TryParse(inputData, out int _))
+		if (!int.TryParse(inputData, out var _))
 		{
 			throw new FormatException("Некорректный формат введенных данных!");
 		}
@@ -30,7 +30,7 @@ public static class Validator
 
 	public static void DoubleNumberValidate(string inputData)
 	{
-		if (!double.TryParse(inputData, out double _))
+		if (!double.TryParse(inputData, out var _))
 		{
 			throw new FormatException("Некорректный формат введенных данных!");
 		}

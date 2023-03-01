@@ -73,8 +73,8 @@ public class User
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
     /// <exception cref="ArgumentNullException">Объект равен null.</exception>
     public User(int userId, string firstName, string lastName, string patronymic, string gender,
-        DateTime birthDate, DateTime registrationDate, List<Note> notes, List<Group> groups,
-        List<Role> roles)
+        DateTime birthDate, DateTime registrationDate, List<Note>? notes, List<Group>? groups,
+        List<Role>? roles)  
     {
         #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, userId);

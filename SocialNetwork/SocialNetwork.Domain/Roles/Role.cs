@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SocialNetwork.Domain;
+﻿namespace SocialNetwork.Domain;
 
 /// <summary>	
 /// Роль.	
@@ -40,7 +37,7 @@ public class Role
     /// <param name="groups">Список групп, в которых состоят пользователи, имеющие данную роль.</param>
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы.</exception>
     /// <exception cref="ArgumentNullException">Объект равен null.</exception>
-    public Role(int roleId, string name, List<User> users, List<Group> groups)
+    public Role(int roleId, string name, List<User>? users, List<Group>? groups)
     {
         #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, roleId);

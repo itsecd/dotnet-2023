@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace SocialNetwork.Domain;
+﻿namespace SocialNetwork.Domain;
 
 /// <summary>	
 /// Группа.	
@@ -60,7 +56,7 @@ public class Group
     /// <exception cref="ArgumentNullException">Объект равен null!</exception>
     /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
     public Group(int groupId, string name, string description, DateTime creationDate, int userId,
-        User user, List<Note> notes)
+        User? user, List<Note>? notes)
     {
         #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, groupId);

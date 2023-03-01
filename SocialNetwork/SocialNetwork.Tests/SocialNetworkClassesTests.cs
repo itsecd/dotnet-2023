@@ -1,6 +1,3 @@
-using System.Reflection.Metadata;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using SocialNetwork.Domain;
 
 namespace SocialNetwork.Tests;
@@ -28,14 +25,14 @@ public class SocialNetworkClassesTests
 	[InlineData(1, "Группа", "Описание группы", -1, true, true, typeof(ArgumentOutOfRangeException))]
 	[InlineData(1, "Группа", "Описание группы", 1, false, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Группа", "Описание группы", 1, true, false, typeof(ArgumentNullException))]
-	public void InitGroup_WithIncorrectValue_ShouldThrowException(int groupId, string name, string description, 
+	public void InitGroupWithIncorrectValueShouldThrowException(int groupId, string name, string description, 
 		int userId, bool isCorrectUser, bool isCorrectNotesList, Type exceptionType) 
 	{
 		try
 		{
 			new Domain.Group(groupId, name, description, DateTime.Now, userId,
 				isCorrectUser ? new User() : null, isCorrectNotesList ? new List<Note>() : null);
-			Assert.Fail(ConstValues.NotThrowsException);
+			Assert.Fail("Exception wasn't thrown!");
 		}
 		catch (ArgumentOutOfRangeException ex) 
 		{
@@ -67,14 +64,14 @@ public class SocialNetworkClassesTests
 	[InlineData(1, "Название записи", "Описание записи", 1,false, 1, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Название записи", "Описание записи", 1, true, -1, true, typeof(ArgumentOutOfRangeException))]
 	[InlineData(1, "Название записи", "Описание записи", 1, true, 1, false, typeof(ArgumentNullException))]
-	public void InitNote_WithIncorrectValue_ShouldThrowException(int id, string name, string description, int userId,
+	public void InitNoteWithIncorrectValueShouldThrowException(int id, string name, string description, int userId,
 		bool isCorrectUser, int groupId, bool isCorrectGroup, Type exceptionType)
 	{
 		try
 		{
 			new Note(id, name, description, DateTime.Now, userId, isCorrectUser ?
-				new User() : null, groupId, isCorrectGroup ? ConstValues.DefaultGroup : null);
-			Assert.Fail(ConstValues.NotThrowsException);
+				new User() : null, groupId, isCorrectGroup ? new Domain.Group() : null);
+			Assert.Fail("Exception wasn't thrown!");
 		}
 		catch (ArgumentOutOfRangeException ex)
 		{
@@ -99,14 +96,14 @@ public class SocialNetworkClassesTests
 	[InlineData(1, null, true, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Название роли", false, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Название роли", true, false, typeof(ArgumentNullException))]
-	public void InitRole_WithIncorrectValue_ShouldThrowException(int roleId, string name, 
+	public void InitRoleWithIncorrectValueShouldThrowException(int roleId, string name,  
 		bool isCorrectUsersList, bool isCorrectGroupsList, Type exceptionType)
 	{
 		try
 		{
-			new Role(roleId, name, isCorrectUsersList ? ConstValues.DefaultUsersList : null, 
-				isCorrectGroupsList ? ConstValues.DefaultGroupsList : null);
-			Assert.Fail(ConstValues.NotThrowsException);
+			new Role(roleId, name, isCorrectUsersList ? new List<User>() : null, 
+				isCorrectGroupsList ? new List<Domain.Group>() : null);
+			Assert.Fail("Exception wasn't thrown!");
 		}
 		catch (ArgumentOutOfRangeException ex)
 		{
@@ -139,17 +136,17 @@ public class SocialNetworkClassesTests
 	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", false, true, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", true, false, true, typeof(ArgumentNullException))]
 	[InlineData(1, "Имя", "Фамилия", "Отчество", "Пол", true, true, false, typeof(ArgumentNullException))]
-	public void InitUser_WithIncorrectValue_ShouldThrowException(int userId, string firstName, 
+	public void InitUserWithIncorrectValueShouldThrowException(int userId, string firstName, 
 		string lastName, string patronymic, string gender, bool isCorrectNotesList, 
 		bool isCorrectGroupsList, bool isCorrectRolesList, Type exceptionType)  
 	{
 		try
 		{
 			new User(userId, firstName, lastName, patronymic, gender, DateTime.Now, DateTime.Now, isCorrectNotesList
-				? ConstValues.DefaultNotesList : null, isCorrectGroupsList ?
-				ConstValues.DefaultGroupsList : null, isCorrectRolesList ?
-				ConstValues.DefaultRolesList : null);
-			Assert.Fail(ConstValues.NotThrowsException);
+				? new List<Note>() : null, isCorrectGroupsList ?
+				new List<Domain.Group>() : null, isCorrectRolesList ?
+				new List<Role>() : null);
+			Assert.Fail("Exception wasn't thrown!");
 		}
 		catch (ArgumentOutOfRangeException ex)
 		{

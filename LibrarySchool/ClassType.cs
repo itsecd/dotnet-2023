@@ -42,6 +42,6 @@ public class ClassType
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(ClassId, Number, Letter);
+        return HashCode.Combine(ClassId, Number, Letter, Students);
     }
 }

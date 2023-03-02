@@ -54,7 +54,7 @@ public class Student
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(StudentId, Passport, StudentName, DateOfBirth, ClassId);
+        return HashCode.Combine(StudentId, Passport, StudentName, DateOfBirth, ClassId, Marks);
     }
 
 }

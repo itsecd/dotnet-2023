@@ -6,15 +6,14 @@
 public class Mark
 {
     ///<summary>
-    /// MarkID - Id mark 
-    ///
+    /// MarkId - Id mark 
     ///</summary>
-    public int MarkID { get; set; }
+    public int MarkId { get; set; }
 
     ///<summary>
-    /// StudentID - Id student
+    /// StudentId - Id student
     ///</summary>
-    public int StudentID { get; set; }
+    public int StudentId { get; set; }
 
     ///<summary>
     /// MarkValue - value of mark student received
@@ -22,22 +21,21 @@ public class Mark
     public int MarkValue { get; set; }
 
     ///<summary>
-    /// SubjectID - Id subject
+    /// SubjectId - Id subject
     ///</summary>
-    public int SubjectID { get; set; }
-
+    public int SubjectId { get; set; }
 
     ///<summary>
     /// TimeReceive - time when student receive mark
     ///</summary>
     public DateOnly TimeReceive { get; set; }
 
-    public Mark(int markID, int studentID, int markValue, int subjectID, DateOnly timeReceive)
+    public Mark(int markId, int studentId, int markValue, int subjectId, DateOnly timeReceive)
     {
-        MarkID = markID;
-        StudentID = studentID;
+        MarkId = markId;
+        StudentId = studentId;
         MarkValue = markValue;
-        SubjectID = subjectID;
+        SubjectId = subjectId;
         TimeReceive = timeReceive;
     }
 
@@ -46,11 +44,11 @@ public class Mark
         if (obj == null) return false;
         if (obj is not Mark) return false;
         var objMark = (Mark)obj;
-        return (objMark.StudentID == StudentID && objMark.MarkValue == MarkValue && objMark.MarkID == MarkID && objMark.SubjectID == SubjectID && objMark.TimeReceive == TimeReceive);
+        return (objMark.StudentId == StudentId && objMark.MarkValue == MarkValue && objMark.MarkId == MarkId && objMark.SubjectId == SubjectId && objMark.TimeReceive == TimeReceive);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(MarkID, StudentID, MarkValue, SubjectID, TimeReceive);
+        return HashCode.Combine(MarkId, StudentId, MarkValue, SubjectId, TimeReceive);
     }
 }

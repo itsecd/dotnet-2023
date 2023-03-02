@@ -6,9 +6,9 @@
 public class ClassType
 {
     ///<summary>
-    /// ClassID - Id class 
+    /// ClassId - Id class 
     ///</summary>
-    public int ClassID { get; set; }
+    public int ClassId { get; set; }
 
     ///<summary>
     /// Number - number of class, example: 6312,...
@@ -20,11 +20,17 @@ public class ClassType
     ///</summary>
     public string Letter { get; set; } = "";
 
-    public ClassType(int classID, int number, string letter)
+    ///<summary>
+    /// Students - List student in class
+    ///</summary>
+    public List<Student> Students { get; set; } = new List<Student>();
+
+    public ClassType(int classId, int number, string letter, List<Student> students)
     {
-        ClassID = classID;
+        ClassId = classId;
         Number = number;
         Letter = letter;
+        Students = students;
     }
 
     public override bool Equals(object? obj)
@@ -32,10 +38,10 @@ public class ClassType
         if (obj == null) return false;
         if (obj is not ClassType) return false;
         var typeObj = (ClassType)obj;
-        return (ClassID == typeObj.ClassID && Number == typeObj.Number && Letter == typeObj.Letter);
+        return (ClassId == typeObj.ClassId && Number == typeObj.Number && Letter == typeObj.Letter);
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(ClassID, Number, Letter);
+        return HashCode.Combine(ClassId, Number, Letter);
     }
 }

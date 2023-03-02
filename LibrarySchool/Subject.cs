@@ -6,9 +6,9 @@
 public class Subject
 {
     /// <summary>
-    /// SubjectID - Id of subject 
+    /// SubjectId - Id of subject 
     /// </summary>
-    public int SubjectID { get; set; }
+    public int SubjectId { get; set; }
 
     /// <summary>
     /// SubjectName - Name of the subject
@@ -20,9 +20,9 @@ public class Subject
     /// </summary>
     public int YearStudy { get; set; }
 
-    public Subject(int subjectID, string subjectName, int yearStudy)
+    public Subject(int subjectId, string subjectName, int yearStudy)
     {
-        SubjectID = subjectID;
+        SubjectId = subjectId;
         SubjectName = subjectName;
         YearStudy = yearStudy;
     }
@@ -31,10 +31,10 @@ public class Subject
         if (obj == null) return false;
         if (obj is not Subject) return false;
         var subj = (Subject)obj;
-        return (subj.SubjectID == SubjectID && subj.SubjectName == SubjectName && subj.YearStudy == YearStudy);
+        return (subj.SubjectId == SubjectId && subj.SubjectName == SubjectName && subj.YearStudy == YearStudy);
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(SubjectID, SubjectName, YearStudy);
+        return HashCode.Combine(SubjectId, SubjectName, YearStudy);
     }
 }

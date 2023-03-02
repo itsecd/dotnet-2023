@@ -1,4 +1,4 @@
-﻿namespace PONRF.Classes;
+﻿namespace PonrfDomain;
 
 /// <summary>
 /// Class Building describes a building 
@@ -8,31 +8,33 @@ public class Building
     /// <summary>
     /// RegistNum contains informatiom about registration number of building
     /// </summary>
-    public guid RegistNum { get; set; } = guid.Empty;
+    public Guid RegistNum { get; set; } = Guid.Empty;
     /// <summary>
     /// District, street and house number contain informatiom about full address of building
     /// </summary>  
     public string District { get; set; } = string.Empty;
     public string Street { get; set; } = string.Empty;
-    public int HouseNumber { get; set; } = int.Empty;
+    public int HouseNumber { get; set; } = int.MinValue;
     /// <summary>
     /// Area contains informatiom about building area
     /// </summary>
-    public int Area { get; set; } = int.Empty;
+    public int Area { get; set; } = int.MinValue;
     /// <summary>
     /// Floors contains informatiom about number of floors of the building
     /// </summary>
-    public int Floors { get; set; } = int.Empty;
+    public int Floors { get; set; } = int.MinValue;
     /// <summary>
     /// DateOfBuild contains informatiom about date of construction of the building
     /// </summary>
     public DateTime DateOfBuild { get; set; } = DateTime.MinValue;
-    public List<Lot> Lot { get; set; };
+    public List<Lot> Lot { get; set; } = new();
 
     public Building() { }
+    /// <summary>
+    /// GetAddress returns address of the building
+    /// </summary>
     public string GetAddress()
     {
-        return Combine(District, Street, HouseNumber);
+        return string.Format("{0}, st. {1}, {2}", District, Street, HouseNumber);
     }
-
 }

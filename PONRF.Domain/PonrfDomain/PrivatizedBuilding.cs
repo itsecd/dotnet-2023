@@ -1,4 +1,4 @@
-namespace PONRF.Classes;
+﻿namespace PonrfDomain;
 
 /// <summary>
 /// Class PrivatizedBuilding describes booked room in hotel
@@ -8,7 +8,7 @@ public class PrivatizedBuilding
     /// <summary>
     /// Id is a identifier of privatized building
     /// </summary>
-    public guid Id { get; set; } = guid.Empty;
+    public Guid Id { get; set; } = Guid.Empty;
     /// <summary>
     /// DateOfSale contains informatiom about date of sale of the building
     /// </summary>
@@ -16,15 +16,15 @@ public class PrivatizedBuilding
     /// <summary>
     /// FirstCost is a original auction price
     /// </summary>
-    public int FirstCost { get; set; } = int.Empty;
+    public int FirstCost { get; set; } = int.MinValue;
     /// <summary>
     /// SecondCost is a final cost
     /// </summary>
-    public int SecondCost { get; set; } = int.Empty;
+    public int SecondCost { get; set; } = int.MinValue;
 
-    public Passport? Passport { get; set; } = None;
-    public Auction? Auction { get; set; } = None;
-    public RegistNumber? RegistNumber { get; set; } = None;
+    public Customer? Passport { get; set; } = new();
+    public Auction? Auction { get; set; } = new();
+    public Building? Building { get; set; } = new();
 
-    public Building() { }
+    public PrivatizedBuilding() { }
 }

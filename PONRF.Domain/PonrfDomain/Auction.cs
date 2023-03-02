@@ -1,14 +1,13 @@
-namespace PONRF.Classes;
-
+﻿namespace PonrfDomain;
 /// <summary>
 /// BookedRoomType describes booked room in hotel
 /// </summary>
-public class Auctoin
+public class Auction
 {
     /// <summary>
-    /// Auction is a identifier of auction
+    /// IDAuction is a identifier of auction
     /// </summary>
-    public guid Auction { get; set; } = guid.Empty;
+    public Guid IDAuction { get; set; } = Guid.Empty;
     /// <summary>
     /// Date is date of holding of the auction
     /// </summary>
@@ -17,7 +16,7 @@ public class Auctoin
     /// Organizer is a auction company 
     /// </summary>
     public string Organizer { get; set; } = string.Empty;
-    public List<Lot> Lot { set; get; };
+    public List<Lot> Lot { set; get; } = new();
 
     public Auction() { }
 }

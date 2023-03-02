@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PonrfDomain", "PonrfDomain.csproj", "{D5F0B022-DE64-48A8-873A-FDFB2372784F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PonrfTests", "..\PonrfTests\PonrfTests.csproj", "{6D9702A4-47C6-404A-AED0-E1E84D2F4096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5F0B022-DE64-48A8-873A-FDFB2372784F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F0B022-DE64-48A8-873A-FDFB2372784F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F0B022-DE64-48A8-873A-FDFB2372784F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F0B022-DE64-48A8-873A-FDFB2372784F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9702A4-47C6-404A-AED0-E1E84D2F4096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9702A4-47C6-404A-AED0-E1E84D2F4096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9702A4-47C6-404A-AED0-E1E84D2F4096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9702A4-47C6-404A-AED0-E1E84D2F4096}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD0D5F50-5F83-48C7-ACCF-7A17A39F1EC8}
+	EndGlobalSection
+EndGlobal

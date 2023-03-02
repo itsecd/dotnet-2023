@@ -1,4 +1,4 @@
-namespace PONRF.Classes;
+﻿namespace PonrfDomain;
 
 /// <summary>
 /// Class Customer describes a customer
@@ -8,7 +8,7 @@ public class Customer
     /// <summary>
     /// Passport contains informatiom about passport's number of customer
     /// </summary>
-    public guid Passport { get; set; } = guid.Empty;
+    public Guid Passport { get; set; } = Guid.Empty;
     /// <summary>
     /// FIO contains informatiom about full name of customer
     /// </summary>  
@@ -18,5 +18,5 @@ public class Customer
     /// </summary>
     public string Address { get; set; } = string.Empty;
 
-    public Customer() {}
+    public Customer() { }
 }

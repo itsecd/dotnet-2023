@@ -1,9 +1,9 @@
 using LibrarySchool;
 using Xunit;
 
-namespace ServerTest;
+namespace LibrarySchoolTest;
 
-public class ServerTest
+public class LibrarySchoolTest
 {
     private List<Student> _students;
     private List<ClassType> _classes;
@@ -90,7 +90,7 @@ public class ServerTest
         };
     }
 
-    public ServerTest()
+    public LibrarySchoolTest()
     {
         _students = CreateListStudent();
         _classes = CreateListClass();

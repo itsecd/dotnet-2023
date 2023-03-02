@@ -11,10 +11,5 @@ public class DepartmentConfiguration : BaseSectionConfiguration, IEntityTypeConf
             .HasMany(x => x.GroupOfStudents)
             .WithOne(x => x.Department)
             .HasForeignKey(x => x.IdDepartment);
-
-        builder
-            .HasMany(x=>x.Specialties)
-            .WithOne(x=>x.Department)
-            .HasForeignKey(x=>x.IdDepartment);
     }
 }

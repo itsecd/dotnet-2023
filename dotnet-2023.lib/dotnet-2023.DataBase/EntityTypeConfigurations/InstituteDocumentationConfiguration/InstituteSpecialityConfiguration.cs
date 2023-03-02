@@ -17,6 +17,6 @@ public class InstituteSpecialityConfiguration : IEntityTypeConfiguration<Institu
         builder
             .HasOne(x => x.Speciality)
             .WithMany(x => x.Institutes)
-            .HasForeignKey(x => x.IdHigherEducationInstitution);
+            .HasForeignKey(x => x.IdSpeciality);
     }
 }

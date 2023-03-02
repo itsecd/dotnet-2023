@@ -14,8 +14,8 @@ namespace dotnet_2023.DataModel.Organization;
 /// </summary>
 public class Organization
 {
-    [Required]
-    [Key]
+    //[Required]
+    //[Key]
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string? FullName { get; set; }
@@ -25,12 +25,12 @@ public class Organization
     public string? LegalAddress { get; set; }
 
 
-    [RegularExpression(@"[0-9]{13}")]
+    //[RegularExpression(@"[0-9]{13}")]
     public string? RegistrationNumber { get; set; }
 
-    [RegularExpression(@"[0-9]{11}")]
+    //[RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }
 
-    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
+    //[RegularExpression(@"\\S+@\\S+\\.\\S+$")]
     public string? Email { get; set; }
 }

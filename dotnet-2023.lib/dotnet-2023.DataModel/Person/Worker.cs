@@ -10,7 +10,6 @@
 public class Worker : BasePerson
 {
     public string? IdOrganization { get; set; }
-    public Organization.Organization? Organization { get; set; }
 
     public string? JobTitle { get; set; }
     public double? Salary { get; set; }

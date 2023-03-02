@@ -26,6 +26,6 @@ public class BasePerson
     [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
     public string? Email { get; set; }
 
-    [RegularExpression(@"[0-9]{11}")]
+    [RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }
 }

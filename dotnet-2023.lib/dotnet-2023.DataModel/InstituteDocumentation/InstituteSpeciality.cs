@@ -20,13 +20,13 @@ public class InstituteSpeciality
     }
     public InstituteSpeciality(string idSpeciality, string idInstitute)
     {
-        Key = new string($"{idSpeciality}_{idInstitute}");
+        Key = new string($"{idSpeciality}-{idInstitute}");
         IdSpeciality = idSpeciality;
         IdHigherEducationInstitution = idInstitute;
     }
 
-    [Key]
-    [Required]
+    //[Key]
+    //[Required]
     public string Key { get; set; }
 
     public string? IdSpeciality { get; set; }

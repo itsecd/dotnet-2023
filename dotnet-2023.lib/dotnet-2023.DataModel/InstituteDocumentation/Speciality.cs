@@ -28,20 +28,13 @@ public enum StudyFormat
 /// </summary>
 public class Speciality
 {
-    [RegularExpression(@"\d.\d\d.\d\d.\d\d")]
-    public string? Code { get; set; } // primary key ?
+    //[RegularExpression(@"\d.\d\d.\d\d.\d\d")]
+    public string Code { get; set; } = new Guid().ToString();
     public string? Title { get; set; }
     public StudyFormat? StudyFormat { get; set; }
 
     /// <summary>
     /// many-to-many with Institute
     /// </summary>
-    public ICollection<InstituteSpeciality>? Institutes { get; set; }
-
-
-    /// <summary>
-    /// one-to-many -> One Department Many Specialties
-    /// </summary>
-    public Department? Department { get; set; }
-    public string? IdDepartment { get; set; }
+    public ICollection<InstituteSpeciality>? Institutes { get; set; } = new List<InstituteSpeciality>();
 }

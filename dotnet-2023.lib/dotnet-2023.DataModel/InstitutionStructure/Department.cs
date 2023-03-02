@@ -23,11 +23,6 @@ public class Department : BaseSection
     public EducationWorker? HeadOfDepartment { get; set; }
 
     /// <summary>
-    /// one-to-many -> One Department Many Specialties
-    /// </summary>
-    public ICollection<Speciality>? Specialties { get; set; } = new List<Speciality>();
-
-    /// <summary>
     /// one-to-many -> One Department Many GroupOfStudents
     /// </summary>
     public ICollection<GroupOfStudents>? GroupOfStudents { get; set; } = new List<GroupOfStudents>();

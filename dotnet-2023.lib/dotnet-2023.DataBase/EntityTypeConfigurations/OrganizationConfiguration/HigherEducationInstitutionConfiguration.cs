@@ -15,8 +15,5 @@ public class HigherEducationInstitutionConfiguration : OrganizationConfiguration
             .HasMany(x => x.Departments)
             .WithOne(x => x.Institute)
             .HasForeignKey(x => x.IdInstitute);
-        builder
-            .Property(x => x.IdRector)
-            .HasMaxLength(127);
     }
 }

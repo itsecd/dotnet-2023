@@ -14,7 +14,7 @@ public class ServerTest
     /// Initializes list of marks.
     /// </summary>
     /// <returns>
-    /// List containing 4 types of marks
+    /// List containing 12 types of marks
     /// </returns>
     private List<Mark> CreateListMark()
     {
@@ -39,7 +39,7 @@ public class ServerTest
     /// Initializes example list of student for testing
     /// </summary>
     /// <returns>
-    /// List containing 2 types of student
+    /// List containing 3 types of student
     /// </returns>
     private List<Student> CreateListStudent()
     {
@@ -60,7 +60,7 @@ public class ServerTest
     /// Initializes list of class for testing
     /// </summary>
     /// <returns>
-    /// List containing 4 classes
+    /// List containing 3 classes
     /// </returns>
     private List<ClassType> CreateListClass()
     {
@@ -77,7 +77,7 @@ public class ServerTest
     /// Initializes list of subjects for testing
     /// </summary>
     /// <returns>
-    /// List containing 6 subjects
+    /// List containing 4 subjects
     /// </returns>
     private List<Subject> CreateListSubject()
     {

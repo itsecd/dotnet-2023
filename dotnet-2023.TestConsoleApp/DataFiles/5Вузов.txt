@@ -1,0 +1,212 @@
+var faclts = new int[] { 1, 3, 4};
+var dct = new Dictionary<int, int[]>();
+
+
+dct.Add(1, new int[] { 0, 1, 2, 9 });
+dct.Add(3, new int[] { 3, 4 });
+dct.Add(4, new int[] { 5, 6, 7 });
+
+int GetNextSpec(List<int> was, int point)
+{
+    do
+    {
+        point = rnd.Next(0,30);
+    } while(was.Contains(point));
+    return point;
+}
+
+
+var institute = Generator.Institution(4, faclts, dct);
+var listSpec = new List<Speciality>();
+for (var i = 0; i < 30; i++)
+{
+    listSpec.Add(Generator.Speciality(i));
+}
+
+
+var instSpec = new List<InstituteSpeciality>();
+
+//var groups = new List<GroupOfStudents>();
+
+var wass = new List<int>();
+
+foreach (var fls in institute.Faculties)
+{
+    foreach (var dps in fls.Departments)
+    {
+        for (var i = 0; i < rnd.Next(1, 3); i++)
+        {
+            var curntl = GetNextSpec(wass, rnd.Next(0, 30));
+            wass.Add(curntl);
+
+            instSpec.Add(new InstituteSpeciality(listSpec[curntl].Code, institute.Id)
+            {
+                IdHigherEducationInstitution = institute.Id,
+                HigherEducationInstitution = institute,
+                IdSpeciality = listSpec[curntl].Code,
+                Speciality = listSpec[curntl]
+            });
+
+            Generator.GroupOfStudents(rnd.Next(1, 4), listSpec[curntl], dps);
+        }
+    }
+}
+
+
+
+var facltsTWO = new int[] { 0, 5, 6 };
+var dctTWO = new Dictionary<int, int[]>();
+
+
+dctTWO.Add(0, new int[] { 0, 1, 8, 13 });
+dctTWO.Add(5, new int[] { 3, 5, 9 });
+dctTWO.Add(6, new int[] { 11, 2, 6 });
+
+var instituteTWO = Generator.Institution(0, facltsTWO, dctTWO);
+
+var instSpecTWO = new List<InstituteSpeciality>();
+
+
+var wassTWO = new List<int>();
+
+foreach (var fls in instituteTWO.Faculties)
+{
+    foreach (var dps in fls.Departments)
+    {
+        for (var i = 0; i < rnd.Next(1, 3); i++)
+        {
+            var curntl = GetNextSpec(wassTWO, rnd.Next(0, 30));
+            wassTWO.Add(curntl);
+
+            instSpecTWO.Add(new InstituteSpeciality(listSpec[curntl].Code, instituteTWO.Id)
+            {
+                IdHigherEducationInstitution = instituteTWO.Id,
+                HigherEducationInstitution = instituteTWO,
+                IdSpeciality = listSpec[curntl].Code,
+                Speciality = listSpec[curntl]
+            });
+
+            Generator.GroupOfStudents(rnd.Next(1, 4), listSpec[curntl], dps);
+        }
+    }
+}
+
+
+var facltsTHREE = new int[] { 1, 4, 2, 6 };
+var dctTHREE = new Dictionary<int, int[]>();
+
+
+dctTHREE.Add(1, new int[] { 0, 1, 3, 2 });
+dctTHREE.Add(4, new int[] { 5, });
+dctTHREE.Add(2, new int[] { 11, 10 });
+dctTHREE.Add(6, new int[] { 7, 8 });
+
+var instituteTHREE = Generator.Institution(5, facltsTHREE, dctTHREE);
+
+var instSpecTHREE = new List<InstituteSpeciality>();
+
+
+var wassTHREE = new List<int>();
+
+foreach (var fls in instituteTHREE.Faculties)
+{
+    foreach (var dps in fls.Departments)
+    {
+        for (var i = 0; i < rnd.Next(1, 3); i++)
+        {
+            var curntl = GetNextSpec(wassTHREE, rnd.Next(0, 30));
+            wassTHREE.Add(curntl);
+
+            instSpecTHREE.Add(new InstituteSpeciality(listSpec[curntl].Code, instituteTHREE.Id)
+            {
+                IdHigherEducationInstitution = instituteTHREE.Id,
+                HigherEducationInstitution = instituteTHREE,
+                IdSpeciality = listSpec[curntl].Code,
+                Speciality = listSpec[curntl]
+            });
+
+            Generator.GroupOfStudents(rnd.Next(1, 4), listSpec[curntl], dps);
+        }
+    }
+}
+
+var facltsFOUR = new int[] { 5, 6 };
+var dctFOUR = new Dictionary<int, int[]>();
+
+dctFOUR.Add(5, new int[] { 0, 1, 4 });
+dctFOUR.Add(6, new int[] { 3, });
+
+
+var instituteFOUR = Generator.Institution(6, facltsFOUR, dctFOUR);
+var instSpecFOUR = new List<InstituteSpeciality>();
+
+var wassFOUR = new List<int>();
+
+foreach (var fls in instituteFOUR.Faculties)
+{
+    foreach (var dps in fls.Departments)
+    {
+        for (var i = 0; i < rnd.Next(1, 3); i++)
+        {
+            var curntl = GetNextSpec(wassFOUR, rnd.Next(0, 30));
+            wassFOUR.Add(curntl);
+
+            instSpecFOUR.Add(new InstituteSpeciality(listSpec[curntl].Code, instituteFOUR.Id)
+            {
+                IdHigherEducationInstitution = instituteFOUR.Id,
+                HigherEducationInstitution = instituteFOUR,
+                IdSpeciality = listSpec[curntl].Code,
+                Speciality = listSpec[curntl]
+            });
+
+            Generator.GroupOfStudents(rnd.Next(1, 4), listSpec[curntl], dps);
+        }
+    }
+}
+
+
+var facltsFIVE = new int[] { 0, 1, 2};
+var dctFIVE = new Dictionary<int, int[]>();
+
+dctFIVE.Add(0, new int[] { 0, 1, 2 });
+dctFIVE.Add(1, new int[] { 3, });
+dctFIVE.Add(2, new int[] { 4, 6});
+
+
+var instituteFIVE = Generator.Institution(3, facltsFIVE, dctFIVE);
+var instSpecFIVE = new List<InstituteSpeciality>();
+
+var wassFIVE = new List<int>();
+
+foreach (var fls in instituteFIVE.Faculties)
+{
+    foreach (var dps in fls.Departments)
+    {
+        for (var i = 0; i < rnd.Next(1, 3); i++)
+        {
+            var curntl = GetNextSpec(wassFIVE, rnd.Next(0, 30));
+            wassFIVE.Add(curntl);
+
+            instSpecFIVE.Add(new InstituteSpeciality(listSpec[curntl].Code, instituteFIVE.Id)
+            {
+                IdHigherEducationInstitution = instituteFIVE.Id,
+                HigherEducationInstitution = instituteFIVE,
+                IdSpeciality = listSpec[curntl].Code,
+                Speciality = listSpec[curntl]
+            });
+
+            Generator.GroupOfStudents(rnd.Next(1, 4), listSpec[curntl], dps);
+        }
+    }
+}
+
+
+var listInstitute = new List<HigherEducationInstitution>();
+listInstitute.Add(institute);
+listInstitute.Add(instituteFIVE);
+listInstitute.Add(instituteFOUR);
+listInstitute.Add(instituteTHREE);
+listInstitute.Add(instituteTWO);
+
+
+Console.WriteLine("First Meow");

@@ -16,7 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.DataBase\dotnet-2023.DataBase.csproj" />
     <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.DataModel\dotnet-2023.DataModel.csproj" />
-    <ProjectReference Include="..\dotnet-2023.lib\dotnet-2023.lib.FillDataBase\dotnet-2023.lib.FillDataBase.csproj" />
   </ItemGroup>
 
 </Project>

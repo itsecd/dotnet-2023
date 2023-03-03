@@ -1,16 +1,15 @@
 ﻿using dotnet_2023.DataBase.DBContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnet_2023.TestConsoleApp.DBContext;
-public class DbContextTest : DataBaseContext
+namespace dotnet_2023.Tests.DataBase; 
+public class DBContext : DataBaseContext
 {
-    public DbContextTest() : base()
+    public DBContext() : base()
     {
-        Database.EnsureDeleted();  
         Database.EnsureCreated();
     }
 
-    public DbContextTest(DbContextOptions<DataBaseContext> options) 
+    public DBContext(DbContextOptions<DataBaseContext> options)
         : base(options) { }
 
 
@@ -21,5 +20,4 @@ public class DbContextTest : DataBaseContext
         //var connectionString = "Data Source=usersdata.db";
         //optionsBuilder.UseSqlite(connectionString);
     }
-
 }

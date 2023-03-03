@@ -162,10 +162,6 @@ public class StoreTest
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
 
-        //Assert.True(result.Any(x => x.ProductName == "Butter" && x.ProductPrice == 159.0 && x.Quantity == 10));
-        //Assert.True(result.Any(x => x.ProductName == "Pasta" && x.ProductPrice == 109.0 && x.Quantity == 5));
-        //Assert.False(result.Any(x => x.ProductName == "Eggs" && x.ProductPrice == 96.0 && x.Quantity == 0));
-
         Assert.Contains(result, x => x.ProductName == "Butter" && x.ProductPrice == 159.0 && x.Quantity == 2);
         Assert.Contains(result, x => x.ProductName == "Pasta" && x.ProductPrice == 109.0 && x.Quantity == 5);
         Assert.DoesNotContain(result, x => x.ProductName == "Eggs" && x.ProductPrice == 96.0 && x.Quantity == 0);

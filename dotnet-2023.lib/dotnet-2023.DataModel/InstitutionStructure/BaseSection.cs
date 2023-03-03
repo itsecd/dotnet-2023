@@ -11,12 +11,12 @@ namespace dotnet_2023.DataModel.InstitutionStructure;
 /// </summary>
 public class BaseSection
 {
-    //[Required]
+    [Required]
     public string? Id { get; set; } = Guid.NewGuid().ToString();
     public string? Name { get; set; }
 
-    //[RegularExpression(@"\\S+@\\S+\\.\\S+$")]
+    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
     public string? Email { get; set; }
-    //[RegularExpression(@"[0-9]{10}")]
+    [RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }
 }

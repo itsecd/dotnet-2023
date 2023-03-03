@@ -25,9 +25,9 @@ public class InstituteSpeciality
         IdHigherEducationInstitution = idInstitute;
     }
 
-    //[Key]
-    //[Required]
-    public string Key { get; set; }
+    [Key]
+    [Required]
+    public string Key { get; set; } = new Guid().ToString();
 
     public string? IdSpeciality { get; set; }
     public Speciality? Speciality { get; set; }

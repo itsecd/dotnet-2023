@@ -47,7 +47,7 @@ public class StoreTest
     /// </returns>
     private List<Store> CreateDefaultStore()
     {
-        var StoreList = new List<Store>
+        var storeList = new List<Store>
         {
             new Store(0, "Walmart", "Polevaya 123"),
             new Store(1, "Pyaterochka", "Pushkina 1837"),
@@ -55,7 +55,7 @@ public class StoreTest
             new Store(3, "Magnit", "Moskovskoye shosse 666"),
             new Store(4, "Perekrestok", "Revolyutsionnaya 1917"),
         };
-        return StoreList;
+        return storeList;
 
     }
 
@@ -67,7 +67,7 @@ public class StoreTest
     /// </returns>
     private List<ProductStore> CreateDefaultProductStore()
     {
-        var ProductStoreList = new List<ProductStore>
+        var productStoreList = new List<ProductStore>
         {
             new ProductStore { ProductId = 0, StoreId = 1, Quantity = 10 },
             new ProductStore { ProductId = 1, StoreId = 1, Quantity = 2 },
@@ -76,7 +76,7 @@ public class StoreTest
             new ProductStore { ProductId = 3, StoreId = 1, Quantity = 0 },
             new ProductStore { ProductId = 3, StoreId = 2, Quantity = 20 }
         };
-        return ProductStoreList;
+        return productStoreList;
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class StoreTest
     {
         var customers = CreateDefaulCustomer();
         var stores = CreateDefaultStore();
-        var SaleList = new List<Sale>
+        var saleList = new List<Sale>
         {
             new Sale("03.03.2023", customers[0], stores[0], CreateDefaulProduct()),
             new Sale("03.01.2023", customers[0], stores[1], CreateDefaulProduct()),
@@ -99,7 +99,7 @@ public class StoreTest
             new Sale("28.02.2023", customers[4], stores[1], CreateDefaulProduct()),
             new Sale("01.03.2023", customers[4], stores[0], CreateDefaulProduct()),
         };
-        return SaleList;
+        return saleList;
     }
 
     /// <summary>
@@ -294,7 +294,7 @@ public class StoreTest
         var sales = CreateDefaultSales();
 
         DateTime startDate = DateTime.Now.AddMonths(-1);
-        double minSalesAmount = 900.0;
+        var minSalesAmount = 900.0;
 
         var result = from sale in sales
                      where sale.DateSale >= startDate

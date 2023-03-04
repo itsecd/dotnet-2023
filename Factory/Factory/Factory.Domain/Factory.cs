@@ -9,12 +9,12 @@ namespace Factory.Domain;
 /// <summary>
 /// Class describing factory
 /// </summary>
-public class Factory
+public class Enterprise
 {
     /// <summary>
     /// RegistrationNumber
     /// </summary>
-    public int RegistrationNumber { get; set; } = 0;
+    public string RegistrationNumber { get; set; } = string.Empty;
 
     /// <summary>
     /// Industry Type
@@ -32,6 +32,11 @@ public class Factory
     public string Address { get; set; } = string.Empty;
 
     /// <summary>
+    /// Telephone number
+    /// </summary>
+    public string TelephoneNumber { get; set; } = string.Empty;
+
+    /// <summary>
     /// Ownership form
     /// </summary>
     public string OwnershipForm { get; set; } = string.Empty;
@@ -46,14 +51,15 @@ public class Factory
     /// </summary>
     public double TotalArea { get; set; } = 0.0;
 
-    public Factory() { }
+    public Enterprise() { }
 
-    public Factory(int registrationNumber, string type, string name, string address, string ownershipForm, int employeesCount, double totalArea)
+    public Enterprise(string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea)
     {
         RegistrationNumber = registrationNumber;
         Type = type;
         Name = name;
         Address = address;
+        TelephoneNumber = telephoneNumber;
         OwnershipForm = ownershipForm;
         EmployeesCount = employeesCount;
         TotalArea = totalArea;

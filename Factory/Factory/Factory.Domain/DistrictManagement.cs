@@ -9,12 +9,12 @@ namespace Factory.Domain;
 /// <summary>
 /// Class describing district management
 /// </summary>
-public class DistrictManagement
+public class Management
 {
     /// <summary>
     /// List of factories
     /// </summary>
-    public List<Factory> Factories { get; set; } = new List<Factory>();   
+    public Enterprise Factory { get; set; } = new Enterprise();   
     
     /// <summary>
     /// List of suppliers
@@ -26,11 +26,11 @@ public class DistrictManagement
     /// </summary>
     public List<Supply> Supplies { get; set; } = new List<Supply>();
 
-    public DistrictManagement() { }
+    public Management() { }
 
-    public DistrictManagement(List<Factory> factories, List<Supplier> suppliers, List<Supply> supplies)
+    public Management(Enterprise factory, List<Supplier> suppliers, List<Supply> supplies)
     {
-        Factories = factories;
+        Factory = factory;
         Suppliers = suppliers;
         Supplies = supplies;
     }

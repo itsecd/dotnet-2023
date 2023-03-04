@@ -21,11 +21,14 @@ public class Supply
     /// </summary>
     public int Quantity { get; set; } = 0;
 
+    public string SuplierNumber { get; set; } = string.Empty; 
+
     public Supply() { }
 
-    public Supply(DateTime date, int quantity)
+    public Supply(string date, int quantity, string suplierNumber)
     {
-        Date = date;   
+        Date = DateTime.Parse(date);   
         Quantity = quantity;
+        SuplierNumber = suplierNumber;
     }
 }

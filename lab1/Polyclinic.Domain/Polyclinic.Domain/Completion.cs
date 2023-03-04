@@ -6,4 +6,11 @@ public class Completion
     public int IdPatient { get; set; } = 0;
     public int Status { get; set; } = 0; // 0 - on treatment // 1 - healthy
 
+    public Completion(int idPatient, int idDoctor, int status, string conclusion)
+    {
+        Conclusion = conclusion;
+        IdDoctor = idDoctor;
+        IdPatient = idPatient;
+        Status = status;
+    }
 }

@@ -146,7 +146,7 @@ public class StoreTest
     /// Display information about all products in a given store
     /// </summary>
     [Fact]
-    public void FirstRequestTest()
+    public void TestProductsInSpecifiedStore()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();
@@ -172,7 +172,7 @@ public class StoreTest
     /// For a given product, display a list of stores where it is located in availability
     /// </summary>
     [Fact]
-    public void SecondRequestTest()
+    public void TestProductInAllStores()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();
@@ -192,10 +192,10 @@ public class StoreTest
 
 
     /// <summary>
-    /// Display information about the average cost of goods of each product grou for each store.
+    /// Display information about the average cost of goods of each product group for each store.
     /// </summary>
     [Fact]
-    public void ThirdRequestTest()
+    public void TestAverageCostGroup()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();
@@ -224,7 +224,7 @@ public class StoreTest
     /// Display the top 5 purchases by total sale amount.
     /// </summary>
     [Fact]
-    public void FourthRequestTest()
+    public void TestTopFivePurchases()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();
@@ -245,7 +245,7 @@ public class StoreTest
     /// Display all information about products that exceed the storage date limit, indicating the store
     /// </summary>
     [Fact]
-    public void FifthRequestTest()
+    public void TestExpiredProducts()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();
@@ -282,7 +282,7 @@ public class StoreTest
     /// Display a list of stores that sold goods for the month amount in excess of the
     /// </summary>
     [Fact]
-    public void SixthResponseTest()
+    public void TestStoresWithAmountMoreThen()
     {
         var products = CreateDefaulProduct();
         var stores = CreateDefaultStore();

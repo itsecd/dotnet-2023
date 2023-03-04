@@ -61,7 +61,7 @@ public static class Generator
     public static Faculty Faculty(int faculty,
         HigherEducationInstitution institution)
     {
-        if (!File.Exists(Path + "Departments.txt"))
+        if (!File.Exists(Path + "Faculity.txt"))
             throw new FileNotFoundException("FileNotFoundException");
 
         var lines = File.ReadAllLines(Path + "Faculity.txt");
@@ -96,15 +96,15 @@ public static class Generator
     }
 
 
-    public static HigherEducationInstitution Institution(int inst, int[] Fclts, 
-        Dictionary<int, int[]> Dprtms)
+    public static HigherEducationInstitution Institution(int inst, int[] faculties,
+        Dictionary<int, int[]> departments)
     {
         if (!File.Exists(Path + "Departments.txt"))
             throw new FileNotFoundException("FileNotFoundException");
 
         var lines = File.ReadAllLines(Path + "Institute.txt");
         var elem = lines[inst].Split('\t');
-        
+
         var institute = new HigherEducationInstitution()
         {
             Email = elem[5],
@@ -121,15 +121,14 @@ public static class Generator
         institute.Rector = rector;
         institute.IdRector = rector.Id;
 
-        for (var i = 0; i < Fclts.Length; i++)
+        for (var i = 0; i < faculties.Length; i++)
         {
-            var faculty = new Faculty();
-            faculty = Faculty(Fclts[i], institute);
-            for (var j = 0; j < Dprtms[Fclts[i]].Length; j++)
+            var faculty = Faculty(faculties[i], institute);
+            for (var j = 0; j < departments[faculties[i]].Length; j++)
             {
-                var tmpDeprt = Department(Dprtms[Fclts[i]][j], faculty, institute);
-                institute.Departments!.Add(tmpDeprt);
-                faculty.Departments!.Add(tmpDeprt);
+                var tmpDepartment = Department(departments[faculties[i]][j], faculty, institute);
+                institute.Departments!.Add(tmpDepartment);
+                faculty.Departments!.Add(tmpDepartment);
             }
             institute.Faculties!.Add(faculty);
         }
@@ -138,26 +137,24 @@ public static class Generator
     }
 
 
-    public static Speciality Speciality(int spec)
+    public static Speciality Speciality(int speciality)
     {
-        if (!File.Exists(Path + "Departments.txt"))
+        if (!File.Exists(Path + "Speciality.txt"))
             throw new FileNotFoundException("FileNotFoundException");
 
         var lines = File.ReadAllLines(Path + "Speciality.txt");
-        var elem = lines[spec].Split('\t');
+        var elem = lines[speciality].Split('\t');
 
-        var sp = new Speciality()
+        return new Speciality()
         {
             Code = elem[0],
             Title = elem[1],
             StudyFormat = StudyFormat.FullTime
         };
-
-        return sp;
     }
 
 
-    public static Student Student(Speciality speciality, GroupOfStudents group, 
+    public static Student Student(Speciality speciality, GroupOfStudents group,
         int id = -1, string name = "")
     {
         var student = new string[3];
@@ -227,12 +224,12 @@ public static class Generator
 
     }
 
-    public static ICollection<GroupOfStudents> GroupOfStudents(int count, 
-        Speciality speciality, Department department)  
+    public static ICollection<GroupOfStudents> GroupOfStudents(int count,
+        Speciality speciality, Department department)
     {
         var groupOfStudents = new List<GroupOfStudents>();
 
-        for(var i = 0; i<count; i++)
+        for (var i = 0; i < count; i++)
             groupOfStudents.Add(GroupOfStudent(speciality, department));
 
         return groupOfStudents;

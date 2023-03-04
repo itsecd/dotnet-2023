@@ -1,24 +1,23 @@
-﻿using dotnet_2023.Tests.DataBase;
-using System.Linq;
+﻿using dotnet_2023.DataModel.Organization;
+using dotnet_2023.Tests.DataBase;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
-using dotnet_2023.DataModel.Organization;
-using dotnet_2023.DataModel.InstitutionStructure;
 
 namespace dotnet_2023.Tests;
-public class Tests
+public class FirstLabTests
 {
-    public Tests()
+    public FirstLabTests()
     {
         DataBasaContext = new DBContext();
-        var inst = DataBasaContext.Institutes.ToList();
-        var instspec = DataBasaContext.InstituteSpecialties.ToList();
-        var spec = DataBasaContext.Specialties.ToList();
-        var faculty = DataBasaContext.Faculties.ToList();
-        var deprnt = DataBasaContext.Departments.ToList();
-        var group = DataBasaContext.GroupOfStudents.ToList();
-        var edworker = DataBasaContext.EducationWorker.ToList();
-        var students = DataBasaContext.Students.ToList();
+        DataBasaContext.Institutes.ToList();
+        DataBasaContext.InstituteSpecialties.ToList();
+        DataBasaContext.Specialties.ToList();
+        DataBasaContext.Faculties.ToList();
+        DataBasaContext.Departments.ToList();
+        DataBasaContext.GroupOfStudents.ToList();
+        DataBasaContext.EducationWorker.ToList();
+        DataBasaContext.Students.ToList();
     }
     public DBContext DataBasaContext { get; set; }
 
@@ -29,10 +28,11 @@ public class Tests
     [InlineData("КФУ", "КФУ", "d0e4ca0b-baf2-4de2-b809-65d3fe0e8f68")]
     [InlineData("СГТУ", "СГТУ", "e7fe6d4e-ccda-4d87-b566-1466ce582f96")]
 
-    public void InformationUniversity(string initials, string expectedInitials, string expectedId)
+    public void InformationUniversity(string initials, string expectedInitials, 
+        string expectedId)
     {
         var actual = DataBasaContext.Institutes
-            .FirstOrDefault(x=>x.Initials == initials);
+            .FirstOrDefault(x => x.Initials == initials);
         Assert.NotNull(actual);
         Assert.Equal(expectedInitials, actual!.Initials);
         Assert.Equal(expectedId, actual.Id);
@@ -44,26 +44,26 @@ public class Tests
     [InlineData("СГЭУ", 2, 4, 6)]
     [InlineData("СГТУ", 4, 9, 12)]
     [InlineData("КНИТУ", 3, 6, 10)]
-    public void InfrormationStructUniversity(string initials, int expectedCountFaclt, 
-        int expectedCountDeparnt, int expectedCountSpec)
+    public void InfrormationStructUniversity(string initials, int expectedCountFaculties,
+        int expectedCountDepartments, int expectedCountSpecialties)
     {
         var actual = DataBasaContext.Institutes
-            .Where(x=>x.Initials == initials)
+            .Where(x => x.Initials == initials)
             .Select(x => new
             {
                 name = x.Initials,
-                faclts = x.Faculties.Count(),
-                departm = x.Departments.Count(),
-                specs = x!.Specialties
+                faculties = x.Faculties.Count(),
+                departments = x.Departments.Count(),
+                specialties = x!.Specialties
                     .Select(i => i.Speciality).Count()
             }).ToArray();
 
         Assert.NotNull(actual);
-        Assert.Equal(expectedCountFaclt, actual.First().faclts);
-        Assert.Equal(expectedCountDeparnt, actual.First().departm);
-        Assert.Equal(expectedCountSpec, actual.First().specs);
-
+        Assert.Equal(expectedCountFaculties, actual.First().faculties);
+        Assert.Equal(expectedCountDepartments, actual.First().departments);
+        Assert.Equal(expectedCountSpecialties, actual.First().specialties);
     }
+
 
     [Fact]
     public void TestPopularSpecialties()
@@ -82,7 +82,6 @@ public class Tests
 
         for (var i = 0; i < expected.Length; i++)
             Assert.Equal(expected[i], actual[i].Code);
-
     }
 
     [Fact]
@@ -108,7 +107,7 @@ public class Tests
 
     [Theory]
     [MemberData("GetDataOwnershipInstitutionAndGroup")]
-    public void OwnershipInstitutionAndGroup(InstitutionalProperty property, 
+    public void OwnershipInstitutionAndGroup(InstitutionalProperty property,
         Dictionary<string, int> expected)
     {
         var actual = DataBasaContext.Institutes
@@ -119,11 +118,10 @@ public class Tests
 
         Assert.Equal(expected.Count, actual.Count);
 
-        foreach(var elem in actual)
+        foreach (var elem in actual)
         {
             Assert.True(actual.Contains(elem));
         }
-
     }
 
     public static IEnumerable<object[]> GetDataOwnershipInstitutionAndGroup()
@@ -198,9 +196,9 @@ public class Tests
             .Select(x => new
             {
                 name = x.Initials,
-                fac = x.Faculties.Count,
-                dep = x.Departments.Count,
-                group = x.Departments
+                faculties = x.Faculties.Count,
+                departments = x.Departments.Count,
+                groups = x.Departments
                     .SelectMany(i => i.GroupOfStudents)
                     .Count()
             })
@@ -211,18 +209,18 @@ public class Tests
         for (var i = 0; i < expected.Length; i++)
         {
             Assert.Equal(expected[i].Name, actual[i].name);
-            Assert.Equal(expected[i].countFaculties, actual[i].fac);
-            Assert.Equal(expected[i].countDepartments, actual[i].dep);
-            Assert.Equal(expected[i].countGroups, actual[i].group);
+            Assert.Equal(expected[i].countFaculties, actual[i].faculties);
+            Assert.Equal(expected[i].countDepartments, actual[i].departments);
+            Assert.Equal(expected[i].countGroups, actual[i].groups);
         }
     }
 
 
     [Theory]
     [MemberData("GetDataBuildingAndOwnershipByType")]
-
-    public void BuildingAndOwnershipByType(InstitutionalProperty institutionalProperty, BuildingProperty buildingProperty,
-         ResponseBuildingAndOwnership[] expected)
+    public void BuildingAndOwnershipByType(InstitutionalProperty institutionalProperty, 
+        BuildingProperty buildingProperty,
+        ResponseBuildingAndOwnership[] expected)
     {
         var actual = DataBasaContext.Institutes
             .Where(x =>
@@ -231,9 +229,9 @@ public class Tests
             .Select(x => new
             {
                 name = x.Initials,
-                fac = x.Faculties.Count,
-                dep = x.Departments.Count,
-                group = x.Departments.SelectMany(i => i.GroupOfStudents)
+                faculties = x.Faculties.Count,
+                departments = x.Departments.Count,
+                groups = x.Departments.SelectMany(i => i.GroupOfStudents)
                     .Count()
             })
             .ToArray();
@@ -242,11 +240,12 @@ public class Tests
         for (var i = 0; i < expected.Length; i++)
         {
             Assert.Equal(expected[i].Name, actual[i].name);
-            Assert.Equal(expected[i].countFaculties, actual[i].fac);
-            Assert.Equal(expected[i].countDepartments, actual[i].dep);
-            Assert.Equal(expected[i].countGroups, actual[i].group);
+            Assert.Equal(expected[i].countFaculties, actual[i].faculties);
+            Assert.Equal(expected[i].countDepartments, actual[i].departments);
+            Assert.Equal(expected[i].countGroups, actual[i].groups);
         }
     }
+
 
     public static IEnumerable<object[]> GetDataBuildingAndOwnershipByType()
     {
@@ -260,7 +259,7 @@ public class Tests
                 countGroups = 38,
             },
         };
-        var expectedMunicipalPrivate = new ResponseBuildingAndOwnership[] {};
+        var expectedMunicipalPrivate = new ResponseBuildingAndOwnership[] { };
         var expectedMunicipalFederal = new ResponseBuildingAndOwnership[] {
             new ResponseBuildingAndOwnership()
             {
@@ -300,8 +299,7 @@ public class Tests
         };
         var expectedPrivateFederal = new ResponseBuildingAndOwnership[] { };
 
-
-        yield return new object[] { InstitutionalProperty.Municipal, 
+        yield return new object[] { InstitutionalProperty.Municipal,
             BuildingProperty.Municipal, expectedMunicipalMunicipal };
         yield return new object[] { InstitutionalProperty.Municipal,
             BuildingProperty.Private, expectedMunicipalPrivate };
@@ -314,5 +312,4 @@ public class Tests
         yield return new object[] { InstitutionalProperty.Private,
             BuildingProperty.Federal, expectedPrivateFederal };
     }
-
 }

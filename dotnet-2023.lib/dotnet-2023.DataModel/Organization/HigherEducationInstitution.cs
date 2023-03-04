@@ -31,7 +31,7 @@ public class HigherEducationInstitution : EducationalInstitution
     /// <summary>
     /// many-to-many -> many Institute many Specialty
     /// </summary>
-    public ICollection<InstituteSpeciality>? Specialties { get; set; } 
+    public ICollection<InstituteSpeciality>? Specialties { get; set; }
         = new List<InstituteSpeciality>();
 
     public override string ToString() =>

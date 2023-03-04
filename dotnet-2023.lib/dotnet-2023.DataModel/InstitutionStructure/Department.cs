@@ -1,5 +1,4 @@
-﻿using dotnet_2023.DataModel.InstituteDocumentation;
-using dotnet_2023.DataModel.Organization;
+﻿using dotnet_2023.DataModel.Organization;
 using dotnet_2023.DataModel.Person;
 
 namespace dotnet_2023.DataModel.InstitutionStructure;

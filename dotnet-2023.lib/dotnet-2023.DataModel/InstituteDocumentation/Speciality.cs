@@ -1,7 +1,4 @@
-﻿using dotnet_2023.DataModel.InstitutionStructure;
-using System.ComponentModel.DataAnnotations;
-
-namespace dotnet_2023.DataModel.InstituteDocumentation;
+﻿namespace dotnet_2023.DataModel.InstituteDocumentation;
 
 public enum StudyFormat
 {

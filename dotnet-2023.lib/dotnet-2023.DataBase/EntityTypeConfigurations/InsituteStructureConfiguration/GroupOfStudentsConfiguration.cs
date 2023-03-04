@@ -11,6 +11,6 @@ public class GroupOfStudentsConfiguration : BaseSectionConfiguration, IEntityTyp
             .HasMany(x => x.Students)
             .WithOne(x => x.Group)
             .HasForeignKey(x => x.IdGroup);
-         
+
     }
 }

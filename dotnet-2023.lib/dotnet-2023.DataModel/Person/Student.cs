@@ -14,7 +14,7 @@ namespace dotnet_2023.DataModel.Person;
 /// </summary>
 public class Student : BasePerson
 {
-    
+
     /// <summary>
     /// one-to-many -> One GroupOfStudent Many Student
     /// </summary>

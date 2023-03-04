@@ -6,8 +6,8 @@ public class DbContextTest : DataBaseContext
 {
     public DbContextTest() : base()
     {
-        Database.EnsureDeleted();  
-        Database.EnsureCreated();
+        //Database.EnsureDeleted();  
+        //Database.EnsureCreated();
     }
 
     public DbContextTest(DbContextOptions<DataBaseContext> options) 

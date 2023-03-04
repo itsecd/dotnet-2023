@@ -4,5 +4,3 @@ using dotnet_2023.DataModel.Organization;
 using dotnet_2023.TestConsoleApp;
 using dotnet_2023.TestConsoleApp.DBContext;
 
-
-var rnd = new Random();

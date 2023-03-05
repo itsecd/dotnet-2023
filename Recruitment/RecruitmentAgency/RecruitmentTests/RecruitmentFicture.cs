@@ -1,6 +1,6 @@
 using RecruitmentAgency;
 namespace RecruitmentTests;
-public class RecruitmentFicture {
+public class RecruitmentFixture {
     public List<Company> FixtureCompanies
     {
         get

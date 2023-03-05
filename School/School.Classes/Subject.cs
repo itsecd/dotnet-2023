@@ -1,5 +1,5 @@
 ﻿namespace School.Classes;
-{
+
     public class Subject
 {
     /// <summary>
@@ -19,5 +19,4 @@
         Name = name;
         Year = year;
     }
-}
 }

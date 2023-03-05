@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace School.Classes;
-{
-    public class Grade
+
+public class Grade
 {
     /// <summary>
     /// Предмет
@@ -25,5 +25,4 @@ namespace School.Classes;
         Subject = subject;
         Student = student;
     }
-}
 }

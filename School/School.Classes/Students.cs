@@ -1,5 +1,4 @@
 ﻿namespace School.Classes;
-{
     public class Students
 {
     /// <summary>	
@@ -43,5 +42,4 @@
         Class = @class;
         BirthDate = birthDate;
     }
-}
 }

@@ -14,11 +14,11 @@ public class FactoryTest
     {
         return new List<Enterprise>()
         {
-            new Enterprise("1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000),
-            new Enterprise("1156313028981", "Материально-техническое снабжение", "ЗГМ", "ул.22 партъезда д.10а", "88462295931", "ООО", 150, 1500),
-            new Enterprise("1116318009510", "Тяжелая промышленность", "ВЗМК", "ул.Балаковская д.6а", "884692007711", "ООО", 200, 2000),
-            new Enterprise("1026300767899", "Транспорт", "АВИАКОР", "ул.Земеца д.32", "88463720888", "АО", 250, 2500),
-            new Enterprise("1026301697487", "Материально-техническое снабжение", "ЭКРАН", "ул.Кирова д.24", "88469983785", "ОАО", 130, 1300),
+            new Enterprise("1036300446093", "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", "РЎРўРђРќ", "СѓР».22 РїР°СЂС‚СЉРµР·РґР° Рґ.7Р°", "88469926984", "Р—РђРћ", 100, 1000),
+            new Enterprise("1156313028981", "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", "Р—Р“Рњ", "СѓР».22 РїР°СЂС‚СЉРµР·РґР° Рґ.10Р°", "88462295931", "РћРћРћ", 150, 1500),
+            new Enterprise("1116318009510", "РўСЏР¶РµР»Р°СЏ РїСЂРѕРјС‹С€Р»РµРЅРЅРѕСЃС‚СЊ", "Р’Р—РњРљ", "СѓР».Р‘Р°Р»Р°РєРѕРІСЃРєР°СЏ Рґ.6Р°", "884692007711", "РћРћРћ", 200, 2000),
+            new Enterprise("1026300767899", "РўСЂР°РЅСЃРїРѕСЂС‚", "РђР’РРђРљРћР ", "СѓР».Р—РµРјРµС†Р° Рґ.32", "88463720888", "РђРћ", 250, 2500),
+            new Enterprise("1026301697487", "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", "Р­РљР РђРќ", "СѓР».РљРёСЂРѕРІР° Рґ.24", "88469983785", "РћРђРћ", 130, 1300),
         };
     }
 
@@ -30,11 +30,11 @@ public class FactoryTest
     {
         return new List<Supplier>()
         {
-            new Supplier("Артур Пирожков", "ул. Зацепильная д.42", "89375550203"),
-            new Supplier("Чендлер Бинг", "ул. Центральная д.1", "89370101010"),
-            new Supplier("Барни Стинсон", "ул. Приоденься д.50", "89376431289"),
-            new Supplier("Джон Сноу", "ул. Таргариенская д.35", "89372229978"),
-            new Supplier("Райан Гослинг", "ул. Лалаленд д.14", "89371234567")
+            new Supplier("РђСЂС‚СѓСЂ РџРёСЂРѕР¶РєРѕРІ", "СѓР». Р—Р°С†РµРїРёР»СЊРЅР°СЏ Рґ.42", "89375550203"),
+            new Supplier("Р§РµРЅРґР»РµСЂ Р‘РёРЅРі", "СѓР». Р¦РµРЅС‚СЂР°Р»СЊРЅР°СЏ Рґ.1", "89370101010"),
+            new Supplier("Р‘Р°СЂРЅРё РЎС‚РёРЅСЃРѕРЅ", "СѓР». РџСЂРёРѕРґРµРЅСЊСЃСЏ Рґ.50", "89376431289"),
+            new Supplier("Р”Р¶РѕРЅ РЎРЅРѕСѓ", "СѓР». РўР°СЂРіР°СЂРёРµРЅСЃРєР°СЏ Рґ.35", "89372229978"),
+            new Supplier("Р Р°Р№Р°РЅ Р“РѕСЃР»РёРЅРі", "СѓР». Р›Р°Р»Р°Р»РµРЅРґ Рґ.14", "89371234567")
         };
     }
 
@@ -89,7 +89,7 @@ public class FactoryTest
 
         Assert.NotNull(result);
         Assert.Single(result);
-        Assert.Contains(result, x => x.Address == "ул.Балаковская д.6а" && x.OwnershipForm == "ООО");
+        Assert.Contains(result, x => x.Address == "СѓР».Р‘Р°Р»Р°РєРѕРІСЃРєР°СЏ Рґ.6Р°" && x.OwnershipForm == "РћРћРћ");
     }
 
     /// <summary>
@@ -107,11 +107,11 @@ public class FactoryTest
                      select sr;
 
         Assert.Equal(3, result.Count());
-        Assert.Contains(result, x => x.Name == "Артур Пирожков");
-        Assert.Contains(result, x => x.Name == "Барни Стинсон");
-        Assert.Contains(result, x => x.Name == "Райан Гослинг");
-        Assert.DoesNotContain(result, x => x.Name == "Джон Сноу");
-        Assert.DoesNotContain(result, x => x.Name == "Чендлер Бинг");
+        Assert.Contains(result, x => x.Name == "РђСЂС‚СѓСЂ РџРёСЂРѕР¶РєРѕРІ");
+        Assert.Contains(result, x => x.Name == "Р‘Р°СЂРЅРё РЎС‚РёРЅСЃРѕРЅ");
+        Assert.Contains(result, x => x.Name == "Р Р°Р№Р°РЅ Р“РѕСЃР»РёРЅРі");
+        Assert.DoesNotContain(result, x => x.Name == "Р”Р¶РѕРЅ РЎРЅРѕСѓ");
+        Assert.DoesNotContain(result, x => x.Name == "Р§РµРЅРґР»РµСЂ Р‘РёРЅРі");
     }
 
     /// <summary>
@@ -127,23 +127,23 @@ public class FactoryTest
                      select new { SupplierName = supplierGroup.Key, FactoryCount = supplierGroup.Select(m => m.Factory).Distinct().Count() };
 
         // Assert
-        var supplier1 = result.FirstOrDefault(s => s.SupplierName == "Артур Пирожков");
+        var supplier1 = result.FirstOrDefault(s => s.SupplierName == "РђСЂС‚СѓСЂ РџРёСЂРѕР¶РєРѕРІ");
         Assert.NotNull(supplier1);
         Assert.Equal(1, supplier1.FactoryCount);
 
-        var supplier2 = result.FirstOrDefault(s => s.SupplierName == "Чендлер Бинг");
+        var supplier2 = result.FirstOrDefault(s => s.SupplierName == "Р§РµРЅРґР»РµСЂ Р‘РёРЅРі");
         Assert.NotNull(supplier2);
         Assert.Equal(2, supplier2.FactoryCount);
 
-        var supplier3 = result.FirstOrDefault(s => s.SupplierName == "Барни Стинсон");
+        var supplier3 = result.FirstOrDefault(s => s.SupplierName == "Р‘Р°СЂРЅРё РЎС‚РёРЅСЃРѕРЅ");
         Assert.NotNull(supplier3);
         Assert.Equal(2, supplier3.FactoryCount);
 
-        var supplier4 = result.FirstOrDefault(s => s.SupplierName == "Джон Сноу");
+        var supplier4 = result.FirstOrDefault(s => s.SupplierName == "Р”Р¶РѕРЅ РЎРЅРѕСѓ");
         Assert.NotNull(supplier4);
         Assert.Equal(1, supplier4.FactoryCount);
 
-        var supplier5 = result.FirstOrDefault(s => s.SupplierName == "Райан Гослинг");
+        var supplier5 = result.FirstOrDefault(s => s.SupplierName == "Р Р°Р№Р°РЅ Р“РѕСЃР»РёРЅРі");
         Assert.NotNull(supplier5);
         Assert.Equal(2, supplier5.FactoryCount);
     }
@@ -158,9 +158,9 @@ public class FactoryTest
 
         var expected = new List<object>()
     {
-        new { IndustryType = "Материально-техническое снабжение", SupplierCount = 5 },
-        new { IndustryType = "Тяжелая промышленность", SupplierCount = 1 },
-        new { IndustryType = "Транспорт", SupplierCount = 2 },
+        new { IndustryType = "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", SupplierCount = 5 },
+        new { IndustryType = "РўСЏР¶РµР»Р°СЏ РїСЂРѕРјС‹С€Р»РµРЅРЅРѕСЃС‚СЊ", SupplierCount = 1 },
+        new { IndustryType = "РўСЂР°РЅСЃРїРѕСЂС‚", SupplierCount = 2 },
     };
 
         var result = from m in management
@@ -175,10 +175,10 @@ public class FactoryTest
 
         var expected2 = new List<object>()
     {
-        new { IndustryForm = "ЗАО", SupplierCount = 2 },
-        new { IndustryForm = "ООО", SupplierCount = 3 },
-        new { IndustryForm = "АО", SupplierCount = 2 },
-        new { IndustryForm = "ОАО", SupplierCount = 1 }
+        new { IndustryForm = "Р—РђРћ", SupplierCount = 2 },
+        new { IndustryForm = "РћРћРћ", SupplierCount = 3 },
+        new { IndustryForm = "РђРћ", SupplierCount = 2 },
+        new { IndustryForm = "РћРђРћ", SupplierCount = 1 }
     };
 
         var result2 = from m in management
@@ -204,11 +204,11 @@ public class FactoryTest
                             orderby m.Supplies.Count() descending
                             select m.Factory).Take(5).ToList();
         
-        Assert.Equal("СТАН", result[0].Name);
-        Assert.Equal("ЗГМ", result[1].Name);
-        Assert.Equal("АВИАКОР", result[2].Name);
-        Assert.Equal("ВЗМК", result[3].Name);
-        Assert.Equal("ЭКРАН", result[4].Name);
+        Assert.Equal("РЎРўРђРќ", result[0].Name);
+        Assert.Equal("Р—Р“Рњ", result[1].Name);
+        Assert.Equal("РђР’РРђРљРћР ", result[2].Name);
+        Assert.Equal("Р’Р—РњРљ", result[3].Name);
+        Assert.Equal("Р­РљР РђРќ", result[4].Name);
     }
 
     /// <summary>
@@ -227,8 +227,8 @@ public class FactoryTest
                        orderby s.Quantity descending
                        select new { sr.Name, sr.Address, sr.Phone }).ToList()[0];
  
-        Assert.Equal("Барни Стинсон", result.Name);
-        Assert.Equal("ул. Приоденься д.50", result.Address);
+        Assert.Equal("Р‘Р°СЂРЅРё РЎС‚РёРЅСЃРѕРЅ", result.Name);
+        Assert.Equal("СѓР». РџСЂРёРѕРґРµРЅСЊСЃСЏ Рґ.50", result.Address);
         Assert.Equal("89376431289", result.Phone);
     }
 
@@ -238,13 +238,13 @@ public class FactoryTest
     [Fact]
     public void EnterpriseConstructorTest() 
     {
-        var enterprise = new Enterprise("1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000);
+        var enterprise = new Enterprise("1036300446093", "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", "РЎРўРђРќ", "СѓР».22 РїР°СЂС‚СЉРµР·РґР° Рґ.7Р°", "88469926984", "Р—РђРћ", 100, 1000);
         Assert.Equal("1036300446093", enterprise.RegistrationNumber);
-        Assert.Equal("Материально-техническое снабжение", enterprise.Type);
-        Assert.Equal("СТАН", enterprise.Name);
-        Assert.Equal("ул.22 партъезда д.7а", enterprise.Address);
+        Assert.Equal("РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", enterprise.Type);
+        Assert.Equal("РЎРўРђРќ", enterprise.Name);
+        Assert.Equal("СѓР».22 РїР°СЂС‚СЉРµР·РґР° Рґ.7Р°", enterprise.Address);
         Assert.Equal("88469926984", enterprise.TelephoneNumber);
-        Assert.Equal("ЗАО", enterprise.OwnershipForm);
+        Assert.Equal("Р—РђРћ", enterprise.OwnershipForm);
         Assert.Equal(100, enterprise.EmployeesCount);
         Assert.Equal(1000, enterprise.TotalArea);
     }
@@ -255,9 +255,9 @@ public class FactoryTest
     [Fact]
     public void SupplierConstructorTest()
     {
-        var supplier = new Supplier("Джон Сноу", "ул. Таргариенская д.35", "89372229978");
-        Assert.Equal("Джон Сноу", supplier.Name);
-        Assert.Equal("ул. Таргариенская д.35", supplier.Address);
+        var supplier = new Supplier("Р”Р¶РѕРЅ РЎРЅРѕСѓ", "СѓР». РўР°СЂРіР°СЂРёРµРЅСЃРєР°СЏ Рґ.35", "89372229978");
+        Assert.Equal("Р”Р¶РѕРЅ РЎРЅРѕСѓ", supplier.Name);
+        Assert.Equal("СѓР». РўР°СЂРіР°СЂРёРµРЅСЃРєР°СЏ Рґ.35", supplier.Address);
         Assert.Equal("89372229978", supplier.Phone);
     }
 
@@ -279,8 +279,8 @@ public class FactoryTest
     [Fact]
     public void ManagmentConstructorTest()
     {
-        var enterprise = new Enterprise("1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000);
-        var supplier = new Supplier("Джон Сноу", "ул. Таргариенская д.35", "89372229978");
+        var enterprise = new Enterprise("1036300446093", "РњР°С‚РµСЂРёР°Р»СЊРЅРѕ-С‚РµС…РЅРёС‡РµСЃРєРѕРµ СЃРЅР°Р±Р¶РµРЅРёРµ", "РЎРўРђРќ", "СѓР».22 РїР°СЂС‚СЉРµР·РґР° Рґ.7Р°", "88469926984", "Р—РђРћ", 100, 1000);
+        var supplier = new Supplier("Р”Р¶РѕРЅ РЎРЅРѕСѓ", "СѓР». РўР°СЂРіР°СЂРёРµРЅСЃРєР°СЏ Рґ.35", "89372229978");
         var supply = new Supply("20.01.2023", 3, "89375550203");
 
         var management = new Management(enterprise, new List<Supplier>() { supplier }, new List<Supply>() { supply });

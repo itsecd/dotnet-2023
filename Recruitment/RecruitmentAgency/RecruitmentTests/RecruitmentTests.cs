@@ -51,4 +51,34 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
 
         Assert.Equal(3, result);
     }
+    [Fact]
+    public void MostPopularCompaniesTest()
+    {
+        var result = (from ca in _fixture.FixtureCompaniesApplications
+                      group ca by ca.Company.CompanyName into g
+                      orderby g.Count() descending
+                      select new
+                      {
+                          Company = g.Key,
+                          NumRequests = g.Count()
+                      }).Take(5).ToList();
+        var expected = new List<string> { "Microsoft", "Netflix", "Oracle" };
+        
+        Assert.Equal(expected[0], result[2].Company);
+        Assert.Equal(expected[1], result[1].Company);
+        Assert.Equal(expected[2], result[0].Company);
+    }
+    [Fact]
+    public void BiggestSalaryTest()
+    {
+        var result = (from c in _fixture.FixtureCompanies
+                     join ca in _fixture.FixtureCompaniesApplications on c.CompanyName equals ca.Company.CompanyName
+                     where ca.Salary == (from ca2 in _fixture.FixtureCompaniesApplications select ca2.Salary).Max()
+                     select new
+                     {
+                         Company = c,
+                         Request = ca
+                     }).ToList();
+        Assert.Equal(70000, result[0].Request.Salary);
+    }
 }

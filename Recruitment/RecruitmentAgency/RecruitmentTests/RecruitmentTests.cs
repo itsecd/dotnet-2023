@@ -41,5 +41,14 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
 
         Assert.Equal(0, result.Count);
     }
+    [Fact]
+    public void NumberApplicationTest()
+    {
+        var result = (from jt in _fixture.FixtureTitles
+                     join ca in _fixture.FixtureCompaniesApplications on jt.JobTitle equals ca.Title.JobTitle
+                     group ca by new { jt.JobTitle, jt.Section } into g
+                     select g.Count()).Sum();
 
+        Assert.Equal(3, result);
+    }
 }

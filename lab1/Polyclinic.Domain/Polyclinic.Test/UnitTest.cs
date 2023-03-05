@@ -3,6 +3,9 @@ namespace Polyclinic.Test;
 
 public class UnitTest
 {
+    /// <summary>
+    /// creating a list of patients
+    /// </summary>
     [Fact]
     private List<Patient> CreatePatientList()
     {
@@ -16,6 +19,9 @@ public class UnitTest
         };
     }
 
+    /// <summary>
+    /// creating a list of doctors
+    /// </summary>
     [Fact]
     private List<Doctor> CreateDoctorList()
     {
@@ -29,6 +35,9 @@ public class UnitTest
         };
     }
 
+    /// <summary>
+    /// creating a list of registered patients
+    /// </summary>
     [Fact]
     private List<Registration> CreateRegList()
     {
@@ -39,25 +48,38 @@ public class UnitTest
             new Registration(3,2,new DateTime(2023,3,19,14,30,0)),
             new Registration(4,4,new DateTime(2023,4,15,13,0,0)),
             new Registration(5,5,new DateTime(2023,4,2,13,0,0)),
-            new Registration(2,3, new DateTime(2023, 4,5,13,0,0))
+            new Registration(2,3, new DateTime(2023, 4,5,13,0,0)),
+            new Registration(5,2,new DateTime(2023,3,2,13,0,0))
         };
     }
 
+    /// <summary>
+    /// creating a list of admitted patients
+    /// </summary>
     [Fact]
     private List<Completion> CreateComList()
     {
         return new List<Completion>()
         {
-            new Completion(1,3,1,"..."),
-            new Completion(2,1,1,"..."),
-            new Completion(3,2,0,"..."),
-            new Completion(4,4,1,"..."),
-            new Completion(5,5,0,"..."),
+            new Completion(1,3,1,"viral disease"),
+            new Completion(2,1,1,"viral disease"),
+            new Completion(3,2,0,"quinsy"),
+            new Completion(4,4,0,"pneumonia"),
+            new Completion(5,5,0,"depression"),
+            new Completion(1,4,0,"pneumonia"),
+            new Completion(2,4,0,"viral disease"),
+            new Completion(3,4,0,"tuberculosis"),
+            new Completion(2,2,1,"tuberculosis"),
+            new Completion(3,5,1,"depression"),
+            new Completion(1,2,0,"quinsy"),
+            new Completion(2,4,0,"bronchitis")
         };
     }
 
+    /// <summary>
+    /// Display information about all doctors with at least 10 years of experience
+    /// </summary>
     [Fact]
-    //Вывести информацию о всех врачах, стаж работы которых не меньше 10 лет
     public void Test1()
     {
         var doctors = CreateDoctorList();
@@ -72,7 +94,9 @@ public class UnitTest
         Assert.DoesNotContain(result, x => x.FullName == "Brian Sullivan");
     }
 
-    //Вывести информацию о всех пациентах, записанных на прием к указанному врачу.
+    /// <summary>
+    /// Display information about all patients registered with the specified doctor, sorted by full name.
+    /// </summary>
     [Fact]
     public void Test2()
     {
@@ -84,6 +108,7 @@ public class UnitTest
                      join p in patients on reg.IdPatient equals p.Id
                      join d in doctors on reg.IdDoctor equals d.Id
                      where d.FullName == "Brian Sullivan"
+                     orderby p.FullName
                      select p;
         
         Assert.NotNull(result);
@@ -92,7 +117,9 @@ public class UnitTest
         Assert.DoesNotContain(result, x => x.FullName == "Carlos Weaver");
     }
 
-    //Вывести информацию о здоровых на настоящий момент пациентах.
+    /// <summary>
+    /// Display information about currently healthy patients
+    /// </summary>
     [Fact]
     public void Test3()
     {
@@ -105,10 +132,81 @@ public class UnitTest
                      select p;
 
         Assert.NotNull(result);
-        Assert.Equal(3, result.Count());
+        Assert.Equal(4, result.Count());
         Assert.Contains(result, x => x.FullName == "Margaret Schultz");
         Assert.DoesNotContain(result, x => x.FullName == "Frances Cooper");
     }
 
-    
+    /// <summary>
+    /// Display information about the number of appointments of patients by doctors for the last month.
+    /// </summary>
+    [Fact]
+    public void Test4()
+    {
+        var registrations = CreateRegList();
+        var doctors = CreateDoctorList();
+        var patients = CreatePatientList();
+        var lastMonth1 = new DateTime(2023,4,1);
+        var lastMonth2 = new DateTime(2023, 4, 30);
+
+        var result = from r in registrations
+                     join p in patients on r.IdPatient equals p.Id
+                     join d in doctors on r.IdDoctor equals d.Id
+                     where r.TimeAdmission >= lastMonth1 && r.TimeAdmission <= lastMonth2
+                     group r by d into dGroup
+                     select new { Doctor = dGroup.Key.FullName, Appointments = dGroup.Count() };
+
+        Assert.NotNull(result);
+        Assert.Contains(result, x => x.Doctor == "Melissa Sparks" && x.Appointments == 1);
+        Assert.Contains(result, x => x.Doctor == "Brian Sullivan" && x.Appointments == 2);
+        Assert.DoesNotContain(result, x => x.Doctor == "John Garcia");
+    }
+
+    /// <summary>
+    /// Display information about the top 5 most common diseases among patients
+    /// </summary>
+    [Fact]
+
+    public void Test5()
+    {
+        var completions = CreateComList();
+        var patients = CreatePatientList();
+
+        var result = (from c in completions
+                      join p in patients on c.IdPatient equals p.Id
+                      group c by c.Conclusion into g
+                      orderby g.Count() descending
+                      select new { Disease = g.Key, Count = g.Count() }).Take(5).ToList();  
+                     
+        Assert.NotNull(result);
+        Assert.Equal(5, result.Count);
+        Assert.Equal("viral disease", result[0].Disease);
+        Assert.Contains(result, x => x.Disease == "pneumonia" && x.Count == 2);
+        Assert.DoesNotContain(result, x => x.Disease == "bronchitis");
+
+    }
+
+    /// <summary>
+    /// Display information about patients over 30 years of age who have appointments with several doctors, sorted by date of birth.
+    /// </summary>
+    [Fact]
+    public void Test6()
+    {
+        var registrations = CreateRegList();
+        var patients = CreatePatientList();
+
+        var result = from p in patients
+                     let age = (int)(DateOnly.FromDateTime(DateTime.Today).Year - p.DateBirth.Year / 365)
+                     where age > 30
+                     join r in registrations on p.Id equals r.IdPatient into appointments
+                     where appointments.GroupBy(a => a.IdDoctor).Count() > 1
+                     orderby p.DateBirth
+                     select p;
+
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count());
+        Assert.Contains(result, x => x.FullName == "Sandra Allen");
+        Assert.Contains(result, x => x.FullName == "Frances Cooper");
+        Assert.DoesNotContain(result, x => x.FullName == "Margaret Schultz");
+    }
 }

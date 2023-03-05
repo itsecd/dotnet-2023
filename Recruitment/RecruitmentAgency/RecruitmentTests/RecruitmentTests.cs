@@ -30,4 +30,16 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
 
         Assert.Equal(2, result.Count);
     }
+    [Fact]
+    public void CompanyApplicationTest()
+    {
+        var result = (from e in _fixture.FixtureEmployees
+                     join ja in _fixture.FixtureJobApplications on e equals ja.Employee
+                     join ca in _fixture.FixtureCompaniesApplications on ja.Title equals ca.Title.JobTitle
+                     where ja.Title == ca.Title.JobTitle && e.Salary <= ca.Salary && e.Education == ca.Education
+                     select new { e.PersonalName, e.Salary }).ToList();
+
+        Assert.Equal(0, result.Count);
+    }
+
 }

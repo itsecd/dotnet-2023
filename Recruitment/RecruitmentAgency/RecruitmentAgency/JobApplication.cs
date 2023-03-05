@@ -17,5 +17,5 @@ public class JobApplication{
     /// <summary>
     /// Title - responsible for the job title
     /// </summary>
-    public Title Title { set; get; } = new();
+    public string Title { set; get; } = string.Empty;
 }

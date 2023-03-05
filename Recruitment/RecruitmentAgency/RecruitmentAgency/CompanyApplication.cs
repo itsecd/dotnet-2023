@@ -21,9 +21,14 @@ public class CompanyApplication{
     /// <summary>
     /// Salary - shows the wages which the company will pay
     /// </summary>
+    /// 
     public int Salary { set; get; } = 0;
     /// <summary>
     /// Title - shows the wages which the company will pay
     /// </summary>
     public Title Title{ set; get; } = new();
+    /// <summary>
+    /// Education - shows the education level
+    /// </summary>
+    public string Education { set; get; } = string.Empty;
 }

@@ -26,8 +26,6 @@ public class Management
     /// </summary>
     public List<Supply> Supplies { get; set; } = new List<Supply>();
 
-    public Management() { }
-
     public Management(Enterprise factory, List<Supplier> suppliers, List<Supply> supplies)
     {
         Factory = factory;

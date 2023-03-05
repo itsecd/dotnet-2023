@@ -17,18 +17,21 @@ public class Supply
     public DateTime Date { get; set; } = new DateTime(1970, 1, 1);
 
     /// <summary>
-    /// Quantity
+    /// Goods count
     /// </summary>
     public int Quantity { get; set; } = 0;
 
-    public string SuplierNumber { get; set; } = string.Empty; 
+    /// <summary>
+    /// Supplier's phone number
+    /// </summary>
+    public string SupplierNumber { get; set; } = string.Empty; 
 
     public Supply() { }
 
-    public Supply(string date, int quantity, string suplierNumber)
+    public Supply(string date, int quantity, string supplierNumber)
     {
         Date = DateTime.Parse(date);   
         Quantity = quantity;
-        SuplierNumber = suplierNumber;
+        SupplierNumber = supplierNumber;
     }
 }

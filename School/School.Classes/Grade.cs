@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿namespace School.Classes;
 
-namespace School.Classes;
+
 
 public class Grade
 {
@@ -14,15 +9,31 @@ public class Grade
     /// </summary>
     public Subject? Subject { get; set; }
 
+
     /// <summary>
     /// Студент
     /// </summary>
-    public Students Student { get; set; }
+    public Students? Student { get; set; }
+
+    /// <summary>
+    /// Оценка
+    /// </summary>
+    public int Mark { get; set; }
+
+    /// <summary>
+    /// Дата оценки
+    /// </summary>
+    public DateTime Date { get; set; }
+
+
     public Grade() { }
 
-    public Grade(Subject subject, Students student)
+    public Grade(Subject subject, Students student, int mark, DateTime dateTime)
     {
         Subject = subject;
         Student = student;
+        Mark = mark;
+        Date = dateTime;
     }
+
 }

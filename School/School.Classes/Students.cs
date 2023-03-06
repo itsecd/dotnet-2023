@@ -1,5 +1,6 @@
 ﻿namespace School.Classes;
-    public class Students
+
+public class Students
 {
     /// <summary>	
     /// Имя
@@ -42,4 +43,17 @@
         Class = @class;
         BirthDate = birthDate;
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Students param)
+            return false;
+        return FirstName == param.FirstName && Passport == param.Passport;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(FirstName, LastName, Patronymic, Passport, Class, BirthDate);
+    }
+
 }

@@ -19,9 +19,19 @@ public class Shipment
     /// <summary>
     /// Date is used to store the information about date of shipment.
     /// </summary>
-    public DateTime Date { get; set; }
+    public DateOnly Date { get; set; }
     /// <summary>
     /// NumberOfGoods is used to store the information about amount of goods in shipment.
     /// </summary>
     public int NumberOfGoods { get; set; }
+
+    public Shipment() { }
+    public Shipment(int id, Fabric fabric, Provider provider, DateOnly date, int numberOfGoods)
+    {
+        Id = id;
+        Fabric = fabric;
+        Provider = provider;
+        Date = date;
+        NumberOfGoods = numberOfGoods;
+    }
 }

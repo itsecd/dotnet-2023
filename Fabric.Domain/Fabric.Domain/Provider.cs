@@ -20,5 +20,13 @@ public class Provider
     /// PhoneNumber is used to store phone number of Fabric.
     /// </summary>
     public string Address { get; set; } = string.Empty;
+    public Provider() { }
+    public Provider(int id, string name, string typeOfGoods, string address)
+    {
+        Id = id;
+        Name = name;
+        TypeOfGoods = typeOfGoods;
+        Address = address;
+    }
 }
 

@@ -1,8 +1,8 @@
-namespace TaxiDomain;
+namespace Taxi.Domain;
 
 public class Driver
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public UInt64 Id { get; set; }
 
     public string FirstName { get; set; } = String.Empty;
     
@@ -13,5 +13,6 @@ public class Driver
     public string Passport { get; set; } = String.Empty;
 
     public string PhoneNumber { get; set; } = String.Empty;
+    
     
 }

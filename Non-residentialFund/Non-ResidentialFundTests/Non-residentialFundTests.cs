@@ -5,14 +5,21 @@ public class Non_residentialFundTests
 {
     private NonResidentialFundFixture _fixture = new();
 
+    /// <summary>
+    /// First request: display information about all customers
+    /// </summary>
     [Fact]
     public void FirstRequestTest()
     {
         var fictureBuyers = _fixture.FixtureBuyers;
         var buyers = (from buyer in fictureBuyers select buyer).ToList();
+        
         Assert.Equal(8, fictureBuyers.Count);
     }
 
+    /// <summary>
+    /// Second request: Output information on auctions in which all auctioned buildings were not sold.
+    /// </summary>
     [Fact]
     public void SecondRequestTest()
     {
@@ -27,9 +34,14 @@ public class Non_residentialFundTests
                                                    on auction.AuctionId equals countTrySaleInAuction.AuctionId
                      where countBoughtInAuction.countBought == countTrySaleInAuction.countTrySale
                      select auction.AuctionId).ToList();
+        
         Assert.Equal(4, result.Count);
     }
 
+    /// <summary>
+    /// Third request: Output the information about the buyers who received the nonresidential fund for a certain the district of the city, 
+    /// and the total amount of privatized fund of the district. Arrange by full name
+    /// </summary>
     [Fact]
     public void ThirdRequestTest()
     {
@@ -43,6 +55,9 @@ public class Non_residentialFundTests
         Assert.Equal(3, result.Count);
     }
 
+    /// <summary>
+    /// Fourth request: Find the addresses of all buyers participating in the auction of the specified date
+    /// </summary>
     [Fact]
     public void FourthRequestTest() 
     {
@@ -51,9 +66,13 @@ public class Non_residentialFundTests
                      join buyer in _fixture.FixtureBuyers on buyerAuction.BuyerId equals buyer.BuyerId
                      where auction.Date == new DateOnly(2022, 3, 20)
                      select new { buyer.BuyerId, buyer.Address, buyer.LastName, buyer.FirstName }).ToList();
+
         Assert.Equal(8, result.Count);
     }
 
+    /// <summary>
+    /// Fifth request: Find the top 5 buyers who spent the most money
+    /// </summary>
     [Fact]
     public void FifthRequestTest()
     {
@@ -62,9 +81,13 @@ public class Non_residentialFundTests
                       group privatized by privatized.BuyerId into privGRoup
                       orderby privGRoup.Sum(privatized => privatized.EndPrice) descending
                       select new { BuyerId = privGRoup.First().BuyerId, expenses = privGRoup.Sum(privatized => privatized.EndPrice) }).Take(5).ToList();
+        
         Assert.Equal(4, result.Count);
     }
 
+    /// <summary>
+    /// Sixth requrst: Output the data on the auctions that brought the most profit
+    /// </summary>
     [Fact]
     public void SixthRequestTest()
     {
@@ -74,6 +97,7 @@ public class Non_residentialFundTests
                      orderby privGRoup.Sum(privatized => privatized.EndPrice - privatized.StartPrice) descending
                      select new { AuctionId = privGRoup.First().AuctionId, income = 
                      privGRoup.Sum(privatized => privatized.EndPrice - privatized.StartPrice) }).ToList();
+        
         Assert.Equal(6, result.Count);
     }
 }

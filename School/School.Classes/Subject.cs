@@ -1,13 +1,11 @@
 ﻿namespace School.Classes;
 
-
 public class Subject
 {
     /// <summary>
     /// Наименование предмета
     /// </summary>
     public string Name { get; set; } = string.Empty;
-
 
     /// <summary>
     /// Год обучения

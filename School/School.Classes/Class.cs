@@ -1,7 +1,5 @@
 ﻿namespace School.Classes;
 
-
-
 public class Class
 {
     /// <summary>
@@ -33,5 +31,4 @@ public class Class
     {
         return HashCode.Combine(Number, Letter);
     }
-
 }

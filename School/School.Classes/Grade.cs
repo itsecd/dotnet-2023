@@ -1,14 +1,11 @@
 ﻿namespace School.Classes;
 
-
-
 public class Grade
 {
     /// <summary>
     /// Предмет
     /// </summary>
     public Subject? Subject { get; set; }
-
 
     /// <summary>
     /// Студент
@@ -25,7 +22,6 @@ public class Grade
     /// </summary>
     public DateTime Date { get; set; }
 
-
     public Grade() { }
 
     public Grade(Subject subject, Students student, int mark, DateTime dateTime)
@@ -35,5 +31,4 @@ public class Grade
         Mark = mark;
         Date = dateTime;
     }
-
 }

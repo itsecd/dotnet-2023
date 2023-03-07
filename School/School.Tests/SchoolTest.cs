@@ -1,11 +1,8 @@
-
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Xunit;
-
 using School.Classes;
 namespace School.Tests;
-
 
 public class SchoolTest
 {
@@ -76,7 +73,6 @@ public class SchoolTest
         new Students("Приветов", "Алексей", "Алексеевич", "2001-11111", new Class(9, 'г'), DateTime.Parse("2008/1/10"))
     };
     }
-
 
     /// <summary>
     /// 1) Вывести информацию обо всех предметах. Проверка на колличество предметов
@@ -207,5 +203,4 @@ public class SchoolTest
         Assert.Equal(4, infoMarks[1].Max);
         Assert.Equal(3.8, infoMarks[1].Average);
     }
-
 }

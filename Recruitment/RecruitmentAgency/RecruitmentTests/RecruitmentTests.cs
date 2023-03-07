@@ -75,9 +75,8 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
                       where ca.Salary == (from ca2 in _fixture.FixtureCompaniesApplications select ca2.Salary).Max()
                       select new
                       {
-                          Company = c,
-                          Request = ca
+                          ca,
                       }).ToList();
-        Assert.Equal(70000, result[0].Request.Salary);
+        Assert.Equal(70000, result[0].ca.Salary);
     }
 }

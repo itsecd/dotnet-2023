@@ -2,7 +2,8 @@
 /// <summary>
 /// Employee - a class that describes the characteristics of a worker
 /// </summary>
-public class Employee{
+public class Employee
+{
     /// <summary>
     /// PersonalName - a string for name, second_name and surname
     /// </summary>  
@@ -23,5 +24,9 @@ public class Employee{
     /// Salary - shows the desired salary
     /// </summary>  
     public int Salary { set; get; } = 0;
+    /// </summary>  
+    /// id - shows the employee's id 
+    /// </summary>  
+    public int Id { set; get; } = 0;
 
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecruitmentAgency;
-public class CompanyApplication{
+﻿namespace RecruitmentAgency;
+public class CompanyApplication
+{
     /// <summary>
     /// Company - contains information about the company
     /// </summary>  
@@ -26,7 +21,7 @@ public class CompanyApplication{
     /// <summary>
     /// Title - shows the wages which the company will pay
     /// </summary>
-    public Title Title{ set; get; } = new();
+    public Title Title { set; get; } = new();
     /// <summary>
     /// Education - shows the education level
     /// </summary>

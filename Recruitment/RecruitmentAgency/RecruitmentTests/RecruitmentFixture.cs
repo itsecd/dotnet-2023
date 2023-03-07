@@ -1,6 +1,7 @@
 using RecruitmentAgency;
 namespace RecruitmentTests;
-public class RecruitmentFixture {
+public class RecruitmentFixture
+{
     public List<Company> FixtureCompanies
     {
         get
@@ -51,7 +52,7 @@ public class RecruitmentFixture {
             firstApplication.Company = companies[0];
             firstApplication.WorkExperience = 0;
             firstApplication.Salary = 50000;
-            firstApplication.Date = new DateTime(2022,12,12);
+            firstApplication.Date = new DateTime(2022, 12, 12);
             firstApplication.Title = titles[0];
             firstApplication.Education = "None";
             companiesApplications.Add(firstApplication);
@@ -80,11 +81,12 @@ public class RecruitmentFixture {
         {
             var employees = new List<Employee>();
             var firstEmployee = new Employee();
-            firstEmployee.PersonalName = "Smith Petrov";
+            firstEmployee.PersonalName = "Alex Walker";
             firstEmployee.Telephone = "531-100";
             firstEmployee.WorkExperience = 0;
             firstEmployee.Salary = 52000;
             firstEmployee.Education = "None";
+            firstEmployee.Id = 0;
             employees.Add(firstEmployee);
             var secondEmployee = new Employee();
             secondEmployee.PersonalName = "John Dishes";
@@ -92,13 +94,15 @@ public class RecruitmentFixture {
             secondEmployee.WorkExperience = 1;
             secondEmployee.Salary = 61000;
             secondEmployee.Education = "Half";
+            firstEmployee.Id = 1;
             employees.Add(secondEmployee);
             var thirdEmployee = new Employee();
             thirdEmployee.PersonalName = "Alex Walker";
             thirdEmployee.Telephone = "513-219";
             thirdEmployee.WorkExperience = 2;
-            thirdEmployee.Salary = 72000;
+            thirdEmployee.Salary = 66000;
             thirdEmployee.Education = "Full";
+            thirdEmployee.Id = 2;
             employees.Add(thirdEmployee);
             return employees;
         }

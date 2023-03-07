@@ -1,7 +1,7 @@
 using Polyclinic.Domain;
 namespace Polyclinic.Test;
 
-public class UnitTest
+public class PolyclinicTest
 {
     /// <summary>
     /// creating a list of patients
@@ -43,13 +43,13 @@ public class UnitTest
     {
         return new List<Registration>()
         {
-            new Registration(1,3,new DateTime(2023,4,5,15,0,0)),
-            new Registration(2,1,new DateTime(2023,4,2,12,0,0)),
-            new Registration(3,2,new DateTime(2023,3,19,14,30,0)),
-            new Registration(4,4,new DateTime(2023,4,15,13,0,0)),
-            new Registration(5,5,new DateTime(2023,4,2,13,0,0)),
-            new Registration(2,3, new DateTime(2023, 4,5,13,0,0)),
-            new Registration(5,2,new DateTime(2023,3,2,13,0,0))
+            new Registration(1,1,3,new DateTime(2023,4,5,15,0,0)),
+            new Registration(2,2,1,new DateTime(2023,4,2,12,0,0)),
+            new Registration(3,3,2,new DateTime(2023,3,19,14,30,0)),
+            new Registration(4,4,4,new DateTime(2023,4,15,13,0,0)),
+            new Registration(5,5,5,new DateTime(2023,4,2,13,0,0)),
+            new Registration(6,2,3, new DateTime(2023, 4,5,13,0,0)),
+            new Registration(7,5,2,new DateTime(2023,3,2,13,0,0))
         };
     }
 
@@ -61,18 +61,18 @@ public class UnitTest
     {
         return new List<Completion>()
         {
-            new Completion(1,3,1,"viral disease"),
-            new Completion(2,1,1,"viral disease"),
-            new Completion(3,2,0,"quinsy"),
-            new Completion(4,4,0,"pneumonia"),
-            new Completion(5,5,0,"depression"),
-            new Completion(1,4,0,"pneumonia"),
-            new Completion(2,4,0,"viral disease"),
-            new Completion(3,4,0,"tuberculosis"),
-            new Completion(2,2,1,"tuberculosis"),
-            new Completion(3,5,1,"depression"),
-            new Completion(1,2,0,"quinsy"),
-            new Completion(2,4,0,"bronchitis")
+            new Completion(1,1,3,1,"viral disease"),
+            new Completion(2,2,1,1,"viral disease"),
+            new Completion(3,3,2,0,"quinsy"),
+            new Completion(4,4,4,0,"pneumonia"),
+            new Completion(5,5,5,0,"depression"),
+            new Completion(6,1,4,0,"pneumonia"),
+            new Completion(7,2,4,0,"viral disease"),
+            new Completion(8,3,4,0,"tuberculosis"),
+            new Completion(9,2,2,1,"tuberculosis"),
+            new Completion(10,3,5,1,"depression"),
+            new Completion(11,1,2,0,"quinsy"),
+            new Completion(12,2,4,0,"bronchitis")
         };
     }
 
@@ -110,7 +110,7 @@ public class UnitTest
                      where d.FullName == "Brian Sullivan"
                      orderby p.FullName
                      select p;
-        
+
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
         Assert.Contains(result, x => x.FullName == "Margaret Schultz");
@@ -146,7 +146,7 @@ public class UnitTest
         var registrations = CreateRegList();
         var doctors = CreateDoctorList();
         var patients = CreatePatientList();
-        var lastMonth1 = new DateTime(2023,4,1);
+        var lastMonth1 = new DateTime(2023, 4, 1);
         var lastMonth2 = new DateTime(2023, 4, 30);
 
         var result = from r in registrations
@@ -176,8 +176,8 @@ public class UnitTest
                       join p in patients on c.IdPatient equals p.Id
                       group c by c.Conclusion into g
                       orderby g.Count() descending
-                      select new { Disease = g.Key, Count = g.Count() }).Take(5).ToList();  
-                     
+                      select new { Disease = g.Key, Count = g.Count() }).Take(5).ToList();
+
         Assert.NotNull(result);
         Assert.Equal(5, result.Count);
         Assert.Equal("viral disease", result[0].Disease);

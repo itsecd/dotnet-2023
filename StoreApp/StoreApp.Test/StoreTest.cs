@@ -91,13 +91,13 @@ public class StoreTest
         var stores = CreateDefaultStore();
         var saleList = new List<Sale>
         {
-            new Sale("03.03.2023", customers[0], stores[0], CreateDefaulProduct()),
-            new Sale("03.01.2023", customers[0], stores[1], CreateDefaulProduct()),
-            new Sale("15.02.2023", customers[1], stores[0], CreateDefaulProduct()),
-            new Sale("18.02.2023", customers[2], stores[2], CreateDefaulProduct()),
-            new Sale("16.02.2023", customers[3], stores[3], CreateDefaulProduct()),
-            new Sale("28.02.2023", customers[4], stores[1], CreateDefaulProduct()),
-            new Sale("01.03.2023", customers[4], stores[0], CreateDefaulProduct()),
+            new Sale(1, "03.03.2023", customers[0], stores[0], CreateDefaulProduct()),
+            new Sale(2, "03.01.2023", customers[0], stores[1], CreateDefaulProduct()),
+            new Sale(3, "15.02.2023", customers[1], stores[0], CreateDefaulProduct()),
+            new Sale(4, "18.02.2023", customers[2], stores[2], CreateDefaulProduct()),
+            new Sale(5, "16.02.2023", customers[3], stores[3], CreateDefaulProduct()),
+            new Sale(6, "28.02.2023", customers[4], stores[1], CreateDefaulProduct()),
+            new Sale(7, "01.03.2023", customers[4], stores[0], CreateDefaulProduct()),
         };
         return saleList;
     }
@@ -304,7 +304,7 @@ public class StoreTest
                      select new { StoreName = storeSales.StoreName, TotalSales = storeSales.TotalSales };
 
 
-        Assert.Equal(1, result.Count());
+        Assert.Single(result);
         Assert.Contains(result, x => x.StoreName == "Walmart" && x.TotalSales == 1467.0);
         Assert.DoesNotContain(result, x => x.StoreName == "Pyaterochka" && x.TotalSales == 978.0);
 

@@ -1,6 +1,4 @@
 using Factory.Domain;
-using System.Drawing;
-using System.Globalization;
 
 namespace Factory.Test;
 
@@ -88,10 +86,10 @@ public class FactoryTest
                      select sr;
 
         Assert.Equal(3, result.Count());
-        Assert.Contains(result, x => x.SupplierID == 1); 
+        Assert.Contains(result, x => x.SupplierID == 1);
         Assert.Contains(result, x => x.SupplierID == 3);
-        Assert.Contains(result, x => x.SupplierID == 5); 
-        Assert.DoesNotContain(result, x => x.SupplierID == 2); 
+        Assert.Contains(result, x => x.SupplierID == 5);
+        Assert.DoesNotContain(result, x => x.SupplierID == 2);
         Assert.DoesNotContain(result, x => x.SupplierID == 4);
     }
 
@@ -142,7 +140,7 @@ public class FactoryTest
         Assert.Equal(2, result.FirstOrDefault(x => x.IndustryType == "Транспорт").SupplierCount);
 
     }
-    
+
     /// <summary>
     /// Selecting top-5 factories by supply count 
     /// </summary>
@@ -167,15 +165,15 @@ public class FactoryTest
     /// </summary>
     [Fact]
     public void RequestTest6()
-    { 
+    {
         var supplier = CreateSupplier();
         var supply = CreateSupply();
 
-            var result = (from s in supplier
-                        join sp in supply on s.SupplierID equals sp.SupplierID
-                        where sp.Date > new DateTime(2023, 1, 1) && sp.Date < new DateTime(2023, 1, 30)
-                        orderby sp.Quantity descending
-                        select new { s.Name, s.Address, s.Phone }).ToList()[0];
+        var result = (from s in supplier
+                      join sp in supply on s.SupplierID equals sp.SupplierID
+                      where sp.Date > new DateTime(2023, 1, 1) && sp.Date < new DateTime(2023, 1, 30)
+                      orderby sp.Quantity descending
+                      select new { s.Name, s.Address, s.Phone }).ToList()[0];
 
         Assert.Equal("Барни Стинсон", result.Name);
         Assert.Equal("ул. Приоденься д.50", result.Address);
@@ -186,7 +184,7 @@ public class FactoryTest
     /// Enterprise constructor with parameters test
     /// </summary>
     [Fact]
-    public void EnterpriseConstructorTest() 
+    public void EnterpriseConstructorTest()
     {
         var enterprise = new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000);
         Assert.Equal(1, enterprise.EnterpriseID);

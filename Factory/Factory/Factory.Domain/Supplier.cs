@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Factory.Domain;
+﻿namespace Factory.Domain;
 
 /// <summary>
 /// Class describing supplier
@@ -29,15 +23,15 @@ public class Supplier
     /// <summary>
     /// Phone 
     /// </summary>
-    public string Phone { get; set; } = string.Empty;   
-   
+    public string Phone { get; set; } = string.Empty;
+
     public Supplier() { }
 
-    public Supplier (int supplierID, string name, string address, string phone) 
+    public Supplier(int supplierID, string name, string address, string phone)
     {
         SupplierID = supplierID;
-        Name = name;    
+        Name = name;
         Address = address;
         Phone = phone;
-    } 
+    }
 }

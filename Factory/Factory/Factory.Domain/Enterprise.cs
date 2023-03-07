@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Factory.Domain;
+﻿namespace Factory.Domain;
 
 /// <summary>
 /// Class describing factory
@@ -25,7 +19,7 @@ public class Enterprise
     /// Industry Type
     /// </summary>
     public string Type { get; set; } = string.Empty;
-    
+
     /// <summary>
     /// Factory name
     /// </summary>

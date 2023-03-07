@@ -303,10 +303,8 @@ public class StoreTest
                      where storeSales.TotalSales >= minSalesAmount
                      select new { StoreName = storeSales.StoreName, TotalSales = storeSales.TotalSales };
 
-
         Assert.Single(result);
         Assert.Contains(result, x => x.StoreName == "Walmart" && x.TotalSales == 1467.0);
         Assert.DoesNotContain(result, x => x.StoreName == "Pyaterochka" && x.TotalSales == 978.0);
-
     }
 }

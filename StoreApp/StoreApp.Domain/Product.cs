@@ -64,7 +64,7 @@ public class Product
     /// <param name="idsale">
     /// ID sale
     /// </param>
-    public void AddToSalesList (int idSale)
+    public void AddToSalesList(int idSale)
     {
         SalesId.Add(idSale);
     }

@@ -50,7 +50,6 @@ public class Sale
         customer.AddToSalesList(saleId);
         store.AddToSalesList(saleId);
     }
-
 }
 
 

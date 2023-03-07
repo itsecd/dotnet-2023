@@ -19,7 +19,5 @@ public class ProductStore
     /// Product quantity
     /// </summary>
     public int Quantity { get; set; }
-
-
 }
 

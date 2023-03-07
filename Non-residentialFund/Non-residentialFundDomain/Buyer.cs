@@ -8,7 +8,6 @@ public class Buyer
     public string PassportSeries { get; set; } = string.Empty;
     public string PassportNumber { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
-
     public Buyer(int buyerId, string lastName, string firstName, string middleName, string passportSeries, string passportNumber, string address)
     {
         BuyerId = buyerId;

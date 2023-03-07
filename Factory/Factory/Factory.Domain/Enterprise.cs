@@ -12,6 +12,11 @@ namespace Factory.Domain;
 public class Enterprise
 {
     /// <summary>
+    /// Enterprise Identifier
+    /// </summary>
+    public int EnterpriseID { get; set; } = 0;
+
+    /// <summary>
     /// RegistrationNumber
     /// </summary>
     public string RegistrationNumber { get; set; } = string.Empty;
@@ -53,8 +58,9 @@ public class Enterprise
 
     public Enterprise() { }
 
-    public Enterprise(string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea)
+    public Enterprise(int enterpriseID, string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea)
     {
+        EnterpriseID = enterpriseID;
         RegistrationNumber = registrationNumber;
         Type = type;
         Name = name;

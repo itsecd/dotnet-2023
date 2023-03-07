@@ -12,6 +12,11 @@ namespace Factory.Domain;
 public class Supplier
 {
     /// <summary>
+    /// Supplier identifier
+    /// </summary>
+    public int SupplierID { get; set; } = 0;
+
+    /// <summary>
     /// Supplier's name
     /// </summary>
     public string Name { get; set; } = string.Empty;
@@ -28,8 +33,9 @@ public class Supplier
    
     public Supplier() { }
 
-    public Supplier (string name, string address, string phone) 
+    public Supplier (int supplierID, string name, string address, string phone) 
     {
+        SupplierID = supplierID;
         Name = name;    
         Address = address;
         Phone = phone;

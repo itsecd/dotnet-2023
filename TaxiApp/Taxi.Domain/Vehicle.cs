@@ -10,7 +10,19 @@ public class Vehicle
 
     public UInt64 VehicleClassificationId { get; set; }
 
-    public Driver Driver { get; set; } = new Driver();
+    public UInt64 Driver { get; set; }
 
     public List<Ride> Rides { get; set; } = new List<Ride>();
+    
+    public Vehicle() { }
+
+    public Vehicle(UInt64 id, string registrationCarPlate, string colour, UInt64 vehicleClassificationId, UInt64 driver, List<Ride>? rides = null)
+    {
+        Id = id;
+        RegistrationCarPlate = registrationCarPlate;
+        Colour = colour;
+        VehicleClassificationId = vehicleClassificationId;
+        Driver = driver;
+        Rides = rides;
+    }
 }

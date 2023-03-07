@@ -14,14 +14,14 @@ public class Ride
 
     public UInt32 Cost { get; set; } = 0;
 
-    public Passenger Passenger { get; set; } = new Passenger();
+    public UInt64 PassengerId { get; set; } 
 
-    public Vehicle Vehicle { get; set; } = new Vehicle();
+    public UInt64 VehicleId { get; set; } 
     
     public Ride() { }
 
     public Ride(UInt64 id, string departurePoint, string destinationPoint, DateTime rideDate, TimeOnly rideTime,
-        UInt32 cost, Passenger passenger, Vehicle vehicle)
+        UInt32 cost, UInt64 passenger, UInt64 vehicle)
     {
         Id = id;
         DeparturePoint = departurePoint;
@@ -29,8 +29,8 @@ public class Ride
         RideDate = rideDate;
         RideTime = rideTime;
         Cost = cost;
-        Passenger = passenger;
-        Vehicle = vehicle;
+        PassengerId = passenger;
+        VehicleId = vehicle;
     }
 
 }

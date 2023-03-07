@@ -15,13 +15,13 @@ public class Passenger
     public List<Ride> Rides { get; set; } = new();
 
     public Passenger() { }
-    public Passenger(UInt64 id, string firstName, string lastName, string patronymic, string phoneNumber)
+    public Passenger(UInt64 id, string firstName, string lastName, string? patronymic, string phoneNumber, List<Ride>? rides = null)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Patronymic = patronymic;
         PhoneNumber = phoneNumber;
-        Rides = new List<Ride>();
+        Rides = rides;
     }
 }

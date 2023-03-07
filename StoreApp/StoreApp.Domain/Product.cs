@@ -40,6 +40,11 @@ public class Product
     /// </summary>
     public DateTime DateStorage { get; set; } = new DateTime(1970, 1, 1);
 
+    /// <summary>
+    /// Collection of product sale IDs
+    /// </summary>
+    public List<int> SalesId { get; set; }
+
 
     public Product(int productId, int productGroup, string productName, double productWeight, bool productType, double productPrice, string dateStorage)
     {
@@ -50,6 +55,18 @@ public class Product
         ProductType = productType;
         ProductPrice = productPrice;
         DateStorage = DateTime.Parse(dateStorage);
+        SalesId = new List<int>();
+    }
+
+    /// <summary>
+    /// Method for adding sales id to the collection
+    /// </summary>
+    /// <param name="idsale">
+    /// ID sale
+    /// </param>
+    public void AddToSalesList (int idSale)
+    {
+        SalesId.Add(idSale);
     }
 
     public override bool Equals(object? obj)

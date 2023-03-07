@@ -15,11 +15,27 @@ public class Customer
     /// </summary>
     public int CustomerCardNumber { get; set; } = -1;
 
+    /// <summary>
+    /// Customer purchase ID collection
+    /// </summary>
+    public List<int> SalesId { get; set; }
 
     public Customer(string customerName, int customerCardNumber)
     {
         CustomerName = customerName;
         CustomerCardNumber = customerCardNumber;
+        SalesId = new List<int>();
+    }
+
+    /// <summary>
+    /// Method for adding sales id to the collection
+    /// </summary>
+    /// <param name="idsale">
+    /// ID sale
+    /// </param>
+    public void AddToSalesList(int idSale)
+    {
+        SalesId.Add(idSale);
     }
 
     public override bool Equals(object? obj)

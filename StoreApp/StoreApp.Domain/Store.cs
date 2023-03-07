@@ -20,11 +20,29 @@ public class Store
     /// </summary>
     public string StoreAddress { get; set; }
 
+    /// <summary>
+    /// Store sales ID collection
+    /// </summary>
+    public List<int> SalesId { get; set; }
+
+
     public Store(int storeId, string storeName, string storeAddress)
     {
         StoreId = storeId;
         StoreName = storeName;
         StoreAddress = storeAddress;
+        SalesId = new List<int>();
+    }
+
+    /// <summary>
+    /// Method for adding sales id to the collection
+    /// </summary>
+    /// <param name="idsale">
+    /// ID sale
+    /// </param>
+    public void AddToSalesList(int idsale)
+    {
+        SalesId.Add(idsale);
     }
 }
 

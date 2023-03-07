@@ -6,6 +6,10 @@
 public class Sale
 {
     /// <summary>
+    /// Sale ID
+    /// </summary>
+    public int SaleId { get; set; }
+    /// <summary>
     /// Date and time of sale
     /// </summary>
     public DateTime DateSale { get; set; } = new DateTime(1970, 1, 1);
@@ -30,15 +34,21 @@ public class Sale
     /// </summary>
     public double Sum { get; set; } = 0.0;
 
-    public Sale(string dateSale, Customer customer, Store store, List<Product> products)
+    public Sale(int saleId, string dateSale, Customer customer, Store store, List<Product> products)
     {
+        SaleId = saleId;
         DateSale = DateTime.Parse(dateSale);
         Customer = customer;
         Store = store;
         Products = products;
 
         foreach (Product product in products)
+        {
             Sum += product.ProductPrice;
+            product.AddToSalesList(saleId);
+        }
+        customer.AddToSalesList(saleId);
+        store.AddToSalesList(saleId);
     }
 
 }

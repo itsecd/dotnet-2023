@@ -37,9 +37,8 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
                       join ca in _fixture.FixtureCompaniesApplications on ja.Title equals ca.Title.JobTitle
                       where ja.Title == ca.Title.JobTitle && e.Salary <= ca.Salary && e.Education == ca.Education && e.WorkExperience == ca.WorkExperience
                       select new { e.PersonalName, e.Salary }).ToList();
-        var y = 2;
 
-        Assert.Equal(1, result.Count);
+        Assert.Single(result);
     }
     [Fact]
     public void NumberApplicationTest()

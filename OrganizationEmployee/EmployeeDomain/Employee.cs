@@ -69,6 +69,7 @@ public class Employee
     /// One employee can work in multiple departments
     /// </summary>
     public List<DepartmentEmployee> DepartmentEmployee { get; set; } = new List<DepartmentEmployee>();
+    /// <summary>
     /// EmployeeVactionVoucher - a list of employee's vacation vouchers. For more details proceed to
     /// "EmployeeVacationVoucher" and "VacationVoucher"
     /// </summary>

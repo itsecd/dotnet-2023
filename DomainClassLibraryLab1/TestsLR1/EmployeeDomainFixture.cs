@@ -51,11 +51,11 @@ public class EmployeeDomainFixture
 
     public List<Department> DepartmentFixture
     {
-        get 
+        get
         {
             return new List<Department>
             {
-                new Department 
+                new Department
                 {
                     Name = "Отдел ИБ",
                     Id = 1
@@ -182,10 +182,10 @@ public class EmployeeDomainFixture
         get
         {
             var workshopList = WorkshopFixture;
-            var employeeList =  new List<Employee>()
+            var employeeList = new List<Employee>()
                 {
                         new Employee
-                        { 
+                        {
                             Id = Guid.NewGuid(),
                             regNumber = 1337,
                             FirstName = "Владислав",
@@ -378,7 +378,7 @@ public class EmployeeDomainFixture
         {
             var departmentList = DepartmentFixture;
             return new List<DepartmentEmployee>
-            { 
+            {
                 new DepartmentEmployee
                 {
                         Department = departmentList[0],

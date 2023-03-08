@@ -1,6 +1,3 @@
-using System.Security.Claims;
-using System.Security.Cryptography;
-using Xunit;
 using School.Classes;
 namespace School.Tests;
 
@@ -45,32 +42,32 @@ public class SchoolTest
     {
         return new List<Subject>()
         {
-            new Subject("Философия", 2008),
-            new Subject("Физика", 2020),
-            new Subject("Программирование", 2023),
-            new Subject("Математический анализ", 2008),
-            new Subject("История", 2001),
-            new Subject("ОБЖ", 2008),
-            new Subject("Литература", 2008),
-            new Subject("Русский", 2007)
+            new Subject("Философия", 2008,null),
+            new Subject("Физика", 2020,null),
+            new Subject("Программирование", 2023,null),
+            new Subject("Математический анализ", 2008,null),
+            new Subject("История", 2001,null),
+            new Subject("ОБЖ", 2008,null),
+            new Subject("Литература", 2008,null),
+            new Subject("Русский", 2007,null)
         };
     }
     /// <summary>
     /// Создание списка из 8 студентов
     /// </summary>
     /// <returns></returns>
-    private List<Students> CreateListStudents()
+    private List<Student> CreateListStudents()
     {
-        return new List<Students>()
+        return new List<Student>()
     {
-        new Students("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/1/10")),
-        new Students("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б'), DateTime.Parse("2000/1/11")),
-        new Students("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в'), DateTime.Parse("2001/2/16")),
-        new Students("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а'), DateTime.Parse("1999/1/10")),
-        new Students("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/2/10")),
-        new Students("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2003/4/10")),
-        new Students("Кареглазов", "Алексей", "Алексеевич", "2001-11111", new Class(8, 'в'), DateTime.Parse("2005/11/10")),
-        new Students("Приветов", "Алексей", "Алексеевич", "2001-11111", new Class(9, 'г'), DateTime.Parse("2008/1/10"))
+        new Student("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/1/10"),null),
+        new Student("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б',null), DateTime.Parse("2000/1/11"),null),
+        new Student("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в',null), DateTime.Parse("2001/2/16"),null),
+        new Student("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а',null), DateTime.Parse("1999/1/10"),null),
+        new Student("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/2/10"),null),
+        new Student("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2003/4/10"),null),
+        new Student("Кареглазов", "Алексей", "Алексеевич", "2001-11111", new Class(8, 'в',null), DateTime.Parse("2005/11/10"),null),
+        new Student("Приветов", "Алексей", "Алексеевич", "2001-11111", new Class(9, 'г',null), DateTime.Parse("2008/1/10"),null)
     };
     }
 
@@ -78,7 +75,7 @@ public class SchoolTest
     /// 1) Вывести информацию обо всех предметах. Проверка на колличество предметов
     /// </summary>
     [Fact]
-    public void TestFirst()
+    public void AllSubjectTest()
     {
         var subjects = CreateListSubjects();
         Assert.Equal(8, subjects.Count);
@@ -88,21 +85,21 @@ public class SchoolTest
     /// 2) Вывести информацию обо всех учениках в указанном классе, упорядочить по ФИО.
     /// </summary>
     [Fact]
-    public void TestSecond()
+    public void AllStudentClassTest()
     {
         var students = CreateListStudents();
-        var @class = new Class(11, 'а');
+        var @class = new Class(11, 'а',null);
 
         var needStudents = (from student in students
                             where student.Class != null && student.Class.Equals(@class)
                             orderby student.LastName, student.FirstName, student.Patronymic
                             select student).ToList();
 
-        var result = new List<Students>
+        var result = new List<Student>
         {
-            new Students("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/1/10")),
-            new Students("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/2/10")),
-            new Students("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2003/4/10"))
+            new Student("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/1/10"),null),
+            new Student("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/2/10"),null),
+            new Student("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2003/4/10"),null)
         };
 
         for (var i = 0; i < result.Count; i++)
@@ -115,7 +112,7 @@ public class SchoolTest
     /// 3) Вывести информацию обо всех учениках, получивших оценки в указанный день.
     /// </summary>
     [Fact]
-    public void TestThird()
+    public void StudentGradesDayTest()
     {
         var grades = CreateListGrades();
 
@@ -130,7 +127,7 @@ public class SchoolTest
     /// 4) Вывести топ 5 учеников по среднему баллу.
     /// </summary>
     [Fact]
-    public void TestFourth()
+    public void TopStudentsAvrMarkTest()
     {
         var grades = CreateListGrades();
 
@@ -142,13 +139,13 @@ public class SchoolTest
                            Marks = g.Average(s => s.Mark)
                        }).Take(5).OrderByDescending(s => s.Marks).ThenBy(s => s.Student.FirstName).ToList();
 
-        var result = new List<Students>
+        var result = new List<Student>
         {
-            new Students("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в'), DateTime.Parse("2001/2/16")),
-            new Students("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б'), DateTime.Parse("2000/1/11")),
-            new Students("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а'), DateTime.Parse("1999/1/10")),
-            new Students("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/2/10")),
-            new Students("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а'), DateTime.Parse("2001/1/10"))
+            new Student("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в',null), DateTime.Parse("2001/2/16"),null),
+            new Student("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б',null), DateTime.Parse("2000/1/11"),null),
+            new Student("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а',null), DateTime.Parse("1999/1/10"),null),
+            new Student("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/2/10"),null),
+            new Student("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/1/10"),null)
         };
 
         for (var i = 0; i < result.Count; i++)
@@ -162,16 +159,16 @@ public class SchoolTest
     /// 5) Вывести учеников с максимальным средним баллом за указанный период.
     /// </summary>
     [Fact]
-    public void TestFifth()
+    public void MaxAvrScorePeriodTest()
     {
         var grades = CreateListGrades();
 
         var maxValue = (from grade in grades
-                        where grade.Date == DateTime.Parse("2022/10/13")
+                        where grade.Date > DateTime.Parse("2022/10/10") && grade.Date <= DateTime.Parse("2022/10/14")
                         select grade.Mark).Max();
 
         var maxMark = (from grade in grades
-                       where grade.Date == DateTime.Parse("2022/10/13")
+                       where grade.Date > DateTime.Parse("2022/10/10") && grade.Date <= DateTime.Parse("2022/10/14")
                        group grade by grade.Student into g
                        select new
                        {
@@ -179,14 +176,14 @@ public class SchoolTest
                            Marks = g.Average(s => s.Mark)
                        }).Where(s => s.Marks == maxValue).ToList();
 
-        Assert.True(maxMark.Count == 3);
+        Assert.True(maxMark.Count == 4);
     }
 
     /// <summary>
     /// 6) Вывести информацию о минимальном, среднем и максимальном балле по каждому предмету.
     /// </summary>
     [Fact]
-    public void TestSixth()
+    public void MinMaxAvrMarkSubjectTest()
     {
         var grades = CreateListGrades();
 

@@ -1,7 +1,11 @@
 ﻿namespace School.Classes;
-
 public class Grade
 {
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public int Id { get; set; }
+
     /// <summary>
     /// Предмет
     /// </summary>
@@ -10,7 +14,7 @@ public class Grade
     /// <summary>
     /// Студент
     /// </summary>
-    public Students? Student { get; set; }
+    public Student? Student { get; set; }
 
     /// <summary>
     /// Оценка
@@ -24,11 +28,24 @@ public class Grade
 
     public Grade() { }
 
-    public Grade(Subject subject, Students student, int mark, DateTime dateTime)
+    public Grade(Subject subject, Student student, int mark, DateTime dateTime)
     {
         Subject = subject;
         Student = student;
         Mark = mark;
         Date = dateTime;
     }
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Grade param)
+            return false;
+
+        return Student == param.Student && Subject == param.Subject && Date == param.Date;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, Student, Subject, Date);
+    }
+
 }

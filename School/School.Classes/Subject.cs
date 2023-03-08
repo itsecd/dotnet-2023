@@ -1,4 +1,5 @@
 ﻿namespace School.Classes;
+
 public class Subject
 {
     /// <summary>

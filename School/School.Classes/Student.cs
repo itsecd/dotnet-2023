@@ -1,4 +1,5 @@
 ﻿namespace School.Classes;
+
 public class Student
 {
     /// <summary>
@@ -40,7 +41,9 @@ public class Student
     /// Список оценок у студента
     /// </summary>
     public List<Grade>? Grades { get; set; }
+
     public Student() { }
+
     public Student(string firstName, string lastName, string patronymic, string passport, Class @class, DateTime birthDate, List<Grade>? grades)
     {
         FirstName = firstName;
@@ -59,6 +62,7 @@ public class Student
 
         return Passport == param.Passport && FirstName == param.FirstName;
     }
+
     public override int GetHashCode()
     {
         return HashCode.Combine(Id, FirstName, LastName, Patronymic, Passport, Class, BirthDate);

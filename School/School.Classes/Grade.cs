@@ -1,4 +1,5 @@
 ﻿namespace School.Classes;
+
 public class Grade
 {
     /// <summary>
@@ -35,6 +36,7 @@ public class Grade
         Mark = mark;
         Date = dateTime;
     }
+     
     public override bool Equals(object? obj)
     {
         if (obj is not Grade param)

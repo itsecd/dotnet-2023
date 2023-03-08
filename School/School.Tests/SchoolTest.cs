@@ -88,7 +88,7 @@ public class SchoolTest
     public void AllStudentClassTest()
     {
         var students = CreateListStudents();
-        var @class = new Class(11, 'à',null);
+        var @class = new Class(11, 'à', null);
 
         var needStudents = (from student in students
                             where student.Class != null && student.Class.Equals(@class)

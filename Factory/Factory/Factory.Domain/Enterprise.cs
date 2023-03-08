@@ -1,4 +1,6 @@
-﻿namespace Factory.Domain;
+﻿using System.Collections.Generic;
+
+namespace Factory.Domain;
 
 /// <summary>
 /// Class describing factory
@@ -50,9 +52,14 @@ public class Enterprise
     /// </summary>
     public double TotalArea { get; set; } = 0.0;
 
+    /// <summary>
+    /// List of supplies
+    /// </summary>
+    public List<Supply> Supplies { get; set; } = new List<Supply>();
+
     public Enterprise() { }
 
-    public Enterprise(int enterpriseID, string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea)
+    public Enterprise(int enterpriseID, string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea, List<Supply> supplies)
     {
         EnterpriseID = enterpriseID;
         RegistrationNumber = registrationNumber;
@@ -63,5 +70,6 @@ public class Enterprise
         OwnershipForm = ownershipForm;
         EmployeesCount = employeesCount;
         TotalArea = totalArea;
+        Supplies = supplies;
     }
 }

@@ -25,13 +25,19 @@ public class Supplier
     /// </summary>
     public string Phone { get; set; } = string.Empty;
 
+    /// <summary>
+    /// List of supplies
+    /// </summary>
+    public List<Supply> Supplies { get; set; } = new List<Supply>();
+
     public Supplier() { }
 
-    public Supplier(int supplierID, string name, string address, string phone)
+    public Supplier(int supplierID, string name, string address, string phone, List<Supply> supplies)
     {
         SupplierID = supplierID;
         Name = name;
         Address = address;
         Phone = phone;
+        Supplies = supplies;
     }
 }

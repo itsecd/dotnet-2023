@@ -5,38 +5,6 @@ namespace Factory.Test;
 public class FactoryTest
 {
     /// <summary>
-    /// Creating a list of enterprises
-    /// </summary>
-    /// <returns></returns>
-    private List<Enterprise> CreateEnterprise()
-    {
-        return new List<Enterprise>()
-        {
-            new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000),
-            new Enterprise(2, "1156313028981", "Материально-техническое снабжение", "ЗГМ", "ул.22 партъезда д.10а", "88462295931", "ООО", 150, 1500),
-            new Enterprise(3, "1116318009510", "Тяжелая промышленность", "ВЗМК", "ул.Балаковская д.6а", "884692007711", "ООО", 200, 2000),
-            new Enterprise(4, "1026300767899", "Транспорт", "АВИАКОР", "ул.Земеца д.32", "88463720888", "АО", 250, 2500),
-            new Enterprise(5, "1026301697487", "Материально-техническое снабжение", "ЭКРАН", "ул.Кирова д.24", "88469983785", "ОАО", 130, 1300),
-        };
-    }
-
-    /// <summary>
-    /// Creating a list of suppliers
-    /// </summary>
-    /// <returns></returns>
-    private List<Supplier> CreateSupplier()
-    {
-        return new List<Supplier>()
-        {
-            new Supplier(1, "Артур Пирожков", "ул. Зацепильная д.42", "89375550203"),
-            new Supplier(2, "Чендлер Бинг", "ул. Центральная д.1", "89370101010"),
-            new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289"),
-            new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978"),
-            new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567")
-        };
-    }
-
-    /// <summary>
     /// Creating a list of supplies
     /// </summary>
     /// <returns></returns>
@@ -52,6 +20,40 @@ public class FactoryTest
             new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
             new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
             new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
+        };
+    }
+
+    /// <summary>
+    /// Creating a list of enterprises
+    /// </summary>
+    /// <returns></returns>
+    private List<Enterprise> CreateEnterprise()
+    {
+        var supply = CreateSupply();
+        return new List<Enterprise>()
+        {
+            new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000, new List<Supply>(){supply[0], supply[1] }),
+            new Enterprise(2, "1156313028981", "Материально-техническое снабжение", "ЗГМ", "ул.22 партъезда д.10а", "88462295931", "ООО", 150, 1500, new List<Supply>(){supply[4], supply[7] }),
+            new Enterprise(3, "1116318009510", "Тяжелая промышленность", "ВЗМК", "ул.Балаковская д.6а", "884692007711", "ООО", 200, 2000, new List<Supply>(){supply[2] }),
+            new Enterprise(4, "1026300767899", "Транспорт", "АВИАКОР", "ул.Земеца д.32", "88463720888", "АО", 250, 2500, new List < Supply >() { supply[3], supply[6] }),
+            new Enterprise(5, "1026301697487", "Материально-техническое снабжение", "ЭКРАН", "ул.Кирова д.24", "88469983785", "ОАО", 130, 1300, new List < Supply >() { supply[5]}),
+        };
+    }
+
+    /// <summary>
+    /// Creating a list of suppliers
+    /// </summary>
+    /// <returns></returns>
+    private List<Supplier> CreateSupplier()
+    {
+        var supply = CreateSupply();
+        return new List<Supplier>()
+        {
+            new Supplier(1, "Артур Пирожков", "ул. Зацепильная д.42", "89375550203", new List<Supply>(){supply[0]}),
+            new Supplier(2, "Чендлер Бинг", "ул. Центральная д.1", "89370101010", new List<Supply>(){supply[1], supply[7] }),
+            new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289", new List<Supply>(){supply[2], supply[6] }),
+            new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>(){supply[3] }),
+            new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567", new List<Supply>(){supply[4], supply[5] })
         };
     }
 
@@ -186,7 +188,9 @@ public class FactoryTest
     [Fact]
     public void EnterpriseConstructorTest()
     {
-        var enterprise = new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000);
+        var supply = new Supply(1, 1, "20.01.2023", 3);
+        var enterprise = new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000, new List<Supply>() { supply });
+        
         Assert.Equal(1, enterprise.EnterpriseID);
         Assert.Equal("1036300446093", enterprise.RegistrationNumber);
         Assert.Equal("Материально-техническое снабжение", enterprise.Type);
@@ -196,6 +200,8 @@ public class FactoryTest
         Assert.Equal("ЗАО", enterprise.OwnershipForm);
         Assert.Equal(100, enterprise.EmployeesCount);
         Assert.Equal(1000, enterprise.TotalArea);
+        Assert.Equal(1000, enterprise.TotalArea);
+        Assert.Equal(new List<Supply>() { supply }, enterprise.Supplies);
     }
 
     /// <summary>
@@ -204,11 +210,13 @@ public class FactoryTest
     [Fact]
     public void SupplierConstructorTest()
     {
-        var supplier = new Supplier(1, "Джон Сноу", "ул. Таргариенская д.35", "89372229978");
+        var supply = new Supply(1, 1, "20.01.2023", 3);
+        var supplier = new Supplier(1, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>() { supply });
         Assert.Equal(1, supplier.SupplierID);
         Assert.Equal("Джон Сноу", supplier.Name);
         Assert.Equal("ул. Таргариенская д.35", supplier.Address);
         Assert.Equal("89372229978", supplier.Phone);
+        Assert.Equal(new List<Supply>() { supply }, supplier.Supplies);
     }
 
     /// <summary>

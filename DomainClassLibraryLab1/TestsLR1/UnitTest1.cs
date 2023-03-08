@@ -1,14 +1,14 @@
-namespace UnitTestLR1;
+п»їnamespace UnitTestLR1;
 
 using EmployeeDomain;
 using EmployeeDomainTests;
-using System.Linq;  // для запросов
+using System.Linq;  // РґР»СЏ Р·Р°РїСЂРѕСЃРѕРІ
 
-public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //этот класс на самом деле наследуется от Object
+public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //СЌС‚РѕС‚ РєР»Р°СЃСЃ РЅР° СЃР°РјРѕРј РґРµР»Рµ РЅР°СЃР»РµРґСѓРµС‚СЃСЏ РѕС‚ Object
 {
-    // Существуют факты и теории
-    // факты - методы, применяют один метод
-    // теория - проверяют несколько значений (?)
+    // РЎСѓС‰РµСЃС‚РІСѓСЋС‚ С„Р°РєС‚С‹ Рё С‚РµРѕСЂРёРё
+    // С„Р°РєС‚С‹ - РјРµС‚РѕРґС‹, РїСЂРёРјРµРЅСЏСЋС‚ РѕРґРёРЅ РјРµС‚РѕРґ
+    // С‚РµРѕСЂРёСЏ - РїСЂРѕРІРµСЂСЏСЋС‚ РЅРµСЃРєРѕР»СЊРєРѕ Р·РЅР°С‡РµРЅРёР№ (?)
     private readonly EmployeeDomainFixture _fixture;
     public EmployeeDomainTestClass(EmployeeDomainFixture fixture)
     {

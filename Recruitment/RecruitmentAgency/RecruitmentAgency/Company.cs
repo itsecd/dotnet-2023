@@ -16,7 +16,7 @@ public class Company
     /// Telephone - a string that stores the phone number
     /// </summary>
     public string Telephone { set; get; } = string.Empty;
-    /// </summary>  
+    /// <summary>  
     /// id - shows the company's id
     /// </summary>  
     public int Id { set; get; }

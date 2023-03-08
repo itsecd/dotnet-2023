@@ -28,7 +28,7 @@ public class CompanyApplication
     /// Education - shows the education level
     /// </summary>
     public string Education { set; get; } = string.Empty;
-    /// </summary>  
+    /// <summary>  
     /// id - shows the company's application id
     /// </summary>  
     public int Id { set; get; }

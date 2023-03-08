@@ -58,7 +58,19 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void FifthRequest()
     {
-
+        var fixtureShipments = _fixture.FixtureShipments;
+        var numbersOfProviders = from shipment in fixtureShipments
+                      group shipment by shipment.Provider.Id into g
+                      select new
+                      {
+                          provider = g.First().Provider.Id,
+                          Count = g.Count()
+                      };
+        var request = from num in numbersOfProviders
+                       orderby num.Count descending 
+                       select num;
+        var firstItem = request.First();
+        Assert.Equal(4, firstItem.provider);
     }
     /// <summary>
     /// Sixth request: information about providers who delivered the maximum quantity of goods during the given interval.

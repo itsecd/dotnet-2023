@@ -1,6 +1,7 @@
-﻿namespace ClassLibraryLab1;
+﻿namespace EmployeeDomain;
 public class Workshop
 {
     public string Name { get; set; }
-    // public id ??
+    public uint Id { get; set; }
+    public List<Employee> Employees { get; set; }
 }

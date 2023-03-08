@@ -1,6 +1,6 @@
-﻿namespace ClassLibraryLab1;
+﻿namespace EmployeeDomain;
 public class Department
 {
-    public string Name { get; set; }
-    // public id
+    public uint Id { get; set; }
+    public string Name { get; set; } // = string.Empty??
 }

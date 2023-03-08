@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionCommittee", "AdmissionCommittee\AdmissionCommittee.csproj", "{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionCommitteeTest", "AdmissionCommitteTests\AdmissionCommitteeTest.csproj", "{2B075D50-516C-4C74-BBA4-92A4F17A2525}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B075D50-516C-4C74-BBA4-92A4F17A2525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B075D50-516C-4C74-BBA4-92A4F17A2525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B075D50-516C-4C74-BBA4-92A4F17A2525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B075D50-516C-4C74-BBA4-92A4F17A2525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

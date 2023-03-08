@@ -1,50 +1,22 @@
 ﻿namespace AdmissionCommittee;
 /// <summary>
-/// Information about entrants
+/// Information about the entrant's statement
 /// </summary>
-public class Entrant
+public class Statement
 {
     /// <summary>
-    /// IdEntrant - int type value for storing the id entrant
+    /// IdStatement - int value for storing the id statement
     /// </summary>
-    public int IdEntrant { get; set; }
+    public int IdStatement { get; set; }
 
     /// <summary>
-    /// FullName - string value for storing the entrant's full name
+    /// PrioritySpecialities - dictionary value for storing specialities and their priority
     /// </summary>
-    public string FullName { get; set; }
+    public Dictionary<Speciality, int> PrioritySpecialities = new();
 
-    /// <summary>
-    /// DateBirth - DateTime value for storing the entrant's date of birth
-    /// </summary>
-    public DateTime DateBirth { get; set; }
-
-    /// <summary>
-    /// Country - string value for storing the entrant's country
-    /// </summary>
-    public string Country { get; set; }
-
-    /// <summary>
-    /// City - string value for storing the entrant's city
-    /// </summary>
-    public string City { get; set; }
-
-    public Statement Statement { get; set; }
-
-    public List<Result> Results = new();
-
-    public Entrant(int idEntrant, string fullName, DateTime dateBirth, string country, string city, Statement statement)
+    public Statement(int idStatement, Dictionary<Speciality, int> prioritySpecialities)
     {
-        IdEntrant = idEntrant;
-        FullName = fullName;
-        DateBirth = dateBirth;
-        Country = country;
-        City = city;
-        Statement = statement;
-    }
-
-    public Entrant(int idEntrant, string fullName, DateTime dateBirth, string country, string city, Statement statement, List<Result> results) : this(idEntrant, fullName, dateBirth, country, city, statement)
-    {
-        Results = results;
+        IdStatement = idStatement;
+        PrioritySpecialities = prioritySpecialities;
     }
 }

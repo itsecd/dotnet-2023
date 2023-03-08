@@ -47,7 +47,7 @@ public class FabricFixture
             var firstShipment = new Shipment(1, fabrics[0], providers[0], firstDate, 15);
             shipments.Add(firstShipment);
             var secondDate = new DateOnly(2022, 7, 13);
-            var secondShipment = new Shipment(2, fabrics[1], providers[1], secondDate, 8);
+            var secondShipment = new Shipment(2, fabrics[1], providers[1], secondDate, 15);
             shipments.Add(secondShipment);
             var thirdDate = new DateOnly(2022, 8, 13);
             var thirdShipment = new Shipment(2, fabrics[2], providers[2], thirdDate, 11);

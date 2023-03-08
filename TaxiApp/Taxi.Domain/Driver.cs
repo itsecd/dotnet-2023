@@ -14,15 +14,4 @@ public class Driver
 
     public string PhoneNumber { get; set; } = String.Empty;
     
-    public Driver() { }
-
-    public Driver(UInt64 id, string firstName, string lastName, string? patronymic, string passport, string phoneNumber)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Patronymic = patronymic;
-        Passport = passport;
-        PhoneNumber = phoneNumber;
-    }
 }

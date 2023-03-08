@@ -3,7 +3,10 @@
 namespace EmployeeDomainTests;
 public class EmployeeDomainFixture
 {
-
+    /// <summary>
+    /// Returns the list of workshop with empty lists of employees
+    /// That property is used in other properties
+    /// </summary>
     public List<Workshop> WorkshopFixture
     {
         get
@@ -49,6 +52,10 @@ public class EmployeeDomainFixture
 
     }
 
+    /// <summary>
+    /// Returns the list of departments
+    /// That property is used in other properties
+    /// </summary>
     public List<Department> DepartmentFixture
     {
         get
@@ -108,7 +115,10 @@ public class EmployeeDomainFixture
             };
         }
     }
-
+    /// <summary>
+    /// Returns the list of occupations
+    /// That property is used in other properties
+    /// </summary>
     public List<Occupation> OccupationFixture
     {
         get
@@ -148,7 +158,10 @@ public class EmployeeDomainFixture
             };
         }
     }
-
+    /// <summary>
+    /// Returns the list of voucher types with empty lists of vacation vouchers
+    /// That property is used in other properties
+    /// </summary>
     public List<VoucherType> VoucherTypeFixture
     {
         get
@@ -176,7 +189,10 @@ public class EmployeeDomainFixture
             };
         }
     }
-
+    /// <summary>
+    /// Returns the list of employee with filled workshops, lists EmployeeOccupation, DepartmentEmployee, EmployeeVacationVoucher are empty
+    /// That property is used in other properties
+    /// </summary>
     public List<Employee> EmployeeOnlyWorkshopFilledFixture
     {
         get
@@ -272,7 +288,10 @@ public class EmployeeDomainFixture
             return employeeList;
         }
     }
-
+    /// <summary>
+    /// Returns the list of EmployeeOccupation objects with filled employee and occupation. Also every employee has workshop and department filled
+    /// That property is used in testing
+    /// </summary>
     public List<EmployeeOccupation> EmployeeOccupationFixture
     {
         get
@@ -371,7 +390,10 @@ public class EmployeeDomainFixture
             return employeeOccupationList;
         }
     }
-
+    /// <summary>
+    /// Returns the list of DepartmentEmployee object with filled department and not filled employee
+    /// That property is used in other properties
+    /// </summary>
     public List<DepartmentEmployee> DepartmentEmployeeFixture
     {
         get
@@ -424,8 +446,10 @@ public class EmployeeDomainFixture
             };
         }
     }
-
-
+    /// <summary>
+    /// Returns the list of employee with filled workshop and DepartmentEmployee list (EmployeeOccupation and EmployeeVacationVoucher is empty)
+    /// That property is used in testing
+    /// </summary>
     public List<Employee> EmployeeWithDepartmentEmployeeFilledFixture
     {
         get
@@ -450,7 +474,10 @@ public class EmployeeDomainFixture
             return employees;
         }
     }
-
+    /// <summary>
+    /// Returns the list of vacation vouchers with filled vocher type and empty EmployeeVacationVoucher list
+    /// That property is used in other properties
+    /// </summary>
     public List<VacationVoucher> VacationVoucherFixture
     {
         get
@@ -489,7 +516,12 @@ public class EmployeeDomainFixture
             return vacationVouchers;
         }
     }
-
+    /// <summary>
+    /// Returns the list of EmployeeVacationVoucher with filled employee and vacation voucher. 
+    /// (uses EmployeeOnlyWorkshopFilledFixture and VacationVoucherFixture, hence every employee has workshop link filled,
+    /// every vacation voucher has voucher type filled.)
+    /// That property is used in testing
+    /// </summary>
     public List<EmployeeVacationVoucher> EmployeeVacationVoucher
     {
         get

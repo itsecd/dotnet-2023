@@ -2,6 +2,7 @@
 using DotNet2023.DataModel.InstitutionStructure;
 using DotNet2023.DataModel.Organization;
 using DotNet2023.DataModel.Person;
+using System.Text.Json;
 
 namespace DotNet2023.TestConsoleApp;
 
@@ -41,85 +42,70 @@ public static class Generator
     public static Department Department(int department, Faculty faculty,
     HigherEducationInstitution institution)
     {
-        if (!File.Exists(Path + "Departments.txt"))
+        if (!File.Exists(Path + "Departments.json"))
             throw new FileNotFoundException("FileNotFoundException");
 
-        var lines = File.ReadAllLines(Path + "Departments.txt");
+        var departments = new List<Department>();
 
-        return new Department()
+        using (var fs = new FileStream("..\\..\\..\\DataFiles\\Departments.json", FileMode.Open))
         {
-            Name = lines[department],
-            Phone = Phone(),
-            Email = Email(),
-            IdFaculty = faculty.Id,
-            Faculty = faculty,
-            IdInstitute = institution.Id,
-            Institute = institution,
-        };
+            departments = JsonSerializer.Deserialize<List<Department>>(fs);
+        }
+
+        if (department > departments.Count)
+            throw new ArgumentOutOfRangeException($"Argument out of Range. " +
+                $"Yout index - {department}, count elements in collection - {departments.Count}");
+
+        departments[department].Institute = institution;
+        departments[department].IdInstitute = institution.Id;
+        departments[department].IdFaculty = faculty.Id;
+        departments[department].Faculty = faculty;
+
+        return departments[department];
     }
 
     public static Faculty Faculty(int faculty,
         HigherEducationInstitution institution)
     {
-        if (!File.Exists(Path + "Faculity.txt"))
+        if (!File.Exists(Path + "Faculty.json"))
             throw new FileNotFoundException("FileNotFoundException");
 
-        var lines = File.ReadAllLines(Path + "Faculity.txt");
+        var faculties = new List<Faculty>();
 
-        return new Faculty()
+        using (var fs = new FileStream("..\\..\\..\\DataFiles\\Faculty.json", FileMode.Open))
         {
-            Name = lines[faculty],
-            Phone = Phone(),
-            Email = Email(),
-            Institute = institution,
-            IdInstitute = institution.Id,
-        };
-    }
+            faculties = JsonSerializer.Deserialize<List<Faculty>>(fs);
+        }
 
-    public static EducationWorker Rector(HigherEducationInstitution institution,
-        string name)
-    {
-        var words = name.Split(' ');
-        return new EducationWorker()
-        {
-            Name = words[1],
-            Surname = words[0],
-            Patronymic = words[2],
-            Phone = Phone(),
-            Email = Email(),
-            ScienceDegree = "Научная степень",
-            JobTitle = "Ректор",
-            Rank = "Звание.",
-            Salary = 100500,
-            IdOrganization = institution.Id,
-        };
+        if (faculty > faculties.Count)
+            throw new ArgumentOutOfRangeException($"Argument out of Range. " +
+                $"Yout index - {faculty}, count elements in collection - {faculties.Count}");
+
+        faculties[faculty].IdInstitute = institution.Id;
+        faculties[faculty].Institute = institution;
+        return faculties[faculty];
     }
 
 
     public static HigherEducationInstitution Institution(int inst, int[] faculties,
         Dictionary<int, int[]> departments)
     {
-        if (!File.Exists(Path + "Departments.txt"))
+        if (!File.Exists(Path + "Institute.json"))
             throw new FileNotFoundException("FileNotFoundException");
 
-        var lines = File.ReadAllLines(Path + "Institute.txt");
-        var elem = lines[inst].Split('\t');
+        var institutions = new List<HigherEducationInstitution>();
 
-        var institute = new HigherEducationInstitution()
+        using (var fs = new FileStream(Path + "Institute.json", FileMode.Open))
         {
-            Email = elem[5],
-            Phone = elem[4],
-            Initials = elem[0],
-            FullName = elem[1],
-            LegalAddress = elem[2],
-            RegistrationNumber = RegisterNumber(),
-            BuildingProperty = BuildingProperty.Federal,
-            InstitutionalProperty = InstitutionalProperty.Municipal,
-        };
+            institutions = JsonSerializer.Deserialize<List<HigherEducationInstitution>>(fs);
+        }
 
-        var rector = Rector(institute, elem[3]);
-        institute.Rector = rector;
-        institute.IdRector = rector.Id;
+        if (inst > institutions.Count)
+            throw new ArgumentOutOfRangeException($"Argument out of Range. " +
+                $"Yout index - {inst}, count elements in collection - {institutions.Count}");
+
+
+        var institute = institutions[inst];
 
         for (var i = 0; i < faculties.Length; i++)
         {
@@ -139,69 +125,61 @@ public static class Generator
 
     public static Speciality Speciality(int speciality)
     {
-        if (!File.Exists(Path + "Speciality.txt"))
+        if (!File.Exists(Path + "Speciality.json"))
             throw new FileNotFoundException("FileNotFoundException");
 
-        var lines = File.ReadAllLines(Path + "Speciality.txt");
-        var elem = lines[speciality].Split('\t');
+        var specialties = new List<Speciality>();
 
-        return new Speciality()
+        using (var fs = new FileStream(Path+"Speciality.json", FileMode.OpenOrCreate))
         {
-            Code = elem[0],
-            Title = elem[1],
-            StudyFormat = StudyFormat.FullTime
-        };
+            specialties = JsonSerializer.Deserialize<List<Speciality>>(fs);
+        }
+        if (speciality > specialties!.Count)
+            throw new ArgumentOutOfRangeException($"Argument out of Ragne. " +
+                $"Your id: {speciality}, count elements: {specialties.Count}");
+
+        return specialties[speciality];
     }
 
 
-    public static Student Student(Speciality speciality, GroupOfStudents group,
-        int id = -1, string name = "")
+    public static Student Student(Speciality speciality, GroupOfStudents group, 
+        BasePerson person)
     {
-        var student = new string[3];
-        if (name == "")
+        var student = new Student()
         {
-            if (!File.Exists(Path + "Names.txt"))
-                throw new FileNotFoundException("FileNotFoundException");
-
-            var lines = File.ReadAllLines(Path + "Names.txt");
-            id = id >= lines.Length || id < 0 ? Rnd.Next(0, lines.Length) : id;
-            student = lines[id].Split(' ');
-        }
-        else
-            student = name.Split(' ');
-
-        var res = new Student()
-        {
-            Name = student[1],
-            Surname = student[0],
-            Patronymic = student[2],
-            Phone = Phone(),
-            Email = Email(),
+            Name = person.Name,
+            Surname = person.Surname,
+            Patronymic = person.Patronymic,
+            Phone = person.Phone,
+            Email = person.Email,
             Speciality = speciality,
             IdSpeciality = speciality.Code,
             IdGroup = group.Id,
             Group = group
         };
-        group.Students!.Add(res);
+        group.Students!.Add(student);
 
-        return res;
+        return student;
     }
 
     public static ICollection<Student> Students(int count, Speciality speciality,
         GroupOfStudents group)
     {
-        if (!File.Exists(Path + "Names.txt"))
+        if (!File.Exists(Path + "Persons.json"))
             throw new FileNotFoundException("FileNotFoundException");
 
-        var lines = File.ReadAllLines(Path + "Names.txt");
+        var persons = new List<Student>();
+        using (var fs = new FileStream(Path + "Persons.json", FileMode.Open))
+        {
+            persons.AddRange(JsonSerializer.Deserialize<List<Student>>(fs));
+        }
 
         var collection = new List<Student>();
         for (var i = 0; i < count; i++)
-            collection.Add(Student(speciality, group, -1, lines[Rnd.Next(0, lines.Length)]));
+            collection.Add(Student(speciality, group, persons[Rnd.Next(0, persons.Count)]));     
 
         return collection;
     }
-
 
     public static GroupOfStudents GroupOfStudent(Speciality speciality,
     Department department)

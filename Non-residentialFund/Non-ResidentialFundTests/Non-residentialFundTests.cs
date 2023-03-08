@@ -1,4 +1,4 @@
-﻿using Non_residentialFundDomain;
+using Non_residentialFundDomain;
 using System;
 
 namespace Non_ResidentialFundTests;

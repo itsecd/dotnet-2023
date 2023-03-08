@@ -3,34 +3,35 @@
 public class Grade
 {
     /// <summary>
-    /// Идентификатор
+    /// ID
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Предмет
+    /// Subject
     /// </summary>
     public Subject? Subject { get; set; }
 
     /// <summary>
-    /// Студент
+    /// Student
     /// </summary>
     public Student? Student { get; set; }
 
     /// <summary>
-    /// Оценка
+    /// Mark
     /// </summary>
     public int Mark { get; set; }
 
     /// <summary>
-    /// Дата оценки
+    /// Date of assessment
     /// </summary>
     public DateTime Date { get; set; }
 
     public Grade() { }
 
-    public Grade(Subject subject, Student student, int mark, DateTime dateTime)
+    public Grade(int id,Subject subject, Student student, int mark, DateTime dateTime)
     {
+        Id = id;
         Subject = subject;
         Student = student;
         Mark = mark;

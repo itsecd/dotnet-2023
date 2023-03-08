@@ -3,29 +3,30 @@
 public class Subject
 {
     /// <summary>
-    /// Идентификатор
+    /// ID
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Наименование предмета
+    /// Name of the subject
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Год обучения
+    /// Year of study
     /// </summary>
     public int Year { get; set; }
 
     /// <summary>
-    /// Список оценок по данному предмету
+    /// List of grades in this subject
     /// </summary>
     public List<Grade>? Grades { get; set; }
 
     public Subject() { }
 
-    public Subject(string name, int year, List<Grade>? grades)
+    public Subject(int id,string name, int year, List<Grade>? grades)
     {
+        Id = id;
         Name = name;
         Year = year;
         Grades = grades;

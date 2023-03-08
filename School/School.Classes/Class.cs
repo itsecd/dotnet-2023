@@ -3,29 +3,30 @@
 public class Class
 {
     /// <summary>
-    /// Идентификатор класса
+    /// Class ID
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Номер класса
+    /// Number of class
     /// </summary>
     public int Number { get; set; }
 
     /// <summary>
-    /// Литера класса
+    /// Class letter
     /// </summary>
     public char Letter { get; set; }
 
     /// <summary>
-    /// Список студентов в данном классе
+    /// List of students in this class
     /// </summary>
     public List<Student>? Students { get; set; }
 
     public Class() { }
 
-    public Class(int number, char letter, List<Student>? students)
+    public Class(int id, int number, char letter, List<Student>? students)
     {
+        Id = id;
         Number = number;
         Letter = letter;
         Students = students;

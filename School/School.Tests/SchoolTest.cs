@@ -200,4 +200,5 @@ public class SchoolTest
         Assert.Equal(4, infoMarks[1].Max);
         Assert.Equal(3.8, infoMarks[1].Average);
     }
+
 }

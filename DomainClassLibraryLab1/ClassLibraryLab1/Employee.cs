@@ -1,9 +1,13 @@
 ﻿namespace EmployeeDomain;
+/// <summary>
+/// Classs Employee represents an employee in organization, it contains personal information and
+/// it has lists of other classes -  EmployeeOccupation, DepartmentEmployee, EmployeeVacationVoucher to represent many-to-many relationship.
+/// It also has a link to Workshop class for one-to-many relationship.
+/// </summary>
 public class Employee
 {
-
     /// <summary>
-    /// Identificator for each Employee object
+    /// Id - Identificator for each Employee object
     /// </summary>
     public Guid Id { get; set; } = Guid.Empty;
     /// <summary>

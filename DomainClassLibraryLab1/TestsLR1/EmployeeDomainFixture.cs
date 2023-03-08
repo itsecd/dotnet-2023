@@ -177,11 +177,12 @@ public class EmployeeDomainFixture
         }
     }
 
-    public List<Employee> EmployeeFixture
+    public List<Employee> EmployeeOnlyWorkshopFilledFixture
     {
         get
         {
-            return new List<Employee>()
+            var workshopList = WorkshopFixture;
+            var employeeList =  new List<Employee>()
                 {
                         new Employee
                         { 
@@ -260,6 +261,15 @@ public class EmployeeDomainFixture
                             EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
                         }
                 };
+            workshopList[0].Employees.Add(employeeList[3]);
+            workshopList[1].Employees.Add(employeeList[2]);
+            workshopList[2].Employees.Add(employeeList[1]);
+            workshopList[3].Employees.Add(employeeList[0]);
+            employeeList[3].Workshop = workshopList[0];
+            employeeList[2].Workshop = workshopList[1];
+            employeeList[1].Workshop = workshopList[2];
+            employeeList[0].Workshop = workshopList[3];
+            return employeeList;
         }
     }
 
@@ -267,66 +277,98 @@ public class EmployeeDomainFixture
     {
         get
         {
-            return new List<EmployeeOccupation>
+            var employeeList = EmployeeOnlyWorkshopFilledFixture;
+            var occupationList = OccupationFixture;
+            var departmentEmployeeList = DepartmentEmployeeFixture;
+            var employeeOccupationList = new List<EmployeeOccupation>
             {
                 new EmployeeOccupation
                 {
                     Id = 1,
                     HireDate = new DateOnly(2000, 1, 27),
                     DismissalDate = null,
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[0],
+                    Occupation = occupationList[1],
                 },
                 new EmployeeOccupation
                 {
                     Id = 2,
                     HireDate = new DateOnly(1998, 3, 20),
                     DismissalDate = new DateOnly(2010, 5, 23),
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[2],
+                    Occupation = occupationList[4]
                 },
                 new EmployeeOccupation
                 {
                     Id = 3,
                     HireDate = new DateOnly(2010, 5, 24),
                     DismissalDate = null,
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[2],
+                    Occupation = occupationList[1]
                 },
                 new EmployeeOccupation
                 {
                     Id = 4,
                     HireDate = new DateOnly(2018, 8, 7),
                     DismissalDate = null,
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[1],
+                    Occupation = occupationList[2]
                 },
                 new EmployeeOccupation
                 {
                     Id = 5,
                     HireDate = new DateOnly(2000, 9, 10),
                     DismissalDate = new DateOnly(2011, 11, 11),
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[3],
+                    Occupation = occupationList[1]
                 },
                 new EmployeeOccupation
                 {
                     Id = 6,
                     HireDate = new DateOnly(2011, 11, 12),
                     DismissalDate = new DateOnly(2016, 3, 24),
-                    Employee = null,
-                    Occupation = null
+                    Employee = employeeList[3],
+                    Occupation = occupationList[3]
                 },
                 new EmployeeOccupation
                 {
                     Id = 7,
                     HireDate = new DateOnly(2016, 3, 25),
                     DismissalDate = null,
-                    Employee = null,
-                    Occupation = null
-                },
-
+                    Employee = employeeList[3],
+                    Occupation = occupationList[4]
+                }
             };
+            employeeList[0].EmployeeOccupation.Add(employeeOccupationList[0]);
+            employeeList[2].EmployeeOccupation.Add(employeeOccupationList[1]);
+            employeeList[2].EmployeeOccupation.Add(employeeOccupationList[2]);
+            employeeList[1].EmployeeOccupation.Add(employeeOccupationList[3]);
+            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[4]);
+            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[5]);
+            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[6]);
+            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[0]);
+            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[2]);
+            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[4]);
+            occupationList[4].EmployeeOccupation.Add(employeeOccupationList[1]);
+            occupationList[4].EmployeeOccupation.Add(employeeOccupationList[6]);
+            occupationList[2].EmployeeOccupation.Add(employeeOccupationList[3]);
+            occupationList[3].EmployeeOccupation.Add(employeeOccupationList[5]);
+
+            employeeList[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
+            employeeList[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
+            employeeList[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
+            employeeList[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
+            employeeList[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
+            employeeList[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
+            employeeList[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
+            departmentEmployeeList[0].Employee = employeeList[0];
+            departmentEmployeeList[1].Employee = employeeList[0];
+            departmentEmployeeList[2].Employee = employeeList[1];
+            departmentEmployeeList[3].Employee = employeeList[2];
+            departmentEmployeeList[4].Employee = employeeList[1];
+            departmentEmployeeList[5].Employee = employeeList[2];
+            departmentEmployeeList[6].Employee = employeeList[3];
+            return employeeOccupationList;
         }
     }
 
@@ -380,6 +422,114 @@ public class EmployeeDomainFixture
                         Id = 7
                 }
             };
+        }
+    }
+
+
+    public List<Employee> EmployeeWithDepartmentEmployeeFilledFixture
+    {
+        get
+        {
+            var departmentList = DepartmentFixture;
+            var employees = EmployeeOnlyWorkshopFilledFixture;
+            var departmentEmployeeList = DepartmentEmployeeFixture;
+            employees[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
+            employees[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
+            employees[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
+            employees[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
+            employees[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
+            employees[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
+            employees[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
+            departmentEmployeeList[0].Employee = employees[0];
+            departmentEmployeeList[1].Employee = employees[0];
+            departmentEmployeeList[2].Employee = employees[1];
+            departmentEmployeeList[3].Employee = employees[2];
+            departmentEmployeeList[4].Employee = employees[1];
+            departmentEmployeeList[5].Employee = employees[2];
+            departmentEmployeeList[6].Employee = employees[3];
+            return employees;
+        }
+    }
+
+    public List<VacationVoucher> VacationVoucherFixture
+    {
+        get
+        {
+            var voucherTypes = VoucherTypeFixture;
+            var vacationVouchers = new List<VacationVoucher>
+            {
+                new VacationVoucher
+                {
+                    Id = 1,
+                    VoucherType = null,
+                    IssueDate = new DateOnly(2022, 3, 22),
+                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                },
+                new VacationVoucher
+                {
+                    Id = 2,
+                    VoucherType = null,
+                    IssueDate = new DateOnly(2022, 5, 12),
+                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                },
+                new VacationVoucher
+                {
+                    Id = 3,
+                    VoucherType = null,
+                    IssueDate = new DateOnly(2020, 1, 5),
+                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                }
+            };
+            voucherTypes[0].VacationVoucher.Add(vacationVouchers[0]);
+            voucherTypes[1].VacationVoucher.Add(vacationVouchers[1]);
+            voucherTypes[2].VacationVoucher.Add(vacationVouchers[2]);
+            vacationVouchers[0].VoucherType = voucherTypes[0];
+            vacationVouchers[1].VoucherType = voucherTypes[1];
+            vacationVouchers[2].VoucherType = voucherTypes[2];
+            return vacationVouchers;
+        }
+    }
+
+    public List<EmployeeVacationVoucher> EmployeeVacationVoucher
+    {
+        get
+        {
+            var employees = EmployeeOnlyWorkshopFilledFixture;
+            var vacationVouchers = VacationVoucherFixture;
+            var employeeVacationVoucherList = new List<EmployeeVacationVoucher>()
+            {
+                new EmployeeVacationVoucher
+                {
+                    Id = 1,
+                    Employee = null,
+                    VacationVoucher = null
+                },
+                new EmployeeVacationVoucher
+                {
+                    Id = 2,
+                    Employee = null,
+                    VacationVoucher = null
+                },
+                new EmployeeVacationVoucher
+                {
+                    Id = 3,
+                    Employee = null,
+                    VacationVoucher = null
+                }
+            };
+            employees[0].EmployeeVacationVoucher.Add(employeeVacationVoucherList[0]);
+            employees[1].EmployeeVacationVoucher.Add(employeeVacationVoucherList[1]);
+            employees[2].EmployeeVacationVoucher.Add(employeeVacationVoucherList[2]);
+            vacationVouchers[0].EmployeeVacationVoucher.Add(employeeVacationVoucherList[0]);
+            vacationVouchers[1].EmployeeVacationVoucher.Add(employeeVacationVoucherList[1]);
+            vacationVouchers[2].EmployeeVacationVoucher.Add(employeeVacationVoucherList[2]);
+            employeeVacationVoucherList[0].Employee = employees[0];
+            employeeVacationVoucherList[1].Employee = employees[1];
+            employeeVacationVoucherList[2].Employee = employees[2];
+            employeeVacationVoucherList[0].VacationVoucher = vacationVouchers[0];
+            employeeVacationVoucherList[1].VacationVoucher = vacationVouchers[1];
+            employeeVacationVoucherList[2].VacationVoucher = vacationVouchers[2];
+            return employeeVacationVoucherList;
         }
     }
 }

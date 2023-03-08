@@ -1,14 +1,8 @@
-﻿namespace UnitTestLR1;
+﻿namespace EmployeeDomainTests;
+using System.Linq;
 
-using EmployeeDomain;
-using EmployeeDomainTests;
-using System.Linq;  // для запросов
-
-public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //этот класс на самом деле наследуется от Object
+public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
 {
-    // Существуют факты и теории
-    // факты - методы, применяют один метод
-    // теория - проверяют несколько значений (?)
     private readonly EmployeeDomainFixture _fixture;
     public EmployeeDomainTestClass(EmployeeDomainFixture fixture)
     {
@@ -17,53 +11,16 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //
     [Fact]
     public void TestFirstQuery()
     {
-        var departmentList = _fixture.DepartmentFixture;
-        var employees = _fixture.EmployeeFixture;
-        var departmentEmployeeList = _fixture.DepartmentEmployeeFixture;
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
-        employees[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
-        departmentEmployeeList[0].Employee = employees[0];
-        departmentEmployeeList[1].Employee = employees[0];
-        departmentEmployeeList[2].Employee = employees[1];
-        departmentEmployeeList[3].Employee = employees[2];
-        departmentEmployeeList[4].Employee = employees[1];
-        departmentEmployeeList[5].Employee = employees[2];
-        departmentEmployeeList[6].Employee = employees[3];
-        var requestFirst = (from employee in employees
+        var firstQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                             from departmentEmployeeItem in employee.DepartmentEmployee
-                            where departmentEmployeeItem.Department != null && departmentEmployeeItem.Department.Id == 1
-                            select employee).ToList();
-        Assert.Equal(3, requestFirst.Count);
+                      where departmentEmployeeItem.Department != null && departmentEmployeeItem.Department.Id == 1
+                      select employee).ToList();
+        Assert.Equal(3, firstQuery.Count);
     }
     [Fact]
     public void TestSecondQuery()
     {
-        var departmentList = _fixture.DepartmentFixture;
-        var employees = _fixture.EmployeeFixture;
-        var departmentEmployeeList = _fixture.DepartmentEmployeeFixture;
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
-        employees[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
-        departmentEmployeeList[0].Employee = employees[0];
-        departmentEmployeeList[1].Employee = employees[0];
-        departmentEmployeeList[2].Employee = employees[1];
-        departmentEmployeeList[3].Employee = employees[2];
-        departmentEmployeeList[4].Employee = employees[1];
-        departmentEmployeeList[5].Employee = employees[2];
-        departmentEmployeeList[6].Employee = employees[3];
-
-
-
-        var requestSecond = (from employee in employees
+        var secondQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                              orderby employee.LastName, employee.FirstName, employee.PatronymicName
                              from departmentEmployeeItem in employee.DepartmentEmployee
                              group employee by new { employee.Id, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
@@ -77,48 +34,37 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //
                                  PatronymicName = grp.Key.PatronymicName,
                                  CountDepart = grp.Count()
                              }).ToList();
-        Assert.Equal(3, requestSecond.Count);
-        /*
-        var requestSecond = (from employee in employees
-                             orderby employee.LastName, employee.FirstName, employee.PatronymicName
-                             join departmentEmployeeItem in departmentEmployeeList on employee equals departmentEmployeeItem.Employee
-
-                             group employee by new { employee.Id, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
-                             where grp.Count() > 1
-                             orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
-                             select new
-                             {
-                                 Id = grp.Key.Id,
-                                 FirstName = grp.Key.FirstName,
-                                 LastName = grp.Key.LastName,
-                                 PatronymicName = grp.Key.PatronymicName,
-                                 CountDepart = grp.Count()
-                             }).ToList();
-        Assert.Equal(3, requestSecond.Count);
-        Assert.Equal(requestSecond, requestSecond22); */
+        Assert.Equal(3, secondQuery.Count);
+    }
+    [Fact]
+    public void TestThirdQuery()
+    {
+        var thirdQuery = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
+                            where employeeOccupationItem != null && employeeOccupationItem.DismissalDate != null
+                            from department in employeeOccupationItem?.Employee?.DepartmentEmployee
+                            select
+                            new
+                            {
+                                regNumber = employeeOccupationItem.Employee?.regNumber,
+                                firstName = employeeOccupationItem.Employee?.FirstName,
+                                lastName = employeeOccupationItem.Employee?.LastName,
+                                patronymicName = employeeOccupationItem.Employee?.PatronymicName,
+                                birthDate = employeeOccupationItem.Employee?.BirthDate,
+                                workshop = employeeOccupationItem.Employee?.Workshop,
+                                department = department,
+                                occupation = employeeOccupationItem.Occupation,
+                            }).ToList();
+        Assert.Equal(4, thirdQuery.Count());
+        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.regNumber == 1337);
+        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.regNumber == 443);
+        Assert.Contains(thirdQuery, requestElem => requestElem.regNumber == 5);
+        Assert.Contains(thirdQuery, requestElem => requestElem.regNumber == 3);
     }
     [Fact]
     public void TestFourthQuery()
     {
-        var departmentList = _fixture.DepartmentFixture;
-        var employees = _fixture.EmployeeFixture;
-        var departmentEmployeeList = _fixture.DepartmentEmployeeFixture;
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
-        employees[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
-        employees[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
-        employees[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
-        employees[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
-        departmentEmployeeList[0].Employee = employees[0];
-        departmentEmployeeList[1].Employee = employees[0];
-        departmentEmployeeList[2].Employee = employees[1];
-        departmentEmployeeList[3].Employee = employees[2];
-        departmentEmployeeList[4].Employee = employees[1];
-        departmentEmployeeList[5].Employee = employees[2];
-        departmentEmployeeList[6].Employee = employees[3];
-
-        var requestFourth =
+        var employees = _fixture.EmployeeWithDepartmentEmployeeFilledFixture;
+        var fourthQuery =
             (from tuple in (
                                 from employee in employees
                                 from departmentEmployeeItem in employee.DepartmentEmployee
@@ -135,6 +81,58 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>   //
                  averageAge = grp.Average(employee => employee.employeeAge),
                  departmentId = grp.Key
              }).ToList();
-        Assert.NotEqual(requestFourth[0].averageAge, requestFourth[1].averageAge);
+        Assert.NotEqual(fourthQuery[0].averageAge, fourthQuery[1].averageAge);
+        Assert.Equal(2, fourthQuery.Count());
+    }
+    [Fact]
+    public void TestFifthQuery()
+    {
+        var fifthQuery = (from employeeVoucherItem in _fixture.EmployeeVacationVoucher
+                          where (DateOnly.FromDateTime(DateTime.Now).DayNumber - employeeVoucherItem.VacationVoucher?.IssueDate.DayNumber) < 365.2425
+                          select new
+                          {
+                              regNumber = employeeVoucherItem.Employee?.regNumber,
+                              firstName = employeeVoucherItem.Employee?.FirstName,
+                              lastName = employeeVoucherItem.Employee?.LastName,
+                              voucherType = employeeVoucherItem.VacationVoucher?.VoucherType
+                          }
+                          ).ToList();
+        Assert.Contains(fifthQuery, queryElem => queryElem.regNumber == 1337);
+        Assert.Contains(fifthQuery, queryElem => queryElem.regNumber == 443);
+        Assert.Equal(2, fifthQuery.Count());
+    }
+    [Fact]
+    public void TestSixthQuery()
+    {
+        var subqueryReplaceNull = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
+                                   select new
+                                   {
+                                       regNumber = employeeOccupationItem.Employee?.regNumber,
+                                       hireDate = employeeOccupationItem.HireDate,
+                                       dismissalDate = (employeeOccupationItem.DismissalDate == null ? DateOnly.FromDateTime(DateTime.Now) : employeeOccupationItem.DismissalDate),
+                                       firstName = employeeOccupationItem.Employee?.FirstName,
+                                       lastName = employeeOccupationItem.Employee?.LastName
+                                   }
+                            ).ToList();
+        var sixthQuery = (from subqueryElem in subqueryReplaceNull
+                            group subqueryElem by new { subqueryElem.regNumber, subqueryElem.firstName, subqueryElem.lastName } into grp
+                            orderby grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425) descending
+                            select new
+                            {
+                                regNumber = grp.Key.regNumber,
+                                firstName = grp.Key.firstName,
+                                lastName = grp.Key.lastName,
+                                workExperience = grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425)
+                            }
+                            ).ToList();
+        Assert.Equal(4, sixthQuery.Count());
+        Assert.True(sixthQuery[0].workExperience > 24);
+        Assert.True(sixthQuery[1].workExperience > 23);
+        Assert.True(sixthQuery[2].workExperience > 22);
+        Assert.True(sixthQuery[2].workExperience > 4);
+        Assert.Equal((uint)3, sixthQuery[0].regNumber);
+        Assert.Equal((uint)1337, sixthQuery[1].regNumber);
+        Assert.Equal((uint)5, sixthQuery[2].regNumber);
+        Assert.Equal((uint)443, sixthQuery[3].regNumber);
     }
 }

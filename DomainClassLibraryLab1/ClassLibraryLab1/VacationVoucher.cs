@@ -1,4 +1,9 @@
 ﻿namespace EmployeeDomain;
+/// <summary>
+/// VacationVoucher - represents a vacation voucher, that may be issued to an employee.
+/// The class stores information about issue date, voucher type and also list of EmployeeVacationVoucher in
+/// order to maintain many-to-many relationship.
+/// </summary>
 public class VacationVoucher
 {
     /// <summary>

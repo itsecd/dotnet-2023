@@ -1,8 +1,6 @@
 ﻿namespace RecruitmentTests;
 
-using Newtonsoft.Json.Linq;
 using System.Linq;
-using Xunit.Sdk;
 
 public class MediaTest : IClassFixture<RecruitmentFixture>
 {
@@ -69,13 +67,13 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     [Fact]
     public void MostPopularCompaniesTest()
     {
-        var result = (from ca in _fixture.FixtureCompaniesApplications
-                      group ca by ca.Company.CompanyName into g
-                      orderby g.Count() descending
+        var result = (from companyApplication in _fixture.FixtureCompaniesApplications
+                      group companyApplication by companyApplication.Company.CompanyName into tableGroup
+                      orderby tableGroup.Count() descending
                       select new
                       {
-                          Company = g.Key,
-                          NumRequests = g.Count()
+                          Company = tableGroup.Key,
+                          NumRequests = tableGroup.Count()
                       }).Take(5).ToList();
         var expected = new List<string> { "Microsoft", "Netflix", "Oracle" };
 
@@ -88,7 +86,7 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     {
         var result = from companyApplication in _fixture.FixtureCompaniesApplications
                      where companyApplication.Salary == (from companyApplicationSalaries in _fixture.FixtureCompaniesApplications
-                                         select companyApplicationSalaries.Salary).Max()
+                                                         select companyApplicationSalaries.Salary).Max()
                      select new
                      {
                          CompanyRequest = companyApplication,

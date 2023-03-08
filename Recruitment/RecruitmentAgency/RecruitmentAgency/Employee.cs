@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-using System.Net;
-
-namespace RecruitmentAgency;
+﻿namespace RecruitmentAgency;
 /// <summary>
 /// Employee - a class that describes the characteristics of a worker
 /// </summary>
@@ -31,7 +28,7 @@ public class Employee
     /// id - shows the employee's id 
     /// </summary>  
     public int Id { set; get; }
-    /// <summary><
+    /// <summary>
     /// Applications - shows the current employee's applications
     /// </summary>
     public List<JobApplication> Applications { set; get; } = new List<JobApplication>();

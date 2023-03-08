@@ -9,6 +9,6 @@ public class EmployeeOccupation
     public uint Id { get; set; }
     public DateOnly HireDate { get; set; }
     public DateOnly? DismissalDate { get; set; }
-    public Occupation Occupation { get; set; }
-    public Employee Employee { get; set; }
+    public Occupation? Occupation { get; set; }
+    public Employee? Employee { get; set; }
 }

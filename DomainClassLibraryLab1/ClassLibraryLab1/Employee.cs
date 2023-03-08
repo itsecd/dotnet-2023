@@ -59,34 +59,14 @@ public class Employee
     /// has been working), and active occupation. Also includes dates of hire and dismissal dates,
     /// for more details proceed to "EmployeeOccupation" class
     /// </summary>
-    public List<EmployeeOccupation> EmployeeOccupation { get; set; }
+    public List<EmployeeOccupation> EmployeeOccupation { get; set; } = new List<EmployeeOccupation>();
     /// <summary>
     /// DepartmentEmployee - a list of employee's departments in which the employee is currently working
     /// One employee can work in multiple departments
     /// </summary>
-    public List<DepartmentEmployee> DepartmentEmployee { get; set; }
+    public List<DepartmentEmployee> DepartmentEmployee { get; set; } = new List<DepartmentEmployee>();
     /// EmployeeVactionVoucher - a list of employee's vacation vouchers. For more details proceed to
     /// "EmployeeVacationVoucher" and "VacationVoucher"
     /// </summary>
-    public List<EmployeeVacationVoucher> EmployeeVacationVoucher { get; set; }
-
-    public Employee(Guid id, uint regNumber, string firstName, string lastName, string patronymicName, DateOnly birthDate, Workshop? workshop, string homeAddress, string homeTelephone, string workTelephone, string familyStatus, uint familyMembersCount, uint childrenCount, List<EmployeeOccupation> employeeOccupation, List<DepartmentEmployee> departmentEmployee, List<EmployeeVacationVoucher> employeeVacationVoucher)
-    {
-        Id = id;
-        this.regNumber = regNumber;
-        FirstName = firstName;
-        LastName = lastName;
-        PatronymicName = patronymicName;
-        BirthDate = birthDate;
-        Workshop = workshop;
-        HomeAddress = homeAddress;
-        HomeTelephone = homeTelephone;
-        WorkTelephone = workTelephone;
-        FamilyStatus = familyStatus;
-        FamilyMembersCount = familyMembersCount;
-        ChildrenCount = childrenCount;
-        EmployeeOccupation = employeeOccupation;
-        DepartmentEmployee = departmentEmployee;
-        EmployeeVacationVoucher = employeeVacationVoucher;
-    }
+    public List<EmployeeVacationVoucher> EmployeeVacationVoucher { get; set; } = new List<EmployeeVacationVoucher>();
 }

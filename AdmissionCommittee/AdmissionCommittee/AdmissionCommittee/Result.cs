@@ -8,12 +8,10 @@ public class Result
     /// IdResult - int value for storing the id result
     /// </summary>
     public int IdResult { get; set; }
-
     /// <summary>
     /// NameSubject - string value for storing the name of the subject(exam)
     /// </summary>
     public string NameSubject { get; set; }
-
     /// <summary>
     /// Mark - int value for storing the exam score
     /// </summary>

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibraryLab1\EmployeeDomain.csproj" />
+    <ProjectReference Include="..\EmployeeDomain\EmployeeDomain.csproj" />
   </ItemGroup>
 
 </Project>

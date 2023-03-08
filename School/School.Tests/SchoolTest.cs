@@ -59,16 +59,16 @@ public class SchoolTest
     private List<Student> CreateListStudents()
     {
         return new List<Student>()
-    {
-        new Student("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/1/10"),null),
-        new Student("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б',null), DateTime.Parse("2000/1/11"),null),
-        new Student("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в',null), DateTime.Parse("2001/2/16"),null),
-        new Student("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а',null), DateTime.Parse("1999/1/10"),null),
-        new Student("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/2/10"),null),
-        new Student("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2003/4/10"),null),
-        new Student("Кареглазов", "Алексей", "Алексеевич", "2001-11111", new Class(8, 'в',null), DateTime.Parse("2005/11/10"),null),
-        new Student("Приветов", "Алексей", "Алексеевич", "2001-11111", new Class(9, 'г',null), DateTime.Parse("2008/1/10"),null)
-    };
+        {
+            new Student("Маризов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/1/10"),null),
+            new Student("Воронин", "Константин", "Борисович", "2001-11111", new Class(10, 'б',null), DateTime.Parse("2000/1/11"),null),
+            new Student("Аршавин", "Андрей", "Алексеевич", "2001-11111", new Class(9, 'в',null), DateTime.Parse("2001/2/16"),null),
+            new Student("Путилин", "Никита", "Алексеевич", "2001-11111", new Class(10, 'а',null), DateTime.Parse("1999/1/10"),null),
+            new Student("Сазонов", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2001/2/10"),null),
+            new Student("Ярмаков", "Алексей", "Алексеевич", "2001-11111", new Class(11, 'а',null), DateTime.Parse("2003/4/10"),null),
+            new Student("Кареглазов", "Алексей", "Алексеевич", "2001-11111", new Class(8, 'в',null), DateTime.Parse("2005/11/10"),null),
+            new Student("Приветов", "Алексей", "Алексеевич", "2001-11111", new Class(9, 'г',null), DateTime.Parse("2008/1/10"),null)
+        };
     }
 
     /// <summary>

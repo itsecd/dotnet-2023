@@ -1,5 +1,8 @@
 ﻿namespace RecruitmentTests;
+
+using Newtonsoft.Json.Linq;
 using System.Linq;
+using Xunit.Sdk;
 
 public class MediaTest : IClassFixture<RecruitmentFixture>
 {
@@ -32,23 +35,36 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     [Fact]
     public void CompanyApplicationTest()
     {
-        var result = (from e in _fixture.FixtureEmployees
-                      join ja in _fixture.FixtureJobApplications on e.Id equals ja.Employee.Id
-                      join ca in _fixture.FixtureCompaniesApplications on ja.Title equals ca.Title.JobTitle
-                      where ja.Title == ca.Title.JobTitle && e.Salary <= ca.Salary && e.Education == ca.Education && e.WorkExperience == ca.WorkExperience
-                      select new { e.PersonalName, e.Salary }).ToList();
+        var result = from applications in _fixture.FixtureTitles
+                     from appCompany in applications.CompanyApplications.Where(appCompany => appCompany.Id == 2)
+                     from appEmployee in applications.EmployeeApplications.Where(appEmployee => appEmployee.Employee.Salary <= appCompany.Salary &&
+                     appEmployee.Employee.Education == appCompany.Education && appEmployee.Title == appCompany.Title.JobTitle &&
+                     appEmployee.Employee.WorkExperience >= appCompany.WorkExperience)
+                     select new
+                     {
+                         Employee = appEmployee,
+                     };
+
 
         Assert.Single(result);
     }
     [Fact]
     public void NumberApplicationTest()
     {
-        var result = (from jt in _fixture.FixtureTitles
-                      join ca in _fixture.FixtureCompaniesApplications on jt.JobTitle equals ca.Title.JobTitle
-                      group ca by new { jt.JobTitle, jt.Section } into g
-                      select g.Count()).Sum();
-
-        Assert.Equal(3, result);
+        var result = from titles in _fixture.FixtureTitles
+                     select new
+                     {
+                         JobSection = titles.Section,
+                         JobTitle = titles.JobTitle,
+                         NumJobApplications = titles.EmployeeApplications.Count(jobApplication => jobApplication.Title == titles.JobTitle),
+                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication.Title.JobTitle == titles.JobTitle)
+                     };
+        var firstItem = result.First();
+        var secondItem = result.Last();
+        Assert.Equal(2, firstItem.NumJobApplications);
+        Assert.Equal(1, secondItem.NumJobApplications);
+        Assert.Equal("Backend", firstItem.JobTitle);
+        Assert.Equal("Frontend", secondItem.JobTitle);
     }
     [Fact]
     public void MostPopularCompaniesTest()
@@ -70,13 +86,13 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     [Fact]
     public void BiggestSalaryTest()
     {
-        var result = (from c in _fixture.FixtureCompanies
-                      join ca in _fixture.FixtureCompaniesApplications on c.CompanyName equals ca.Company.CompanyName
-                      where ca.Salary == (from ca2 in _fixture.FixtureCompaniesApplications select ca2.Salary).Max()
-                      select new
-                      {
-                          ca,
-                      }).ToList();
-        Assert.Equal(70000, result[0].ca.Salary);
+        var result = from companyApplication in _fixture.FixtureCompaniesApplications
+                     where companyApplication.Salary == (from companyApplicationSalaries in _fixture.FixtureCompaniesApplications
+                                         select companyApplicationSalaries.Salary).Max()
+                     select new
+                     {
+                         CompanyRequest = companyApplication,
+                     };
+        Assert.Equal(70000, result.First().CompanyRequest.Salary);
     }
 }

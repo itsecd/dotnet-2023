@@ -1,4 +1,7 @@
 ﻿namespace RecruitmentAgency;
+/// <summary>
+/// Company - a class that describes the company representative
+/// </summary>
 public class Company
 {
     /// <summary>
@@ -13,4 +16,12 @@ public class Company
     /// Telephone - a string that stores the phone number
     /// </summary>
     public string Telephone { set; get; } = string.Empty;
+    /// </summary>  
+    /// id - shows the company's id
+    /// </summary>  
+    public int Id { set; get; }
+    /// <summary><
+    /// Applications - shows the applications 
+    /// </summary>
+    public List<CompanyApplication> Applications { set; get; } = new List<CompanyApplication>();
 }

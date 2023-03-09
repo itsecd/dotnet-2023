@@ -22,11 +22,11 @@ public class Card
     /// </summary>
     public int DayCount { set; get; }
     /// <summary>
-    /// IdBooks stores list of book's id
+    /// IdBooks stores list of id books
     /// </summary>
     public List<Book> IdBooks { set; get; } = new List<Book>();
     /// <summary>
-    /// IdReader stores list of reader's id
+    /// IdReader stores list of id readers
     /// </summary>
     public List<Reader> IdReader { set; get; } = new List<Reader>();
 }

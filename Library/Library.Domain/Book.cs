@@ -30,7 +30,7 @@ public class Book
     /// </summary>
     public int YearEdition { set; get; }
     /// <summary>
-    /// IdTypeEdition stores a list of type id book
+    /// IdTypeEdition stores list of id types book
     /// </summary>
     public List<TypeEdition> IdTypeEdition { set; get; } = new List<TypeEdition>();
 }

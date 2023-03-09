@@ -14,11 +14,11 @@ public class Department
     /// </summary>
     public int Count { set; get; }
     /// <summary>
-    /// IdBooks stores list id of books
+    /// IdBooks stores list of id books
     /// </summary>
     public List<Book> IdBooks { set; get; } = new List<Book>();
     /// <summary>
-    /// IdTypeDepartments stores list id of type department
+    /// IdTypeDepartments stores list of id types department
     /// </summary>
     public List<TypeDepartment> IdTypeDepartments { set; get; } = new List<TypeDepartment>();
 }

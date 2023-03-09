@@ -15,5 +15,5 @@ public class VoucherType
     /// <summary>
     /// VacationVoucher - a list of VacationVoucher objects. For more details proceed to VacationVoucher class
     /// </summary>
-    public List<VacationVoucher> VacationVoucher { get; set; } = new List<VacationVoucher>();
+    public List<VacationVoucher> VacationVouchers { get; set; } = new List<VacationVoucher>();
 }

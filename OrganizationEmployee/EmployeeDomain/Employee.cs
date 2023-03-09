@@ -59,19 +59,19 @@ public class Employee
     /// </summary>
     public uint ChildrenCount { get; set; } = 0;
     /// <summary>
-    /// EmployeeOccupation - a list of employee's occupations, including old occupations (on which the employee
+    /// EmployeeOccupations - a list of employee's occupations, including old occupations (on which the employee
     /// has been working), and active occupation. Also includes dates of hire and dismissal dates,
     /// for more details proceed to "EmployeeOccupation" class
     /// </summary>
-    public List<EmployeeOccupation> EmployeeOccupation { get; set; } = new List<EmployeeOccupation>();
+    public List<EmployeeOccupation> EmployeeOccupations { get; set; } = new List<EmployeeOccupation>();
     /// <summary>
-    /// DepartmentEmployee - a list of employee's departments in which the employee is currently working
+    /// DepartmentEmployees - a list of employee's departments in which the employee is currently working
     /// One employee can work in multiple departments
     /// </summary>
-    public List<DepartmentEmployee> DepartmentEmployee { get; set; } = new List<DepartmentEmployee>();
+    public List<DepartmentEmployee> DepartmentEmployees { get; set; } = new List<DepartmentEmployee>();
     /// <summary>
-    /// EmployeeVactionVoucher - a list of employee's vacation vouchers. For more details proceed to
+    /// EmployeeVacationVouchers - a list of employee's vacation vouchers. For more details proceed to
     /// "EmployeeVacationVoucher" and "VacationVoucher"
     /// </summary>
-    public List<EmployeeVacationVoucher> EmployeeVacationVoucher { get; set; } = new List<EmployeeVacationVoucher>();
+    public List<EmployeeVacationVoucher> EmployeeVacationVouchers { get; set; } = new List<EmployeeVacationVoucher>();
 }

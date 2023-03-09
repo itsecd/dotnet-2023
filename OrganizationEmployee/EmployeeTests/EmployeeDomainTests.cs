@@ -17,7 +17,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     public void TestFirstQuery(uint departmentId, int countObjects)
     {
         var firstQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
-                          from departmentEmployeeItem in employee.DepartmentEmployee
+                          from departmentEmployeeItem in employee.DepartmentEmployees
                           where departmentEmployeeItem.Department != null && departmentEmployeeItem.Department.Id == departmentId
                           select employee).ToList();
         Assert.Equal(countObjects, firstQuery.Count);
@@ -30,7 +30,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     {
         var secondQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                            orderby employee.LastName, employee.FirstName, employee.PatronymicName
-                           from departmentEmployeeItem in employee.DepartmentEmployee
+                           from departmentEmployeeItem in employee.DepartmentEmployees
                            group employee by new { employee.RegNumber, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
                            where grp.Count() > 1
                            orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
@@ -57,7 +57,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     {
         var thirdQuery = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
                           where employeeOccupationItem != null && employeeOccupationItem.DismissalDate != null
-                          from department in employeeOccupationItem?.Employee?.DepartmentEmployee
+                          from department in employeeOccupationItem?.Employee?.DepartmentEmployees
                           select
                           new
                           {
@@ -86,7 +86,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         var fourthQuery =
             (from tuple in (
                                 from employee in employees
-                                from departmentEmployeeItem in employee.DepartmentEmployee
+                                from departmentEmployeeItem in employee.DepartmentEmployees
                                 where departmentEmployeeItem.Department != null
                                 select new
                                 {

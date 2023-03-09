@@ -129,31 +129,31 @@ public class EmployeeDomainFixture
                 {
                     Name = "Аналитик данных",
                     Id = 0,
-                    EmployeeOccupation = new List<EmployeeOccupation>()
+                    EmployeeOccupations = new List<EmployeeOccupation>()
                 },
                 new Occupation
                 {
                     Name = "Программист",
                     Id = 1,
-                    EmployeeOccupation = new List<EmployeeOccupation>()
+                    EmployeeOccupations = new List<EmployeeOccupation>()
                 },
                 new Occupation
                 {
                     Name = "Тестировщик",
                     Id = 2,
-                    EmployeeOccupation = new List<EmployeeOccupation>()
+                    EmployeeOccupations = new List<EmployeeOccupation>()
                 },
                 new Occupation
                 {
                     Name = "Технический персонал",
                     Id = 3,
-                    EmployeeOccupation = new List<EmployeeOccupation>()
+                    EmployeeOccupations = new List<EmployeeOccupation>()
                 },
                 new Occupation
                 {
                     Name = "Менеджер",
                     Id = 4,
-                    EmployeeOccupation = new List<EmployeeOccupation>()
+                    EmployeeOccupations = new List<EmployeeOccupation>()
                 }
             };
         }
@@ -172,19 +172,19 @@ public class EmployeeDomainFixture
                 {
                     Name = "Санаторий",
                     Id = 0,
-                    VacationVoucher = new List<VacationVoucher>()
+                    VacationVouchers = new List<VacationVoucher>()
                 },
                 new VoucherType
                 {
                     Name = "Дом отдыха",
                     Id = 1,
-                    VacationVoucher = new List<VacationVoucher>()
+                    VacationVouchers = new List<VacationVoucher>()
                 },
                 new VoucherType
                 {
                     Name = "Пионерский лагерь предприятия",
                     Id = 2,
-                    VacationVoucher = new List<VacationVoucher>()
+                    VacationVouchers = new List<VacationVoucher>()
                 }
             };
         }
@@ -215,9 +215,9 @@ public class EmployeeDomainFixture
                             FamilyStatus = "женат",
                             FamilyMembersCount = 4,
                             ChildrenCount = 2,
-                            EmployeeOccupation = new List<EmployeeOccupation>(),
-                            DepartmentEmployee = new List<DepartmentEmployee>(),
-                            EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                         },
                         new Employee
                         {
@@ -234,9 +234,9 @@ public class EmployeeDomainFixture
                             FamilyStatus = "холост",
                             FamilyMembersCount = 3,
                             ChildrenCount = 0,
-                            EmployeeOccupation = new List<EmployeeOccupation>(),
-                            DepartmentEmployee = new List<DepartmentEmployee>(),
-                            EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                         },
                         new Employee
                         {
@@ -253,9 +253,9 @@ public class EmployeeDomainFixture
                             FamilyStatus = "женат",
                             FamilyMembersCount = 5,
                             ChildrenCount = 3,
-                            EmployeeOccupation = new List<EmployeeOccupation>(),
-                            DepartmentEmployee = new List<DepartmentEmployee>(),
-                            EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                         },
                         new Employee
                         {
@@ -272,9 +272,9 @@ public class EmployeeDomainFixture
                             FamilyStatus = "замужем",
                             FamilyMembersCount = 3,
                             ChildrenCount = 1,
-                            EmployeeOccupation = new List<EmployeeOccupation>(),
-                            DepartmentEmployee = new List<DepartmentEmployee>(),
-                            EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                         }
                 };
             workshopList[0].Employees.Add(employeeList[3]);
@@ -358,28 +358,28 @@ public class EmployeeDomainFixture
                     Occupation = occupationList[4]
                 }
             };
-            employeeList[0].EmployeeOccupation.Add(employeeOccupationList[0]);
-            employeeList[2].EmployeeOccupation.Add(employeeOccupationList[1]);
-            employeeList[2].EmployeeOccupation.Add(employeeOccupationList[2]);
-            employeeList[1].EmployeeOccupation.Add(employeeOccupationList[3]);
-            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[4]);
-            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[5]);
-            employeeList[3].EmployeeOccupation.Add(employeeOccupationList[6]);
-            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[0]);
-            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[2]);
-            occupationList[1].EmployeeOccupation.Add(employeeOccupationList[4]);
-            occupationList[4].EmployeeOccupation.Add(employeeOccupationList[1]);
-            occupationList[4].EmployeeOccupation.Add(employeeOccupationList[6]);
-            occupationList[2].EmployeeOccupation.Add(employeeOccupationList[3]);
-            occupationList[3].EmployeeOccupation.Add(employeeOccupationList[5]);
+            employeeList[0].EmployeeOccupations.Add(employeeOccupationList[0]);
+            employeeList[2].EmployeeOccupations.Add(employeeOccupationList[1]);
+            employeeList[2].EmployeeOccupations.Add(employeeOccupationList[2]);
+            employeeList[1].EmployeeOccupations.Add(employeeOccupationList[3]);
+            employeeList[3].EmployeeOccupations.Add(employeeOccupationList[4]);
+            employeeList[3].EmployeeOccupations.Add(employeeOccupationList[5]);
+            employeeList[3].EmployeeOccupations.Add(employeeOccupationList[6]);
+            occupationList[1].EmployeeOccupations.Add(employeeOccupationList[0]);
+            occupationList[1].EmployeeOccupations.Add(employeeOccupationList[2]);
+            occupationList[1].EmployeeOccupations.Add(employeeOccupationList[4]);
+            occupationList[4].EmployeeOccupations.Add(employeeOccupationList[1]);
+            occupationList[4].EmployeeOccupations.Add(employeeOccupationList[6]);
+            occupationList[2].EmployeeOccupations.Add(employeeOccupationList[3]);
+            occupationList[3].EmployeeOccupations.Add(employeeOccupationList[5]);
 
-            employeeList[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
-            employeeList[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
-            employeeList[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
-            employeeList[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
-            employeeList[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
-            employeeList[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
-            employeeList[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
+            employeeList[0].DepartmentEmployees.Add(departmentEmployeeList[0]);
+            employeeList[0].DepartmentEmployees.Add(departmentEmployeeList[1]);
+            employeeList[1].DepartmentEmployees.Add(departmentEmployeeList[2]);
+            employeeList[1].DepartmentEmployees.Add(departmentEmployeeList[3]);
+            employeeList[2].DepartmentEmployees.Add(departmentEmployeeList[4]);
+            employeeList[2].DepartmentEmployees.Add(departmentEmployeeList[5]);
+            employeeList[3].DepartmentEmployees.Add(departmentEmployeeList[6]);
             departmentEmployeeList[0].Employee = employeeList[0];
             departmentEmployeeList[1].Employee = employeeList[0];
             departmentEmployeeList[2].Employee = employeeList[1];
@@ -457,13 +457,13 @@ public class EmployeeDomainFixture
             var departmentList = DepartmentFixture;
             var employees = EmployeeOnlyWorkshopFilledFixture;
             var departmentEmployeeList = DepartmentEmployeeFixture;
-            employees[0].DepartmentEmployee.Add(departmentEmployeeList[0]);
-            employees[0].DepartmentEmployee.Add(departmentEmployeeList[1]);
-            employees[1].DepartmentEmployee.Add(departmentEmployeeList[2]);
-            employees[1].DepartmentEmployee.Add(departmentEmployeeList[3]);
-            employees[2].DepartmentEmployee.Add(departmentEmployeeList[4]);
-            employees[2].DepartmentEmployee.Add(departmentEmployeeList[5]);
-            employees[3].DepartmentEmployee.Add(departmentEmployeeList[6]);
+            employees[0].DepartmentEmployees.Add(departmentEmployeeList[0]);
+            employees[0].DepartmentEmployees.Add(departmentEmployeeList[1]);
+            employees[1].DepartmentEmployees.Add(departmentEmployeeList[2]);
+            employees[1].DepartmentEmployees.Add(departmentEmployeeList[3]);
+            employees[2].DepartmentEmployees.Add(departmentEmployeeList[4]);
+            employees[2].DepartmentEmployees.Add(departmentEmployeeList[5]);
+            employees[3].DepartmentEmployees.Add(departmentEmployeeList[6]);
             departmentEmployeeList[0].Employee = employees[0];
             departmentEmployeeList[1].Employee = employees[0];
             departmentEmployeeList[2].Employee = employees[1];
@@ -490,26 +490,26 @@ public class EmployeeDomainFixture
                     Id = 1,
                     VoucherType = null,
                     IssueDate = new DateOnly(2022, 3, 22),
-                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                    EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 2,
                     VoucherType = null,
                     IssueDate = new DateOnly(2022, 5, 12),
-                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                    EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 3,
                     VoucherType = null,
                     IssueDate = new DateOnly(2020, 1, 5),
-                    EmployeeVacationVoucher = new List<EmployeeVacationVoucher>()
+                    EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 }
             };
-            voucherTypes[0].VacationVoucher.Add(vacationVouchers[0]);
-            voucherTypes[1].VacationVoucher.Add(vacationVouchers[1]);
-            voucherTypes[2].VacationVoucher.Add(vacationVouchers[2]);
+            voucherTypes[0].VacationVouchers.Add(vacationVouchers[0]);
+            voucherTypes[1].VacationVouchers.Add(vacationVouchers[1]);
+            voucherTypes[2].VacationVouchers.Add(vacationVouchers[2]);
             vacationVouchers[0].VoucherType = voucherTypes[0];
             vacationVouchers[1].VoucherType = voucherTypes[1];
             vacationVouchers[2].VoucherType = voucherTypes[2];
@@ -549,12 +549,12 @@ public class EmployeeDomainFixture
                     VacationVoucher = null
                 }
             };
-            employees[0].EmployeeVacationVoucher.Add(employeeVacationVoucherList[0]);
-            employees[1].EmployeeVacationVoucher.Add(employeeVacationVoucherList[1]);
-            employees[2].EmployeeVacationVoucher.Add(employeeVacationVoucherList[2]);
-            vacationVouchers[0].EmployeeVacationVoucher.Add(employeeVacationVoucherList[0]);
-            vacationVouchers[1].EmployeeVacationVoucher.Add(employeeVacationVoucherList[1]);
-            vacationVouchers[2].EmployeeVacationVoucher.Add(employeeVacationVoucherList[2]);
+            employees[0].EmployeeVacationVouchers.Add(employeeVacationVoucherList[0]);
+            employees[1].EmployeeVacationVouchers.Add(employeeVacationVoucherList[1]);
+            employees[2].EmployeeVacationVouchers.Add(employeeVacationVoucherList[2]);
+            vacationVouchers[0].EmployeeVacationVouchers.Add(employeeVacationVoucherList[0]);
+            vacationVouchers[1].EmployeeVacationVouchers.Add(employeeVacationVoucherList[1]);
+            vacationVouchers[2].EmployeeVacationVouchers.Add(employeeVacationVoucherList[2]);
             employeeVacationVoucherList[0].Employee = employees[0];
             employeeVacationVoucherList[1].Employee = employees[1];
             employeeVacationVoucherList[2].Employee = employees[2];

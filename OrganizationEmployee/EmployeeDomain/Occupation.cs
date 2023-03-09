@@ -16,5 +16,5 @@ public class Occupation
     /// <summary>
     /// EmployeeOccupation - a list of EmployeeOccupation objects, used for many-to-many relationship.
     /// </summary>
-    public List<EmployeeOccupation> EmployeeOccupation { get; set; } = new List<EmployeeOccupation>();
+    public List<EmployeeOccupation> EmployeeOccupations { get; set; } = new List<EmployeeOccupation>();
 }

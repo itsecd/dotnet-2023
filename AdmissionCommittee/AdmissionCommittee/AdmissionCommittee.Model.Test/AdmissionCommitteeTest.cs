@@ -1,8 +1,6 @@
-using AdmissionCommittee;
+namespace AdmissionCommittee.Model.Test;
 
-namespace AdmissionCommitteTest;
-
-public class AdmissionCommitteTest
+public class AdmissionCommitteeTest
 {
     /// <summary>
     /// _results - list consisiting of a list of entrants results in 3 subjects
@@ -24,7 +22,7 @@ public class AdmissionCommitteTest
     /// </summary>
     private readonly List<Statement> _statements = new();
 
-    public AdmissionCommitteTest()
+    public AdmissionCommitteeTest()
     {
         CreateResults();
         CreateSpecialities();

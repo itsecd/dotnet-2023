@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdmissionCommittee\AdmissionCommittee.csproj" />
+    <ProjectReference Include="..\AdmissionCommittee.Model\AdmissionCommittee.Model.csproj" />
   </ItemGroup>
 
 </Project>

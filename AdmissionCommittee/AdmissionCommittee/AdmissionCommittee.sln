@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionCommittee", "AdmissionCommittee\AdmissionCommittee.csproj", "{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdmissionCommittee.Model", "AdmissionCommittee.Model\AdmissionCommittee.Model.csproj", "{23A70A2E-6712-4F8D-87FD-6F9BDD9CC15E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionCommitteeTest", "AdmissionCommitteTests\AdmissionCommitteeTest.csproj", "{2B075D50-516C-4C74-BBA4-92A4F17A2525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdmissionCommittee.Model.Test", "AdmissionCommittee.Model.Test\AdmissionCommittee.Model.Test.csproj", "{2B075D50-516C-4C74-BBA4-92A4F17A2525}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

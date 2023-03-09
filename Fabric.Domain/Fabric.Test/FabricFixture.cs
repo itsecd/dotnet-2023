@@ -58,9 +58,9 @@ public class FabricFixture
             var fifthDate = new DateOnly(2022, 3, 3);
             var fifthShipment = new Shipment(2, fabrics[0], providers[3], fifthDate, 4);
             shipments.Add(fifthShipment);
-            //var sixthDate = new DateOnly(2022, 12, 13);
-           // var sixthShipment = new Shipment(2, fabrics[3], providers[1], sixthDate, 7);
-            //shipments.Add(sixthShipment);
+            var sixthDate = new DateOnly(2022, 12, 13);
+            var sixthShipment = new Shipment(2, fabrics[3], providers[1], sixthDate, 7);
+            shipments.Add(sixthShipment);
             return shipments;
         }
     }

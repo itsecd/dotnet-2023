@@ -40,15 +40,15 @@ public class UnitTests : IClassFixture<UnitFixture>
     {
         var l = new List<string> { "10.05.03", "09.03.03", "09.03.02", "09.03.01", "01.03.02" };
         var result = (from specialtyNode in _fixture.SpecialtyTableNodes
-                     group specialtyNode by specialtyNode.Specialty.SpecialtyCode into specialtyGroup
-                     orderby specialtyGroup.Count() descending
-                     select new
-                     {
-                         specialty = specialtyGroup.Key,
-                         numRequests = specialtyGroup.Count()
-                     }).Take(5).ToList();
+                      group specialtyNode by specialtyNode.Specialty.SpecialtyCode into specialtyGroup
+                      orderby specialtyGroup.Count() descending
+                      select new
+                      {
+                          specialty = specialtyGroup.Key,
+                          numRequests = specialtyGroup.Count()
+                      }).Take(5).ToList();
         for (var i = 0; i < 5; i++)
-        Assert.Equal(l[i], result[i].specialty);
+            Assert.Equal(l[i], result[i].specialty);
     }
     /// <summary>
     /// Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.
@@ -83,13 +83,14 @@ public class UnitTests : IClassFixture<UnitFixture>
                       group university by university.UniversityConstructionProperty into universityConstGroup
                       from universityPropGroup in (
                           from university in universityConstGroup
-                          group university by university.UniversityProperty into universityPropGroup select new{ })
-                          select new
-                          {
-                              faculties = universityConstGroup.Sum(x => x.UniversityFacultiesData.Count()),
-                              departments = universityConstGroup.Sum(x => x.UniversityDepartmentsData.Count()),
-                              specialities = universityConstGroup.Sum(x => x.UniversitySpecialtyTable.Count())
-                          }
+                          group university by university.UniversityProperty into universityPropGroup
+                          select new { })
+                      select new
+                      {
+                          faculties = universityConstGroup.Sum(x => x.UniversityFacultiesData.Count()),
+                          departments = universityConstGroup.Sum(x => x.UniversityDepartmentsData.Count()),
+                          specialities = universityConstGroup.Sum(x => x.UniversitySpecialtyTable.Count())
+                      }
                           ).ToList();
         Assert.Equal(5, result[0].faculties);
         Assert.Equal(1, result[1].faculties);

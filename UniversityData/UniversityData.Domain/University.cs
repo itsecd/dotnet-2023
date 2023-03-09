@@ -23,11 +23,11 @@ public class University
     /// <summary>
     /// Сведения о ректоре 
     /// </summary>
-    public Rector? UniversityRectorData { get; set; }  
+    public Rector? UniversityRectorData { get; set; }
     /// <summary>
     /// Собственность учреждения
     /// </summary>
-    public string UniversityProperty { get; set; } = string.Empty; 
+    public string UniversityProperty { get; set; } = string.Empty;
     /// <summary>
     /// Собственность здания университета
     /// </summary>

@@ -3,7 +3,7 @@
 /// Информация о кафедре
 /// </summary>
 public class Department
-{   
+{
     /// <summary>
     /// ID
     /// </summary>
@@ -19,5 +19,5 @@ public class Department
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? University { get; set; } 
+    public University? University { get; set; }
 }

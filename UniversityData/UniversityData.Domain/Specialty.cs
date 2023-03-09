@@ -11,7 +11,7 @@ public class Specialty
     /// <summary>
     /// Название специальности
     /// </summary>
-    public string SpecialtyName { get; set; } = string.Empty; 
+    public string SpecialtyName { get; set; } = string.Empty;
     /// <summary>
     /// Код-шифр специальности 
     /// </summary>
@@ -20,5 +20,5 @@ public class Specialty
     /// Ссылка на обратную связь
     /// </summary>
     public SpecialtyTableNode? SpecialtyNode { get; set; }
-   
+
 }

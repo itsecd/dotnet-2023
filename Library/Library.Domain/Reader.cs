@@ -24,5 +24,5 @@ public class Reader
     /// <summary>
     /// RegistrationDate stores reader's registration date
     /// </summary>
-    public DateTime RegistrationDate { set; get; }
+    public DateOnly RegistrationDate { set; get; }
 }

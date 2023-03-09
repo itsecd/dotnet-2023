@@ -12,11 +12,11 @@ public class Card
     /// <summary>
     /// DateOfIssue stores date of taking the book
     /// </summary>
-    public DateTime DateOfIssue { set; get; }
+    public DateOnly DateOfIssue { set; get; }
     /// <summary>
     /// DateOfReturn stores date of returning the book
     /// </summary>
-    public DateTime DateOfReturn { set; get; }
+    public DateOnly DateOfReturn { set; get; }
     /// <summary>
     /// DayCount stores the number of days for which the book was taken
     /// </summary>

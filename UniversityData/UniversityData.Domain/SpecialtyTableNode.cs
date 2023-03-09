@@ -13,7 +13,7 @@ public class SpecialtyTableNode
     /// </summary>
     public Specialty? Specialty { get; set; }
     /// <summary>
-    /// Количетсов групп
+    /// Количество групп
     /// </summary>
     public int CountGroups { get; set; }
     /// <summary>

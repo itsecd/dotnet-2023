@@ -11,15 +11,15 @@ public class Faculty
     /// <summary>
     /// Название факультета
     /// </summary>
-    public string FaculityName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Количетсво сотрудников факультета
     /// </summary>
-    public int FaculityWorkersCount { get; set; }
+    public int WorkersCount { get; set; }
     /// <summary>
     /// Количество студентов факультета
     /// </summary>
-    public int FaculityStudentsCount { get; set; }
+    public int StudentsCount { get; set; }
     /// <summary>
     /// <summary>
     /// Ссылка на обратную связь

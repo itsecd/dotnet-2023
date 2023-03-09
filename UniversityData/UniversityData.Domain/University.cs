@@ -11,19 +11,19 @@ public class University
     /// <summary>
     /// Регистрационный номер
     /// </summary>
-    public string UniversityNumber { get; set; } = string.Empty;
+    public string Number { get; set; } = string.Empty;
     /// <summary>
     /// Название университета
     /// </summary>
-    public string UniversityName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Адрес университета
     /// </summary>
-    public string UniversityAddress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
     /// <summary>
     /// Сведения о ректоре 
     /// </summary>
-    public Rector? UniversityRectorData { get; set; }
+    public Rector? RectorData { get; set; }
     /// <summary>
     /// Собственность учреждения
     /// </summary>
@@ -31,17 +31,17 @@ public class University
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public string UniversityConstructionProperty { get; set; } = string.Empty;
+    public string ConstructionProperty { get; set; } = string.Empty;
     /// <summary>
     /// Факультеты университета
     /// </summary>
-    public List<Faculty> UniversityFacultiesData { get; set; } = new List<Faculty>();
+    public List<Faculty> FacultiesData { get; set; } = new List<Faculty>();
     /// <summary>
     /// Кафедры университета
     /// </summary>
-    public List<Department> UniversityDepartmentsData { get; set; } = new List<Department>();
+    public List<Department> DepartmentsData { get; set; } = new List<Department>();
     /// <summary>
-    /// Таблица связи специальность-количетсов групп
+    /// Таблица связи специальность-количество групп
     /// </summary>
-    public List<SpecialtyTableNode> UniversitySpecialtyTable { get; set; } = new List<SpecialtyTableNode>();
+    public List<SpecialtyTableNode> SpecialtyTable { get; set; } = new List<SpecialtyTableNode>();
 }

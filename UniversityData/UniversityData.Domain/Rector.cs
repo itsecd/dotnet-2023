@@ -11,29 +11,29 @@ public class Rector
     /// <summary>
     /// Имя ректора
     /// </summary>
-    public string RectorName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Фамилия ректора
     /// </summary>
-    public string RectorSurname { get; set; } = string.Empty;
+    public string Surname { get; set; } = string.Empty;
     /// <summary>
     /// Отчество ректора
     /// </summary>
-    public string RectorPatronymic { get; set; } = string.Empty;
+    public string Patronymic { get; set; } = string.Empty;
     /// <summary>
     /// Степень ректора
     /// </summary>
-    public string RectorDegree { get; set; } = string.Empty;
+    public string Degree { get; set; } = string.Empty;
     /// <summary>
     /// Звание ректора
     /// </summary>
-    public string RectorTitle { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
     /// <summary>
     /// Должность ректора
     /// </summary>
-    public string RectorPosition { get; set; } = string.Empty;
+    public string Position { get; set; } = string.Empty;
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? RectorUniversity { get; set; }
+    public University? University { get; set; }
 }

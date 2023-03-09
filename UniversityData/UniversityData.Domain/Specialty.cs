@@ -1,6 +1,4 @@
-﻿
-
-namespace UniversityData.Domain;
+﻿namespace UniversityData.Domain;
 /// <summary>
 /// Специальность
 /// </summary>
@@ -13,18 +11,14 @@ public class Specialty
     /// <summary>
     /// Название специальности
     /// </summary>
-    public string? SpecialtyName { get; set; } 
+    public string SpecialtyName { get; set; } = string.Empty; 
     /// <summary>
     /// Код-шифр специальности 
     /// </summary>
-    public string? SpecialtyCode { get; set; }
+    public string SpecialtyCode { get; set; } = string.Empty;
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
     public SpecialtyTableNode? SpecialtyNode { get; set; }
-    public Specialty(string? specialtyName, string? specialtyCode)
-    {
-        SpecialtyName = specialtyName;
-        SpecialtyCode = specialtyCode;
-    }
+   
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace UniversityData.Domain;
+﻿namespace UniversityData.Domain;
 /// <summary>
 /// Информация о ректор
 /// </summary>
@@ -13,39 +11,29 @@ public class Rector
     /// <summary>
     /// Имя ректора
     /// </summary>
-    public string? RectorName { get; set; }
+    public string RectorName { get; set; } = string.Empty;
     /// <summary>
     /// Фамилия ректора
     /// </summary>
-    public string? RectorSurname { get; set; }
+    public string RectorSurname { get; set; } = string.Empty;
     /// <summary>
     /// Отчество ректора
     /// </summary>
-    public string? RectorPatronymic { get; set; }
+    public string RectorPatronymic { get; set; } = string.Empty;
     /// <summary>
     /// Степень ректора
     /// </summary>
-    public string? RectorDegree { get; set; }
+    public string RectorDegree { get; set; } = string.Empty;
     /// <summary>
     /// Звание ректора
     /// </summary>
-    public string? RectorTitle { get; set; }
+    public string RectorTitle { get; set; } = string.Empty;
     /// <summary>
     /// Должность ректора
     /// </summary>
-    public string? RectorPosition { get; set; }
+    public string RectorPosition { get; set; } = string.Empty;
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
     public University? RectorUniversity { get; set; }
-
-    public Rector(string? rectorName, string? rectorSurname, string? rectorPatronymic, string? rectorDegree, string? rectorTitle, string? rectorPosition)
-    {
-        RectorName = rectorName;
-        RectorSurname = rectorSurname;
-        RectorPatronymic = rectorPatronymic;
-        RectorDegree = rectorDegree;
-        RectorTitle = rectorTitle;
-        RectorPosition = rectorPosition;
-    }
 }

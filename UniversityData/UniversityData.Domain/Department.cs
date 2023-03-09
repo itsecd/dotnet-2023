@@ -1,6 +1,4 @@
-﻿
-
-namespace UniversityData.Domain;
+﻿namespace UniversityData.Domain;
 /// <summary>
 /// Информация о кафедре
 /// </summary>
@@ -13,19 +11,13 @@ public class Department
     /// <summary>
     /// Название кафедры
     /// </summary>
-    public string? DepartmentName { get; set; } 
+    public string DepartmentName { get; set; } = string.Empty;
     /// <summary>
     /// Контактный телефон заведущего кафедрой
     /// </summary>
-    public string? DepartmentSupervisorNumber { get; set; }
+    public string DepartmentSupervisorNumber { get; set; } = string.Empty;
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? DepartmentUniversity { get; set; }
-
-    public Department(string? departmentName, string? departmentSupervisorNumber)
-    {
-        DepartmentName = departmentName;
-        DepartmentSupervisorNumber = departmentSupervisorNumber;
-    }
+    public University? University { get; set; } 
 }

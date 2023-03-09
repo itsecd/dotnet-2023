@@ -1,6 +1,4 @@
-﻿
-
-namespace UniversityData.Domain;
+﻿namespace UniversityData.Domain;
 /// <summary>
 /// Узел таблицы связи специальности и количества групп
 /// </summary>
@@ -22,10 +20,4 @@ public class SpecialtyTableNode
     /// Ссылка на обратную связь
     /// </summary>
     public University? TableNodeUniversity { get; set; }
-    
-    public SpecialtyTableNode(Specialty? specialty, int countGroups)
-    {
-        Specialty = specialty;
-        CountGroups = countGroups;
-    }
 }

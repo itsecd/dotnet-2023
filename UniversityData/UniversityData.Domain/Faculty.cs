@@ -1,6 +1,4 @@
-﻿
-
-namespace UniversityData.Domain;
+﻿namespace UniversityData.Domain;
 /// <summary>
 /// Информация о факультете 
 /// </summary>
@@ -13,7 +11,7 @@ public class Faculty
     /// <summary>
     /// Название факультета
     /// </summary>
-    public string? FaculityName { get; set; }
+    public string FaculityName { get; set; } = string.Empty;
     /// <summary>
     /// Количетсво сотрудников факультета
     /// </summary>
@@ -23,14 +21,8 @@ public class Faculty
     /// </summary>
     public int FaculityStudentsCount { get; set; }
     /// <summary>
+    /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? FaculityUniversity { get; set; }
-
-    public Faculty(string? faculityName, int faculityWorkersCount, int faculityStudentsCount)
-    {
-        FaculityName = faculityName;
-        FaculityWorkersCount = faculityWorkersCount;
-        FaculityStudentsCount = faculityStudentsCount;
-    }
+    public University? University { get; set; }
 }

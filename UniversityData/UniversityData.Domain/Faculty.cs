@@ -13,14 +13,13 @@ public class Faculty
     /// </summary>
     public string Name { get; set; } = string.Empty;
     /// <summary>
-    /// Количетсво сотрудников факультета
+    /// Количество сотрудников факультета
     /// </summary>
     public int WorkersCount { get; set; }
     /// <summary>
     /// Количество студентов факультета
     /// </summary>
     public int StudentsCount { get; set; }
-    /// <summary>
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>

@@ -28,9 +28,9 @@ public class UnitTests : IClassFixture<UnitFixture>
         var result = (from university in _fixture.Universities
                       where (university.Number == "45678")
                       select university).ToList();
-        Assert.Equal(1, result[0].FacultiesData.Count());
-        Assert.Equal(1, result[0].DepartmentsData.Count());
-        Assert.Equal(4, result[0].SpecialtyTable.Count());
+        Assert.Equal(1, result[0].FacultiesData.Count);
+        Assert.Equal(1, result[0].DepartmentsData.Count);
+        Assert.Equal(4, result[0].SpecialtyTable.Count);
     }
     /// <summary>
     /// Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).
@@ -57,7 +57,7 @@ public class UnitTests : IClassFixture<UnitFixture>
     public void MaxCountDepartments()
     {
         var result = (from university in _fixture.Universities
-                      where university.DepartmentsData.Count() == _fixture.Universities.Max(x => x.DepartmentsData.Count())
+                      where university.DepartmentsData.Count == _fixture.Universities.Max(x => x.DepartmentsData.Count)
                       select university).ToList();
         Assert.Equal(1, result.Count);
     }
@@ -81,17 +81,19 @@ public class UnitTests : IClassFixture<UnitFixture>
     {
         var result = (from university in _fixture.Universities
                       group university by university.ConstructionProperty into universityConstGroup
-                      from universityPropGroup in (
+                      from universityPropGroup in
+                      (
                           from university in universityConstGroup
                           group university by university.UniversityProperty into universityPropGroup
-                          select new { })
+                          select new { }
+                      )
                       select new
                       {
-                          faculties = universityConstGroup.Sum(x => x.FacultiesData.Count()),
-                          departments = universityConstGroup.Sum(x => x.DepartmentsData.Count()),
-                          specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count())
+                          faculties = universityConstGroup.Sum(x => x.FacultiesData.Count),
+                          departments = universityConstGroup.Sum(x => x.DepartmentsData.Count),
+                          specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count)
                       }
-                          ).ToList();
+                      ).ToList();
         Assert.Equal(5, result[0].faculties);
         Assert.Equal(1, result[1].faculties);
         Assert.Equal(3, result[0].departments);

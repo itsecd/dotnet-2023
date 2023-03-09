@@ -33,4 +33,8 @@ public class Book
     /// IdTypeEdition stores list of id types book
     /// </summary>
     public List<TypeEdition> IdTypeEdition { set; get; } = new List<TypeEdition>();
+    /// <summary>
+    /// IsIssued stores information about whether a book has been issued
+    /// </summary>
+    public bool IsIssued { set; get; }
 }

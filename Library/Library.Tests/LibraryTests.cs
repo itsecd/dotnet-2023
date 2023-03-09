@@ -22,4 +22,17 @@ public class LibraryTests : IClassFixture<LibraryFixture>
                        select book).Count();
         Assert.Equal(1, request);
     }
+    /// <summary>
+    /// Second request - give info about all books issued order by book's name
+    /// </summary>
+    [Fact]
+    public void BooksTest()
+    {
+        var fixtureBook = _fixture.FixtureBook;
+        var request = (from book in fixtureBook
+                       where book.IsIssued == true
+                       orderby book.Name
+                       select book).Count();
+        Assert.Equal(4, request);
+    }
 }

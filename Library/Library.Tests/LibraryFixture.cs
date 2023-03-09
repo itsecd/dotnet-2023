@@ -56,6 +56,7 @@ public class LibraryFixture
             firstBook.PlaceEdition = "Kuibyshev";
             firstBook.YearEdition = 1989;
             firstBook.IdTypeEdition.Add(typeEditions[2]);
+            firstBook.IsIssued = true;
             books.Add(firstBook);
             var secondBook = new Book();
             secondBook.Id = 1;
@@ -65,6 +66,7 @@ public class LibraryFixture
             secondBook.PlaceEdition = "Kuibyshev";
             secondBook.YearEdition = 1988;
             secondBook.IdTypeEdition.Add(typeEditions[2]);
+            secondBook.IsIssued = true;
             books.Add(secondBook);
             var thirdBook = new Book();
             thirdBook.Id = 2;
@@ -74,6 +76,7 @@ public class LibraryFixture
             thirdBook.PlaceEdition = "Samara";
             thirdBook.YearEdition = 2005;
             thirdBook.IdTypeEdition.Add(typeEditions[0]);
+            thirdBook.IsIssued = true;
             books.Add(thirdBook);
             var fourthBook = new Book();
             fourthBook.Id = 3;
@@ -83,6 +86,7 @@ public class LibraryFixture
             fourthBook.PlaceEdition = "Samara";
             fourthBook.YearEdition = 2017;
             fourthBook.IdTypeEdition.Add(typeEditions[1]);
+            fourthBook.IsIssued = true;
             books.Add(fourthBook);
             return books;
         }

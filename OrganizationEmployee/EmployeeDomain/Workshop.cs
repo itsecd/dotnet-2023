@@ -1,6 +1,6 @@
 ﻿namespace EmployeeDomain;
 /// <summary>
-/// Class Workshop represents a workshop on the orgainzation
+/// Class Workshop represents a workshop on the organization
 /// </summary>
 public class Workshop
 {

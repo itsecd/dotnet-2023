@@ -348,5 +348,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/DomainClassLibraryLab1/DomainClassLibraryLab1.sln
-/DomainClassLibraryLab1/TestsLR1/TestsLR1.csproj

@@ -11,9 +11,9 @@ public class Employee
     /// </summary>
     public Guid Id { get; set; } = Guid.Empty;
     /// <summary>
-    /// regNumber - registration number of an Employee
+    /// RegNumber - registration number of an Employee
     /// </summary>
-    public uint regNumber = 0;
+    public uint RegNumber { get; set; }
     /// <summary>
     /// FirstName - first name of an Employee
     /// </summary>

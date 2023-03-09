@@ -203,7 +203,7 @@ public class EmployeeDomainFixture
                         new Employee
                         {
                             Id = Guid.NewGuid(),
-                            regNumber = 1337,
+                            RegNumber = 1337,
                             FirstName = "Владислав",
                             LastName = "Мещеряков",
                             PatronymicName = "Даниилович",
@@ -222,7 +222,7 @@ public class EmployeeDomainFixture
                         new Employee
                         {
                             Id = Guid.NewGuid(),
-                            regNumber = 443,
+                            RegNumber = 443,
                             FirstName = "Сергей",
                             LastName = "Ляхов",
                             PatronymicName = "Сергеевич",
@@ -241,7 +241,7 @@ public class EmployeeDomainFixture
                         new Employee
                         {
                             Id = Guid.NewGuid(),
-                            regNumber = 3,
+                            RegNumber = 3,
                             FirstName = "Михаил",
                             LastName = "Зайцев",
                             PatronymicName = "Иванович",
@@ -260,7 +260,7 @@ public class EmployeeDomainFixture
                         new Employee
                         {
                             Id = Guid.NewGuid(),
-                            regNumber = 5,
+                            RegNumber = 5,
                             FirstName = "Дарья",
                             LastName = "Заварзина",
                             PatronymicName = "Анатольевна",

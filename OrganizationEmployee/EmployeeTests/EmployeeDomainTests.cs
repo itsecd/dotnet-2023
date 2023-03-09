@@ -31,22 +31,22 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         var secondQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                            orderby employee.LastName, employee.FirstName, employee.PatronymicName
                            from departmentEmployeeItem in employee.DepartmentEmployee
-                           group employee by new { employee.regNumber, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
+                           group employee by new { employee.RegNumber, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
                            where grp.Count() > 1
                            orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
                            select new
                            {
-                               regNumber = grp.Key.regNumber,
+                               RegNumber = grp.Key.RegNumber,
                                FirstName = grp.Key.FirstName,
                                LastName = grp.Key.LastName,
                                PatronymicName = grp.Key.PatronymicName,
                                CountDepart = grp.Count()
                            }).ToList();
         Assert.Equal(3, secondQuery.Count);
-        Assert.DoesNotContain(secondQuery, requestElem => requestElem.regNumber == 5);
-        Assert.Contains(secondQuery, requestElem => requestElem.regNumber == 1337);
-        Assert.Contains(secondQuery, requestElem => requestElem.regNumber == 443);
-        Assert.Contains(secondQuery, requestElem => requestElem.regNumber == 3);
+        Assert.DoesNotContain(secondQuery, requestElem => requestElem.RegNumber == 5);
+        Assert.Contains(secondQuery, requestElem => requestElem.RegNumber == 1337);
+        Assert.Contains(secondQuery, requestElem => requestElem.RegNumber == 443);
+        Assert.Contains(secondQuery, requestElem => requestElem.RegNumber == 3);
     }
     /// <summary>
     /// Third query - output the archive of dismissals, including registration number, first name, last name, patronymic name,
@@ -61,7 +61,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                           select
                           new
                           {
-                              regNumber = employeeOccupationItem.Employee?.regNumber,
+                              RegNumber = employeeOccupationItem.Employee?.RegNumber,
                               firstName = employeeOccupationItem.Employee?.FirstName,
                               lastName = employeeOccupationItem.Employee?.LastName,
                               patronymicName = employeeOccupationItem.Employee?.PatronymicName,
@@ -71,10 +71,10 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                               occupation = employeeOccupationItem.Occupation,
                           }).ToList();
         Assert.Equal(4, thirdQuery.Count());
-        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.regNumber == 1337);
-        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.regNumber == 443);
-        Assert.Contains(thirdQuery, requestElem => requestElem.regNumber == 5);
-        Assert.Contains(thirdQuery, requestElem => requestElem.regNumber == 3);
+        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 1337);
+        Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 443);
+        Assert.Contains(thirdQuery, requestElem => requestElem.RegNumber == 5);
+        Assert.Contains(thirdQuery, requestElem => requestElem.RegNumber == 3);
     }
     /// <summary>
     /// Fourth Query - output an average age of employees for each department
@@ -115,14 +115,14 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                           where (DateOnly.FromDateTime(DateTime.Now).DayNumber - employeeVoucherItem.VacationVoucher?.IssueDate.DayNumber) < 365.2425
                           select new
                           {
-                              regNumber = employeeVoucherItem.Employee?.regNumber,
+                              RegNumber = employeeVoucherItem.Employee?.RegNumber,
                               firstName = employeeVoucherItem.Employee?.FirstName,
                               lastName = employeeVoucherItem.Employee?.LastName,
                               voucherType = employeeVoucherItem.VacationVoucher?.VoucherType
                           }
                           ).ToList();
-        Assert.Contains(fifthQuery, queryElem => queryElem.regNumber == 1337);
-        Assert.Contains(fifthQuery, queryElem => queryElem.regNumber == 443);
+        Assert.Contains(fifthQuery, queryElem => queryElem.RegNumber == 1337);
+        Assert.Contains(fifthQuery, queryElem => queryElem.RegNumber == 443);
         Assert.Equal(2, fifthQuery.Count());
     }
     /// <summary>
@@ -134,7 +134,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         var subqueryReplaceNull = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
                                    select new
                                    {
-                                       regNumber = employeeOccupationItem.Employee?.regNumber,
+                                       RegNumber = employeeOccupationItem.Employee?.RegNumber,
                                        hireDate = employeeOccupationItem.HireDate,
                                        dismissalDate = (employeeOccupationItem.DismissalDate == null ? DateOnly.FromDateTime(DateTime.Now) : employeeOccupationItem.DismissalDate),
                                        firstName = employeeOccupationItem.Employee?.FirstName,
@@ -142,11 +142,11 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                                    }
                             ).ToList();
         var sixthQuery = (from subqueryElem in subqueryReplaceNull
-                          group subqueryElem by new { subqueryElem.regNumber, subqueryElem.firstName, subqueryElem.lastName } into grp
+                          group subqueryElem by new { subqueryElem.RegNumber, subqueryElem.firstName, subqueryElem.lastName } into grp
                           orderby grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425) descending
                           select new
                           {
-                              regNumber = grp.Key.regNumber,
+                              RegNumber = grp.Key.RegNumber,
                               firstName = grp.Key.firstName,
                               lastName = grp.Key.lastName,
                               workExperience = grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425)
@@ -157,9 +157,9 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         Assert.True(sixthQuery[1].workExperience > 23);
         Assert.True(sixthQuery[2].workExperience > 22);
         Assert.True(sixthQuery[2].workExperience > 4);
-        Assert.Equal((uint)3, sixthQuery[0].regNumber);
-        Assert.Equal((uint)1337, sixthQuery[1].regNumber);
-        Assert.Equal((uint)5, sixthQuery[2].regNumber);
-        Assert.Equal((uint)443, sixthQuery[3].regNumber);
+        Assert.Equal((uint)3, sixthQuery[0].RegNumber);
+        Assert.Equal((uint)1337, sixthQuery[1].RegNumber);
+        Assert.Equal((uint)5, sixthQuery[2].RegNumber);
+        Assert.Equal((uint)443, sixthQuery[3].RegNumber);
     }
 }

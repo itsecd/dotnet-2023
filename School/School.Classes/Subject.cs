@@ -43,5 +43,4 @@ public class Subject
     {
         return HashCode.Combine(Id, Year, Name);
     }
-
 }

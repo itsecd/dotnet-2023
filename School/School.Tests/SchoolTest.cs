@@ -6,7 +6,6 @@ public class SchoolTest
     /// <summary>
     /// Creating a list of 8 ratings
     /// </summary>
-    /// <returns></returns>
     private List<Grade> CreateListGrades()
     {
         var students = CreateListStudents();
@@ -33,7 +32,6 @@ public class SchoolTest
             new Grade(15, subject[0], students[7], 1, DateTime.Parse("2022/10/13"))
         };
     }
-
     /// <summary>
     /// Creating a list of 8 items
     /// </summary>
@@ -152,7 +150,6 @@ public class SchoolTest
         {
             Assert.True(result[i].Equals(topFive.ElementAt(i).Student));
         }
-
     }
 
     /// <summary>
@@ -163,25 +160,19 @@ public class SchoolTest
     {
         var grades = CreateListGrades();
 
-        var maxMark = (from grade in grades
-                       where grade.Date >= DateTime.Parse("2022/10/10") && grade.Date <= DateTime.Parse("2022/10/14")
-                       group grade by grade.Student into g
-                       select new
-                       {
-                           Student = g.Key,
-                           Marks = g.Average(s => s.Mark)
-                       }).Max(x => x.Marks);
+        var averageMarks =
+            (from grade in grades
+            where grade.Date >= DateTime.Parse("2022/10/10") && grade.Date <= DateTime.Parse("2022/10/14")
+            group grade by grade.Student into g
+            select new
+            {
+              Student = g.Key,
+              Marks = g.Average(s => s.Mark)
+            }).ToList();
 
-        var num_students = (from grade in grades
-                            where grade.Date >= DateTime.Parse("2022/10/10") && grade.Date <= DateTime.Parse("2022/10/14")
-                            group grade by grade.Student into g
-                            select new
-                            {
-                                Student = g.Key,
-                                Marks = g.Average(s => s.Mark)
-                            }).Where(x => x.Marks.Equals(maxMark)).Count();
-
-        Assert.True(num_students == 4);
+        var maxMark = averageMarks.Max(x => x.Marks);
+        var numStudents = averageMarks.Count(x => x.Marks.Equals(maxMark));
+        Assert.True(numStudents == 4);
     }
 
     /// <summary>
@@ -205,5 +196,4 @@ public class SchoolTest
         Assert.Equal(4, infoMarks[1].Max);
         Assert.Equal(3.8, infoMarks[1].Average);
     }
-
 }

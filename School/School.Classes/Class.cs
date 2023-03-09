@@ -43,5 +43,4 @@ public class Class
     {
         return HashCode.Combine(Id,Number, Letter);
     }
-
 }

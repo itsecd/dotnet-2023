@@ -68,5 +68,4 @@ public class Student
     {
         return HashCode.Combine(Id, FirstName, LastName, Patronymic, Passport, Class, BirthDate);
     }
-
 }

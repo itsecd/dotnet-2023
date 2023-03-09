@@ -50,5 +50,4 @@ public class Grade
     {
         return HashCode.Combine(Id, Student, Subject, Date);
     }
-
 }

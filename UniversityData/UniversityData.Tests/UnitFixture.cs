@@ -13,15 +13,15 @@ public class UnitFixture
             {
                 data.Add(new Specialty());
             }
-            data[0].Name = "Прикладная информатика";
+            data[0].Name = "РџСЂРёРєР»Р°РґРЅР°СЏ РёРЅС„РѕСЂРјР°С‚РёРєР°";
             data[0].Code = "09.03.03";
-            data[1].Name = "Информационные системы и технологии";
+            data[1].Name = "РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹Рµ СЃРёСЃС‚РµРјС‹ Рё С‚РµС…РЅРѕР»РѕРіРёРё";
             data[1].Code = "09.03.02";
-            data[2].Name = "Информатика и вычислительная техника";
+            data[2].Name = "РРЅС„РѕСЂРјР°С‚РёРєР° Рё РІС‹С‡РёСЃР»РёС‚РµР»СЊРЅР°СЏ С‚РµС…РЅРёРєР°";
             data[2].Code = "09.03.01";
-            data[3].Name = "Прикладная математика и информатика";
+            data[3].Name = "РџСЂРёРєР»Р°РґРЅР°СЏ РјР°С‚РµРјР°С‚РёРєР° Рё РёРЅС„РѕСЂРјР°С‚РёРєР°";
             data[3].Code = "01.03.02";
-            data[4].Name = "Информационная безопасность автоматизированных систем";
+            data[4].Name = "РРЅС„РѕСЂРјР°С†РёРѕРЅРЅР°СЏ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚СЊ Р°РІС‚РѕРјР°С‚РёР·РёСЂРѕРІР°РЅРЅС‹С… СЃРёСЃС‚РµРј";
             data[4].Code = "10.05.03";
             return data;
         }
@@ -36,13 +36,13 @@ public class UnitFixture
             {
                 data.Add(new Department());
             }
-            data[0].Name = "ГИиБ";
+            data[0].Name = "Р“РРёР‘";
             data[0].SupervisorNumber = "890918734";
-            data[1].Name = "Кафедры алгебры и геометрии";
+            data[1].Name = "РљР°С„РµРґСЂС‹ Р°Р»РіРµР±СЂС‹ Рё РіРµРѕРјРµС‚СЂРёРё";
             data[1].SupervisorNumber = "890918735";
-            data[2].Name = "Кафедра высшей математики";
+            data[2].Name = "РљР°С„РµРґСЂР° РІС‹СЃС€РµР№ РјР°С‚РµРјР°С‚РёРєРё";
             data[2].SupervisorNumber = "890918736";
-            data[3].Name = "Кафедра информационных технологий";
+            data[3].Name = "РљР°С„РµРґСЂР° РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… С‚РµС…РЅРѕР»РѕРіРёР№";
             data[3].SupervisorNumber = "890918737";
             return data;
         }
@@ -57,24 +57,24 @@ public class UnitFixture
             {
                 data.Add(new Rector());
             }
-            data[0].Name = "Владимир";
-            data[0].Surname = "Богатырев";
-            data[0].Patronymic = "Дмитриевич";
-            data[0].Degree = "Доктор экономических наук";
-            data[0].Title = "Профессор";
-            data[0].Position = "Ректор";
-            data[1].Name = "Дмитрий";
-            data[1].Surname = "Быков";
-            data[1].Patronymic = "Евгеньевич";
-            data[1].Degree = "Доктор технических наук";
-            data[1].Title = "Профессор";
-            data[1].Position = "Ректор";
-            data[2].Name = "Вадим";
-            data[2].Surname = "Ружников";
-            data[2].Patronymic = "Александрович";
-            data[2].Degree = "Кандидат технических наук";
-            data[2].Title = "Доцент";
-            data[2].Position = "Ректор";
+            data[0].Name = "Р’Р»Р°РґРёРјРёСЂ";
+            data[0].Surname = "Р‘РѕРіР°С‚С‹СЂРµРІ";
+            data[0].Patronymic = "Р”РјРёС‚СЂРёРµРІРёС‡";
+            data[0].Degree = "Р”РѕРєС‚РѕСЂ СЌРєРѕРЅРѕРјРёС‡РµСЃРєРёС… РЅР°СѓРє";
+            data[0].Title = "РџСЂРѕС„РµСЃСЃРѕСЂ";
+            data[0].Position = "Р РµРєС‚РѕСЂ";
+            data[1].Name = "Р”РјРёС‚СЂРёР№";
+            data[1].Surname = "Р‘С‹РєРѕРІ";
+            data[1].Patronymic = "Р•РІРіРµРЅСЊРµРІРёС‡";
+            data[1].Degree = "Р”РѕРєС‚РѕСЂ С‚РµС…РЅРёС‡РµСЃРєРёС… РЅР°СѓРє";
+            data[1].Title = "РџСЂРѕС„РµСЃСЃРѕСЂ";
+            data[1].Position = "Р РµРєС‚РѕСЂ";
+            data[2].Name = "Р’Р°РґРёРј";
+            data[2].Surname = "Р СѓР¶РЅРёРєРѕРІ";
+            data[2].Patronymic = "РђР»РµРєСЃР°РЅРґСЂРѕРІРёС‡";
+            data[2].Degree = "РљР°РЅРґРёРґР°С‚ С‚РµС…РЅРёС‡РµСЃРєРёС… РЅР°СѓРє";
+            data[2].Title = "Р”РѕС†РµРЅС‚";
+            data[2].Position = "Р РµРєС‚РѕСЂ";
             return data;
         }
     }
@@ -88,22 +88,22 @@ public class UnitFixture
             {
                 data.Add(new Faculty());
             }
-            data[0].Name = "Институт информатики и кибернетики";
+            data[0].Name = "РРЅСЃС‚РёС‚СѓС‚ РёРЅС„РѕСЂРјР°С‚РёРєРё Рё РєРёР±РµСЂРЅРµС‚РёРєРё";
             data[0].WorkersCount = 16;
             data[0].StudentsCount = 110;
-            data[1].Name = "Институт экономики и управления";
+            data[1].Name = "РРЅСЃС‚РёС‚СѓС‚ СЌРєРѕРЅРѕРјРёРєРё Рё СѓРїСЂР°РІР»РµРЅРёСЏ";
             data[1].WorkersCount = 22;
             data[1].StudentsCount = 81;
-            data[2].Name = "Юридический институт";
+            data[2].Name = "Р®СЂРёРґРёС‡РµСЃРєРёР№ РёРЅСЃС‚РёС‚СѓС‚";
             data[2].WorkersCount = 11;
             data[2].StudentsCount = 65;
-            data[3].Name = "Социально-гумманитарный институт";
+            data[3].Name = "РЎРѕС†РёР°Р»СЊРЅРѕ-РіСѓРјРјР°РЅРёС‚Р°СЂРЅС‹Р№ РёРЅСЃС‚РёС‚СѓС‚";
             data[3].WorkersCount = 30;
             data[3].StudentsCount = 200;
-            data[4].Name = "Институт доп. образования";
+            data[4].Name = "РРЅСЃС‚РёС‚СѓС‚ РґРѕРї. РѕР±СЂР°Р·РѕРІР°РЅРёСЏ";
             data[4].WorkersCount = 22;
             data[4].StudentsCount = 62;
-            data[5].Name = "Институт двигателей и энергетических установок";
+            data[5].Name = "РРЅСЃС‚РёС‚СѓС‚ РґРІРёРіР°С‚РµР»РµР№ Рё СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёС… СѓСЃС‚Р°РЅРѕРІРѕРє";
             data[5].WorkersCount = 16;
             data[5].StudentsCount = 70;
             return data;
@@ -155,23 +155,23 @@ public class UnitFixture
                 data.Add(new University());
             }
             data[0].Number = "12345";
-            data[0].Name = "Самарский университет";
-            data[0].Address = "Самара";
+            data[0].Name = "РЎР°РјР°СЂСЃРєРёР№ СѓРЅРёРІРµСЂСЃРёС‚РµС‚";
+            data[0].Address = "РЎР°РјР°СЂР°";
             data[0].RectorData = Rectors[0];
-            data[0].UniversityProperty = "муниципальная";
-            data[0].ConstructionProperty = "муниципальная";
+            data[0].UniversityProperty = "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ";
+            data[0].ConstructionProperty = "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ";
             data[1].Number = "56789";
-            data[1].Name = "СамГТУ";
-            data[1].Address = "Самара";
+            data[1].Name = "РЎР°РјР“РўРЈ";
+            data[1].Address = "РЎР°РјР°СЂР°";
             data[1].RectorData = Rectors[1];
-            data[1].UniversityProperty = "муниципальная";
-            data[1].ConstructionProperty = "муниципальная";
+            data[1].UniversityProperty = "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ";
+            data[1].ConstructionProperty = "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ";
             data[2].Number = "45678";
-            data[2].Name = "ПГУТИ";
-            data[2].Address = "Самара";
+            data[2].Name = "РџР“РЈРўР";
+            data[2].Address = "РЎР°РјР°СЂР°";
             data[2].RectorData = Rectors[2];
-            data[2].UniversityProperty = "муниципальная";
-            data[2].ConstructionProperty = "федеральная";
+            data[2].UniversityProperty = "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ";
+            data[2].ConstructionProperty = "С„РµРґРµСЂР°Р»СЊРЅР°СЏ";
             data[0].FacultiesData.AddRange(new[] { Faculties[0], Faculties[1], Faculties[2] });
             data[0].DepartmentsData.AddRange(new Department[] { Departments[0], Departments[1] });
             data[0].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[0], SpecialtyTableNodes[1], SpecialtyTableNodes[2] });

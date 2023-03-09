@@ -9,7 +9,7 @@ public class UnitTests : IClassFixture<UnitFixture>
         _fixture = unitFixture;
     }
     /// <summary>
-    /// Запрос 1 - Вывести информацию о выбранном вузе.
+    /// Р—Р°РїСЂРѕСЃ 1 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РІС‹Р±СЂР°РЅРЅРѕРј РІСѓР·Рµ.
     /// </summary>
     [Fact]
     public void InformationOfUniversity()
@@ -17,10 +17,10 @@ public class UnitTests : IClassFixture<UnitFixture>
         var result = (from university in _fixture.Universities
                       where university.Number == "12345"
                       select university).ToList();
-        Assert.Equal("Самарский университет", result[0].Name);
+        Assert.Equal("РЎР°РјР°СЂСЃРєРёР№ СѓРЅРёРІРµСЂСЃРёС‚РµС‚", result[0].Name);
     }
     /// <summary>
-    /// Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.
+    /// Р—Р°РїСЂРѕСЃ 2 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С„Р°РєСѓР»СЊС‚РµС‚Р°С…, РєР°С„РµРґСЂР°С… Рё СЃРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЏС… РґР°РЅРЅРѕРіРѕ РІСѓР·Р°.
     /// </summary>
     [Fact]
     public void InformationOfStructure()
@@ -33,7 +33,7 @@ public class UnitTests : IClassFixture<UnitFixture>
         Assert.Equal(4, result[0].SpecialtyTable.Count());
     }
     /// <summary>
-    /// Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).
+    /// Р—Р°РїСЂРѕСЃ 3 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РѕРї 5 РїРѕРїСѓР»СЏСЂРЅС‹С… СЃРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЏС… (СЃ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј РєРѕР»РёС‡РµСЃС‚РІРѕРј РіСЂСѓРїРї).
     /// </summary>
     [Fact]
     public void TopFiveSpecialties()
@@ -51,7 +51,7 @@ public class UnitTests : IClassFixture<UnitFixture>
             Assert.Equal(l[i], result[i].specialty);
     }
     /// <summary>
-    /// Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.
+    /// Р—Р°РїСЂРѕСЃ 4 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р’РЈР—Р°С… СЃ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј РєРѕР»РёС‡РµСЃС‚РІРѕРј РєР°С„РµРґСЂ, СѓРїРѕСЂСЏРґРѕС‡РёС‚СЊ РїРѕ РЅР°Р·РІР°РЅРёСЋ.
     /// </summary>
     [Fact]
     public void MaxCountDepartments()
@@ -62,19 +62,19 @@ public class UnitTests : IClassFixture<UnitFixture>
         Assert.Equal(1, result.Count);
     }
     /// <summary>
-    /// Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.
+    /// Р—Р°РїСЂРѕСЃ 5 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р’РЈР—Р°С… СЃ Р·Р°РґР°РЅРЅРѕР№ СЃРѕР±СЃС‚РІРµРЅРЅРѕСЃС‚СЊСЋ СѓС‡СЂРµР¶РґРµРЅРёСЏ, Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РіСЂСѓРїРї РІ Р’РЈР—Рµ.
     /// </summary>
     [Fact]
     public void UniversityWithProperty()
     {
         var result = (from university in _fixture.Universities
-                      where (university.UniversityProperty == "муниципальная")
+                      where (university.UniversityProperty == "РјСѓРЅРёС†РёРїР°Р»СЊРЅР°СЏ")
                       where (university.SpecialtyTable.Sum(x => x.CountGroups) == 27)
                       select university).ToList();
         Assert.Equal(1, result.Count);
     }
     /// <summary>
-    /// Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания.
+    /// Р—Р°РїСЂРѕСЃ 6 - Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕР»РёС‡РµСЃС‚РІРµ С„Р°РєСѓР»СЊС‚РµС‚РѕРІ, РєР°С„РµРґСЂ, СЃРїРµС†РёР°Р»СЊРЅРѕСЃС‚РµР№ РїРѕ РєР°Р¶РґРѕРјСѓ С‚РёРїСѓ СЃРѕР±СЃС‚РІРµРЅРЅРѕСЃС‚Рё СѓС‡СЂРµР¶РґРµРЅРёСЏ Рё СЃРѕР±СЃС‚РІРµРЅРЅРѕСЃС‚Рё Р·РґР°РЅРёСЏ.
     /// </summary>
     [Fact]
     public void CountDepartments()

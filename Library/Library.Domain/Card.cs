@@ -28,5 +28,5 @@ public class Card
     /// <summary>
     /// IdReader stores list of reader's id
     /// </summary>
-    public List<Reader> IdReader {  set; get; } = new List<Reader>();
+    public List<Reader> IdReader { set; get; } = new List<Reader>();
 }

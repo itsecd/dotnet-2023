@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UniversityData.Domain\UniversityData.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

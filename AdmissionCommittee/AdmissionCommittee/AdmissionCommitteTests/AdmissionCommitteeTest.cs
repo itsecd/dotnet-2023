@@ -137,7 +137,7 @@ public class AdmissionCommitteTest
     /// Output information about entrants from the specified city
     /// </summary>
     [Fact]
-    public void FirstRequest()
+    public void TestEntrantsFromSpecifiedCity()
     {
         var selectedEntrants = (from entrant in _entrants
                                 where entrant.City == "Saint-Petersburg"
@@ -151,7 +151,7 @@ public class AdmissionCommitteTest
     /// Output information about entrants older than 20 years, arrange by full name
     /// </summary>
     [Fact]
-    public void SecondRequest()
+    public void TestEntrantsOverTwentyYearsOlder()
     {
         var selectedEntrants = (from entrant in _entrants
                                 where (DateTime.Now.Year - entrant.DateBirth.Year) > 20
@@ -174,7 +174,7 @@ public class AdmissionCommitteTest
     /// 
     /// </summary>
     [Fact]
-    public void ThirdRequest()
+    public void TestEntrantsEnteringSpecifiedSpeciality()
     {
         var selectedEntrants = (from entrant in _entrants
                                 from spec in entrant.Statement.PrioritySpecialities
@@ -198,12 +198,12 @@ public class AdmissionCommitteTest
     /// "Applied Mathematics and Computer science"    1
     /// "Sociology"                                   2
     /// "International relations"                     3
-    /// "—hemistry"                                   2
+    /// "Chemistry"                                   2
     /// 
     /// 
     /// </summary>
     [Fact]
-    public void FourthRequest()
+    public void TestCountOfEntrantsEnteringEachSpeciality()
     {
         var entrantsCount = (from entrant in _entrants
                              from spec in entrant.Statement.PrioritySpecialities
@@ -238,7 +238,7 @@ public class AdmissionCommitteTest
     /// Output information about top 5 entrants who scored the highest number of marks for 3 subject
     /// </summary>
     [Fact]
-    public void FifthRequest()
+    public void TestTopFiveEntrants()
     {
         var entrantsTopFive = ((from entrant in _entrants
                                 orderby entrant.Results.Sum(t => t.Mark) descending
@@ -273,7 +273,7 @@ public class AdmissionCommitteTest
     /// 
     /// </summary>
     [Fact]
-    public void SixthRequestMathematics()
+    public void TestEntrantMaxMarkMathematics()
     {
         var entrantMath = (from entrant in _entrants
                            from spec in entrant.Statement.PrioritySpecialities
@@ -314,7 +314,7 @@ public class AdmissionCommitteTest
     /// "Lebedeva Kira Romanovna"  "Computer security"                            100
     /// </summary>
     [Fact]
-    public void SixthRequestRussianLanguage()
+    public void TestEntrantMaxMarkRussianLanguage()
     {
         var entrantRus = (from entrant in _entrants
                           from spec in entrant.Statement.PrioritySpecialities
@@ -354,7 +354,7 @@ public class AdmissionCommitteTest
     /// "Lebedeva Kira Romanovna"  "Computer security"                            100
     /// </summary>
     [Fact]
-    public void SixthRequestPhysics()
+    public void TestEntrantMaxMarkPhysics()
     {
         var entrantPhys = (from entrant in _entrants
                            from spec in entrant.Statement.PrioritySpecialities
@@ -395,7 +395,7 @@ public class AdmissionCommitteTest
     /// "Novikov Roman Evgenievich"   "Applied Mathematics and Computer science"    71
     /// </summary>
     [Fact]
-    public void SixthRequestComputerScience()
+    public void TestEntrantMaxMarkComputerScience()
     {
         var entrantCompscience = (from entrant in _entrants
                                   from spec in entrant.Statement.PrioritySpecialities
@@ -436,7 +436,7 @@ public class AdmissionCommitteTest
     /// 
     /// </summary>
     [Fact]
-    public void SixthRequestSocialStudies()
+    public void TestEntrantMaxMarkSocialStudies()
     {
         var entrantSocialStudies = (from entrant in _entrants
                                     from spec in entrant.Statement.PrioritySpecialities
@@ -473,7 +473,7 @@ public class AdmissionCommitteTest
     /// 
     /// </summary>
     [Fact]
-    public void SixthRequestHistory()
+    public void TestEntrantMaxMarkHistory()
     {
         var entrantHistory = (from entrant in _entrants
                               from spec in entrant.Statement.PrioritySpecialities
@@ -509,7 +509,7 @@ public class AdmissionCommitteTest
     /// 
     /// </summary>
     [Fact]
-    public void SixthRequestChemistry()
+    public void TestEntrantMaxMarkChemistry()
     {
         var entrant—hemistry = (from entrant in _entrants
                                 from spec in entrant.Statement.PrioritySpecialities
@@ -541,7 +541,7 @@ public class AdmissionCommitteTest
     /// "Kalinina Elena Vasilyevna"  "International relations and foreign policy"  98
     /// </summary>
     [Fact]
-    public void SixthRequestEnglishLanguage()
+    public void TestEntrantMaxMarkEnglishLanguage()
     {
         var entrantEng = (from entrant in _entrants
                           from spec in entrant.Statement.PrioritySpecialities

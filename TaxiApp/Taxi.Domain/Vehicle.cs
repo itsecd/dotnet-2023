@@ -10,7 +10,7 @@ public class Vehicle
 
     public UInt64 VehicleClassificationId { get; set; }
 
-    public UInt64 Driver { get; set; }
+    public UInt64 DriverId { get; set; }
 
     public List<Ride> Rides { get; set; } = new List<Ride>();
     

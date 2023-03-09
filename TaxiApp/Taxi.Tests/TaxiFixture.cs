@@ -99,7 +99,7 @@ public class TaxiFixture
                 RegistrationCarPlate = "Е555КХ163",
                 Colour = "grey",
                 VehicleClassificationId = 1,
-                Driver = 5
+                DriverId = 5
             };
             var secondVehicle = new Vehicle()
             {
@@ -107,7 +107,7 @@ public class TaxiFixture
                 RegistrationCarPlate = "А007МР163",
                 Colour = "white",
                 VehicleClassificationId = 1,
-                Driver = 4
+                DriverId = 4
             };
             var thirdVehicle = new Vehicle()
             {
@@ -115,7 +115,7 @@ public class TaxiFixture
                 RegistrationCarPlate = "Х243КХ163",
                 Colour = "white",
                 VehicleClassificationId = 2,
-                Driver = 3
+                DriverId = 3
             };
             var fourthVehicle = new Vehicle()
             {
@@ -123,7 +123,7 @@ public class TaxiFixture
                 RegistrationCarPlate = "В796ТМ116",
                 Colour = "black",
                 VehicleClassificationId = 2,
-                Driver = 2
+                DriverId = 2
             };
             var fifthVehicle = new Vehicle()
             {
@@ -131,7 +131,7 @@ public class TaxiFixture
                 RegistrationCarPlate = "К005ТМ163",
                 Colour = "black",
                 VehicleClassificationId = 3,
-                Driver = 1
+                DriverId = 1
             };
             
             return new List<Vehicle>() { firstVehicle, secondVehicle, thirdVehicle, fourthVehicle, fifthVehicle };

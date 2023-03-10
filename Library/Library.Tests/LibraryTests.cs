@@ -16,7 +16,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     [Fact]
     public void CipherTest()
     {
-        var fixtureBook = _fixture.FixtureBook;
+        var fixtureBook = _fixture.FixtureBook.ToList();
         var request = (from book in fixtureBook
                        where book.Cipher == "5698/197b"
                        select book).Count();
@@ -28,7 +28,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     [Fact]
     public void BooksTest()
     {
-        var fixtureBook = _fixture.FixtureBook;
+        var fixtureBook = _fixture.FixtureBook.ToList();
         var request = (from book in fixtureBook
                        where book.IsIssued == true
                        orderby book.Name
@@ -49,5 +49,32 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         Assert.Equal(2, request.Count());
         Assert.Equal(15, request.First(x => x.departments.Id == 3).count);
         Assert.Equal(20, request.First(x => x.departments.Id == 4).count);
+    }
+    /// <summary>
+    /// Fourth request - give info about count of books in each department for each type edition
+    /// </summary>
+    [Fact]
+    public void CountTypesTest()
+    {
+        var fixtureDepartment = _fixture.FixtureDepartment.ToList();
+        var fixtureTypeEdition = _fixture.FixtureTypeEdition.ToList();
+        var request = (from mass in
+                       (from department in fixtureDepartment
+                        from book in department.IdBooks
+                        from type in book.IdTypeEdition
+                        select new
+                        {
+                            types = type.Name,
+                            count = department.Count
+                        })
+                       group mass by mass.types into gr
+                       select new
+                       {
+                           Count = gr.Sum(ret => ret.count),
+                           gr.Key
+                       }).ToList();
+        Assert.Equal(33, request.First(x => x.Key == "Tutorial").Count);
+        Assert.Equal(35, request.First(x => x.Key == "Monograph").Count);
+        Assert.Equal(75, request.First(x => x.Key == "Methodological guidelines").Count);
     }
 }

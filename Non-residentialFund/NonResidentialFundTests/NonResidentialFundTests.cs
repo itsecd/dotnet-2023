@@ -7,7 +7,7 @@ public class NonResidentialFundTests
     /// First request: display information about all customers
     /// </summary>
     [Fact]
-    public void FirstRequestTest()
+    public void AllCustomersRequestTest()
     {
         var fictureBuyers = _fixture.FixtureBuyers;
         var buyers = (from buyer in fictureBuyers select buyer).ToList();
@@ -27,14 +27,19 @@ public class NonResidentialFundTests
     /// Second request: Output information on auctions in which all auctioned buildings were not sold.
     /// </summary>
     [Fact]
-    public void SecondRequestTest()
+    public void AuctionsNotAllLotsSoldRequestTest()
     {
         var result = (from auction in _fixture.FixtureAuctions
-                      join countBoughtInAuction in (from privatized in _fixture.FixturePrivatized
-                                                    group privatized by privatized.AuctionId into privGroup
-                                                    select new { AuctionId = privGroup.First().AuctionId, countBought = privGroup.Count() })
-                                                    on auction.AuctionId equals countBoughtInAuction.AuctionId
-                      where countBoughtInAuction.countBought != auction.Buildings.Count()
+                      join countBoughtInAuction in (
+                            from privatized in _fixture.FixturePrivatized
+                            group privatized by privatized.AuctionId into privGroup
+                            select new
+                            {
+                                privGroup.First().AuctionId,
+                                countBought = privGroup.Count()
+                            })
+                            on auction.AuctionId equals countBoughtInAuction.AuctionId
+                      where countBoughtInAuction.countBought != auction.Buildings.Count
                       select auction.AuctionId).ToList();
 
         Assert.Equal(2, result.Count);
@@ -47,19 +52,20 @@ public class NonResidentialFundTests
     /// and the total amount of privatized fund of the district. Arrange by full name
     /// </summary>
     [Fact]
-    public void ThirdRequestTest()
+    public void BuyersInSpecifiedDistrictRequestTest()
     {
         var result = (from buyer in _fixture.FixtureBuyers
                       join privatized in _fixture.FixturePrivatized on buyer.BuyerId equals privatized.BuyerId
                       join building in _fixture.FixtureBuildings on privatized.RegistrationNumber equals building.RegistrationNumber
-                      join districtCountSold in (from building in _fixture.FixtureBuildings
-                                                 join privatized in _fixture.FixturePrivatized on building.RegistrationNumber equals privatized.RegistrationNumber
-                                                 group new { privatized, building } by building.DistrictId into privGroupByDistrict
-                                                 select new
-                                                 {
-                                                     DistrictId = privGroupByDistrict.First().building.DistrictId,
-                                                     CountSold = privGroupByDistrict.Count()
-                                                 }
+                      join districtCountSold in (
+                            from building in _fixture.FixtureBuildings
+                            join privatized in _fixture.FixturePrivatized on building.RegistrationNumber equals privatized.RegistrationNumber
+                            group new { privatized, building } by building.DistrictId into privGroupByDistrict
+                            select new
+                            {
+                                privGroupByDistrict.First().building.DistrictId,
+                                CountSold = privGroupByDistrict.Count()
+                            }
                       ).ToList() on building.DistrictId equals districtCountSold.DistrictId
                       where building.DistrictId == 1
                       orderby buyer.LastName, buyer.FirstName
@@ -77,7 +83,7 @@ public class NonResidentialFundTests
     /// Fourth request: Find the addresses of all buyers participating in the auction of the specified date
     /// </summary>
     [Fact]
-    public void FourthRequestTest()
+    public void AddressesOfAuctionParticipantsInSpecifiedDateRequestTest()
     {
         var result = (from auction in _fixture.FixtureAuctions
                       from participant in auction.Buyers
@@ -96,13 +102,17 @@ public class NonResidentialFundTests
     /// Fifth request: Find the top 5 buyers who spent the most money
     /// </summary>
     [Fact]
-    public void FifthRequestTest()
+    public void TopBuyersByExpensesRequestTest()
     {
         var result = (from privatized in _fixture.FixturePrivatized
                       join buyer in _fixture.FixtureBuyers on privatized.BuyerId equals buyer.BuyerId
                       group privatized by privatized.BuyerId into privGRoup
                       orderby privGRoup.Sum(privatized => privatized.EndPrice) descending
-                      select new { BuyerId = privGRoup.First().BuyerId, expenses = privGRoup.Sum(privatized => privatized.EndPrice) }).Take(5).ToList();
+                      select new
+                      {
+                          privGRoup.First().BuyerId,
+                          expenses = privGRoup.Sum(privatized => privatized.EndPrice)
+                      }).Take(5).ToList();
 
         Assert.Equal(4, result.Count);
         Assert.Equal(8, result.First().BuyerId);
@@ -113,7 +123,7 @@ public class NonResidentialFundTests
     /// Sixth requrst: Output the data on the auctions that brought the most profit
     /// </summary>
     [Fact]
-    public void SixthRequestTest()
+    public void AuctionsWithHighestIncomeRequestTest()
     {
         var result = (from privatized in _fixture.FixturePrivatized
                       join auction in _fixture.FixtureAuctions on privatized.AuctionId equals auction.AuctionId
@@ -121,9 +131,8 @@ public class NonResidentialFundTests
                       orderby privGRoup.Sum(privatized => privatized.EndPrice - privatized.StartPrice) descending
                       select new
                       {
-                          AuctionId = privGRoup.First().AuctionId,
-                          income =
-                      privGRoup.Sum(privatized => privatized.EndPrice - privatized.StartPrice)
+                          privGRoup.First().AuctionId,
+                          income = privGRoup.Sum(privatized => privatized.EndPrice - privatized.StartPrice)
                       }).ToList();
 
         Assert.Equal(6, result.Count);

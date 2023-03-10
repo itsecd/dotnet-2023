@@ -29,7 +29,7 @@ public class Employee
     /// <summary>
     /// BirthDate - birth date of an Employee
     /// </summary>
-    public DateOnly BirthDate { get; set; } = DateOnly.MinValue;
+    public DateTime BirthDate { get; set; } = DateTime.MinValue;
     /// <summary>
     /// Workshop - an workshop, where the employee is working
     /// </summary>

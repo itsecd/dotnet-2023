@@ -207,7 +207,7 @@ public class EmployeeDomainFixture
                             FirstName = "Владислав",
                             LastName = "Мещеряков",
                             PatronymicName = "Даниилович",
-                            BirthDate = new DateOnly(1978, 3, 22),
+                            BirthDate = new DateTime(1978, 3, 22),
                             Workshop = null,
                             HomeAddress = "пгт. Безенчук, ул.Нефтянников д.35",
                             HomeTelephone = "89633154365",
@@ -226,7 +226,7 @@ public class EmployeeDomainFixture
                             FirstName = "Сергей",
                             LastName = "Ляхов",
                             PatronymicName = "Сергеевич",
-                            BirthDate = new DateOnly(2000, 1, 23),
+                            BirthDate = new DateTime(2000, 1, 23),
                             Workshop = null,
                             HomeAddress = "г.Самара, ул.Ленина, д.57",
                             HomeTelephone = "89633154365",
@@ -245,7 +245,7 @@ public class EmployeeDomainFixture
                             FirstName = "Михаил",
                             LastName = "Зайцев",
                             PatronymicName = "Иванович",
-                            BirthDate = new DateOnly(1978, 8, 6),
+                            BirthDate = new DateTime(1978, 8, 6),
                             Workshop = null,
                             HomeAddress = "г.Самара Московское шоссе, д.108",
                             HomeTelephone = "89633154365",
@@ -264,7 +264,7 @@ public class EmployeeDomainFixture
                             FirstName = "Дарья",
                             LastName = "Заварзина",
                             PatronymicName = "Анатольевна",
-                            BirthDate = new DateOnly(1980, 10, 10),
+                            BirthDate = new DateTime(1980, 10, 10),
                             Workshop = null,
                             HomeAddress =  "пгт.Безенчук ул.Чапева д.43",
                             HomeTelephone = "89633154365",
@@ -304,7 +304,7 @@ public class EmployeeDomainFixture
                 new EmployeeOccupation
                 {
                     Id = 1,
-                    HireDate = new DateOnly(2000, 1, 27),
+                    HireDate = new DateTime(2000, 1, 27),
                     DismissalDate = null,
                     Employee = employeeList[0],
                     Occupation = occupationList[1],
@@ -312,15 +312,15 @@ public class EmployeeDomainFixture
                 new EmployeeOccupation
                 {
                     Id = 2,
-                    HireDate = new DateOnly(1998, 3, 20),
-                    DismissalDate = new DateOnly(2010, 5, 23),
+                    HireDate = new DateTime(1998, 3, 20),
+                    DismissalDate = new DateTime(2010, 5, 23),
                     Employee = employeeList[2],
                     Occupation = occupationList[4]
                 },
                 new EmployeeOccupation
                 {
                     Id = 3,
-                    HireDate = new DateOnly(2010, 5, 24),
+                    HireDate = new DateTime(2010, 5, 24),
                     DismissalDate = null,
                     Employee = employeeList[2],
                     Occupation = occupationList[1]
@@ -328,7 +328,7 @@ public class EmployeeDomainFixture
                 new EmployeeOccupation
                 {
                     Id = 4,
-                    HireDate = new DateOnly(2018, 8, 7),
+                    HireDate = new DateTime(2018, 8, 7),
                     DismissalDate = null,
                     Employee = employeeList[1],
                     Occupation = occupationList[2]
@@ -336,23 +336,23 @@ public class EmployeeDomainFixture
                 new EmployeeOccupation
                 {
                     Id = 5,
-                    HireDate = new DateOnly(2000, 9, 10),
-                    DismissalDate = new DateOnly(2011, 11, 11),
+                    HireDate = new DateTime(2000, 9, 10),
+                    DismissalDate = new DateTime(2011, 11, 11),
                     Employee = employeeList[3],
                     Occupation = occupationList[1]
                 },
                 new EmployeeOccupation
                 {
                     Id = 6,
-                    HireDate = new DateOnly(2011, 11, 12),
-                    DismissalDate = new DateOnly(2016, 3, 24),
+                    HireDate = new DateTime(2011, 11, 12),
+                    DismissalDate = new DateTime(2016, 3, 24),
                     Employee = employeeList[3],
                     Occupation = occupationList[3]
                 },
                 new EmployeeOccupation
                 {
                     Id = 7,
-                    HireDate = new DateOnly(2016, 3, 25),
+                    HireDate = new DateTime(2016, 3, 25),
                     DismissalDate = null,
                     Employee = employeeList[3],
                     Occupation = occupationList[4]
@@ -489,21 +489,21 @@ public class EmployeeDomainFixture
                 {
                     Id = 1,
                     VoucherType = null,
-                    IssueDate = new DateOnly(2022, 3, 22),
+                    IssueDate = new DateTime(2022, 3, 22),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 2,
                     VoucherType = null,
-                    IssueDate = new DateOnly(2022, 5, 12),
+                    IssueDate = new DateTime(2022, 5, 12),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 3,
                     VoucherType = null,
-                    IssueDate = new DateOnly(2020, 1, 5),
+                    IssueDate = new DateTime(2020, 1, 5),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 }
             };

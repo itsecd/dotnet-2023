@@ -12,12 +12,12 @@ public class EmployeeOccupation
     /// <summary>
     /// HireDate - a date, when an employee was hired on the given occupation.
     /// </summary>
-    public DateOnly HireDate { get; set; }
+    public DateTime HireDate { get; set; }
     /// <summary>
     /// DismissalDate - a date, when an employee was dismissed from the occupation.
     /// Can be null if the employee is still working on that job.
     /// </summary>
-    public DateOnly? DismissalDate { get; set; }
+    public DateTime? DismissalDate { get; set; }
     /// <summary>
     /// Occupation - a link to Occupation object, used for many-to-many relationship
     /// </summary>

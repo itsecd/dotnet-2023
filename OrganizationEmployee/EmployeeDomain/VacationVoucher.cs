@@ -13,7 +13,7 @@ public class VacationVoucher
     /// <summary>
     /// IssueDate - a date, when the VacationVoucher was issued
     /// </summary>
-    public DateOnly IssueDate { get; set; }
+    public DateTime IssueDate { get; set; }
     /// <summary>
     /// VoucherType - a link to VoucherType of the given voucher
     /// </summary>

@@ -18,7 +18,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     {
         var firstQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                           from departmentEmployeeItem in employee.DepartmentEmployees
-                          where departmentEmployeeItem.Department != null && departmentEmployeeItem.Department.Id == departmentId
+                          where departmentEmployeeItem.Department?.Id == departmentId
                           select employee).ToList();
         Assert.Equal(countObjects, firstQuery.Count);
     }
@@ -31,15 +31,21 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         var secondQuery = (from employee in _fixture.EmployeeWithDepartmentEmployeeFilledFixture
                            orderby employee.LastName, employee.FirstName, employee.PatronymicName
                            from departmentEmployeeItem in employee.DepartmentEmployees
-                           group employee by new { employee.RegNumber, employee.LastName, employee.FirstName, employee.PatronymicName } into grp
+                           group employee by new
+                           {
+                               employee.RegNumber,
+                               employee.LastName,
+                               employee.FirstName,
+                               employee.PatronymicName
+                           } into grp
                            where grp.Count() > 1
                            orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
                            select new
                            {
-                               RegNumber = grp.Key.RegNumber,
-                               FirstName = grp.Key.FirstName,
-                               LastName = grp.Key.LastName,
-                               PatronymicName = grp.Key.PatronymicName,
+                               grp.Key.RegNumber,
+                               grp.Key.FirstName,
+                               grp.Key.LastName,
+                               grp.Key.PatronymicName,
                                CountDepart = grp.Count()
                            }).ToList();
         Assert.Equal(3, secondQuery.Count);
@@ -56,21 +62,22 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     public void TestThirdQuery()
     {
         var thirdQuery = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
-                          where employeeOccupationItem != null && employeeOccupationItem.DismissalDate != null
+                          where employeeOccupationItem?.DismissalDate != null
                           from department in employeeOccupationItem?.Employee?.DepartmentEmployees
                           select
                           new
                           {
-                              RegNumber = employeeOccupationItem.Employee?.RegNumber,
-                              firstName = employeeOccupationItem.Employee?.FirstName,
-                              lastName = employeeOccupationItem.Employee?.LastName,
-                              patronymicName = employeeOccupationItem.Employee?.PatronymicName,
-                              birthDate = employeeOccupationItem.Employee?.BirthDate,
-                              workshop = employeeOccupationItem.Employee?.Workshop,
-                              department = department,
-                              occupation = employeeOccupationItem.Occupation,
-                          }).ToList();
-        Assert.Equal(4, thirdQuery.Count());
+                              employeeOccupationItem.Employee?.RegNumber,
+                              employeeOccupationItem.Employee?.FirstName,
+                              employeeOccupationItem.Employee?.LastName,
+                              employeeOccupationItem.Employee?.PatronymicName,
+                              employeeOccupationItem.Employee?.BirthDate,
+                              employeeOccupationItem.Employee?.Workshop,
+                              department,
+                              employeeOccupationItem.Occupation
+                          }
+                          ).ToList();
+        Assert.Equal(4, thirdQuery.Count);
         Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 1337);
         Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 443);
         Assert.Contains(thirdQuery, requestElem => requestElem.RegNumber == 5);
@@ -84,26 +91,28 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     {
         var employees = _fixture.EmployeeWithDepartmentEmployeeFilledFixture;
         var fourthQuery =
-            (from tuple in (
-                                from employee in employees
-                                from departmentEmployeeItem in employee.DepartmentEmployees
-                                where departmentEmployeeItem.Department != null
-                                select new
-                                {
-                                    employeeAge = (DateOnly.FromDateTime(DateTime.Now).DayNumber - employee.BirthDate.DayNumber) / 365.2425,
-                                    departmentId = departmentEmployeeItem.Department?.Id
-                                }
-                            )
-             group tuple by tuple.departmentId into grp
+            (from tuple in
+                 (from employee in employees
+                  from departmentEmployeeItem in employee.DepartmentEmployees
+                  where departmentEmployeeItem.Department != null
+                  select new
+                  {
+                      EmployeeAge = ((DateTime.Now -
+                                      employee.BirthDate).TotalDays / 365.2422),
+                      DepartmentId = departmentEmployeeItem.Department?.Id
+                  }
+                  )
+             group tuple by tuple.DepartmentId into grp
              select new
              {
-                 averageAge = grp.Average(employee => employee.employeeAge),
-                 departmentId = grp.Key
-             }).ToList();
-        Assert.True(fourthQuery[0].averageAge > 37);
-        Assert.True(fourthQuery[1].averageAge > 38);
-        Assert.NotEqual(fourthQuery[0].averageAge, fourthQuery[1].averageAge);
-        Assert.Equal(2, fourthQuery.Count());
+                 AverageAge = grp.Average(employee => employee.EmployeeAge),
+                 grp.Key
+             }
+             ).ToList();
+        Assert.True(fourthQuery[0].AverageAge >= 37);
+        Assert.True(fourthQuery[1].AverageAge >= 38);
+        Assert.NotEqual(fourthQuery[0].AverageAge, fourthQuery[1].AverageAge);
+        Assert.Equal(2, fourthQuery.Count);
     }
     /// <summary>
     /// Fifth query - output the info about employees, who received a vacation voucher in past year.
@@ -112,18 +121,19 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     public void TestFifthQuery()
     {
         var fifthQuery = (from employeeVoucherItem in _fixture.EmployeeVacationVoucher
-                          where (DateOnly.FromDateTime(DateTime.Now).DayNumber - employeeVoucherItem.VacationVoucher?.IssueDate.DayNumber) < 365.2425
+                          where (DateTime.Now.Date -
+                                employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
                           select new
                           {
-                              RegNumber = employeeVoucherItem.Employee?.RegNumber,
-                              firstName = employeeVoucherItem.Employee?.FirstName,
-                              lastName = employeeVoucherItem.Employee?.LastName,
-                              voucherType = employeeVoucherItem.VacationVoucher?.VoucherType
+                              employeeVoucherItem.Employee?.RegNumber,
+                              employeeVoucherItem.Employee?.FirstName,
+                              employeeVoucherItem.Employee?.LastName,
+                              employeeVoucherItem.VacationVoucher?.VoucherType
                           }
                           ).ToList();
         Assert.Contains(fifthQuery, queryElem => queryElem.RegNumber == 1337);
         Assert.Contains(fifthQuery, queryElem => queryElem.RegNumber == 443);
-        Assert.Equal(2, fifthQuery.Count());
+        Assert.Equal(2, fifthQuery.Count);
     }
     /// <summary>
     /// Output the top-5 employees who have the longest working experience at the company
@@ -134,29 +144,38 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         var subqueryReplaceNull = (from employeeOccupationItem in _fixture.EmployeeOccupationFixture
                                    select new
                                    {
-                                       RegNumber = employeeOccupationItem.Employee?.RegNumber,
-                                       hireDate = employeeOccupationItem.HireDate,
-                                       dismissalDate = (employeeOccupationItem.DismissalDate == null ? DateOnly.FromDateTime(DateTime.Now) : employeeOccupationItem.DismissalDate),
-                                       firstName = employeeOccupationItem.Employee?.FirstName,
-                                       lastName = employeeOccupationItem.Employee?.LastName
+                                       employeeOccupationItem.Employee?.RegNumber,
+                                       employeeOccupationItem.HireDate,
+                                       DismissalDate = employeeOccupationItem.DismissalDate ?? DateTime.Now,
+                                       employeeOccupationItem.Employee?.FirstName,
+                                       employeeOccupationItem.Employee?.LastName
                                    }
-                            ).ToList();
+                                   ).ToList();
         var sixthQuery = (from subqueryElem in subqueryReplaceNull
-                          group subqueryElem by new { subqueryElem.RegNumber, subqueryElem.firstName, subqueryElem.lastName } into grp
-                          orderby grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425) descending
+                          group subqueryElem by new
+                          {
+                              subqueryElem.RegNumber,
+                              subqueryElem.FirstName,
+                              subqueryElem.LastName
+                          } into grp
+                          orderby grp.Sum(subqueryElem =>
+                                          (subqueryElem.DismissalDate -
+                                                subqueryElem.HireDate).TotalDays / 365.2422) descending
                           select new
                           {
-                              RegNumber = grp.Key.RegNumber,
-                              firstName = grp.Key.firstName,
-                              lastName = grp.Key.lastName,
-                              workExperience = grp.Sum(subqueryElem => (subqueryElem.dismissalDate?.DayNumber - subqueryElem.hireDate.DayNumber) / 365.2425)
+                              grp.Key.RegNumber,
+                              grp.Key.FirstName,
+                              grp.Key.LastName,
+                              WorkExperience = grp.Sum(subqueryElem =>
+                              (subqueryElem.DismissalDate -
+                                    subqueryElem.HireDate).TotalDays / 365.2422)
                           }
-                            ).Take(5).ToList();
-        Assert.Equal(4, sixthQuery.Count());
-        Assert.True(sixthQuery[0].workExperience > 24);
-        Assert.True(sixthQuery[1].workExperience > 23);
-        Assert.True(sixthQuery[2].workExperience > 22);
-        Assert.True(sixthQuery[2].workExperience > 4);
+                          ).Take(5).ToList();
+        Assert.Equal(4, sixthQuery.Count);
+        Assert.True(sixthQuery[0].WorkExperience > 24);
+        Assert.True(sixthQuery[1].WorkExperience > 23);
+        Assert.True(sixthQuery[2].WorkExperience > 22);
+        Assert.True(sixthQuery[2].WorkExperience > 4);
         Assert.Equal((uint)3, sixthQuery[0].RegNumber);
         Assert.Equal((uint)1337, sixthQuery[1].RegNumber);
         Assert.Equal((uint)5, sixthQuery[2].RegNumber);

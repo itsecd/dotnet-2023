@@ -127,7 +127,7 @@ public class LibraryFixture
             fifthDepartment.Id = 4;
             fifthDepartment.IdTypeDepartments.Add(typeDepartments[1]);
             fifthDepartment.IdBooks.Add(books[3]);
-            fifthDepartment.Count = 15;
+            fifthDepartment.Count = 20;
             departments.Add(fifthDepartment);
             return departments;
         }

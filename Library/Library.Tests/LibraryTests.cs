@@ -35,4 +35,19 @@ public class LibraryTests : IClassFixture<LibraryFixture>
                        select book).Count();
         Assert.Equal(4, request);
     }
+    /// <summary>
+    /// Third request - give info on the availability of the selected book in different departments and their quantity
+    /// </summary>
+    [Fact]
+    public void CountBooksTest()
+    {
+        var fixtureDepartment = _fixture.FixtureDepartment.ToList();
+        var request = (from department in fixtureDepartment
+                       from b in department.IdBooks
+                       where b.Id == 3
+                       select new { departments = department, count = department.Count });
+        Assert.Equal(2, request.Count());
+        Assert.Equal(15, request.First(x => x.departments.Id == 3).count);
+        Assert.Equal(20, request.First(x => x.departments.Id == 4).count);
+    }
 }

@@ -1,8 +1,3 @@
-using Taxi.Domain;
-using System.Linq;
-using System.Threading.Channels;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-
 namespace Taxi.Tests;
 
 public class TaxiTests : IClassFixture<TaxiFixture>

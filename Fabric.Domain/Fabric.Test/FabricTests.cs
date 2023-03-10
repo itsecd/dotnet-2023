@@ -73,6 +73,7 @@ public class FabricTests : IClassFixture<FabricFixture>
                           Form = g.Key,
                           Count = g.Count()
                       };
+
         Assert.Equal(2, request.First(x => x.Form == "рнн").Count);
     }
     /// <summary>

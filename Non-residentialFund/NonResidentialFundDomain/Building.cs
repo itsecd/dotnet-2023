@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// Building - a class that describes characteristics of a building
 /// </summary>
@@ -28,8 +28,11 @@ public class Building
     /// BuildDate - date of building construction
     /// </summary>
     public DateOnly BuildDate { get; set; } = new DateOnly();
-
-    public Building(int regNum, string address, int districtId, double area, int flourCount, DateOnly buildDate)
+    /// <summary>
+    /// Auctions - list of auctions for which the building was offered
+    /// </summary>
+    public List<BuildingAuctionConnection> Auctions = new();
+    public Building(int regNum, string address, int districtId, double area, int flourCount, DateOnly buildDate, List<BuildingAuctionConnection> auctions)
     {
         RegistrationNumber = regNum;
         Address = address;
@@ -37,5 +40,6 @@ public class Building
         Area = area;
         FloorCount = flourCount;
         BuildDate = buildDate;
+        Auctions = auctions;
     }
 }

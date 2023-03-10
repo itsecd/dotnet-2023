@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// Organization - a class that describes characteristics of a organization that organized the auction 
 /// </summary>

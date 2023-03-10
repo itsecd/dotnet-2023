@@ -1,5 +1,5 @@
-namespace Non_ResidentialFundTests;
-public class Non_residentialFundTests
+namespace NonResidentialFund.Tests;
+public class NonResidentialFundTests
 {
     private NonResidentialFundFixture _fixture = new();
 
@@ -34,11 +34,7 @@ public class Non_residentialFundTests
                                                     group privatized by privatized.AuctionId into privGroup
                                                     select new { AuctionId = privGroup.First().AuctionId, countBought = privGroup.Count() })
                                                     on auction.AuctionId equals countBoughtInAuction.AuctionId
-                      join countTrySaleInAuction in (from buildingAuction in _fixture.FixtureBuildingAuctionConnections
-                                                     group buildingAuction by buildingAuction.AuctionId into buildingsInAuction
-                                                     select new { AuctionId = buildingsInAuction.First().AuctionId, countTrySale = buildingsInAuction.Count() })
-                                                    on auction.AuctionId equals countTrySaleInAuction.AuctionId
-                      where countBoughtInAuction.countBought != countTrySaleInAuction.countTrySale
+                      where countBoughtInAuction.countBought != auction.Buildings.Count()
                       select auction.AuctionId).ToList();
 
         Assert.Equal(2, result.Count);
@@ -83,12 +79,11 @@ public class Non_residentialFundTests
     [Fact]
     public void FourthRequestTest()
     {
-        var result = (from buyerAuction in _fixture.FixtureBuyerAuctionConnections
-                      join auction in _fixture.FixtureAuctions on buyerAuction.AuctionId equals auction.AuctionId
-                      join buyer in _fixture.FixtureBuyers on buyerAuction.BuyerId equals buyer.BuyerId
+        var result = (from auction in _fixture.FixtureAuctions
+                      from participant in auction.Buyers
+                      join buyer in _fixture.FixtureBuyers on participant.BuyerId equals buyer.BuyerId
                       where auction.Date == new DateOnly(2022, 3, 21)
-                      select new { buyer.BuyerId, buyer.Address, buyer.LastName, buyer.FirstName }).ToList();
-
+                      select new { buyer.BuyerId, buyer.Address }).ToList();
         Assert.Equal(5, result.Count);
         Assert.Contains(result, buyer => buyer.BuyerId == 1);
         Assert.Contains(result, buyer => buyer.BuyerId == 3);

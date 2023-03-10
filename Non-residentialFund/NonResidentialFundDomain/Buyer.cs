@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// Buyer - a class that describes characteristics of a buyer
 /// </summary>
@@ -32,7 +32,13 @@ public class Buyer
     /// Address - buyer's residence address 
     /// </summary>
     public string Address { get; set; } = string.Empty;
-    public Buyer(int buyerId, string lastName, string firstName, string middleName, string passportSeries, string passportNumber, string address)
+    /// <summary>
+    /// Auctions - List of auctions in which the buyer participated
+    /// </summary>
+    public List<BuyerAuctionConnection> Auctions = new();
+
+    public Buyer(int buyerId, string lastName, string firstName, string middleName,
+        string passportSeries, string passportNumber, string address, List<BuyerAuctionConnection> auctions)
     {
         BuyerId = buyerId;
         LastName = lastName;
@@ -41,5 +47,6 @@ public class Buyer
         PassportSeries = passportSeries;
         PassportNumber = passportNumber;
         Address = address;
+        Auctions = auctions;
     }
 }

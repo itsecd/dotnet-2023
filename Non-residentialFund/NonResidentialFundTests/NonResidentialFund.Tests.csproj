@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>Non_ResidentialFundTests</RootNamespace>
+    <RootNamespace>NonResidentialFund.Tests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Non-residentialFundDomain\Non-residentialFundDomain.csproj" />
+    <ProjectReference Include="..\NonResidentialFundDomain\NonResidentialFund.Domain.csproj" />
   </ItemGroup>
 
 </Project>

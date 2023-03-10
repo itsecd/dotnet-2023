@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// District - a class that describes characteristics of a district in which the buildings are located
 /// </summary>

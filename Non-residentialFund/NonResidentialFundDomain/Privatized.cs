@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// Privatized - a class that describes characteristics of a privatized building 
 /// </summary>

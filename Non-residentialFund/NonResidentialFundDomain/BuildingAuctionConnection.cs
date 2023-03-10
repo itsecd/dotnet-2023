@@ -1,4 +1,4 @@
-﻿namespace Non_residentialFundDomain;
+﻿namespace NonResidentialFund.Domain;
 /// <summary>
 /// BuildingAuctionConnection - class that describes the relationship between the auction and the buildings offered at that auction
 /// </summary>

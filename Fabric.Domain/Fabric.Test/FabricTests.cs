@@ -12,7 +12,7 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void FirstRequest()
     {
-        var fixtureFabrics = _fixture.FixtureFabrics;
+        var fixtureFabrics = _fixture.FixtureFabrics.ToList();
         var request = (from fabric in fixtureFabrics
                        where (fabric.Id == 2)
                        select fabric).Count();
@@ -24,7 +24,7 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void SecondRequest()
     {
-        var fixtureShipments = _fixture.FixtureShipments;
+        var fixtureShipments = _fixture.FixtureShipments.ToList();
         var firstDate = new DateOnly(2022, 5, 21);
         var secondDate = new DateOnly(2022, 9, 21);
         var request = (from shipment in fixtureShipments
@@ -38,9 +38,9 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void ThirdRequest()
     {
-        var shipments = _fixture.FixtureShipments;
-        var fabrics = _fixture.FixtureFabrics;
-        var providers = _fixture.FixtureProviders;
+        var shipments = _fixture.FixtureShipments.ToList();
+        var fabrics = _fixture.FixtureFabrics.ToList();
+        var providers = _fixture.FixtureProviders.ToList();
         var request = from provider in providers
                       join shipment in shipments on provider.Id equals shipment.Provider.Id
                       join fabric in fabrics on shipment.Fabric.Id equals fabric.Id
@@ -61,9 +61,9 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void FourthRequest()
     {
-        var shipments = _fixture.FixtureShipments;
-        var fabrics = _fixture.FixtureFabrics;
-        var providers = _fixture.FixtureProviders;
+        var shipments = _fixture.FixtureShipments.ToList();
+        var fabrics = _fixture.FixtureFabrics.ToList();
+        var providers = _fixture.FixtureProviders.ToList();
         var request = from fabric in fabrics
                       join shipment in shipments on fabric.Id equals shipment.Fabric.Id
                       join provider in providers on shipment.Provider.Id equals provider.Id
@@ -82,7 +82,7 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void FifthRequest()
     {
-        var fixtureShipments = _fixture.FixtureShipments;
+        var fixtureShipments = _fixture.FixtureShipments.ToList();
         var numbersOfProviders = from shipment in fixtureShipments
                                  group shipment by shipment.Provider.Id into g
                                  select new
@@ -90,9 +90,9 @@ public class FabricTests : IClassFixture<FabricFixture>
                                      provider = g.Key,
                                      Count = g.Count()
                                  };
-        var request = from num in numbersOfProviders
+        var request = (from num in numbersOfProviders
                       orderby num.Count descending
-                      select num;
+                      select num).Take(5).ToList();
         var firstItem = request.First();
         Assert.Equal(2, firstItem.provider);
     }
@@ -102,7 +102,7 @@ public class FabricTests : IClassFixture<FabricFixture>
     [Fact]
     public void SixthRequest()
     {
-        var fixtureShipments = _fixture.FixtureShipments;
+        var fixtureShipments = _fixture.FixtureShipments.ToList();
         var firstDate = new DateOnly(2022, 5, 21);
         var secondDate = new DateOnly(2022, 9, 21);
         var shipmentsInInterval = from shipment in fixtureShipments

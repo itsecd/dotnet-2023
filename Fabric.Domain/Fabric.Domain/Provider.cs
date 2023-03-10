@@ -1,6 +1,6 @@
 ﻿namespace Fabric.Domain;
 /// <summary>
-/// Class Provider is used to store information of the fabric.
+/// Class Provider is used to store information of the provider.
 /// </summary>
 public class Provider
 {
@@ -20,13 +20,16 @@ public class Provider
     /// PhoneNumber is used to store phone number of Fabric.
     /// </summary>
     public string Address { get; set; } = string.Empty;
+
+    public List<Shipment> Shipments { get; set; } = new List<Shipment>();
     public Provider() { }
-    public Provider(int id, string name, string typeOfGoods, string address)
+    public Provider(int id, string name, string typeOfGoods, string address, List<Shipment> shipments)
     {
         Id = id;
         Name = name;
         TypeOfGoods = typeOfGoods;
         Address = address;
+        Shipments = shipments;
     }
 }
 

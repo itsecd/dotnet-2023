@@ -36,9 +36,9 @@ public class Fabric
     /// TotalSquare is used to store information about the area of the Fabric.
     /// </summary>
     public int TotalSquare { get; set; }
-
+    public List<Shipment> Shipments { get; set; } = new List<Shipment>();
     public Fabric() { }
-    public Fabric(int id, string type, string name, string address, string phoneNumber, string formOfOwnership, int numberOfWorkers, int totalSquare)
+    public Fabric(int id, string type, string name, string address, string phoneNumber, string formOfOwnership, int numberOfWorkers, int totalSquare, List<Shipment> shipments)
     {
         Id = id;
         Type = type;
@@ -48,6 +48,7 @@ public class Fabric
         FormOfOwnership = formOfOwnership;
         NumberOfWorkers = numberOfWorkers;
         TotalSquare = totalSquare;
+        Shipments = shipments;
     }
 }
 

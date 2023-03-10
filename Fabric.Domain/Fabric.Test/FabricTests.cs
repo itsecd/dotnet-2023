@@ -1,4 +1,4 @@
-namespace Fabric.Test;
+Ôªønamespace Fabric.Test;
 
 public class FabricTests : IClassFixture<FabricFixture>
 {
@@ -73,8 +73,7 @@ public class FabricTests : IClassFixture<FabricFixture>
                           Form = g.Key,
                           Count = g.Count()
                       };
-
-        Assert.Equal(2, request.First(x => x.Form == "“ŒŒ").Count);
+        Assert.Equal(2, request.First(x => x.Form == "–¢–û–û").Count);
     }
     /// <summary>
     /// Fifth request: top 5 of providers by the number of shipments

@@ -44,11 +44,11 @@ public class UnitTests : IClassFixture<UnitFixture>
                       orderby specialtyGroup.Count() descending
                       select new
                       {
-                          specialty = specialtyGroup.Key,
+                          Specialty = specialtyGroup.Key,
                           numRequests = specialtyGroup.Count()
                       }).Take(5).ToList();
         for (var i = 0; i < 5; i++)
-            Assert.Equal(l[i], result[i].specialty);
+            Assert.Equal(l[i], result[i].Specialty);
     }
     /// <summary>
     /// Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.
@@ -85,20 +85,29 @@ public class UnitTests : IClassFixture<UnitFixture>
                       (
                           from university in universityConstGroup
                           group university by university.UniversityProperty into universityPropGroup
-                          select new { }
+                          select new
+                          {
+                              UnivesityProp = universityPropGroup.Key
+                          }
                       )
                       select new
                       {
-                          faculties = universityConstGroup.Sum(x => x.FacultiesData.Count),
-                          departments = universityConstGroup.Sum(x => x.DepartmentsData.Count),
-                          specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count)
+                          ConstProp = universityConstGroup.Key,
+                          UniversityProp = universityPropGroup.UnivesityProp,
+                          Faculties = universityConstGroup.Sum(x => x.FacultiesData.Count),
+                          Departments = universityConstGroup.Sum(x => x.DepartmentsData.Count),
+                          Specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count)
                       }
                       ).ToList();
-        Assert.Equal(5, result[0].faculties);
-        Assert.Equal(1, result[1].faculties);
-        Assert.Equal(3, result[0].departments);
-        Assert.Equal(1, result[1].departments);
-        Assert.Equal(7, result[0].specialities);
-        Assert.Equal(4, result[1].specialities);
+        Assert.Equal("муниципальная", result[0].UniversityProp);
+        Assert.Equal("муниципальная", result[1].UniversityProp);
+        Assert.Equal("муниципальная", result[0].ConstProp);
+        Assert.Equal("федеральная", result[1].ConstProp);
+        Assert.Equal(5, result[0].Faculties);
+        Assert.Equal(1, result[1].Faculties);
+        Assert.Equal(3, result[0].Departments);
+        Assert.Equal(1, result[1].Departments);
+        Assert.Equal(7, result[0].Specialities);
+        Assert.Equal(4, result[1].Specialities);
     }
 }

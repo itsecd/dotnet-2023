@@ -74,7 +74,6 @@ public class FabricTests : IClassFixture<FabricFixture>
                           Count = g.Count()
                       };
         Assert.Equal(2, request.First(x => x.Form == "рнн").Count);
-
     }
     /// <summary>
     /// Fifth request: top 5 of providers by the number of shipments
@@ -91,8 +90,8 @@ public class FabricTests : IClassFixture<FabricFixture>
                                      Count = g.Count()
                                  };
         var request = (from num in numbersOfProviders
-                      orderby num.Count descending
-                      select num).Take(5).ToList();
+                       orderby num.Count descending
+                       select num).Take(5).ToList();
         var firstItem = request.First();
         Assert.Equal(2, firstItem.provider);
     }

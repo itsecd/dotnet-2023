@@ -122,7 +122,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     {
         var fifthQuery = (from employeeVoucherItem in _fixture.EmployeeVacationVoucher
                           where (DateTime.Now.Date -
-                                employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
+                                 employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
                           select new
                           {
                               employeeVoucherItem.Employee?.RegNumber,
@@ -160,7 +160,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                           } into grp
                           orderby grp.Sum(subqueryElem =>
                                           (subqueryElem.DismissalDate -
-                                                subqueryElem.HireDate).TotalDays / 365.2422) descending
+                                           subqueryElem.HireDate).TotalDays / 365.2422) descending
                           select new
                           {
                               grp.Key.RegNumber,
@@ -168,7 +168,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                               grp.Key.LastName,
                               WorkExperience = grp.Sum(subqueryElem =>
                               (subqueryElem.DismissalDate -
-                                    subqueryElem.HireDate).TotalDays / 365.2422)
+                               subqueryElem.HireDate).TotalDays / 365.2422)
                           }
                           ).Take(5).ToList();
         Assert.Equal(4, sixthQuery.Count);

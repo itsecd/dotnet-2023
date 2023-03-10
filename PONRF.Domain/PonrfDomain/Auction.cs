@@ -7,7 +7,7 @@ public class Auction
     /// <summary>
     /// IDAuction is a identifier of auction
     /// </summary>
-    public Guid IDAuction { get; set; } = Guid.Empty;
+    public int IDAuction { get; set; } = int.MinValue;
     /// <summary>
     /// Date is date of holding of the auction
     /// </summary>
@@ -16,7 +16,13 @@ public class Auction
     /// Organizer is a auction company 
     /// </summary>
     public string Organizer { get; set; } = string.Empty;
-    public List<Lot> Lot { set; get; } = new();
+    public List<Lot> Lot { set; get; } = new List<Lot>();
 
     public Auction() { }
+    public Auction(int iDAuction, DateTime date, string organizer)
+    {
+        IDAuction = iDAuction;
+        Date = date;
+        Organizer = organizer;
+    }
 }

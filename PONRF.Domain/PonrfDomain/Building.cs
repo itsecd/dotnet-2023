@@ -8,7 +8,7 @@ public class Building
     /// <summary>
     /// RegistNum contains informatiom about registration number of building
     /// </summary>
-    public Guid RegistNum { get; set; } = Guid.Empty;
+    public int RegistNum { get; set; } = int.MinValue;
     /// <summary>
     /// District, street and house number contain informatiom about full address of building
     /// </summary>  
@@ -27,9 +27,19 @@ public class Building
     /// DateOfBuild contains informatiom about date of construction of the building
     /// </summary>
     public DateTime DateOfBuild { get; set; } = DateTime.MinValue;
-    public List<Lot> Lot { get; set; } = new();
+    public List<Lot> Lot { get; set; } = new List<Lot>();
 
     public Building() { }
+    public Building(int registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild)
+    {
+        RegistNum = registNum;
+        District = district;
+        Street = street;
+        HouseNumber = houseNumber;
+        Area = area;
+        Floors = floors;
+        DateOfBuild = dateOfBuild;
+    }
     /// <summary>
     /// GetAddress returns address of the building
     /// </summary>

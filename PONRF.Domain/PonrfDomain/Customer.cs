@@ -8,7 +8,7 @@ public class Customer
     /// <summary>
     /// Passport contains informatiom about passport's number of customer
     /// </summary>
-    public Guid Passport { get; set; } = Guid.Empty;
+    public int Passport { get; set; } = int.MinValue;
     /// <summary>
     /// FIO contains informatiom about full name of customer
     /// </summary>  
@@ -19,4 +19,10 @@ public class Customer
     public string Address { get; set; } = string.Empty;
 
     public Customer() { }
+    public Customer(int passport, string fIO, string address)
+    {
+        Passport = passport;
+        FIO = fIO;
+        Address = address;
+    }
 }

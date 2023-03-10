@@ -8,7 +8,7 @@ public class PrivatizedBuilding
     /// <summary>
     /// Id is a identifier of privatized building
     /// </summary>
-    public Guid Id { get; set; } = Guid.Empty;
+    public int Id { get; set; } = int.MaxValue;
     /// <summary>
     /// DateOfSale contains informatiom about date of sale of the building
     /// </summary>
@@ -27,4 +27,14 @@ public class PrivatizedBuilding
     public Building? Building { get; set; } = new();
 
     public PrivatizedBuilding() { }
+    public PrivatizedBuilding(int id, DateTime dateOfSale, int firstCost, int secondCost, Customer? passport, Auction? auction, Building? building)
+    {
+        Id = id;
+        DateOfSale = dateOfSale;
+        FirstCost = firstCost;
+        SecondCost = secondCost;
+        Passport = passport;
+        Auction = auction;
+        Building = building;
+    }
 }

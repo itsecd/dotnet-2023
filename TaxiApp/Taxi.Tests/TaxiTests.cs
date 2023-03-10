@@ -2,25 +2,21 @@ using Taxi.Domain;
 using System.Linq;
 using System.Threading.Channels;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using Xunit.Abstractions;
 
 namespace Taxi.Tests;
 
 public class TaxiTests : IClassFixture<TaxiFixture>
 {
     private readonly TaxiFixture _fixture;
-    private readonly ITestOutputHelper _testOutputHelper;
     
-    public TaxiTests(TaxiFixture fixture, ITestOutputHelper testOutputHelper)
+    public TaxiTests(TaxiFixture fixture)
     {
         _fixture = fixture;
-        _testOutputHelper = testOutputHelper;
     }
     
     [Fact]
     public void InfoAboutVehiclesAndDrivers()
     {
-        
         var query = (from vehicle in _fixture.FixtureVehicles
             from vehicleClassification in _fixture.FixtureVehicleClassifications
             from driver in _fixture.FixtureDrivers
@@ -44,13 +40,6 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         Assert.Contains(query, elem => elem.FirstName == "Алексей");
         Assert.Contains(query, elem => elem.Model == "Octavia");
         Assert.DoesNotContain(query, elem => elem.Passport == "3616039857");
-        
-        
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
-        
     }
 
     [Fact]
@@ -66,16 +55,16 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         var minDate = new DateTime(2023, 2, 3);
         var maxDate = new DateTime(2023, 2, 4);
         
-        var query = (from p in passengers
-            from r in p.Rides
-            where  r.RideDate <= maxDate && r.RideDate >= minDate
-            orderby p.LastName, p.FirstName, p.Patronymic
+        var query = (from passenger in passengers
+            from ride in passenger.Rides
+            where  ride.RideDate <= maxDate && ride.RideDate >= minDate
+            orderby passenger.LastName, passenger.FirstName, passenger.Patronymic
             select new
             {
-                p.LastName,
-                p.FirstName,
-                p.Patronymic,
-                r.RideDate
+                passenger.LastName,
+                passenger.FirstName,
+                passenger.Patronymic,
+                ride.RideDate
             }).Distinct().ToList();
         
         Assert.Equal(4, query.Count);
@@ -83,12 +72,6 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         Assert.Contains(query, elem => elem.LastName == "Котов");
         Assert.DoesNotContain(query, elem => elem.LastName == "Беляева");
         Assert.DoesNotContain(query, elem => elem.LastName == "Кулешов");
-        
-
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
     }
 
     [Fact]
@@ -101,19 +84,18 @@ public class TaxiTests : IClassFixture<TaxiFixture>
             passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
         }
 
-        var query = (from p in passengers
+        var query = (from passenger in passengers
             select new
             {
-                p.LastName,
-                p.FirstName,
-                p.Patronymic,
-                p.Rides.Count
+                passenger.LastName,
+                passenger.FirstName,
+                passenger.Patronymic,
+                passenger.Rides.Count
             }).ToList();
-        
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
+
+        Assert.Equal(7, query.Count);
+        Assert.Contains(query, elem => elem.LastName == "Котов" && elem.Count == 3);
+        Assert.DoesNotContain(query, elem=> elem.LastName == "Белый" && elem.Count == 1);
     }
 
     [Fact]
@@ -127,26 +109,21 @@ public class TaxiTests : IClassFixture<TaxiFixture>
             vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
         }
 
-        var query = (from v in vehicles
-            from d in drivers
-            where v.DriverId == d.Id
-            orderby v.Rides.Count
+        var query = (from vehicle in vehicles
+            from driver in drivers
+            where vehicle.DriverId == driver.Id
+            orderby vehicle.Rides.Count
             select new
             {
-                d.LastName,
-                d.FirstName,
-                d.Patronymic,
-                v.Rides.Count
+                driver.LastName,
+                driver.FirstName,
+                driver.Patronymic,
+                vehicle.Rides.Count
             }).Take(2).ToList();
 
         Assert.Contains(query, elem => elem.Count == 4);
         Assert.DoesNotContain(query, elem => elem.Count == 3);
-        
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
-        
+        Assert.Equal(2, query.Count);
     }
     
     [Fact]
@@ -160,8 +137,8 @@ public class TaxiTests : IClassFixture<TaxiFixture>
             vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
         }
 
-        var query = (from ridesInfo in (from r in rides
-                group r by r.VehicleId
+        var query = (from ridesInfo in (from ride in rides
+                group ride by ride.VehicleId
                 into grp
                 select new
                 {
@@ -171,13 +148,13 @@ public class TaxiTests : IClassFixture<TaxiFixture>
                         ride.RideTime.Second + 60 * ride.RideTime.Minute + 3600 * ride.RideTime.Hour),
                     max = grp.Max(ride => ride.RideTime.Second + 60 * ride.RideTime.Minute + 3600 * ride.RideTime.Hour)
                 })
-            from d in drivers
-            where d.Id == ridesInfo.vehicleId
+            from driver in drivers
+            where driver.Id == ridesInfo.vehicleId
             select new
             {
-                d.LastName,
-                d.FirstName,
-                d.Patronymic,
+                driver.LastName,
+                driver.FirstName,
+                driver.Patronymic,
                 ridesInfo.count,
                 ridesInfo.avg,
                 ridesInfo.max
@@ -187,11 +164,6 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         Assert.Equal(1980, query[4].avg);
         Assert.Equal(2400, query[0].max);
         Assert.Equal(4, query[2].count);
-
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
     }
     
     [Fact]
@@ -207,10 +179,10 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         var minDate = new DateTime(2023, 2, 3);
         var maxDate = new DateTime(2023, 2, 6);
 
-        var subquery = (from p in passengers
-            from r in p.Rides
-            where r.RideDate < maxDate && r.RideDate > minDate
-            group p.Id by p
+        var subquery = (from passenger in passengers
+            from ride in passenger.Rides
+            where ride.RideDate < maxDate && ride.RideDate > minDate
+            group passenger.Id by passenger
             into grp
             select new
             {
@@ -227,10 +199,12 @@ public class TaxiTests : IClassFixture<TaxiFixture>
             where sq.count == max
             select sq).ToList();
         
-        foreach (var elem in query)
-        {
-            _testOutputHelper.WriteLine(elem.ToString());
-        }
+        Assert.Equal(5, query.Count);
+        Assert.DoesNotContain(query, elem => elem.count == 1);
+        Assert.DoesNotContain(query, elem => elem.count == 3);
+        Assert.Contains(query, elem => elem.count == 2);
+        Assert.DoesNotContain(query, elem => elem.LastName == "Кулешов");
+        Assert.Contains(query, elem => elem.LastName == "Беляева");
     }
     
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet.classes;
+namespace AirlineClasses;
 public class Passenger
 {
     /// <summary>
@@ -16,17 +16,9 @@ public class Passenger
     /// </summary>
     public string Name { get; set; } = string.Empty;
     /// <summary>
-    /// Passenger's ticket number
+    /// List of tickets for passenger
     /// </summary>
-    public int Ticket_number { get; set; } = 0;
-    /// <summary>
-    /// Passenger's seat number
-    /// </summary>
-    public int Seat_number { get; set; } = 0;         
-    /// <summary>
-    /// Passenger's baggage weight
-    /// </summary>
-    public float Baggage_weight { get; set; } = 0;
+    public List<Ticket>? Tickets { get; set; }
     /// <summary>
     /// Create default passenger object
     /// </summary>
@@ -42,13 +34,39 @@ public class Passenger
     }
     /// <summary>
     /// Create passenger object by name, passport ID, ticket number, seat number and baggage weight
+    /// for registered on flight passengers
     /// </summary>
-    public Passenger(int passport_number, string name, int ticket_number, int seat_number, float baggage_weight)
+    public Passenger(int passport_number, string name, List<Ticket> tickets)
     {
         Passport_number = passport_number;
         Name = name;
-        Ticket_number = ticket_number;
-        Seat_number = seat_number;
-        Baggage_weight = baggage_weight;
+        Tickets = tickets;
+    }
+
+    /// <summary>
+    /// add ticket to ticket list
+    /// </summary>
+    /// <param name="ticket"></param>
+    public void Add_ticket(Ticket ticket)
+    {
+        Tickets.Add(ticket);
+    }
+    /// <summary>
+    /// add ticket list to ticket list
+    /// </summary>
+    /// <param name="tickets"></param>
+    public void Add_ticket(List<Ticket> tickets)
+    {
+        Tickets.AddRange(tickets);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Passenger param)
+            return false;
+
+        return Passport_number == param.Passport_number &&
+               Name == param.Name &&
+               Tickets == param.Tickets;
     }
 }

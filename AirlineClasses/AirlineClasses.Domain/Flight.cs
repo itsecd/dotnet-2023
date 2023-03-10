@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet.classes;
+namespace AirlineClasses;
 
 public class Flight
 {
@@ -31,15 +31,31 @@ public class Flight
     /// <summary>
     /// type airplane on flight
     /// </summary>
-    public string Airplane_type { get; set; } = string.Empty;
+    public Airplane? Airplane { get; set; }
+    public List<Ticket>? Tickets { get; set; }
     public Flight() {}
-    public Flight(string cipher, string departure_place, string destination, DateTime? departure_date, DateTime arrival_date, string airplane_type)
+    public Flight(string cipher, string departure_place, string destination, DateTime? departure_date, DateTime arrival_date, Airplane airplane, List<Ticket> tickets)
     {
         Cipher = cipher;
         Departure_place = departure_place;
         Destination = destination;
         Departure_date = departure_date;
         Arrival_date = arrival_date;
-        Airplane_type = airplane_type;
+        Airplane = airplane;
+        Tickets = tickets;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Flight param)
+            return false;
+
+        return Cipher == param.Cipher &&
+               Departure_place == param.Departure_place &&
+               Destination == param.Destination &&
+               Departure_date == param.Departure_date &&
+               Arrival_date == param.Arrival_date &&
+               Airplane == param.Airplane &&
+               Tickets == param.Tickets;
     }
 }

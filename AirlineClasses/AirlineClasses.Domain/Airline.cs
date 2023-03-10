@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet.classes;
+namespace AirlineClasses;
 public class Airline
 {
     /// <summary>

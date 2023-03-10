@@ -13,39 +13,40 @@ public class EmployeeDomainFixture
         {
             return new List<Workshop>
             {
+                new Workshop
+                {
+                    Name = "Ленинский цех",
+                    Id = 1,
+                    Employees = new List<Employee>()
+                },
+                new Workshop
+                {
+                    Name = "Производственный цех",
+                    Id = 2,
+                    Employees = new List<Employee>()
+                },
                 new Workshop {
-                Name = "Ленинский цех",
-                Id = 1,
-                Employees = new List<Employee>()
+                    Name = "Восточный цех",
+                    Id = 3,
+                    Employees = new List<Employee>()
                 },
                 new Workshop
                 {
-                Name = "Производственный цех",
-                Id = 2,
-                Employees = new List<Employee>()
-                },
-                new Workshop {
-                Name = "Восточный цех",
-                Id = 3,
-                Employees = new List<Employee>()
+                    Name = "Волжский цех",
+                    Id = 4,
+                    Employees = new List<Employee>()
                 },
                 new Workshop
                 {
-                Name = "Волжский цех",
-                Id = 4,
-                Employees = new List<Employee>()
+                    Name = "Новоспасский цех",
+                    Id = 5,
+                    Employees = new List<Employee>()
                 },
                 new Workshop
                 {
-                Name = "Новоспасский цех",
-                Id = 5,
-                Employees = new List<Employee>()
-                },
-                new Workshop
-                {
-                Name = "Ульяновский цех",
-                Id = 6,
-                Employees = new List<Employee>()
+                    Name = "Ульяновский цех",
+                    Id = 6,
+                    Employees = new List<Employee>()
                 }
             };
         }
@@ -403,45 +404,45 @@ public class EmployeeDomainFixture
             {
                 new DepartmentEmployee
                 {
-                        Department = departmentList[0],
-                        Employee = null,
-                        Id = 1
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 1
                 },
                 new DepartmentEmployee
                 {
-                       Department = departmentList[1],
-                        Employee = null,
-                        Id = 2
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 2
                 },
                 new DepartmentEmployee
                 {
-                        Department = departmentList[1],
-                        Employee = null,
-                        Id = 3
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 3
                 },
                 new DepartmentEmployee
                 {
-                        Department = departmentList[0],
-                        Employee = null,
-                        Id = 4
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 4
                 },
                 new DepartmentEmployee
                 {
-                        Department = departmentList[0],
-                        Employee = null,
-                        Id = 5
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 5
                 },
                 new DepartmentEmployee
                 {
-                        Department = departmentList[1],
-                        Employee = null,
-                        Id = 6
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 6
                 },
                 new DepartmentEmployee
                 {
-                        Department = departmentList[1],
-                        Employee = null,
-                        Id = 7
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 7
                 }
             };
         }

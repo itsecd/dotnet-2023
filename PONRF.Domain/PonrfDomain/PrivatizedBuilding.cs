@@ -22,18 +22,18 @@ public class PrivatizedBuilding
     /// </summary>
     public int SecondCost { get; set; } = int.MinValue;
 
-    public Customer? Passport { get; set; } = new();
+    public Customer? Customer { get; set; } = new();
     public Auction? Auction { get; set; } = new();
     public Building? Building { get; set; } = new();
 
     public PrivatizedBuilding() { }
-    public PrivatizedBuilding(int id, DateTime dateOfSale, int firstCost, int secondCost, Customer? passport, Auction? auction, Building? building)
+    public PrivatizedBuilding(int id, DateTime dateOfSale, int firstCost, int secondCost, Customer? customer, Auction? auction, Building? building)
     {
         Id = id;
         DateOfSale = dateOfSale;
         FirstCost = firstCost;
         SecondCost = secondCost;
-        Passport = passport;
+        Customer = customer;
         Auction = auction;
         Building = building;
     }

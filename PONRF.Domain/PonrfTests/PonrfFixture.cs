@@ -38,16 +38,16 @@ public class PonrfFixture
     /// <summary>
     /// List of auctions for testing
     /// </summary>
-    public List<Auction> AuctionFixture
+    public List<Auction> AuctionsFixture
     {
         get
         {
-            var auction = new List<Auction>()
+            var auctions = new List<Auction>()
             {
                 new Auction(1, DateTime.Parse("2023-02-02"),"Аргентум"),
                 new Auction(2, DateTime.Parse("2022-09-11"),"Сириус"),
             };
-            return auction;
+            return auctions;
         }
     }
     /// <summary>
@@ -59,13 +59,31 @@ public class PonrfFixture
         {
             var customers = CustomersFixture;
             var buildings = BuildingsFixture;
-            var auction = AuctionFixture;
+            var auctions = AuctionsFixture;
             var privatizedBuildings = new List<PrivatizedBuilding>()
             {
-                new PrivatizedBuilding(1, DateTime.Parse("2023-02-02"), 100000, 300000, customers[1], auction[1], buildings[1]),
-                new PrivatizedBuilding(2, DateTime.Parse("2003-02-02"), 400000, 750000, customers[2], auction[1], buildings[2]),
+                new PrivatizedBuilding(1, DateTime.Parse("2023-02-02"), 100000, 300000, customers[0], auctions[0], buildings[0]),
+                new PrivatizedBuilding(2, DateTime.Parse("2003-02-02"), 400000, 750000, customers[1], auctions[0], buildings[1]),
             };
             return privatizedBuildings;
+        }
+    }
+    /// <summary>
+    /// List of lots (buildings for sale) for testing
+    /// </summary>
+    public List<Lot> LotsFixture
+    {
+        get
+        {
+            var buildings = BuildingsFixture;
+            var auctions = AuctionsFixture;
+            var lots = new List<Lot>()
+            {
+                new Lot(1, auctions[1], buildings[0]),
+                new Lot(2, auctions[1], buildings[1]),
+                new Lot(3, auctions[1], buildings[2]),
+            };
+            return lots;
         }
     }
 }

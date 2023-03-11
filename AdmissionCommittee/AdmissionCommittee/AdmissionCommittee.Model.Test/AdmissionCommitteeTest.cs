@@ -87,7 +87,7 @@ public class AdmissionCommitteeTest
         _specialities.Add(new Speciality(4, "410305D", "International relations", "Historical"));
         _specialities.Add(new Speciality(5, "020302D", "Computer security", "Computer science and Cybernetics"));
         _specialities.Add(new Speciality(6, "020302D", "International relations and foreign policy", "Historical"));
-        _specialities.Add(new Speciality(7, "040401D", "—hemistry", "Natural Science"));
+        _specialities.Add(new Speciality(7, "040401D", "Chemistry", "Natural Science"));
     }
 
     /// <summary>
@@ -226,7 +226,7 @@ public class AdmissionCommitteeTest
         Assert.Equal(2, entrantsCount[2].CountEntrants);
         Assert.Equal("International relations", entrantsCount[3].NameSpeciality);
         Assert.Equal(3, entrantsCount[3].CountEntrants);
-        Assert.Equal("—hemistry", entrantsCount[4].NameSpeciality);
+        Assert.Equal("Chemistry", entrantsCount[4].NameSpeciality);
         Assert.Equal(2, entrantsCount[4].CountEntrants);
     }
 
@@ -503,13 +503,13 @@ public class AdmissionCommitteeTest
     /// <summary>
     /// Chemistry
     /// 
-    /// "Vinogradov Dmitry Artemovich"  "—hemistry"   74
+    /// "Vinogradov Dmitry Artemovich"  "Chemistry"   74
     /// 
     /// </summary>
     [Fact]
     public void TestEntrantMaxMarkChemistry()
     {
-        var entrant—hemistry = (from entrant in _entrants
+        var entrantChemistry = (from entrant in _entrants
                                 from spec in entrant.Statement.PrioritySpecialities
                                 from res in entrant.Results
                                 where res.NameSubject == "Chemistry"
@@ -525,11 +525,11 @@ public class AdmissionCommitteeTest
                                 }
                                 ).ToList();
 
-        Assert.Equal(1, entrant—hemistry.Count);
+        Assert.Equal(1, entrantChemistry.Count);
 
-        Assert.Equal("Vinogradov Dmitry Artemovich", entrant—hemistry[0].NameEntrant);
-        Assert.Equal("—hemistry", entrant—hemistry[0].Speciality);
-        Assert.Equal(74, entrant—hemistry[0].MaxMark);
+        Assert.Equal("Vinogradov Dmitry Artemovich", entrantChemistry[0].NameEntrant);
+        Assert.Equal("Chemistry", entrantChemistry[0].Speciality);
+        Assert.Equal(74, entrantChemistry[0].MaxMark);
     }
 
     /// <summary>

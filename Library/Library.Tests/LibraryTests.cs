@@ -110,7 +110,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureCard = _fixture.FixtureCard.ToList();
         var maxDelay = (from card in fixtureCard
                         from reader in card.IdReader
-                        group card by reader.Id into g
+                        group card by reader.FullName into g
                         select new
                         {
                             Delay = g.Key,
@@ -118,7 +118,9 @@ public class LibraryTests : IClassFixture<LibraryFixture>
                             Count = g.Count()
                         });
         var request = (from readers in maxDelay
-                       select readers.Count);
-        Assert.Equal(2, request.First());
+                       where (readers.MaxDay == maxDelay.Max(x => x.MaxDay))
+                       orderby readers.Delay
+                       select readers.Count).Count();
+        Assert.Equal(2, request);
     }
 }

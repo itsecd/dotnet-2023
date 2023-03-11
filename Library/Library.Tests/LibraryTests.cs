@@ -85,15 +85,15 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     {
         var fixtureCard = _fixture.FixtureCard.ToList();
         var date = new DateOnly(2023, 3, 1);
-        var numOfReaders = from card in fixtureCard
-                      from reader in card.IdReader
-                      where card.DateOfReturn < date
-                      group card by reader.Id into g
-                      select new
-                      {
-                          readers = g.Key,
-                          count = g.Count()
-                      };
+        var numOfReaders = (from card in fixtureCard
+                            from reader in card.IdReader
+                            where card.DateOfReturn < date
+                            group card by reader.Id into g
+                            select new
+                            {
+                                readers = g.Key,
+                                count = g.Count()
+                            }).ToList();
         var request = (from reader in numOfReaders
                        orderby reader.count descending
                        select reader).Take(5).ToList();
@@ -107,6 +107,18 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     [Fact]
     public void DelayReadersTest()
     {
-
+        var fixtureCard = _fixture.FixtureCard.ToList();
+        var maxDelay = (from card in fixtureCard
+                        from reader in card.IdReader
+                        group card by reader.Id into g
+                        select new
+                        {
+                            Delay = g.Key,
+                            MaxDay = g.Select(x => x.DateOfReturn.DayNumber - x.DateOfIssue.DayNumber - x.DayCount).Max(),
+                            Count = g.Count()
+                        });
+        var request = (from readers in maxDelay
+                       select readers.Count);
+        Assert.Equal(2, request.First());
     }
 }

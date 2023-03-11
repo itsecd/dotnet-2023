@@ -77,4 +77,36 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         Assert.Equal(35, request.First(x => x.Key == "Monograph").Count);
         Assert.Equal(75, request.First(x => x.Key == "Methodological guidelines").Count);
     }
+    /// <summary>
+    /// Fifth request - give info about top 5 readers who have read the most books in a given period
+    /// </summary>
+    [Fact]
+    public void TopFiveTest()
+    {
+        var fixtureCard = _fixture.FixtureCard.ToList();
+        var date = new DateOnly(2023, 3, 1);
+        var numOfReaders = from card in fixtureCard
+                      from reader in card.IdReader
+                      where card.DateOfReturn < date
+                      group card by reader.Id into g
+                      select new
+                      {
+                          readers = g.Key,
+                          count = g.Count()
+                      };
+        var request = (from reader in numOfReaders
+                       orderby reader.count descending
+                       select reader).Take(5).ToList();
+        var first = request.First();
+        Assert.Equal(1, first.readers);
+        Assert.Equal(5, request.Count);
+    }
+    /// <summary>
+    /// Sixth request - give info about readers who have delayed books for the longest period of time, ordered by full name
+    /// </summary>
+    [Fact]
+    public void DelayReadersTest()
+    {
+
+    }
 }

@@ -8,17 +8,17 @@ public class Passenger
     /// <summary>
     ///     Id - unique identifier of the passenger
     /// </summary>
-    public UInt64 Id { get; set; }
+    public ulong Id { get; set; }
 
     /// <summary>
     ///     FirstName - first name of the passenger
     /// </summary>
-    public string FirstName { get; set; } = String.Empty;
+    public string FirstName { get; set; } = string.Empty;
 
     /// <summary>
     ///     LastName - last name of the passenger
     /// </summary>
-    public string LastName { get; set; } = String.Empty;
+    public string LastName { get; set; } = string.Empty;
 
     /// <summary>
     ///     Patronymic - patronymic of the passenger
@@ -28,7 +28,7 @@ public class Passenger
     /// <summary>
     ///     PhoneNumber - mobile phone number registered to the passenger
     /// </summary>
-    public string PhoneNumber { get; set; } = String.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
 
     /// <summary>
     ///     Rides - a list of the current passenger's rides

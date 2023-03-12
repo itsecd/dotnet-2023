@@ -8,17 +8,17 @@ public class Ride
     /// <summary>
     ///     Id - unique identifier of the ride
     /// </summary>
-    public UInt64 Id { get; set; }
+    public ulong Id { get; set; }
 
     /// <summary>
     ///     DeparturePoint - a address where the ride starts
     /// </summary>
-    public string DeparturePoint { get; set; } = String.Empty;
+    public string DeparturePoint { get; set; } = string.Empty;
 
     /// <summary>
     ///     DestinationPoint - a address where the ride ends
     /// </summary>
-    public string DestinationPoint { get; set; } = String.Empty;
+    public string DestinationPoint { get; set; } = string.Empty;
 
     /// <summary>
     ///     RideDate - date and time when the ride started
@@ -33,15 +33,15 @@ public class Ride
     /// <summary>
     ///     Cost - cost of ride
     /// </summary>
-    public UInt32 Cost { get; set; } = 0;
+    public uint Cost { get; set; } = 0;
 
     /// <summary>
     ///     PassengerId - passenger's unique identifier
     /// </summary>
-    public UInt64 PassengerId { get; set; }
+    public ulong PassengerId { get; set; }
 
     /// <summary>
     ///     VehicleId - vehicle's unique identifier
     /// </summary>
-    public UInt64 VehicleId { get; set; }
+    public ulong VehicleId { get; set; }
 }

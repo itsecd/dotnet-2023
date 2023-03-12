@@ -201,7 +201,7 @@ public class TaxiTests : IClassFixture<TaxiFixture>
         var minDate = new DateTime(2023, 2, 3);
         var maxDate = new DateTime(2023, 2, 6);
 
-        var subquery = from passenger in passengers
+        var subquery = (from passenger in passengers
             from ride in passenger.Rides
             where ride.RideDate < maxDate && ride.RideDate > minDate
             group passenger.Id by passenger
@@ -212,7 +212,7 @@ public class TaxiTests : IClassFixture<TaxiFixture>
                 grp.Key.FirstName,
                 grp.Key.Patronymic,
                 count = grp.Count()
-            };
+            }).ToList();
 
         var max = subquery.Max(elem => elem.count);
 

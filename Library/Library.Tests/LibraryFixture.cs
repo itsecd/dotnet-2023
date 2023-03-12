@@ -51,7 +51,7 @@ public class LibraryFixture
             var firstBook = new Book();
             firstBook.Id = 0;
             firstBook.Cipher = "5698/197b";
-            firstBook.Autor = "Vasilev A.V.";
+            firstBook.Author = "Vasilev A.V.";
             firstBook.Name = "Boolean algebra tutorial";
             firstBook.PlaceEdition = "Kuibyshev";
             firstBook.YearEdition = 1989;
@@ -61,7 +61,7 @@ public class LibraryFixture
             var secondBook = new Book();
             secondBook.Id = 1;
             secondBook.Cipher = "5696/197b";
-            secondBook.Autor = "Vasilev A.V.";
+            secondBook.Author = "Vasilev A.V.";
             secondBook.Name = "Mathematical analysis manual";
             secondBook.PlaceEdition = "Kuibyshev";
             secondBook.YearEdition = 1988;
@@ -71,7 +71,7 @@ public class LibraryFixture
             var thirdBook = new Book();
             thirdBook.Id = 2;
             thirdBook.Cipher = "5832/198c";
-            thirdBook.Autor = "Merkulov D.A.";
+            thirdBook.Author = "Merkulov D.A.";
             thirdBook.Name = "Computer science and computer engineering";
             thirdBook.PlaceEdition = "Samara";
             thirdBook.YearEdition = 2005;
@@ -81,7 +81,7 @@ public class LibraryFixture
             var fourthBook = new Book();
             fourthBook.Id = 3;
             fourthBook.Cipher = "7896/215a";
-            fourthBook.Autor = "Andropov I.S.";
+            fourthBook.Author = "Andropov I.S.";
             fourthBook.Name = "Nanoelectronics and medicine";
             fourthBook.PlaceEdition = "Samara";
             fourthBook.YearEdition = 2017;

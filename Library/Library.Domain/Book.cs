@@ -14,9 +14,9 @@ public class Book
     /// </summary>
     public string Cipher { set; get; } = string.Empty;
     /// <summary>
-    /// Autor stores last name and initials of the author
+    /// Author stores last name and initials of the author
     /// </summary>
-    public string Autor { set; get; } = string.Empty;
+    public string Author { set; get; } = string.Empty;
     /// <summary>
     /// Name stores name of the book
     /// </summary>

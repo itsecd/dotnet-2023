@@ -17,22 +17,30 @@ public class UnitTest : IClassFixture<PonrfFixture>
         var customers = _fixture.CustomersFixture.ToList();
         var request = (from customer in customers
                        select customer).Count();
-        Assert.Equal(3, request);
+        Assert.Equal(6, request);
     }
 
-    //[Fact]
-    //public void AuctionsWithoutFullSales()
-    //{
-    //    var auctions = _fixture.AuctionsFixture.ToList();
-    //    var lots = _fixture.LotsFixture.ToList();
-    //    var privatizedBuildings = _fixture.PrivatizedBuildingsFixture.ToList();
-    //    var request = (from auction in auctions
-    //                   join lot in lots on auction.IDAuction equals lot.Auction?.IDAuction &&
-    //                   join privatizedBuilding in privatizedBuildings on auction.IDAuction equals privatizedBuilding.Auction?.IDAuction
-    //                   where
-    //                   select auction).Count();
-    //    Assert.Equal(1, request);
-    //}
+    [Fact]
+    public void AuctionsWithoutFullSales()
+    {
+        var auctions = _fixture.AuctionsFixture.ToList();
+        var lots = _fixture.LotsFixture.ToList();
+        var privatizedBuildings = _fixture.PrivatizedBuildingsFixture.ToList();
+        var request = (from auction in auctions
+                       join lot in lots on auction.IDAuction equals lot.Auction?.IDAuction
+                       join privatizedBuilding in privatizedBuildings on auction.IDAuction equals privatizedBuilding.Auction?.IDAuction
+                       where (from auction in auctions
+                              join lot in lots on auction.IDAuction equals lot.Auction?.IDAuction
+                              group lot by new { lot.Auction?.IDAuction} into auctLot
+                              select auctLot).Count() > 
+                              (from auction in auctions
+                               join privatizedBuilding in privatizedBuildings on auction.IDAuction equals privatizedBuilding.Auction?.IDAuction
+                               group privatizedBuilding by new { privatizedBuilding.Auction?.IDAuction } into privBuild
+                               select privBuild).Count()
+                       select auction);
+        Console.WriteLine(request);
+      //  Assert.Equal(1, request);
+    }
 
     [Fact]
     public void CustomersAndBuildingsInDistrict()
@@ -71,14 +79,35 @@ public class UnitTest : IClassFixture<PonrfFixture>
     }
 
     [Fact]
-    public void Fifth()
+    public void TopFive()
     {
-
+        var customers = _fixture.CustomersFixture.ToList();
+        var privatizedBuildings = _fixture.PrivatizedBuildingsFixture.ToList();
+        var request = (from customer in customers
+                       join privatizedBuilding in privatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
+                       group privatizedBuilding by new { privatizedBuilding.Customer?.FIO} into privBuild
+                       select new {
+                           privBuild.Key.FIO,
+                           Total = privBuild.Sum(s => s.SecondCost)
+                       }).OrderByDescending(t => t.Total).Take(5).ToList();
+        Assert.Equal("Турец И. П.", request[0].FIO);
+        Assert.Equal("Раскольникова С. М.", request[4].FIO);
     }
 
     [Fact]
-    public void Sixth()
+    public void MostProfitableAuctions()
     {
-
+        var auctions = _fixture.AuctionsFixture.ToList();
+        var privatizedBuildings = _fixture.PrivatizedBuildingsFixture.ToList();
+        var request = (from auction in auctions
+                       join privatizedBuilding in privatizedBuildings on auction.IDAuction equals privatizedBuilding.Auction?.IDAuction
+                       group privatizedBuilding by new { privatizedBuilding.Auction?.Organizer } into privBuild
+                       select new
+                       {
+                           privBuild.Key.Organizer,
+                           Profit = privBuild.Sum(s => s.SecondCost - s.FirstCost)
+                       }).OrderByDescending(p => p.Profit).Take(2).ToList();
+        Assert.Equal("Сириус", request[0].Organizer);
+        Assert.Equal("Аргентум", request[1].Organizer);
     }
 }

@@ -39,4 +39,9 @@ public class Airplane
                Passenger_Capacity == param.Passenger_Capacity;
                 
     }
+
+    public override int GetHashCode()
+    {
+        return Model.GetHashCode();
+    }
 }

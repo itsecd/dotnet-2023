@@ -69,4 +69,9 @@ public class Passenger
                Name == param.Name &&
                Tickets == param.Tickets;
     }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, Passport_number);
+    }
 }

@@ -29,4 +29,8 @@ public class Ticket
                Baggage_weight == param.Baggage_weight;
     }
 
+    public override int GetHashCode()
+    {
+        return Number.GetHashCode();
+    }
 }

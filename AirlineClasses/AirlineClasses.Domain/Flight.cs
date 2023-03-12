@@ -29,9 +29,16 @@ public class Flight
     /// </summary>
     public DateTime? Arrival_date { get; set; }
     /// <summary>
+    /// Flight time
+    /// </summary>
+    public TimeSpan Flight_time { get; set; }
+    /// <summary>
     /// type airplane on flight
     /// </summary>
     public Airplane? Airplane { get; set; }
+    /// <summary>
+    /// List of tickets on flight
+    /// </summary>
     public List<Ticket>? Tickets { get; set; }
     public Flight() {}
     public Flight(string cipher, string departure_place, string destination, DateTime? departure_date, DateTime arrival_date, Airplane airplane, List<Ticket> tickets)
@@ -41,6 +48,7 @@ public class Flight
         Destination = destination;
         Departure_date = departure_date;
         Arrival_date = arrival_date;
+        Flight_time = Arrival_date.Value-Departure_date.Value;
         Airplane = airplane;
         Tickets = tickets;
     }
@@ -57,5 +65,10 @@ public class Flight
                Arrival_date == param.Arrival_date &&
                Airplane == param.Airplane &&
                Tickets == param.Tickets;
+    }
+
+    public override int GetHashCode()
+    {
+        return Cipher.GetHashCode();
     }
 }

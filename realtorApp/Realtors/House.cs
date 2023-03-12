@@ -15,7 +15,11 @@ public class House
         Square = square;
         Rooms =rooms;
     }
-    
+    public override bool Equals(object? obj)
+    {
+        if(obj is not House param) return false;
+        return ID == param.ID && Type==param.Type && Address==param.Address && Square==param.Square && Rooms==param.Rooms;
+    }
     public override int GetHashCode()
     {
         return HashCode.Combine(Id, Type, Address, Square, Rooms);

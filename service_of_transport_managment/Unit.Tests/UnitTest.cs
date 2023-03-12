@@ -1,3 +1,6 @@
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Interfaces;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using TransManagment;
 using Xunit.Sdk;
@@ -45,13 +48,6 @@ public class UnitTest
             new Routes(144, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 06, 00, 00), new DateTime(2022, 02, 11, 18, 00, 00), temp_t[4], temp_d[4]),
             new Routes(155, new DateOnly(2022, 02, 12), new DateTime(2022, 02, 12, 06, 30, 00), new DateTime(2022, 02, 11, 18, 00, 00), temp_t[5], temp_d[5]),
         };
-    }
-
-    public int Func(Routes x, Routes y)
-    {
-        if(x.Driver.Driver_id == y.Driver.Driver_id)
-            return 2;
-        return 1;
     }
 
     [Fact]
@@ -147,13 +143,40 @@ public class UnitTest
         var result = (from driver in drivers
                       join route in routes on driver.Driver_id equals route.Driver.Driver_id
                       group route by driver.Driver_id into res
-                      orderby res.Count()
-                      select res).Take(5).ToList();
+                      orderby res.Count() descending
+                      select res).Take(5);
         Assert.Equal(5, result.Count());
-        //Assert.Contains(result, driver => driver.Driver_id == 11);
-        //Assert.Contains(result, driver => driver.Driver_id == 12);
-        //Assert.Contains(result, driver => driver.Driver_id == 13);
-        //Assert.Contains(result, driver => driver.Driver_id == 14);
-        //Assert.Contains(result, driver => driver.Driver_id == 15);
+        Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 11);
+        Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 12);
+        Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 13);
+        Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 14);
+        Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 15);
+    }
+    [Fact] 
+    public void Task5() 
+    {
+        List<Drivers> drivers = FixtureDriv();
+        List<Routes> routes = FixtureRoute();
+        var result = (from driver in drivers
+                      join route in routes on driver.Driver_id equals route.Driver.Driver_id
+                      group route by driver.Driver_id into res
+                      select res.First().Time_from.ToBinary() - res.First().Time_to.ToBinary() ).ToList();
+        Assert.Equal(6, result.Count());
+        Assert.Equal(432000000000, result.Max());
+        Assert.Equal(174000000000, result.Average());
+    }
+    [Fact]
+    public void Task6()
+    {
+        List<Transports> transports = FixturTrans();
+        List<Routes> routes = FixtureRoute();
+        var result = (from transport in transports
+                      join route in routes on transport.Transport_id equals route.Transport.Transport_id
+                      group route by route.Transport.Transport_id into res
+                      orderby res.Count()
+                      where res.First().Date < new DateOnly(2022, 02, 12) && res.First().Date > new DateOnly(2022, 02, 10) && res.Count() == 2
+                      select res);
+        Assert.Equal(2 ,result.First().Count());
+        Assert.Contains(result.First(), driver => driver.Driver.Driver_id == 12);
     }
 }

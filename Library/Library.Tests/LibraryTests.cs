@@ -30,7 +30,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     {
         var fixtureBook = _fixture.FixtureBook.ToList();
         var request = (from book in fixtureBook
-                       where book.IsIssued == true
+                       where book.IsIssued
                        orderby book.Name
                        select book).Count();
         Assert.Equal(4, request);
@@ -45,7 +45,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var request = (from department in fixtureDepartment
                        from b in department.IdBooks
                        where b.Id == 3
-                       select new { departments = department, count = department.Count });
+                       select new { departments = department, count = department.Count }).ToList();
         Assert.Equal(2, request.Count());
         Assert.Equal(15, request.First(x => x.departments.Id == 3).count);
         Assert.Equal(20, request.First(x => x.departments.Id == 4).count);
@@ -116,7 +116,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
                             Delay = g.Key,
                             MaxDay = g.Select(x => x.DateOfReturn.DayNumber - x.DateOfIssue.DayNumber - x.DayCount).Max(),
                             Count = g.Count()
-                        });
+                        }).ToList();
         var request = (from readers in maxDelay
                        where (readers.MaxDay == maxDelay.Max(x => x.MaxDay))
                        orderby readers.Delay

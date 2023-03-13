@@ -17,7 +17,7 @@ public class Transports
     /// <summary>
     /// date_make - date when make transport
     /// </summary>
-    public DateOnly? Date_make { get; set; } //= new DateOnly();
+    public DateOnly Date_make { get; set; } //= new DateOnly();
     public Transports() { }
     public Transports(int _transport_id, string _type, string _model, DateOnly _date_make)
 	{

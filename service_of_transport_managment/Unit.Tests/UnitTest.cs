@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Interfaces;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Xml.Linq;
 using TransManagment;
 using Xunit.Sdk;
 
@@ -10,6 +11,9 @@ namespace Unit.Tests;
 
 public class UnitTest
 {
+    /// <summary>
+    /// FixturTrans - default list of transports
+    /// </summary>
     public List<Transports> FixturTrans()
     {
         return new List<Transports>()
@@ -22,6 +26,9 @@ public class UnitTest
             new Transports(6, "tram", "Mos_tram", new DateOnly(1989, 08, 02)),
         };
     }
+    /// <summary>
+    /// FixturDriv - default list of drivers
+    /// </summary>
     public List<Drivers> FixtureDriv()
     {
         return new List<Drivers>()
@@ -34,6 +41,9 @@ public class UnitTest
              new Drivers (16, "Bill", "Pechorin", "Andeivich", 300965, 1234, 3668090),
         };
     }
+    /// <summary>
+    /// FixturRoute - default list of routes
+    /// </summary>
     public List<Routes> FixtureRoute()
     {
         List<Drivers> temp_d = FixtureDriv();
@@ -50,6 +60,9 @@ public class UnitTest
         };
     }
 
+    /// <summary>
+    /// TransportTest - test about transports
+    /// </summary>
     [Fact]
     public void TransportTest()
     {
@@ -59,6 +72,9 @@ public class UnitTest
         Assert.Equal("Mercedes", transport.Model);
         Assert.Equal(new DateOnly(1990, 10, 23), transport.Date_make);
     }
+    /// <summary>
+    /// DriverTest - test about drivers
+    /// </summary>
     [Fact]
     public void DriverTest()
     {
@@ -71,6 +87,9 @@ public class UnitTest
         Assert.Equal(2434, driver.Driver_card);
         Assert.Equal(2568090, driver.Number);
     }
+    /// <summary>
+    /// RouteTest - test about routes
+    /// </summary>
     [Fact]
     public void RouteTest() 
     {
@@ -84,8 +103,11 @@ public class UnitTest
         Assert.Equal(temp_t[0], route.Transport);
         Assert.Equal(temp_d[0], route.Driver);
     }
-    [Fact]
 
+    /// <summary>
+    /// Task1 - Output all information about a specific vehicle.
+    /// </summary>
+    [Fact]
     public void Task1()
     {
         List<Transports> transports = FixturTrans();
@@ -96,7 +118,10 @@ public class UnitTest
         Assert.Single(result);
         Assert.Contains(result, transport => transport.Transport_id == 1);
     }
-    [Fact]
+    /// <summary>
+    /// Task2 - Output all drivers who have made trips for a given period, sort by full name.
+    /// </summary>
+        [Fact]
     public void Task2()
     {
         List<Drivers> drivers = FixtureDriv();
@@ -114,6 +139,9 @@ public class UnitTest
         Assert.Contains(result, driver => driver.Driver_id == 15);
     }
     [Fact]
+    /// <summary>
+    /// Task3 - Output the total travel time of the vehicle of each type and model.
+    /// </summary>
     public void Task3()
     {
         List<Transports> transports = FixturTrans();
@@ -135,6 +163,9 @@ public class UnitTest
         Assert.Contains(result, driver => driver.Driver_id == 15);
         Assert.Contains(result, driver => driver.Driver_id == 16);
     }
+    /// <summary>
+    /// Task4 - Output the top 5 drivers by the number of trips made.
+    /// </summary>
     [Fact]
     public void Task4()
     {
@@ -152,6 +183,9 @@ public class UnitTest
         Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 14);
         Assert.Contains(result, driver => driver.ToList()[0].Driver.Driver_id == 15);
     }
+    /// <summary>
+    /// Task5 - Display information about the number of trips, average time and maximum travel time for each driver.
+    /// </summary>
     [Fact] 
     public void Task5() 
     {
@@ -165,6 +199,9 @@ public class UnitTest
         Assert.Equal(432000000000, result.Max());
         Assert.Equal(174000000000, result.Average());
     }
+    /// <summary>
+    /// Task6 - Display information about vehicles that have made the maximum number of trips during the specified period.
+    /// </summary>
     [Fact]
     public void Task6()
     {

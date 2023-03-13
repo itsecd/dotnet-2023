@@ -23,7 +23,7 @@ public class Routes
     /// </summary>
     public Transports Transport  { get; set; } = new Transports();
     /// <summary>
-    /// Driver - list of driver
+    /// Driver - driver
     /// </summary>
     public Drivers Driver { get; set; } = new Drivers();
     public Routes() { }

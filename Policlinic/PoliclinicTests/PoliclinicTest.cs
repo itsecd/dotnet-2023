@@ -1,132 +1,96 @@
-using System.Security.Cryptography;
-using Xunit.Sdk;
-using Policlinic;
-
 namespace PoliclinicTests;
 
-public class PoliclinicTest
+public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
 {
-    private List<SpecializationType> CreateDefaultSpecializations()
-    {
-        return new List<SpecializationType>()
-        {
-            new SpecializationType("Психотерапевт"),
-            new SpecializationType("Дерматолог")
-        };
-    }
+    private PoliclinicTestFixture _fixture;
 
-    private List<DoctorType> CreateDefaultDoctors()
+    public PoliclinicTest(PoliclinicTestFixture fixture)
     {
-        var specializationList = CreateDefaultSpecializations();
-        return new List<DoctorType>()
-        {
-            new DoctorType("1234 567890", "Иванов Иван Иванович", new DateTime(1975, 12, 1), 7, specializationList[0]),
-            new DoctorType("4321 567890", "Петров Петр Петрович", new DateTime(1960, 10, 10), 15, specializationList[1]),
-            new DoctorType("2341 567890", "Смирнов Александр Александрович", new DateTime(1980, 1, 1), 3, specializationList[0])
-        };
+        _fixture = fixture;
     }
-
-    private List<PatientType> CreateDefaultPatients()
-    {
-        return new List<PatientType>
-        {
-            new PatientType("4231 123456", "Иванов Петр Владимирович", new DateTime(2000, 2, 2), "Московское шоссе 34б"),
-            new PatientType("1234 123456", "Белов Евгений Максимович", new DateTime(1990, 7, 6), "Улица Кирова 231"),
-            new PatientType("1423 123456", "Киров Лукас Маркович", new DateTime(1993, 8, 8), "Улица Мичурина 15"),
-            new PatientType("4321 123456", "Крылов Владимир Петрович", new DateTime(1995, 1, 1), "Улица Баныкина 17")
-        };
-    }
-
-    private List<ReceptionType> CreateDefaultReceptions()
-    {
-        var patientList = CreateDefaultPatients();
-        var doctorList = CreateDefaultDoctors();
-        return new List<ReceptionType>()
-        {
-            new ReceptionType(new DateTime(2023, 2, 1, 12, 0, 0), "На лечении", doctorList[0], patientList[0]),
-            new ReceptionType(new DateTime(2023, 2, 1, 12, 15, 0), "Здоров", doctorList[0], patientList[1]),
-            new ReceptionType(new DateTime(2023, 2, 2, 11, 0, 0), "Здоров", doctorList[1], patientList[2]),
-            new ReceptionType(new DateTime(2023, 2, 3, 13, 45, 0), "На лечении", doctorList[2], patientList[3]),
-        };
-    }
-
-    [Fact]
-    public void SpecializationConstructorTest()
-    {
-        var specialization = new SpecializationType("Психотерапевт");
-        Assert.Equal("Психотерапевт", specialization.Specialization);
-    }
-
-    [Fact]
-    public void DoctorConstructorTest() 
-    {
-        var specializationList = CreateDefaultSpecializations();
-        var doctor = new DoctorType("1234 567890", "Иванов Иван Иванович", new DateTime(1975, 12, 1), 7, specializationList[0]);
-        Assert.Equal("1234 567890", doctor.Passport);
-        Assert.Equal("Иванов Иван Иванович", doctor.FIO);
-        Assert.Equal(new DateTime(1975, 12, 1), doctor.BirthDate);
-        Assert.Equal(7, doctor.WorkExperience);
-        Assert.Equal(specializationList[0], doctor.Specialization);
-    }
-
-    [Fact]
-    public void PatientConstructorTest()
-    {
-        var patient = new PatientType("1234 123456", "Белов Евгений Максимович", new DateTime(1990, 7, 6), "Улица Кирова 231");
-        Assert.Equal("1234 123456", patient.Passport);
-        Assert.Equal("Белов Евгений Максимович", patient.FIO);
-        Assert.Equal(new DateTime(1990, 7, 6), patient.BirthDate);
-        Assert.Equal("Улица Кирова 231", patient.Address);
-    }
-
-    [Fact]
-    public void ReceptionConstructorTest()
-    {
-        var patientList = CreateDefaultPatients();
-        var doctorList = CreateDefaultDoctors();
-        var reception = new ReceptionType(new DateTime(2023, 2, 1, 12, 0, 0), "На лечении", doctorList[0], patientList[0]);
-        Assert.Equal(new DateTime(2023, 2, 1, 12, 0, 0), reception.DateAndTime);
-        Assert.Equal("На лечении", reception.Status);
-        Assert.Equal(doctorList[0], reception.Doctor);
-        Assert.Equal(patientList[0], reception.Patient);
-    }
-    
+    /// <summary>
+    /// Вывести информацию о всех врачах, стаж работы которых не меньше 10 лет
+    /// </summary>
     [Fact]
     public void FirstRequest()
     {
-        var doctorList = CreateDefaultDoctors();
+        var doctorList = _fixture.CreateDefaultDoctors();
         var requestDoctorList = (from doctor in doctorList
                                  where doctor.WorkExperience >= 10
                                  select doctor.FIO).ToList();
         Assert.Equal(doctorList[1].FIO, requestDoctorList[0]);
     }
-
+    /// <summary>
+    /// Вывести информацию о всех пациентах, записанных на прием к указанному врачу, упорядочить по ФИО
+    /// </summary>
     [Fact]
     public void SecondRequest()
     {
-        var receptionList = CreateDefaultReceptions();
-        var requestPatientList = (from reception in receptionList
-                                  where reception.Doctor.FIO == "Иванов Иван Иванович"
-                                  orderby reception.Patient.FIO
-                                  select reception.Patient.FIO).ToList();
-        Assert.Equal(receptionList[0].Patient.FIO, requestPatientList[1]);
-        Assert.Equal(receptionList[1].Patient.FIO, requestPatientList[0]);
+        var receptionList = _fixture.CreateDefaultReceptions();
+        var patientList = _fixture.CreateDefaultPatients();
+        var doctorList = _fixture.CreateDefaultDoctors();
+        var requestPatientList = (from patient in patientList
+                                  join reception in receptionList on patient.Passport equals (reception.PassportPatient)
+                                  join doctor in doctorList on reception.PassportDoctor equals (doctor.Passport)
+                                  where doctor.FIO == "Иванов Иван Иванович" && doctor.FIO.Count() > 1
+                                  orderby patient.FIO
+                                  select patient.FIO).ToList();
+        Assert.Equal("Белов Евгений Максимович", requestPatientList[0]);
+        Assert.Equal("Иванов Петр Владимирович", requestPatientList[1]);
     }
-
+    /// <summary>
+    /// Вывести информацию о здоровых на настоящий момент пациентах
+    /// </summary>
     [Fact]
     public void ThirdRequest()
     {
-        var receptionList = CreateDefaultReceptions();
+        var receptionList = _fixture.CreateDefaultReceptions();
         var requestHealthyPatientList = (from reception in receptionList
-                                  where reception.Status == "Здоров"
-                                  select reception.Patient).ToList();
-        Assert.Equal(receptionList[1].Patient, requestHealthyPatientList[0]);
-        Assert.Equal(receptionList[2].Patient, requestHealthyPatientList[1]);
+                                         where reception.Status == "Здоров"
+                                         select reception.PassportPatient).ToList();
+        Assert.Equal(receptionList[1].PassportPatient, requestHealthyPatientList[0]);
+        Assert.Equal(receptionList[2].PassportPatient, requestHealthyPatientList[1]);
     }
-
+    /// <summary>
+    /// Вывести информацию о количестве приемов пациентов по врачам за последний месяц
+    /// </summary>
     [Fact]
     public void FourthRequest()
     {
-
+        var receptionList = _fixture.CreateDefaultReceptions();
+        var requestCountReceptionsInOneMonth = (from reception in receptionList
+                                                where reception.DateAndTime > new DateTime(2023, 1, 31)
+                                                && reception.DateAndTime < new DateTime(2023, 3, 1) && reception.PassportDoctor == 1234567890
+                                                select reception.IdReception).Count();
+        Assert.Equal(2, requestCountReceptionsInOneMonth);
+    }
+    /// <summary>
+    /// Вывести информацию о топ 5 наиболее распространенных заболеваниях среди пациентов
+    /// </summary>
+    [Fact]
+    public void FifthRequest()
+    {
+        var receptionList = _fixture.CreateDefaultReceptions();
+        var requestTopDiseases = (from reception in receptionList
+                                  where reception.Conclution != ""
+                                  orderby reception.Conclution.Count()
+                                  select reception.Conclution).Take(5).ToList();
+        Assert.Equal("Нервоз", requestTopDiseases[0]);
+        Assert.Equal("Псориаз", requestTopDiseases[1]);
+    }
+    /// <summary>
+    /// Вывести информацию о пациентах старше 30 лет, которые записаны на прием к нескольким врачам, упорядочить по дате рождения
+    /// </summary>
+    [Fact]
+    public void SixthRequest()
+    {
+        var receptionList = _fixture.CreateDefaultReceptions();
+        var patientList = _fixture.CreateDefaultPatients();
+        var requestOlderPatients = (from patient in patientList
+                                    join reception in receptionList on patient.Passport equals (reception.PassportPatient)
+                                    where DateTime.Today.Year - patient.BirthDate.Year > 30 && reception.Status.Count() > 1
+                                    orderby patient.BirthDate
+                                    select patient.FIO).ToList();
+        Assert.Equal("Белов Евгений Максимович", requestOlderPatients[0]);
     }
 }

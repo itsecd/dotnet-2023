@@ -24,17 +24,17 @@ public class Flight
     /// <summary>
     /// Departure date
     /// </summary>
-    public DateOnly DepartureDate { get; set; } = new DateOnly();
+    public DateTime DepartureDate { get; set; } = new DateTime();
     /// <summary>
     /// Arrival date
     /// </summary>
-    public DateOnly ArrivalDate { get; set; } = new DateOnly();
+    public DateTime ArrivalDate { get; set; } = new DateTime();
     /// <summary>
     /// List of tickets on this flight
     /// </summary>
     public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
     public Flight() { }
-    public Flight(int numberOfFlight, string departureCity, string arrivalCity, DateOnly departureDate, DateOnly arrivalDate)
+    public Flight(int numberOfFlight, string departureCity, string arrivalCity, DateTime departureDate, DateTime arrivalDate)
     {
         NumberOfFlight = numberOfFlight;
         DepartureCity = departureCity;

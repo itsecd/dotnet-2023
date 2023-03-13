@@ -11,8 +11,8 @@ public class ClassesTest : IClassFixture<AirlineBookingSystemFixture>
     public void AllFlights()
     {
         var request = (from flight in _fixture.FixtureFlights
-                       select flight).Count();
-        Assert.Equal(5, request);
+                       select flight).ToList();
+        Assert.Equal(5, request.Count);
     }
     [Fact]
     public void ClientsWithSpecificFlight()
@@ -31,19 +31,19 @@ public class ClassesTest : IClassFixture<AirlineBookingSystemFixture>
     [Fact]
     public void FlightsWithSpecifiedDepartureCityAndData()
     {
-        var specifiedDate = new DateOnly(2023, 8, 28);
+        var specifiedDate = new DateTime(2023, 8, 28);
         var request = (from flight in _fixture.FixtureFlights
                        where (flight.DepartureCity == "Kurumoch") && (flight.DepartureDate == specifiedDate)
-                       select flight).Count();
-        Assert.Equal(2, request);
+                       select flight).ToList();
+        Assert.Equal(2, request.Count);
     }
     [Fact]
     public void FlightsWithMaxCountOfClient()
     {
-        var request = ((from flight in _fixture.FixtureFlights
+        var request = (from flight in _fixture.FixtureFlights
                         where flight != null
                         orderby flight.Tickets.Count() descending
-                        select flight).Take(5)).ToList();
+                        select flight).Take(5).ToList();
         Assert.Equal(2, request[0].NumberOfFlight);
         Assert.Equal(4, request[1].NumberOfFlight);
         Assert.Equal(1, request[2].NumberOfFlight);
@@ -58,9 +58,9 @@ public class ClassesTest : IClassFixture<AirlineBookingSystemFixture>
                           select flight.Tickets.Count).Max();
         var request = (from flight in _fixture.FixtureFlights
                        where flight.Tickets.Count.CompareTo(maxClients) == 0
-                       select flight.NumberOfFlight).Count();
+                       select flight.NumberOfFlight).ToList();
 
-        Assert.Equal(2, request);
+        Assert.Equal(2, request.Count);
     }
     [Fact]
     public void MaxAndMinAndAvgClientsAmountFromSpecifiedDepartureCity()

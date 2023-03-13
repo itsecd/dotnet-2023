@@ -37,11 +37,11 @@ public class AirlineBookingSystemFixture
     {
         get
         {
-            var firstFlight = new Flight(1, "Kurumoch", "Astana", new DateOnly(2023, 8, 28), new DateOnly(2023, 8, 29));
-            var secondFlight = new Flight(2, "Astana", "Kurumoch", new DateOnly(2023, 10, 17), new DateOnly(2023, 10, 18));
-            var thirdFlight = new Flight(3, "Kurumoch", "Sochi", new DateOnly(2023, 8, 28), new DateOnly(2023, 8, 28));
-            var fourthFlight = new Flight(4, "Los Angeles", "Tokyo", new DateOnly(2023, 10, 2), new DateOnly(2023, 10, 3));
-            var fifthFlight = new Flight(5, "Chiko", "Kem", new DateOnly(2023, 6, 6), new DateOnly(2023, 6, 7));
+            var firstFlight = new Flight(1, "Kurumoch", "Astana", new DateTime(2023, 8, 28), new DateTime(2023, 8, 29));
+            var secondFlight = new Flight(2, "Astana", "Kurumoch", new DateTime(2023, 10, 17), new DateTime(2023, 10, 18));
+            var thirdFlight = new Flight(3, "Kurumoch", "Sochi", new DateTime(2023, 8, 28), new DateTime(2023, 8, 28));
+            var fourthFlight = new Flight(4, "Los Angeles", "Tokyo", new DateTime(2023, 10, 2), new DateTime(2023, 10, 3));
+            var fifthFlight = new Flight(5, "Chiko", "Kem", new DateTime(2023, 6, 6), new DateTime(2023, 6, 7));
 
             var firstTicket = new Ticket(100);
             var secondTicket = new Ticket(101);
@@ -99,30 +99,30 @@ public class AirlineBookingSystemFixture
 
             var tenthTicket = new Ticket(500);
 
-            var firstClient = new Client(738096, new DateOnly(1969, 8, 15), "Samoylov A. K.");
+            var firstClient = new Client(738096, new DateTime(1969, 8, 15), "Samoylov A. K.");
             firstClient.Tickets.Add(firstTicket);
 
-            var secondClient = new Client(258204, new DateOnly(2002, 6, 4), "Shestakov N. D.");
+            var secondClient = new Client(258204, new DateTime(2002, 6, 4), "Shestakov N. D.");
             secondClient.Tickets.Add(secondTicket);
             secondClient.Tickets.Add(thirdTicket);
 
-            var thirdClient = new Client(211702, new DateOnly(1984, 10, 28), "Fomina M. D.");
+            var thirdClient = new Client(211702, new DateTime(1984, 10, 28), "Fomina M. D.");
             thirdClient.Tickets.Add(fourthTicket);
 
-            var fourthClient = new Client(783469, new DateOnly(1978, 10, 17), "Novikov Y. M.");
+            var fourthClient = new Client(783469, new DateTime(1978, 10, 17), "Novikov Y. M.");
             fourthClient.Tickets.Add(fifthTicket);
 
-            var fifthClient = new Client(481761, new DateOnly(2013, 12, 7), "Myasnikov S. I.");
+            var fifthClient = new Client(481761, new DateTime(2013, 12, 7), "Myasnikov S. I.");
             fifthClient.Tickets.Add(sixthTicket);
             fifthClient.Tickets.Add(tenthTicket);
 
-            var sixthClient = new Client(154590, new DateOnly(1993, 3, 21), "Kapustina D. F.");
+            var sixthClient = new Client(154590, new DateTime(1993, 3, 21), "Kapustina D. F.");
             sixthClient.Tickets.Add(seventhTicket);
 
-            var seventhClient = new Client(303386, new DateOnly(2013, 4, 3), "Panfilova K. T.");
+            var seventhClient = new Client(303386, new DateTime(2013, 4, 3), "Panfilova K. T.");
             seventhClient.Tickets.Add(eighthTicket);
 
-            var eighthClient = new Client(240348, new DateOnly(1966, 8, 17), "Birukov D. M.");
+            var eighthClient = new Client(240348, new DateTime(1966, 8, 17), "Birukov D. M.");
             eighthClient.Tickets.Add(ninthTicket);
 
 

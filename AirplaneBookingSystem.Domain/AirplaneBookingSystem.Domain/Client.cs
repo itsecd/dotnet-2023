@@ -16,7 +16,7 @@ public class Client
     /// <summary>
     /// Client`s birthday
     /// </summary>
-    public DateOnly BirthdayData { get; set; } = new DateOnly();
+    public DateTime BirthdayData { get; set; } = new DateTime();
     /// <summary>
     /// Client`s name
     /// </summary>
@@ -26,7 +26,7 @@ public class Client
     /// </summary>
     public List<Ticket> Tickets { get; set; } = new List<Ticket>();
     public Client() { }
-    public Client(int passportNumber, DateOnly birthdayData, string name)
+    public Client(int passportNumber, DateTime birthdayData, string name)
     {
         PassportNumber = passportNumber;
         BirthdayData = birthdayData;

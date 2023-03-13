@@ -10,7 +10,7 @@ public class Client
     /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
-    /// Passport number 
+    /// Client`s passport number 
     /// </summary>
     public int PassportNumber { get; set; } = 0;
     /// <summary>
@@ -22,7 +22,7 @@ public class Client
     /// </summary>
     public string Name { get; set; } = string.Empty;
     /// <summary>
-    /// Represent a tickets 
+    /// Client`s tickets 
     /// </summary>
     public List<Ticket> Tickets { get; set; } = new List<Ticket>();
     public Client() { }

@@ -1,4 +1,4 @@
-﻿namespace AirlineClasses;
+﻿namespace AirLine.Domain;
 public class Airplane
 {
     /// <summary>
@@ -8,7 +8,7 @@ public class Airplane
     /// <summary>
     /// Airplane load capacity
     /// </summary>
-    public int Load_Capacity { get; set; } = 0;
+    public int LoadCapacity { get; set; } = 0;
     /// <summary>
     /// Airplane perfomance
     /// </summary>
@@ -16,16 +16,16 @@ public class Airplane
     /// <summary>
     /// Airplane passengers capacity
     /// </summary>
-    public int Passenger_Capacity { get; set; } = 0;
+    public int PassengerCapacity { get; set; } = 0;
 
     public Airplane() { }
 
     public Airplane(string model, int capacity, int perfomance, int passengers)
     {
         Model = model;
-        Load_Capacity = capacity;
+        LoadCapacity = capacity;
         Perfomance = perfomance;
-        Passenger_Capacity = passengers;
+        PassengerCapacity = passengers;
     }
 
     public override bool Equals(object? obj)
@@ -34,9 +34,9 @@ public class Airplane
             return false;
 
         return Model == param.Model &&
-               Load_Capacity == param.Load_Capacity &&
+               LoadCapacity == param.LoadCapacity &&
                Perfomance == param.Perfomance &&
-               Passenger_Capacity == param.Passenger_Capacity;
+               PassengerCapacity == param.PassengerCapacity;
                 
     }
 

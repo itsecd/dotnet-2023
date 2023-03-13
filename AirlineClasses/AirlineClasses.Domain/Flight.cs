@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirlineClasses;
+namespace AirLine.Domain;
 
 public class Flight
 {
@@ -15,7 +15,7 @@ public class Flight
     /// <summary>
     /// Field departure place 
     /// </summary>
-    public string Departure_place { get; set; } = string.Empty;
+    public string DeparturePlace { get; set; } = string.Empty;
     /// <summary>
     /// Field destination
     /// </summary>
@@ -23,15 +23,15 @@ public class Flight
     /// <summary>
     /// Field date of departure
     /// </summary>
-    public DateTime? Departure_date { get; set; }
+    public DateTime? DepartureDate { get; set; }
     /// <summary>
     /// Field date of arrival
     /// </summary>
-    public DateTime? Arrival_date { get; set; }
+    public DateTime? ArrivalDate { get; set; }
     /// <summary>
     /// Flight time
     /// </summary>
-    public TimeSpan Flight_time { get; set; }
+    public TimeSpan FlightTime { get; set; }
     /// <summary>
     /// type airplane on flight
     /// </summary>
@@ -41,14 +41,14 @@ public class Flight
     /// </summary>
     public List<Ticket>? Tickets { get; set; }
     public Flight() {}
-    public Flight(string cipher, string departure_place, string destination, DateTime? departure_date, DateTime arrival_date, Airplane airplane, List<Ticket> tickets)
+    public Flight(string cipher, string departurePlace, string destination, DateTime? departureDate, DateTime arrivalDate, Airplane airplane, List<Ticket> tickets)
     {
         Cipher = cipher;
-        Departure_place = departure_place;
+        DeparturePlace = departurePlace;
         Destination = destination;
-        Departure_date = departure_date;
-        Arrival_date = arrival_date;
-        Flight_time = Arrival_date.Value-Departure_date.Value;
+        DepartureDate = departureDate;
+        ArrivalDate = arrivalDate;
+        FlightTime = ArrivalDate.Value-DepartureDate.Value;
         Airplane = airplane;
         Tickets = tickets;
     }
@@ -59,10 +59,10 @@ public class Flight
             return false;
 
         return Cipher == param.Cipher &&
-               Departure_place == param.Departure_place &&
+               DeparturePlace == param.DeparturePlace &&
                Destination == param.Destination &&
-               Departure_date == param.Departure_date &&
-               Arrival_date == param.Arrival_date &&
+               DepartureDate == param.DepartureDate &&
+               ArrivalDate == param.ArrivalDate &&
                Airplane == param.Airplane &&
                Tickets == param.Tickets;
     }

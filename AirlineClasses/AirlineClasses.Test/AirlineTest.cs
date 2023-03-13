@@ -1,5 +1,5 @@
 using Xunit;
-using AirlineClasses;
+using AirLine.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -14,7 +14,7 @@ public class AirlineTest
     /// <returns>
     /// List containing 5 different Airplanes
     /// </returns>
-    private List<Airplane> Default_airplanes()
+    private List<Airplane> DefaultAirplanes()
     {
         return new List<Airplane>()
         {
@@ -32,7 +32,7 @@ public class AirlineTest
     /// <returns>
     /// List containing 3 different flights
     /// </returns>
-    private List<Flight> Default_flights()
+    private List<Flight> DefaultFlights()
     {
         return new List<Flight>()
         {
@@ -51,7 +51,7 @@ public class AirlineTest
     /// <returns>
     /// List containing 6 different passengers
     /// </returns>
-    private List<Passenger> Default_passengers()
+    private List<Passenger> DefaultPassengers()
     {
         return new List<Passenger>()
         {
@@ -70,15 +70,18 @@ public class AirlineTest
     /// <returns>
     /// Filled airline object
     /// </returns>
-    private Airline CreateDefAirline()
+    private Airline CreateDefaultAirline()
     {
-        return new Airline(Default_airplanes(), Default_flights(), Default_passengers());
+        return new Airline(DefaultAirplanes(), DefaultFlights(), DefaultPassengers());
     }
 
+    /// <summary>
+    /// testing airplanes in airline
+    /// </summary>
     [Fact]
-    public void Airplane_test()
+    public void AirplaneTest()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         List<Airplane> airplanes = air.Airplanes;
         Assert.Equal(5, airplanes.Count);
     }
@@ -87,117 +90,150 @@ public class AirlineTest
     /// Product class constructor test
     /// </summary>
     [Fact]
-    public void Airplane_constructor_test()
+    public void AirplaneConstructorCest()
     {
         var plane = new Airplane("Tu-134", 100, 50, 70);
         Assert.Equal("Tu-134", plane.Model);
-        Assert.Equal(100, plane.Load_Capacity);
+        Assert.Equal(100, plane.LoadCapacity);
         Assert.Equal(50, plane.Perfomance);
-        Assert.Equal(70, plane.Passenger_Capacity);
+        Assert.Equal(70, plane.PassengerCapacity);
     }
 
+    /// <summary>
+    /// Ticket class constructor test
+    /// </summary>
     [Fact]
-    public void Ticket_constructor_test()
+    public void TicketConstructorCest()
     {
         var ticket = new Ticket(1000, "5A", 7.5);
         Assert.Equal(1000, ticket.Number);
-        Assert.Equal("5A", ticket.Seat_number);
-        Assert.Equal(7.5, ticket.Baggage_weight);
+        Assert.Equal("5A", ticket.SeatNumber);
+        Assert.Equal(7.5, ticket.BaggageWeight);
     }
 
+    /// <summary>
+    /// Flight class constructor test
+    /// </summary>
     [Fact]
-    public void Flight_constructor_test()
+    public void FlightConstructorTest()
     {
         var flight = new Flight("BD-1120", "Moscow", "Budapest", new DateTime(2022, 11, 20, 19, 00, 00), new DateTime(2022, 11, 20, 23, 30, 00), new Airplane("Tu-134", 100, 50, 70), new List<Ticket>() { new Ticket(1000, "5A", 7.5), new Ticket(1320, "2B", 7.5), new Ticket(1001, "5B", 2.3), new Ticket(1231, "7C", 2.3)});
         Assert.Equal("BD-1120", flight.Cipher);
-        Assert.Equal("Moscow", flight.Departure_place);
+        Assert.Equal("Moscow", flight.DeparturePlace);
         Assert.Equal("Budapest", flight.Destination);
-        Assert.Equal(new DateTime(2022, 11, 20, 19, 00, 00), flight.Departure_date);
-        Assert.Equal(new DateTime(2022, 11, 20, 23, 30, 00), flight.Arrival_date);
+        Assert.Equal(new DateTime(2022, 11, 20, 19, 00, 00), flight.DepartureDate);
+        Assert.Equal(new DateTime(2022, 11, 20, 23, 30, 00), flight.ArrivalDate);
         Assert.Equal(new Airplane("Tu-134", 100, 50, 70), flight.Airplane);
         Assert.Equal(new List<Ticket>() { new Ticket(1000, "5A", 7.5), new Ticket(1320, "2B", 7.5), new Ticket(1001, "5B", 2.3), new Ticket(1231, "7C", 2.3) }, flight.Tickets);
 
     }
 
+    /// <summary>
+    /// Passenger class constructor test
+    /// </summary>
     [Fact]
-    public void Passenger_constructor_test()
+    public void PassengerConstructorTest()
     {
         var passenger = new Passenger(0001, "Petrovskaya Kira Viktorovna", new List<Ticket>() { new Ticket(1000, "5A", 7.5), new Ticket(1320, "2B", 7.5)});
-        Assert.Equal(0001, passenger.Passport_number);
+        Assert.Equal(0001, passenger.PassportNumber);
         Assert.Equal("Petrovskaya Kira Viktorovna", passenger.Name);
         Assert.Equal(new List<Ticket>() { new Ticket(1000, "5A", 7.5), new Ticket(1320, "2B", 7.5) }, passenger.Tickets);
     }
 
+
+    /// <summary>
+    /// Test task 1
+    /// </summary>
     [Fact]
-    public void Task1()
+    public void AllFlightsWithSpecificPlaces()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var request = (from flight in air.Flights
-                       where (flight.Departure_place == "Moscow") && (flight.Destination == "Budapest")
+                       where (flight.DeparturePlace == "Moscow") && (flight.Destination == "Budapest")
                        select flight).Count();
         Assert.Equal(1, request);
     }
 
 
+
+    /// <summary>
+    /// Test task 2
+    /// </summary>
     [Fact]
-    public void Task2()
+    public void CountPassengersWithoutBaggage()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var request = (from flight in air.Flights
                        from ticket in flight.Tickets
                        from passenger in air.Passengers
                        from t in passenger.Tickets
-                       where (flight.Cipher == "CH-0510") && (ticket.Baggage_weight == 0) && (t.Number == ticket.Number)
+                       where (flight.Cipher == "CH-0510") && (ticket.BaggageWeight == 0) && (t.Number == ticket.Number)
                        select passenger).Count();
         Assert.Equal(2, request);
     }
 
+
+    /// <summary>
+    /// Test task 3
+    /// </summary>
     [Fact]
-    public void Task3()
+    public void FlightWithSpecificDate()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var first_date = new DateTime(2019, 5, 10, 00, 00, 00);
         var second_date = new DateTime(2024, 5, 11, 10, 00, 00);
         var plane = new Airplane("Boeing-777", 400, 70, 235);
         var request = (from flight in air.Flights
                        where (flight.Airplane.Equals(plane)) &&
-                       (flight.Departure_date >= first_date) &&
-                       (flight.Departure_date <= second_date)
+                       (flight.DepartureDate >= first_date) &&
+                       (flight.DepartureDate <= second_date)
                        select flight).Count();
         Assert.Equal(1, request);
     }
 
+
+    /// <summary>
+    /// Test task 4
+    /// </summary>
     [Fact]
-    public void Task4()
+    public void TopFiveFlights()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var request = (from flight in air.Flights
                        where flight != null
                        select flight.Tickets.Count).Take(5).Count();
         Assert.Equal(5, request);
     }
 
+
+    /// <summary>
+    /// Test task 5
+    /// </summary>
     [Fact]
-    public void Task5()
+    public void FlightWithMinFlightTime()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var min_time = (from flight in air.Flights
-                        orderby flight.Flight_time
-                        select flight.Flight_time).Min();
+                        orderby flight.FlightTime
+                        select flight.FlightTime).Min();
         var request = (from flight in air.Flights
-                       where flight.Flight_time == min_time
+                       where flight.FlightTime == min_time
                        select flight.Cipher).Count();
         Assert.Equal(1, request);
     }
 
+
+    /// <summary>
+    /// Test task 6
+    /// </summary>
     [Fact]
-    public void Task6()
+    public void MaxAverageBaggageWeight()
     {
-        Airline air = CreateDefAirline();
+        Airline air = CreateDefaultAirline();
         var request = (from flight in air.Flights
                        from ticket in flight.Tickets
-                       where flight.Departure_place == "Moscow"
-                       select ticket.Baggage_weight).ToList();
+                       where flight.DeparturePlace == "Moscow"
+                       select ticket.BaggageWeight).ToList();
         var max = request.Max();
         var avg = request.Average();
         Assert.Equal(7.5, max);

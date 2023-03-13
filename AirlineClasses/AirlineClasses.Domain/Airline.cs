@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirlineClasses;
+namespace AirLine.Domain;
 public class Airline
 {
     /// <summary>
@@ -34,7 +34,7 @@ public class Airline
     /// <param name="airplane">
     /// airplane
     /// </param>
-    public void Add_to_airplane_list(Airplane airplane)
+    public void AddToAirplaneList(Airplane airplane)
     {
         Airplanes.Add(airplane);
     }
@@ -45,7 +45,7 @@ public class Airline
     /// <param name="flight">
     /// flight
     /// </param>
-    public void Add_to_flight_list(Flight flight)
+    public void AddToFlightList(Flight flight)
     {
         Flights.Add(flight);
     }
@@ -56,7 +56,7 @@ public class Airline
     /// <param name="passenger">
     /// passenger
     /// </param>
-    public void Add_to_passenger_list(Passenger passenger)
+    public void AddToPassengerList(Passenger passenger)
     {
         Passengers.Add(passenger);
     }

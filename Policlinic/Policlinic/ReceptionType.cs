@@ -1,44 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Policlinic;
-using Policlinic;
+﻿namespace Policlinic;
+/// <summary>
+/// ReceptionType describes a reception
+/// </summary>
 public class ReceptionType
 {
+    /// <summary>
+    /// IdReception is an int typed value of the reception's id
+    /// </summary>
+    public int IdReception { get; set; }
+    /// <summary>
+    /// DateAndTime is a datetime value of the reception's date and time
+    /// </summary>
     public DateTime DateAndTime { get; set; }
-
-    //public DateTime Time { get; set; }
-
+    /// <summary>
+    /// Status is a string typed value of the reception's status ("На лечении" or "Здоров")
+    /// </summary>
     public string Status { get; set; } = string.Empty;
-
-    public DoctorType Doctor { get; set; } = new();
-
-    public PatientType Patient { get; set; } = new();
+    /// <summary>
+    /// PassportDoctor is a long int typed value for storing the doctor's passport series and number
+    /// </summary>
+    public long PassportDoctor { get; set; }
+    /// <summary>
+    /// PassportPatient is a long int typed value for storing the patient's passport series and number
+    /// </summary>
+    public long PassportPatient { get; set; }
+    /// <summary>
+    /// Conclution is a string typed value of the conclution (if status == "Здоров", this will be empty)
+    /// </summary>
+    public string Conclution { get; set; } = string.Empty;
 
     public ReceptionType() { }
 
-    public ReceptionType(DateTime dateAndTime, string status, DoctorType doctor, PatientType patient)
+    public ReceptionType(DateTime dateAndTime, string status, long doctor, long patient, string conclution)
     {
         DateAndTime = dateAndTime;
-        //Time = time;
         Status = status;
-        Doctor = doctor;
-        Patient = patient;
+        PassportDoctor = doctor;
+        PassportPatient = patient;
+        Conclution = conclution;
     }
 
     public override bool Equals(object? obj)
     {
         if (obj is not ReceptionType param)
             return false;
-        return Doctor.Equals(param.Doctor) && Patient.Equals(param.Patient) &&
+        return PassportDoctor.Equals(param.PassportDoctor) && PassportPatient.Equals(param.PassportPatient) &&
              DateAndTime == param.DateAndTime && Status == param.Status;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Doctor, Patient, DateAndTime, Status);
+        return HashCode.Combine(IdReception);
     }
 }

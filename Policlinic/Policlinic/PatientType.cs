@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace Policlinic;
+﻿namespace Policlinic;
 
+/// <summary>
+/// PatientType describes a patient
+/// </summary>
 public class PatientType
 {
-    public string Passport { get; set; } = string.Empty;
-
+    /// <summary>
+    /// Passport is a long int typed value of the passport series and number
+    /// </summary>
+    public long Passport { get; set; }
+    /// <summary>
+    ///  FIO is a string typed value for storing the name, surname and patronymic of the patient
+    /// </summary>
     public string FIO { get; set; } = string.Empty;
-
+    /// <summary>
+    /// BirthDate is a datetime value of a doctor's birthday
+    /// </summary>
     public DateTime BirthDate { get; set; } = DateTime.MinValue;
-
+    /// <summary>
+    /// Address is a string typed value of the patient's address
+    /// </summary>
     public string Address { get; set; } = string.Empty;
 
     public PatientType() { }
 
-    public PatientType(string passport, string fIO, DateTime birthDate, string address)
+    public PatientType(long passport, string fIO, DateTime birthDate, string address)
     {
         Passport = passport;
         FIO = fIO;
@@ -34,6 +41,6 @@ public class PatientType
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Passport, FIO, BirthDate, Address);
+        return HashCode.Combine(Passport);
     }
 }

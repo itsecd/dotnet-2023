@@ -1,13 +1,18 @@
 ﻿namespace CarSharingTests;
-public class CarSharingQueries
+public class CarSharingQueries:IClassFixture<CarSharingFixture>
 {
+    private readonly CarSharingFixture _fixture;
+    public CarSharingQueries(CarSharingFixture fixture)
+    {
+        _fixture = fixture;
+    }
     /// <summary>
     /// first request - info about all cars
     /// </summary>
     [Fact]
     public void AllCars()
     {
-        var carList = CarFixture.ToList();
+        var carList = _fixture.CarFixture.ToList();
         var carRequest = (for car in carList select car).Count();
         Assert.Equal(4, carRequest);
     }
@@ -17,7 +22,7 @@ public class CarSharingQueries
     [Fact]
     public void AllClientsRented()
     {
-        var rentedCarList = RentedCarFixture.ToList();
+        var rentedCarList = _fixture.RentedCarFixture.ToList();
         var whorentedrolls = (from car in rentedCarList where car.Car.Model == "Rolls-Royce Boat Tail" select car.Client.FirstName).ToList();
         Assert.Equal(whorentedrolls[0], rentedCarList[1].Client.FirstName);
     }
@@ -27,7 +32,7 @@ public class CarSharingQueries
     [Fact]
     public void AllRented()
     {
-        var carsinrent = RentedCarFixture.ToList();
+        var carsinrent = _fixture.RentedCarFixture.ToList();
         var rentedcar = (from car in carsinrent where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToList();
         Assert.Equal(carsinrent[0].Car.Model, rentedcar[0]);
     }

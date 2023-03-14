@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music Marketplace", "Music Marketplace.csproj", "{DC10FC1C-7043-4FDB-B915-F9312A0F2332}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEST", "TEST\TEST.csproj", "{F3E7109E-72FC-4E21-B317-0990B27E2625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DC10FC1C-7043-4FDB-B915-F9312A0F2332}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC10FC1C-7043-4FDB-B915-F9312A0F2332}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC10FC1C-7043-4FDB-B915-F9312A0F2332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E7109E-72FC-4E21-B317-0990B27E2625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E7109E-72FC-4E21-B317-0990B27E2625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E7109E-72FC-4E21-B317-0990B27E2625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E7109E-72FC-4E21-B317-0990B27E2625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

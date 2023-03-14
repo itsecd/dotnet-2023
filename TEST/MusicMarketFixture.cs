@@ -1,4 +1,6 @@
-namespace MusicMarketTests;
+using MusicMarket;
+
+namespace TEST;
 
 using MusicMarket;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ public class MusicMarketFixture
     {
         get
         {
-            var Products = new List<Product>();
+            var sellers = FixtureSellers;
+            var products = new List<Product>();
 
             var product0 = new Product();
             var product1 = new Product();
@@ -33,7 +36,7 @@ public class MusicMarketFixture
             product6.Id = 6;
             product7.Id = 7;
 
-            product0.Name = "The Curse of the Seas" ;
+            product0.Name = "The Curse of the Seas";
             product1.Name = "Decorative and applied art";
             product2.Name = "Aurora";
             product3.Name = "Forgive Me My Love";
@@ -114,25 +117,25 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            product0.Seller = Sellers[0];
-            product1.Seller = Sellers[0];
-            product2.Seller = Sellers[0];
-            product3.Seller = Sellers[0];
-            product4.Seller = Sellers[1];
-            product5.Seller = Sellers[2];
-            product6.Seller = Sellers[2];
-            product7.Seller = Sellers[2];
+            product0.Seller = sellers[0];
+            product1.Seller = sellers[0];
+            product2.Seller = sellers[0];
+            product3.Seller = sellers[0];
+            product4.Seller = sellers[1];
+            product5.Seller = sellers[2];
+            product6.Seller = sellers[2];
+            product7.Seller = sellers[2];
 
-            Products.Add(product0);
-            Products.Add(product1);
-            Products.Add(product2);
-            Products.Add(product3);
-            Products.Add(product4);
-            Products.Add(product5);
-            Products.Add(product6);
-            Products.Add(product7);
+            products.Add(product0);
+            products.Add(product1);
+            products.Add(product2);
+            products.Add(product3);
+            products.Add(product4);
+            products.Add(product5);
+            products.Add(product6);
+            products.Add(product7);
 
-            return Products;
+            return products;
         }
     }
 
@@ -140,9 +143,9 @@ public class MusicMarketFixture
     {
         get
         {
-            var Products = FixtureProducts;
+            var products = FixtureProducts;
 
-            var Sellers = new List<Seller>();
+            var sellers = new List<Seller>();
             var seller0 = new Seller();
             var seller1 = new Seller();
             var seller2 = new Seller();
@@ -156,28 +159,28 @@ public class MusicMarketFixture
             seller2.ShopName = "StopRobot";
 
             seller0.CountryOfDelivery = "Russia";
-            seller1.CountryOfDelivery = "UK" ;
+            seller1.CountryOfDelivery = "UK";
             seller2.CountryOfDelivery = "USA";
 
             seller0.Price = 300;
             seller1.Price = 750;
             seller2.Price = 680;
 
-            seller0.Products.Add(Products[0]);
-            seller0.Products.Add(Products[1]);
-            seller0.Products.Add(Products[2]);
-            seller0.Products.Add(Products[3]);
-            seller1.Products.Add(Products[4]);
-            seller2.Products.Add(Products[5]);
-            seller2.Products.Add(Products[6]);
-            seller2.Products.Add(Products[7]);
-            
+            seller0.Products.Add(products[0]);
+            seller0.Products.Add(products[1]);
+            seller0.Products.Add(products[2]);
+            seller0.Products.Add(products[3]);
+            seller1.Products.Add(products[4]);
+            seller2.Products.Add(products[5]);
+            seller2.Products.Add(products[6]);
+            seller2.Products.Add(products[7]);
 
-            Sellers.Add(seller0);
-            Sellers.Add(seller1);
-            Sellers.Add(seller2);
-            
-            return Sellers;
+
+            sellers.Add(seller0);
+            sellers.Add(seller1);
+            sellers.Add(seller2);
+
+            return sellers;
         }
     }
 
@@ -185,16 +188,16 @@ public class MusicMarketFixture
     {
         get
         {
-            var Products = FixtureProducts;
+            var products = FixtureProducts;
 
-            var Purchases = new List<Purchase>();
+            var purchases = new List<Purchase>();
 
             var purchase0 = new Purchase();
             var purchase1 = new Purchase();
             var purchase2 = new Purchase();
             var purchase4 = new Purchase();
             var purchase3 = new Purchase();
-            
+
 
             purchase0.Id = 0;
             purchase1.Id = 1;
@@ -203,24 +206,24 @@ public class MusicMarketFixture
             purchase4.Id = 4;
 
 
-            purchase0.Products.Add(Products[7]);
-            purchase1.Products.Add(Products[3]);
-            purchase2.Products.Add(Products[4]);
-            purchase3.Products.Add(Products[5]);
-            purchase4.Products.Add(Products[6]);
+            purchase0.Products.Add(products[7]);
+            purchase1.Products.Add(products[3]);
+            purchase2.Products.Add(products[4]);
+            purchase3.Products.Add(products[5]);
+            purchase4.Products.Add(products[6]);
 
-            purchase0.Date = 25.03.2022 8:44:23; 
-            purchase1.Date = 10.08.2022 11:31:56; 
-            purchase2.Date = 12.02.2023 19:20:29;
-            purchase3.Date = 21.10.2022 13:46:41;
-            purchase4.Date = 7.09.2023 22:10:33;
+            //purchase0.Date = 25.03.2022 8:44:23;
+            //purchase1.Date = 10.08.2022 11:31:56;
+            //purchase2.Date = 12.02.2023 19:20:29;
+            //purchase3.Date = 21.10.2022 13:46:41;
+            //purchase4.Date = 7.09.2023 22:10:33;
 
-            Purchases.Add(purchase0);
-            Purchases.Add(purchase1);
-            Purchases.Add(purchase2);
-            Purchases.Add(purchase3);
-            Purchases.Add(purchase4);
-            return Purchases;
+            purchases.Add(purchase0);
+            purchases.Add(purchase1);
+            purchases.Add(purchase2);
+            purchases.Add(purchase3);
+            purchases.Add(purchase4);
+            return purchases;
         }
     }
 
@@ -228,10 +231,10 @@ public class MusicMarketFixture
     {
         get
         {
-
-            var Ñustomers = new List<Ñustomer>();
+            var purchases = FixturePurchases;
+            var ñustomers = new List<Ñustomer>();
             var customer0 = new Ñustomer();
-            var customer1= new Ñustomer();
+            var customer1 = new Ñustomer();
             var customer2 = new Ñustomer();
             var customer3 = new Ñustomer();
             var customer4 = new Ñustomer();
@@ -254,27 +257,27 @@ public class MusicMarketFixture
             customer2.Country = "USA";
             customer3.Country = "France";
             customer4.Country = "Russia";
-         
+
             customer0.Adress = "Aubonnestr. 18c 2672 Sembrancher";
             customer1.Adress = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94";
             customer2.Adress = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851";
             customer3.Adress = "8, avenue de Coste 24798 Costa";
             customer4.Adress = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23";
 
-            customer0.Purchases.Add(Purchases[0]);
-            customer1.Purchases.Add(Purchases[1]);
-            customer2.Purchases.Add(Purchases[2]);
-            customer3.Purchases.Add(Purchases[3]);
-            customer4.Purchases.Add(Purchases[4]);
+            customer0.Purchases.Add(purchases[0]);
+            customer1.Purchases.Add(purchases[1]);
+            customer2.Purchases.Add(purchases[2]);
+            customer3.Purchases.Add(purchases[3]);
+            customer4.Purchases.Add(purchases[4]);
 
-            Ñustomers.Add(customer0);
-            Ñustomers.Add(customer1);
-            Ñustomers.Add(customer2);
-            Ñustomers.Add(customer3;
-            Ñustomers.Add(customer4);
+            ñustomers.Add(customer0);
+            ñustomers.Add(customer1);
+            ñustomers.Add(customer2);
+            ñustomers.Add(customer3);
+            ñustomers.Add(customer4);
 
-            return Ñustomers;
+            return ñustomers;
         }
     }
-    
+
 }

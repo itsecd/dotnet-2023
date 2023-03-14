@@ -1,4 +1,4 @@
-﻿namespace TransManagment.Domain;
+﻿namespace TransportManagment.Classes;
 public class Transport
 {
     /// <summary>

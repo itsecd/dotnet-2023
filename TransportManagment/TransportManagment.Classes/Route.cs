@@ -1,4 +1,4 @@
-﻿namespace TransManagment.Domain;
+﻿namespace TransportManagment.Classes;
 public class Route
 {
     /// <summary>

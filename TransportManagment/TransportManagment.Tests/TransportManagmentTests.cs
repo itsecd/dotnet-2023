@@ -1,5 +1,4 @@
-using TransManagment.Domain;
-namespace TransManagment.Tests;
+namespace TransportManagment.Classes.Tests;
 public class TransManagmentTests
 {
     /// <summary>
@@ -94,7 +93,7 @@ public class TransManagmentTests
         Assert.Equal(tempd[0], route.Driver);
     }
     /// <summary>
-    /// Output all information about a specific vehicle.
+    /// Task 1 - Output all information about a specific vehicle.
     /// </summary>
     [Fact]
     public void AllTransportInfo()
@@ -108,7 +107,7 @@ public class TransManagmentTests
         Assert.Contains(result, transport => transport.TransportId == 1);
     }
     /// <summary>
-    /// Output all drivers who have made trips for a given period, sort by full name.
+    /// Task 2 - Output all drivers who have made trips for a given period, sort by full name.
     /// </summary>
     [Fact]
     public void AllDriversWithSpecificDate()
@@ -128,7 +127,7 @@ public class TransManagmentTests
         Assert.Contains(result, driver => driver.DriverId == 15);
     }
     /// <summary>
-    /// Output the total travel time of the vehicle of each type and model.
+    /// Task 3 - Output the total travel time of the vehicle of each type and model.
     /// </summary>
     [Fact]
     public void TotalTimeTravelEveryTypeAndModel()
@@ -153,7 +152,7 @@ public class TransManagmentTests
         Assert.Contains(result, driver => driver.DriverId == 16);
     }
     /// <summary>
-    /// Output the top 5 drivers by the number of trips made.
+    /// Task 4 - Output the top 5 drivers by the number of trips made.
     /// </summary>
     [Fact]
     public void TopFiveDrivers()
@@ -173,7 +172,7 @@ public class TransManagmentTests
         Assert.Contains(result, driver => driver.ToList()[0].Driver.DriverId == 15);
     }
     /// <summary>
-    /// Display information about the number of trips, average time and maximum travel time for each driver.
+    /// Task 5 - Display information about the number of trips, average time and maximum travel time for each driver.
     /// </summary>
     [Fact]
     public void InfoAboutCountTravelAvgTimeTranvelMaxTimeTravel()
@@ -189,7 +188,7 @@ public class TransManagmentTests
         Assert.Equal(174000000000, result.Average());
     }
     /// <summary>
-    /// Display information about vehicles that have made the maximum number of trips during the specified period.
+    /// Task 6 - Display information about vehicles that have made the maximum number of trips during the specified period.
     /// </summary>
     [Fact]
     public void TransportInfoWithMaxCountForSpecificDate()

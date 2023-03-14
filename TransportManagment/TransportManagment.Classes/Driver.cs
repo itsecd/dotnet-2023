@@ -1,4 +1,4 @@
-﻿namespace TransManagment.Domain;
+﻿namespace TransportManagment.Classes;
 public class Driver
 {
     /// <summary>
@@ -26,7 +26,7 @@ public class Driver
     /// </summary>
     public int DriverCard { get; set; } = 0;
     /// <summary>
-    /// number - telephon number of driver
+    /// Telephon number of driver
     /// </summary>
     public int Number { get; set; } = 0;
     public Driver() { }

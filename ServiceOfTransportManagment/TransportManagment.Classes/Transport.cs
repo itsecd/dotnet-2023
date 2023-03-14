@@ -1,29 +1,28 @@
 ﻿namespace TransManagment.Domain;
-
 public class Transport
 {
     /// <summary>
-    /// transport_id - unique key of transport
+    /// Unique key of transport
     /// </summary>
-    public int Transport_id { get; set; } = 0;
+    public int TransportId { get; set; } = 0;
     /// <summary>
-    /// type - type of transport
+    /// type of transport
     /// </summary>
     public string Type { get; set; } = string.Empty;
     /// <summary>
-    /// model - model of transport
+    /// Model of transport
     /// </summary>
     public string Model { get; set; } = string.Empty;
     /// <summary>
-    /// date_make - date when make transport
+    /// Date when make transport
     /// </summary>
-    public DateOnly Date_make { get; set; } //= new DateOnly();
+    public DateOnly DateMake { get; set; } = new DateOnly();
     public Transport() { }
-    public Transport(int _transport_id, string _type, string _model, DateOnly _date_make)
+    public Transport(int transportId, string type, string model, DateOnly dateMake)
     {
-        Date_make = _date_make;
-        Type = _type;
-        Model = _model;
-        Transport_id = _transport_id;
+        DateMake = dateMake;
+        Type = type;
+        Model = model;
+        TransportId = transportId;
     }
 }

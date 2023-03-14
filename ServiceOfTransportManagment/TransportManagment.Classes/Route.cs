@@ -1,23 +1,22 @@
 ﻿namespace TransManagment.Domain;
-
 public class Route
 {
     /// <summary>
-    /// route_id - unique key of route
+    /// Unique key of route
     /// </summary>
-    public int Route_id { get; set; } = 0;
+    public int RouteId { get; set; } = 0;
     /// <summary>
-    /// date - date of route
+    /// Date of route
     /// </summary>
     public DateOnly Date { get; set; } = new DateOnly();
     /// <summary>
-    /// time_to - time when transport drive out of route
+    /// Time when transport drive out of route
     /// </summary>
-    public DateTime Time_to { get; set; } = new DateTime();
+    public DateTime TimeTo { get; set; } = new DateTime();
     /// <summary>
-    /// time_from - time when transport drive in of route
+    /// Time when transport drive in of route
     /// </summary>
-    public DateTime Time_from { get; set; } = new DateTime();
+    public DateTime TimeFrom { get; set; } = new DateTime();
     /// <summary>
     /// Transport - transport
     /// </summary>
@@ -27,13 +26,13 @@ public class Route
     /// </summary>
     public Driver Driver { get; set; } = new Driver();
     public Route() { }
-    public Route(int _route_id, DateOnly _date, DateTime _time_to, DateTime _time_from, Transport _transport, Driver _driver)
+    public Route(int routeId, DateOnly date, DateTime timeTo, DateTime timeFrom, Transport transport, Driver driver)
     {
-        Route_id = _route_id;
-        Date = _date;
-        Time_to = _time_to;
-        Time_from = _time_from;
-        Transport = _transport;
-        Driver = _driver;
+        RouteId = routeId;
+        Date = date;
+        TimeTo = timeTo;
+        TimeFrom = timeFrom;
+        Transport = transport;
+        Driver = driver;
     }
 }

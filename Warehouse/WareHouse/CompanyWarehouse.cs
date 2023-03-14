@@ -5,23 +5,19 @@
 public class CompanyWarehouse
 {
     /// <summary>
-    /// Cells - show product cell number 
+    /// CellNumber - cell number 
     /// </summary>  
-    public string Cells { set; get; } = string.Empty;
+    public int CellNumber { set; get; }
     /// <summary>
     /// Count - shows amount of product
     /// </summary>
-    public List<Goods> Count { set; get; } = new List<Goods>();
+    public int ID { set; get; }
     /// <summary>  
     /// ID - shows the product's id
     /// </summary>  
-    public List<Goods> ID { set; get; } = new List<Goods>();
-    /// <summary><
-    /// Name - a string that stores product name 
-    /// </summary>
-    public List<Goods> Name { set; get; } = new List<Goods>();
-    /// <summary><
-    /// CompanyName - a string that stores company name what get supply
-    /// </summary>
-    public List<Goods> CompanyName { set; get; } = new List<Goods>();
+    public CompanyWarehouse(int cell, int id)
+    {
+        CellNumber = cell;
+        ID = id;
+    }
 }

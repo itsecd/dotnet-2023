@@ -7,7 +7,7 @@ public class Goods
     /// <summary>
     /// Count - shows amount of product
     /// </summary>  
-    public int Count { set; get; }  
+    public int Count { set; get; }
     /// <summary>
     /// CompanyName - contain string of company what get supply
     /// </summary>

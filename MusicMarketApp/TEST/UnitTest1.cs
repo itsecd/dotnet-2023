@@ -63,13 +63,13 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     //public void Aidio()
     //{
     //    // диски,
-    //    var request0 = (from flight in _fixture.FixtureFlights
-    //                    where flight != null
-    //                    select flight.Tickets.Count).Take(5).Count();
+    //    var request0 = (from product in _fixture.FixtureProducts
+    //                    where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")
+    //                    select product).Count();
     //    // кассеты,
-    //    var request1 = (from flight in _fixture.FixtureFlights
-    //                    where flight != null
-    //                    select flight.Tickets.Count).Take(5).Count();
+    //    var request1 = (from product in _fixture.FixtureProducts
+    //                    where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")
+    //                    select product).Count();
     //    // виниловые пластинки.
     //    var request2 = (from product in _fixture.FixtureProducts
     //                    where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")

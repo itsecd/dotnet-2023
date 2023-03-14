@@ -1,6 +1,6 @@
-﻿namespace TransManagment;
+﻿namespace TransManagment.Domain;
 
-public class Drivers
+public class Driver
 {
     /// <summary>
     /// driver_id - unique key of driver
@@ -15,9 +15,9 @@ public class Drivers
     /// </summary>
     public string Last_name { get; set; } = string.Empty;
     /// <summary>
-    /// dad_name - dad's name of driver
+    /// Patronymic - patronymic of driver
     /// </summary>
-    public string Dad_name { get; set; } = string.Empty;
+    public string Patronymic { get; set; } = string.Empty;
     /// <summary>
     /// passport - number of passport driver
     /// </summary>
@@ -30,13 +30,13 @@ public class Drivers
     /// number - telephon number of driver
     /// </summary>
     public int Number { get; set; } = 0;
-    public Drivers() { }
-    public Drivers(int _driver_id, string _first_name, string _last_name, string _dad_name, int _passport, int _driver_card, int _number)
+    public Driver() { }
+    public Driver(int _driver_id, string _first_name, string _last_name, string _patronymic, int _passport, int _driver_card, int _number)
     {
         Driver_id = _driver_id;
         First_name = _first_name;
         Last_name = _last_name;
-        Dad_name = _dad_name;
+        Patronymic = _patronymic;
         Passport = _passport;
         Driver_card = _driver_card;
         Number = _number;

@@ -1,6 +1,6 @@
-﻿namespace TransManagment;
+﻿namespace TransManagment.Domain;
 
-public class Transports
+public class Transport
 {
     /// <summary>
     /// transport_id - unique key of transport
@@ -18,12 +18,12 @@ public class Transports
     /// date_make - date when make transport
     /// </summary>
     public DateOnly Date_make { get; set; } //= new DateOnly();
-    public Transports() { }
-    public Transports(int _transport_id, string _type, string _model, DateOnly _date_make)
-	{
+    public Transport() { }
+    public Transport(int _transport_id, string _type, string _model, DateOnly _date_make)
+    {
         Date_make = _date_make;
         Type = _type;
-        Model = _model; 
+        Model = _model;
         Transport_id = _transport_id;
     }
 }

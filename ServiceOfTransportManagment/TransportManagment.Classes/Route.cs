@@ -1,6 +1,6 @@
-﻿namespace TransManagment;
+﻿namespace TransManagment.Domain;
 
-public class Routes
+public class Route
 {
     /// <summary>
     /// route_id - unique key of route
@@ -21,14 +21,14 @@ public class Routes
     /// <summary>
     /// Transport - transport
     /// </summary>
-    public Transports Transport  { get; set; } = new Transports();
+    public Transport Transport { get; set; } = new Transport();
     /// <summary>
     /// Driver - driver
     /// </summary>
-    public Drivers Driver { get; set; } = new Drivers();
-    public Routes() { }
-    public Routes(int _route_id, DateOnly _date, DateTime _time_to, DateTime _time_from, Transports _transport, Drivers _driver)
-	{
+    public Driver Driver { get; set; } = new Driver();
+    public Route() { }
+    public Route(int _route_id, DateOnly _date, DateTime _time_to, DateTime _time_from, Transport _transport, Driver _driver)
+    {
         Route_id = _route_id;
         Date = _date;
         Time_to = _time_to;

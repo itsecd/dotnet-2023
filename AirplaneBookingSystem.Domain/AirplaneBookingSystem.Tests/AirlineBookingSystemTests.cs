@@ -64,7 +64,7 @@ public class ClassesTest : IClassFixture<AirlineBookingSystemFixture>
         var maxClients = (from client in _fixture.FixtureClient
                           from ticket in client.Tickets
                           group ticket by ticket.Flight into flight
-                          orderby flight.Key.Tickets.Count() descending
+                          orderby flight.Key.Tickets.Count descending
                           select flight.Key.Tickets.Count).Max();
         var request = (from client in _fixture.FixtureClient
                        from ticket in client.Tickets
@@ -80,19 +80,19 @@ public class ClassesTest : IClassFixture<AirlineBookingSystemFixture>
                           from ticket in client.Tickets
                           group ticket by ticket.Flight into flight
                           where flight.Key.DepartureCity == "Kurumoch"
-                          orderby flight.Key.Tickets.Count() descending
+                          orderby flight.Key.Tickets.Count descending
                           select flight.Key.Tickets.Count).Max();
         var minClients = (from client in _fixture.FixtureClient
                           from ticket in client.Tickets
                           group ticket by ticket.Flight into flight
                           where flight.Key.DepartureCity == "Kurumoch"
-                          orderby flight.Key.Tickets.Count() descending
+                          orderby flight.Key.Tickets.Count descending
                           select flight.Key.Tickets.Count).Min();
         var avgClients = (from client in _fixture.FixtureClient
                           from ticket in client.Tickets
                           group ticket by ticket.Flight into flight
                           where flight.Key.DepartureCity == "Kurumoch"
-                          orderby flight.Key.Tickets.Count() descending
+                          orderby flight.Key.Tickets.Count descending
                           select flight.Key.Tickets.Count).Average();
         Assert.Equal(2, maxClients);
         Assert.Equal(1, minClients);

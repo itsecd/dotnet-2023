@@ -1,4 +1,4 @@
-namespace EnterpriseData;
+namespace Enterprise.Data;
 
 /// <summary>
 ///     Invoice - is a class that stores the history of shipments
@@ -9,11 +9,6 @@ public class Invoice
     ///     Id - number of the voice
     /// </summary>
     public uint Id { get; set; }
-
-    /// <summary>
-    ///     ItemNumberProduct - unique identifier of the product
-    /// </summary>
-    public uint ItemNumberProduct { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
@@ -28,20 +23,19 @@ public class Invoice
     /// <summary>
     ///     ShipmentDate - shipment date
     /// </summary>
-	public DateOnly ShipmentDate { get; set; } = DateOnly.MinValue;
+	public DateOnly ShipmentDate { get; set; }
 
     /// <summary>
-    ///     ShipmentDate - quantity shipped
+    ///     Product - collection of pairs "product identifier - product quantity"
     /// </summary>
-    public uint Quntity { get; set; }
+    public Dictionary<uint, uint> Products { get; set; } = new Dictionary<uint, uint>();
 
-	public Invoice(uint id, uint itemNumberProduct, string nameOrganizationn, string adressOrganization, DateOnly shipmentDate, uint quntity)
+    public Invoice(uint id, string nameOrganizationn, string adressOrganization, DateOnly shipmentDate, Dictionary<uint, uint> products)
     {
         Id = id;
-        ItemNumberProduct = itemNumberProduct;
         NameOrganizationn = nameOrganizationn;
         AdressOrganization = adressOrganization;
         ShipmentDate = shipmentDate;
-        Quntity = quntity;
+        Products = products;
     }
 }

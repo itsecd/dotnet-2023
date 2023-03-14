@@ -1,4 +1,4 @@
-﻿namespace EnterpriseData;
+﻿namespace Enterprise.Data;
 
 /// <summary>
 ///     Product - is a class that stores information about a product
@@ -16,20 +16,21 @@ public class Product
 	public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    ///     QuntityProduct - quantity of goods stored in the warehouse
+    ///     Quntity - quantity of goods stored in the warehouse
     /// </summary>
-	public uint QuntityProduct { get; set; }
+	public uint Quntity { get; set; }
 
     /// <summary>
     ///     CellNumber - number of the cell in which the product is stored
     /// </summary>
 	public uint CellNumber { get; set; }
 
-	public Product(uint itemNumber, string title, uint quntityProduct, uint cellNumber)
+    public Product(uint itemNumber, string title, uint quntity, uint cellNumber)
     {
         ItemNumber = itemNumber;
         Title = title;
-        QuntityProduct = quntityProduct;
+        Quntity = quntity;
         CellNumber = cellNumber;
     }
+
 }

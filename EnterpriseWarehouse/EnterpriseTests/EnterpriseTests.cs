@@ -1,25 +1,17 @@
-﻿namespace EnterpriseTests;
+﻿namespace Enterprise.Data.Tests;
 
-using EnterpriseData;
 using System.Linq;
 
-public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
+public class EnterpriseTestsClass
 {
-    private readonly EnterpriseFixture _fixture;
-    public EnterpriseTestsClass(EnterpriseFixture fixture)
-    { 
-        _fixture = fixture; 
-    
-    }
-    [Fact]
-
     /// <summary>
     ///     First Query:
     ///     displays information about the company's products, sorted by product name
     /// </summary>
-    public void FirstQueryTest()
+    [Fact]
+    public void AllProductSortebByTitle()
     {
-        var allProducts = _fixture.ProductFixture;
+        var allProducts = EnterpriseFixture.ProductFixture;
         var products = (from product in allProducts orderby product.Title select product).ToList();
 
         Assert.Equal(9, products.Count);
@@ -34,16 +26,17 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
         Assert.Equal("Чайник из нерж. стали 3л", products[8].Title);
     }
 
-    [Fact]
-
     /// <summary>
     ///     Second Query:
     ///     displays information about the company's products received on the specified day by the recipient of products
     /// </summary>
-    public void SecondQueryTest()
+    [Fact]
+    public void InformationProductReceivedOnCertainDay()
     {
-        var query = (from invoice in _fixture.InvoceFixture where invoice.ShipmentDate == new DateOnly(2023, 02, 11)
-                     join product in _fixture.ProductFixture on invoice.ItemNumberProduct equals product.ItemNumber 
+        var query = (from invoice in EnterpriseFixture.InvoiceFixture
+                     from infoProduct in invoice.Products
+                     where invoice.ShipmentDate == new DateOnly(2023, 02, 11)
+                     join product in EnterpriseFixture.ProductFixture on infoProduct.Key equals product.ItemNumber
                      select product).ToList();
         Assert.Equal(2, query.Count);
         Assert.Contains(query, queryElem => queryElem.Title == "Кувшин для воды из стекла 4л");
@@ -54,18 +47,18 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
         Assert.DoesNotContain(query, queryElem => queryElem.ItemNumber == 102302);
     }
 
-    [Fact]
-
     /// <summary>
     ///     Third Query:
     ///     displays the state of the warehouse at the moment with the numbers of cells of the warehouse and their contents
     /// </summary>
-    public void ThirdQueryTest()
+    [Fact]
+    public void CurrentStateWarehouseWithCellNumbers()
     {
-        var query = (from warehouse in _fixture.StorageCellFixture
-                    join product in _fixture.ProductFixture on warehouse.ItemNumberProduct equals product.ItemNumber
-                    orderby warehouse.Number
-                    select new {number = warehouse.Number, productIN = product.ItemNumber, productTitle = product.Title, quntityProduct = product.QuntityProduct}).ToList();
+        var query = (from warehouse in EnterpriseFixture.StorageCellFixture
+                     from productWarehouse in warehouse.ItemNumberProducts
+                     join product in EnterpriseFixture.ProductFixture on productWarehouse equals product.ItemNumber
+                     orderby warehouse.Number
+                     select new { number = warehouse.Number, productIN = product.ItemNumber, productTitle = product.Title, quntityProduct = product.Quntity }).ToList();
 
         Assert.Equal(9, query.Count);
         Assert.Equal("Картонная коробка 40*30*30", query[0].productTitle);
@@ -74,91 +67,91 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
         Assert.True(query[7].quntityProduct == 10);
     }
 
-    [Fact]
-
     /// <summary>
     ///     Fourt Query:
     ///     displays information about the organizations that received the maximum volume products for a given period
     /// </summary>
-    public void FourthQueryTest()
+    [Fact]
+    public void InfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod()
     {
-        var query = (from invoice in _fixture.InvoceFixture
+        var query = (from invoice in EnterpriseFixture.InvoiceFixture
+                     from product in invoice.Products
                      where invoice.ShipmentDate > new DateOnly(2023, 02, 1) && invoice.ShipmentDate < new DateOnly(2023, 02, 15)
-                     group invoice by new {
+                     group invoice by new
+                     {
                          invoice.NameOrganizationn,
                          invoice.AdressOrganization
-                     } into grp select new
+                     } into grp
+                     select new
                      {
                          grp.Key.NameOrganizationn,
                          grp.Key.AdressOrganization,
-                         quntity = grp.Sum(x => x.Quntity)
+                         quntity = grp.Sum(x => x.Products.Sum(x => x.Value))
                      }).ToList();
         var max = query.Max(x => x.quntity);
-        foreach(var q in query)
+        foreach (var q in query)
         {
             if (q.quntity == max)
             {
                 Assert.Equal("Посуда Центр", q.NameOrganizationn);
                 Assert.Equal("г. Самара, ул. Партизанская, 17.", q.AdressOrganization);
-            }            
+            }
         }
 
     }
-
-    [Fact]
 
     /// <summary>
     ///     Fifth Query:
     ///     displays the top 5 products by stock availability
     /// </summary>
-    public void FifthQueryTest()
-    {
-        var query = (from product in _fixture.ProductFixture orderby product.QuntityProduct descending select product).Take(5).ToList();
-        Assert.Equal(5, query.Count);
-        Assert.True(query[0].QuntityProduct == 100);
-        Assert.True(query[1].QuntityProduct == 50);
-        Assert.True(query[2].QuntityProduct == 50);
-        Assert.True(query[3].QuntityProduct == 35);
-        Assert.True(query[4].QuntityProduct == 25);
-    }
-
     [Fact]
+    public void TopFiveProductsByStockAvailability()
+    {
+        var query = (from product in EnterpriseFixture.ProductFixture orderby product.Quntity descending select product).Take(5).ToList();
+        Assert.Equal(5, query.Count);
+        Assert.True(query[0].Quntity == 100);
+        Assert.True(query[1].Quntity == 50);
+        Assert.True(query[2].Quntity == 50);
+        Assert.True(query[3].Quntity == 35);
+        Assert.True(query[4].Quntity == 25);
+    }
 
     /// <summary>
     ///     Sixth Query:
     ///     displays information about the quantity of delivered goods for each goods and each organization
     /// </summary>
-    public void SixthQueryTest() 
-    { 
-        var query = (from invoice in _fixture.InvoceFixture
-                     join product in _fixture.ProductFixture on invoice.ItemNumberProduct equals product.ItemNumber
+    [Fact]
+    public void InfoAboutTheQuantityGoodsDelivered()
+    {
+        var query = (from invoice in EnterpriseFixture.InvoiceFixture
+                     from listProduct in invoice.Products
+                     join product in EnterpriseFixture.ProductFixture on listProduct.Key equals product.ItemNumber
                      group invoice by new
                      {
                          invoice.NameOrganizationn,
                          invoice.AdressOrganization,
-                         invoice.ItemNumberProduct,
+                         listProduct.Key,
                          product.Title
                      } into grp
                      select new
                      {
                          grp.Key.NameOrganizationn,
                          grp.Key.AdressOrganization,
-                         grp.Key.ItemNumberProduct,
+                         grp.Key.Key,
                          grp.Key.Title,
-                         quntity = grp.Sum(x => x.Quntity)
+                         quntity = grp.Sum(x => x.Products.Sum(x => x.Value))
                      }).ToList();
         Assert.Equal(4, query.Count);
-        Assert.Contains(query, queryElem => queryElem.ItemNumberProduct == 102302);
-        Assert.Contains(query, queryElem => queryElem.ItemNumberProduct == 101700);
-        Assert.Contains(query, queryElem => queryElem.ItemNumberProduct == 320510);
-        Assert.Contains(query, queryElem => queryElem.ItemNumberProduct == 103700);
+        Assert.Contains(query, queryElem => queryElem.Key == 102302);
+        Assert.Contains(query, queryElem => queryElem.Key == 101700);
+        Assert.Contains(query, queryElem => queryElem.Key == 320510);
+        Assert.Contains(query, queryElem => queryElem.Key == 103700);
         Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Партизанская, 17.");
         Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Луцкая, 16.");
         Assert.Contains(query, queryElem => queryElem.NameOrganizationn == "СамараПласт");
         Assert.Contains(query, queryElem => queryElem.NameOrganizationn == "Посуда Центр");
         Assert.DoesNotContain(query, queryElem => queryElem.Title == "Кастрюля алюм. с крышкой 5л");
-        Assert.DoesNotContain(query, queryElem => queryElem.ItemNumberProduct == 106302);
+        Assert.DoesNotContain(query, queryElem => queryElem.Key == 106302);
         Assert.DoesNotContain(query, queryElem => queryElem.Title == "Чайная ложка из нерж. стали");
-        
     }
 }

@@ -1,4 +1,4 @@
-namespace EnterpriseData;
+namespace Enterprise.Data;
 
 /// <summary>
 ///     StorageCell - is a class linking the cell number and the product stored in it
@@ -13,11 +13,11 @@ public class StorageCell
     /// <summary>
     ///     ItemNumberProduct - unique identifier of the product 
     /// </summary>
-	public uint ItemNumberProduct { get; set; }
+	public List<uint> ItemNumberProducts { get; set; } = new List<uint>();
 
-	public StorageCell(uint number, uint itemNumberProduct)
+    public StorageCell(uint number, List<uint> itemNumberProducts)
     {
         Number = number;
-        ItemNumberProduct = itemNumberProduct;
+        ItemNumberProducts = itemNumberProducts;
     }
 }

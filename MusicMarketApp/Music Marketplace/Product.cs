@@ -60,7 +60,7 @@ public class Product
     /// <summary>
     /// Продавец
     /// </summary>
-    public Seller Seller = new(); 
+    public string Seller { get; set; } = string.Empty; 
 
     
     //public Product() { }

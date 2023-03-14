@@ -117,14 +117,14 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            product0.Seller = sellers[0];
-            product1.Seller = sellers[0];
-            product2.Seller = sellers[0];
-            product3.Seller = sellers[0];
-            product4.Seller = sellers[1];
-            product5.Seller = sellers[2];
-            product6.Seller = sellers[2];
-            product7.Seller = sellers[2];
+            product0.Seller = "Muzzona";
+            product1.Seller = "Muzzona";
+            product2.Seller = "Muzzona";
+            product3.Seller = "Muzzona";
+            product4.Seller = "Skifmusic";
+            product5.Seller = "StopRobot";
+            product6.Seller = "StopRobot";
+            product7.Seller = "StopRobot";
 
             products.Add(product0);
             products.Add(product1);

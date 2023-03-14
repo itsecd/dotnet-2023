@@ -24,11 +24,6 @@ public class Purchase
     /// </summary>
     public DateTime Date { get; set; }
 
-    /// <summary>
-    /// Покупатель.
-    /// </summary>
-    public string СustomerName { get; set; } = string.Empty;
-
     public Purchase() { }
 
     public Purchase(int id, List<Product> products, DateTime date, string customerName)
@@ -36,7 +31,6 @@ public class Purchase
         Id = id;
         Products = products;
         Date = date;
-        СustomerName = customerName;
        
     }
   

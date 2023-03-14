@@ -29,6 +29,11 @@ public class Seller
     /// </summary>
     public double Price { get; set; }
 
+    /// <summary>
+    /// Список товаррв.
+    /// </summary>
+    public List<Product> Products = new();
+
     public Seller() { }
     public Seller(int id, string name, string country, double price)
     {

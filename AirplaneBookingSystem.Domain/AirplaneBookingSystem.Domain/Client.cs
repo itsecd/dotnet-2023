@@ -31,6 +31,5 @@ public class Client
         PassportNumber = passportNumber;
         BirthdayData = birthdayData;
         Name = name;
-        Tickets = new List<Ticket>();
     }
 }

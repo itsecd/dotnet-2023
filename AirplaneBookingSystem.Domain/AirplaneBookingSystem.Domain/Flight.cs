@@ -41,6 +41,5 @@ public class Flight
         ArrivalCity = arrivalCity;
         DepartureDate = departureDate;
         ArrivalDate = arrivalDate;
-        Tickets = new List<Ticket>();
     }
 }

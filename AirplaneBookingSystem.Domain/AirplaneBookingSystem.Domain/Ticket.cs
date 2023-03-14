@@ -13,10 +13,15 @@ public class Ticket
     /// Number of ticket
     /// </summary>
     public int TicketNumber { get; set; } = 0;
+    public Client Client { get; set; }
+    public Flight Flight { get; set; }
 
     public Ticket() { }
-    public Ticket(int ticketNumber)
+
+    public Ticket(int ticketNumber, Client client, Flight flight)
     {
         TicketNumber = ticketNumber;
+        Client = client;
+        Flight = flight;
     }
 }

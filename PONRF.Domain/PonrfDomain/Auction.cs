@@ -19,10 +19,11 @@ public class Auction
     public List<Lot> Lot { set; get; } = new List<Lot>();
 
     public Auction() { }
-    public Auction(int iDAuction, DateTime date, string organizer)
+    public Auction(int iDAuction, DateTime date, string organizer, List<Lot> lot)
     {
         IDAuction = iDAuction;
         Date = date;
         Organizer = organizer;
+        Lot = lot;
     }
 }

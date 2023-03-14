@@ -30,7 +30,7 @@ public class Building
     public List<Lot> Lot { get; set; } = new List<Lot>();
 
     public Building() { }
-    public Building(int registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild)
+    public Building(int registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild, List<Lot> lot)
     {
         RegistNum = registNum;
         District = district;
@@ -39,12 +39,6 @@ public class Building
         Area = area;
         Floors = floors;
         DateOfBuild = dateOfBuild;
-    }
-    /// <summary>
-    /// GetAddress returns address of the building
-    /// </summary>
-    public string GetAddress()
-    {
-        return string.Format("{0}, st. {1}, {2}", District, Street, HouseNumber);
+        Lot = lot;
     }
 }

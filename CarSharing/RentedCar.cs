@@ -11,28 +11,23 @@
         public Client Client { get; set; } = new();
         public RentalPoint Point { get; set; } = new();
         public Car Car { get; set; } = new();
-
         /// <summary>
         /// id of rented car
         /// </summary>
         public Guid Id { get; set; } = Guid.Empty;
-
         /// <summary>
         /// date and time when client rented a car
         /// </summary>
         public DateTime TimeOfRent { get; set; } = DateTime.MinValue;
-
         /// <summary>
         /// period of time when the client can use a rented car 
         /// </summary>
         public uint RentPeriod { get; set; } = 0;
-
         /// <summary>
         /// a day when car must be returned to the rental point
         /// </summary>
         public DateTime TimeOfReturn { get => TimeOfRent.AddDays(RentPeriod); }
         public RentedCar() { }
-
         public RentedCar(Guid id, Client client, RentalPoint point, CarList car, DateTime timeOfRent, uint rentPeriod)
         {
             Id = id;

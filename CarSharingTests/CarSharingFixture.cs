@@ -1,5 +1,4 @@
 using CarSharing;
-
 namespace CarSharingTests
 {
     public class CarFixture
@@ -7,7 +6,6 @@ namespace CarSharingTests
         /// <summary>
         /// list of clients to test queries
         /// </summary>
-        
         public List<Client> ClientFixture
         {
             get
@@ -57,7 +55,6 @@ namespace CarSharingTests
                 return rentalPoint;
             }
         }
-
         public List<RentedCar> RentedCarFixture
         {
             get

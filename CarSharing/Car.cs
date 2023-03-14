@@ -13,20 +13,15 @@
         /// colour of the car
         /// </summary>
         public string Colour { get; set; } = string.Empty;
-
         /// <summary>
         /// number of the car
         /// </summary>
-
         public string Number { get; set; } = string.Empty;
-
         /// <summary>
         /// id of the car
         /// </summary>
         public Guid CarId { get; set; } = Guid.Empty;
-
         public Car() { }
-
         public Car(Guid carId, string model, string colour, string number)
         {
             CarId = carId;

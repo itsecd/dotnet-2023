@@ -1,6 +1,6 @@
 using CarSharing;
-namespace CarSharingTests
-{
+namespace CarSharingTests;
+
     public class CarFixture
     {
         /// <summary>
@@ -76,4 +76,4 @@ namespace CarSharingTests
             }
         }   
     }
-}
+

@@ -1,16 +1,16 @@
 ﻿namespace PonrfDomain;
 
 /// <summary>
-/// Class PrivatizedBuilding describes booked room in hotel
+/// Class PrivatizedBuilding describes sold buildings
 /// </summary>
 public class PrivatizedBuilding
 {
     /// <summary>
     /// Id is a identifier of privatized building
     /// </summary>
-    public int Id { get; set; } = int.MaxValue;
+    public int Id { get; set; }
     /// <summary>
-    /// DateOfSale contains informatiom about date of sale of the building
+    /// DateOfSale contains information about date of sale of the building
     /// </summary>
     public DateTime DateOfSale { get; set; } = DateTime.MinValue;
     /// <summary>

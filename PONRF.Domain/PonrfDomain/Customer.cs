@@ -6,23 +6,23 @@
 public class Customer
 {
     /// <summary>
-    /// Passport contains informatiom about passport's number of customer
+    /// Passport contains information about passport's number of customer
     /// </summary>
-    public int Passport { get; set; } = int.MinValue;
+    public int Passport { get; set; }
     /// <summary>
-    /// FIO contains informatiom about full name of customer
+    /// FIO contains information about full name of customer
     /// </summary>  
-    public string FIO { get; set; } = string.Empty;
+    public string Fio { get; set; } = string.Empty;
     /// <summary>
-    /// Address contains informatiom about home address of customer
+    /// Address contains information about home address of customer
     /// </summary>
     public string Address { get; set; } = string.Empty;
 
     public Customer() { }
-    public Customer(int passport, string fIO, string address)
+    public Customer(int passport, string fio, string address)
     {
         Passport = passport;
-        FIO = fIO;
+        Fio = fio;
         Address = address;
     }
 }

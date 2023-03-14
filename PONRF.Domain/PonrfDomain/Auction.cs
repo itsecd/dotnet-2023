@@ -1,13 +1,13 @@
 ﻿namespace PonrfDomain;
 /// <summary>
-/// BookedRoomType describes booked room in hotel
+/// Class Auction describes an auction
 /// </summary>
 public class Auction
 {
     /// <summary>
-    /// IDAuction is a identifier of auction
+    /// Id is a identifier of auction
     /// </summary>
-    public int IDAuction { get; set; } = int.MinValue;
+    public int Id { get; set; }
     /// <summary>
     /// Date is date of holding of the auction
     /// </summary>
@@ -16,14 +16,14 @@ public class Auction
     /// Organizer is a auction company 
     /// </summary>
     public string Organizer { get; set; } = string.Empty;
-    public List<Lot> Lot { set; get; } = new List<Lot>();
+    public List<PrivatizedBuilding> PrivatizedBuilding { set; get; } = new List<PrivatizedBuilding>();
 
     public Auction() { }
-    public Auction(int iDAuction, DateTime date, string organizer, List<Lot> lot)
+    public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
     {
-        IDAuction = iDAuction;
+        Id = id;
         Date = date;
         Organizer = organizer;
-        Lot = lot;
+        PrivatizedBuilding = privatizedBuilding;
     }
 }

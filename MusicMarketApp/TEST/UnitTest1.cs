@@ -18,8 +18,8 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     [Fact]
     public void VinylRecordsInfoTest()
     {
-        //var fixtureProduct = _fixture.FixtureProducts.ToList();
-        var request = (from product in _fixture.FixtureProducts
+        var fixtureProduct = _fixture.FixtureProducts.ToList();
+        var request = (from product in fixtureProduct
                        where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")
                        select product).Count();
         Assert.Equal(2, request);
@@ -31,7 +31,8 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     [Fact]
     public void ProductBySeller()
     {
-        var request = (from product in _fixture.FixtureProducts
+        var fixtureProduct = _fixture.FixtureProducts.ToList();
+        var request = (from product in fixtureProduct
                        where (product.Seller.ShopName == "StopRobot")
                        orderby product.Price
                        select product).Count();

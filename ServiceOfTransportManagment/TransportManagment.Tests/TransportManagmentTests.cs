@@ -102,7 +102,7 @@ public class UnitTest
     /// Task1 - Output all information about a specific vehicle.
     /// </summary>
     [Fact]
-    public void Task1()
+    public void AllTransportInfo()
     {
         List<Transport> transports = FixturTrans();
         var result = (from transport in transports
@@ -116,7 +116,7 @@ public class UnitTest
     /// Task2 - Output all drivers who have made trips for a given period, sort by full name.
     /// </summary>
     [Fact]
-    public void Task2()
+    public void AllDriversWithSpecificDate()
     {
         List<Driver> drivers = FixtureDriv();
         List<Route> routes = FixtureRoute();
@@ -132,11 +132,11 @@ public class UnitTest
         Assert.Contains(result, driver => driver.Driver_id == 14);
         Assert.Contains(result, driver => driver.Driver_id == 15);
     }
-    [Fact]
     /// <summary>
     /// Task3 - Output the total travel time of the vehicle of each type and model.
     /// </summary>
-    public void Task3()
+    [Fact]
+    public void TotalTimeTravelEveryTypeAndModel()
     {
         List<Transport> transports = FixturTrans();
         List<Route> routes = FixtureRoute();
@@ -161,7 +161,7 @@ public class UnitTest
     /// Task4 - Output the top 5 drivers by the number of trips made.
     /// </summary>
     [Fact]
-    public void Task4()
+    public void TopFiveDrivers()
     {
         List<Driver> drivers = FixtureDriv();
         List<Route> routes = FixtureRoute();
@@ -181,7 +181,7 @@ public class UnitTest
     /// Task5 - Display information about the number of trips, average time and maximum travel time for each driver.
     /// </summary>
     [Fact]
-    public void Task5()
+    public void InfoAboutCountTravelAvgTimeTranvelMaxTimeTravel()
     {
         List<Driver> drivers = FixtureDriv();
         List<Route> routes = FixtureRoute();
@@ -197,7 +197,7 @@ public class UnitTest
     /// Task6 - Display information about vehicles that have made the maximum number of trips during the specified period.
     /// </summary>
     [Fact]
-    public void Task6()
+    public void TransportInfoWithMaxCountForSpecificDate()
     {
         List<Transport> transports = FixturTrans();
         List<Route> routes = FixtureRoute();

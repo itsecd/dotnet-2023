@@ -1,25 +1,40 @@
 namespace Realtors;
+/// <summary>
+/// ClientType sellers and buyers of the real estate agency
+/// </summary>
 public class Client
 {
-    public Guid ID{get; set;}=Guid.Empty;
+    /// <summary>
+    /// Id - guid typed value for storing Id of the client
+    /// </summary>
+    public Guid Id{get; set;}=Guid.Empty;
+    /// <summary>
+    /// Passport - a string representing passport number
+    /// </summary>
     public string Passport{get;set;} = string.Empty;
+    /// <summary>
+    /// Number - a string for contact number
+    /// </summary> 
     public string Number{get;set;}=string.Empty;
+    /// <summary>
+    /// Registration- a string for customer registration address
+    /// </summary> 
     public string Registration{get;set;}=string.Empty;
+    /// <summary>
+    /// FirstName, SecondName - a string for name and second_name optionally
+    /// </summary> 
     public string FirstName{get;set;}=string.Empty;
     public string SecondName{get;set;}=string.Empty;
-    public string Surname{get;set;}=string.Empty;
-    
     public List<Application> Applications{get;set;}=new();
-
     public Client(){}
-    public Client(Guid id, Application application, string passport, string number, string registration, string firstname, string secondname, string surname)
+    public Client(Guid id, string passport, string number, string registration, string firstname, string secondname, string surname, Application application)
     {
-        ID=id;
+        Id=id;
         Passport=passport;
+        Number=number;
         Registration=registration;
         FirstName=firstname;
         SecondName=secondname;
-        Surname=surname;
         Applications=application;
     }
      public override bool Equals(object? obj)
@@ -32,11 +47,10 @@ public class Client
                Number == param.Number &&
                Registration == param.Registration &&
                FirstName == param.FirstName &&
-               SecondName == param.SecondName &&
-               Surname == param.Surname;             
+               SecondName == param.SecondName;            
     }
     public override int GetHashCode()
     {
-        return HashCode.Combine(Id,Applications, Passport, Number, Registration, FirstName, SecondName, Surname);
+        return HashCode.Combine(Id, Passport, Number, Registration, FirstName, SecondName, Applications);
     }
 }

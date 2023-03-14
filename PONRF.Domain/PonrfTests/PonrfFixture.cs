@@ -36,7 +36,7 @@ public class PonrfFixture
                 new Building(3, "Самарский", "Самарская", 42, 235, 3, DateTime.MinValue, new List<Lot>{ new Lot(1, 3), new Lot(3, 3) }),
                 new Building(4, "Железнодорожный", "Гоголя", 53, 68, 1, DateTime.Parse("2018-02-09"), new List < Lot > { new Lot(3, 4) }),
                 new Building(5, "Промышленный", "Гагарина", 7, 2100, 5, DateTime.Parse("2018-02-09"), new List < Lot > { new Lot(2, 5) }),
-                new Building(6, "Железнодорожный", "Студенческий", 12, 540, 3, DateTime.Parse("1997-10-30"), new List < Lot > { new Lot(2, 6) }),
+                new Building(6, "Железнодорожный", "Студенческая", 12, 540, 3, DateTime.Parse("1997-10-30"), new List < Lot > { new Lot(2, 6) }),
             };
             return buildings;
         }

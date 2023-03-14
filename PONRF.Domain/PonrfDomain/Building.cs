@@ -41,4 +41,8 @@ public class Building
         DateOfBuild = dateOfBuild;
         Lot = lot;
     }
+    public string GetAddress()
+    {
+        return string.Format("р-н {0}, ул. {1}, {2}", District, Street, HouseNumber);
+    }
 }

@@ -105,4 +105,12 @@ public class UnitTest : IClassFixture<PonrfFixture>
         Assert.Equal("Сириус", request[0].Organizer);
         Assert.Equal("Аргентум", request[1].Organizer);
     }
+
+    [Fact]
+    public void AddressOfBuildings()
+    {
+        var buildings = _fixture.BuildingsFixture.ToList();
+        var request = (from building in buildings select building.GetAddress()).ToList();
+        Assert.Equal("р-н Кировский, ул. Домодедовская, 76", request[0]);
+    }
 }

@@ -29,8 +29,12 @@ public class Driver
     /// Telephon number of driver
     /// </summary>
     public int Number { get; set; } = 0;
+    /// <summary>
+    /// List of routes for this driver
+    /// </summary>
+    public List<int> Routes { get; set; } = new List<int>();
     public Driver() { }
-    public Driver(int driverId, string firstName, string lastName, string patronymic, int passport, int driverCard, int number)
+    public Driver(int driverId, string firstName, string lastName, string patronymic, int passport, int driverCard, int number, List<int> routes)
     {
         DriverId = driverId;
         FirstName = firstName;
@@ -39,5 +43,6 @@ public class Driver
         Passport = passport;
         DriverCard = driverCard;
         Number = number;
+        Routes = routes;
     }
 }

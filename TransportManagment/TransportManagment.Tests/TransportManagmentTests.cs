@@ -1,3 +1,5 @@
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+
 namespace TransportManagment.Classes.Tests;
 public class TransManagmentTests
 {
@@ -8,12 +10,12 @@ public class TransManagmentTests
     {
         return new List<Transport>()
         {
-            new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23)),
-            new Transport(2, "bus", "Audi", new DateOnly(1992, 04, 18)),
-            new Transport(3, "trolleybus", "VAZ", new DateOnly(1985, 10, 23)),
-            new Transport(4, "trolleybus", "VAZ", new DateOnly(2010, 11, 01)),
-            new Transport(5, "tram", "Samtram", new DateOnly(1990, 10, 13)),
-            new Transport(6, "tram", "Mostram", new DateOnly(1989, 08, 02)),
+            new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23), new List<int> {100}),
+            new Transport(2, "bus", "Audi", new DateOnly(1992, 04, 18), new List<int> {111, 112}),
+            new Transport(3, "trolleybus", "VAZ", new DateOnly(1985, 10, 23), new List<int> {123}),
+            new Transport(4, "trolleybus", "VAZ", new DateOnly(2010, 11, 01), new List < int > {133}),
+            new Transport(5, "tram", "Samtram", new DateOnly(1990, 10, 13), new List < int > {144}),
+            new Transport(6, "tram", "Mostram", new DateOnly(1989, 08, 02), new List < int > {155}),
         };
     }
     /// <summary>
@@ -23,12 +25,12 @@ public class TransManagmentTests
     {
         return new List<Driver>()
         {
-             new Driver (11, "Igor", "Gudzenko", "Nicolaevich", 290865, 2434, 2568090),
-             new Driver (12, "Oleg", "Fursov", "Igorevich", 292365, 2211, 2578090),
-             new Driver (13, "Evpatiy", "Kage", "Niconorovich", 129561, 3081, 2568430),
-             new Driver (14, "Egor", "Abramov", "Danilovich", 280123, 2411, 2568123),
-             new Driver (15, "Adry", "Tarasov", "Sergeivich", 199321, 2784, 2522290),
-             new Driver (16, "Bill", "Pechorin", "Andeivich", 300965, 1234, 3668090),
+             new Driver (11, "Igor", "Gudzenko", "Nicolaevich", 290865, 2434, 2568090, new List<int> { 100 }),
+             new Driver (12, "Oleg", "Fursov", "Igorevich", 292365, 2211, 2578090, new List < int > { 111 }),
+             new Driver (13, "Evpatiy", "Kage", "Niconorovich", 129561, 3081, 2568430, new List < int > { 112 }),
+             new Driver (14, "Egor", "Abramov", "Danilovich", 280123, 2411, 2568123, new List < int > {123, 133}),
+             new Driver (15, "Adry", "Tarasov", "Sergeivich", 199321, 2784, 2522290, new List < int > { 144 }),
+             new Driver (16, "Bill", "Pechorin", "Andeivich", 300965, 1234, 3668090, new List < int > { 155 }),
         };
     }
     /// <summary>
@@ -55,11 +57,12 @@ public class TransManagmentTests
     [Fact]
     public void TransportTest()
     {
-        var transport = new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23));
+        var transport = new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23), new List<int> { 100 });
         Assert.Equal(1, transport.TransportId);
         Assert.Equal("bus", transport.Type);
         Assert.Equal("Mercedes", transport.Model);
         Assert.Equal(new DateOnly(1990, 10, 23), transport.DateMake);
+        Assert.Equal(new List<int> {100}, transport.Routes);
     }
     /// <summary>
     /// DriverTest - test about drivers
@@ -67,7 +70,7 @@ public class TransManagmentTests
     [Fact]
     public void DriverTest()
     {
-        var driver = new Driver(11, "Igor", "Gudzenko", "Nicolaevich", 290865, 2434, 2568090);
+        var driver = new Driver(11, "Igor", "Gudzenko", "Nicolaevich", 290865, 2434, 2568090, new List<int> { 100 });
         Assert.Equal(11, driver.DriverId);
         Assert.Equal("Igor", driver.FirstName);
         Assert.Equal("Gudzenko", driver.LastName);
@@ -75,6 +78,7 @@ public class TransManagmentTests
         Assert.Equal(290865, driver.Passport);
         Assert.Equal(2434, driver.DriverCard);
         Assert.Equal(2568090, driver.Number);
+        Assert.Equal(new List<int> { 100 }, driver.Routes);
     }
     /// <summary>
     /// RouteTest - test about routes

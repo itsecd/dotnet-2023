@@ -1,9 +1,9 @@
 ﻿namespace HotelBookingSystem.Classes;
 public class BookedRooms
 {
-    public Lodger Client { get; set; }
+    //public Lodger Client { get; set; }
 
-    public Room BookedRoom { get; set; }
+    //public Room BookedRoom { get; set; }
 
     public DateTime EntryDate { get; set; }
 
@@ -11,10 +11,10 @@ public class BookedRooms
 
     public DateTime DepartmentDate { get; set; }
 
-    public BookedRooms (Lodger client, Room bookedRoom, DateTime entryDate, DateTime bookingTerm, DateTime departmentDate)
+    public BookedRooms (DateTime entryDate, DateTime bookingTerm, DateTime departmentDate)
     {
-        Client = client;
-        BookedRoom = bookedRoom;
+        //Client = client;
+        //BookedRoom = bookedRoom;
         EntryDate = entryDate;
         BookingTerm = bookingTerm;
         DepartmentDate = departmentDate;

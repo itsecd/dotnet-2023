@@ -7,10 +7,13 @@ public class Lodger
 
     public DateTime Birthdate { get; set; }
 
-    public Lodger (int passport, string name, DateTime birthdate)
+    public List<BookedRooms> Brooms { get; set; }
+
+    public Lodger (int passport, string name, DateTime birthdate, List<BookedRooms> brooms)
     { 
         Passport = passport; 
         Name = name;
         Birthdate = birthdate;
+        Brooms = brooms;
     }
 }

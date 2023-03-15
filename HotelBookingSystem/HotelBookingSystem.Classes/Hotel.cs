@@ -7,10 +7,13 @@ public class Hotel
 
     public string Adress { get; set; }
 
-    public Hotel (string name, string city, string adress)
+    public List<Room> RoomList { get; set; }
+
+    public Hotel (string name, string city, string adress, List<Room> roomList)
     {
         Name = name;
         City = city;
         Adress = adress;
+        RoomList = roomList;
     }
 }

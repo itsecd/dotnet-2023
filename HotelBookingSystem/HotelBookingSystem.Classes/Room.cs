@@ -7,13 +7,14 @@ public class Room
 
     public int Cost { get; set; }
 
-    public Hotel Placement { get; set; }
+    //public Hotel Placement { get; set; }
+    public List<BookedRooms> Brooms { get; set; }
 
-    public Room (string typeOfRoom, int numberOfRooms, int cost, Hotel placement)
+    public Room (string typeOfRoom, int numberOfRooms, int cost, List<BookedRooms> brooms)
     {
         TypeOfRoom = typeOfRoom;
         NumberOfRooms = numberOfRooms;
         Cost = cost;
-        Placement = placement;
+        Brooms = brooms;
     }
 }

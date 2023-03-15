@@ -6,9 +6,13 @@
 public class Building
 {
     /// <summary>
+    /// Id is a identifier of building
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// RegistNum contains information about registration number of building
     /// </summary>
-    public int RegistNum { get; set; }
+    public string RegistNum { get; set; } = string.Empty;
     /// <summary>
     /// District, street and house number contain information about full address of building
     /// </summary>  
@@ -30,8 +34,9 @@ public class Building
     public List<PrivatizedBuilding> PrivatizedBuilding { get; set; } = new List<PrivatizedBuilding>();
 
     public Building() { }
-    public Building(int registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild, List<PrivatizedBuilding> privatizedBuilding)
+    public Building(int id, string registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild, List<PrivatizedBuilding> privatizedBuilding)
     {
+        Id = id;
         RegistNum = registNum;
         District = district;
         Street = street;

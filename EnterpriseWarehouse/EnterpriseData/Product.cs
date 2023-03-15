@@ -16,20 +16,20 @@ public class Product
 	public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    ///     Quntity - quantity of goods stored in the warehouse
+    ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
-	public uint Quntity { get; set; }
+	public uint Quantity { get; set; }
 
     /// <summary>
     ///     CellNumber - number of the cell in which the product is stored
     /// </summary>
-	public uint CellNumber { get; set; }
+	public List<uint> CellNumber { get; set; }
 
-    public Product(uint itemNumber, string title, uint quntity, uint cellNumber)
+    public Product(uint itemNumber, string title, uint quantity, List<uint> cellNumber)
     {
         ItemNumber = itemNumber;
         Title = title;
-        Quntity = quntity;
+        Quantity = quantity;
         CellNumber = cellNumber;
     }
 

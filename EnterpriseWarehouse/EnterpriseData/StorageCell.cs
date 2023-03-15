@@ -13,9 +13,9 @@ public class StorageCell
     /// <summary>
     ///     ItemNumberProduct - unique identifier of the product 
     /// </summary>
-	public List<uint> ItemNumberProducts { get; set; } = new List<uint>();
+	public uint ItemNumberProducts { get; set; }
 
-    public StorageCell(uint number, List<uint> itemNumberProducts)
+    public StorageCell(uint number, uint itemNumberProducts)
     {
         Number = number;
         ItemNumberProducts = itemNumberProducts;

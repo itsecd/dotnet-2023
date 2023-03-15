@@ -5,48 +5,66 @@ using System.Collections.Generic;
 
 public class PoliclinicTestFixture
 {
-    public List<SpecializationType> CreateDefaultSpecializations()
+    public List<Specialization> CreateDefaultSpecializations
     {
-        return new List<SpecializationType>()
+        get
         {
-            new SpecializationType(1, "Психотерапевт"),
-            new SpecializationType(2, "Дерматолог")
-        };
+            return new List<Specialization>()
+            {
+                new Specialization(1, "Psychotherapist"),
+                new Specialization(2, "Dermatologist")
+            };
+        }
     }
 
-    public List<DoctorType> CreateDefaultDoctors()
+    public List<Doctor> CreateDefaultDoctors
     {
-        var specializationList = CreateDefaultSpecializations();
-        return new List<DoctorType>()
+        get
         {
-            new DoctorType(1234567890, "Иванов Иван Иванович", new DateTime(1975, 12, 1), 7, specializationList[0].Id),
-            new DoctorType(4321567890, "Петров Петр Петрович", new DateTime(1960, 10, 10), 15, specializationList[1].Id),
-            new DoctorType(2341567890, "Смирнов Александр Александрович", new DateTime(1980, 1, 1), 3, specializationList[0].Id)
-        };
+            var receptionList = CreateDefaultReceptions;
+            var specializationList = CreateDefaultSpecializations;
+            var receptionListSpecial1 = new List<Reception> { receptionList[0], receptionList[1] };
+            var receptionListSpecial2 = new List<Reception> { receptionList[2], receptionList[4] };
+            var receptionListSpecial3 = new List<Reception> { receptionList[3] };
+            return new List<Doctor>()
+                {
+                    new Doctor(1234567890, "Ivanov Ivan Ivanovich", new DateTime(1975, 12, 1), 7, specializationList[0], receptionListSpecial1),
+                    new Doctor(4321567890, "Petrov Peter Petrovich", new DateTime(1960, 10, 10), 15, specializationList[1], receptionListSpecial2),
+                    new Doctor(2341567890, "Smirnov Alexander Alexandrovich", new DateTime(1980, 1, 1), 3, specializationList[0], receptionListSpecial3)
+                };
+        }
     }
 
-    public List<PatientType> CreateDefaultPatients()
+    public List<Patient> CreateDefaultPatients
     {
-        return new List<PatientType>
+        get
         {
-            new PatientType(4231123456, "Иванов Петр Владимирович", new DateTime(2000, 2, 2), "Московское шоссе 34б"),
-            new PatientType(1234123456, "Белов Евгений Максимович", new DateTime(1990, 7, 6), "Улица Кирова 231"),
-            new PatientType(1423123456, "Киров Лукас Маркович", new DateTime(1993, 8, 8), "Улица Мичурина 15"),
-            new PatientType(4321123456, "Крылов Владимир Петрович", new DateTime(1995, 1, 1), "Улица Баныкина 17")
-        };
+            var receptionList = CreateDefaultReceptions;
+            var receptionListSpecial1 = new List<Reception> { receptionList[0] };
+            var receptionListSpecial2 = new List<Reception> { receptionList[1], receptionList[4] };
+            var receptionListSpecial3 = new List<Reception> { receptionList[2] };
+            var receptionListSpecial4 = new List<Reception> { receptionList[3] };
+            return new List<Patient>
+                {
+                    new Patient(4231123456, "Ivanov Pyotr Vladimirovich", new DateTime(2000, 2, 2), "Moskovskoe highway 34b", receptionListSpecial1),
+                    new Patient(1234123456, "Belov Evgeny Maksimovich", new DateTime(1990, 7, 6), "231 Kirov Street", receptionListSpecial2),
+                    new Patient(1423123456, "Kirov Lukas Markovich", new DateTime(1993, 8, 8), "Michurina Street 15", receptionListSpecial3),
+                    new Patient(4321123456, "Krylov Vladimir Petrovich", new DateTime(1985, 1, 1), "17 Banykin Street", receptionListSpecial4)
+                };
+        }
     }
-
-    public List<ReceptionType> CreateDefaultReceptions()
+    public List<Reception> CreateDefaultReceptions
     {
-        var patientList = CreateDefaultPatients();
-        var doctorList = CreateDefaultDoctors();
-        return new List<ReceptionType>()
+        get
         {
-            new ReceptionType(new DateTime(2023, 2, 1, 12, 0, 0), "На лечении", doctorList[0].Passport, patientList[0].Passport, "Нервоз"),
-            new ReceptionType(new DateTime(2023, 2, 1, 12, 15, 0), "Здоров", doctorList[0].Passport, patientList[1].Passport, ""),
-            new ReceptionType(new DateTime(2023, 2, 2, 11, 0, 0), "Здоров", doctorList[1].Passport, patientList[2].Passport, ""),
-            new ReceptionType(new DateTime(2023, 2, 3, 13, 45, 0), "На лечении", doctorList[2].Passport, patientList[3].Passport, "Псориаз"),
-            new ReceptionType(new DateTime(2023, 2, 1, 12, 30, 0), "Здоров", doctorList[1].Passport, patientList[1].Passport, ""),
-        };
+            return new List<Reception>()
+                {
+                    new Reception(10, new DateTime(2023, 2, 1, 12, 0, 0), "On treatment", new Doctor(), new Patient(), "Nervousness"),
+                    new Reception(11, new DateTime(2023, 2, 1, 12, 15, 0), "Healthy", new Doctor(), new Patient(), ""),
+                    new Reception(12, new DateTime(2023, 2, 2, 11, 0, 0), "Healthy", new Doctor(), new Patient(), ""),
+                    new Reception(13, new DateTime(2023, 2, 3, 13, 45, 0), "On treatment", new Doctor(), new Patient(), "Psoriasis"),
+                    new Reception(14, new DateTime(2023, 2, 1, 12, 30, 0), "Healthy", new Doctor(), new Patient(), ""),
+                };
+        }
     }
 }

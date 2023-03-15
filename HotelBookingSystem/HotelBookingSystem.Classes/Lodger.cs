@@ -9,7 +9,7 @@ public class Lodger
 
     public List<BookedRooms> Brooms { get; set; }
 
-    public Lodger (int passport, string name, DateTime birthdate, List<BookedRooms> brooms)
+    public Lodger (List<BookedRooms> brooms, int passport, string name, DateTime birthdate)
     { 
         Passport = passport; 
         Name = name;

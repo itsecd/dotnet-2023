@@ -90,35 +90,18 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
     //[Fact]
-    //public void TopFiveTest()
-    //{
-    //var tickets = (from flight in _fixture.FixtureFlights
-    //               from ticket in flight.Tickets
-    //               where flight.Source == "Moscow"
-    //               select ticket.BaggageWeight).ToList();
-    //var max = tickets.Max();
-    //var avg = tickets.Average();
+    public void TopFiveTest()
+    {
+        var customers = _fixture.FixtureСustomers.ToList();
+
+        var request = (from customer in customers
 
 
-    //    var fixtureCard = _fixture.FixtureCard.ToList();
-    //    var date = new DateOnly(2023, 3, 1);
-    //    var numOfReaders = (from card in fixtureCard
-    //                        from reader in card.IdReader
-    //                        where card.DateOfReturn < date
-    //                        group card by reader.Id into g
-    //                        select new
-    //                        {
-    //                            readers = g.Key,
-    //                            count = g.Count()
-    //                        }).ToList();
-    //    var request = (from reader in numOfReaders
-    //                   orderby reader.count descending
-    //                   select reader).Take(5).ToList();
-    //    var first = request.First();
+                       orderby customer.count descending
+                       select customer).Take(5).ToList();
 
-    //    Assert.Equal(1, first.readers);
-    //    Assert.Equal(5, request.Count);
-    //}
+        Assert.Equal(5, request.Count());
+    }
 
     /// <summary>
     /// Шестой запрос: Вывести информацию о количестве проданных товаров каждым продавцом 

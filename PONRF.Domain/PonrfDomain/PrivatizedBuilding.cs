@@ -6,7 +6,7 @@
 public class PrivatizedBuilding
 {
     /// <summary>
-    /// Id is a identifier of privatized building
+    /// Id is an identifier of privatized building
     /// </summary>
     public int Id { get; set; }
     /// <summary>

@@ -5,7 +5,7 @@
 public class Auction
 {
     /// <summary>
-    /// Id is a identifier of auction
+    /// Id is an identifier of auction
     /// </summary>
     public int Id { get; set; }
     /// <summary>

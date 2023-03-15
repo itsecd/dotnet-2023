@@ -6,7 +6,7 @@
 public class Customer
 {
     /// <summary>
-    /// Id is a identifier of customer
+    /// Id is an identifier of customer
     /// </summary>
     public int Id { get; set; }
     /// <summary>

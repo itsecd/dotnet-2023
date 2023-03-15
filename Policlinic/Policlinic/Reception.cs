@@ -25,7 +25,7 @@ public class Reception
     /// </summary>
     public Patient Patient { get; set; } = new Patient();
     /// <summary>
-    /// Conclution is a string typed value of the conclution (if status == "Healthy", this will be empty)
+    /// Conclusion is a string typed value of the conclusion (if status == "Healthy", this will be empty)
     /// </summary>
     public string Conclusion { get; set; } = string.Empty;
 

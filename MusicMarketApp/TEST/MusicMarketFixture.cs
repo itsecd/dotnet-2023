@@ -15,7 +15,6 @@ public class MusicMarketFixture
     {
         get
         {
-            var sellers = FixtureSellers;
             var products = new List<Product>();
 
             var product0 = new Product();
@@ -45,8 +44,8 @@ public class MusicMarketFixture
             product6.Name = "PWR/UP";
             product7.Name = "Rush!";
 
-            product0.TypeOfCarrier = "disc";
-            product1.TypeOfCarrier = "cassette";
+            product0.TypeOfCarrier = "cassette";
+            product1.TypeOfCarrier = "disc";
             product2.TypeOfCarrier = "vinyl record";
             product3.TypeOfCarrier = "disc";
             product4.TypeOfCarrier = "cassette";
@@ -55,13 +54,13 @@ public class MusicMarketFixture
             product7.TypeOfCarrier = "disc";
 
             product0.PublicationType = "album";
-            product1.PublicationType = "single";
+            product1.PublicationType = "album";
             product2.PublicationType = "album";
             product3.PublicationType = "single";
             product4.PublicationType = "album";
             product5.PublicationType = "single";
             product6.PublicationType = "album";
-            product7.PublicationType = "single";
+            product7.PublicationType = "album";
 
             product0.Creator = "Aria";
             product1.Creator = "Monetochka";
@@ -117,14 +116,23 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            product0.Seller = "Muzzona";
-            product1.Seller = "Muzzona";
-            product2.Seller = "Muzzona";
-            product3.Seller = "Muzzona";
-            product4.Seller = "Skifmusic";
-            product5.Seller = "StopRobot";
-            product6.Seller = "StopRobot";
-            product7.Seller = "StopRobot";
+            //product0.Seller = "Muzzona";
+            //product1.Seller = "Muzzona";
+            //product2.Seller = "Muzzona";
+            //product3.Seller = "Muzzona";
+            //product4.Seller = "Skifmusic";
+            //product5.Seller = "StopRobot";
+            //product6.Seller = "StopRobot";
+            //product7.Seller = "StopRobot";
+
+            product0.Seller = new Seller(0, "Muzzona", "Russia", 300);
+            product1.Seller = new Seller(1, "Muzzona", "Russia", 300);
+            product2.Seller = new Seller(2, "Muzzona", "Russia", 300);
+            product3.Seller = new Seller(3, "Muzzona", "Russia", 300);
+            product4.Seller = new Seller(4, "Skifmusic", "UK", 750);
+            product5.Seller = new Seller(5, "StopRobot", "USA", 680);
+            product6.Seller = new Seller(6, "StopRobot", "USA", 680);
+            product7.Seller = new Seller(7, "StopRobot", "USA", 680);
 
             products.Add(product0);
             products.Add(product1);
@@ -212,11 +220,11 @@ public class MusicMarketFixture
             purchase3.Products.Add(products[5]);
             purchase4.Products.Add(products[6]);
 
-            //purchase0.Date = 25.03.2022 8:44:23;
-            //purchase1.Date = 10.08.2022 11:31:56;
-            //purchase2.Date = 12.02.2023 19:20:29;
-            //purchase3.Date = 21.10.2022 13:46:41;
-            //purchase4.Date = 7.09.2023 22:10:33;
+            purchase0.Date = DateTime.Parse("2023/03/12");
+            purchase1.Date = DateTime.Parse("2023/03/14");
+            purchase2.Date = DateTime.Parse("2023/03/12");
+            purchase3.Date = DateTime.Parse("2023/01/10");
+            purchase4.Date = DateTime.Parse("2023/03/11");
 
             purchases.Add(purchase0);
             purchases.Add(purchase1);

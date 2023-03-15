@@ -60,9 +60,9 @@ public class Product
     /// <summary>
     /// Продавец
     /// </summary>
-    public string Seller { get; set; } = string.Empty; 
+    public Seller? Seller { get; set; }
 
-    
+
     //public Product() { }
 
     //public Product( int id, string typeOfCarrier, string publicationType, string creator, string name, string madeIn,

@@ -1,6 +1,3 @@
-using Policlinic;
-using System.Security.Cryptography;
-
 namespace PoliclinicTests;
 
 public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>

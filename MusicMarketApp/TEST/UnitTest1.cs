@@ -3,6 +3,9 @@ namespace TEST;
 using MusicMarket;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection.PortableExecutable;
+using System.Security.AccessControl;
+using System.Security.Cryptography;
 
 public class MusicMarketTest : IClassFixture<MusicMarketFixture>
 {
@@ -89,18 +92,34 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     /// Пятый запрос: Вывести информацию о топ 5 покупателях 
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
-    //[Fact]
+    [Fact]
     public void TopFiveTest()
     {
         var customers = _fixture.FixtureСustomers.ToList();
+        var purchases = _fixture.FixturePurchases.ToList();
+        var products = _fixture.FixtureProducts.ToList();
+        var sellers = _fixture.FixtureSellers.ToList();
 
-        var request = (from customer in customers
-
-
-                       orderby customer.count descending
-                       select customer).Take(5).ToList();
-
-        Assert.Equal(5, request.Count());
+        var customerPurchases = 
+            from customer in customers
+            from purchase in customer.Purchases
+            from product in purchase.Products
+            select new
+            {
+                customer.Id,
+                PurchaseCost = purchase.Products.Sum(product => product.Price + product.Seller?.Price)
+            };
+        var customerAvgPurchases =
+            from customerPurchase in customerPurchases
+            group customerPurchase by customerPurchase.Id into customer
+            select new
+            {
+                customer.Key,
+                AvgCost = customer.Average(cust => cust.PurchaseCost)
+            };
+        var top5 = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5);
+        var max = top5.Max(a => a.AvgCost);
+        Assert.Equal(7240,max);
     }
 
     /// <summary>

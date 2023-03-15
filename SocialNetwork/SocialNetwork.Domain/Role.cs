@@ -53,5 +53,4 @@ public class Role
     public Role()
     {
     }
-    #endregion
 }

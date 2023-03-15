@@ -78,6 +78,5 @@ public class Group
     public Group() 
     {
     }
-    #endregion
 
 }

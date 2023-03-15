@@ -7,7 +7,6 @@ namespace SocialNetwork.Tests;
 /// </summary>
 public class LinqTests
 {
-	#region Методы.
 	/// <summary>
 	/// Поиск всех пользователей заданной группы, упорядочивание по ФИО.
 	/// </summary>
@@ -146,6 +145,5 @@ public class LinqTests
 		Assert.True(result.Count == 2 && result[0].Notes!.Count == 3 
 			&& result[1].Notes!.Count == 3);
 	}
-	#endregion
 }
 

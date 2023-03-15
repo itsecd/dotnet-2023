@@ -5,7 +5,6 @@
 /// </summary>	
 public class Group
 {
-    #region Свойства.	
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
@@ -40,9 +39,7 @@ public class Group
     /// Записи группы.
     /// </summary>
     public List<Note>? Notes { get; set; }
-    #endregion
 
-    #region Конструкторы.
     /// <summary>
     /// Создает группу с помощью указанных данных.
     /// </summary>
@@ -58,7 +55,6 @@ public class Group
     public Group(int groupId, string name, string description, DateTime? creationDate, int userId,
         User? user, List<Note>? notes)
     {
-        #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, groupId);
         Validator.StringTextValidate(name);
         Validator.StringTextValidate(description);
@@ -66,7 +62,6 @@ public class Group
         Validator.RangeNumberValidate(0, int.MaxValue, userId);
         Validator.UserValidate(user);
         Validator.ListValidate(notes);
-        #endregion
 
         Id = groupId;
         Name = name;

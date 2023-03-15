@@ -7,7 +7,6 @@ namespace SocialNetwork.Tests;
 /// </summary>
 public class SocialNetworkClassesTests 
 {
-	#region Методы.
 	/// <summary>
 	/// Создание группы с некорректными параметрами в конструкторе.
 	/// </summary>
@@ -157,5 +156,4 @@ public class SocialNetworkClassesTests
 			Assert.True(ex.GetType() == exceptionType);
 		}
 	}
-	#endregion
 }

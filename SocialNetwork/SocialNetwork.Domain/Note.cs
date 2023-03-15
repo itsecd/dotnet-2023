@@ -4,8 +4,7 @@
 /// Запись.	
 /// </summary>	
 public class Note
-{
-    #region Свойства.	
+{	
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
@@ -45,9 +44,7 @@ public class Note
     /// Группа.
     /// </summary>
     public Group? Group { get; set; }
-    #endregion
 
-    #region Конструкторы.
     /// <summary>
     /// Создает запись с помощью указанных данных.
     /// </summary>
@@ -64,7 +61,6 @@ public class Note
     public Note(int id, string name, string description, DateTime? creationDate, int userId,
         User? user, int groupId, Group? group)
     {
-        #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, id);
         Validator.StringTextValidate(name);
         Validator.StringTextValidate(description);
@@ -73,7 +69,6 @@ public class Note
         Validator.UserValidate(user);
         Validator.RangeNumberValidate(0, int.MaxValue, groupId);
         Validator.GroupValidate(group);
-        #endregion
 
         Id = id;
         Name = name;

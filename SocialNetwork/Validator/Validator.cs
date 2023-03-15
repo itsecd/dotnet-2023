@@ -8,7 +8,6 @@ namespace SocialNetwork;
 /// </summary>
 public static class Validator
 {
-	#region Методы.
 	/// <summary>
 	/// Пытается преобразовать строку в числовое значение типа int.
 	/// </summary>
@@ -148,5 +147,4 @@ public static class Validator
 			throw new ArgumentNullException("Пользователь равен null!");
 		}
 	}
-	#endregion
 }

@@ -4,8 +4,7 @@
 /// Пользователь.	
 /// </summary>	
 public class User
-{
-    #region Свойства.	
+{	
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
@@ -54,9 +53,7 @@ public class User
     /// Роли пользователя.
     /// </summary>
     public List<Role>? Roles { get; set; }
-    #endregion
 
-    #region Конструкторы.
     /// <summary>
     /// Создает пользователя с помощью указанных параметров.
     /// </summary>
@@ -76,7 +73,6 @@ public class User
         DateTime? birthDate, DateTime? registrationDate, List<Note>? notes, List<Group>? groups,
         List<Role>? roles)  
     {
-        #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, userId);
         Validator.StringTextValidate(firstName);
         Validator.StringTextValidate(lastName);
@@ -87,7 +83,6 @@ public class User
         Validator.ListValidate(notes);
         Validator.ListValidate(groups);
         Validator.ListValidate(roles);
-        #endregion
 
         Id = userId;
         FirstName = firstName;

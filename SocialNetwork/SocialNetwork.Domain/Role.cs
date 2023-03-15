@@ -4,8 +4,7 @@
 /// Роль.	
 /// </summary>	
 public class Role
-{
-    #region Свойства.	
+{	
     /// <summary>	
     /// Идентификатор.	
     /// </summary>	
@@ -25,9 +24,7 @@ public class Role
     /// Группы, в которых состоят пользователи, обладающие данной ролью.
     /// </summary>
     public List<Group>? Groups { get; set; }
-    #endregion
 
-    #region Конструкторы.
     /// <summary>
     /// Создает роль с помощью указанных данных.
     /// </summary>
@@ -39,12 +36,10 @@ public class Role
     /// <exception cref="ArgumentNullException">Объект равен null.</exception>
     public Role(int roleId, string name, List<User>? users, List<Group>? groups)
     {
-        #region Валидация входных параметров.
         Validator.RangeNumberValidate(0, int.MaxValue, roleId);
         Validator.StringTextValidate(name);
         Validator.ListValidate(users);
         Validator.ListValidate(groups);
-        #endregion
 
         Id = roleId;
         Name = name;

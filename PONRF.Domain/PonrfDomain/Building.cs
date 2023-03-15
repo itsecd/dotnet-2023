@@ -6,7 +6,7 @@
 public class Building
 {
     /// <summary>
-    /// Id is a identifier of building
+    /// Id is an identifier of building
     /// </summary>
     public int Id { get; set; }
     /// <summary>

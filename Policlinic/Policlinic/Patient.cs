@@ -1,18 +1,18 @@
 ﻿namespace Policlinic;
 
 /// <summary>
-/// PatientType describes a patient
+/// Patient describes a patient
 /// </summary>
-public class PatientType
+public class Patient
 {
     /// <summary>
     /// Passport is a long int typed value of the passport series and number
     /// </summary>
     public long Passport { get; set; }
     /// <summary>
-    ///  FIO is a string typed value for storing the name, surname and patronymic of the patient
+    ///  Fio is a string typed value for storing the name, surname and patronymic of the patient
     /// </summary>
-    public string FIO { get; set; } = string.Empty;
+    public string Fio { get; set; } = string.Empty;
     /// <summary>
     /// BirthDate is a datetime value of a doctor's birthday
     /// </summary>
@@ -22,21 +22,24 @@ public class PatientType
     /// </summary>
     public string Address { get; set; } = string.Empty;
 
-    public PatientType() { }
+    public List<Reception> Receptions { get; set; } = new List<Reception>();
 
-    public PatientType(long passport, string fIO, DateTime birthDate, string address)
+    public Patient() { }
+
+    public Patient(long passport, string fio, DateTime birthDate, string address, List<Reception> receptions)
     {
         Passport = passport;
-        FIO = fIO;
+        Fio = fio;
         BirthDate = birthDate;
         Address = address;
+        Receptions = receptions;
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj is not PatientType param)
+        if (obj is not Patient param)
             return false;
-        return Passport == param.Passport && FIO == param.FIO && BirthDate == param.BirthDate && Address == param.Address;
+        return Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && Address == param.Address && Receptions == param.Receptions;
     }
 
     public override int GetHashCode()

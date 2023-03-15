@@ -8,7 +8,7 @@ namespace TestDOTNET1
 {
     public class UnitTest
     {
-        private List<DOTNET_1.Type> Types { get; set; }
+        private List<Type> Types { get; set; }
         private List<Price> Prices { get; set; }
         private List<Bicycle> Bicycles { get; set; }
         private List<Customer> Customers { get; set; }

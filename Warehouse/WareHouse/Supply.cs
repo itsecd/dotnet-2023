@@ -1,36 +1,32 @@
 ﻿namespace Warehouse;
 /// <summary>
-/// Warehouse - a class that describes the company supply with goods
+///     Warehouse - a class that describes the company supply with goods
 /// </summary>
 public class Supply
 {
     /// <summary>
-    /// Count - shows amount of product
+    ///     SupplyCount - shows amount of product
     /// </summary>  
-    public int ProductCount { set; get; }
+    public int SupplyCount { set; get; }
     /// <summary>
-    /// CompanyName - contain name of company what get supply
+    ///     CompanyName - contain name of company what get supply
     /// </summary>
     public string CompanyName { set; get; } = string.Empty;
     /// <summary>
     ///     CompanyAdress - address of the company what get supply
     /// </summary>
-	public string CompanyAdress { get; set; } = string.Empty;
-    /// <summary>  
-    /// ID - shows the product's id
-    /// </summary>  
-    public int ID { set; get; }
+	public string CompanyAddress { get; set; } = string.Empty;
     /// <summary>
     ///     SupplyDate - shipment date
     /// </summary>
-    public DateOnly SupplyDate { get; set; } = DateOnly.MinValue;
-
-    public Supply(int id, string companyName, string companyAdress, DateOnly supplyDate, int count)
+    public DateTime SupplyDate { get; set; } = DateTime.MinValue;
+    public List<Goods> Goods { set; get; } = new List<Goods>();
+    public Supply(string companyName, string companyAdress, DateTime supplyDate, int supplyCount)
     {
-        ID = id;
         CompanyName = companyName;
-        CompanyAdress = companyAdress;
+        CompanyAddress = companyAdress;
         SupplyDate = supplyDate;
-        ProductCount = count;
+        SupplyCount = supplyCount;
     }
+    public Supply() { }
 }

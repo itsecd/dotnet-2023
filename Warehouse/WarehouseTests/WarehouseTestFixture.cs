@@ -1,5 +1,4 @@
 ﻿namespace WarehouseTest;
-
 using Warehouse;
 
 public class WarehouseFixture
@@ -8,51 +7,54 @@ public class WarehouseFixture
     {
         get
         {
-            return new List<Goods> {
-                new Goods (103722, "Контейнер 640мл с крышкой", 100, 1),
-                new Goods (164302, "Картонная коробка 60*40*50", 50, 2),
-                new Goods (106932, "Пищевая плёнка для упаковки 5м", 5, 3),
-                new Goods (218302, "Гипсовая штукатурка 5кг", 10, 4),
-                new Goods (319510, "Столовая ложка из нерж. стали", 35, 10),
-                new Goods (312510, "Чайная ложка из нерж. стали", 50, 10),
-                new Goods (320513, "Вилка из нерж. стали", 25, 10),
-                new Goods (161708, "Ваза из стекла 4л", 10, 15),
-                new Goods (103410, "Ваза из стекла 3л", 15, 15)
-            };
-        }
-    }
+            var firstRoute = new Supply("СамараПласт", "г. Самара, ул. Луцкая, 16.", new DateTime(2023, 02, 20), 10);
+            var secondRoute = new Supply("Самара Строй Комплект", "г. Самара, ул. Олимпийская, 73а.", new DateTime(2023, 03, 01), 5);
+            var thirdRoute = new Supply("Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
+            var fourthRoute = new Supply("Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
 
-    public List<CompanyWarehouse> WarehouseCellsFixture
-    {
-        get
-        {
-            return new List<CompanyWarehouse>
+            var firstProduction = new Goods(103722, "Контейнер 640мл с крышкой", 100);
+            var secondProduction = new Goods(164302, "Картонная коробка 60*40*50", 50);
+            var thirdProduction = new Goods(106932, "Пищевая плёнка для упаковки 5м", 5);
+            var fourthProduction = new Goods(218302, "Гипсовая штукатурка 5кг", 10);
+            var fifthProduction = new Goods(319510, "Столовая ложка из нерж. стали", 35);
+            var sixthProduction = new Goods(320513, "Вилка из нерж. стали", 25);
+            var seventhProduction = new Goods(161708, "Ваза из стекла 4л", 10);
+            var eighthProduction = new Goods(103410, "Ваза из стекла 3л", 15);
+
+            firstProduction.WarehouseCell.Add(new WarehouseCells(1, firstProduction));
+            secondProduction.WarehouseCell.Add(new WarehouseCells(2, secondProduction));
+            thirdProduction.WarehouseCell.Add(new WarehouseCells(3, thirdProduction));
+            fourthProduction.WarehouseCell.Add(new WarehouseCells(4, fourthProduction));
+            fourthProduction.WarehouseCell.Add(new WarehouseCells(10, fourthProduction));
+            fourthProduction.WarehouseCell.Add(new WarehouseCells(11, fourthProduction));
+            fifthProduction.WarehouseCell.Add(new WarehouseCells(5, fifthProduction));
+            sixthProduction.WarehouseCell.Add(new WarehouseCells(6, sixthProduction));
+            seventhProduction.WarehouseCell.Add(new WarehouseCells(7, seventhProduction));
+            eighthProduction.WarehouseCell.Add(new WarehouseCells(8, eighthProduction));
+            eighthProduction.WarehouseCell.Add(new WarehouseCells(9, eighthProduction));
+
+            firstProduction.Supply.Add(firstRoute);
+            thirdProduction.Supply.Add(fourthRoute);
+            fourthProduction.Supply.Add(secondRoute);
+            fifthProduction.Supply.Add(thirdRoute);
+
+            firstRoute.Goods.Add(firstProduction);
+            secondRoute.Goods.Add(fourthProduction);
+            thirdRoute.Goods.Add(fifthProduction);
+            fourthRoute.Goods.Add(thirdProduction);
+
+            var goods = new List<Goods>
             {
-                new CompanyWarehouse (1, 103722),
-                new CompanyWarehouse (2, 164302),
-                new CompanyWarehouse (3, 106932),
-                new CompanyWarehouse (4, 218302),
-                new CompanyWarehouse (10, 319510),
-                new CompanyWarehouse (10, 312510),
-                new CompanyWarehouse (10, 312510),
-                new CompanyWarehouse (15, 161708),
-                new CompanyWarehouse (15, 103410)
-
+                firstProduction,
+                secondProduction,
+                thirdProduction,
+                fourthProduction,
+                fifthProduction,
+                sixthProduction,
+                seventhProduction,
+                eighthProduction
             };
-        }
-    }
-
-    public List<Supply> SupplyFixture
-    {
-        get
-        {
-            return new List<Supply>
-            {
-                new Supply (103722, "СамараПласт", "г. Самара, ул. Луцкая, 16.", new DateOnly(2023, 02, 20), 10),
-                new Supply (218302, "Самара Строй Комплект", "г. Самара, ул. Олимпийская, 73а.", new DateOnly(2023, 03, 01), 5),
-                new Supply (312510, "Fix Price", "г. Самара, ул. Спортивная, 20.", new DateOnly(2023, 02, 11), 10),
-                new Supply (106932, "Fix Price", "г. Самара, ул. Спортивная, 20.", new DateOnly(2023, 01, 23), 10)
-            };
+            return goods;
         }
     }
 }

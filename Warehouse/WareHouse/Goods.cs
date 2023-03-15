@@ -1,31 +1,28 @@
 ﻿namespace Warehouse;
 /// <summary>
-/// Warehouse - a class that describes the company supply with goods
+///     Warehouse - a class that describes the company supply with goods
 /// </summary>
 public class Goods
 {
     /// <summary>
-    /// Count - shows amount of product
+    ///     ProductCount - shows amount of product
     /// </summary>  
     public int ProductCount { set; get; }
     /// <summary>  
-    /// ID - shows the product's id
+    ///     Id - shows the product's id
     /// </summary>  
-    public int ID { set; get; }
+    public int Id { set; get; }
     /// <summary>
-    /// Name - a string that stores product name 
+    ///     Name - a string that stores product name 
     /// </summary>
     public string Name { set; get; } = string.Empty;
-    /// <summary>
-    ///     Cell - number of the cell in which the product is stored
-    /// </summary>
-	public int CellNumber { get; set; }
-
-    public Goods(int id, string name, int count, int cells)
+    public List<Supply> Supply { set; get; } = new List<Supply>();
+    public List<WarehouseCells> WarehouseCell { set; get; } = new List<WarehouseCells>();
+    public Goods(int id, string name, int count)
     {
-        ID = id;
+        Id = id;
         Name = name;
         ProductCount = count;
-        CellNumber = cells;
     }
+    public Goods() { }
 }

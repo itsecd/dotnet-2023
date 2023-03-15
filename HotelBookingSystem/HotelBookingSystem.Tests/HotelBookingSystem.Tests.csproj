@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -21,7 +21,6 @@
     </PackageReference>
   </ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\HeartbreakHotel.Classes\HeartbreakHotel.Classes.csproj" />
+		<ProjectReference Include="..\HotelBookingSystem.Classes\HotelBookingSystem.Classes.csproj" />
 	</ItemGroup>
-
 </Project>

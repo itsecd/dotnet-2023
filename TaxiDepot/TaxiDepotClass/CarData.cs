@@ -6,27 +6,22 @@ public class Car
     /// Car government number - field
     /// </summary>
     public string CarNumber { get; set; } = string.Empty;
-    
     /// <summary>
     /// Car model - field
     /// </summary>
     public string CarModel { get; } = string.Empty;
-    
     /// <summary>
     /// Car color - field
     /// </summary>
     public string CarColor { get; set; } = string.Empty;
-
     /// <summary>
     /// Indicator that the driver is assigned to the car - field
     /// </summary>
     public bool CarAssigned { get; set; } = false;
-
     /// <summary>
     /// Constructor without parameters to instantiate the class - Car
     /// </summary>
     public Car() {}
-
     /// <summary>
     /// Constructor with parameters to instantiate the class - Car
     /// </summary>
@@ -39,7 +34,6 @@ public class Car
         CarModel = model;
         CarColor = color;
     }
-
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -54,7 +48,6 @@ public class Car
                CarModel == param.CarModel &&
                CarColor == param.CarColor;
     }
-    
     /// <summary>
     /// Overload == through Equals
     /// </summary>
@@ -65,7 +58,6 @@ public class Car
     {            
         return Object.Equals(carObj1, carObj2);        
     }
-
     /// <summary>
     /// Overload != through Equals
     /// </summary>
@@ -76,7 +68,6 @@ public class Car
     {            
         return !Object.Equals(carObj1, carObj2);        
     }
-    
     /// <summary>
     /// Print function
     /// </summary>
@@ -85,7 +76,6 @@ public class Car
     {
         Console.WriteLine($"Car model: {obj.CarModel}, number - {obj.CarNumber}, color - {obj.CarColor}");
     }
-    
     /// <summary>
     /// Get hash code func
     /// </summary>

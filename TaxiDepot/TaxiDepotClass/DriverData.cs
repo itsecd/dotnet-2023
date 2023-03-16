@@ -6,43 +6,34 @@ public class Driver
     /// Driver surname - field
     /// </summary>
     public string DriverSurname { get; set; } = string.Empty;
-    
     /// <summary>
     /// Driver name - field
     /// </summary>
     public string DriverName { get; set; } = string.Empty;
-    
     /// <summary>
     /// Driver patronymic - field
     /// </summary>
     public string DriverPatronymic { get; set; } = string.Empty;
-    
     /// <summary>
     /// Driver passport ID - field
     /// </summary>
     public int DriverPassportId { get; set; } = 0;
-    
     /// <summary>
     /// Driver address - field
     /// </summary>
     public string DriverAddress { get; set; } = string.Empty;
-    
     /// <summary>
     /// Driver phone number  - field
     /// </summary>
     public string DriverPhoneNumber { get; set; } = string.Empty;
-    
     /// <summary>
     /// Indicator that the driver is assigned to the car - field
     /// </summary>
     public bool DriverAssigned { get; set; } = false;
-    
-    
     /// <summary>
     /// Constructor without parameters to instantiate the class - Driver
     /// </summary>
     public Driver() {}
-
     /// <summary>
     /// Constructor with parameters to instantiate the class - Driver
     /// </summary>
@@ -61,7 +52,6 @@ public class Driver
         DriverAddress = address;
         DriverPhoneNumber = phoneNumber;
     }
-
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -79,7 +69,6 @@ public class Driver
                DriverAddress == param.DriverAddress &&
                DriverPhoneNumber == param.DriverPhoneNumber;
     }
-    
     /// <summary>
     /// Overload == through Equals
     /// </summary>
@@ -90,7 +79,6 @@ public class Driver
     {            
         return Object.Equals(driverObj1, driverObj2);        
     }
-    
     /// <summary>
     /// Overload != through Equals
     /// </summary>
@@ -101,7 +89,6 @@ public class Driver
     {            
         return !Object.Equals(driverObj1, driverObj2);        
     }
-
     /// <summary>
     /// Print function
     /// </summary>
@@ -111,7 +98,6 @@ public class Driver
         Console.WriteLine(
             $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}");
     }
-    
     /// <summary>
     /// Get hash code func
     /// </summary>

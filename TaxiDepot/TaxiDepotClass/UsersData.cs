@@ -6,27 +6,22 @@ public class User
     /// User surname - field
     /// </summary>
     public string UserSurname { get; set; } = string.Empty;
-    
     /// <summary>
     /// User name - field
     /// </summary>
     public string UserName { get; set; } = string.Empty;
-    
     /// <summary>
     /// User patronymic - field
     /// </summary>
     public string UserPatronymic { get; set; } = string.Empty;
-    
     /// <summary>
     /// User phone number  - field
     /// </summary>
     public string UserPhoneNumber { get; set; } = string.Empty;
-
     /// <summary>
     /// Constructor without parameters to instantiate the class - User
     /// </summary>
     public User() {}
-    
     /// <summary>
     /// Constructor with parameters to instantiate the class - User
     /// </summary>
@@ -41,7 +36,6 @@ public class User
         UserPatronymic = patronymic;
         UserPhoneNumber = phoneNumber;
     }
-    
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -57,7 +51,6 @@ public class User
                UserPatronymic == param.UserPatronymic &&
                UserPhoneNumber == param.UserPhoneNumber;
     }
-    
     /// <summary>
     /// Overload == through Equals
     /// </summary>
@@ -68,7 +61,6 @@ public class User
     {            
         return Object.Equals(userObj1, userObj2);        
     }
-
     /// <summary>
     /// Overload != through Equals
     /// </summary>
@@ -79,7 +71,6 @@ public class User
     {            
         return !Object.Equals(userObj1, userObj2);        
     }
-    
     /// <summary>
     /// Print function
     /// </summary>
@@ -89,7 +80,6 @@ public class User
         Console.WriteLine(
             $"User: {obj.UserSurname} {obj.UserName} {obj.UserPatronymic}, phone number - {obj.UserPhoneNumber}");
     }
-    
     /// <summary>
     /// Get hash code func
     /// </summary>

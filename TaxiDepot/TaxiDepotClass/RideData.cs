@@ -6,37 +6,30 @@ public class Ride
     /// Departure place - field 
     /// </summary>
     public string TripDeparturePlace { get; set; } = string.Empty;
-
     /// <summary>
     /// Destination place - field 
     /// </summary>
     public string TripDestinationPlace { get; set; } = string.Empty;
-
     /// <summary>
     /// Trip date - field
     /// </summary>
     public DateTime? TripDate { get; set; }
-
     /// <summary>
     /// Trip time - field
     /// </summary>
     public TimeSpan? TripTime { get; set; }
-    
     /// <summary>
     /// Trip price - field
     /// </summary>
     public double TripPrice { get; set;  } = 0.0;
-
     /// <summary>
     /// Assigned car - field
     /// </summary>
     public Car? TripCar { get; set; }
-
     /// <summary>
     /// Constructor without parameters to instantiate the class - Ride
     /// </summary>
     public Ride() {}
-
     /// <summary>
     /// Constructor with parameters to instantiate the class - Ride
     /// </summary>
@@ -55,7 +48,6 @@ public class Ride
         TripPrice = price;
         TripCar = auto;
     }
-
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -73,7 +65,6 @@ public class Ride
                TripPrice == param.TripPrice &&
                TripCar == param.TripCar;
     }
-    
     /// <summary>
     /// Overload == through Equals
     /// </summary>
@@ -84,7 +75,6 @@ public class Ride
     {            
         return Object.Equals(rideObj1, rideObj2);        
     }
-
     /// <summary>
     /// Overload != through Equals
     /// </summary>
@@ -95,7 +85,6 @@ public class Ride
     {            
         return !Object.Equals(rideObj1, rideObj2);        
     }
-    
     /// <summary>
     /// Print function
     /// </summary>
@@ -104,7 +93,6 @@ public class Ride
     {
         Console.WriteLine($"Departure place: {obj.TripDeparturePlace}, Destination place - {obj.TripDestinationPlace}, date - {obj.TripDate}, time - {obj.TripTime}, price - {obj.TripPrice}, assigned car - {obj.TripCar}");
     }
-    
     /// <summary>
     /// Get hash code func
     /// </summary>

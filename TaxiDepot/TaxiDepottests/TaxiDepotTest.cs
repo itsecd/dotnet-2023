@@ -32,7 +32,6 @@ public class TaxiDepotTest
                 00293944, "Samara Lisova 323, 11", "83747378283")
         };
     }
-
     /// <summary>
     /// Class Car initialization
     /// </summary>
@@ -52,7 +51,6 @@ public class TaxiDepotTest
             new Car("X354XA99", "Kia Rio", "Green")
         };
     }
-    
     /// <summary>
     /// Class User initialization
     /// </summary>
@@ -68,7 +66,6 @@ public class TaxiDepotTest
             new User("Lisov", "Vladimir", "Artmovich", "89177373403")
         };
     }
-    
     /// <summary>
     /// Class Ride initialization
     /// </summary>
@@ -95,10 +92,19 @@ public class TaxiDepotTest
             new Ride("Samara Tolova 9", "Samara Stakova 91", 
                 new DateTime(2022,01, 19, 18, 30, 20), 
                 new TimeSpan(1, 13, 42),  
-                99.11, new Car("M763MM763", "Lada Vesta", "White"))
+                99.11, new Car("T821TT20", "Geely Atlas", "Black")),
+            
+            new Ride("Samara Olova 9", "Samara Stakova 91", 
+                new DateTime(2022,01, 19, 18, 30, 20), 
+                new TimeSpan(1, 13, 42),  
+                99.11, new Car("T821TT20", "Geely Atlas", "Black")),
+            
+            new Ride("Samara Rolova 9", "Samara Stakova 91", 
+                new DateTime(2022,01, 19, 18, 30, 20), 
+                new TimeSpan(1, 13, 42),  
+                99.11, new Car("T821TT20", "Geely Atlas", "Black"))
         };
     }
-
     /// <summary>
     /// Class TaxiDepot initialization
     /// </summary>
@@ -107,7 +113,31 @@ public class TaxiDepotTest
     {
         return new TaxiDepot(DriversList(), CarsList(), UsersList(), RidesList());
     }
-    
+	/// <summary>
+	/// Create car driver pair - func
+	/// </summary>
+	/// <returns></returns>
+	private TaxiDepot CreateCarDriverPairInTaxiDepot()
+	{
+        var company = CreateTaxiDepotObject();
+        company.TrySetDriverCarPair(new Driver("Antonov", "Viktor", "Pavlovich",
+            14557586, "Samara Lenina 25, 4", "89791113223"), new Car("T821TT20", "Geely Atlas", "Black"));
+        return company;
+    }
+    /// <summary>
+    /// Create user ride pair - func
+    /// </summary>
+    /// <returns></returns>
+    private TaxiDepot CreateUserRidePairInTaxiDepot()
+    {
+        var company = CreateTaxiDepotObject();
+        company.TrySetUserRidePair(new User("Lisov", "Vladimir", "Artmovich", "89177373403"),
+            new Ride("Samara Tolova 9", "Samara Stakova 91", 
+                new DateTime(2022,01, 19, 18, 30, 20), 
+                new TimeSpan(1, 13, 42),  
+                99.11, new Car("M763MM763", "Lada Vesta", "White")));
+        return company;
+    }
     /// <summary>
     /// Drivers amount test
     /// </summary>
@@ -118,7 +148,6 @@ public class TaxiDepotTest
         List<Driver> drivers = company.Drivers;
         Assert.Equal(7, drivers.Count);
     }
-    
     /// <summary>
     /// Cars amount test
     /// </summary>
@@ -129,7 +158,6 @@ public class TaxiDepotTest
         List<Car> cars = company.Cars;
         Assert.Equal(9, cars.Count);
     }
-    
     /// <summary>
     /// Users amount test
     /// </summary>
@@ -140,7 +168,6 @@ public class TaxiDepotTest
         List<User> users = company.Users;
         Assert.Equal(5, users.Count);
     }
-    
     /// <summary>
     /// Rides amount test
     /// </summary>
@@ -149,9 +176,8 @@ public class TaxiDepotTest
     {
         var company = CreateTaxiDepotObject();
         List<Ride> rides = company.Rides;
-        Assert.Equal(4, rides.Count);
+        Assert.Equal(6, rides.Count);
     }
-    
     /// <summary>
     /// Right data constructor test - class Driver
     /// </summary>
@@ -167,7 +193,6 @@ public class TaxiDepotTest
         Assert.Equal("89791113223", driver.DriverPhoneNumber);
         Assert.Equal(14557586, driver.DriverPassportId);
     }
-    
     /// <summary>
     /// Right data constructor test - class Car
     /// </summary>
@@ -179,7 +204,6 @@ public class TaxiDepotTest
         Assert.Equal("BMW", car.CarModel);
         Assert.Equal("Black", car.CarColor);
     }
-    
     /// <summary>
     /// Right data constructor test - class User
     /// </summary>
@@ -192,7 +216,6 @@ public class TaxiDepotTest
         Assert.Equal("Pavlovich", user.UserPatronymic);
         Assert.Equal("89228881212", user.UserPhoneNumber);
     }
-    
     /// <summary>
     /// Right data constructor test - class Ride
     /// </summary>
@@ -210,7 +233,6 @@ public class TaxiDepotTest
         Assert.Equal(129.22, ride.TripPrice);
         Assert.Equal(new Car("M777MM763", "Mercedes E63", "Black"), ride.TripCar);
     }
-
     /// <summary>
     /// Test with place condition to search amount of posts - class Ride
     /// </summary>
@@ -224,7 +246,6 @@ public class TaxiDepotTest
             select obj).Count();
         Assert.Equal(1, countRide);
     }
-    
     /// <summary>
     /// Test with price condition to search amount of posts - class Ride
     /// </summary>
@@ -233,9 +254,8 @@ public class TaxiDepotTest
     {
         TaxiDepot company = CreateTaxiDepotObject();
         var countRide = (from obj in company.Rides where (obj.TripPrice < 400.0) select obj).Count();
-        Assert.Equal(3, countRide);
+        Assert.Equal(5, countRide);
     }
-    
     /// <summary>
     /// Test with date condition to search amount of posts - class Ride
     /// </summary>
@@ -246,7 +266,6 @@ public class TaxiDepotTest
         var countRide = (from obj in company.Rides where (obj.TripDate < new DateTime(2021, 12, 12, 12, 12, 12)) select obj).Count();
         Assert.Equal(3, countRide);
     }
-    
     /// <summary>
     /// Test with time condition to search amount of posts - class Ride
     /// </summary>
@@ -255,9 +274,8 @@ public class TaxiDepotTest
     {
         TaxiDepot company = CreateTaxiDepotObject();
         var countRide = (from obj in company.Rides where (obj.TripTime <  new TimeSpan(1, 59, 23)) select obj).Count();
-        Assert.Equal(3, countRide);
+        Assert.Equal(5, countRide);
     }
-    
     /// <summary>
     /// Test with car condition to search amount of posts - class Ride
     /// </summary>
@@ -267,5 +285,76 @@ public class TaxiDepotTest
         TaxiDepot company = CreateTaxiDepotObject();
         var countRide = (from obj in company.Rides where (obj.TripCar == new Car("M777MM763", "Mercedes E63", "Black")) select obj).Count();
         Assert.Equal(1, countRide);
+    }
+    /// <summary>
+    /// Task 1 
+    /// </summary>
+	[Fact]
+    public void TestDriverCarPair()
+    {
+        var company = CreateCarDriverPairInTaxiDepot();
+        Assert.Equal(new Car("T821TT20", "Geely Atlas", "Black"), company.TryGetDriverCarInfo(new Driver("Antonov", "Viktor", "Pavlovich",
+            14557586, "Samara Lenina 25, 4", "89791113223")));
+    }
+    /// <summary>
+    /// Task 2
+    /// </summary>
+    [Fact]
+    public void TestPostsDateConditionRide()
+    {
+        TaxiDepot company = CreateTaxiDepotObject();
+        var countRide = (from obj in company.Rides where (obj.TripDate < new DateTime(2021, 12, 12, 12, 12, 12) && obj.TripDate > new DateTime(2019, 12, 12, 12, 12, 12)) select obj).Count();
+        Assert.Equal(3, countRide);
+    }
+    /// <summary>
+    /// Task 3
+    /// </summary>
+    [Fact]
+    public void TestUserRidePair()
+    {
+        TaxiDepot company = CreateUserRidePairInTaxiDepot();
+        Assert.Equal(new Ride("Samara Tolova 9", "Samara Stakova 91", 
+            new DateTime(2022,01, 19, 18, 30, 20), 
+            new TimeSpan(1, 13, 42),  
+            99.11, new Car("M763MM763", "Lada Vesta", "White")), company.TryGetUserRideInfo(new User("Lisov", "Vladimir", "Artmovich", "89177373403")));
+    }
+    /// <summary>
+    /// Task 4
+    /// </summary>
+    [Fact]
+    public void TopFiveDriversRide()
+    {
+        var company = CreateCarDriverPairInTaxiDepot();
+        var result = (from rides in company.Rides
+            where rides != null
+            select rides.TripCar).Take(5).Count();
+        Assert.Equal(5, result);
+    }
+    /// <summary>
+    /// Task 5
+    /// </summary>
+    [Fact]
+    public void TestRidesTimeInfo()
+    {
+        var company = CreateCarDriverPairInTaxiDepot();
+        var result = (from rides in company.Rides
+            where rides != null
+            select rides.TripTime).ToList();
+        
+        var max = result.Max();
+        Assert.Equal(new TimeSpan(2, 3, 4), max);
+    }
+    /// <summary>
+    /// Task 6
+    /// </summary>
+    [Fact]
+    public void TestUserRidesAmountInfo()
+    {
+        var company = CreateUserRidePairInTaxiDepot();
+        var result = (from keys in company.UserAssignedToRide
+            from rides in company.UserAssignedToRide.Values
+            where rides.TripDate < new DateTime(2022, 12, 12, 12, 12, 12)
+            select keys).ToList();
+        Assert.Single(result);
     }
 }

@@ -13,32 +13,30 @@ public class TaxiDepot
     /// Drivers who are registered in the taxi company
     /// </summary>
     public List<Driver> Drivers { get; set; } = new List<Driver>();
-
     /// <summary>
     /// Cars who are registered in the taxi company
     /// </summary>
     public List<Car> Cars { get; set; } = new List<Car>();
-
     /// <summary>
     /// Peoples who are used the taxi company
     /// </summary>
     public List<User> Users { get; set; } = new List<User>();
-
     /// <summary>
     /// Taxi company's trip info
     /// </summary>
     public List<Ride> Rides { get; set; } = new List<Ride>();
-
     /// <summary>
     /// Driver - Car: pair-container
     /// </summary>
-    public readonly IDictionary<Driver, Car> CarAssignedToDriver = new Dictionary<Driver, Car>();
-
+    public Dictionary<Driver, Car> CarAssignedToDriver;
+    /// <summary>
+    /// User - Ride: pair-container
+    /// </summary>
+    public Dictionary<User, Ride> UserAssignedToRide;
     /// <summary>
     /// Constructor without parameters to instantiate the class - TaxiDepot
     /// </summary>
     public TaxiDepot() {}
-
     /// <summary>
     /// Constructor with parameters to instantiate the class - TaxiDepot
     /// </summary>
@@ -52,8 +50,9 @@ public class TaxiDepot
         Cars = carObj;
         Users = userObj;
         Rides = rideObj;
+        CarAssignedToDriver = new Dictionary<Driver, Car>();
+        UserAssignedToRide = new Dictionary<User, Ride>();
     }
-
     /// <summary>
     /// Try set pair of driver, car - func 
     /// </summary>
@@ -70,11 +69,11 @@ public class TaxiDepot
         catch (ArgumentException)
         {
             Console.WriteLine("An element with that Key already exists.");
+            throw;
         }
         carInfo.CarAssigned = true;
         driverInfo.DriverAssigned = true;
     }
-    
     /// <summary>
     /// Try get pair of driver, car - func 
     /// </summary>
@@ -92,7 +91,40 @@ public class TaxiDepot
             throw;
         }
     }
-    
+    /// <summary>
+    /// Try set pair of user, ride - func 
+    /// </summary>
+    /// <param name="userInfo"></param>
+    /// <param name="rideInfo"></param>
+    public void TrySetUserRidePair(User userInfo, Ride rideInfo)
+    {
+        try
+        {
+            UserAssignedToRide.Add(userInfo, rideInfo);
+        }
+        catch (ArgumentException)
+        {
+            Console.WriteLine("An element with that Key already exists.");
+            throw;
+        }
+    }
+    /// <summary>
+    /// Try get pair of user, ride - func 
+    /// </summary>
+    /// <param name="userInfo"></param>
+    /// <returns></returns>
+    public Ride TryGetUserRideInfo(User userInfo)
+    {
+        try
+        {
+            return UserAssignedToRide[userInfo];
+        }
+        catch (KeyNotFoundException)
+        {
+            Console.WriteLine("Key is not found.");
+            throw;
+        }
+    }
     /// <summary>
     /// Try add post to drivers list - func
     /// </summary>
@@ -106,9 +138,9 @@ public class TaxiDepot
         catch (KeyNotFoundException)
         {
             Console.WriteLine("Error");
+            throw;
         }
     }
-    
     /// <summary>
     /// Try add post to cars list - func
     /// </summary>
@@ -122,9 +154,9 @@ public class TaxiDepot
         catch (KeyNotFoundException)
         {
             Console.WriteLine("Error");
+            throw;
         }
     }
-    
     /// <summary>
     /// Try add post to users list - func
     /// </summary>
@@ -138,9 +170,9 @@ public class TaxiDepot
         catch (KeyNotFoundException)
         {
             Console.WriteLine("Error");
+            throw;
         }
     }
-    
     /// <summary>
     /// Try add post to rides list - func
     /// </summary>
@@ -154,6 +186,7 @@ public class TaxiDepot
         catch (KeyNotFoundException)
         {
             Console.WriteLine("Error");
+            throw;
         }
     }
 }

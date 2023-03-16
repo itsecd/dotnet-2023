@@ -14,9 +14,9 @@ namespace BicycleTests
         public BicycleTests()
         {
             Types = new List<BicycleType>() {
-                new BicycleType() { TypeId = 1, TypeName = "Горный"},
-                new BicycleType() { TypeId = 2, TypeName = "Прогулочный"},
-                new BicycleType() { TypeId = 3, TypeName = "Спортивный"}
+                new BicycleType() { TypeId = 1, TypeName = "Mountain"},
+                new BicycleType() { TypeId = 2, TypeName = "City"},
+                new BicycleType() { TypeId = 3, TypeName = "Sport"}
             };
 
             Prices = new List<Price>()
@@ -67,7 +67,7 @@ namespace BicycleTests
         public void TestGetSportBicycles()
         {
             // Act
-            var sportBikes = Bicycles.Where((Func<Bicycle, bool>)(b => b.Type.TypeName == "Спортивный"));
+            var sportBikes = Bicycles.Where((Func<Bicycle, bool>)(b => b.Type.TypeName == "Sport"));
 
             // Assert
             Assert.Equal(2, sportBikes.Count());
@@ -78,7 +78,7 @@ namespace BicycleTests
         public void TestGetCustomersWhoRentedMountainBikes()
         {
             // Arrange        
-            var mountainBikes = Bicycles.Where((Func<Bicycle, bool>)(b => b.Type.TypeName == "Горный"));
+            var mountainBikes = Bicycles.Where((Func<Bicycle, bool>)(b => b.Type.TypeName == "Mountain"));
 
             // Act
             var customerNames = from c in Customers
@@ -100,9 +100,9 @@ namespace BicycleTests
                                              .Select(g => new { BikeType = g.Key, TotalTime = g.Sum(br => br.RentalDurationHours) });
 
             // Assert
-            Assert.Equal(new List<object> { new { BikeType = "Горный", TotalTime = 5.5 },
-                                             new { BikeType = "Прогулочный", TotalTime = 7.5 },
-                                             new { BikeType = "Спортивный", TotalTime = 4 } },
+            Assert.Equal(new List<object> { new { BikeType = "Mountain", TotalTime = 5.5 },
+                                             new { BikeType = "City", TotalTime = 7.5 },
+                                             new { BikeType = "Sports", TotalTime = 4 } },
                          totalRentalTime.ToList());
         }
 

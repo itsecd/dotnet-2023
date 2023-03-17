@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MusicMarket;
+﻿namespace MusicMarket;
 
 /// <summary>
 /// Покупатель.

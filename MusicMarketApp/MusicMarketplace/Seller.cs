@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Xml.Linq;
-
-namespace MusicMarket;
+﻿namespace MusicMarket;
 
 /// <summary>
 /// Продавец.

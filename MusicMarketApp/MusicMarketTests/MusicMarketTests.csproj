@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Music Marketplace\MusicMarketplace.csproj" />
+    <ProjectReference Include="..\MusicMarketplace\MusicMarketplace.csproj" />
   </ItemGroup>
 
 </Project>

@@ -114,15 +114,6 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            //product0.Seller = "Muzzona";
-            //product1.Seller = "Muzzona";
-            //product2.Seller = "Muzzona";
-            //product3.Seller = "Muzzona";
-            //product4.Seller = "Skifmusic";
-            //product5.Seller = "StopRobot";
-            //product6.Seller = "StopRobot";
-            //product7.Seller = "StopRobot";
-
             product0.Seller = new Seller(0, "Muzzona", "Russia", 300);
             product1.Seller = new Seller(1, "Muzzona", "Russia", 300);
             product2.Seller = new Seller(2, "Muzzona", "Russia", 300);
@@ -233,17 +224,17 @@ public class MusicMarketFixture
         }
     }
 
-    public List<—ustomer> Fixture—ustomers
+    public List<≈Éustomer> Fixture≈Éustomers
     {
         get
         {
             var purchases = FixturePurchases;
-            var Òustomers = new List<—ustomer>();
-            var customer0 = new —ustomer();
-            var customer1 = new —ustomer();
-            var customer2 = new —ustomer();
-            var customer3 = new —ustomer();
-            var customer4 = new —ustomer();
+            var ≈Ñustomers = new List<≈Éustomer>();
+            var customer0 = new ≈Éustomer();
+            var customer1 = new ≈Éustomer();
+            var customer2 = new ≈Éustomer();
+            var customer3 = new ≈Éustomer();
+            var customer4 = new ≈Éustomer();
 
             customer0.Id = 0;
             customer1.Id = 1;
@@ -276,13 +267,13 @@ public class MusicMarketFixture
             customer3.Purchases.Add(purchases[3]);
             customer4.Purchases.Add(purchases[4]);
 
-            Òustomers.Add(customer0);
-            Òustomers.Add(customer1);
-            Òustomers.Add(customer2);
-            Òustomers.Add(customer3);
-            Òustomers.Add(customer4);
+            ≈Ñustomers.Add(customer0);
+            ≈Ñustomers.Add(customer1);
+            ≈Ñustomers.Add(customer2);
+            ≈Ñustomers.Add(customer3);
+            ≈Ñustomers.Add(customer4);
 
-            return Òustomers;
+            return ≈Ñustomers;
         }
     }
 

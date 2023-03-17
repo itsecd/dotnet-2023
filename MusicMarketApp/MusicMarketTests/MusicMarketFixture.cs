@@ -1,4 +1,4 @@
-namespace TEST;
+namespace MusicMarketTests;
 
 using MusicMarket;
 using System;

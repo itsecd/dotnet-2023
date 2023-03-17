@@ -1,4 +1,4 @@
-namespace TEST;
+namespace MusicMarketTests;
 
 using System.Linq;
 

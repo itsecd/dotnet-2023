@@ -1,19 +1,36 @@
 ﻿namespace Shop_class;
+/// <summary>
+/// Customer -  class describes the buyers
+/// </summary>
 public class Customer
 {
-    public Customer(int id, string first_name, string last_name, string middle_name, string card_count)
+    public Customer(int customerid, string firstname, string lastname, string middlename, string cardcount)
     {
-        Id = id;
-        First_name = first_name;
-        Last_name = last_name;
-        Middle_name = middle_name;
-        Card_count = card_count;
+        CustomerId = customerid;
+        FirstName = firstname;
+        LastName = lastname;
+        MiddleName = middlename;
+        CardCount = cardcount;
     }
-
-    public int Id { get; set; }
-    public string First_name { get; set; }
-    public string Last_name { get; set; }
-    public string Middle_name { get; set; }
-    public string Card_count { get; set; }
+    /// <summary>
+    /// Customer id
+    /// </summary>
+    public int CustomerId { get; set; }
+    /// <summary>
+    /// Customer first name
+    /// </summary>
+    public string FirstName { get; set; }
+    /// <summary>
+    /// Customer last name
+    /// </summary>
+    public string LastName { get; set; }
+    /// <summary>
+    /// Customer midle name
+    /// </summary>
+    public string MiddleName { get; set; }
+    /// <summary>
+    /// Customer card count
+    /// </summary>
+    public string CardCount { get; set; }
 
 }

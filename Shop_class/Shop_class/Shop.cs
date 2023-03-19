@@ -1,14 +1,22 @@
 ﻿
 namespace Shop_class;
+/// <summary>
+/// Shop - class describes shop 
+/// </summary>
 public class Shop
 {
+    /// <summary>
+    /// shop id
+    /// </summary>
+    public int ShopId { get; set; }
+    /// <summary>
+    /// products in shop
+    /// </summary>
+    public List<Product> Products { get; set; } 
 
-    public int Id { get; set; }
-    public List<Product> Products { get; set; } = new List<Product>();
-
-    public Shop(int id, List<Product> products)
+    public Shop(int shopid, List<Product> products)
     {
-        Id = id;
+        ShopId = shopid;
         Products = products;
     }
 

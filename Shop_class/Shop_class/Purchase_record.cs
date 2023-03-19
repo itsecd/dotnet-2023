@@ -3,15 +3,19 @@
 namespace Shop_class;
 public class Purchase_record
 {
-    public Purchase_record(Customer customer, Product product, double quantity)
+    public Purchase_record(Customer customer, List<Product> products, 
+        Shop shop, double sum, DateTime dateSale)
     {
         Customer = customer;
-        Product = product;
-        Quantity = quantity;
+        Products = products;
+        Shop = shop;
+        Sum = sum;
+        DateSale = dateSale;
     }
 
     public Customer Customer { get; set; }
-    public Product Product { get; set; }
-    public double Quantity { get; set; }
-    public DateTime Date { get; set; }
+    public List<Product> Products { get; set; }
+    public Shop Shop { get; set; }
+    public double Sum { get; set; }
+    public DateTime DateSale { get; set; }
 }

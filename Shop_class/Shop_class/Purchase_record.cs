@@ -3,7 +3,7 @@
 namespace Shop_class;
 public class Purchase_record
 {
-    public Purchase_record(Customer customer, List<Product> products, 
+    public Purchase_record(Customer customer, List<Product> products,
         Shop shop, double sum, DateTime dateSale)
     {
         Customer = customer;

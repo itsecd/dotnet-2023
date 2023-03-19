@@ -24,6 +24,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <ProjectReference Include="/Users/vladimirskobcov/RiderProjects/dotnet-2023/TaxiDepot/TaxiDepotClass/TaxiDepotClass.csproj" />
+        <ProjectReference Include="..\TaxiDepo.Classes\TaxiDepo.Classes.csproj" />
     </ItemGroup>
 </Project>

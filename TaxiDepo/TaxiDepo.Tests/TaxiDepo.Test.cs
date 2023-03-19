@@ -1,10 +1,10 @@
 using Xunit;
-using TaxiDepotClass;
+using TaxiDepo.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace TaxiDepotTests;
+namespace TaxiDepoClasses.Tests;
 
 public class TaxiDepotTest
 {

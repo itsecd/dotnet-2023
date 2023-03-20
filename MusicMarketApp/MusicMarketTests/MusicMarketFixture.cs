@@ -238,12 +238,12 @@ public class MusicMarketFixture
         get
         {
             var purchases = FixturePurchases;
-            var ñustomers = new List<Ñustomer>();
-            var customer0 = new Ñustomer();
-            var customer1 = new Ñustomer();
-            var customer2 = new Ñustomer();
-            var customer3 = new Ñustomer();
-            var customer4 = new Ñustomer();
+            var ñustomers = new List<Customer>();
+            var customer0 = new Customer();
+            var customer1 = new Customer();
+            var customer2 = new Customer();
+            var customer3 = new Customer();
+            var customer4 = new Customer();
 
             customer0.Id = 0;
             customer1.Id = 1;
@@ -276,13 +276,13 @@ public class MusicMarketFixture
             customer3.Purchases.Add(purchases[3]);
             customer4.Purchases.Add(purchases[4]);
 
-            ñustomers.Add(customer0);
-            ñustomers.Add(customer1);
-            ñustomers.Add(customer2);
-            ñustomers.Add(customer3);
-            ñustomers.Add(customer4);
+            customers.Add(customer0);
+            customers.Add(customer1);
+            customers.Add(customer2);
+            customers.Add(customer3);
+            customers.Add(customer4);
 
-            return ñustomers;
+            return customers;
         }
     }
 

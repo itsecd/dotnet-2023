@@ -229,7 +229,7 @@ public class MusicMarketFixture
         get
         {
             var purchases = FixturePurchases;
-            var ńustomers = new List<Customer>();
+            var customers = new List<Customer>();
             var customer0 = new Customer();
             var customer1 = new Customer();
             var customer2 = new Customer();

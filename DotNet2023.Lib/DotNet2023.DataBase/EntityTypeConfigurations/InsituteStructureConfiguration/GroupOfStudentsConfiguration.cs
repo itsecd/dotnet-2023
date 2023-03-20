@@ -1,4 +1,4 @@
-﻿using DotNet2023.DataModel.InstitutionStructure;
+﻿using DotNet2023.Domain.InstitutionStructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

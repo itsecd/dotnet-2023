@@ -2,10 +2,10 @@
 using DotNet2023.DataBase.EntityTypeConfigurations.InstituteDocumentationConfiguration;
 using DotNet2023.DataBase.EntityTypeConfigurations.OrganizationConfiguration;
 using DotNet2023.DataBase.EntityTypeConfigurations.PersonConfiguration;
-using DotNet2023.DataModel.InstituteDocumentation;
-using DotNet2023.DataModel.InstitutionStructure;
-using DotNet2023.DataModel.Organization;
-using DotNet2023.DataModel.Person;
+using DotNet2023.Domain.InstituteDocumentation;
+using DotNet2023.Domain.InstitutionStructure;
+using DotNet2023.Domain.Organization;
+using DotNet2023.Domain.Person;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNet2023.DataBase.DBContext;

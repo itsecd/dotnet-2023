@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotNet2023.Lib\DotNet2023.DataBase\DotNet2023.DataBase.csproj" />
-    <ProjectReference Include="..\DotNet2023.Lib\DotNet2023.DataModel\DotNet2023.DataModel.csproj" />
+    <ProjectReference Include="..\DotNet2023.lib\DotNet2023.Domain\DotNet2023.Domain.csproj" />
   </ItemGroup>
 
 </Project>

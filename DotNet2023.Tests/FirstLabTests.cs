@@ -1,4 +1,4 @@
-﻿using DotNet2023.DataModel.Organization;
+﻿using DotNet2023.Domain.Organization;
 using DotNet2023.Tests.DataBase;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
-﻿using DotNet2023.DataModel.InstituteDocumentation;
-using DotNet2023.DataModel.InstitutionStructure;
-using DotNet2023.DataModel.Organization;
-using DotNet2023.DataModel.Person;
+﻿using DotNet2023.Domain.InstituteDocumentation;
+using DotNet2023.Domain.InstitutionStructure;
+using DotNet2023.Domain.Organization;
+using DotNet2023.Domain.Person;
 using System.Text.Json;
 
 namespace DotNet2023.TestConsoleApp;

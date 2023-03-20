@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNet2023.DataModel\DotNet2023.DataModel.csproj" />
+    <ProjectReference Include="..\DotNet2023.Domain\DotNet2023.Domain.csproj" />
   </ItemGroup>
 
 </Project>

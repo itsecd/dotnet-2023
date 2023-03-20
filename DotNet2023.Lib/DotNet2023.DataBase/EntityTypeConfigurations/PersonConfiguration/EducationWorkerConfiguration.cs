@@ -1,4 +1,4 @@
-﻿using DotNet2023.DataModel.Person;
+﻿using DotNet2023.Domain.Person;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

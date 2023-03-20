@@ -27,6 +27,10 @@ public class Ride
     /// </summary>
     public Car? TripCar { get; set; }
     /// <summary>
+    /// Information about the user who made this trip
+    /// </summary>
+    public User UserInfo { get; set; }
+    /// <summary>
     /// Constructor without parameters to instantiate the class Ride
     /// </summary>
     public Ride() {}
@@ -39,7 +43,8 @@ public class Ride
     /// <param name="time">Trip time</param>
     /// <param name="price">Trip price</param>
     /// <param name="auto">Trip assigned auto</param>
-    public Ride(string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price, Car auto)
+    public Ride(string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price, Car auto,
+        User user)
     {
         TripDeparturePlace = departurePlace;
         TripDestinationPlace = destinationPlace;
@@ -47,6 +52,9 @@ public class Ride
         TripTime = time;
         TripPrice = price;
         TripCar = auto;
+        UserInfo = user;
+        user.TryAddRideToCollection(this);
+        auto.TryAddRideToCollection(this);
     }
     /// <summary>
     /// Overload Equals
@@ -57,7 +65,7 @@ public class Ride
     {
         if (rideObj is not Ride param || GetType() != rideObj.GetType())
             return false;
-
+        
         return TripDeparturePlace == param.TripDeparturePlace &&
                TripDestinationPlace == param.TripDestinationPlace &&
                TripDate == param.TripDate &&

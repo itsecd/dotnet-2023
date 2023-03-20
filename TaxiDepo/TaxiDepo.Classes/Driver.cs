@@ -29,7 +29,11 @@ public class Driver
     /// <summary>
     /// Indicator that the driver is assigned to the car
     /// </summary>
-    public bool DriverAssigned { get; set; } = false;
+    public bool DriverIsAssigned { get; set; } = false;
+    /// <summary>
+    /// Assigned car info
+    /// </summary>
+    public Car AssignedCar { get; set; }
     /// <summary>
     /// Constructor without parameters to instantiate the class Driver
     /// </summary>
@@ -51,6 +55,15 @@ public class Driver
         DriverPassportId = passportId;
         DriverAddress = address;
         DriverPhoneNumber = phoneNumber;
+    }
+    /// <summary>
+    /// Try to sign driver to car
+    /// </summary>
+    /// <param name="carInfo"></param>
+    public void TrySignCar(Car carInfo)
+    {
+        AssignedCar = carInfo;
+        DriverIsAssigned = true;
     }
     /// <summary>
     /// Overload Equals
@@ -96,7 +109,7 @@ public class Driver
     public void PrintDriverData(Driver obj)
     {
         Console.WriteLine(
-            $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}");
+            $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}, his car - {obj.AssignedCar}");
     }
     /// <summary>
     /// Get hash code func

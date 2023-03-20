@@ -17,7 +17,15 @@ public class Car
     /// <summary>
     /// Indicator that the driver is assigned to the car
     /// </summary>
-    public bool CarAssigned { get; set; } = false;
+    public bool CarIsAssigned { get; set; } = false;
+    /// <summary>
+    /// Assigned driver info
+    /// </summary>
+    public Driver AssignedDriver { get; set; }
+    /// <summary>
+    /// Rides collection
+    /// </summary>
+    public List<Ride> CarRides { get; set; } = new List<Ride>();
     /// <summary>
     /// Constructor without parameters to instantiate the class Car
     /// </summary>
@@ -33,6 +41,32 @@ public class Car
         CarNumber = number;
         CarModel = model;
         CarColor = color;
+    }
+    /// <summary>
+    /// Try to sign a driver
+    /// </summary>
+    /// <param name="driverInfo"></param>
+    public void TrySignDriver(Driver driverInfo)
+    {
+        AssignedDriver = driverInfo;
+        CarIsAssigned = true;
+        driverInfo.TrySignCar(this);
+    }
+    /// <summary>
+    /// Try to add ride to car collection
+    /// </summary>
+    /// <param name="rideInfo"></param>
+    public void TryAddRideToCollection(Ride rideInfo)
+    {
+        try
+        {
+            CarRides.Add(rideInfo);
+        }
+        catch (ArgumentException)
+        {
+            Console.WriteLine("Error");
+            throw;
+        }
     }
     /// <summary>
     /// Overload Equals

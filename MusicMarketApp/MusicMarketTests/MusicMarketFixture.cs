@@ -224,7 +224,7 @@ public class MusicMarketFixture
         }
     }
 
-    public List<Ńustomer> FixtureŃustomers
+    public List<Customer> FixtureCustomers
     {
         get
         {

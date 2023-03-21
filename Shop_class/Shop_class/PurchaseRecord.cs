@@ -10,7 +10,6 @@ public class PurchaseRecord
     {
         Customer = customer;
         Products = products;
-
         Sum = sum;
         DateSale = dateSale;
     }

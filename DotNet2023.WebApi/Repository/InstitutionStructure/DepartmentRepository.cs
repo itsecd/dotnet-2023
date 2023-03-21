@@ -4,10 +4,10 @@ using DotNet2023.WebApi.Interfaces.InstitutionStructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNet2023.WebApi.Repository.InstitutionStructure;
-public class DepartmenRepository : IDepartment
+public class DepartmentRepository : IDepartment
 {
     private readonly DbContextWebApi _dbContext;
-    public DepartmenRepository(DbContextWebApi dbContext) =>
+    public DepartmentRepository(DbContextWebApi dbContext) =>
         _dbContext = dbContext;
 
     public bool CreateDepartment(Department department)

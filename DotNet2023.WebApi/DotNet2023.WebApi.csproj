@@ -18,10 +18,4 @@
     <ProjectReference Include="..\DotNet2023.lib\DotNet2023.Domain\DotNet2023.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\InstituteDocumentation\" />
-    <Folder Include="Controllers\InstitutionStructure\" />
-    <Folder Include="Controllers\Person\" />
-  </ItemGroup>
-
 </Project>

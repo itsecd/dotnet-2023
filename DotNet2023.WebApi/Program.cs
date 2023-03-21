@@ -1,6 +1,12 @@
 using DotNet2023.WebApi.DataBase;
+using DotNet2023.WebApi.Interfaces.InstituteDocumentation;
+using DotNet2023.WebApi.Interfaces.InstitutionStructure;
 using DotNet2023.WebApi.Interfaces.Organization;
+using DotNet2023.WebApi.Interfaces.Person;
+using DotNet2023.WebApi.Repository.InstituteDocumentation;
+using DotNet2023.WebApi.Repository.InstitutionStructure;
 using DotNet2023.WebApi.Repository.Organization;
+using DotNet2023.WebApi.Repository.Person;
 using DotNet2023.WebApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +20,14 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
-    .AddScoped<IHigherEducationInstitution, HigherEducationInstitutionRepository>();
-
+    .AddScoped<IHigherEducationInstitution, HigherEducationInstitutionRepository>()
+    .AddScoped<IInstituteSpeciality, InstituteSpecialityRepository>()
+    .AddScoped<ISpeciality, SpecialityRepository>()
+    .AddScoped<IDepartment, DepartmentRepository>()
+    .AddScoped<IFaculty, FacultyRepository>()
+    .AddScoped<IGroupOfStudents, GroupOfStudentsRepository>()
+    .AddScoped<IEducationWorker, EducationWorkerRepository>()
+    .AddScoped<IStudent, StudentRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

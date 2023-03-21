@@ -35,7 +35,7 @@ public class SpecialityRepository : ISpeciality
         return await SaveAsync();
     }
 
-    public ICollection<Speciality>? GetInstituteSpecialities() =>
+    public ICollection<Speciality>? GetSpecialities() =>
         _dbContext.Specialties.ToList();
 
     public Speciality? GetSpeciality(string code) =>

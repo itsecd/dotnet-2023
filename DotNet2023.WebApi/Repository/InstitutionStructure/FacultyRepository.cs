@@ -27,7 +27,6 @@ public class FacultyRepository : IFaculty
         _dbContext.Faculties.Remove(faculty);
         return Save();
     }
-
     public async Task<bool> DeleteFacultyAsync(Faculty faculty)
     {
         _dbContext.Faculties.Remove(faculty);

@@ -12,7 +12,10 @@ public interface IInstituteSpeciality
     InstituteSpeciality? GetInstituteSpeciality(string code, string idInstitution);
 
     bool InstituteSpecialityExistsByCode(string code);
+    bool InstituteSpecialityExists(string code, string idInstitution);
     Task<bool> InstituteSpecialityExistsByCodeAsync(string code);
+    Task<bool> InstituteSpecialityExistsAsync(string code, string idInstitution);
+
 
 
     bool CreateInstituteSpeciality(InstituteSpeciality instituteSpeciality);

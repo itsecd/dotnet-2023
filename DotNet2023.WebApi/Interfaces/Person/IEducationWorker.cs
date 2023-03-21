@@ -3,7 +3,7 @@
 namespace DotNet2023.WebApi.Interfaces.Person;
 public interface IEducationWorker
 {
-    ICollection<EducationWorker>? GetEducationWorker();
+    ICollection<EducationWorker>? GetEducationWorkers();
     ICollection<EducationWorker>? GetEducationWorkerByInstitution(string idInstitution);
 
     EducationWorker? GetEducationWorkerById(string IdEducationWorker);

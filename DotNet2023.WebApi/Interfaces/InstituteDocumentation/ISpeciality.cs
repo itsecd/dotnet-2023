@@ -3,7 +3,7 @@
 namespace DotNet2023.WebApi.Interfaces.InstituteDocumentation;
 public interface ISpeciality
 {
-    ICollection<Speciality>? GetInstituteSpecialities();
+    ICollection<Speciality>? GetSpecialities();
     Speciality? GetSpeciality(string code);
 
     bool SpecialityExists(string code);

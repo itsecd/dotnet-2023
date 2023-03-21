@@ -26,6 +26,12 @@ public class MappingProfiles : Profile
         CreateMap<Student, StudentDto>();
 
         CreateMap<HigherEducationInstitutionDto, HigherEducationInstitution>();
-
+        CreateMap<DepartmentDto, Department>();
+        CreateMap<FacultyDto, Faculty>();
+        CreateMap<GroupOfStudentsDto, GroupOfStudents>();
+        CreateMap<InstituteSpecialityDto, InstituteSpeciality>();
+        CreateMap<SpecialityDto, Speciality>();
+        CreateMap<EducationWorkerDto, EducationWorker>();
+        CreateMap<StudentDto, Student>();
     }
 }

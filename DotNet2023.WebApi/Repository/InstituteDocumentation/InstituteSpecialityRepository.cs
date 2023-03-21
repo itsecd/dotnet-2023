@@ -63,6 +63,16 @@ public class InstituteSpecialityRepository : IInstituteSpeciality
         await _dbContext.InstituteSpecialties
         .AnyAsync(x => x.IdSpeciality == code);
 
+    public bool InstituteSpecialityExists(string code, string idInstitution) =>
+        _dbContext.InstituteSpecialties
+        .Any(x => x.IdSpeciality == code &&
+        x.IdHigherEducationInstitution == idInstitution);
+
+    public async Task<bool> InstituteSpecialityExistsAsync(string code, string idInstitution) =>
+        await _dbContext.InstituteSpecialties
+        .AnyAsync(x => x.IdSpeciality == code &&
+        x.IdHigherEducationInstitution == idInstitution);
+
     public bool Save()
     {
         var saved = _dbContext.SaveChanges();

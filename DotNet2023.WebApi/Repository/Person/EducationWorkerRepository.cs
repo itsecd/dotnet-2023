@@ -43,7 +43,7 @@ public class EducationWorkerRepository : IEducationWorker
         await _dbContext.EducationWorker
         .AnyAsync(x => x.Id == IdEducationWorker);
 
-    public ICollection<EducationWorker>? GetEducationWorker() =>
+    public ICollection<EducationWorker>? GetEducationWorkers() =>
         _dbContext.EducationWorker.ToList();
 
     public EducationWorker? GetEducationWorkerById(string IdEducationWorker) =>

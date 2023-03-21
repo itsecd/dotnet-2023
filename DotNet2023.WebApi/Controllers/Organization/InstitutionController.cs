@@ -10,12 +10,12 @@ namespace DotNet2023.WebApi.Controllers.Organization;
 [ApiController]
 public class InstitutionController : Controller
 {
-    private readonly IHigherEducationInstitution _institutionRepository;
+    private readonly IHigherEducationInstitution _repository;
     private readonly IMapper _mapper;
 
     public InstitutionController(IHigherEducationInstitution institutionRepository,
         IMapper mapper) =>
-        (_institutionRepository, _mapper) = (institutionRepository, mapper);
+        (_repository, _mapper) = (institutionRepository, mapper);
 
 
     [HttpGet]
@@ -23,7 +23,7 @@ public class InstitutionController : Controller
     {
         var institutions = _mapper
             .Map<List<HigherEducationInstitutionDto>>
-            (_institutionRepository.GetInstitutions());
+            (_repository.GetInstitutions());
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
         return Ok(institutions);
@@ -34,13 +34,12 @@ public class InstitutionController : Controller
     {
         var institution = _mapper
             .Map<HigherEducationInstitutionDto>
-            (_institutionRepository.GetInstitution(idInstitution));
+            (_repository.GetInstitution(idInstitution));
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         return Ok(institution);
-
     }
 
 
@@ -48,7 +47,7 @@ public class InstitutionController : Controller
     public async Task<IActionResult>? GetInstitutionAsync(
         string idInstitution)
     {
-        var institution = await _institutionRepository
+        var institution = await _repository
             .GetInstitutionAsync(idInstitution);
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -67,7 +66,7 @@ public class InstitutionController : Controller
         var institutionMap = _mapper
             .Map<HigherEducationInstitution>(institution);
         
-        if (!_institutionRepository.CreateInstructon(institutionMap))
+        if (!_repository.CreateInstructon(institutionMap))
         {
             ModelState.AddModelError("", "Something went wrong while savin");
             return StatusCode(500, ModelState);
@@ -78,16 +77,16 @@ public class InstitutionController : Controller
     [HttpDelete("DeleteInstructon")]
     public IActionResult DeleteInstitution(string idInstitution)
     {
-        if (!_institutionRepository.InstitutionExists(idInstitution))
+        if (!_repository.InstitutionExists(idInstitution))
             return NotFound();
         
-        var institutionToDelete = _institutionRepository
+        var institutionToDelete = _repository
             .GetInstitution(idInstitution);
 
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid || institutionToDelete == null)
             return BadRequest(ModelState);
 
-        if (!_institutionRepository.DeleteInstructon(institutionToDelete))
+        if (!_repository.DeleteInstructon(institutionToDelete))
             ModelState.AddModelError("", "Something went wrong deleting institution");
         
         return Ok("Successfully deleted");
@@ -101,14 +100,14 @@ public class InstitutionController : Controller
         if (institution == null)
             return BadRequest(ModelState);
 
-        if (!_institutionRepository.InstitutionExists(institution.Id))
+        if (!_repository.InstitutionExists(institution.Id))
             return NotFound();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         var institutionToUpdate = _mapper.Map<HigherEducationInstitution>(institution);
-        if (!_institutionRepository.UpdateInstructon(institutionToUpdate))
+        if (!_repository.UpdateInstructon(institutionToUpdate))
         {
             ModelState.AddModelError("", "Something went wrong updating institution");
             return StatusCode(500, ModelState);

@@ -7,13 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2023.Domain", "DotNet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2023.Tests", "..\DotNet2023.Tests\DotNet2023.Tests.csproj", "{585F77E0-2ABB-4931-8C91-7A90F6F9136F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2023.TestConsoleApp", "..\DotNet2023.TestConsoleApp\DotNet2023.TestConsoleApp.csproj", "{5F3D2188-FE33-47B2-BDD4-EA4815C0A529}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2023.DataBase", "DotNet2023.DataBase\DotNet2023.DataBase.csproj", "{349FD51D-F39D-4738-AE17-B21A0DDC7FF5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2023.WebApi", "..\DotNet2023.WebApi\DotNet2023.WebApi.csproj", "{58C5A04F-C209-465B-8B42-E8A0066CAA32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet2023.Application", "DotNet2023.Application\DotNet2023.Application.csproj", "{EA5A974C-7246-4FDA-9199-8036E43A350E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +25,6 @@ Global
 		{585F77E0-2ABB-4931-8C91-7A90F6F9136F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{585F77E0-2ABB-4931-8C91-7A90F6F9136F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{585F77E0-2ABB-4931-8C91-7A90F6F9136F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F3D2188-FE33-47B2-BDD4-EA4815C0A529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F3D2188-FE33-47B2-BDD4-EA4815C0A529}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F3D2188-FE33-47B2-BDD4-EA4815C0A529}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F3D2188-FE33-47B2-BDD4-EA4815C0A529}.Release|Any CPU.Build.0 = Release|Any CPU
 		{349FD51D-F39D-4738-AE17-B21A0DDC7FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{349FD51D-F39D-4738-AE17-B21A0DDC7FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{349FD51D-F39D-4738-AE17-B21A0DDC7FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,10 +33,6 @@ Global
 		{58C5A04F-C209-465B-8B42-E8A0066CAA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C5A04F-C209-465B-8B42-E8A0066CAA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58C5A04F-C209-465B-8B42-E8A0066CAA32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA5A974C-7246-4FDA-9199-8036E43A350E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA5A974C-7246-4FDA-9199-8036E43A350E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA5A974C-7246-4FDA-9199-8036E43A350E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA5A974C-7246-4FDA-9199-8036E43A350E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

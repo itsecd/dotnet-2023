@@ -1,18 +1,29 @@
 ﻿using DotNet2023.Domain.Organization;
-using MediatR;
+using System.ComponentModel.DataAnnotations;
 
-namespace DotNet2023.Application.Institutions.Commands.CreateInstitutions;
-
-public class CreateInstitutionsCommand : IRequest
+namespace DotNet2023.WebApi.DtoModels.Organization;
+public class HigherEducationInstitutionDto
 {
-    public string IdInstitution { get; set; } = String.Empty;
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+
     public string? FullName { get; set; }
     public string? Initials { get; set; }
+
     public string? LegalAddress { get; set; }
 
+
+    [RegularExpression(@"[0-9]{13}")]
     public string? RegistrationNumber { get; set; }
+
+    [RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }
+
+    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
     public string? Email { get; set; }
+
     public InstitutionalProperty? InstitutionalProperty { get; set; }
     public BuildingProperty? BuildingProperty { get; set; }
+
+    public string? IdRector { get; set; }
+
 }

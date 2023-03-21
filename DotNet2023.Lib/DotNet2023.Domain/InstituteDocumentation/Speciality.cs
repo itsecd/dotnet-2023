@@ -1,4 +1,6 @@
-﻿namespace DotNet2023.Domain.InstituteDocumentation;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DotNet2023.Domain.InstituteDocumentation;
 
 public enum StudyFormat
 {
@@ -25,7 +27,8 @@ public enum StudyFormat
 /// </summary>
 public class Speciality
 {
-    //[RegularExpression(@"\d.\d\d.\d\d.\d\d")]
+    // TODO rename Code to IdSpeciality
+    [RegularExpression(@"\d.\d\d.\d\d.\d\d")]
     public string Code { get; set; } = new Guid().ToString();
     public string? Title { get; set; }
     public StudyFormat? StudyFormat { get; set; }

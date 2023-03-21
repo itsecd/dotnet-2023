@@ -12,7 +12,8 @@ namespace DotNet2023.Domain.InstitutionStructure;
 public class BaseSection
 {
     [Required]
-    public string? Id { get; set; } = Guid.NewGuid().ToString();
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    // TODO rename Name to Title
     public string? Name { get; set; }
 
     [RegularExpression(@"\\S+@\\S+\\.\\S+$")]

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -14,7 +15,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotNet2023.lib\DotNet2023.DataBase\DotNet2023.DataBase.csproj" />
-    <ProjectReference Include="..\DotNet2023.lib\DotNet2023.DataModel\DotNet2023.Domain.csproj" />
+    <ProjectReference Include="..\DotNet2023.lib\DotNet2023.Domain\DotNet2023.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\InstituteDocumentation\" />
+    <Folder Include="Controllers\InstitutionStructure\" />
+    <Folder Include="Controllers\Person\" />
+    <Folder Include="Interfaces\InstituteDocumentation\" />
+    <Folder Include="Interfaces\InstitutionStructure\" />
+    <Folder Include="Interfaces\Person\" />
+    <Folder Include="Repository\InstituteDocumentation\" />
+    <Folder Include="Repository\InstitutionStructure\" />
+    <Folder Include="Repository\Person\" />
   </ItemGroup>
 
 </Project>

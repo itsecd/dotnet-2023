@@ -3,7 +3,7 @@
 /// <summary>
 /// Покупатель.
 /// </summary>
-public class Сustomer
+public class Customer
 {
     /// <summary>
     /// ID Покупателя.
@@ -30,9 +30,9 @@ public class Сustomer
     /// </summary>
     public List<Purchase> Purchases = new();
 
-    public Сustomer() { }
+    public Customer() { }
 
-    public Сustomer(int id, string name, string country, string adress, List<Purchase> purchases)
+    public Customer(int id, string name, string country, string adress, List<Purchase> purchases)
     {
         Id = id;
         Name = name;

@@ -36,7 +36,7 @@ public class EducationWorkerRepository : IEducationWorker
 
     public bool EducationWorkerExistsById(string IdEducationWorker) =>
         _dbContext.EducationWorker
-        .Any(x=>x.Id == IdEducationWorker);
+        .Any(x => x.Id == IdEducationWorker);
 
     public async Task<bool> EducationWorkerExistsByIdAsync(
         string IdEducationWorker) =>

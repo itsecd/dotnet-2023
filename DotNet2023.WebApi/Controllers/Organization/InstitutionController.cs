@@ -53,7 +53,7 @@ public class InstitutionController : Controller
             return BadRequest(ModelState);
 
         return Ok(_mapper.Map<HigherEducationInstitutionDto>(institution));
-     }
+    }
 
 
     [HttpPost("CreateInstructon")]
@@ -65,7 +65,7 @@ public class InstitutionController : Controller
 
         var institutionMap = _mapper
             .Map<HigherEducationInstitution>(institution);
-        
+
         if (!_repository.CreateInstructon(institutionMap))
         {
             ModelState.AddModelError("", "Something went wrong while savin");
@@ -79,7 +79,7 @@ public class InstitutionController : Controller
     {
         if (!_repository.InstitutionExists(idInstitution))
             return NotFound();
-        
+
         var institutionToDelete = _repository
             .GetInstitution(idInstitution);
 
@@ -88,7 +88,7 @@ public class InstitutionController : Controller
 
         if (!_repository.DeleteInstructon(institutionToDelete))
             ModelState.AddModelError("", "Something went wrong deleting institution");
-        
+
         return Ok("Successfully deleted");
     }
 

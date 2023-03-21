@@ -116,7 +116,7 @@ public class InstituteSpecialityController : Controller
             return BadRequest(ModelState);
 
         if (!_repository.InstituteSpecialityExists(
-            instituteSpeciality!.IdSpeciality, 
+            instituteSpeciality!.IdSpeciality,
             instituteSpeciality!.IdHigherEducationInstitution))
             return NotFound();
 

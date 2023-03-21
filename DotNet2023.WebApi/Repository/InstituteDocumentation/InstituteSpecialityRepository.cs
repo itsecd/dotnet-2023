@@ -44,7 +44,7 @@ public class InstituteSpecialityRepository : IInstituteSpeciality
         .ToList();
 
     public ICollection<InstituteSpeciality>? GetInstituteSpecialitiesByInstitution
-        (string idInstitution)=>
+        (string idInstitution) =>
         _dbContext.InstituteSpecialties
         .Where(x => x.IdHigherEducationInstitution == idInstitution)
         .ToList();

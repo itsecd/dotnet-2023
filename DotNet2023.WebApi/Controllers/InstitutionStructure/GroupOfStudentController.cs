@@ -80,7 +80,7 @@ public class GroupOfStudentController : Controller
 
 
     [HttpPut("UpdateGroupOfStudents")]
-    public IActionResult UpdateGroupOfStudents (
+    public IActionResult UpdateGroupOfStudents(
         [FromBody] GroupOfStudents groupOfStudent)
     {
         if (groupOfStudent == null)

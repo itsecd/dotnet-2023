@@ -46,7 +46,7 @@ public class StudentRepository : IStudent
         _dbContext.Students
         .Where(x => x.IdGroup == idGroupOfStudent)
         .ToList();
-        
+
 
     public bool Save()
     {

@@ -28,7 +28,7 @@ public class FirstLabTests
     [InlineData("КФУ", "КФУ", "d0e4ca0b-baf2-4de2-b809-65d3fe0e8f68")]
     [InlineData("СГТУ", "СГТУ", "e7fe6d4e-ccda-4d87-b566-1466ce582f96")]
 
-    public void InformationUniversity(string initials, string expectedInitials, 
+    public void InformationUniversity(string initials, string expectedInitials,
         string expectedId)
     {
         var actual = DataBasaContext.Institutes
@@ -218,7 +218,7 @@ public class FirstLabTests
 
     [Theory]
     [MemberData("GetDataBuildingAndOwnershipByType")]
-    public void BuildingAndOwnershipByType(InstitutionalProperty institutionalProperty, 
+    public void BuildingAndOwnershipByType(InstitutionalProperty institutionalProperty,
         BuildingProperty buildingProperty,
         ResponseBuildingAndOwnership[] expected)
     {

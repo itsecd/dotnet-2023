@@ -37,7 +37,7 @@ public class FacultyRepository : IFaculty
         await _dbContext.Faculties
         .AnyAsync(x => x.Id == IdFaculty);
 
-    public bool FacultytExistsById(string IdFaculty) => 
+    public bool FacultytExistsById(string IdFaculty) =>
         _dbContext.Faculties
         .Any(x => x.Id == IdFaculty);
 

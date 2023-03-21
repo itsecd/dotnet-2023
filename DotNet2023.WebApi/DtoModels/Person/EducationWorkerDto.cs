@@ -3,7 +3,7 @@
 namespace DotNet2023.WebApi.DtoModels.Person;
 public class EducationWorkerDto
 {
-    public string Id { get; set; } 
+    public string Id { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Patronymic { get; set; }

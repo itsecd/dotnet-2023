@@ -37,7 +37,7 @@ public class DepartmentRepository : IDepartment
     public bool DepartmentExistsById(string idDepartment)
     {
         return _dbContext.Departments
-            .Any(x=>x.Id == idDepartment);
+            .Any(x => x.Id == idDepartment);
     }
 
     public async Task<bool> DepartmentExistsByIdAsync(string idDepartment)

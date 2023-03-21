@@ -3,7 +3,7 @@
 namespace DotNet2023.WebApi.DtoModels.InstitutionStructure;
 public class DepartmentDto
 {
-    public string Id { get; set; } 
+    public string Id { get; set; }
     public string? Name { get; set; }
 
     [RegularExpression(@"\\S+@\\S+\\.\\S+$")]

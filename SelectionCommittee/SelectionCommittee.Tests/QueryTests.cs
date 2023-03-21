@@ -3,7 +3,7 @@ using SelectionCommittee.Domain;
 namespace SelectionCommittee.Tests;
 
 /// <summary>
-/// Тестирование сущностей приемной комиссии с помощью LINQ.
+/// Тестирование корректности выполнения запросов с помощью LINQ.
 /// </summary>
 public class QueryTests
 {
@@ -11,9 +11,8 @@ public class QueryTests
     /// Вывести информацию об абитуриентах из указанного города.
     /// </summary>
     [Fact]
-    public void FirstQueryTest()
+    public void FindEnrolleesByCityTest()
     {
-        var defaultDate = DateTime.Now;
         var correctResult = new List<Enrollee>
         {
             new Enrollee()
@@ -78,11 +77,10 @@ public class QueryTests
     /// Вывести информацию об абитуриентах старше 20 лет, упорядочить по ФИО.
     /// </summary>
     [Fact]
-    public void SecondQueryTest()
+    public void FindEnrolleesByAgeSortByFioTest()
     {
         var enrollees = new List<Enrollee>();
         var size = 10;
-
 
         for (var index = 0; index < size; index++)
         {
@@ -125,9 +123,9 @@ public class QueryTests
     /// упорядочить по сумме баллов за экзамены.
     /// </summary>
     [Fact]
-    public void ThirdQueryTest()
+    public void FindEnrolleesBySpecializationTest()
     {
-        var enrollees = new List<Enrollee>
+        var correctResult = new List<Enrollee>
         {
             new Enrollee
             {
@@ -175,29 +173,75 @@ public class QueryTests
             }
         };
 
-        var correctResult = new List<Enrollee>(enrollees);
-
-        enrollees.Add(new Enrollee
+        var enrollees = new List<Enrollee>
         {
-            FirstName = "Петр",
-            LastName = "Игнатьев",
-            Country = "Russia",
-            City = "Samara",
-            Specializations = new List<Specialization>
+            new Enrollee
             {
-                new Specialization
+                FirstName = "Михаил",
+                LastName = "Иванов",
+                Country = "Russia",
+                City = "Samara",
+                Specializations = new List<Specialization>
                 {
-                    Name = "ФИИТ"
-                }
-            },
-            ExamResults = new List<ExamResult>
+                    new Specialization
+                    {
+                        Name = "ИБАС"
+                    }
+                },
+                ExamResults = new List<ExamResult>
                 {
                     new ExamResult
                     {
                         Points = 0
                     }
                 }
-        });
+
+            },
+
+            new Enrollee
+            {
+                FirstName = "Виктор",
+                LastName = "Иванов",
+                Country = "Russia",
+                City = "Moscow",
+                Specializations = new List<Specialization>
+                {
+                    new Specialization
+                    {
+                        Name = "ИБАС"
+                    }
+                },
+                ExamResults = new List<ExamResult>
+                {
+                    new ExamResult
+                    {
+                        Points = 0
+                    }
+                }
+            },
+
+            new Enrollee
+            {
+                FirstName = "Петр",
+                LastName = "Игнатьев",
+                Country = "Russia",
+                City = "Samara",
+                Specializations = new List<Specialization>
+                {
+                    new Specialization
+                    {
+                    Name = "ФИИТ"
+                    }
+                },
+                ExamResults = new List<ExamResult>
+                {
+                    new ExamResult
+                    {
+                        Points = 0
+                    }
+                }
+            }
+        };
 
         var result = enrollees
             .Where(enrollee => enrollee.Specializations![0].Name == "ИБАС")
@@ -218,7 +262,7 @@ public class QueryTests
     /// приоритету.
     /// </summary>
     [Fact]
-    public void FourthQueryTest()
+    public void FindEnrolleesBySpecializationAndPriorityTest()
     {
         var correctResult = new List<Enrollee>
         {
@@ -269,14 +313,61 @@ public class QueryTests
             },
         };
 
-        var enrollees = new List<Enrollee>(correctResult);
-        enrollees.Add(new Enrollee
+        var enrollees = new List<Enrollee>
         {
-            FirstName = "Михаил",
-            LastName = "Иванов",
-            Country = "Russia",
-            City = "Samara",
-            Specializations = new List<Specialization>
+            new Enrollee
+            {
+                FirstName = "Михаил",
+                LastName = "Иванов",
+                Country = "Russia",
+                City = "Samara",
+                Specializations = new List<Specialization>
+                {
+                    new Specialization
+                    {
+                        Name = "ИБАС",
+                        Priority = 1
+                    }
+                },
+                ExamResults = new List<ExamResult>
+                {
+                    new ExamResult
+                    {
+                        Points = 0
+                    }
+                }
+            },
+
+            new Enrollee
+            {
+                FirstName = "Михаил",
+                LastName = "Иванов",
+                Country = "Russia",
+                City = "Samara",
+                Specializations = new List<Specialization>
+                {
+                    new Specialization
+                    {
+                        Name = "ИБАС",
+                        Priority = 1
+                    }
+                },
+                ExamResults = new List<ExamResult>
+                {
+                    new ExamResult
+                    {
+                        Points = 0
+                    }
+                }
+            },
+
+            new Enrollee
+            {
+                FirstName = "Михаил",
+                LastName = "Иванов",
+                Country = "Russia",
+                City = "Samara",
+                Specializations = new List<Specialization>
                 {
                     new Specialization
                     {
@@ -284,14 +375,15 @@ public class QueryTests
                         Priority = 2
                     }
                 },
-            ExamResults = new List<ExamResult>
+                ExamResults = new List<ExamResult>
                 {
                     new ExamResult
                     {
                         Points = 0
                     }
                 }
-        });
+            }
+        };
 
         var result = enrollees
             .Where(enrollee => enrollee.Specializations![0].Name == "ИБАС"
@@ -310,7 +402,7 @@ public class QueryTests
     /// Вывести информацию о топ 5 абитуриентах, набравших наибольшее число баллов за три предмета.
     /// </summary>
     [Fact]
-    public void FifthQueryTest()
+    public void FindEnrollesByExamResultTest()
     {
         var pointsList = new List<int> { 200, 190, 180, 170, 160, 150, 140, 130 };
         var correctResult = new List<Enrollee>();

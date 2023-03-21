@@ -24,31 +24,31 @@ public class FlightCLass
     /// <summary>
     /// Represent a point of arrival
     /// </summary>
-    public string Destination { get; set; } = string.Empty;
+    public string Destination { get; set; }
     /// <summary>
     /// Represent a departure date
     /// </summary>
-    public DateOnly DepartureDate { get; set; } = new DateOnly();
+    public DateTime DepartureDate { get; set; }
     /// <summary>
     /// Represent a arrival date
     /// </summary>
-    public DateOnly ArrivalDate { get; set; } = new DateOnly();
+    public DateTime ArrivalDate { get; set; }
     /// <summary>
     /// Represent a flight duration
     /// </summary>
-    public double FlightDuration { get; set; } = 0;
+    public double FlightDuration { get; set; }
     /// <summary>
     /// Represent a type of airplane
     /// </summary>
-    public string AirplaneType { get; set; } = string.Empty;
+    public string AirplaneType { get; set; }
     /// <summary>
     /// Represent a list of tickets on this flight
     /// </summary>
     public List<TicketClass> Tickets { get; set; } = new List<TicketClass> { };
     public FlightCLass() { }
     public FlightCLass(int number, string flightCode, string source,
-        string destination, DateOnly departureDate,
-        DateOnly arrivalDate, double flightDuration, string airplaneType)
+        string destination, DateTime departureDate,
+        DateTime arrivalDate, double flightDuration, string airplaneType)
     {
         Number = number;
         FlightCode = flightCode;

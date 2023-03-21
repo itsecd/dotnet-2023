@@ -12,7 +12,7 @@ public class PassengerClass
     /// <summary>
     /// Represent a passport number 
     /// </summary>
-    public int PassportNumber { get; set; } = 0;
+    public string PassportNumber { get; set; }
     /// <summary>
     /// Represent a passenger name
     /// </summary>
@@ -22,7 +22,7 @@ public class PassengerClass
     /// </summary>
     public List<TicketClass> Tickets { get; set; } = new List<TicketClass>();
     public PassengerClass() { }
-    public PassengerClass(int passportNumber, string name)
+    public PassengerClass(string passportNumber, string name)
     {
         PassportNumber = passportNumber;
         Name = name;

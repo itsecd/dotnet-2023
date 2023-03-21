@@ -39,8 +39,8 @@ public class AirlinesFixture
     {
         get
         {
-            var firstDate = new DateOnly(2023, 1, 1);
-            var secondDate = new DateOnly(2023, 3, 3);
+            var firstDate = new DateTime(2023, 1, 1);
+            var secondDate = new DateTime(2023, 3, 3);
             var firstDuration = 1.5;
             var secondDuration = 1.1;
             var thirdDuration = 1;
@@ -98,13 +98,13 @@ public class AirlinesFixture
             var secondTicket = new TicketClass(101, "2A", 5);
             var thirdTicket = new TicketClass(102, "3A", 5);
             var fourthTicket = new TicketClass(103, "4A", 5);
-            var firstPassenger = new PassengerClass(1234, "Paul Johnson");
+            var firstPassenger = new PassengerClass("1234", "Paul Johnson");
             firstPassenger.Tickets.Add(firstTicket);
-            var secondPassenger = new PassengerClass(1235, "Sandra Cole");
+            var secondPassenger = new PassengerClass("1235", "Sandra Cole");
             secondPassenger.Tickets.Add(secondTicket);
-            var thirdPassenger = new PassengerClass(1236, "Jack Spours");
+            var thirdPassenger = new PassengerClass("1236", "Jack Spours");
             thirdPassenger.Tickets.Add(thirdTicket);
-            var fourthPassenger = new PassengerClass(1237, "Mike McKay");
+            var fourthPassenger = new PassengerClass("1237", "Mike McKay");
             fourthPassenger.Tickets.Add(fourthTicket);
             var passengers = new List<PassengerClass>
             {

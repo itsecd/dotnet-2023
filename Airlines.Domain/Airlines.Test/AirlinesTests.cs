@@ -29,8 +29,8 @@ public class ClassesTest : IClassFixture<AirlinesFixture>
     [Fact]
     public void FlightsAtSpecifiedPeriod()
     {
-        var firstCompDate = new DateOnly(2023, 3, 2);
-        var secondCompDate = new DateOnly(2023, 4, 2);
+        var firstCompDate = new DateTime(2023, 3, 2);
+        var secondCompDate = new DateTime(2023, 4, 2);
         var request = (from flight in _fixture.FixtureFlights
                        where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
                        (flight.DepartureDate.CompareTo(secondCompDate) < 0)

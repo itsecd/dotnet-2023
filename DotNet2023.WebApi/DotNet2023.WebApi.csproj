@@ -22,12 +22,6 @@
     <Folder Include="Controllers\InstituteDocumentation\" />
     <Folder Include="Controllers\InstitutionStructure\" />
     <Folder Include="Controllers\Person\" />
-    <Folder Include="Interfaces\InstituteDocumentation\" />
-    <Folder Include="Interfaces\InstitutionStructure\" />
-    <Folder Include="Interfaces\Person\" />
-    <Folder Include="Repository\InstituteDocumentation\" />
-    <Folder Include="Repository\InstitutionStructure\" />
-    <Folder Include="Repository\Person\" />
   </ItemGroup>
 
 </Project>

@@ -27,53 +27,39 @@ public class HigherEducationInstitutionRepository : IHigherEducationInstitution
         _dbContext.Institutes.Remove(institution);
         return Save();
     }
-    // TODO how you async?...........
     public async Task<bool> DeleteInstructonAsync(HigherEducationInstitution institution)
     {
         _dbContext.Institutes.Remove(institution);
         return await SaveAsync();
     }
 
-    public HigherEducationInstitution? GetInstitution(string idInstitution)
-    {
-        return _dbContext.Institutes
-            .FirstOrDefault(institution => institution.Id == idInstitution);
-    }
+    public HigherEducationInstitution? GetInstitution(string idInstitution) =>
+        _dbContext.Institutes
+        .FirstOrDefault(institution => institution.Id == idInstitution);
 
-    public async Task<HigherEducationInstitution>? GetInstitutionAsync(string idInstitution)
-    {
-        return await _dbContext.Institutes
-            .FirstOrDefaultAsync(institution => institution.Id == idInstitution);
-    }
+    public async Task<HigherEducationInstitution>? GetInstitutionAsync
+        (string idInstitution) =>
+        await _dbContext.Institutes
+        .FirstOrDefaultAsync(institution => institution.Id == idInstitution);
 
-    public ICollection<HigherEducationInstitution> GetInstitutions()
-    {
-        return _dbContext.Institutes.ToList();
-    }
-    
+    public ICollection<HigherEducationInstitution> GetInstitutions() =>
+        _dbContext.Institutes.ToList();
 
-    public bool InstitutionExists(string idInstitution)
-    {
-        return _dbContext.Institutes
-            .Any(x=>x.Id == idInstitution); 
-    }
-    public async Task<bool> InstitutionExistsAsync(string idInstitution)
-    {
-        return await _dbContext.Institutes
-            .AnyAsync(x => x.Id == idInstitution);
-    }
+    public bool InstitutionExists(string idInstitution) =>
+        _dbContext.Institutes
+        .Any(x => x.Id == idInstitution);
 
-    public bool InstructonExistsByInitials(string initials)
-    {
-        return _dbContext.Institutes
-            .Any(x => x.Initials == initials);
-    }
+    public async Task<bool> InstitutionExistsAsync(string idInstitution) =>
+        await _dbContext.Institutes
+        .AnyAsync(x => x.Id == idInstitution);
 
-    public async Task<bool> InstructonExistsByInitialsAsync(string initials)
-    {
-        return await _dbContext.Institutes
-            .AnyAsync(x => x.Initials == initials);
-    }
+    public bool InstructonExistsByInitials(string initials) =>
+        _dbContext.Institutes
+        .Any(x => x.Initials == initials);
+
+    public async Task<bool> InstructonExistsByInitialsAsync(string initials) =>
+        await _dbContext.Institutes
+        .AnyAsync(x => x.Initials == initials);
 
     public bool Save()
     {

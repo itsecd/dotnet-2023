@@ -12,4 +12,10 @@ public class TransportType
     /// Name type of trasport
     /// </summary>
     public string TypeName { get; set; } = string.Empty;
+    public TransportType() { }
+    public TransportType(int typeId, string typeName)
+    {
+        TypeId = typeId;
+        TypeName = typeName;
+    }
 }

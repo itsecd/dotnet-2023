@@ -1,5 +1,6 @@
 namespace TransportMgmt.Tests;
-public class UnitTest1
+
+public class TransportTests
 {
     [Fact]
     public void Test1()

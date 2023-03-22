@@ -35,9 +35,9 @@ public class Driver
     /// <summary>
     /// Driver's phone number
     /// </summary>
-    public int PhoneNumber { get; set; } = 0;
+    public string PhoneNumber { get; set; } = string.Empty;
     public Driver() { }
-    public Driver(int driverId, string fistName, string lastName, string midleName, int passport, int driverLicense, string address, int phoneNumber)
+    public Driver(int driverId, string fistName, string lastName, string midleName, int passport, int driverLicense, string address, string phoneNumber)
     {
         DriverId = driverId;
         FistName = fistName;

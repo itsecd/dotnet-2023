@@ -3,10 +3,12 @@ using DotNet2023.WebApi.Interfaces.InstituteDocumentation;
 using DotNet2023.WebApi.Interfaces.InstitutionStructure;
 using DotNet2023.WebApi.Interfaces.Organization;
 using DotNet2023.WebApi.Interfaces.Person;
+using DotNet2023.WebApi.Interfaces.Queries;
 using DotNet2023.WebApi.Repository.InstituteDocumentation;
 using DotNet2023.WebApi.Repository.InstitutionStructure;
 using DotNet2023.WebApi.Repository.Organization;
 using DotNet2023.WebApi.Repository.Person;
+using DotNet2023.WebApi.Repository.Queries;
 using DotNet2023.WebApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +29,8 @@ builder.Services
     .AddScoped<IFaculty, FacultyRepository>()
     .AddScoped<IGroupOfStudents, GroupOfStudentsRepository>()
     .AddScoped<IEducationWorker, EducationWorkerRepository>()
-    .AddScoped<IStudent, StudentRepository>();
+    .AddScoped<IStudent, StudentRepository>()
+    .AddScoped<IQueries, QueriesRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

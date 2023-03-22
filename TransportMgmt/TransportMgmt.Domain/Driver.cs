@@ -18,8 +18,6 @@ public class Driver
 
     public int PhoneNumber { get; set; } = 0;
 
-    public List<int> Routes { get; set; } = new List<int>();
-
     public Driver() { }
 
     public Driver(int driverId, string fistName, string lastName, string midleName, int passport, int driverLicense, string address, int phoneNumber)

@@ -6,11 +6,9 @@ public class Transport
 
     public string Type { get; set; } = string.Empty;
 
-    public Model Model { get; set; }= new Model();
+    public Model Model { get; set; } = new Model();
 
     public DateOnly DateMake { get; set; } = new DateOnly();
-
-    public List<int> Routes { get; set; } = new List<int>();
 
     public Transport() { }
 

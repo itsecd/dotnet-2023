@@ -90,7 +90,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     [Fact]
     public void TopFiveTest()
     {
-        var customers = _fixture.FixtureÑustomers.ToList();
+        var customers = _fixture.FixtureCustomers.ToList();
         var purchases = _fixture.FixturePurchases.ToList();
         var products = _fixture.FixtureProducts.ToList();
         var sellers = _fixture.FixtureSellers.ToList();

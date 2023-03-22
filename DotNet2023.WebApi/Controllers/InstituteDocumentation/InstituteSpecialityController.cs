@@ -54,7 +54,6 @@ public class InstituteSpecialityController : Controller
         return Ok(instituteSpecialit);
     }
 
-
     [HttpGet("GetInstituteSpeciality")]
     public IActionResult GetInstituteSpeciality(string code, string idInstitution)
     {
@@ -67,7 +66,6 @@ public class InstituteSpecialityController : Controller
 
         return Ok(instituteSpeciality);
     }
-
 
     [HttpPost("CreateInstituteSpeciality")]
     public IActionResult CreateInstituteSpeciality(
@@ -87,8 +85,6 @@ public class InstituteSpecialityController : Controller
         return Ok("Successfully created");
     }
 
-
-
     [HttpDelete("DeleteInstituteSpeciality")]
     public IActionResult DeleteInstituteSpeciality(string code, string idInstitution)
     {
@@ -106,7 +102,6 @@ public class InstituteSpecialityController : Controller
 
         return Ok("Successfully deleted");
     }
-
 
     [HttpPut("UpdateInstituteSpeciality")]
     public IActionResult UpdateInstituteSpeciality(

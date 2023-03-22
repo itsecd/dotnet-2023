@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet2023.DataBase\DotNet2023.DataBase.csproj" />
+    <ProjectReference Include="..\DotNet2023.Domain\DotNet2023.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

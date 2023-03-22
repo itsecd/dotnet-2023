@@ -5,6 +5,7 @@ using System.Linq;
 using Xunit;
 
 namespace DotNet2023.Tests;
+
 public class FirstLabTests
 {
     public FirstLabTests()
@@ -231,8 +232,9 @@ public class FirstLabTests
                 name = x.Initials,
                 faculties = x.Faculties.Count,
                 departments = x.Departments.Count,
-                groups = x.Departments.SelectMany(i => i.GroupOfStudents)
-                    .Count()
+                groups = x.Departments
+                .SelectMany(i => i.GroupOfStudents)
+                .Count()
             })
             .ToArray();
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DotNet2023.Domain.Person;
+using DotNet2023.WebApi.DtoModels.Person;
 using DotNet2023.WebApi.Interfaces.Person;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,27 +12,39 @@ public class StudentController : Controller
 {
     private readonly IStudent _repository;
     private readonly IMapper _mapper;
+    public readonly ILogger<Student> _logger;
 
     public StudentController(IStudent repository,
-        IMapper mapper) =>
-        (_repository, _mapper) = (repository, mapper);
+        IMapper mapper, ILogger<Student> logger) =>
+        (_repository, _mapper, _logger) = (repository, mapper, logger);
 
+    /// <summary>
+    /// get all students
+    /// </summary>
+    /// <returns>IActionResult with List<StudentDto></returns>
     [HttpGet]
     public IActionResult GetStudents()
     {
         var educationWorker = _mapper
-            .Map<List<Student>>
+            .Map<List<StudentDto>>
             (_repository.GetStudents());
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
         return Ok(educationWorker);
     }
 
+    /// <summary>
+    /// Get student by id
+    /// </summary>
+    /// <param name="idStudent">id Student</param>
+    /// <returns>IActionResult with StudentDto</returns>
     [HttpGet("GetStudent")]
     public IActionResult GetStudent(string idStudent)
     {
         var institution = _mapper
-            .Map<EducationWorker>
+            .Map<StudentDto>
             (_repository.GetStudentById(idStudent));
 
         if (!ModelState.IsValid)
@@ -40,16 +53,21 @@ public class StudentController : Controller
         return Ok(institution);
     }
 
-
+    /// <summary>
+    /// Create a new student
+    /// </summary>
+    /// <param name="student">new student</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpPost("CreateStudent")]
     public IActionResult CreateStudent(
-    [FromBody] Student student)
+    [FromBody] StudentDto student)
     {
         if (student == null)
             return BadRequest(ModelState);
 
         var studentMap = _mapper
             .Map<Student>(student);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.CreateStudent(studentMap))
         {
@@ -59,6 +77,11 @@ public class StudentController : Controller
         return Ok("Successfully created");
     }
 
+    /// <summary>
+    /// Delete by id Student
+    /// </summary>
+    /// <param name="idStudent">id Student</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpDelete("DeleteStudent")]
     public IActionResult DeleteStudent(string idStudent)
     {
@@ -67,6 +90,7 @@ public class StudentController : Controller
 
         var studentToDelete = _repository
             .GetStudentById(idStudent);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!ModelState.IsValid || studentToDelete == null)
             return BadRequest(ModelState);
@@ -77,21 +101,27 @@ public class StudentController : Controller
         return Ok("Successfully deleted");
     }
 
-
+    /// <summary>
+    /// Update model
+    /// </summary>
+    /// <param name="student">model that is updated</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpPut("UpdateStudent")]
     public IActionResult UpdateStudent(
-        [FromBody] EducationWorker educationWorker)
+        [FromBody] StudentDto student)
     {
-        if (educationWorker == null)
+        if (student == null)
             return BadRequest(ModelState);
 
-        if (!_repository.StudentExistsById(educationWorker.Id))
+        if (!_repository.StudentExistsById(student.Id))
             return NotFound();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var studentToUpdate = _mapper.Map<Student>(educationWorker);
+        var studentToUpdate = _mapper.Map<Student>(student);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
         if (!_repository.UpdateStudent(studentToUpdate))
         {
             ModelState.AddModelError("", "Something went wrong updating institution");

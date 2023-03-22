@@ -31,7 +31,7 @@ public class ResponseUniversityStructByProperty : BaseResponse
     public int CountGroups { get; set; }
 }
 
-public static class QueriesToDomainModel
+public class QueriesToDomainModel
 {
     /// <summary>
     /// Get Institution By Id

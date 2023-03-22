@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DotNet2023.Domain.Person;
+using DotNet2023.WebApi.DtoModels.Person;
 using DotNet2023.WebApi.Interfaces.Person;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,45 +12,63 @@ public class EducationWorkerController : Controller
 {
     private readonly IEducationWorker _repository;
     private readonly IMapper _mapper;
+    public readonly ILogger<EducationWorker> _logger;
 
     public EducationWorkerController(IEducationWorker repository,
-        IMapper mapper) =>
-        (_repository, _mapper) = (repository, mapper);
+        IMapper mapper, ILogger<EducationWorker> logger) =>
+        (_repository, _mapper, _logger) = (repository, mapper, logger);
 
+    /// <summary>
+    /// get all EducationWorker
+    /// </summary>
+    /// <returns>IActionResult with List<EducationWorkerDto></returns>
     [HttpGet]
     public IActionResult GetEducationWorkers()
     {
         var educationWorker = _mapper
-            .Map<List<EducationWorker>>
+            .Map<List<EducationWorkerDto>>
             (_repository.GetEducationWorkers());
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
         return Ok(educationWorker);
     }
 
+    /// <summary>
+    /// Get EducationWorker by id
+    /// </summary>
+    /// <param name="idEducationWorker">id EducationWorker</param>
+    /// <returns>IActionResult with EducationWorkerDto</returns>
     [HttpGet("GetEducationWorker")]
     public IActionResult GetEducationWorker(string idEducationWorker)
     {
-        var institution = _mapper
-            .Map<EducationWorker>
+        var educationWorker = _mapper
+            .Map<EducationWorkerDto>
             (_repository.GetEducationWorkerById(idEducationWorker));
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(institution);
+        return Ok(educationWorker);
     }
 
-
+    /// <summary>
+    /// Create a new educationWorker
+    /// </summary>
+    /// <param name="educationWorker">new educationWorker</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpPost("CreateEducationWorker")]
     public IActionResult CreateEducationWorker(
-    [FromBody] EducationWorker educationWorker)
+    [FromBody] EducationWorkerDto educationWorker)
     {
         if (educationWorker == null)
             return BadRequest(ModelState);
 
         var educationWorkerMap = _mapper
             .Map<EducationWorker>(educationWorker);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.CreateEducationWorker(educationWorkerMap))
         {
@@ -59,6 +78,11 @@ public class EducationWorkerController : Controller
         return Ok("Successfully created");
     }
 
+    /// <summary>
+    /// Delete by id EducationWorker
+    /// </summary>
+    /// <param name="idEducationWorker">id EducationWorker</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpDelete("DeleteEducationWorker")]
     public IActionResult DeleteEducationWorker(string idEducationWorker)
     {
@@ -67,6 +91,7 @@ public class EducationWorkerController : Controller
 
         var educationWorkerToDelete = _repository
             .GetEducationWorkerById(idEducationWorker);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!ModelState.IsValid || educationWorkerToDelete == null)
             return BadRequest(ModelState);
@@ -77,10 +102,14 @@ public class EducationWorkerController : Controller
         return Ok("Successfully deleted");
     }
 
-
+    /// <summary>
+    /// Update model
+    /// </summary>
+    /// <param name="educationWorker">model that is updated</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
     [HttpPut("UpdateEducationWorker")]
     public IActionResult UpdateEducationWorker(
-        [FromBody] EducationWorker educationWorker)
+        [FromBody] EducationWorkerDto educationWorker)
     {
         if (educationWorker == null)
             return BadRequest(ModelState);
@@ -92,6 +121,8 @@ public class EducationWorkerController : Controller
             return BadRequest(ModelState);
 
         var educationWorkerToUpdate = _mapper.Map<EducationWorker>(educationWorker);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
         if (!_repository.UpdateEducationWorker(educationWorkerToUpdate))
         {
             ModelState.AddModelError("", "Something went wrong updating institution");

@@ -18,9 +18,9 @@ public class QueriesRepository : IQueries
         QueriesToDomainModel.GetInstitutionByInitials(_dbContext, initials);
 
     public ResponseUniversityStructByProperty[]? GetInstitutionStruct(
-        InstitutionalProperty institutionalProperty, 
+        InstitutionalProperty institutionalProperty,
         BuildingProperty buildingProperty) =>
-        QueriesToDomainModel.GetInstitutionStruct(_dbContext, institutionalProperty, 
+        QueriesToDomainModel.GetInstitutionStruct(_dbContext, institutionalProperty,
             buildingProperty);
 
     public ResponseUniversityStructByInitials? GetInstitutionStructByInitials(

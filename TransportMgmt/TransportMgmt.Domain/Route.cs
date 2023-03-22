@@ -12,10 +12,5 @@ public class Route
     /// Route number
     /// </summary>
     public string RouteNumber { get; set; } = string.Empty;
-    public Route() { }
-    public Route(int routeId, string routeNumber)
-    {
-        RouteId = routeId;
-        RouteNumber = routeNumber;
-    }
+
 }

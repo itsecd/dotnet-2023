@@ -11,7 +11,7 @@ public class Transport
     /// <summary>
     /// Transport type
     /// </summary>
-    public string Type { get; set; } = string.Empty;
+    public TransportType Type { get; set; } = null!;
     /// <summary>
     /// Transport model
     /// </summary>
@@ -21,7 +21,7 @@ public class Transport
     /// </summary>
     public DateOnly DateMake { get; set; } = new DateOnly();
     public Transport() { }
-    public Transport(int transportId, string type, Model model, DateOnly dateMake)
+    public Transport(int transportId, TransportType type, Model model, DateOnly dateMake)
     {
         TransportId = transportId;
         Type = type;

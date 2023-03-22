@@ -1,5 +1,4 @@
-﻿
-using Shop_class;
+﻿using Shop_class;
 
 namespace xUnitTest;
 public class ShopFixtture
@@ -89,8 +88,10 @@ public class ShopFixtture
         {
             return new List<PurchaseRecord>
             {
-                new PurchaseRecord(Customers[0], new List<Product> {Products[0], Products[1] }, 400.0, new DateTime(2023, 03, 13)),
+                new PurchaseRecord(Customers[0], new List<Product> {Products[0], Products[1] }, 1100.0, new DateTime(2023, 03, 13)),
                 new PurchaseRecord(Customers[1], new List<Product> {Products[0], Products[3] }, 300.0, new DateTime(2023, 03, 14)),
+                new PurchaseRecord(Customers[2], new List<Product> {Products[0], Products[1] }, 234.0, new DateTime(2023, 01, 20)),
+                new PurchaseRecord(Customers[4], new List<Product> {Products[0], Products[3] }, 470.0, new DateTime(2023, 02, 23)),
             };
         }
     }
@@ -100,8 +101,10 @@ public class ShopFixtture
         {
             return new List<PurchaseRecord>
             {
-                new PurchaseRecord(Customers[4], new List<Product> {Products[3], Products[6] }, 400.0, new DateTime(2023, 03, 13)),
-                new PurchaseRecord(Customers[3], new List<Product> {Products[0], Products[3] }, 300.0, new DateTime(2023, 03, 14)),
+                new PurchaseRecord(Customers[4], new List<Product> {Products[3], Products[6] }, 440.0, new DateTime(2023, 03, 13)),
+                new PurchaseRecord(Customers[3], new List<Product> {Products[0], Products[3] }, 900.0, new DateTime(2023, 01, 14)),
+                new PurchaseRecord(Customers[4], new List<Product> {Products[3], Products[6] }, 100.0, new DateTime(2023, 03, 13)),
+                new PurchaseRecord(Customers[2], new List<Product> {Products[0], Products[3] }, 800.0, new DateTime(2023, 03, 14)),
             };
         }
     }
@@ -113,13 +116,15 @@ public class ShopFixtture
             {
                 new PurchaseRecord(Customers[2], new List<Product> {Products[0], Products[1] }, 200.0, new DateTime(2023, 03, 13)),
                 new PurchaseRecord(Customers[4], new List<Product> {Products[0], Products[3] }, 150.0, new DateTime(2023, 03, 14)),
+                new PurchaseRecord(Customers[1], new List<Product> {Products[3], Products[6] }, 450.0, new DateTime(2023, 03, 13)),
+                new PurchaseRecord(Customers[0], new List<Product> {Products[0], Products[3] }, 990.0, new DateTime(2023, 03, 14)),
             };
         }
     }
 
     public List<Shop> Shops
-    {           
-        get 
+    {
+        get
         {
             return new List<Shop>()
             {
@@ -127,9 +132,9 @@ public class ShopFixtture
                 new Shop(2, ProductQuantities2, ListPurchaseRecords2),
                 new Shop(3, ProductQuantities3, ListPurchaseRecords3)
             };
-        } 
+        }
     }
 
 }
 
-        
+

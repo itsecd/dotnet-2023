@@ -1,25 +1,20 @@
-﻿namespace BicycleRentals; 
+﻿namespace BicycleRentals;
 /// <summary>
 /// Bicycle - a class describing the bicycle
 /// </summary> 
 public class Bicycle
 {
-    //constructer
-    public Bicycle()
-    {
-        Type = new BicycleType();
-    }
     /// <summary>
     /// SerialNumber - shows the Bicycle's id
     /// </summary>  
     public int SerialNumber { get; set; }
     /// <summary>
-    /// Type - shows the Bicycle's type
-    /// </summary> 
-    public BicycleType Type { get; set; }
+    /// TypeId - shows the Type's id
+    /// </summary>  
+    public int TypeId { get; set; }
     /// <summary>
     /// Model - shows the Bicycle's model
-    /// </summary> 
+    /// </summary>     
     public string? Model { get; set; }
     /// <summary>
     /// Color - shows the Bicycle's color

@@ -4,22 +4,16 @@
 /// </summary> 
 public class BicycleRental
 {
-    //constructer
-    public BicycleRental()
-    {
-        Bicycle = new Bicycle();
-        Customer = new Customer();
-    }
     /// <summary>
-    /// Bicycle - shows the bicycle rented
+    /// SerialNumber - shows the Bicycle's id
+    /// </summary>  
+    public int SerialNumber { get; set; }
+    /// <summary>
+    /// CustomerId - shows the customer's id
     /// </summary> 
-    public Bicycle Bicycle { get; set; }
+    public int CustomerId { get; set; }
     /// <summary>
-    /// Customer - shows the customer rented
-    /// </summary> 
-    public Customer Customer { get; set; }
-    /// <summary>
-    /// RentalStartTime - shows the rental start time
+    /// RentalStartTime - shows the rental Start time
     /// </summary> 
     public DateTime RentalStartTime { get; set; }
     /// <summary>

@@ -10,12 +10,12 @@ public class ShopFixtture
         {
             return new List<Product>()
             {
-            new Product ("1", "Молоко", 1,  0.5, "штучный", 69, new DateTime(2023, 03, 30) ),
+            new Product ("1", "Молоко", 1,  0.5, "штучный", 70, new DateTime(2023, 01, 30) ),
             new Product ("2", "Лапша", 5,  0.9, "штучный", 90, new DateTime(2033, 03, 30) ),
             new Product ("3", "Масло", 1,  0.25, "штучный", 80, new DateTime(2023, 04, 05) ),
             new Product ("4", "Свинина", 2,  1.0, "развесной", 350, new DateTime(2023, 03, 27) ),
             new Product ("5", "Яйца", 2,  0.35, "штучный", 99, new DateTime(2023, 04, 20) ),
-            new Product ("6", "Хлеб", 4,  0.5, "штучный", 50, new DateTime(2023, 03, 25) ),
+            new Product ("6", "Хлеб", 4,  0.5, "штучный", 50, new DateTime(2023, 02, 25) ),
             new Product ("7", "Вода", 6,  1.5, "штучный", 50, new DateTime(2033, 03, 25) ),
             new Product ("8", "Форель", 3,  1.0, "развесной", 500, new DateTime(2023, 03, 27) ),
             new Product ("9", "Сникерс", 7,  0.035, "штучный", 40, new DateTime(2023, 09, 27) )

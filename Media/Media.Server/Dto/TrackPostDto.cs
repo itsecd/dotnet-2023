@@ -1,15 +1,7 @@
-﻿namespace Media.Domain;
+﻿namespace Media.Server.Dto;
 
-/// <summary>
-/// Class Track is used to store information of the track
-/// </summary>
-public class Track
+public class TrackPostDto
 {
-    /// <summary>
-    /// Id is used to store a unique identifer
-    /// </summary>
-    public int Id { get; set; }
-
     /// <summary>
     /// Number is used to store the track number in the album
     /// </summary>

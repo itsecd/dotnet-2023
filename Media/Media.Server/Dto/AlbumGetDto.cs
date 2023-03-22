@@ -1,9 +1,8 @@
-﻿namespace Media.Domain;
+﻿using Media.Domain;
 
-/// <summary>
-/// Class Album is used to store information of the Album
-/// </summary>
-public class Album
+namespace Media.Server.Dto;
+
+public class AlbumGetDto
 {
     /// <summary>
     /// Id is used to store a unique identifer
@@ -19,16 +18,6 @@ public class Album
     /// Year is used to store the year the Album was created
     /// </summary>
     public int Year { get; set; }
-
-    /// <summary>
-    /// Tracks is used to store a list of tracks
-    /// </summary>
-    public List<Track> Tracks { get; set; }
-
-    /// <summary>
-    /// Genre is used to store information of the genre of the album
-    /// </summary>
-    public Genre Genre { get; set; }
 
     /// <summary>
     /// GenreId is used to store identifier of genre

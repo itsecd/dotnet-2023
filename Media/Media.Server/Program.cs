@@ -1,14 +1,17 @@
+using AutoMapper;
 using Media.Server;
+using Media.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<MediaRepository>();//добавление репозитория
-//builder.Services.AddTransient<MadiRepository>();//будет создаваться каждый раз
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddSingleton<IMediaRepository, MediaRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 var app = builder.Build();
 
@@ -18,10 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();// можно юзатьь можно не юзать
-
-app.UseAuthorization();// можем не использовать
-
+app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();

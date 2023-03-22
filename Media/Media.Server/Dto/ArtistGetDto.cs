@@ -1,9 +1,11 @@
-﻿namespace Media.Domain;
+﻿using Media.Domain;
+
+namespace Media.Server.Dto;
 
 /// <summary>
-/// Class Artist is used to store information of the artist
+/// Class ArtistGetDto is used to make GET HTTP-requests.
 /// </summary>
-public class Artist
+public class ArtistGetDto
 {
     /// <summary>
     /// Id is used to store a unique identifier 
@@ -19,9 +21,4 @@ public class Artist
     /// Description is used to store description of the artist
     /// </summary>
     public string Description { get; set; }
-
-    /// <summary>
-    /// Albums is used to store a list of albums of this artist
-    /// </summary>
-    public List<Album> Albums { get; set; }
 }

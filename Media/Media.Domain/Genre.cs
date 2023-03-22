@@ -13,5 +13,5 @@ public class Genre
     /// <summary>
     /// Name is used to store a name of genre
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 }

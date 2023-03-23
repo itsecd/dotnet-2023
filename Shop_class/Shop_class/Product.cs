@@ -4,16 +4,16 @@
 /// </summary>
 public class Product
 {
-    public Product(string barcode, string name, int poductgroupcode, double weight, string producttype,
-        double price, DateTime storagelimitdate)
+    public Product(string barcode, string name, int poductGroupCode, double weight, string productType,
+        double price, DateTime storageLimitDate)
     {
         Barcode = barcode;
         Name = name;
-        PoductGroupCode = poductgroupcode;
+        ProductGroupCode = poductGroupCode;
         Weight = weight;
-        ProductType = producttype;
+        ProductType = productType;
         Price = price;
-        StorageLimitDate = storagelimitdate;
+        StorageLimitDate = storageLimitDate;
     }
     /// <summary>
     /// Product barcode
@@ -27,7 +27,7 @@ public class Product
     /// Product group code (milky - 1, meat - 2, fish - 3, bakery - 4, grocery - 5
     ///                     drinks - 6, candies - 7)
     /// </summary>
-    public int PoductGroupCode { get; set; }
+    public int ProductGroupCode { get; set; }
     /// <summary>
     /// Product weight
     /// </summary>
@@ -44,6 +44,4 @@ public class Product
     /// Storage limit date
     /// </summary>
     public DateTime StorageLimitDate { get; set; }
-
-
 }

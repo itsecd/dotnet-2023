@@ -4,16 +4,16 @@
 /// </summary>
 public class ProductQuantity
 {
-    public ProductQuantity(string barcode, int shopId, double quantity)
+    public ProductQuantity(Product product, int shopId, double quantity)
     {
-        Barcode = barcode;
+        Product = product;
         ShopId = shopId;
         Quantity = quantity;
     }
     /// <summary>
     /// Product barcode
     /// </summary>
-    public string Barcode { get; set; }
+    public Product Product { get; set; }
     /// <summary>
     /// Shop id
     /// </summary>
@@ -22,5 +22,4 @@ public class ProductQuantity
     /// Product quantity
     /// </summary>
     public double Quantity { get; set; }
-
 }

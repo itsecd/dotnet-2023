@@ -17,9 +17,9 @@ public class Shop
     /// </summary>
     public List<PurchaseRecord> PurchaseRecords { get; set; }
 
-    public Shop(int shopid, List<ProductQuantity> products, List<PurchaseRecord> purchaseRecords)
+    public Shop(int shopId, List<ProductQuantity> products, List<PurchaseRecord> purchaseRecords)
     {
-        ShopId = shopid;
+        ShopId = shopId;
         Products = products;
         PurchaseRecords = purchaseRecords;
     }

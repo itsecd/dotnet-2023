@@ -1,7 +1,7 @@
 ﻿using Shop_class;
 
 namespace xUnitTest;
-public class ShopFixtture
+public class ShopFixture
 {
     public List<Product> Products
     {
@@ -28,13 +28,13 @@ public class ShopFixtture
         {
             return new List<ProductQuantity>
             {
-                new ProductQuantity("1", 1, 250),
-                new ProductQuantity("2", 1, 100),
-                new ProductQuantity("3", 1, 50),
-                new ProductQuantity("5", 1, 60),
-                new ProductQuantity("6", 1, 75),
-                new ProductQuantity("7", 1, 100),
-                new ProductQuantity("9", 1, 200)
+                new ProductQuantity(Products[0], 1, 250),
+                new ProductQuantity(Products[1], 1, 100),
+                new ProductQuantity(Products[2], 1, 50),
+                new ProductQuantity(Products[4], 1, 60),
+                new ProductQuantity(Products[5], 1, 75),
+                new ProductQuantity(Products[6], 1, 100),
+                new ProductQuantity(Products[8], 1, 200)
             };
         }
     }
@@ -44,11 +44,11 @@ public class ShopFixtture
         {
             return new List<ProductQuantity>
             {
-                new ProductQuantity("2", 2, 200),
-                new ProductQuantity("5", 2, 100),
-                new ProductQuantity("6", 2, 100),
-                new ProductQuantity("7", 2, 90),
-                new ProductQuantity("9", 2, 40)
+                new ProductQuantity(Products[1], 2, 200),
+                new ProductQuantity(Products[4], 2, 100),
+                new ProductQuantity(Products[5], 2, 100),
+                new ProductQuantity(Products[6], 2, 90),
+                new ProductQuantity(Products[8], 2, 40)
             };
         }
     }
@@ -58,13 +58,13 @@ public class ShopFixtture
         {
             return new List<ProductQuantity>
             {
-                new ProductQuantity("1", 3, 200),
-                new ProductQuantity("3", 3, 100),
-                new ProductQuantity("4", 3, 50),
-                new ProductQuantity("5", 3, 60),
-                new ProductQuantity("6", 3, 75),
-                new ProductQuantity("7", 3, 30),
-                new ProductQuantity("8", 3, 130),
+                new ProductQuantity(Products[0], 3, 200),
+                new ProductQuantity(Products[2], 3, 100),
+                new ProductQuantity(Products[3], 3, 50),
+                new ProductQuantity(Products[4], 3, 60),
+                new ProductQuantity(Products[5], 3, 75),
+                new ProductQuantity(Products[6], 3, 30),
+                new ProductQuantity(Products[7], 3, 130),
             };
         }
     }

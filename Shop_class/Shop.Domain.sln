@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop_class", "Shop_class\Shop_class.csproj", "{9BDC8D56-6B13-48DA-BC43-7AD5E69E4519}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Domain", "Shop_class\Shop.Domain.csproj", "{9BDC8D56-6B13-48DA-BC43-7AD5E69E4519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTest", "xUnitTest\xUnitTest.csproj", "{1033E309-7262-4B69-B1C6-81C4AE9AD998}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Test", "xUnitTest\Shop.Test.csproj", "{1033E309-7262-4B69-B1C6-81C4AE9AD998}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

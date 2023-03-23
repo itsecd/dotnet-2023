@@ -4,13 +4,13 @@
 /// </summary>
 public class Customer
 {
-    public Customer(int customerid, string firstname, string lastname, string middlename, string cardcount)
+    public Customer(int customerId, string firstName, string lastName, string middleName, string cardCount)
     {
-        CustomerId = customerid;
-        FirstName = firstname;
-        LastName = lastname;
-        MiddleName = middlename;
-        CardCount = cardcount;
+        CustomerId = customerId;
+        FirstName = firstName;
+        LastName = lastName;
+        MiddleName = middleName;
+        CardCount = cardCount;
     }
     /// <summary>
     /// Customer id
@@ -32,5 +32,4 @@ public class Customer
     /// Customer card count
     /// </summary>
     public string CardCount { get; set; }
-
 }

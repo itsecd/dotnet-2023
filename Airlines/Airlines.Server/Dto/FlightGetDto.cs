@@ -1,9 +1,6 @@
-﻿namespace Airlines.Domain;
+﻿namespace Airlines.Server.Dto;
 
-/// <summary>
-/// Сlass describing the flight of an airplane
-/// </summary>
-public class FlightCLass
+public class FlightGetDto
 {
     /// <summary>
     /// Represent a unique Id of flight
@@ -37,23 +34,4 @@ public class FlightCLass
     /// Represent a type of airplane
     /// </summary>
     public string? AirplaneType { get; set; }
-    /// <summary>
-    /// Represent a list of tickets on this flight
-    /// </summary>
-    public List<TicketClass> Tickets { get; set; } = new List<TicketClass> { };
-    public FlightCLass() { }
-    public FlightCLass(int id, string flightCode, string source,
-        string destination, DateTime departureDate,
-        DateTime arrivalDate, double flightDuration, string airplaneType)
-    {
-        Id = id;
-        FlightCode = flightCode;
-        Source = source;
-        Destination = destination;
-        DepartureDate = departureDate;
-        ArrivalDate = arrivalDate;
-        FlightDuration = flightDuration;
-        AirplaneType = airplaneType;
-        Tickets = new List<TicketClass>();
-    }
 }

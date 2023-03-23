@@ -1,9 +1,6 @@
-﻿namespace Airlines.Domain;
+﻿namespace Airlines.Server.Dto;
 
-/// <summary>
-/// Сlass describing an airplane
-/// </summary>
-public class AirplaneClass
+public class AirplaneGetDto
 {
     /// <summary>
     /// Represent an unique Id of Airplane 
@@ -25,17 +22,4 @@ public class AirplaneClass
     /// Represent a max count of seats
     /// </summary>
     public int SeatingCapacity { get; set; }
-    /// <summary>
-    /// Represent a flights   
-    /// </summary>
-    public List<FlightCLass> Flights { get; set; } = new List<FlightCLass>();
-    public AirplaneClass() { }
-    public AirplaneClass(string model, int carryingCapacity, int capability, int seatingCapacity)
-    {
-        Model = model;
-        CarryingCapacity = carryingCapacity;
-        Capability = capability;
-        SeatingCapacity = seatingCapacity;
-        Flights = new List<FlightCLass>();
-    }
 }

@@ -8,15 +8,15 @@ public class TicketClass
     /// <summary>
     /// Represent a unique Id of ticket
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Represent a number of ticket
     /// </summary>
-    public int TicketNumber { get; set; } = 0;
+    public int TicketNumber { get; set; }
     /// <summary>
     /// Represent a seatnumber of ticket
     /// </summary>
-    public string SeatNumber { get; set; } = string.Empty;
+    public string? SeatNumber { get; set; }
     /// <summary>
     /// Represent a baggage weight, which passanger can move
     /// </summary>

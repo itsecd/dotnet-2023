@@ -8,15 +8,15 @@ public class PassengerClass
     /// <summary>
     /// Represent a unique Id of passanger
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Represent a passport number 
     /// </summary>
-    public string PassportNumber { get; set; }
+    public string? PassportNumber { get; set; }
     /// <summary>
     /// Represent a passenger name
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
     /// <summary>
     /// Represent a tickets 
     /// </summary>
@@ -26,6 +26,5 @@ public class PassengerClass
     {
         PassportNumber = passportNumber;
         Name = name;
-        Tickets = new List<TicketClass>();
     }
 }

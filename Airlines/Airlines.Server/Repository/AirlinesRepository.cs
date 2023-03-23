@@ -1,15 +1,17 @@
-﻿namespace Airlines.Test;
+﻿using Airlines.Domain;
 
-using Airlines.Domain;
+namespace Airlines.Server.Repository;
 
-public class AirlinesFixture
+
+public class AirlinesRepository : IAirlinesRepository
 {
+    private readonly List<AirplaneClass> _airplanes;
     private readonly List<TicketClass> _tickets;
     private readonly List<FlightCLass> _flights;
     private readonly List<PassengerClass> _passengers;
-    //private readonly List<AirplaneClass> _airplanes;
-    public AirlinesFixture()
+    public AirlinesRepository()
     {
+        _airplanes = MakeTestAirplanes();
         _tickets = MakeTestTickets();
         _flights = MakeTestFlights();
         _passengers = MakeTestPassengers();
@@ -17,29 +19,39 @@ public class AirlinesFixture
     public List<TicketClass> Tickets => _tickets;
     public List<FlightCLass> Flights => _flights;
     public List<PassengerClass> Passengers => _passengers;
+    public List<AirplaneClass> Airplanes => _airplanes;
+    private List<AirplaneClass> MakeTestAirplanes()
+    {
+        return new List<AirplaneClass> {
+            new AirplaneClass(){ Id= 1, Model="Boeing 777", SeatingCapacity= 100, Capability=6200, CarryingCapacity= 100},
+            new AirplaneClass(){ Id= 2, Model="Boeing 767", SeatingCapacity= 110, Capability=6200, CarryingCapacity= 110},
+            new AirplaneClass(){ Id= 3, Model="Boeing 747", SeatingCapacity= 120, Capability=6200, CarryingCapacity= 120},
+            new AirplaneClass(){ Id= 4, Model="Boeing 737", SeatingCapacity= 130, Capability=6200, CarryingCapacity= 130},
+        };
+    }
     private List<TicketClass> MakeTestTickets()
     {
         var tickets = new List<TicketClass>();
         for (var i = 0; i < 10; i++)
         {
-            var firstTicket = new TicketClass(i, "A" + i, i);
+            var firstTicket = new TicketClass(i, "A" + i, i) { Id = i };
             tickets.Add(firstTicket);
-            var secondTicket = new TicketClass(i + 10, "A" + i + 10, i + 10);
+            var secondTicket = new TicketClass(i + 10, "A" + i + 10, i + 10) { Id = i + 10 };
             tickets.Add(secondTicket);
             if (i % 2 == 0)
             {
-                var thirdTicket = new TicketClass(i + 20, "A" + i + 20, i + 20);
+                var thirdTicket = new TicketClass(i + 20, "A" + i + 20, i + 20) { Id = i + 20 };
                 tickets.Add(thirdTicket);
-                var fourthTicket = new TicketClass(i + 30, "A" + i + 30, i + 30);
+                var fourthTicket = new TicketClass(i + 30, "A" + i + 30, i + 30) { Id = i + 30 };
                 tickets.Add(fourthTicket);
             }
             if (i > 6)
             {
-                var fifthTicket = new TicketClass(i + 20, "A" + i + 20, i + 20);
+                var fifthTicket = new TicketClass(i + 20, "A" + i + 20, i + 20) { Id = i + 40 };
                 tickets.Add(fifthTicket);
-                var sixthTicket = new TicketClass(i + 30, "A" + i + 30, i + 30);
+                var sixthTicket = new TicketClass(i + 30, "A" + i + 30, i + 30) { Id = i + 50 };
                 tickets.Add(sixthTicket);
-                var seventhTicket = new TicketClass(i + 20, "A" + i + 20, i + 20);
+                var seventhTicket = new TicketClass(i + 20, "A" + i + 20, i + 20) { Id = i + 60 };
                 tickets.Add(seventhTicket);
             }
         }
@@ -103,17 +115,13 @@ public class AirlinesFixture
         var secondTicket = new TicketClass(101, "2A", 5);
         var thirdTicket = new TicketClass(102, "3A", 5);
         var fourthTicket = new TicketClass(103, "4A", 5);
-        var firstPassenger = new PassengerClass("1234", "Paul Johnson");
-        firstPassenger.Id = 1;
+        var firstPassenger = new PassengerClass("1234", "Paul Johnson") { Id = 1 };
         firstPassenger.Tickets.Add(firstTicket);
-        var secondPassenger = new PassengerClass("1235", "Sandra Cole");
-        secondPassenger.Id = 2;
+        var secondPassenger = new PassengerClass("1235", "Sandra Cole") { Id = 2 };
         secondPassenger.Tickets.Add(secondTicket);
-        var thirdPassenger = new PassengerClass("1236", "Jack Spours");
-        thirdPassenger.Id = 3;
+        var thirdPassenger = new PassengerClass("1236", "Jack Spours") { Id = 3 };
         thirdPassenger.Tickets.Add(thirdTicket);
-        var fourthPassenger = new PassengerClass("1237", "Mike McKay");
-        fourthPassenger.Id = 4;
+        var fourthPassenger = new PassengerClass("1237", "Mike McKay") { Id = 4 };
         fourthPassenger.Tickets.Add(fourthTicket);
         var passengers = new List<PassengerClass>
             {

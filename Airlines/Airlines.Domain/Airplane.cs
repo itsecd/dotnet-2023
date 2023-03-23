@@ -30,12 +30,4 @@ public class AirplaneClass
     /// </summary>
     public List<FlightCLass> Flights { get; set; } = new List<FlightCLass>();
     public AirplaneClass() { }
-    public AirplaneClass(string model, int carryingCapacity, int capability, int seatingCapacity)
-    {
-        Model = model;
-        CarryingCapacity = carryingCapacity;
-        Capability = capability;
-        SeatingCapacity = seatingCapacity;
-        Flights = new List<FlightCLass>();
-    }
 }

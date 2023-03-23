@@ -1,11 +1,10 @@
-﻿using Airlines.Domain;
+﻿using Airlines.Server.Dto;
 using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Airlines.Server.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
@@ -19,41 +18,70 @@ public class AnalyticsController : ControllerBase
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
-    // GET: api/<AnalyticsController>
-    [HttpGet]
-    public IEnumerable<PassengerClass> Get()
+    [HttpGet("PassengersWithoutBaggage")]
+    public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage()
     {
         var request = (from flight in _airlinesRepository.Flights
                        from ticket in _airlinesRepository.Tickets
                        from passenger in _airlinesRepository.Passengers
                        from t in passenger.Tickets
                        where (flight.Id == 1) && (ticket.BaggageWeight == 0) && (t.TicketNumber == ticket.TicketNumber)
-                       select passenger);
+                       select _mapper.Map<PassengerGetDto>(passenger));
+        return request;
+
+
+    }
+    [HttpGet("FlightsWthSpecifiedSourceAndDestination")]
+    public IEnumerable<FlightGetDto> GetFlightsWthSpecifiedSourceAndDestination()
+    {
+        var request = (from flight in _airlinesRepository.Flights
+                       where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
+                       select _mapper.Map<FlightGetDto>(flight));
+        return request;
+
+    }
+    [HttpGet("FlightsAtSpecifiedPeriod")]
+    public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod()
+    {
+        var firstCompDate = new DateTime(2023, 3, 2);
+        var secondCompDate = new DateTime(2023, 4, 2);
+        var request = (from flight in _airlinesRepository.Flights
+                       where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
+                       (flight.DepartureDate.CompareTo(secondCompDate) < 0)
+                       select _mapper.Map<FlightGetDto>(flight));
+        return request;
+
+    }
+    [HttpGet("FlightsWithMaxCountOfPassengers")]
+    public IEnumerable<int> GetFlightsWithMaxCountOfPassengers()
+    {
+        var request = (from flight in _airlinesRepository.Flights
+                       where flight != null
+                       select flight.Tickets.Count).Take(5);
+        return request;
+
+    }
+    [HttpGet("MaxAndAvgBaggageAmountFromSpecifiedSource")]
+    public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
+    {
+        var tickets = (from flight in _airlinesRepository.Flights
+                       from ticket in flight.Tickets
+                       where flight.Source == "Moscow"
+                       select ticket.BaggageWeight).ToList();
+        var max = tickets.Max();
+        var avg = tickets.Average();
+        var request = new List<double>() { max, avg };
         return request;
     }
-
-    // GET api/<AnalyticsController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
+    [HttpGet("FlightsWithMinFlightDuration")]
+    public IEnumerable<FlightGetDto> GetFlightsWithMinFlightDuration()
     {
-        return "value";
-    }
-
-    // POST api/<AnalyticsController>
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
-
-    // PUT api/<AnalyticsController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<AnalyticsController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        var minDuration = (from flight in _airlinesRepository.Flights
+                           orderby flight.FlightDuration
+                           select flight.FlightDuration).Min();
+        var request = (from flight in _airlinesRepository.Flights
+                       where flight.FlightDuration.CompareTo(minDuration) == 0
+                       select _mapper.Map<FlightGetDto>(flight));
+        return request;
     }
 }

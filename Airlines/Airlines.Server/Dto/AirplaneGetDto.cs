@@ -1,5 +1,4 @@
 ﻿namespace Airlines.Server.Dto;
-
 public class AirplaneGetDto
 {
     /// <summary>
@@ -7,7 +6,7 @@ public class AirplaneGetDto
     /// </summary>
     public int Id { get; set; }
     /// <summary>
-    /// Represent a model of Airplane 
+    /// Represent a model of airplane
     /// </summary>
     public string? Model { get; set; }
     /// <summary>

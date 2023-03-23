@@ -18,11 +18,11 @@ public class AnalyticsController : ControllerBase
         _repository = repository;
         _mapper = mapper;
     }
- 
+
     /// <summary>
     /// Get artist information
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Artist information</returns>
     [HttpGet("artist-information")]
     public IEnumerable<ArtistGetDto> GetArtistInfo()
     {
@@ -34,7 +34,7 @@ public class AnalyticsController : ControllerBase
     /// Get album information by year
     /// </summary>
     /// <param name="albumName"> Album name</param>
-    /// <returns></returns>
+    /// <returns>Album information by year</returns>
     [HttpGet("tracks-in-album/{albumName}")]
     public IActionResult GetTracksInfo(string albumName)
     {
@@ -48,10 +48,10 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Get tracks info
+    /// Get album information
     /// </summary>
     /// <param name="year"> Year </param>
-    /// <returns></returns>
+    /// <returns>Album information</returns>
     [HttpGet("albums-by-year/{year:int}")]
     public IActionResult GetAlbumsInfo(int year)
     {
@@ -61,7 +61,11 @@ public class AnalyticsController : ControllerBase
         if (resultList.Count == 0) return NotFound();
         return Ok(resultList);
     }
-    
+
+    /// <summary>
+    /// Get top-5 longest albums
+    /// </summary>
+    /// <returns>Top-5 albums</returns>
     [HttpGet("top-5-albums")]
     public IEnumerable<AlbumGetDto> GetTopAlbums()
     {
@@ -70,6 +74,9 @@ public class AnalyticsController : ControllerBase
                 select _mapper.Map<Album, AlbumGetDto>(album)).Take(5).ToList();
     }
 
+    /// <summary>
+    /// Get the artists with the most albums
+    /// <returns>Artist with the most albums</returns>
     [HttpGet("max-album-artists")]
     public IEnumerable<ArtistGetDto> GetMaxAlbumArtistTest()
     {
@@ -78,6 +85,10 @@ public class AnalyticsController : ControllerBase
                 select _mapper.Map<Artist, ArtistGetDto>(artist)).ToList();
     }
 
+    /// <summary>
+    /// Get information about the minimum, maximum and average duration of albums
+    /// </summary>
+    /// <returns>Information of album duration</returns>
     [HttpGet("information-of-duration")]
     public IEnumerable<double> GetAlbumDurationsInfo()
     {
@@ -85,7 +96,7 @@ public class AnalyticsController : ControllerBase
                                  select new { Album = album, Duration = album.Tracks.Sum(track => track.Duration) });
         var min = durationAlbumList.Min(album => album.Duration);
         var max = durationAlbumList.Max(album => album.Duration);
-        var avg = durationAlbumList.Average(album=> album.Duration);
+        var avg = durationAlbumList.Average(album => album.Duration);
         return new List<double> { min, avg, max };
     }
 }

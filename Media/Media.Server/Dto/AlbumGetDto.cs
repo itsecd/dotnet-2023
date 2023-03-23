@@ -1,6 +1,4 @@
-﻿using Media.Domain;
-
-namespace Media.Server.Dto;
+﻿namespace Media.Server.Dto;
 
 /// <summary>
 /// Class AlbumGetDto is used to make GET HTTP-requests.

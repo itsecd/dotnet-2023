@@ -1,6 +1,4 @@
-﻿using Media.Domain;
-
-namespace Media.Server.Dto;
+﻿namespace Media.Server.Dto;
 
 /// <summary>
 /// Class ArtistPostDto is used to make POST and PUT HTTP-requests.

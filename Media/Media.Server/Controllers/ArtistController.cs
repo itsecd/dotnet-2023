@@ -10,21 +10,37 @@ namespace Media.Server.Controllers;
 [ApiController]
 public class ArtistController : ControllerBase
 {
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly IMediaRepository _repository;
 
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
+
     public ArtistController(IMediaRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get list of artist 
+    /// </summary>
+    /// <returns>List of artist</returns>
     [HttpGet]
     public IEnumerable<ArtistGetDto> Get()
     {
         return _repository.Artists.Select(artist => _mapper.Map<Artist, ArtistGetDto>(artist));
     }
 
+    /// <summary>
+    /// Get artist by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Artist</returns>
     [HttpGet("{id}")]
     public ActionResult<ArtistGetDto> Get(int id)
     {
@@ -33,12 +49,22 @@ public class ArtistController : ControllerBase
         else return Ok(_mapper.Map<Artist, ArtistGetDto>(artist));
     }
 
+    /// <summary>
+    /// Post new artist
+    /// </summary>
+    /// <param name="artist"></param>
     [HttpPost]
     public void Post([FromBody] ArtistPostDto artist)
     {
         _repository.Artists.Add(_mapper.Map<ArtistPostDto, Artist>(artist));
     }
 
+    /// <summary>
+    /// Put artist
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="putArtist"></param>
+    /// <returns>Id of puttable artist</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ArtistPostDto putArtist)
     {
@@ -52,6 +78,10 @@ public class ArtistController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete artist by id
+    /// </summary>
+    /// <param name="id"></param>
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

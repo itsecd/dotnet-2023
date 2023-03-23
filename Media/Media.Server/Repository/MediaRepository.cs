@@ -1,5 +1,4 @@
 ﻿using Media.Domain;
-using System.Diagnostics;
 
 namespace Media.Server.Repository;
 
@@ -65,7 +64,7 @@ public class MediaRepository : IMediaRepository
             for (var j = 0; j < Convert.ToInt32(i + 4) / 6 % 2 + 1; j++)
             {
                 artist.Albums.Add(albums.First());
-                _albums.Find(album => album.Id == albums.First().Id)!.ArtistId=i;
+                _albums.Find(album => album.Id == albums.First().Id)!.ArtistId = i;
                 albums.RemoveAt(0);
             }
             artists.Add(artist);

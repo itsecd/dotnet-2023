@@ -3,7 +3,6 @@ using Media.Domain;
 using Media.Server.Dto;
 using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Media.Server.Controllers;
 
@@ -11,21 +10,37 @@ namespace Media.Server.Controllers;
 [ApiController]
 public class TrackController : ControllerBase
 {
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly IMediaRepository _repository;
 
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
+
     public TrackController(IMediaRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get list of track 
+    /// </summary>
+    /// <returns>List of track</returns>
     [HttpGet]
     public IEnumerable<Track> Get()
     {
         return _repository.Tracks;
     }
 
+    /// <summary>
+    /// Get track by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Track</returns>
     [HttpGet("{id}")]
     public ActionResult<Track> Get(int id)
     {
@@ -34,12 +49,22 @@ public class TrackController : ControllerBase
         else return Ok(track);
     }
 
+    /// <summary>
+    /// Post new track
+    /// </summary>
+    /// <param name="track"></param>
     [HttpPost]
     public void Post([FromBody] TrackPostDto track)
     {
         _repository.Tracks.Add(_mapper.Map<TrackPostDto, Track>(track));
     }
 
+    /// <summary>
+    /// Put tarck
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="putTrack"></param>
+    /// <returns>Id of puttable track</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
     {
@@ -55,6 +80,10 @@ public class TrackController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete track by id
+    /// </summary>
+    /// <param name="id"></param>
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

@@ -19,6 +19,7 @@ public class TrackController : ControllerBase
         _repository = repository;
         _mapper = mapper;
     }
+
     [HttpGet]
     public IEnumerable<Track> Get()
     {

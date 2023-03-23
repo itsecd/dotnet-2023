@@ -6,84 +6,79 @@ using System.Collections.Generic;
 
 public class MediaFixture
 {
-    public List<Genre> FixtureGenres
+    private readonly List<Genre> _genres;
+
+    private readonly List<Track> _tracks;
+
+    private readonly List<Album> _albums;
+
+    private readonly List<Artist> _artists;
+
+    public MediaFixture()
     {
-        get
+        _genres = new List<Genre>();
+        for (var i = 0; i < 3; i++)
         {
-            var genres = new List<Genre>();
-            for (var i = 0; i < 3; i++)
-            {
-                var genre = new Genre();
-                genre.Id = i;
-                genre.Name = "Genre #" + i;
-                genres.Add(genre);
-            }
-            return genres;
+            var genre = new Genre();
+            genre.Id = i;
+            genre.Name = "Genre #" + i;
+            _genres.Add(genre);
         }
+
+        _tracks = new List<Track>();
+        for (var i = 0; i < 12; i++)
+        {
+            var track = new Track();
+            track.Id = i;
+            track.Duration = i * 100 % 301;
+            track.Number = i % 2;
+            track.AlbumId = Convert.ToInt32(i / 2);
+            track.Name = "Track #" + i;
+            _tracks.Add(track);
+        }
+
+        var albums = new List<Album>();
+        _albums = new List<Album>();
+        for (var i = 0; i < 6; i++)
+        {
+            var album = new Album();
+            album.Id = i;
+            album.Name = "Album #" + i;
+            album.Year = 2000 + i % 4;
+            album.Tracks = new List<Track>();
+            for (var j = 0; j < 2; j++)
+            {
+                album.Tracks.Add(_tracks[i * 2 + j]);
+            }
+            album.Genre = _genres[i % 3];
+            album.GenreId = i % 3;
+            albums.Add(album);
+            _albums.Add(album);
+        }
+        var artists = new List<Artist>();
+        for (var i = 0; i < 4; i++)
+        {
+            var artist = new Artist();
+            artist.Id = i;
+            artist.Name = "Artist #" + i;
+            artist.Description = "Description about artist #" + i;
+            artist.Albums = new List<Album>();
+            for (var j = 0; j < Convert.ToInt32(i + 4) / 6 % 2 + 1; j++)
+            {
+                artist.Albums.Add(albums.First());
+                _albums.Find(album => album.Id == albums.First().Id)!.ArtistId = i;
+                albums.RemoveAt(0);
+            }
+            artists.Add(artist);
+        }
+        _artists = artists;
     }
 
-    public List<Track> FixtureTracks
-    {
-        get
-        {
-            var tracks = new List<Track>();
-            for (var i = 0; i < 12; i++)
-            {
-                var track = new Track();
-                track.Id = i;
-                track.Duration = i * 100 % 301;
-                track.Number = i % 2;
-                track.AlbumId = Convert.ToInt32(i / 2);
-                track.Name = "Track #" + i;
-                tracks.Add(track);
-            }
-            return tracks;
-        }
-    }
+    public List<Genre> FixtureGenres => _genres;
 
-    public List<Album> FixtureAlbums
-    {
-        get
-        {
-            var genres = FixtureGenres;
-            var tracks = FixtureTracks;
-            var albums = new List<Album>();
-            for (var i = 0; i < 6; i++)
-            {
-                var album = new Album();
-                album.Id = i;
-                album.Name = "Album #" + i;
-                album.Year = 2000 + i % 4;
-                for (var j = 0; j < 2; j++)
-                {
-                    album.Tracks.Add(tracks[i * 2 + j]);
-                }
-                album.Genre = genres[i % 3];
-                albums.Add(album);
-            }
-            return albums;
-        }
-    }
-    public List<Artist> FixtureArtists
-    {
-        get
-        {
-            var albums = FixtureAlbums;
-            var artists = new List<Artist>();
-            for (var i = 0; i < 4; i++)
-            {
-                var artist = new Artist();
-                artist.Id = i;
-                artist.Name = "Artist #" + i;
-                artist.Description = "Description about artist #" + i;
-                for (var j = 0; j < (Convert.ToInt32(i + 4) / 6) % 2 + 1; j++)
-                {
-                    artist.Albums.Add(albums.First());
-                    albums.RemoveAt(0);
-                }
-                artists.Add(artist);
-            }
-            return artists;
-        }
-    }
+    public List<Track> FixtureTracks => _tracks;
+
+    public List<Album> FixtureAlbums => _albums;
+
+    public List<Artist> FixtureArtists => _artists;
 }

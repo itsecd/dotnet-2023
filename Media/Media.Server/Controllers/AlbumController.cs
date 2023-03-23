@@ -18,6 +18,7 @@ public class AlbumController : ControllerBase
         _repository = repository;
         _mapper = mapper;
     }
+
     [HttpGet]
     public IEnumerable<AlbumGetDto> Get()
     {

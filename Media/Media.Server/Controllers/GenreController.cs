@@ -18,6 +18,7 @@ public class GenreController : ControllerBase
         _repository = repository;
         _mapper = mapper;
     }
+
     [HttpGet]
     public IEnumerable<Genre> Get()
     {

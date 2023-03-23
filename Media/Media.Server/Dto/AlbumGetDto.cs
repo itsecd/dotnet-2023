@@ -2,6 +2,9 @@
 
 namespace Media.Server.Dto;
 
+/// <summary>
+/// Class AlbumGetDto is used to make GET HTTP-requests.
+/// </summary>
 public class AlbumGetDto
 {
     /// <summary>

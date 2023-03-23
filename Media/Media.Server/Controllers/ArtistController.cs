@@ -18,6 +18,7 @@ public class ArtistController : ControllerBase
         _repository = repository;
         _mapper = mapper;
     }
+
     [HttpGet]
     public IEnumerable<ArtistGetDto> Get()
     {

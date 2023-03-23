@@ -44,7 +44,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     {
         var resultList = (from album in _fixture.FixtureAlbums
                           orderby album.Tracks.Sum(x => x.Duration) descending
-                          select new { Album = album, Duration = album.Tracks.Sum(x => x.Duration) }).Take(5).ToList();
+                          select new { Album = album, Duration = album.Tracks.Sum(track => track.Duration) }).Take(5).ToList();
         Assert.Equal(5, resultList.Count);
     }
 
@@ -52,7 +52,7 @@ public class MediaTest : IClassFixture<MediaFixture>
     public void MaxAlbumArtistTest()
     {
         var resultList = (from artist in _fixture.FixtureArtists
-                          where artist.Albums.Count == _fixture.FixtureArtists.Max(x => x.Albums.Count)
+                          where artist.Albums.Count == _fixture.FixtureArtists.Max(artist => artist.Albums.Count)
                           select artist).ToList();
         Assert.Equal(2, resultList.Count);
     }
@@ -61,12 +61,12 @@ public class MediaTest : IClassFixture<MediaFixture>
     public void AlbumDurationInfoTest()
     {
         var durationAlbumList = (from album in _fixture.FixtureAlbums
-                                 select new { Album = album, Duration = album.Tracks.Sum(x => x.Duration) });
-        var min = durationAlbumList.Min(a => a.Duration);
+                                 select new { Album = album, Duration = album.Tracks.Sum(track => track.Duration) });
+        var min = durationAlbumList.Min(album => album.Duration);
 
-        var max = durationAlbumList.Max(a => a.Duration);
+        var max = durationAlbumList.Max(album => album.Duration);
 
-        var avg = durationAlbumList.Average(a => a.Duration);
+        var avg = durationAlbumList.Average(album => album.Duration);
 
         Assert.Equal(100, min);
         Assert.Equal(500, max);

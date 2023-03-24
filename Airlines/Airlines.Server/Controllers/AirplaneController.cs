@@ -5,6 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airlines.Server.Controllers;
+
+/// <summary>
+/// Controller for airplane table
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AirplaneController : ControllerBase
@@ -19,21 +23,34 @@ public class AirplaneController : ControllerBase
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// Get metod for airplane table
+    /// </summary>
+    /// <returns>'
+    /// Return all airplanes
+    /// </returns>
     [HttpGet]
     public IEnumerable<AirplaneGetDto> Get()
     {
-        _logger.LogInformation("Get passengers");
+        _logger.LogInformation("Get airplaes");
         return _airlinesRepository.Airplanes.Select(airplane => _mapper.Map<AirplaneGetDto>(airplane));
     }
 
+    /// <summary>
+    /// Get by id metod for airplane table
+    /// </summary>
+    /// <returns>'
+    /// Return airplane with specified id
+    /// </returns>
     [HttpGet("{id}")]
     public ActionResult<AirplaneGetDto> Get(int id)
     {
-        _logger.LogInformation($"Get passenger with id ({id})");
+        _logger.LogInformation($"Get airplane with id ({id})");
         var airplane = _airlinesRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation($"Not found passenger with id ({id})");
+            _logger.LogInformation($"Not found airplane with id ({id})");
             return NotFound();
         }
         else
@@ -42,21 +59,31 @@ public class AirplaneController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Post method for airplane table
+    /// </summary>
+    /// <param name="airplane"> Airplane class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] AirplanePostDto airplane)
     {
-        _logger.LogInformation("Post");
+        _logger.LogInformation("Post airplane");
         _airlinesRepository.Airplanes.Add(_mapper.Map<AirplaneClass>(airplane));
     }
 
+    /// <summary>
+    /// Put method for airplane table
+    /// </summary>
+    /// <param name="id">An id of airplane which would be changed </param>
+    /// <param name="airplaneToPut">Airplane class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] AirplanePostDto airplaneToPut)
     {
-        _logger.LogInformation("Put passenger with id {0}", id);
+        _logger.LogInformation("Put airplane with id {0}", id);
         var airplane = _airlinesRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation("Not found passenger with id {0}", id);
+            _logger.LogInformation("Not found airplae with id {0}", id);
             return NotFound();
         }
         else
@@ -66,14 +93,19 @@ public class AirplaneController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete method 
+    /// </summary>
+    /// <param name="id">An id of airplane which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($"Put passenger with id ({id})");
+        _logger.LogInformation($"Put airplane with id ({id})");
         var airplane = _airlinesRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation($"Not found passenger with id ({id})");
+            _logger.LogInformation($"Not found airplane with id ({id})");
             return NotFound();
         }
         else

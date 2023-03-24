@@ -4,6 +4,9 @@ using AutoMapper;
 
 namespace Airlines.Server;
 
+/// <summary>
+/// Class to mapping types
+/// </summary>
 public class MappingProfile : Profile
 {
     public MappingProfile()

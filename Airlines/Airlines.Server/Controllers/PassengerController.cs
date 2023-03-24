@@ -5,6 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airlines.Server.Controllers;
+
+/// <summary>
+/// Controller for passenger table
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PassengerController : ControllerBase
@@ -19,6 +23,13 @@ public class PassengerController : ControllerBase
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// Get metod for passenger table
+    /// </summary>
+    /// <returns>'
+    /// Return all passengers
+    /// </returns>
     [HttpGet]
     public IEnumerable<PassengerGetDto> Get()
     {
@@ -26,6 +37,12 @@ public class PassengerController : ControllerBase
         return _airlinesRepository.Passengers.Select(passenger => _mapper.Map<PassengerGetDto>(passenger));
     }
 
+    /// <summary>
+    /// Get by id metod for passenger table
+    /// </summary>
+    /// <returns>'
+    /// Return passenger with specified id
+    /// </returns>
     [HttpGet("{id}")]
     public ActionResult<PassengerGetDto> Get(int id)
     {
@@ -42,6 +59,11 @@ public class PassengerController : ControllerBase
         }
     }
 
+
+    /// <summary>
+    /// Post method for passenger table
+    /// </summary>
+    /// <param name="passenger"> Paseenger class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] PassengerPostDto passenger)
     {
@@ -49,6 +71,12 @@ public class PassengerController : ControllerBase
         _airlinesRepository.Passengers.Add(_mapper.Map<PassengerClass>(passenger));
     }
 
+    /// <summary>
+    /// Put method for passenger table
+    /// </summary>
+    /// <param name="id">An id of passenger which would be changed </param>
+    /// <param name="airplaneToPut">Passenger class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PassengerPostDto passengerToPut)
     {
@@ -66,6 +94,11 @@ public class PassengerController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete method 
+    /// </summary>
+    /// <param name="id">An id of passenger which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

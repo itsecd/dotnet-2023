@@ -1,7 +1,9 @@
 ﻿using Airlines.Domain;
 
 namespace Airlines.Server.Repository;
-
+/// <summary>
+/// Class to store a Airlines data base
+/// </summary>
 
 public class AirlinesRepository : IAirlinesRepository
 {
@@ -29,8 +31,6 @@ public class AirlinesRepository : IAirlinesRepository
                 seventhPassenger
 
             };
-
-
         var firstDate = new DateTime(2023, 1, 1);
         var secondDate = new DateTime(2023, 3, 3);
         var firstDuration = 1.5;

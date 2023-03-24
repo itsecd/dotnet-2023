@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Airlines.Server.Controllers;
 
+/// <summary>
+/// Controller for get methods which returns a specified data from airlines data base
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
@@ -18,9 +21,15 @@ public class AnalyticsController : ControllerBase
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// Get method which return a passengers without baggage
+    /// </summary>
+    /// <returns>Passengers without baggage</returns>
     [HttpGet("PassengersWithoutBaggage")]
     public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage()
     {
+        _logger.LogInformation("Get passengers without baggage");
         var request = (from flight in _airlinesRepository.Flights
                        from ticket in _airlinesRepository.Tickets
                        from passenger in _airlinesRepository.Passengers
@@ -31,18 +40,30 @@ public class AnalyticsController : ControllerBase
 
 
     }
-    [HttpGet("FlightsWthSpecifiedSourceAndDestination")]
-    public IEnumerable<FlightGetDto> GetFlightsWthSpecifiedSourceAndDestination()
+
+    /// <summary>
+    /// Get method which return a flights with specified source and destination
+    /// </summary>
+    /// <returns>Flights with specified source and destination</returns>
+    [HttpGet("FlightsWithSpecifiedSourceAndDestination")]
+    public IEnumerable<FlightGetDto> GetFlightsWithSpecifiedSourceAndDestination()
     {
+        _logger.LogInformation("Get flights with specified source and destination");
         var request = (from flight in _airlinesRepository.Flights
                        where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
                        select _mapper.Map<FlightGetDto>(flight));
         return request;
 
     }
+
+    /// <summary>
+    /// Get method which return a flights at specified period
+    /// </summary>
+    /// <returns>Flights at specified period</returns>
     [HttpGet("FlightsAtSpecifiedPeriod")]
     public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod()
     {
+        _logger.LogInformation("Get flights at specified period");
         var firstCompDate = new DateTime(2023, 3, 2);
         var secondCompDate = new DateTime(2023, 4, 2);
         var request = (from flight in _airlinesRepository.Flights
@@ -52,18 +73,30 @@ public class AnalyticsController : ControllerBase
         return request;
 
     }
+
+    /// <summary>
+    /// Get method which return a flights with max count of passengers
+    /// </summary>
+    /// <returns>Flights with max count of passengers</returns>
     [HttpGet("FlightsWithMaxCountOfPassengers")]
     public IEnumerable<int> GetFlightsWithMaxCountOfPassengers()
     {
+        _logger.LogInformation("Get flights with max count of passengers");
         var request = (from flight in _airlinesRepository.Flights
                        where flight != null
                        select flight.Tickets.Count).Take(5);
         return request;
 
     }
+
+    /// <summary>
+    /// Get method which return max and average baggage amount from specified source
+    /// </summary>
+    /// <returns>Max and average baggage amount from specified source</returns>
     [HttpGet("MaxAndAvgBaggageAmountFromSpecifiedSource")]
     public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
     {
+        _logger.LogInformation("Get max and average baggage amount from specified source");
         var tickets = (from flight in _airlinesRepository.Flights
                        from ticket in flight.Tickets
                        where flight.Source == "Moscow"
@@ -73,9 +106,15 @@ public class AnalyticsController : ControllerBase
         var request = new List<double>() { max, avg };
         return request;
     }
+
+    /// <summary>
+    /// Get method which return flights with minimal flight duration
+    /// </summary>
+    /// <returns>Flights with minimal flight duration</returns>
     [HttpGet("FlightsWithMinFlightDuration")]
     public IEnumerable<FlightGetDto> GetFlightsWithMinFlightDuration()
     {
+        _logger.LogInformation("Get flights with minimal flight duration");
         var minDuration = (from flight in _airlinesRepository.Flights
                            orderby flight.FlightDuration
                            select flight.FlightDuration).Min();

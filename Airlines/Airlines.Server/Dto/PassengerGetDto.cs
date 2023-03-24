@@ -1,5 +1,8 @@
 ﻿namespace Airlines.Server.Dto;
 
+/// <summary>
+/// Class for get method of passenger table
+/// </summary>
 public class PassengerGetDto
 {
     /// <summary>

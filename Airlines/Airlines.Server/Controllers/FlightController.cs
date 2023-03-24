@@ -5,6 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airlines.Server.Controllers;
+
+/// <summary>
+/// Controller for flight table
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class FlightController : ControllerBase
@@ -19,6 +23,13 @@ public class FlightController : ControllerBase
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// Get metod for flight table
+    /// </summary>
+    /// <returns>'
+    /// Return all flights
+    /// </returns>
     [HttpGet]
     public IEnumerable<FlightGetDto> Get()
     {
@@ -26,6 +37,12 @@ public class FlightController : ControllerBase
         return _airlinesRepository.Flights.Select(flight => _mapper.Map<FlightGetDto>(flight));
     }
 
+    /// <summary>
+    /// Get by id metod for flight table
+    /// </summary>
+    /// <returns>'
+    /// Return flight with specified id
+    /// </returns>
     [HttpGet("{id}")]
     public ActionResult<FlightGetDto> Get(int id)
     {
@@ -42,6 +59,10 @@ public class FlightController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Post method for flight table
+    /// </summary>
+    /// <param name="flight"> Flight class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] FlightPostDto flight)
     {
@@ -49,6 +70,12 @@ public class FlightController : ControllerBase
         _airlinesRepository.Flights.Add(_mapper.Map<FlightCLass>(flight));
     }
 
+    /// <summary>
+    /// Put method for flight table
+    /// </summary>
+    /// <param name="id">An id of flight which would be changed </param>
+    /// <param name="flightToPut">Flight class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] FlightPostDto flightToPut)
     {
@@ -66,7 +93,11 @@ public class FlightController : ControllerBase
         }
     }
 
-    // DELETE api/<PassengerController>/5
+    /// <summary>
+    /// Delete method 
+    /// </summary>
+    /// <param name="id">An id of flight which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

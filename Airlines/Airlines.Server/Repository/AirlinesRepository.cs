@@ -1,10 +1,10 @@
 ﻿using Airlines.Domain;
 
 namespace Airlines.Server.Repository;
+
 /// <summary>
 /// Class to store a Airlines data base
 /// </summary>
-
 public class AirlinesRepository : IAirlinesRepository
 {
     private readonly List<AirplaneClass> _airplanes;
@@ -56,7 +56,6 @@ public class AirlinesRepository : IAirlinesRepository
                 sixthFlight,
                 seventhFlight
             };
-
         var tickets = new List<TicketClass>();
         for (var i = 0; i < 10; i++)
         {

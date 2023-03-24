@@ -75,7 +75,7 @@ public class PassengerController : ControllerBase
     /// Put method for passenger table
     /// </summary>
     /// <param name="id">An id of passenger which would be changed </param>
-    /// <param name="airplaneToPut">Passenger class instance to insert to table</param>
+    /// <param name="passengerToPut">Passenger class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PassengerPostDto passengerToPut)

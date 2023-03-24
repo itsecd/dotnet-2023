@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Media.Server.Controllers;
 
+/// <summary>
+/// Genre controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class GenreController : ControllerBase
@@ -20,10 +23,16 @@ public class GenreController : ControllerBase
     /// </summary>
     private readonly IMapper _mapper;
 
-    public GenreController(IMediaRepository repository, IMapper mapper)
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
+    private readonly ILogger<GenreController> _logger;
+
+    public GenreController(IMediaRepository repository, IMapper mapper, ILogger<GenreController> logger)
     {
         _repository = repository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -33,6 +42,7 @@ public class GenreController : ControllerBase
     [HttpGet]
     public IEnumerable<Genre> Get()
     {
+        _logger.LogInformation("GET: Get list of genre");
         return _repository.Genres;
     }
 
@@ -45,8 +55,16 @@ public class GenreController : ControllerBase
     public ActionResult<Genre> Get(int id)
     {
         var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
-        if (genre == null) { return NotFound(); }
-        else return Ok(genre);
+        if (genre == null)
+        {
+            _logger.LogInformation($"GET(id): Genre with id = {id} not found");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"GET(id): Get genre with id = {id}");
+            return Ok(genre);
+        }
     }
 
     /// <summary>
@@ -56,6 +74,7 @@ public class GenreController : ControllerBase
     [HttpPost]
     public void Post([FromBody] GenrePostDto genre)
     {
+        _logger.LogInformation("Post new genre");
         _repository.Genres.Add(_mapper.Map<GenrePostDto, Genre>(genre));
     }
 
@@ -69,10 +88,15 @@ public class GenreController : ControllerBase
     public IActionResult Put(int id, [FromBody] GenrePostDto putGenre)
     {
         var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
-        if (genre == null) return NotFound();
+        if (genre == null)
+        {
+            _logger.LogInformation($"PUT: Genre with id = {id} not found");
+            return NotFound();
+        }
         else
         {
             genre.Name = putGenre.Name;
+            _logger.LogInformation($"PUT: Put genre with id = {id}");
             return Ok(new { genre.Id });
         }
     }
@@ -85,6 +109,9 @@ public class GenreController : ControllerBase
     public void Delete(int id)
     {
         var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
-        if (genre != null) _repository.Genres.Remove(genre);
+        if (genre != null)
+        {
+            if(_repository.Genres.Remove(genre)) _logger.LogInformation($"DELETE: Delete genre with id = {id}");
+        }
     }
 }

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Media.Server.Controllers;
 
+/// <summary>
+/// Track controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class TrackController : ControllerBase
@@ -20,10 +23,16 @@ public class TrackController : ControllerBase
     /// </summary>
     private readonly IMapper _mapper;
 
-    public TrackController(IMediaRepository repository, IMapper mapper)
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
+    private readonly ILogger<TrackController> _logger;
+
+    public TrackController(IMediaRepository repository, IMapper mapper, ILogger<TrackController> logger)
     {
         _repository = repository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -33,6 +42,7 @@ public class TrackController : ControllerBase
     [HttpGet]
     public IEnumerable<Track> Get()
     {
+        _logger.LogInformation("GET: Get list of track");
         return _repository.Tracks;
     }
 
@@ -45,8 +55,16 @@ public class TrackController : ControllerBase
     public ActionResult<Track> Get(int id)
     {
         var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
-        if (track == null) { return NotFound(); }
-        else return Ok(track);
+        if (track == null)
+        {
+            _logger.LogInformation($"GET(id): Track with id = {id} not found");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"GET(id): Get track with id = {id}");
+            return Ok(track);
+        }
     }
 
     /// <summary>
@@ -56,6 +74,7 @@ public class TrackController : ControllerBase
     [HttpPost]
     public void Post([FromBody] TrackPostDto track)
     {
+        _logger.LogInformation("Post new track");
         _repository.Tracks.Add(_mapper.Map<TrackPostDto, Track>(track));
     }
 
@@ -69,13 +88,18 @@ public class TrackController : ControllerBase
     public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
     {
         var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
-        if (track == null) return NotFound();
+        if (track == null)
+        {
+            _logger.LogInformation($"PUT: Track with id = {id} not found");
+            return NotFound();
+        }
         else
         {
             track.Name = putTrack.Name;
             track.Number = putTrack.Number;
             track.AlbumId = putTrack.AlbumId;
             track.Duration = putTrack.Duration;
+            _logger.LogInformation($"PUT: Put track with id = {id}");
             return Ok(new { track.Id });
         }
     }
@@ -88,6 +112,9 @@ public class TrackController : ControllerBase
     public void Delete(int id)
     {
         var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
-        if (track != null) _repository.Tracks.Remove(track);
+        if (track != null)
+        {
+            if(_repository.Tracks.Remove(track)) _logger.LogInformation($"DELETE: Delete track with id = {id}");
+        }
     }
 }

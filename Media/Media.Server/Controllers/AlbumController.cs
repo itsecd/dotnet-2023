@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Media.Server.Controllers;
 
+/// <summary>
+/// Album controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AlbumController : ControllerBase
@@ -20,10 +23,16 @@ public class AlbumController : ControllerBase
     /// </summary>
     private readonly IMapper _mapper;
 
-    public AlbumController(IMediaRepository repository, IMapper mapper)
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
+    private readonly ILogger<AlbumController> _logger;
+
+    public AlbumController(IMediaRepository repository, IMapper mapper, ILogger<AlbumController> logger)
     {
         _repository = repository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -33,6 +42,7 @@ public class AlbumController : ControllerBase
     [HttpGet]
     public IEnumerable<AlbumGetDto> Get()
     {
+        _logger.LogInformation("GET: Get list of album");
         return _repository.Albums.Select(album => _mapper.Map<Album, AlbumGetDto>(album));
     }
 
@@ -45,8 +55,16 @@ public class AlbumController : ControllerBase
     public ActionResult<AlbumGetDto> Get(int id)
     {
         var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
-        if (album == null) { return NotFound(); }
-        else return Ok(_mapper.Map<Album, AlbumGetDto>(album));
+        if (album == null)
+        {
+            _logger.LogInformation($"GET(id): Album with id = {id} not found");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"GET(id): Get album with id = {id}");
+            return Ok(_mapper.Map<Album, AlbumGetDto>(album));
+        }
     }
 
     /// <summary>
@@ -56,6 +74,7 @@ public class AlbumController : ControllerBase
     [HttpPost]
     public void Post([FromBody] AlbumPostDto album)
     {
+        _logger.LogInformation("Post new album");
         _repository.Albums.Add(_mapper.Map<AlbumPostDto, Album>(album));
     }
 
@@ -69,13 +88,18 @@ public class AlbumController : ControllerBase
     public IActionResult Put(int id, [FromBody] AlbumPostDto putAlbum)
     {
         var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
-        if (album == null) return NotFound();
+        if (album == null)
+        {
+            _logger.LogInformation($"PUT: Album with id = {id} not found");
+            return NotFound();
+        }
         else
         {
             album.Name = putAlbum.Name;
             album.ArtistId = putAlbum.ArtistId;
             album.GenreId = putAlbum.GenreId;
             album.Year = putAlbum.Year;
+            _logger.LogInformation($"PUT: Put album with id = {id}");
             return Ok(new { album.Id });
         }
     }
@@ -88,6 +112,9 @@ public class AlbumController : ControllerBase
     public void Delete(int id)
     {
         var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
-        if (album != null) _repository.Albums.Remove(album);
+        if (album != null)
+        {
+            if(_repository.Albums.Remove(album)) _logger.LogInformation($"DELETE: Delete album with id = {id}");
+        }
     }
 }

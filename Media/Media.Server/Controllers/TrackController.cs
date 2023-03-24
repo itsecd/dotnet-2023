@@ -114,7 +114,7 @@ public class TrackController : ControllerBase
         var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
         if (track != null)
         {
-            if(_repository.Tracks.Remove(track)) _logger.LogInformation($"DELETE: Delete track with id = {id}");
+            if (_repository.Tracks.Remove(track)) _logger.LogInformation($"DELETE: Delete track with id = {id}");
         }
     }
 }

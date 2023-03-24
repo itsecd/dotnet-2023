@@ -114,7 +114,7 @@ public class AlbumController : ControllerBase
         var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
         if (album != null)
         {
-            if(_repository.Albums.Remove(album)) _logger.LogInformation($"DELETE: Delete album with id = {id}");
+            if (_repository.Albums.Remove(album)) _logger.LogInformation($"DELETE: Delete album with id = {id}");
         }
     }
 }

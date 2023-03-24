@@ -27,6 +27,7 @@ public class AnalyticsController : ControllerBase
     /// Used to store logger
     /// </summary>
     private readonly ILogger<AnalyticsController> _logger;
+
     public AnalyticsController(IMediaRepository repository, IMapper mapper, ILogger<AnalyticsController> logger)
     {
         _repository = repository;

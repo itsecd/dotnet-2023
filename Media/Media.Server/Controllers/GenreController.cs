@@ -111,7 +111,7 @@ public class GenreController : ControllerBase
         var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
         if (genre != null)
         {
-            if(_repository.Genres.Remove(genre)) _logger.LogInformation($"DELETE: Delete genre with id = {id}");
+            if (_repository.Genres.Remove(genre)) _logger.LogInformation($"DELETE: Delete genre with id = {id}");
         }
     }
 }

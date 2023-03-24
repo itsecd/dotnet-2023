@@ -27,6 +27,7 @@ public class ArtistController : ControllerBase
     /// Used to store logger
     /// </summary>
     private readonly ILogger<ArtistController> _logger;
+
     public ArtistController(IMediaRepository repository, IMapper mapper, ILogger<ArtistController> logger)
     {
         _repository = repository;

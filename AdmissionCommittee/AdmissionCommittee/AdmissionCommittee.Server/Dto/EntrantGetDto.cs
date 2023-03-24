@@ -1,12 +1,9 @@
-﻿namespace AdmissionCommittee;
+﻿namespace AdmissionCommittee.Server.Dto;
 /// <summary>
 /// Information about entrants
 /// </summary>
-public class Entrant
+public class EntrantGetDto
 {
-    /// <summary>
-    /// IdEntrant - int type value for storing the id entrant
-    /// </summary>
     public int IdEntrant { get; set; }
 
     /// <summary>
@@ -29,30 +26,10 @@ public class Entrant
     /// </summary>
     public string? City { get; set; }
 
-    public Statement? Statement { get; set; }
-
     /// <summary>
     /// StatementId - int value for storing the id statement of entrant
     /// </summary>
     public int StatementId { get; set; }
 
     public List<Result> Results = new();
-
-    public Entrant() { }
-
-    public Entrant(int idEntrant, string? fullName, DateTime dateBirth, string? country, string? city, Statement? statement, int statementId)
-    {
-        IdEntrant = idEntrant;
-        FullName = fullName;
-        DateBirth = dateBirth;
-        Country = country;
-        City = city;
-        Statement = statement;
-        StatementId = statementId;
-    }
-
-    public Entrant(int idEntrant, string? fullName, DateTime dateBirth, string? country, string? city, Statement? statement, int statementId, List<Result> results) : this(idEntrant, fullName, dateBirth, country, city, statement, statementId)
-    {
-        Results = results;
-    }
 }

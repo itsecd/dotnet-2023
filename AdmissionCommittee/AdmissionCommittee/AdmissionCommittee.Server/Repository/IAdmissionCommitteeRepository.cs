@@ -2,8 +2,8 @@
 
 public interface IAdmissionCommitteeRepository
 {
-    List<Entrant> Entrants { get; }
-    List<List<Result>> Results { get; }
-    List<Speciality> Specialities { get; }
-    List<Statement> Statements { get; }
+    List<Entrant> GetEntrants { get; }
+    List<List<Result>> GetResults { get; }
+    List<Speciality> GetSpecialities { get; }
+    List<Statement> GetStatements { get; }
 }

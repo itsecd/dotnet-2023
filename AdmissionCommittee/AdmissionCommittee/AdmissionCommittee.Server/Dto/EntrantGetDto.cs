@@ -4,6 +4,9 @@
 /// </summary>
 public class EntrantGetDto
 {
+    /// <summary>
+    /// IdEntrant - int type value for storing the id entrant
+    /// </summary>
     public int IdEntrant { get; set; }
 
     /// <summary>
@@ -30,6 +33,4 @@ public class EntrantGetDto
     /// StatementId - int value for storing the id statement of entrant
     /// </summary>
     public int StatementId { get; set; }
-
-    public List<Result> Results = new();
 }

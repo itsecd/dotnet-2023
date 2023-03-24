@@ -2,6 +2,7 @@
 using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
@@ -21,61 +22,90 @@ public class EntrantController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    /// <summary>
+    /// Get all Entrants
+    /// </summary>
+    /// <returns> IEnumerable type EntrantGetDto </returns>
+    [HttpGet("GetAllEntrants")]
     public IEnumerable<EntrantGetDto> Get()
     {
-        return _admissionCommitteeRepository.Entrants.Select(entrant => _mapper.Map<EntrantGetDto>(entrant));
+        _logger.LogInformation("Get all Entrants");
+        return _admissionCommitteeRepository.GetEntrants.Select(entrant => _mapper.Map<EntrantGetDto>(entrant));
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<Entrant> Get(int id)
+    /// <summary>
+    /// Get Entrant by id
+    /// </summary>
+    /// <param name="idEntrant">id entrant</param>
+    /// <returns>EntrantGetDto with http code</returns>
+    [HttpGet("GetEntrantById{idEntrant}")]
+    public ActionResult<EntrantGetDto> Get(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.Entrants.FirstOrDefault(entrant => entrant.IdEntrant == id);
+        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
-            _logger.LogInformation("Not found entrant : {id}", id);
-            return NotFound($"The entrant does't exist by this id {id}");
+            _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
+            return NotFound($"The Entrant does't exist by this idEntrant {idEntrant}");
         }
         else
         {
+            _logger.LogInformation("Get Entrant by {idEntrant}", idEntrant);
             return Ok(_mapper.Map<EntrantGetDto>(entrant));
         }
     }
 
-    [HttpPost]
+    /// <summary>
+    /// Create new Entrant
+    /// </summary>
+    /// <param name="entrant">new Entrant</param>
+    [HttpPost("CreateEntrant")]
     public void Post([FromBody] EntrantPostDto entrant)
     {
-        _admissionCommitteeRepository.Entrants.Add(_mapper.Map<Entrant>(entrant));
+        _logger.LogInformation("Create new Entrant");
+        _admissionCommitteeRepository.GetEntrants.Add(_mapper.Map<Entrant>(entrant));
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] EntrantPostDto entrantToPut)
+    /// <summary>
+    /// Update information about Entrant
+    /// </summary>
+    /// <param name="idEntrant">id Entrant</param>
+    /// <param name="entrantToPut">Entrant that is updated</param>
+    /// <returns></returns>
+    [HttpPut("UpdateEntrantById{idEntrant}")]
+    public IActionResult Put(int idEntrant, [FromBody] EntrantPostDto entrantToPut)
     {
-        var entrant = _admissionCommitteeRepository.Entrants.FirstOrDefault(entrant => entrant.IdEntrant == id);
+        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
-            _logger.LogInformation("Not found entrant : {id}", id);
-            return NotFound($"The entrant does't exist by this id {id}");
+            _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
+            return NotFound($"The Entrant does't exist by this id {idEntrant}");
         }
         else
         {
+            _logger.LogInformation("Update Entrant by id {idEntrant}", idEntrant);
             _mapper.Map(entrantToPut, entrant);
             return Ok();
         }
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <summary>
+    /// Delete by id Entrant
+    /// </summary>
+    /// <param name="idEntrant">id Entrant for delete</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpDelete("DeleteEntrantById{idEntrant}")]
+    public IActionResult Delete(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.Entrants.FirstOrDefault(entrant => entrant.IdEntrant == id);
+        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
-            _logger.LogInformation($"Not found entrant : {id}");
-            return NotFound($"The entrant does't exist by this id {id}");
+            _logger.LogInformation($"Not found Entrant : {idEntrant}");
+            return NotFound($"The entrant does't exist by this id {idEntrant}");
         }
         else
         {
-            _admissionCommitteeRepository.Entrants.Remove(entrant);
+            _logger.LogInformation("Delete Entrant by id {idEntrant}", idEntrant);
+            _admissionCommitteeRepository.GetEntrants.Remove(entrant);
             return Ok();
         }
     }

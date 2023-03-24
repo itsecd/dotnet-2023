@@ -130,11 +130,11 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
         }
     }
 
-    public List<List<Result>> Results => _results;
+    public List<List<Result>> GetResults => _results;
 
-    public List<Speciality> Specialities => _specialities;
+    public List<Speciality> GetSpecialities => _specialities;
 
-    public List<Entrant> Entrants => _entrants;
+    public List<Entrant> GetEntrants => _entrants;
 
-    public List<Statement> Statements => _statements;
+    public List<Statement> GetStatements => _statements;
 }

@@ -28,6 +28,4 @@ public class EntrantPostDto
     /// StatementId - int value for storing the id statement of entrant
     /// </summary>
     public int StatementId { get; set; }
-
-    public List<Result> Results = new();
 }

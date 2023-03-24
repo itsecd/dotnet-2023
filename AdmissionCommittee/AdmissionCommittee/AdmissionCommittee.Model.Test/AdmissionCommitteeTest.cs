@@ -112,16 +112,17 @@ public class AdmissionCommitteeTest
     /// </summary>
     private void CreateEntrants()
     {
-        _entrants.Add(new Entrant(1, "Lebedeva Kira Romanovna", new DateTime(2005, 01, 19), "Russian Federation", "Saint-Petersburg", _statements[0]));
-        _entrants.Add(new Entrant(2, "Popova Eva Artemovna", new DateTime(2002, 11, 12), "Russian Federation", "Kazan", _statements[1]));
-        _entrants.Add(new Entrant(3, "Novikov Roman Evgenievich", new DateTime(2005, 08, 29), "Kazakhstan", "Astana", _statements[2]));
-        _entrants.Add(new Entrant(4, "Isaev Nikita Grigorievich", new DateTime(2001, 01, 01), "Russian Federation", "Saint-Petersburg", _statements[3]));
-        _entrants.Add(new Entrant(5, "Pastukhova Sofya Maksimovna", new DateTime(2004, 01, 29), "Uzbekistan", "Tashkent", _statements[4]));
-        _entrants.Add(new Entrant(6, "Gromova Alyona Andreevna", new DateTime(2003, 08, 02), "Russian Federation", "Ekaterinburg", _statements[5]));
-        _entrants.Add(new Entrant(7, "Bykova Anastasia Miroslavovna", new DateTime(2003, 08, 30), "Uzbekistan", "Mirabad", _statements[6]));
-        _entrants.Add(new Entrant(8, "Soboleva Alice Yaroslavovna", new DateTime(2003, 08, 03), "Russian Federation", "Azov", _statements[7]));
-        _entrants.Add(new Entrant(9, "Kalinina Elena Vasilyevna", new DateTime(2003, 02, 01), "Russian Federation", "Samara", _statements[8]));
-        _entrants.Add(new Entrant(10, "Vinogradov Dmitry Artemovich", new DateTime(2005, 05, 31), "Latvia", "Smiltene", _statements[9]));
+
+        _entrants.Add(new Entrant(1, "Lebedeva Kira Romanovna", new DateTime(2005, 01, 19), "Russian Federation", "Saint-Petersburg", _statements[0], 1));
+        _entrants.Add(new Entrant(2, "Popova Eva Artemovna", new DateTime(2002, 11, 12), "Russian Federation", "Kazan", _statements[1], 2));
+        _entrants.Add(new Entrant(3, "Novikov Roman Evgenievich", new DateTime(2005, 08, 29), "Kazakhstan", "Astana", _statements[2], 3));
+        _entrants.Add(new Entrant(4, "Isaev Nikita Grigorievich", new DateTime(2001, 01, 01), "Russian Federation", "Saint-Petersburg", _statements[3], 4));
+        _entrants.Add(new Entrant(5, "Pastukhova Sofya Maksimovna", new DateTime(2004, 01, 29), "Uzbekistan", "Tashkent", _statements[4], 5));
+        _entrants.Add(new Entrant(6, "Gromova Alyona Andreevna", new DateTime(2003, 08, 02), "Russian Federation", "Ekaterinburg", _statements[5], 6));
+        _entrants.Add(new Entrant(7, "Bykova Anastasia Miroslavovna", new DateTime(2003, 08, 30), "Uzbekistan", "Mirabad", _statements[6], 7));
+        _entrants.Add(new Entrant(8, "Soboleva Alice Yaroslavovna", new DateTime(2003, 08, 03), "Russian Federation", "Azov", _statements[7], 8));
+        _entrants.Add(new Entrant(9, "Kalinina Elena Vasilyevna", new DateTime(2003, 02, 01), "Russian Federation", "Samara", _statements[8], 9));
+        _entrants.Add(new Entrant(10, "Vinogradov Dmitry Artemovich", new DateTime(2005, 05, 31), "Latvia", "Smiltene", _statements[9], 10));
 
 
         for (int i = 0, j = 0; i < _entrants.Count; i++, j++)

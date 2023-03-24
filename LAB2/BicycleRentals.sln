@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BicycleRentals", "BicycleRentals.csproj", "{86625379-41AC-42A6-B924-686094539808}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BicycleTests", "..\BicycleTestsVerLaptop\BicycleTests.csproj", "{AAA2CC33-DBE4-4667-B90A-AC38C37B1854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BicycleTests", "..\BicycleTests\BicycleTests.csproj", "{AAA2CC33-DBE4-4667-B90A-AC38C37B1854}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BicycleSever", "..\BicycleRentalSever\BicycleSever.csproj", "{3A9ADF95-2653-40C1-B23B-9C2A0FBC350C}"
 EndProject

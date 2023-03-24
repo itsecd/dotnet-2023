@@ -26,7 +26,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a passengers without baggage
     /// </summary>
     /// <returns>Passengers without baggage</returns>
-    [HttpGet("PassengersWithoutBaggage")]
+    [HttpGet("passengers-without-baggage")]
     public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage()
     {
         _logger.LogInformation("Get passengers without baggage");
@@ -45,7 +45,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a flights with specified source and destination
     /// </summary>
     /// <returns>Flights with specified source and destination</returns>
-    [HttpGet("FlightsWithSpecifiedSourceAndDestination")]
+    [HttpGet("flights-with-specified-source-and-destination")]
     public IEnumerable<FlightGetDto> GetFlightsWithSpecifiedSourceAndDestination()
     {
         _logger.LogInformation("Get flights with specified source and destination");
@@ -60,7 +60,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a flights at specified period
     /// </summary>
     /// <returns>Flights at specified period</returns>
-    [HttpGet("FlightsAtSpecifiedPeriod")]
+    [HttpGet("flights-at-specified-period")]
     public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod()
     {
         _logger.LogInformation("Get flights at specified period");
@@ -78,7 +78,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a flights with max count of passengers
     /// </summary>
     /// <returns>Flights with max count of passengers</returns>
-    [HttpGet("FlightsWithMaxCountOfPassengers")]
+    [HttpGet("flights-with-max-count-of-passengers")]
     public IEnumerable<int> GetFlightsWithMaxCountOfPassengers()
     {
         _logger.LogInformation("Get flights with max count of passengers");
@@ -93,7 +93,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return max and average baggage amount from specified source
     /// </summary>
     /// <returns>Max and average baggage amount from specified source</returns>
-    [HttpGet("MaxAndAvgBaggageAmountFromSpecifiedSource")]
+    [HttpGet("max-and-avg-baggage-amount-from-specified-source")]
     public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
     {
         _logger.LogInformation("Get max and average baggage amount from specified source");
@@ -111,7 +111,7 @@ public class AnalyticsController : ControllerBase
     /// Get method which return flights with minimal flight duration
     /// </summary>
     /// <returns>Flights with minimal flight duration</returns>
-    [HttpGet("FlightsWithMinFlightDuration")]
+    [HttpGet("flights-with-min-flight-duration")]
     public IEnumerable<FlightGetDto> GetFlightsWithMinFlightDuration()
     {
         _logger.LogInformation("Get flights with minimal flight duration");

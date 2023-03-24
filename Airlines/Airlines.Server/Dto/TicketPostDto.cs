@@ -18,4 +18,3 @@ public class TicketPostDto
     /// </summary>
     public int BaggageWeight { get; set; }
 }
-

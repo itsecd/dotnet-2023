@@ -63,15 +63,15 @@ public class BicycleRentalRespostory : IBicycleRentalRespostory
         get => new List<BicycleRental>()
             {
             new BicycleRental() {RentalId = 1 ,SerialNumber = 1,CustomerId = 1, RentalStartTime = new DateTime(2022, 3, 1, 9, 0, 0), RentalEndTime = new DateTime(2022, 3, 1, 10, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 3,CustomerId = 2, RentalStartTime = new DateTime(2023, 3, 2, 10, 0, 0), RentalEndTime = new DateTime(2023, 3, 2, 12, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 4,CustomerId = 3,RentalStartTime = new DateTime(2022, 3, 3, 11, 0, 0), RentalEndTime = new DateTime(2022, 3, 3, 11, 30, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 5,CustomerId = 4,RentalStartTime = new DateTime(2023, 3, 4, 12, 0, 0), RentalEndTime = new DateTime(2023, 3, 4, 14, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 1,CustomerId = 5, RentalStartTime = new DateTime(2022, 3, 5, 13, 0, 0), RentalEndTime = new DateTime(2022, 3, 5, 15, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 4,CustomerId = 4,RentalStartTime = new DateTime(2023, 3, 2, 10, 0, 0), RentalEndTime = new DateTime(2023, 3, 2, 12, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 9,CustomerId = 3, RentalStartTime = new DateTime(2022, 3, 3, 14, 0, 0), RentalEndTime = new DateTime(2022, 3, 3, 16, 0, 0) },
-            new BicycleRental() {RentalId = 1, SerialNumber = 10,CustomerId = 4, RentalStartTime = new DateTime(2023, 3, 4, 16, 0, 0), RentalEndTime = new DateTime(2023, 3, 4, 18, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 6,CustomerId = 2, RentalStartTime = new DateTime(2022, 3, 5, 11, 0, 0), RentalEndTime = new DateTime(2022, 3, 5, 12, 0, 0) },
-            new BicycleRental() {RentalId = 1 ,SerialNumber = 5,CustomerId = 1, RentalStartTime = new DateTime(2023, 3, 6, 13, 0, 0), RentalEndTime = new DateTime(2023, 3, 6, 15, 0, 0) }
+            new BicycleRental() {RentalId = 2 ,SerialNumber = 3,CustomerId = 2, RentalStartTime = new DateTime(2023, 3, 2, 10, 0, 0), RentalEndTime = new DateTime(2023, 3, 2, 12, 0, 0) },
+            new BicycleRental() {RentalId = 3 ,SerialNumber = 4,CustomerId = 3,RentalStartTime = new DateTime(2022, 3, 3, 11, 0, 0), RentalEndTime = new DateTime(2022, 3, 3, 11, 30, 0) },
+            new BicycleRental() {RentalId = 4 ,SerialNumber = 5,CustomerId = 4,RentalStartTime = new DateTime(2023, 3, 4, 12, 0, 0), RentalEndTime = new DateTime(2023, 3, 4, 14, 0, 0) },
+            new BicycleRental() {RentalId = 5 ,SerialNumber = 1,CustomerId = 5, RentalStartTime = new DateTime(2022, 3, 5, 13, 0, 0), RentalEndTime = new DateTime(2022, 3, 5, 15, 0, 0) },
+            new BicycleRental() {RentalId = 6 ,SerialNumber = 4,CustomerId = 4,RentalStartTime = new DateTime(2023, 3, 2, 10, 0, 0), RentalEndTime = new DateTime(2023, 3, 2, 12, 0, 0) },
+            new BicycleRental() {RentalId = 7 ,SerialNumber = 9,CustomerId = 3, RentalStartTime = new DateTime(2022, 3, 3, 14, 0, 0), RentalEndTime = new DateTime(2022, 3, 3, 16, 0, 0) },
+            new BicycleRental() {RentalId = 8, SerialNumber = 10,CustomerId = 4, RentalStartTime = new DateTime(2023, 3, 4, 16, 0, 0), RentalEndTime = new DateTime(2023, 3, 4, 18, 0, 0) },
+            new BicycleRental() {RentalId = 9 ,SerialNumber = 6,CustomerId = 2, RentalStartTime = new DateTime(2022, 3, 5, 11, 0, 0), RentalEndTime = new DateTime(2022, 3, 5, 12, 0, 0) },
+            new BicycleRental() {RentalId = 10 ,SerialNumber = 5,CustomerId = 1, RentalStartTime = new DateTime(2023, 3, 6, 13, 0, 0), RentalEndTime = new DateTime(2023, 3, 6, 15, 0, 0) }
             };
     }
 }

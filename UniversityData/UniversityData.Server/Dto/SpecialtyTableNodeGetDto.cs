@@ -1,8 +1,6 @@
-﻿namespace UniversityData.Domain;
-/// <summary>
-/// Узел таблицы связи специальности и количества групп
-/// </summary>
-public class SpecialtyTableNode
+﻿namespace UniversityData.Server.Dto;
+
+public class SpecialtyTableNodeGetDto
 {
     /// <summary>
     /// ID
@@ -10,10 +8,6 @@ public class SpecialtyTableNode
     public int Id { get; set; }
     /// <summary>
     /// Специальность
-    /// </summary>
-    public Specialty Specialty { get; set; }
-    /// <summary>
-    /// ID специальности
     /// </summary>
     public int SpecialtyID { get; set; }
     /// <summary>

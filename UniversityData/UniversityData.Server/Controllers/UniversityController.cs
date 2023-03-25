@@ -1,6 +1,8 @@
 ﻿using UniversityData.Domain;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Server.Dto;
 namespace UniversityData.Server.Controllers;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,14 +17,24 @@ public class UniversityController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<University> Get()
+    public IEnumerable<UniversityGetDto> Get()
     {
         _logger.LogInformation("Get all departments");
-        return _universityDataRepository.Universities;
+        return _universityDataRepository.Universities.Select(university =>
+        new UniversityGetDto
+        {
+            Id = university.Id,
+            Name = university.Name,
+            Number = university.Number,
+            Address = university.Address,
+            RectorId = university.RectorId,
+            UniversityProperty = university.UniversityProperty,
+            ConstructionProperty = university.ConstructionProperty
+        });
     }
 
     [HttpGet("{id}")]
-    public ActionResult<University?> Get(int id)
+    public ActionResult<UniversityGetDto?> Get(int id)
     {
         var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
@@ -33,7 +45,16 @@ public class UniversityController : ControllerBase
         else
         {
             _logger.LogInformation($"Get university with id {id}");
-            return Ok(university);
+            return Ok(new UniversityGetDto
+            {
+                Id = university.Id,
+                Name = university.Name,
+                Number = university.Number,
+                Address = university.Address,
+                RectorId = university.RectorId,
+                UniversityProperty = university.UniversityProperty,
+                ConstructionProperty = university.ConstructionProperty
+            });
         }
     }
 

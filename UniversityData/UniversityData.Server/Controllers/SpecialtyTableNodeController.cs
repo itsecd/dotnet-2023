@@ -1,4 +1,5 @@
 ﻿using UniversityData.Domain;
+using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 namespace UniversityData.Server.Controllers;
 
@@ -15,14 +16,21 @@ public class SpecialtyTableNodeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<SpecialtyTableNode> Get()
+    public IEnumerable<SpecialtyTableNodeGetDto> Get()
     {
         _logger.LogInformation("Get all departments");
-        return _universityDataRepository.SpecialtyTableNodes;
+        return _universityDataRepository.SpecialtyTableNodes.Select(specialtyTableNode =>
+        new SpecialtyTableNodeGetDto
+        {
+            Id= specialtyTableNode.Id,
+            SpecialtyID = specialtyTableNode.SpecialtyID,
+            CountGroups = specialtyTableNode.CountGroups,
+            UniversityId = specialtyTableNode.UniversityId
+        });
     }
 
     [HttpGet("{id}")]
-    public ActionResult<SpecialtyTableNode?> Get(int id)
+    public ActionResult<SpecialtyTableNodeGetDto?> Get(int id)
     {
         var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
@@ -33,7 +41,13 @@ public class SpecialtyTableNodeController : ControllerBase
         else
         {
             _logger.LogInformation($"Get specialtyTableNode with id {id}");
-            return Ok(specialtyTableNode);
+            return Ok(new SpecialtyTableNodeGetDto
+            {
+                Id = specialtyTableNode.Id,
+                SpecialtyID = specialtyTableNode.SpecialtyID,
+                CountGroups = specialtyTableNode.CountGroups,
+                UniversityId = specialtyTableNode.UniversityId
+            });
         }
     }
 

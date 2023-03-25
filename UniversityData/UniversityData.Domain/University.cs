@@ -21,6 +21,10 @@ public class University
     /// </summary>
     public string Address { get; set; } 
     /// <summary>
+    /// ID ректора
+    /// </summary>
+    public int RectorId { get; set; }
+    /// <summary>
     /// Сведения о ректоре 
     /// </summary>
     public Rector RectorData { get; set; }

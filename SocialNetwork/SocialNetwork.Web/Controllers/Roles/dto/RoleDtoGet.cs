@@ -20,10 +20,10 @@ public class RoleDtoGet
 	/// <summary>
 	/// Пользователи, обладающие конкретной ролью.
 	/// </summary>
-	public List<User> Users { get; set; }
+	public List<User>? Users { get; set; }
 
 	/// <summary>
 	/// Группы, в которых состоят пользователи, обладающие данной ролью.
 	/// </summary>
-	public List<Group> Groups { get; set; }
+	public List<Group>? Groups { get; set; }
 }

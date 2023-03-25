@@ -18,7 +18,7 @@ public class GroupDtoPostOrPut
 	/// <summary>
 	/// Дата создания.
 	/// </summary>
-	public DateTime CreationDate { get; set; }
+	public DateTime? CreationDate { get; set; }
 
 	/// <summary>
 	/// Идентификатор создателя.

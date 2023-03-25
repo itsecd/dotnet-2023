@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.Core;
 using SocialNetwork.Domain;
 
 namespace SocialNetwork.Web;
@@ -11,14 +12,33 @@ namespace SocialNetwork.Web;
 public class RoleController : ControllerBase
 {
 	/// <summary>
+	/// Сервис социальной сети.
+	/// </summary>
+	private readonly ISocialNetworkService _socialNetworkService;
+
+	/// <summary>
+	/// Создает контроллер с помощью указанных данных.
+	/// </summary>
+	/// <param name="socialNetworkRepository">Содержит данные сущностей социальной сети.</param>
+	public RoleController(ISocialNetworkService socialNetworkService) 
+	{
+		_socialNetworkService = socialNetworkService;
+	}
+
+	/// <summary>
 	/// Получение всех ролей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность ролей.</returns>
 	[HttpGet]
-	public IEnumerable<RoleDtoGet> GetAllRoles() 
-	{
-		return null;
-	}
+	public IEnumerable<RoleDtoGet> GetAllRoles() => 
+		_socialNetworkService.GetAllRoles().Select(role =>
+			new RoleDtoGet
+			{
+				Id = role.Id,
+				Name = role.Name,
+				Groups = role.Groups,
+				Users = role.Users
+			});
 
 	/// <summary>
 	/// Получение роли по идентификатору.
@@ -28,7 +48,15 @@ public class RoleController : ControllerBase
 	[HttpGet("{id}")]
 	public RoleDtoGet GetRole(int id) 
 	{
-		return new RoleDtoGet();
+		var entity = _socialNetworkService.GetRole(id);
+
+		return new RoleDtoGet
+		{
+			Id = entity.Id,
+			Name = entity.Name,
+			Users = entity.Users,
+			Groups = entity.Groups
+		};
 	}
 
 	/// <summary>
@@ -36,9 +64,12 @@ public class RoleController : ControllerBase
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
 	[HttpPost]
-	public void CreateRole(RoleDtoPostOrPut model)
+	public void CreateRole([FromBody] RoleDtoPostOrPut model)
 	{
-
+		_socialNetworkService.CreateRole(new Role
+		{
+			Name = model.Name
+		});
 	}
 
 	/// <summary>
@@ -47,9 +78,12 @@ public class RoleController : ControllerBase
 	/// <param name="id">Идентификатор роли, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой роли.</param>
 	[HttpPut("{id}")]
-	public void UpdateRole(int id, RoleDtoPostOrPut model)
+	public void UpdateRole(int id, [FromBody] RoleDtoPostOrPut model)
 	{
-
+		_socialNetworkService.UpdateRole(id, new Role
+		{
+			Name = model.Name
+		});
 	}
 
 	/// <summary>
@@ -59,6 +93,6 @@ public class RoleController : ControllerBase
 	[HttpDelete("{id}")]
 	public void DeleteRole(int id) 
 	{
-
+		_socialNetworkService.DeleteRole(id);
 	}
 }

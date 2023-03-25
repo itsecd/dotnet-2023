@@ -34,25 +34,25 @@ public class UserDtoGet
 	/// <summary>	
 	/// Дата рождения.	
 	/// </summary>	
-	public DateTime BirthDate { get; set; }
+	public DateTime? BirthDate { get; set; }
 
 	/// <summary>	
 	/// Дата регистрации.	
 	/// </summary>	
-	public DateTime RegistrationDate { get; set; }
+	public DateTime? RegistrationDate { get; set; }
 
 	/// <summary>
 	/// Записи пользователя.
 	/// </summary>
-	public List<Note> Notes { get; set; }
+	public List<Note>? Notes { get; set; }
 
 	/// <summary>
 	/// Группы пользователя.
 	/// </summary>
-	public List<Group> Groups { get; set; }
+	public List<Group>? Groups { get; set; }
 
 	/// <summary>
 	/// Роли пользователя.
 	/// </summary>
-	public List<Role> Roles { get; set; }
+	public List<Role>? Roles { get; set; }
 }

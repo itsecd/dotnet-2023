@@ -45,45 +45,36 @@ public class Note
     /// </summary>
     public Group? Group { get; set; }
 
-    /// <summary>
-    /// Создает запись с помощью указанных данных.
-    /// </summary>
-    /// <param name="id">Идентификатор записи.</param>
-    /// <param name="name">Название записи.</param>
-    /// <param name="description">Описание записи.</param>
-    /// <param name="creationDate">Дата создания записи.</param>
-    /// <param name="userId">Идентификатор создателя записи.</param>
-    /// <param name="user">Создатель записи.</param>
-    /// <param name="groupId">Идентификатор группы.</param>
-    /// <param name="group">Группа.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
-    /// <exception cref="ArgumentNullException">Объект равен null!</exception>
-    public Note(int id, string name, string description, DateTime? creationDate, int userId,
-        User? user, int groupId, Group? group)
-    {
-        Validator.RangeNumberValidate(0, int.MaxValue, id);
-        Validator.StringTextValidate(name);
-        Validator.StringTextValidate(description);
-        Validator.DateTimeValidate(creationDate);
-        Validator.RangeNumberValidate(0, int.MaxValue, userId);
-        Validator.UserValidate(user);
-        Validator.RangeNumberValidate(0, int.MaxValue, groupId);
-        Validator.GroupValidate(group);
+	/// <summary>
+	/// Создает запись с помощью указанных данных.
+	/// </summary>
+	/// <param name="id">Идентификатор записи.</param>
+	/// <param name="name">Название записи.</param>
+	/// <param name="description">Описание записи.</param>
+	/// <param name="creationDate">Дата создания записи.</param>
+	/// <param name="userId">Идентификатор создателя записи.</param>
+	/// <param name="user">Создатель записи.</param>
+	/// <param name="groupId">Идентификатор группы.</param>
+	/// <param name="group">Группа.</param>
+	/// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
+	/// <exception cref="ArgumentNullException">Объект равен null!</exception>
+	public Note(int id, string name, string description, DateTime? creationDate, int userId,
+		User? user, int groupId, Group? group)
+	{
+		Id = id;
+		Name = name;
+		Description = description;
+		CreationDate = creationDate;
+		UserId = userId;
+		User = user;
+		GroupId = groupId;
+		Group = group;
+	}
 
-        Id = id;
-        Name = name;
-        Description = description;
-        CreationDate = creationDate;
-        UserId = userId;
-        User = user;
-        GroupId = groupId;
-        Group = group;
-    }
-
-    /// <summary>
-    /// Создает запись без параметров.
-    /// </summary>
-    public Note()
-    {
-    }
+	/// <summary>
+	/// Создает запись без параметров.
+	/// </summary>
+	public Note()
+	{
+	}
 }

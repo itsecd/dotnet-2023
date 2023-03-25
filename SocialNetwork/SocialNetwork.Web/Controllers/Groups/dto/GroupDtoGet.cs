@@ -25,15 +25,15 @@ public class GroupDtoGet
 	/// <summary>	
 	/// Дата создания.	
 	/// </summary>	
-	public DateTime CreationDate { get; set; }
+	public DateTime? CreationDate { get; set; }
 
 	/// <summary>
 	/// Создатель.
 	/// </summary>
-	public User User { get; set; }
+	public User? User { get; set; }
 
 	/// <summary>
 	/// Записи группы.
 	/// </summary>
-	public List<Note> Notes { get; set; }
+	public List<Note>? Notes { get; set; }
 }

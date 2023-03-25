@@ -25,9 +25,9 @@ public class PassengerController : ControllerBase
     }
 
     /// <summary>
-    /// Get metod for passenger table
+    /// Get method for passenger table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return all passengers
     /// </returns>
     [HttpGet]
@@ -38,9 +38,9 @@ public class PassengerController : ControllerBase
     }
 
     /// <summary>
-    /// Get by id metod for passenger table
+    /// Get by id method for passenger table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return passenger with specified id
     /// </returns>
     [HttpGet("{id}")]
@@ -63,7 +63,7 @@ public class PassengerController : ControllerBase
     /// <summary>
     /// Post method for passenger table
     /// </summary>
-    /// <param name="passenger"> Paseenger class instance to insert to table</param>
+    /// <param name="passenger"> Passenger class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] PassengerPostDto passenger)
     {

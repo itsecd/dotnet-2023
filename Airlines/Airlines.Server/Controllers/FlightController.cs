@@ -25,9 +25,9 @@ public class FlightController : ControllerBase
     }
 
     /// <summary>
-    /// Get metod for flight table
+    /// Get method for flight table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return all flights
     /// </returns>
     [HttpGet]
@@ -38,9 +38,9 @@ public class FlightController : ControllerBase
     }
 
     /// <summary>
-    /// Get by id metod for flight table
+    /// Get by id method for flight table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return flight with specified id
     /// </returns>
     [HttpGet("{id}")]

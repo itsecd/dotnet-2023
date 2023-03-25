@@ -10,11 +10,11 @@ public class TicketPostDto
     /// </summary>
     public int? TicketNumber { get; set; }
     /// <summary>
-    /// Represent a seatnumber of ticket
+    /// Represent a seat number of ticket
     /// </summary>
     public string? SeatNumber { get; set; }
     /// <summary>
-    /// Represent a baggage weight, which passanger can move
+    /// Represent a baggage weight, which passenger can move
     /// </summary>
     public int BaggageWeight { get; set; }
 }

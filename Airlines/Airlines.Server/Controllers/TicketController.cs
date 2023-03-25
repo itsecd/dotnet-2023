@@ -25,9 +25,9 @@ public class TicketController : ControllerBase
     }
 
     /// <summary>
-    /// Get metod for ticket table
+    /// Get method for ticket table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return all tickets
     /// </returns>
     [HttpGet]
@@ -38,9 +38,9 @@ public class TicketController : ControllerBase
     }
 
     /// <summary>
-    /// Get by id metod for ticket table
+    /// Get by id method for ticket table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return ticket with specified id
     /// </returns>
     [HttpGet("{id}")]

@@ -25,9 +25,9 @@ public class AirplaneController : ControllerBase
     }
 
     /// <summary>
-    /// Get metod for airplane table
+    /// Get method for airplane table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return all airplanes
     /// </returns>
     [HttpGet]
@@ -38,9 +38,9 @@ public class AirplaneController : ControllerBase
     }
 
     /// <summary>
-    /// Get by id metod for airplane table
+    /// Get by id method for airplane table
     /// </summary>
-    /// <returns>'
+    /// <returns>
     /// Return airplane with specified id
     /// </returns>
     [HttpGet("{id}")]
@@ -83,7 +83,7 @@ public class AirplaneController : ControllerBase
         var airplane = _airlinesRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation("Not found airplae with id {0}", id);
+            _logger.LogInformation("Not found airplane with id {0}", id);
             return NotFound();
         }
         else

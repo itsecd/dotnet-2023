@@ -16,9 +16,4 @@ public class Specialty
     /// Код-шифр специальности 
     /// </summary>
     public string Code { get; set; }
-    /// <summary>
-    /// Ссылка на обратную связь
-    /// </summary>
-    public SpecialtyTableNode Node { get; set; }
-
 }

@@ -33,7 +33,7 @@ public class Rector
     /// </summary>
     public string Position { get; set; } 
     /// <summary>
-    /// Ссылка на обратную связь
+    /// ID университета
     /// </summary>
-    public University University { get; set; }
+    public int UniversityiId { get; set; }
 }

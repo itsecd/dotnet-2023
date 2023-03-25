@@ -21,7 +21,7 @@ public class Faculty
     /// </summary>
     public int StudentsCount { get; set; }
     /// <summary>
-    /// Ссылка на обратную связь
+    /// ID университета
     /// </summary>
-    public University University { get; set; }
+    public int UniversityId { get; set; }
 }

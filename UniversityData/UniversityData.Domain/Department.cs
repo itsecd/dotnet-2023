@@ -17,7 +17,7 @@ public class Department
     /// </summary>
     public string SupervisorNumber { get; set; }
     /// <summary>
-    /// Ссылка на обратную связь
+    /// ID университета
     /// </summary>
-    public University University { get; set; }
+    public int UniversityId { get; set; }
 }

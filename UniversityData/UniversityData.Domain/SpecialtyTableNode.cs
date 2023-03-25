@@ -17,7 +17,7 @@ public class SpecialtyTableNode
     /// </summary>
     public int CountGroups { get; set; }
     /// <summary>
-    /// Ссылка на обратную связь
+    /// ID университета
     /// </summary>
-    public University TableNodeUniversity { get; set; }
+    public int UniversityId { get; set; }
 }

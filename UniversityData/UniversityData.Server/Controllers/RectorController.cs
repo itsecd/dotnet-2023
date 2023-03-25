@@ -1,4 +1,5 @@
 ﻿using UniversityData.Domain;
+using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 namespace UniversityData.Server.Controllers;
 
@@ -38,9 +39,18 @@ public class RectorController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] Rector rector)
+    public void Post([FromBody] RectorPostDto rector)
     {
-        _universityDataRepository.Rectors.Add(rector);
+        _universityDataRepository.Rectors.Add(new Rector()
+        {
+            Name = rector.Name,
+            Surname = rector.Surname,
+            Patronymic = rector.Patronymic,
+            Degree = rector.Degree,
+            Title = rector.Title,
+            Position = rector.Position,
+            UniversityiId = rector.UniversityiId
+        });
     }
 
     [HttpPut("{id}")]

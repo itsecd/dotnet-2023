@@ -1,4 +1,5 @@
 ﻿using UniversityData.Domain;
+using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 namespace UniversityData.Server.Controllers;
 
@@ -38,9 +39,13 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] Specialty specialty)
+    public void Post([FromBody] SpecialtyPostDto specialty)
     {
-        _universityDataRepository.Specialties.Add(specialty);
+        _universityDataRepository.Specialties.Add(new Specialty()
+        {
+            Name = specialty.Name,
+            Code = specialty.Code
+        });
     }
 
     [HttpPut("{id}")]

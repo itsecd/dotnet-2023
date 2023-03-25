@@ -1,4 +1,5 @@
 ﻿using UniversityData.Domain;
+using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 namespace UniversityData.Server.Controllers;
 
@@ -38,14 +39,20 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] Department department)
+    public void Post([FromBody] DepartmentPostDto department)
     {
-        _universityDataRepository.Departments.Add(department);
+        _universityDataRepository.Departments.Add(new Department()
+        {
+            Name = department.Name,
+            SupervisorNumber = department.SupervisorNumber,
+            UniversityId = department.UniversityId
+        });
     }
 
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] string value)
     {
+
     }
 
     [HttpDelete("{id}")]

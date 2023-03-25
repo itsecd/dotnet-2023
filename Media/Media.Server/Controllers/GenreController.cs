@@ -49,7 +49,7 @@ public class GenreController : ControllerBase
     /// <summary>
     /// Get genre by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Genre Id</param>
     /// <returns>Genre</returns>
     [HttpGet("{id}")]
     public ActionResult<Genre> Get(int id)
@@ -70,7 +70,7 @@ public class GenreController : ControllerBase
     /// <summary>
     /// Post new genre
     /// </summary>
-    /// <param name="genre"></param>
+    /// <param name="genre">Genre name</param>
     [HttpPost]
     public void Post([FromBody] GenrePostDto genre)
     {
@@ -81,8 +81,8 @@ public class GenreController : ControllerBase
     /// <summary>
     /// Put genre
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="putGenre"></param>
+    /// <param name="id">Genre Id</param>
+    /// <param name="putGenre"/Genre to putting</param>
     /// <returns>Id of puttable genre</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GenrePostDto putGenre)
@@ -104,7 +104,7 @@ public class GenreController : ControllerBase
     /// <summary>
     /// Delete genre by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Genre Id</param>
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

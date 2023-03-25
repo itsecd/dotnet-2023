@@ -50,7 +50,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get album information by year
     /// </summary>
-    /// <param name="albumName"> Album name</param>
+    /// <param name="albumName">Album name</param>
     /// <returns>Album information by year</returns>
     [HttpGet("tracks-in-album/{albumName}")]
     public IActionResult GetTracksInfo(string albumName)
@@ -72,7 +72,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get album information
     /// </summary>
-    /// <param name="year"> Year </param>
+    /// <param name="year">Year</param>
     /// <returns>Album information</returns>
     [HttpGet("albums-by-year/{year:int}")]
     public IActionResult GetAlbumsInfo(int year)

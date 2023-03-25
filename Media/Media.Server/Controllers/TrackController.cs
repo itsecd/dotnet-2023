@@ -49,7 +49,7 @@ public class TrackController : ControllerBase
     /// <summary>
     /// Get track by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Track Id</param>
     /// <returns>Track</returns>
     [HttpGet("{id}")]
     public ActionResult<Track> Get(int id)
@@ -70,7 +70,7 @@ public class TrackController : ControllerBase
     /// <summary>
     /// Post new track
     /// </summary>
-    /// <param name="track"></param>
+    /// <param name="track">Track name</param>
     [HttpPost]
     public void Post([FromBody] TrackPostDto track)
     {
@@ -79,10 +79,10 @@ public class TrackController : ControllerBase
     }
 
     /// <summary>
-    /// Put tarck
+    /// Put track
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="putTrack"></param>
+    /// <param name="id">Track Id</param>
+    /// <param name="putTrack">Track fo putting</param>
     /// <returns>Id of puttable track</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
@@ -107,7 +107,7 @@ public class TrackController : ControllerBase
     /// <summary>
     /// Delete track by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Track name</param>
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

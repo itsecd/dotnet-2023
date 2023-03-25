@@ -5,7 +5,6 @@
 public class ProductQuantity
 {
     public ProductQuantity() { }
-
     public ProductQuantity(string barcode, int shopId, double quantity)
     {
         Barcode = barcode;

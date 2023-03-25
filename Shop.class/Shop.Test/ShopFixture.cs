@@ -3,7 +3,6 @@
 namespace Shops.Test;
 public class ShopFixture
 {
-    //Не получается сделать нормально объекты поля которых ссылаются друг на друга, делать как делал
     public List<Shop> ShopsList
     {
         get
@@ -14,7 +13,7 @@ public class ShopFixture
             var firstShop = new Shop(1, new List<ProductQuantity>() { products[0][0], products[0][1], products[0][2], products[0][3], products[0][4], products[0][5], products[0][6] }, purchases1);
             shops.Add(firstShop);
             var purchases2 = ListPurchaseRecords2;
-            var secondShop = new Shop(2, new List<ProductQuantity>() { products[1][0], products[1][1], products[1][2], products[1][3], products[1][4]}, purchases2);
+            var secondShop = new Shop(2, new List<ProductQuantity>() { products[1][0], products[1][1], products[1][2], products[1][3], products[1][4] }, purchases2);
             shops.Add(secondShop);
             var purchases3 = ListPurchaseRecords3;
             var thirdShop = new Shop(3, new List<ProductQuantity>() { products[2][0], products[2][1], products[2][2], products[2][3], products[2][4], products[2][5], products[2][6] }, purchases3);
@@ -22,7 +21,7 @@ public class ShopFixture
             return shops;
 
         }
-        
+
     }
     public List<Product> Products
     {
@@ -50,7 +49,8 @@ public class ShopFixture
             var productQuantities = new List<List<ProductQuantity>>();
             var products = Products;
             var firstProductQuantities = new List<ProductQuantity>
-            {   new ProductQuantity(products[0].Barcode, 1, 250),
+            {
+                new ProductQuantity(products[0].Barcode, 1, 250),
                 new ProductQuantity(products[1].Barcode, 1, 100),
                 new ProductQuantity(products[2].Barcode, 1, 50),
                 new ProductQuantity(products[4].Barcode, 1, 60),
@@ -150,12 +150,12 @@ public class ShopFixture
                 new PurchaseRecord(3, customers[1], products[3], 2.0, new DateTime(2023, 03, 13)),
                 new PurchaseRecord(3, customers[1], products[6], 1.0, new DateTime(2023, 03, 13)),
                 new PurchaseRecord(3, customers[0], products[0], 3.0, new DateTime(2023, 03, 14)),
-                new PurchaseRecord(3, customers[0], products[3], 5.0, new DateTime(2023, 03, 14)),   
+                new PurchaseRecord(3, customers[0], products[3], 5.0, new DateTime(2023, 03, 14)),
              };
         }
     }
 
-    
+
 }
 
 

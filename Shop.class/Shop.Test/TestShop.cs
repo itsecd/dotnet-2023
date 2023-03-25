@@ -1,5 +1,3 @@
-using Shops.Domain;
-
 namespace Shops.Test;
 
 public class TestShop : IClassFixture<ShopFixture>

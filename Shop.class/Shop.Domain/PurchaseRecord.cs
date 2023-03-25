@@ -5,7 +5,6 @@
 public class PurchaseRecord
 {
     public PurchaseRecord() { }
-
     public PurchaseRecord(int shopId, Customer customer, Product product, double quantity, DateTime dateSale)
     {
         ShopId = shopId;

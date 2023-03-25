@@ -17,11 +17,6 @@ public class Shop
     /// </summary>
     public List<PurchaseRecord> PurchaseRecords { get; set; } = new List<PurchaseRecord>();
     public Shop() { }
-    public Shop(int id) 
-    {
-        Id = id;
-    }
-
     public Shop(int id, List<ProductQuantity> products, List<PurchaseRecord> purchaseRecords)
     {
         Id = id;

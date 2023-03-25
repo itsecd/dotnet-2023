@@ -11,7 +11,7 @@ public class SpecialtyTableNode
     /// <summary>
     /// Специальность
     /// </summary>
-    public Specialty? Specialty { get; set; }
+    public Specialty Specialty { get; set; }
     /// <summary>
     /// Количество групп
     /// </summary>
@@ -19,5 +19,5 @@ public class SpecialtyTableNode
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? TableNodeUniversity { get; set; }
+    public University TableNodeUniversity { get; set; }
 }

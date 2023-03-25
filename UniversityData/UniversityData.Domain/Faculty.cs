@@ -11,7 +11,7 @@ public class Faculty
     /// <summary>
     /// Название факультета
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string  Name { get; set; } 
     /// <summary>
     /// Количество сотрудников факультета
     /// </summary>
@@ -23,5 +23,5 @@ public class Faculty
     /// <summary>
     /// Ссылка на обратную связь
     /// </summary>
-    public University? University { get; set; }
+    public University University { get; set; }
 }

@@ -11,31 +11,31 @@ public class University
     /// <summary>
     /// Регистрационный номер
     /// </summary>
-    public string Number { get; set; } = string.Empty;
+    public string Number { get; set; } 
     /// <summary>
     /// Название университета
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } 
     /// <summary>
     /// Адрес университета
     /// </summary>
-    public string Address { get; set; } = string.Empty;
+    public string Address { get; set; } 
     /// <summary>
     /// Сведения о ректоре 
     /// </summary>
-    public Rector? RectorData { get; set; }
+    public Rector RectorData { get; set; }
     /// <summary>
     /// Собственность учреждения
     /// </summary>
-    public string UniversityProperty { get; set; } = string.Empty;
+    public string UniversityProperty { get; set; } 
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public string ConstructionProperty { get; set; } = string.Empty;
+    public string ConstructionProperty { get; set; } 
     /// <summary>
     /// Факультеты университета
     /// </summary>
-    public List<Faculty> FacultiesData { get; set; } = new List<Faculty>();
+    public List<Faculty>? FacultiesData { get; set; } = new List<Faculty>();
     /// <summary>
     /// Кафедры университета
     /// </summary>

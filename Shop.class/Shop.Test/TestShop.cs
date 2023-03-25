@@ -35,7 +35,7 @@ public class TestShop : IClassFixture<ShopFixture>
         var query =
             (from shop in fixtureShop
              from products in shop.Products
-             where products.Product.Barcode == "1"
+             where products.Barcode == "1"
              select shop).ToList();
         Assert.Equal(2, query.Count());
     }
@@ -54,7 +54,7 @@ public class TestShop : IClassFixture<ShopFixture>
 
         var result =
             (from ps in productInShop
-             join p in productList on ps.Product.Barcode equals p.Barcode
+             join p in productList on ps.Barcode equals p.Barcode
              join s in fixtureShop on ps.ShopId equals s.Id
              group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
              select new
@@ -86,11 +86,11 @@ public class TestShop : IClassFixture<ShopFixture>
 
 
         Assert.Equal(5, topPurch.Count());
-        Assert.Contains(topPurch, x => x.Sum == 1100 && x.Customer.CardCount == customer[0].CardCount);
-        Assert.Contains(topPurch, x => x.Sum == 990 && x.Customer.CardCount == customer[0].CardCount);
-        Assert.Contains(topPurch, x => x.Sum == 900 && x.Customer.CardCount == customer[3].CardCount);
-        Assert.Contains(topPurch, x => x.Sum == 800 && x.Customer.CardCount == customer[2].CardCount);
-        Assert.Contains(topPurch, x => x.Sum == 470 && x.Customer.CardCount == customer[4].CardCount);
+        Assert.Contains(topPurch, x => x.Sum == 2100 && x.Customer.CardCount == customer[4].CardCount);
+        Assert.Contains(topPurch, x => x.Sum == 1750 && x.Customer.CardCount == customer[0].CardCount);
+        Assert.Contains(topPurch, x => x.Sum == 1400 && x.Customer.CardCount == customer[3].CardCount);
+        Assert.Contains(topPurch, x => x.Sum == 1050 && x.Customer.CardCount == customer[1].CardCount);
+        Assert.Contains(topPurch, x => x.Sum == 700 && x.Customer.CardCount == customer[4].CardCount);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class TestShop : IClassFixture<ShopFixture>
              select products).ToList();
         var expiredProduct =
             (from ps in productInShop
-             join p in productList on ps.Product.Barcode equals p.Barcode
+             join p in productList on ps.Barcode equals p.Barcode
              join s in fixtureShop on ps.ShopId equals s.Id
              where p.StorageLimitDate < DateTime.Now
              select new
@@ -157,9 +157,10 @@ public class TestShop : IClassFixture<ShopFixture>
             }
             ).ToList();
 
-        Assert.Equal(2, result.Count());
-        Assert.Contains(result, x => x.ShopId == 1 && x.SumSale == 1400);
-        Assert.Contains(result, x => x.ShopId == 3 && x.SumSale == 1790);
+        Assert.Equal(3, result.Count());
+        Assert.Contains(result, x => x.ShopId == 1 && x.SumSale == 2170);
+        Assert.Contains(result, x => x.ShopId == 2 && x.SumSale == 2290);
+        Assert.Contains(result, x => x.ShopId == 3 && x.SumSale == 5460);
     }
 
 

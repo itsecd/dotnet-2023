@@ -14,10 +14,10 @@ public class ShopFixture
             var firstShop = new Shop(1, new List<ProductQuantity>() { products[0][0], products[0][1], products[0][2], products[0][3], products[0][4], products[0][5], products[0][6] }, purchases1);
             shops.Add(firstShop);
             var purchases2 = ListPurchaseRecords2;
-            var secondShop = new Shop(1, new List<ProductQuantity>() { products[1][0], products[1][1], products[1][2], products[1][3], products[1][4]}, purchases2);
+            var secondShop = new Shop(2, new List<ProductQuantity>() { products[1][0], products[1][1], products[1][2], products[1][3], products[1][4]}, purchases2);
             shops.Add(secondShop);
             var purchases3 = ListPurchaseRecords3;
-            var thirdShop = new Shop(1, new List<ProductQuantity>() { products[2][0], products[2][1], products[2][2], products[2][3], products[2][4], products[2][5], products[2][6] }, purchases3);
+            var thirdShop = new Shop(3, new List<ProductQuantity>() { products[2][0], products[2][1], products[2][2], products[2][3], products[2][4], products[2][5], products[2][6] }, purchases3);
             shops.Add(thirdShop);
             return shops;
 
@@ -48,36 +48,35 @@ public class ShopFixture
         get
         {
             var productQuantities = new List<List<ProductQuantity>>();
-            var shops = ShopsList.ToList();
             var products = Products;
             var firstProductQuantities = new List<ProductQuantity>
-            {   new ProductQuantity(products[0], shops[0], 250),
-                new ProductQuantity(products[1], shops[0], 100),
-                new ProductQuantity(products[2], shops[0], 50),
-                new ProductQuantity(products[4], shops[0], 60),
-                new ProductQuantity(products[5], shops[0], 75),
-                new ProductQuantity(products[6], shops[0], 100),
-                new ProductQuantity(products[8], shops[0], 200)
+            {   new ProductQuantity(products[0].Barcode, 1, 250),
+                new ProductQuantity(products[1].Barcode, 1, 100),
+                new ProductQuantity(products[2].Barcode, 1, 50),
+                new ProductQuantity(products[4].Barcode, 1, 60),
+                new ProductQuantity(products[5].Barcode, 1, 75),
+                new ProductQuantity(products[6].Barcode, 1, 100),
+                new ProductQuantity(products[8].Barcode, 1, 200)
             };
             productQuantities.Add(firstProductQuantities);
             var secondProductQuantities = new List<ProductQuantity>
             {
-                new ProductQuantity(products[1], shops[1], 200),
-                new ProductQuantity(products[4], shops[1], 100),
-                new ProductQuantity(products[5], shops[1], 100),
-                new ProductQuantity(products[6], shops[1], 90),
-                new ProductQuantity(products[8], shops[1], 40)
+                new ProductQuantity(products[1].Barcode, 2, 200),
+                new ProductQuantity(products[4].Barcode, 2, 100),
+                new ProductQuantity(products[5].Barcode, 2, 100),
+                new ProductQuantity(products[6].Barcode, 2, 90),
+                new ProductQuantity(products[8].Barcode, 2, 40)
             };
             productQuantities.Add(secondProductQuantities);
             var thirdProductQuantities = new List<ProductQuantity>
             {
-                new ProductQuantity(products[0], shops[2], 200),
-                new ProductQuantity(products[2], shops[2], 100),
-                new ProductQuantity(products[3], shops[2], 50),
-                new ProductQuantity(products[4], shops[2], 60),
-                new ProductQuantity(products[5], shops[2], 75),
-                new ProductQuantity(products[6], shops[2], 30),
-                new ProductQuantity(products[7], shops[2], 130),
+                new ProductQuantity(products[0].Barcode, 3, 200),
+                new ProductQuantity(products[2].Barcode, 3, 100),
+                new ProductQuantity(products[3].Barcode, 3, 50),
+                new ProductQuantity(products[4].Barcode, 3, 60),
+                new ProductQuantity(products[5].Barcode, 3, 75),
+                new ProductQuantity(products[6].Barcode, 3, 30),
+                new ProductQuantity(products[7].Barcode, 3, 130),
             };
             productQuantities.Add(thirdProductQuantities);
 

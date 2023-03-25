@@ -5,30 +5,21 @@
 public class ProductQuantity
 {
     public ProductQuantity() { }
-    public ProductQuantity(Product product, Shop shop, double quantity)
+
+    public ProductQuantity(string barcode, int shopId, double quantity)
     {
-        Product = product;
-        Barcode = product.Barcode;
-        Shop = shop;
-        ShopId = shop.Id;
+        Barcode = barcode;
+        ShopId = shopId;
         Quantity = quantity;
     }
-    /// <summary>
-    /// What product 
-    /// </summary>
-    public Product Product { get; set; } = new Product();
     /// <summary>
     /// Product barcode
     /// </summary>
     public string Barcode { get; set; } = string.Empty;
     /// <summary>
-    /// What shop
-    /// </summary>
-    public Shop Shop { get; set; } = new Shop();
-    /// <summary>
     /// Shop id
     /// </summary>
-    public int ShopId { get; set; }
+    public int ShopId { get; set; } = 0;
     /// <summary>
     /// Product quantity
     /// </summary>

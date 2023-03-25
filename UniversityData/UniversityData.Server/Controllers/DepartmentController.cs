@@ -38,8 +38,9 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] Department department)
     {
+        _universityDataRepository.Departments.Add(department);
     }
 
     [HttpPut("{id}")]

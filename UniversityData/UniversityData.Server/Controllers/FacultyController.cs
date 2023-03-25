@@ -38,8 +38,9 @@ public class FacultyController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] Faculty faculty)
     {
+        _universityDataRepository.Faculties.Add(faculty);
     }
 
     [HttpPut("{id}")]

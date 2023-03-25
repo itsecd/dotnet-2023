@@ -38,8 +38,9 @@ public class RectorController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] Rector rector)
     {
+        _universityDataRepository.Rectors.Add(rector);
     }
 
     [HttpPut("{id}")]

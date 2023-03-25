@@ -1,11 +1,13 @@
-namespace xUnitTest;
+using Shops.Domain;
+
+namespace Shops.Test;
 
 public class TestShop : IClassFixture<ShopFixture>
 {
-    private readonly ShopFixture _shopFixtture;
-    public TestShop(ShopFixture shopFixtture)
+    private readonly ShopFixture _shopFixture;
+    public TestShop(ShopFixture shopFixture)
     {
-        _shopFixtture = shopFixtture;
+        _shopFixture = shopFixture;
     }
 
 
@@ -15,10 +17,10 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void ProductInShop()
     {
-        var fixtureShop = _shopFixtture.Shops;
+        var fixtureShop = _shopFixture.ShopsList;
         var query =
             (from shop in fixtureShop
-             where shop.ShopId == 1
+             where shop.Id == 1
              select shop.Products).ToList()[0];
         Assert.Equal(7, query.Count());
     }
@@ -29,7 +31,7 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void ProductAvailable()
     {
-        var fixtureShop = _shopFixtture.Shops;
+        var fixtureShop = _shopFixture.ShopsList;
         var query =
             (from shop in fixtureShop
              from products in shop.Products
@@ -43,8 +45,8 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void AvgPriceProductGroup()
     {
-        var fixtureShop = _shopFixtture.Shops;
-        var productList = _shopFixtture.Products;
+        var fixtureShop = _shopFixture.ShopsList;
+        var productList = _shopFixture.Products;
         var productInShop =
             (from shop in fixtureShop
              from products in shop.Products
@@ -53,11 +55,11 @@ public class TestShop : IClassFixture<ShopFixture>
         var result =
             (from ps in productInShop
              join p in productList on ps.Product.Barcode equals p.Barcode
-             join s in fixtureShop on ps.ShopId equals s.ShopId
-             group new { p, s } by new { p.ProductGroupCode, s.ShopId } into grp
+             join s in fixtureShop on ps.ShopId equals s.Id
+             group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
              select new
              {
-                 ShopId = grp.Key.ShopId,
+                 ShopId = grp.Key.Id,
                  PoductGroup = grp.Key.ProductGroupCode,
                  AvgPrice = grp.Average(x => x.p.Price)
              }
@@ -73,8 +75,8 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void Top5Purchases()
     {
-        var customer = _shopFixtture.Customers;
-        var fixtureShop = _shopFixtture.Shops;
+        var customer = _shopFixture.Customers;
+        var fixtureShop = _shopFixture.ShopsList;
         var topPurch =
             (from shop in fixtureShop
              from pr in shop.PurchaseRecords
@@ -97,8 +99,8 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void ProductDelay()
     {
-        var fixtureShop = _shopFixtture.Shops;
-        var productList = _shopFixtture.Products;
+        var fixtureShop = _shopFixture.ShopsList;
+        var productList = _shopFixture.Products;
         var productInShop =
             (from shop in fixtureShop
              from products in shop.Products
@@ -106,11 +108,11 @@ public class TestShop : IClassFixture<ShopFixture>
         var expiredProduct =
             (from ps in productInShop
              join p in productList on ps.Product.Barcode equals p.Barcode
-             join s in fixtureShop on ps.ShopId equals s.ShopId
+             join s in fixtureShop on ps.ShopId equals s.Id
              where p.StorageLimitDate < DateTime.Now
              select new
              {
-                 ShopId = s.ShopId,
+                 ShopId = s.Id,
                  ProductBarcode = p.Barcode,
                  ProductName = p.Name,
              }
@@ -127,7 +129,7 @@ public class TestShop : IClassFixture<ShopFixture>
     [Fact]
     public void ShopEarnedMore()
     {
-        var fixtureShop = _shopFixtture.Shops;
+        var fixtureShop = _shopFixture.ShopsList;
         var purchases =
            (from shop in fixtureShop
             from pr in shop.PurchaseRecords
@@ -144,7 +146,7 @@ public class TestShop : IClassFixture<ShopFixture>
             group purchase by purchase.Shop into sgrp
             select new
             {
-                ShopId = sgrp.Key.ShopId,
+                ShopId = sgrp.Key.Id,
                 SumSale = sgrp.Sum(purchase => purchase.Sale)
             } into shopSales
             where shopSales.SumSale >= 1400.0

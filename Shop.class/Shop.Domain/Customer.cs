@@ -1,12 +1,13 @@
-﻿namespace Shop_class;
+﻿namespace Shops.Domain;
 /// <summary>
 /// Customer -  class describes the buyers
 /// </summary>
 public class Customer
 {
-    public Customer(int customerId, string firstName, string lastName, string middleName, string cardCount)
+    public Customer() { }
+    public Customer(int id, string firstName, string lastName, string middleName, string cardCount)
     {
-        CustomerId = customerId;
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         MiddleName = middleName;
@@ -15,21 +16,21 @@ public class Customer
     /// <summary>
     /// Customer id
     /// </summary>
-    public int CustomerId { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Customer first name
     /// </summary>
-    public string FirstName { get; set; }
+    public string FirstName { get; set; } = string.Empty;
     /// <summary>
     /// Customer last name
     /// </summary>
-    public string LastName { get; set; }
+    public string LastName { get; set; } = string.Empty;
     /// <summary>
-    /// Customer midle name
+    /// Customer middle name
     /// </summary>
-    public string MiddleName { get; set; }
+    public string MiddleName { get; set; } = string.Empty;
     /// <summary>
     /// Customer card count
     /// </summary>
-    public string CardCount { get; set; }
+    public string CardCount { get; set; } = string.Empty;
 }

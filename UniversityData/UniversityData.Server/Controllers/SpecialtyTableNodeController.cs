@@ -52,8 +52,14 @@ public class SpecialtyTableNodeController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
     {
+        _universityDataRepository.SpecialtyTableNodes.Add(new SpecialtyTableNode()
+        {
+            SpecialtyID = specialtyTableNode.SpecialtyID,
+            CountGroups = specialtyTableNode.CountGroups,
+            UniversityId = specialtyTableNode.UniversityId
+        });
     }
 
     [HttpPut("{id}")]

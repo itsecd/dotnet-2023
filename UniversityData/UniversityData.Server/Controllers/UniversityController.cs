@@ -59,8 +59,17 @@ public class UniversityController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] UniversityPostDto university)
     {
+        _universityDataRepository.Universities.Add(new University()
+        {
+            Number = university.Number,
+            Address = university.Address,
+            Name = university.Name,
+            RectorId = university.RectorId,
+            UniversityProperty = university.UniversityProperty,
+            ConstructionProperty = university.ConstructionProperty
+        });
     }
 
     [HttpPut("{id}")]

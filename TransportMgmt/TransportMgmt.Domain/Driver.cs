@@ -11,7 +11,7 @@ public class Driver
     /// <summary>
     /// First name of driver
     /// </summary>
-    public string FistName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
     /// <summary>
     /// Last name of driver
     /// </summary>
@@ -37,10 +37,10 @@ public class Driver
     /// </summary>
     public string PhoneNumber { get; set; } = string.Empty;
     public Driver() { }
-    public Driver(int driverId, string fistName, string lastName, string midleName, int passport, int driverLicense, string address, string phoneNumber)
+    public Driver(int driverId, string firstName, string lastName, string midleName, int passport, int driverLicense, string address, string phoneNumber)
     {
         DriverId = driverId;
-        FistName = fistName;
+        FirstName = firstName;
         LastName = lastName;
         MidleName = midleName;
         Passport = passport;

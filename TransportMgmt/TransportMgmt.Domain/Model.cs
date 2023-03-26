@@ -11,7 +11,7 @@ public class Model
     /// <summary>
     /// Transport model name
     /// </summary>
-    public string ModelName { get; set; } = string.Empty;
+    public string ModelName { get; set; } = string.Empty; 
     /// <summary>
     /// Transport model floor level
     /// </summary>

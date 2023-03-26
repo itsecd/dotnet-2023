@@ -1,6 +1,6 @@
-﻿namespace TransportMgmt.Tests;
+﻿using TransportMgmt.Domain;
 
-using TransportMgmt.Domain;
+namespace TransportMgmt.Tests;
 
 public class TransportFixture
 {
@@ -76,9 +76,9 @@ public class TransportFixture
             {
                  new Driver (1, "Степан", "Водянов", "Денисович", 270972, 1112, "22 Армии 412", "88005553535"),
                  new Driver (2, "Степан", "Арапенков", "Владимирович", 270973, 1113, "22 Армии 413", "88005553536"),
-                 new Driver (3, "Михаил", "Борисычев", "Владиславович", 270974, 1114, "22 Армии 414", "88005553537"),
-                 new Driver (4, "Владимир", "Гусев", "Андреевич", 270975, 1115, "22 Армии 415", "88005553538"),
-                 new Driver (5, "Семён", "Денисов", "Владимирович", 270976, 1116, "22 Армии 416", "88005553539"),
+                 new Driver (3, "Семён", "Денисов", "Владимирович", 270976, 1116, "22 Армии 416", "88005553539"),
+                 new Driver (4, "Михаил", "Борисычев", "Владиславович", 270974, 1114, "22 Армии 414", "88005553537"),
+                 new Driver (5, "Владимир", "Гусев", "Андреевич", 270975, 1115, "22 Армии 415", "88005553538"),
                  new Driver (6, "Степан", "Денисов", "Владимирович", 270977, 1117, "22 Армии 417", "88005553540"),
             };
         }
@@ -97,7 +97,7 @@ public class TransportFixture
                 new Transport(3, TransportType[2], Models[2], new DateOnly(1985, 10, 15)),
                 new Transport(4, TransportType[0], Models[3], new DateOnly(2010, 11, 13)),
                 new Transport(5, TransportType[1], Models[4], new DateOnly(2015, 12, 09)),
-                new Transport(6, TransportType[1], Models[5], new DateOnly(2007, 08, 12)),
+                new Transport(6, TransportType[2], Models[5], new DateOnly(2007, 08, 12)),
                 new Transport(7, TransportType[1], Models[6], new DateOnly(2009, 06, 07))
             };
         }
@@ -116,10 +116,12 @@ public class TransportFixture
                 new Trip(3, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[2], Transports[2], Drivers[2]),
                 new Trip(4, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[3], Transports[3], Drivers[3]),
                 new Trip(5, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[4], Transports[4], Drivers[4]),
-                new Trip(6, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[5], Transports[5], Drivers[5]),
+                new Trip(6, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[5], Transports[5], Drivers[2]),
                 new Trip(7, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 19, 30, 00), Routes[5], Transports[0], Drivers[0]),
                 new Trip(8, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 19, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), Routes[3], Transports[2], Drivers[0]),
-                new Trip(4, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), Routes[4], Transports[1], Drivers[3])
+                new Trip(4, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), Routes[4], Transports[1], Drivers[3]),
+                new Trip(9, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), Routes[2], Transports[6], Drivers[2]),
+                new Trip(10, new DateOnly(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), Routes[0], Transports[1], Drivers[0])
             };
         }
     }

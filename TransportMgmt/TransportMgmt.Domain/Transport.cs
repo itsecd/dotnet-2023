@@ -13,7 +13,7 @@ public class Transport
     /// </summary>
     public TransportType Type { get; set; } = null!;
     /// <summary>
-    /// Transport model
+    /// Transport model 
     /// </summary>
     public Model Model { get; set; } = new Model();
     /// <summary>

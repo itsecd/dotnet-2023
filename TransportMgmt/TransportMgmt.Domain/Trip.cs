@@ -10,7 +10,7 @@ public class Trip
     public int TripId { get; set; } = 0;
     /// <summary>
     /// Trip date
-    /// </summary>
+    /// </summary> 
     public DateOnly Date { get; set; } = new DateOnly();
     /// <summary>
     /// Trip start time

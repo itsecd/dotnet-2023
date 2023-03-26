@@ -1,6 +1,6 @@
 ﻿using UniversityData.Domain;
 
-namespace UniversityData.Server;
+namespace UniversityData.Server.Repository;
 public interface IUniversityDataRepository
 {
     List<Department> Departments { get; }

@@ -1,6 +1,9 @@
 ﻿using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Server.Repository;
+using AutoMapper;
+
 namespace UniversityData.Server.Controllers;
 
 [Route("api/[controller]")]
@@ -9,24 +12,19 @@ public class SpecialtyTableNodeController : ControllerBase
 {
     private readonly ILogger<SpecialtyTableNodeController> _logger;
     private readonly IUniversityDataRepository _universityDataRepository;
-    public SpecialtyTableNodeController(ILogger<SpecialtyTableNodeController> logger, IUniversityDataRepository universityDataRepository)
+    private readonly IMapper _mapper;
+    public SpecialtyTableNodeController(ILogger<SpecialtyTableNodeController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<SpecialtyTableNodeGetDto> Get()
     {
         _logger.LogInformation("Get all departments");
-        return _universityDataRepository.SpecialtyTableNodes.Select(specialtyTableNode =>
-        new SpecialtyTableNodeGetDto
-        {
-            Id= specialtyTableNode.Id,
-            SpecialtyID = specialtyTableNode.SpecialtyID,
-            CountGroups = specialtyTableNode.CountGroups,
-            UniversityId = specialtyTableNode.UniversityId
-        });
+        return _universityDataRepository.SpecialtyTableNodes.Select(specialtyTableNode => _mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
     }
 
     [HttpGet("{id}")]
@@ -41,25 +39,14 @@ public class SpecialtyTableNodeController : ControllerBase
         else
         {
             _logger.LogInformation($"Get specialtyTableNode with id {id}");
-            return Ok(new SpecialtyTableNodeGetDto
-            {
-                Id = specialtyTableNode.Id,
-                SpecialtyID = specialtyTableNode.SpecialtyID,
-                CountGroups = specialtyTableNode.CountGroups,
-                UniversityId = specialtyTableNode.UniversityId
-            });
+            return Ok(_mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
         }
     }
 
     [HttpPost]
     public void Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
     {
-        _universityDataRepository.SpecialtyTableNodes.Add(new SpecialtyTableNode()
-        {
-            SpecialtyID = specialtyTableNode.SpecialtyID,
-            CountGroups = specialtyTableNode.CountGroups,
-            UniversityId = specialtyTableNode.UniversityId
-        });
+        _universityDataRepository.SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNode>(specialtyTableNode));
     }
 
     [HttpPut("{id}")]
@@ -73,9 +60,7 @@ public class SpecialtyTableNodeController : ControllerBase
         }
         else
         {
-            specialtyTableNode.SpecialtyID = specialtyTableNodeToPut.SpecialtyID;
-            specialtyTableNode.CountGroups = specialtyTableNodeToPut.CountGroups;
-            specialtyTableNode.UniversityId = specialtyTableNodeToPut.UniversityId;
+            _mapper.Map<SpecialtyTableNodePostDto, SpecialtyTableNode>(specialtyTableNodeToPut, specialtyTableNode);
             return Ok();
         }
     }

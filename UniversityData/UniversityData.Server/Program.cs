@@ -1,7 +1,14 @@
+using AutoMapper;
 using UniversityData.Server;
+using UniversityData.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
+
+
+builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
 
 builder.Services.AddControllers();

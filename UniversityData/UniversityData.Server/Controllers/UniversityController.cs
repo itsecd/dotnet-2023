@@ -1,6 +1,9 @@
 ﻿using UniversityData.Domain;
 using Microsoft.AspNetCore.Mvc;
 using UniversityData.Server.Dto;
+using UniversityData.Server.Repository;
+using AutoMapper;
+
 namespace UniversityData.Server.Controllers;
 
 
@@ -10,27 +13,19 @@ public class UniversityController : ControllerBase
 {
     private readonly ILogger<UniversityController> _logger;
     private readonly IUniversityDataRepository _universityDataRepository;
-    public UniversityController(ILogger<UniversityController> logger, IUniversityDataRepository universityDataRepository)
+    private readonly IMapper _mapper;
+    public UniversityController(ILogger<UniversityController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<UniversityGetDto> Get()
     {
         _logger.LogInformation("Get all departments");
-        return _universityDataRepository.Universities.Select(university =>
-        new UniversityGetDto
-        {
-            Id = university.Id,
-            Name = university.Name,
-            Number = university.Number,
-            Address = university.Address,
-            RectorId = university.RectorId,
-            UniversityProperty = university.UniversityProperty,
-            ConstructionProperty = university.ConstructionProperty
-        });
+        return _universityDataRepository.Universities.Select(university => _mapper.Map<UniversityGetDto>(university));
     }
 
     [HttpGet("{id}")]
@@ -45,31 +40,14 @@ public class UniversityController : ControllerBase
         else
         {
             _logger.LogInformation($"Get university with id {id}");
-            return Ok(new UniversityGetDto
-            {
-                Id = university.Id,
-                Name = university.Name,
-                Number = university.Number,
-                Address = university.Address,
-                RectorId = university.RectorId,
-                UniversityProperty = university.UniversityProperty,
-                ConstructionProperty = university.ConstructionProperty
-            });
+            return Ok(_mapper.Map<UniversityGetDto>(university));
         }
     }
 
     [HttpPost]
     public void Post([FromBody] UniversityPostDto university)
     {
-        _universityDataRepository.Universities.Add(new University()
-        {
-            Number = university.Number,
-            Address = university.Address,
-            Name = university.Name,
-            RectorId = university.RectorId,
-            UniversityProperty = university.UniversityProperty,
-            ConstructionProperty = university.ConstructionProperty
-        });
+        _universityDataRepository.Universities.Add(_mapper.Map<University>(university));
     }
 
     [HttpPut("{id}")]
@@ -83,12 +61,7 @@ public class UniversityController : ControllerBase
         }
         else
         {
-            university.Number = universityToPut.Number;
-            university.Name = universityToPut.Name;
-            university.Address = universityToPut.Address;
-            university.RectorId = universityToPut.RectorId;
-            university.ConstructionProperty = universityToPut.ConstructionProperty;
-            university.UniversityProperty = universityToPut.UniversityProperty;
+            _mapper.Map<UniversityPostDto, University>(universityToPut, university);
             return Ok();
         }
     }

@@ -1,6 +1,9 @@
 ﻿using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Server.Repository;
+using AutoMapper;
+
 namespace UniversityData.Server.Controllers;
 
 [Route("api/[controller]")]
@@ -9,10 +12,12 @@ public class DepartmentController : ControllerBase
 {
     private readonly ILogger<DepartmentController> _logger;
     private readonly IUniversityDataRepository _universityDataRepository;
-    public DepartmentController(ILogger<DepartmentController> logger, IUniversityDataRepository universityDataRepository)
+    private readonly IMapper _mapper;
+    public DepartmentController(ILogger<DepartmentController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -41,12 +46,7 @@ public class DepartmentController : ControllerBase
     [HttpPost]
     public void Post([FromBody] DepartmentPostDto department)
     {
-        _universityDataRepository.Departments.Add(new Department()
-        {
-            Name = department.Name,
-            SupervisorNumber = department.SupervisorNumber,
-            UniversityId = department.UniversityId
-        });
+        _universityDataRepository.Departments.Add(_mapper.Map<Department>(department));
     }
 
     [HttpPut("{id}")]
@@ -60,9 +60,7 @@ public class DepartmentController : ControllerBase
         }
         else
         {
-            department.Name = departmentToPut.Name;
-            department.SupervisorNumber = departmentToPut.SupervisorNumber;
-            department.UniversityId = departmentToPut.UniversityId;
+            _mapper.Map<DepartmentPostDto, Department>(departmentToPut, department);
             return Ok();
         }
     }

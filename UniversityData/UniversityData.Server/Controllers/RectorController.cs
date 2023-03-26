@@ -1,6 +1,9 @@
 ﻿using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Server.Repository;
+using AutoMapper;
+
 namespace UniversityData.Server.Controllers;
 
 [Route("api/[controller]")]
@@ -9,10 +12,12 @@ public class RectorController : ControllerBase
 {
     private readonly ILogger<RectorController> _logger;
     private readonly IUniversityDataRepository _universityDataRepository;
-    public RectorController(ILogger<RectorController> logger, IUniversityDataRepository universityDataRepository)
+    private readonly IMapper _mapper;
+    public RectorController(ILogger<RectorController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -41,16 +46,7 @@ public class RectorController : ControllerBase
     [HttpPost]
     public void Post([FromBody] RectorPostDto rector)
     {
-        _universityDataRepository.Rectors.Add(new Rector()
-        {
-            Name = rector.Name,
-            Surname = rector.Surname,
-            Patronymic = rector.Patronymic,
-            Degree = rector.Degree,
-            Title = rector.Title,
-            Position = rector.Position,
-            UniversityiId = rector.UniversityiId
-        });
+        _universityDataRepository.Rectors.Add(_mapper.Map<Rector>(rector));
     }
 
     [HttpPut("{id}")]
@@ -64,13 +60,7 @@ public class RectorController : ControllerBase
         }
         else
         {
-            rector.Surname = rectorToPut.Surname;
-            rector.Name = rectorToPut.Name;
-            rector.Patronymic = rectorToPut.Patronymic;
-            rector.UniversityiId = rectorToPut.UniversityiId;
-            rector.Degree = rectorToPut.Degree;
-            rector.Title = rectorToPut.Title;
-            rector.Position = rectorToPut.Position;
+            _mapper.Map<RectorPostDto, Rector>(rectorToPut, rector);
             return Ok();
         }
     }

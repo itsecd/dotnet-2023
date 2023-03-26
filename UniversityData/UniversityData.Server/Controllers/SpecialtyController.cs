@@ -1,6 +1,9 @@
 ﻿using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Server.Repository;
+using AutoMapper;
+
 namespace UniversityData.Server.Controllers;
 
 [Route("api/[controller]")]
@@ -9,10 +12,12 @@ public class SpecialtyController : ControllerBase
 {
     private readonly ILogger<SpecialtyController> _logger;
     private readonly IUniversityDataRepository _universityDataRepository;
-    public SpecialtyController(ILogger<SpecialtyController> logger, IUniversityDataRepository universityDataRepository)
+    private readonly IMapper _mapper;
+    public SpecialtyController(ILogger<SpecialtyController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -41,11 +46,7 @@ public class SpecialtyController : ControllerBase
     [HttpPost]
     public void Post([FromBody] SpecialtyPostDto specialty)
     {
-        _universityDataRepository.Specialties.Add(new Specialty()
-        {
-            Name = specialty.Name,
-            Code = specialty.Code
-        });
+        _universityDataRepository.Specialties.Add(_mapper.Map<Specialty>(specialty));
     }
 
     [HttpPut("{id}")]
@@ -59,8 +60,7 @@ public class SpecialtyController : ControllerBase
         }
         else
         {
-            specialty.Name = specialtyToPut.Name;
-            specialty.Code = specialtyToPut.Code;
+            _mapper.Map<SpecialtyPostDto, Specialty>(specialtyToPut, specialty);
             return Ok();
         }
     }

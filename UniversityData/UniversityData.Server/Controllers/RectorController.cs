@@ -54,8 +54,25 @@ public class RectorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] RectorPostDto rectorToPut)
     {
+        var rector = _universityDataRepository.Rectors.FirstOrDefault(rector => rector.Id == id);
+        if (rector == null)
+        {
+            _logger.LogInformation($"Not found rector with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            rector.Surname = rectorToPut.Surname;
+            rector.Name = rectorToPut.Name;
+            rector.Patronymic = rectorToPut.Patronymic;
+            rector.UniversityiId = rectorToPut.UniversityiId;
+            rector.Degree = rectorToPut.Degree;
+            rector.Title = rectorToPut.Title;
+            rector.Position = rectorToPut.Position;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

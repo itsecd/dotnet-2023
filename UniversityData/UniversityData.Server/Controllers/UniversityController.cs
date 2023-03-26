@@ -73,8 +73,24 @@ public class UniversityController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] UniversityPostDto universityToPut)
     {
+        var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
+        if (university == null)
+        {
+            _logger.LogInformation($"Not found university with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            university.Number = universityToPut.Number;
+            university.Name = universityToPut.Name;
+            university.Address = universityToPut.Address;
+            university.RectorId = universityToPut.RectorId;
+            university.ConstructionProperty = universityToPut.ConstructionProperty;
+            university.UniversityProperty = universityToPut.UniversityProperty;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

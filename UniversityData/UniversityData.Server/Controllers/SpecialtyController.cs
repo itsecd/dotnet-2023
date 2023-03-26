@@ -49,8 +49,20 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] SpecialtyPostDto specialtyToPut)
     {
+        var specialty = _universityDataRepository.Specialties.FirstOrDefault(specialty => specialty.Id == id);
+        if (specialty == null)
+        {
+            _logger.LogInformation($"Not found specialty with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            specialty.Name = specialtyToPut.Name;
+            specialty.Code = specialtyToPut.Code;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

@@ -51,8 +51,22 @@ public class FacultyController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] FacultyPostDto facultyToPut)
     {
+        var faculty = _universityDataRepository.Faculties.FirstOrDefault(faculty => faculty.Id == id);
+        if (faculty == null)
+        {
+            _logger.LogInformation($"Not found faculty with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            faculty.Name = facultyToPut.Name;
+            faculty.WorkersCount = facultyToPut.WorkersCount;
+            faculty.StudentsCount = facultyToPut.StudentsCount;
+            faculty.UniversityId = facultyToPut.UniversityId;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

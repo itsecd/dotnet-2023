@@ -63,8 +63,21 @@ public class SpecialtyTableNodeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] SpecialtyTableNodePostDto specialtyTableNodeToPut)
     {
+        var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
+        if (specialtyTableNode == null)
+        {
+            _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            specialtyTableNode.SpecialtyID = specialtyTableNodeToPut.SpecialtyID;
+            specialtyTableNode.CountGroups = specialtyTableNodeToPut.CountGroups;
+            specialtyTableNode.UniversityId = specialtyTableNodeToPut.UniversityId;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

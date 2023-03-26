@@ -50,9 +50,21 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] DepartmentPostDto departmentToPut)
     {
-
+        var department = _universityDataRepository.Departments.FirstOrDefault(department => department.Id == id);
+        if (department == null)
+        {
+            _logger.LogInformation($"Not found department with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            department.Name = departmentToPut.Name;
+            department.SupervisorNumber = departmentToPut.SupervisorNumber;
+            department.UniversityId = departmentToPut.UniversityId;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchool", "LibrarySch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchoolTest", "LibrarySchoolTest\LibrarySchoolTest.csproj", "{B2F0A83B-01BD-49F2-A30D-1373E04C1B2F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchoolServer", "LibrarySchoolServer\LibrarySchoolServer.csproj", "{C44E5C40-9BA1-4335-A109-94F422559395}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B2F0A83B-01BD-49F2-A30D-1373E04C1B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2F0A83B-01BD-49F2-A30D-1373E04C1B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2F0A83B-01BD-49F2-A30D-1373E04C1B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44E5C40-9BA1-4335-A109-94F422559395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44E5C40-9BA1-4335-A109-94F422559395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44E5C40-9BA1-4335-A109-94F422559395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44E5C40-9BA1-4335-A109-94F422559395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,9 +28,11 @@ public class Mark
     ///<summary>
     /// TimeReceive - time when student receive mark
     ///</summary>
-    public DateOnly TimeReceive { get; set; }
+    public DateTime TimeReceive { get; set; }
 
-    public Mark(int markId, int studentId, int markValue, int subjectId, DateOnly timeReceive)
+    public Mark() { }
+
+    public Mark(int markId, int studentId, int markValue, int subjectId, DateTime timeReceive)
     {
         MarkId = markId;
         StudentId = studentId;

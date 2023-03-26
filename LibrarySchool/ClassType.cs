@@ -32,6 +32,7 @@ public class ClassType
         Letter = letter;
         Students = students;
     }
+    public ClassType() { }
 
     public override bool Equals(object? obj)
     {

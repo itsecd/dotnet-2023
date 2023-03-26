@@ -20,6 +20,8 @@ public class Subject
     /// </summary>
     public int YearStudy { get; set; }
 
+    public Subject() { }
+
     public Subject(int subjectId, string subjectName, int yearStudy)
     {
         SubjectId = subjectId;

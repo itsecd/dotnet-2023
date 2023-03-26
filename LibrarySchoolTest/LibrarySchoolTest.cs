@@ -20,18 +20,18 @@ public class LibrarySchoolTest
     {
         return new List<Mark>()
         {
-            new Mark(0,  0, 4, 0, new DateOnly(2023, 06, 23)),
-            new Mark(1,  0, 5, 1, new DateOnly(2023, 06, 20)),
-            new Mark(2,  0, 5, 2, new DateOnly(2023, 06, 26)),
-            new Mark(3,  0, 4, 3, new DateOnly(2022, 05, 23)),
-            new Mark(4,  1, 5, 0, new DateOnly(2023, 06, 22)),
-            new Mark(5,  1, 5, 1, new DateOnly(2023, 06, 21)),
-            new Mark(6,  1, 4, 2, new DateOnly(2023, 06, 23)),
-            new Mark(7,  1, 5, 3, new DateOnly(2022, 05, 23)),
-            new Mark(8,  2, 3, 0, new DateOnly(2023, 06, 22)),
-            new Mark(9,  2, 4, 1, new DateOnly(2023, 06, 21)),
-            new Mark(10, 2, 5, 2, new DateOnly(2023, 06, 23)),
-            new Mark(11, 2, 5, 3, new DateOnly(2022, 05, 23))
+            new Mark(0,  0, 4, 0, new DateTime(2023, 06, 23)),
+            new Mark(1,  0, 5, 1, new DateTime(2023, 06, 20)),
+            new Mark(2,  0, 5, 2, new DateTime(2023, 06, 26)),
+            new Mark(3,  0, 4, 3, new DateTime(2022, 05, 23)),
+            new Mark(4,  1, 5, 0, new DateTime(2023, 06, 22)),
+            new Mark(5,  1, 5, 1, new DateTime(2023, 06, 21)),
+            new Mark(6,  1, 4, 2, new DateTime(2023, 06, 23)),
+            new Mark(7,  1, 5, 3, new DateTime(2022, 05, 23)),
+            new Mark(8,  2, 3, 0, new DateTime(2023, 06, 22)),
+            new Mark(9,  2, 4, 1, new DateTime(2023, 06, 21)),
+            new Mark(10, 2, 5, 2, new DateTime(2023, 06, 23)),
+            new Mark(11, 2, 5, 3, new DateTime(2022, 05, 23))
         };
     }
 
@@ -46,12 +46,12 @@ public class LibrarySchoolTest
         var listMark = CreateListMark();
 
         return new List<Student>() {
-            new Student(0, "12343C", "Pham Ngoc Hung", new DateOnly(2000, 01, 04), 1
+            new Student(0, "12343C", "Pham Ngoc Hung", new DateTime(2000, 01, 04), 1
                          , listMark.Where(mark=> mark.StudentId == 0).ToList()),
-            new Student(1, "32342C", "La Hoang Anh", new DateOnly(1998, 12, 12), 2
+            new Student(1, "32342C", "La Hoang Anh", new DateTime(1998, 12, 12), 2
                          , listMark.Where(mark=> mark.StudentId == 1).ToList()),
 
-            new Student(2, "32231C", "Nguyen Van Hoang", new DateOnly(1999, 06, 29), 2
+            new Student(2, "32231C", "Nguyen Van Hoang", new DateTime(1999, 06, 29), 2
                          , listMark.Where(mark=> mark.StudentId == 2).ToList())
         };
     }
@@ -105,7 +105,7 @@ public class LibrarySchoolTest
         Assert.Equal(0, _students.ElementAt(0).StudentId);
         Assert.Equal("12343C", _students.ElementAt(0).Passport);
         Assert.Equal(1, _students.ElementAt(0).ClassId);
-       
+
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class LibrarySchoolTest
         var queryStudentMark = _marks.Where(mark => mark.StudentId == indexStudent).ToList()
                                      .Select(mark => mark.MarkValue);
 
-        var listTrueMarkValue = new List<int> {4, 5, 5, 4};
+        var listTrueMarkValue = new List<int> { 4, 5, 5, 4 };
         Assert.Equal(listTrueMarkValue, queryStudentMark);
     }
 
@@ -173,5 +173,12 @@ public class LibrarySchoolTest
         var queryStudentMark = _marks.Find(mark => mark.StudentId == indexStudent && mark.SubjectId == indexSubject);
 
         Assert.Equal(4, queryStudentMark!.MarkValue);
+    }
+
+    [Fact]
+    public void TestQuerrySubject()
+    {
+
+
     }
 }

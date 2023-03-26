@@ -23,7 +23,7 @@ public class Student
     /// <summary>
     /// DateOfBirth - student's date of birth
     /// </summary>
-    public DateOnly DateOfBirth { get; set; } = new DateOnly(1, 1, 1);
+    public DateTime DateOfBirth { get; set; } = new DateTime(1, 1, 1);
 
     /// <summary>
     /// ClassId - Id of the class where student studing
@@ -35,7 +35,9 @@ public class Student
     /// </summary>
     public List<Mark> Marks { get; set; } = new List<Mark>();
 
-    public Student(int studentId, string passport, string studentName, DateOnly dateOfBirth, int classId, List<Mark> marks)
+    public Student() { }
+
+    public Student(int studentId, string passport, string studentName, DateTime dateOfBirth, int classId, List<Mark> marks)
     {
         StudentId = studentId;
         Passport = passport;

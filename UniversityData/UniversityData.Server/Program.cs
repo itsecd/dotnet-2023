@@ -2,7 +2,7 @@ using UniversityData.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<UniversityDataRepository>();
+builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

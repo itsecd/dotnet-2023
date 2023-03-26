@@ -8,8 +8,8 @@ namespace UniversityData.Server.Controllers;
 public class RectorController : ControllerBase
 {
     private readonly ILogger<RectorController> _logger;
-    private readonly UniversityDataRepository _universityDataRepository;
-    public RectorController(ILogger<RectorController> logger, UniversityDataRepository universityDataRepository)
+    private readonly IUniversityDataRepository _universityDataRepository;
+    public RectorController(ILogger<RectorController> logger, IUniversityDataRepository universityDataRepository)
     {
         _logger = logger;
         _universityDataRepository = universityDataRepository;

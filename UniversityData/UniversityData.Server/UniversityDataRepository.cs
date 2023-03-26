@@ -2,7 +2,7 @@
 
 namespace UniversityData.Server;
 
-public class UniversityDataRepository
+public class UniversityDataRepository : IUniversityDataRepository
 {
     private readonly List<University> _universities;
     private readonly List<Faculty> _faculties;
@@ -197,7 +197,7 @@ public class UniversityDataRepository
         _universities[2].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[7], SpecialtyTableNodes[8], SpecialtyTableNodes[9], SpecialtyTableNodes[10] });
     }
 
-    
+
     public List<University> Universities => _universities;
     public List<Department> Departments => _departments;
     public List<Faculty> Faculties => _faculties;

@@ -172,7 +172,7 @@ public class UnitFixture
             data[2].RectorData = Rectors[2];
             data[2].UniversityProperty = "муниципальная";
             data[2].ConstructionProperty = "федеральная";
-            data[0].FacultiesData.AddRange(new[] { Faculties[0], Faculties[1], Faculties[2] });
+            data[0].FacultiesData.AddRange(new Faculty[] { Faculties[0], Faculties[1], Faculties[2] });
             data[0].DepartmentsData.AddRange(new Department[] { Departments[0], Departments[1] });
             data[0].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[0], SpecialtyTableNodes[1], SpecialtyTableNodes[2] });
             data[1].FacultiesData.AddRange(new Faculty[] { Faculties[3], Faculties[4] });
@@ -181,17 +181,6 @@ public class UnitFixture
             data[2].FacultiesData.Add(Faculties[5]);
             data[2].DepartmentsData.Add(Departments[3]);
             data[2].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[7], SpecialtyTableNodes[8], SpecialtyTableNodes[9], SpecialtyTableNodes[10] });
-            data[0].SpecialtyTable[0].TableNodeUniversity = data[0];
-            data[0].SpecialtyTable[1].TableNodeUniversity = data[0];
-            data[0].SpecialtyTable[2].TableNodeUniversity = data[0];
-            data[1].SpecialtyTable[0].TableNodeUniversity = data[1];
-            data[1].SpecialtyTable[1].TableNodeUniversity = data[1];
-            data[1].SpecialtyTable[2].TableNodeUniversity = data[1];
-            data[1].SpecialtyTable[3].TableNodeUniversity = data[1];
-            data[2].SpecialtyTable[0].TableNodeUniversity = data[2];
-            data[2].SpecialtyTable[1].TableNodeUniversity = data[2];
-            data[2].SpecialtyTable[2].TableNodeUniversity = data[2];
-            data[2].SpecialtyTable[3].TableNodeUniversity = data[2];
             return data;
         }
     }

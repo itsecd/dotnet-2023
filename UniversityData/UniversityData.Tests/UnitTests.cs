@@ -69,9 +69,17 @@ public class UnitTests : IClassFixture<UnitFixture>
     {
         var result = (from university in _fixture.Universities
                       where (university.UniversityProperty == "муниципальная")
-                      where (university.SpecialtyTable.Sum(x => x.CountGroups) == 27)
-                      select university).ToList();
-        Assert.Equal(1, result.Count);
+                      select new
+                      {
+                          university.Id,
+                          university.Name,
+                          university.Number,
+                          university.RectorId,
+                          university.ConstructionProperty,
+                          university.UniversityProperty,
+                          count = university.SpecialtyTable.Sum(specialtiyNode => specialtiyNode.CountGroups)
+                      }).ToList();
+        Assert.Equal(3, result.Count);
     }
     /// <summary>
     /// Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания.

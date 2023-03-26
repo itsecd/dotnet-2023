@@ -11,15 +11,15 @@ public class Rector
     /// <summary>
     /// Имя ректора
     /// </summary>
-    public string Name { get; set; } 
+    public string Name { get; set; }
     /// <summary>
     /// Фамилия ректора
     /// </summary>
-    public string Surname { get; set; } 
+    public string Surname { get; set; }
     /// <summary>
     /// Отчество ректора
     /// </summary>
-    public string Patronymic { get; set; } 
+    public string Patronymic { get; set; }
     /// <summary>
     /// Степень ректора
     /// </summary>
@@ -27,11 +27,11 @@ public class Rector
     /// <summary>
     /// Звание ректора
     /// </summary>
-    public string Title { get; set; } 
+    public string Title { get; set; }
     /// <summary>
     /// Должность ректора
     /// </summary>
-    public string Position { get; set; } 
+    public string Position { get; set; }
     /// <summary>
     /// ID университета
     /// </summary>

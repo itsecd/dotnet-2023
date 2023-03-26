@@ -1,8 +1,8 @@
-﻿using UniversityData.Domain;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
-using AutoMapper;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -52,7 +52,7 @@ public class AnalyticsController : ControllerBase
             _logger.LogInformation("Get infromation about university");
             return Ok(univesity);
         }
-       
+
     }
     /// <summary>
     /// Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.
@@ -75,7 +75,7 @@ public class AnalyticsController : ControllerBase
         {
             _logger.LogInformation("Get infromation about structure of university");
             return Ok(universities);
-        } 
+        }
     }
     /// <summary>
     /// Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).

@@ -1,8 +1,8 @@
-﻿using UniversityData.Domain;
-using UniversityData.Server.Dto;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Domain;
+using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
-using AutoMapper;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>

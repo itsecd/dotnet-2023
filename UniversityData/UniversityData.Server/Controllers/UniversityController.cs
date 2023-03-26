@@ -1,8 +1,8 @@
-﻿using UniversityData.Domain;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
-using AutoMapper;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -109,7 +109,7 @@ public class UniversityController : ControllerBase
         }
         else
         {
-           _universityDataRepository.Universities.Remove(university);
+            _universityDataRepository.Universities.Remove(university);
             _logger.LogInformation("Delete university with id: {0}", id);
             return Ok();
         }

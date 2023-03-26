@@ -11,7 +11,7 @@ public class Specialty
     /// <summary>
     /// Название специальности
     /// </summary>
-    public string Name { get; set; } 
+    public string Name { get; set; }
     /// <summary>
     /// Код-шифр специальности 
     /// </summary>

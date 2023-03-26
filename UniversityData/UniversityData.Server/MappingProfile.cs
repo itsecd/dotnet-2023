@@ -17,7 +17,7 @@ public class MappingProfile : Profile
         CreateMap<SpecialtyTableNode, SpecialtyTableNodePostDto>();
         CreateMap<SpecialtyTableNode, SpecialtyTableNodeGetDto>();
         CreateMap<DepartmentPostDto, Department>();
-        CreateMap<FacultyPostDto, Faculty> ();
+        CreateMap<FacultyPostDto, Faculty>();
         CreateMap<RectorPostDto, Rector>();
         CreateMap<SpecialtyPostDto, Specialty>();
         CreateMap<UniversityPostDto, University>();

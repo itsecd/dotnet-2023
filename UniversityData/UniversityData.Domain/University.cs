@@ -11,15 +11,15 @@ public class University
     /// <summary>
     /// Регистрационный номер
     /// </summary>
-    public string Number { get; set; } 
+    public string Number { get; set; }
     /// <summary>
     /// Название университета
     /// </summary>
-    public string Name { get; set; } 
+    public string Name { get; set; }
     /// <summary>
     /// Адрес университета
     /// </summary>
-    public string Address { get; set; } 
+    public string Address { get; set; }
     /// <summary>
     /// ID ректора
     /// </summary>
@@ -31,11 +31,11 @@ public class University
     /// <summary>
     /// Собственность учреждения
     /// </summary>
-    public string UniversityProperty { get; set; } 
+    public string UniversityProperty { get; set; }
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public string ConstructionProperty { get; set; } 
+    public string ConstructionProperty { get; set; }
     /// <summary>
     /// Факультеты университета
     /// </summary>

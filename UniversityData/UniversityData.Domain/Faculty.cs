@@ -11,7 +11,7 @@ public class Faculty
     /// <summary>
     /// Название факультета
     /// </summary>
-    public string  Name { get; set; } 
+    public string Name { get; set; }
     /// <summary>
     /// Количество сотрудников факультета
     /// </summary>

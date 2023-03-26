@@ -1,6 +1,7 @@
 using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Taxi.Domain;
+using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -10,9 +11,9 @@ public class VehicleClassificationController : ControllerBase
 {
     private readonly ILogger<VehicleClassificationController> _logger;
     
-    private readonly TaxiRepository _taxiRepository;
+    private readonly ITaxiRepository _taxiRepository;
     
-    public VehicleClassificationController(ILogger<VehicleClassificationController> logger, TaxiRepository taxiRepository)
+    public VehicleClassificationController(ILogger<VehicleClassificationController> logger, ITaxiRepository taxiRepository)
     {
         _logger = logger;
         _taxiRepository = taxiRepository;
@@ -36,6 +37,7 @@ public class VehicleClassificationController : ControllerBase
         }
         else
         {
+            _logger.LogInformation($"Get vehicle classification with id={id}");
             return Ok(vehicleClassification);
         }
     }

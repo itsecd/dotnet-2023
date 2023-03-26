@@ -1,7 +1,8 @@
 using Taxi.Domain;
-namespace Taxi.Server;
 
-public class TaxiRepository
+namespace Taxi.Server.Repository;
+
+public class TaxiRepository: ITaxiRepository
 {
     private readonly List<VehicleClassification> _vehicleClassifications;
 

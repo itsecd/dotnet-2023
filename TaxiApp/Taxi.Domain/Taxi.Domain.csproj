@@ -7,4 +7,12 @@
         <RootNamespace>Taxi.Domain</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\net6.0\Taxi.Domain.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\net6.0\Taxi.Domain.xml</DocumentationFile>
+    </PropertyGroup>
+
 </Project>

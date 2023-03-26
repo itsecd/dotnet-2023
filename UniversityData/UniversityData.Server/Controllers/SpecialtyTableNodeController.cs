@@ -81,7 +81,18 @@ public class SpecialtyTableNodeController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
+        if (specialtyTableNode == null)
+        {
+            _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _universityDataRepository.SpecialtyTableNodes.Remove(specialtyTableNode);
+            return Ok();
+        }
     }
 }

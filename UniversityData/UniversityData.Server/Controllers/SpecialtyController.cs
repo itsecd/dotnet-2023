@@ -66,7 +66,18 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var specialty = _universityDataRepository.Specialties.FirstOrDefault(specialty => specialty.Id == id);
+        if (specialty == null)
+        {
+            _logger.LogInformation($"Not found specialty with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _universityDataRepository.Specialties.Remove(specialty);
+            return Ok();
+        }
     }
 }

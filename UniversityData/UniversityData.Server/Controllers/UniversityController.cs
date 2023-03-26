@@ -94,7 +94,18 @@ public class UniversityController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
+        if (university == null)
+        {
+            _logger.LogInformation($"Not found university with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+           _universityDataRepository.Universities.Remove(university);
+            return Ok();
+        }
     }
 }

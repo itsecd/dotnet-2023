@@ -70,7 +70,18 @@ public class FacultyController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var faculty = _universityDataRepository.Faculties.FirstOrDefault(faculty => faculty.Id == id);
+        if (faculty == null)
+        {
+            _logger.LogInformation($"Not found faculty with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _universityDataRepository.Faculties.Remove(faculty);
+            return Ok();
+        }
     }
 }

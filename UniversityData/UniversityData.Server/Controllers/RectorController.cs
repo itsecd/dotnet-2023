@@ -76,7 +76,18 @@ public class RectorController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var rector = _universityDataRepository.Rectors.FirstOrDefault(rector => rector.Id == id);
+        if (rector == null)
+        {
+            _logger.LogInformation($"Not found rector with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _universityDataRepository.Rectors.Remove(rector);
+            return Ok();
+        }
     }
 }

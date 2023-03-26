@@ -68,7 +68,18 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var department = _universityDataRepository.Departments.FirstOrDefault(department => department.Id == id);
+        if (department == null)
+        {
+            _logger.LogInformation($"Not found department with id: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _universityDataRepository.Departments.Remove(department);
+            return Ok();
+        }
     }
 }

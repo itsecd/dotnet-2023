@@ -83,7 +83,7 @@ public class ArtistController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <param name="putArtist"></param>
-    /// <returns>Id of puttable artist</returns>
+    /// <returns>Id of put-artist</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ArtistPostDto putArtist)
     {

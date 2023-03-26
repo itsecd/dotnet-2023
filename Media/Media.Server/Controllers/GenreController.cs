@@ -82,8 +82,8 @@ public class GenreController : ControllerBase
     /// Put genre
     /// </summary>
     /// <param name="id">Genre Id</param>
-    /// <param name="putGenre"/Genre to putting</param>
-    /// <returns>Id of puttable genre</returns>
+    /// <param name="putGenre">Genre to putting</param>
+    /// <returns>Id of put-genre</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GenrePostDto putGenre)
     {

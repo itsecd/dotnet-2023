@@ -83,7 +83,7 @@ public class TrackController : ControllerBase
     /// </summary>
     /// <param name="id">Track Id</param>
     /// <param name="putTrack">Track fo putting</param>
-    /// <returns>Id of puttable track</returns>
+    /// <returns>Id of put-track</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
     {

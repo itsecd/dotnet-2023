@@ -70,7 +70,7 @@ public class AlbumController : ControllerBase
     /// <summary>
     /// Post new album
     /// </summary>
-    /// <param name="album">Akbum name</param>
+    /// <param name="album">Album name</param>
     [HttpPost]
     public void Post([FromBody] AlbumPostDto album)
     {
@@ -83,7 +83,7 @@ public class AlbumController : ControllerBase
     /// </summary>
     /// <param name="id">Album Id</param>
     /// <param name="putAlbum">Album for putting</param>
-    /// <returns>Id of puttable album</returns>
+    /// <returns>Id of put-album</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] AlbumPostDto putAlbum)
     {

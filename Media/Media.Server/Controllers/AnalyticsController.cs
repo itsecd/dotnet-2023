@@ -65,7 +65,7 @@ public class AnalyticsController : ControllerBase
             _logger.LogInformation($"Get album information by name: There are no albums named {albumName}");
             return NotFound();
         }
-        _logger.LogInformation($"Get album informaion by name: {albumName}");
+        _logger.LogInformation($"Get album information by name: {albumName}");
         return Ok(resultList);
     }
 

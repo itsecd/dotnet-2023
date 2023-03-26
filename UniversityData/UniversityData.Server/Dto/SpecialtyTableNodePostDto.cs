@@ -1,5 +1,7 @@
 ﻿namespace UniversityData.Server.Dto;
-
+/// <summary>
+/// Узел таблицы связи специальности и количества групп
+/// </summary>
 public class SpecialtyTableNodePostDto
 {
     /// <summary>

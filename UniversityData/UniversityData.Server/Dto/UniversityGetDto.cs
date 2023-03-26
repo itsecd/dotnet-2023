@@ -1,5 +1,7 @@
 ﻿namespace UniversityData.Server.Dto;
-
+/// <summary>
+/// Информация об университете
+/// </summary>
 public class UniversityGetDto
 {
     /// <summary>
@@ -30,7 +32,4 @@ public class UniversityGetDto
     /// Собственность здания университета
     /// </summary>
     public string ConstructionProperty { get; set; }
-    /// <summary>
-    /// Факультеты университета
-    /// </summary>
 }

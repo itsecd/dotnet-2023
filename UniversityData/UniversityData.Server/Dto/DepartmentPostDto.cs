@@ -1,5 +1,7 @@
 ﻿namespace UniversityData.Server.Dto;
-
+/// <summary>
+/// Информация о кафедре
+/// </summary>
 public class DepartmentPostDto
 {
     /// <summary>

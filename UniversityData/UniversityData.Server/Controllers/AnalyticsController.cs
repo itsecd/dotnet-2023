@@ -39,18 +39,18 @@ public class AnalyticsController : ControllerBase
     [HttpGet("information_of_university{number}")]
     public ActionResult<UniversityGetDto> GetInformationOfUniversity(string number)
     {
-        var univesity = (from university in _universityDataRepository.Universities
+        var result = (from university in _universityDataRepository.Universities
                          where university.Number == number
                          select _mapper.Map<University, UniversityGetDto>(university)).ToList();
-        if (univesity.Count() == 0)
+        if (result.Count == 0)
         {
             _logger.LogInformation("Not found university with number: {0}", number);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get infromation about university");
-            return Ok(univesity);
+            _logger.LogInformation("Get information about university");
+            return Ok(result);
         }
 
     }
@@ -66,14 +66,14 @@ public class AnalyticsController : ControllerBase
         var universities = (from university in _universityDataRepository.Universities
                             where university.Number == number
                             select _mapper.Map<University, UniversityGetStructureDto>(university)).ToList();
-        if (universities.Count() == 0)
+        if (universities.Count == 0)
         {
             _logger.LogInformation("Not found university with number: {0}", number);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get infromation about structure of university");
+            _logger.LogInformation("Get information about structure of university");
             return Ok(universities);
         }
     }
@@ -112,11 +112,11 @@ public class AnalyticsController : ControllerBase
     /// <param name="universityproperty"></param>
     /// <returns></returns>
     [HttpGet("university_with_target_property")]
-    public IEnumerable<object> UniversityWithProperty(string universityproperty)
+    public IEnumerable<object> UniversityWithProperty(string universityProperty)
     {
-        _logger.LogInformation("Get information about universitities with target propety");
+        _logger.LogInformation("Get information about universities with target Propety");
         return (from university in _universityDataRepository.Universities
-                where (university.UniversityProperty == universityproperty)
+                where (university.UniversityProperty == universityProperty)
                 select new
                 {
                     university.Id,
@@ -125,7 +125,7 @@ public class AnalyticsController : ControllerBase
                     university.RectorId,
                     university.ConstructionProperty,
                     university.UniversityProperty,
-                    count = university.SpecialtyTable.Sum(specialtiyNode => specialtiyNode.CountGroups)
+                    count = university.SpecialtyTable.Sum(specialtyNode => specialtyNode.CountGroups)
                 }).ToList();
     }
     /// <summary>

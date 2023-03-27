@@ -15,7 +15,7 @@ public class SpecialtyTableNode
     /// <summary>
     /// ID специальности
     /// </summary>
-    public int SpecialtyID { get; set; }
+    public int SpecialtyId { get; set; }
     /// <summary>
     /// Количество групп
     /// </summary>

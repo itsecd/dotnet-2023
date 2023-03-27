@@ -9,28 +9,28 @@ public class Shipment
     /// </summary>
     public int Id { get; set; }
     /// <summary>
-    /// Fabric is used to store the recipient information.
+    /// FabricId is used to store the ID of recipient.
     /// </summary>
-    public Fabric Fabric { get; set; } = new Fabric();
+    public int FabricId { get; set; } = 0;
     /// <summary>
-    /// Provider is used to store the sender information.
+    /// ProviderId is used to store the ID of sender.
     /// </summary>
-    public Provider Provider { get; set; } = new Provider();
+    public int ProviderId { get; set; } = 0;
     /// <summary>
     /// Date is used to store the information about date of shipment.
     /// </summary>
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
     /// <summary>
     /// NumberOfGoods is used to store the information about amount of goods in shipment.
     /// </summary>
     public int NumberOfGoods { get; set; }
 
     public Shipment() { }
-    public Shipment(int id, Fabric fabric, Provider provider, DateOnly date, int numberOfGoods)
+    public Shipment(int id, int fabricId, int providerId, DateTime date, int numberOfGoods)
     {
         Id = id;
-        Fabric = fabric;
-        Provider = provider;
+        FabricId = fabricId;
+        ProviderId = providerId;
         Date = date;
         NumberOfGoods = numberOfGoods;
     }

@@ -43,25 +43,23 @@ public class FabricFixture
         get
         {
             var shipments = new List<Shipment>();
-            var fabrics = FixtureFabrics.ToList();
-            var providers = FixtureProviders.ToList();
-            var firstDate = new DateOnly(2022, 6, 11);
-            var firstShipment = new Shipment(1, fabrics[0], providers[0], firstDate, 15);
+            var firstDate = new DateTime(2022, 6, 11);
+            var firstShipment = new Shipment(1, 1, 1, firstDate, 15);
             shipments.Add(firstShipment);
-            var secondDate = new DateOnly(2022, 7, 13);
-            var secondShipment = new Shipment(2, fabrics[1], providers[1], secondDate, 15);
+            var secondDate = new DateTime(2022, 7, 13);
+            var secondShipment = new Shipment(2, 2, 2, secondDate, 15);
             shipments.Add(secondShipment);
-            var thirdDate = new DateOnly(2022, 8, 13);
-            var thirdShipment = new Shipment(2, fabrics[2], providers[2], thirdDate, 11);
+            var thirdDate = new DateTime(2022, 8, 13);
+            var thirdShipment = new Shipment(3, 3, 3, thirdDate, 11);
             shipments.Add(thirdShipment);
-            var fourthDate = new DateOnly(2022, 11, 11);
-            var fourthShipment = new Shipment(2, fabrics[3], providers[3], fourthDate, 5);
+            var fourthDate = new DateTime(2022, 11, 11);
+            var fourthShipment = new Shipment(4, 4, 4, fourthDate, 5);
             shipments.Add(fourthShipment);
-            var fifthDate = new DateOnly(2022, 3, 3);
-            var fifthShipment = new Shipment(2, fabrics[0], providers[3], fifthDate, 4);
+            var fifthDate = new DateTime(2022, 3, 3);
+            var fifthShipment = new Shipment(5, 1, 4, fifthDate, 4);
             shipments.Add(fifthShipment);
-            var sixthDate = new DateOnly(2022, 12, 13);
-            var sixthShipment = new Shipment(2, fabrics[3], providers[1], sixthDate, 7);
+            var sixthDate = new DateTime(2022, 12, 13);
+            var sixthShipment = new Shipment(6, 4, 2, sixthDate, 7);
             shipments.Add(sixthShipment);
             return shipments;
         }

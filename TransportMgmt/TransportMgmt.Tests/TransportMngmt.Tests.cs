@@ -43,9 +43,9 @@ public class TransportTests : IClassFixture<TransportFixture>
                          midleName = res.First().Driver.MiddleName
                      }).ToList();
         Assert.Equal(5, query.Count);
-        Assert.Contains(query, x => x.lastName == "Âîäÿíîâ");
+        Assert.Contains(query, x => x.lastName == "Ð’Ð¾Ð´ÑÐ½Ð¾Ð²");
         Assert.Contains(query, x => x.driverId == 2);
-        Assert.Contains(query, x => x.firstName == "Ìèõàèë" && x.midleName == "Âëàäèñëàâîâè÷");
+        Assert.Contains(query, x => x.firstName == "ÐœÐ¸Ñ…Ð°Ð¸Ð»" && x.midleName == "Ð’Ð»Ð°Ð´Ð¸ÑÐ»Ð°Ð²Ð¾Ð²Ð¸Ñ‡");
         Assert.Contains(query, x => x.driverId == 5);
     }
     /// <summary>
@@ -119,9 +119,9 @@ public class TransportTests : IClassFixture<TransportFixture>
                      ).ToList();
         Assert.Equal(5, query.Count);
         Assert.Contains(query, driver => driver.tripsAmount == 4);
-        Assert.Contains(query, driver => driver.lastName == "Äåíèñîâ");
-        Assert.Contains(query, driver => driver.fistName == "Ñòåïàí");
-        Assert.Contains(query, driver => driver.midleName == "Äåíèñîâè÷");
+        Assert.Contains(query, driver => driver.lastName == "Ð”ÐµÐ½Ð¸ÑÐ¾Ð²");
+        Assert.Contains(query, driver => driver.fistName == "Ð¡Ñ‚ÐµÐ¿Ð°Ð½");
+        Assert.Contains(query, driver => driver.midleName == "Ð”ÐµÐ½Ð¸ÑÐ¾Ð²Ð¸Ñ‡");
         Assert.Contains(query, driver => driver.maxTrip == 342000000000);
     }
     /// <summary>

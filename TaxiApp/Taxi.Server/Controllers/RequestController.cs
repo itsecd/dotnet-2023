@@ -1,24 +1,35 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Taxi.Server.Repository;
 using Taxi.Domain;
 using Taxi.Server.Dto;
+using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
-public class RequestController: ControllerBase
+/// <summary>
+///     Controller for request
+/// </summary>
+public class RequestController : ControllerBase
 {
     private readonly ILogger<RequestController> _logger;
-    private readonly ITaxiRepository _taxiRepository;
     private readonly IMapper _mapper;
-    
+    private readonly ITaxiRepository _taxiRepository;
+
     public RequestController(ILogger<RequestController> logger, ITaxiRepository taxiRepository, IMapper mapper)
     {
         _logger = logger;
         _taxiRepository = taxiRepository;
         _mapper = mapper;
     }
-    
+
+    /// <summary>
+    ///     Get method which output all information about the individual driver and his vehicle
+    /// </summary>
+    /// <param name="id"> Identifier of driver</param>
+    /// <returns>
+    ///     Return list of drivers
+    ///     Signalization of success or error
+    /// </returns>
     [HttpGet("vehicles_and_drivers/{id}")]
     public IActionResult GetVehicleAndDriver(ulong id)
     {
@@ -43,26 +54,32 @@ public class RequestController: ControllerBase
 
         if (query.Count == 0)
         {
-            _logger.LogInformation("Not found driver and vehicle by driver id");
+            _logger.LogInformation("Not found driver and vehicle by driver id={id}", id);
             return NotFound();
         }
-        else
-        {
-            _logger.LogInformation("Get driver and vehicle by driver id");
-            return Ok(query);
-        }
+
+        _logger.LogInformation("Get driver and vehicle by driver id={id}", id);
+        return Ok(query);
     }
 
+    /// <summary>
+    ///     Get method which output all passengers who have ride in the given period, sorted by full name
+    /// </summary>
+    /// <param name="minDate"> Start date</param>
+    /// <param name="maxDate"> End date</param>
+    /// <returns>
+    ///     Return list of passengers
+    /// </returns>
     [HttpGet("passengers_over_given_period")]
     public ActionResult<IEnumerable<PassengerGetDto>> GetPassengerOverGivenPeriod(DateTime minDate, DateTime maxDate)
     {
-        var passengers = _taxiRepository.Passengers;
-        var rides = _taxiRepository.Rides;
-        foreach (var ride in rides)
+        List<Passenger> passengers = _taxiRepository.Passengers;
+        List<Ride> rides = _taxiRepository.Rides;
+        foreach (Ride ride in rides)
         {
             passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
         }
-        
+
         var query = (from passenger in passengers
             from ride in passenger.Rides
             where ride.RideDate <= maxDate && ride.RideDate >= minDate
@@ -74,19 +91,24 @@ public class RequestController: ControllerBase
             _logger.LogInformation("Not found passengers over given period");
             return NotFound();
         }
-        else
-        {
-            _logger.LogInformation("Get passengers over given period");
-            return Ok(query);
-        }
+
+        _logger.LogInformation("Get passengers over given period");
+        return Ok(query);
     }
-    
+
+    /// <summary>
+    ///     Get method which output the number of ride for each passenger
+    /// </summary>
+    /// <returns>
+    ///     Return list of passenger and rides count
+    ///     Signalization of success or error
+    /// </returns>
     [HttpGet("count_passenger_rides")]
     public IActionResult GetCountPassengerRides()
     {
-        var passengers = _taxiRepository.Passengers;
-        var rides = _taxiRepository.Rides;
-        foreach (var ride in rides)
+        List<Passenger> passengers = _taxiRepository.Passengers;
+        List<Ride> rides = _taxiRepository.Rides;
+        foreach (Ride ride in rides)
         {
             passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
         }
@@ -105,22 +127,24 @@ public class RequestController: ControllerBase
             _logger.LogInformation("Not found passengers");
             return NotFound();
         }
-        else
-        {
-            _logger.LogInformation("Get count passenger rides");
-            return Ok(query);
-        }
-        
-        
+
+        _logger.LogInformation("Get count passenger rides");
+        return Ok(query);
     }
 
+    /// <summary>
+    ///     Get method which output the top 2 drivers by the number of ride made
+    /// </summary>
+    /// <returns>
+    ///     Return list of drivers
+    /// </returns>
     [HttpGet("count_top_driver_rides")]
     public IEnumerable<Driver> GetTopDriver()
     {
-        var vehicles = _taxiRepository.Vehicles;
-        var rides = _taxiRepository.Rides;
-        var drivers = _taxiRepository.Drivers;
-        foreach (var ride in rides)
+        List<Vehicle> vehicles = _taxiRepository.Vehicles;
+        List<Ride> rides = _taxiRepository.Rides;
+        List<Driver> drivers = _taxiRepository.Drivers;
+        foreach (Ride ride in rides)
         {
             vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
         }
@@ -130,18 +154,24 @@ public class RequestController: ControllerBase
             where vehicle.DriverId == driver.Id
             orderby vehicle.Rides.Count
             select driver).Take(2).ToList();
-        
+
         _logger.LogInformation("Get top 2 driver by count of rides");
         return query;
     }
 
+    /// <summary>
+    ///     Get method which output information about the number of rides, average time and maximum ride time for each driver
+    /// </summary>
+    /// <returns>
+    ///     Return list of driver, rides count, average time, maximum time
+    /// </returns>
     [HttpGet("infos_about_rides")]
     public IActionResult GetInfosAboutRides()
     {
-        var vehicles = _taxiRepository.Vehicles;
-        var rides = _taxiRepository.Rides;
-        var drivers = _taxiRepository.Drivers;
-        foreach (var ride in rides)
+        List<Vehicle> vehicles = _taxiRepository.Vehicles;
+        List<Ride> rides = _taxiRepository.Rides;
+        List<Driver> drivers = _taxiRepository.Drivers;
+        foreach (Ride ride in rides)
         {
             vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
         }
@@ -169,21 +199,30 @@ public class RequestController: ControllerBase
                 ridesInfo.avg,
                 ridesInfo.max
             }).ToList();
-        
+
         _logger.LogInformation("Get infos about passengers rides");
         return Ok(query);
     }
-    
+
+    /// <summary>
+    ///     Get method which output the information about the passengers who have made the maximum number of rides in a given
+    ///     period
+    /// </summary>
+    /// <param name="minDate"> Start date</param>
+    /// <param name="maxDate"> End date</param>
+    /// <returns>
+    ///     Return list of passengers
+    /// </returns>
     [HttpGet("max_rides_of_passenger")]
     public IActionResult GetMaxRidesOfPassenger(DateTime minDate, DateTime maxDate)
     {
-        var passengers = _taxiRepository.Passengers;
-        var rides = _taxiRepository.Rides;
-        foreach (var ride in rides)
+        List<Passenger> passengers = _taxiRepository.Passengers;
+        List<Ride> rides = _taxiRepository.Rides;
+        foreach (Ride ride in rides)
         {
             passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
         }
-        
+
         var subquery = (from passenger in passengers
             from ride in passenger.Rides
             where ride.RideDate < maxDate && ride.RideDate > minDate
@@ -217,7 +256,7 @@ public class RequestController: ControllerBase
                 sq.Patronymic,
                 sq.PhoneNumber
             }).ToList();
-        
+
         _logger.LogInformation("Get passenger with max count of rides");
         return Ok(query);
     }

@@ -2,33 +2,27 @@ using Taxi.Domain;
 
 namespace Taxi.Server.Repository;
 
-public class TaxiRepository: ITaxiRepository
+public class TaxiRepository : ITaxiRepository
 {
-    private readonly List<VehicleClassification> _vehicleClassifications;
-    private readonly List<Driver> _drivers;
-    private readonly List<Vehicle> _vehicles;
-    private readonly List<Ride> _rides;
-    private readonly List<Passenger> _passengers;
-
     public TaxiRepository()
     {
-        _vehicleClassifications = new List<VehicleClassification>
-        { 
-            new VehicleClassification 
+        VehicleClassifications = new List<VehicleClassification>
+        {
+            new()
             {
                 Id = 1,
                 Brand = "Lada",
                 Model = "Granta",
                 Class = "B"
             },
-            new VehicleClassification
+            new()
             {
                 Id = 2,
                 Brand = "Skoda",
                 Model = "Octavia",
                 Class = "C"
             },
-            new VehicleClassification
+            new()
             {
                 Id = 3,
                 Brand = "Audi",
@@ -37,9 +31,9 @@ public class TaxiRepository: ITaxiRepository
             }
         };
 
-        _drivers = new List<Driver>
-        { 
-            new Driver 
+        Drivers = new List<Driver>
+        {
+            new()
             {
                 Id = 1,
                 FirstName = "Сергей",
@@ -48,7 +42,7 @@ public class TaxiRepository: ITaxiRepository
                 Passport = "3616099877",
                 PhoneNumber = "79278990908"
             },
-            new Driver
+            new()
             {
                 Id = 2,
                 FirstName = "Михаил",
@@ -57,7 +51,7 @@ public class TaxiRepository: ITaxiRepository
                 Passport = "3616201668",
                 PhoneNumber = "79604515989"
             },
-            new Driver
+            new()
             {
                 Id = 3,
                 FirstName = "Алексей",
@@ -66,7 +60,7 @@ public class TaxiRepository: ITaxiRepository
                 Passport = "3616529576",
                 PhoneNumber = "79041496150"
             },
-            new Driver
+            new()
             {
                 Id = 4,
                 FirstName = "Александр",
@@ -75,7 +69,7 @@ public class TaxiRepository: ITaxiRepository
                 Passport = "3616039857",
                 PhoneNumber = "79041496150"
             },
-            new Driver
+            new()
             {
                 Id = 5,
                 FirstName = "Ярослав",
@@ -86,9 +80,9 @@ public class TaxiRepository: ITaxiRepository
             }
         };
 
-        _vehicles = new List<Vehicle>
+        Vehicles = new List<Vehicle>
         {
-            new Vehicle
+            new()
             {
                 Id = 1,
                 RegistrationCarPlate = "Е555КХ163",
@@ -96,7 +90,7 @@ public class TaxiRepository: ITaxiRepository
                 VehicleClassificationId = 1,
                 DriverId = 5
             },
-            new Vehicle
+            new()
             {
                 Id = 2,
                 RegistrationCarPlate = "А007МР163",
@@ -104,7 +98,7 @@ public class TaxiRepository: ITaxiRepository
                 VehicleClassificationId = 1,
                 DriverId = 4
             },
-            new Vehicle
+            new()
             {
                 Id = 3,
                 RegistrationCarPlate = "Х243КХ163",
@@ -112,7 +106,7 @@ public class TaxiRepository: ITaxiRepository
                 VehicleClassificationId = 2,
                 DriverId = 3
             },
-            new Vehicle
+            new()
             {
                 Id = 4,
                 RegistrationCarPlate = "В796ТМ116",
@@ -120,7 +114,7 @@ public class TaxiRepository: ITaxiRepository
                 VehicleClassificationId = 2,
                 DriverId = 2
             },
-            new Vehicle
+            new()
             {
                 Id = 5,
                 RegistrationCarPlate = "К005ТМ163",
@@ -130,9 +124,9 @@ public class TaxiRepository: ITaxiRepository
             }
         };
 
-        _passengers = new List<Passenger>
+        Passengers = new List<Passenger>
         {
-            new Passenger
+            new()
             {
                 Id = 1,
                 FirstName = "Максим",
@@ -140,7 +134,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Семёнович",
                 PhoneNumber = "79610482450"
             },
-            new Passenger
+            new()
             {
                 Id = 2,
                 FirstName = "Анна",
@@ -148,7 +142,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Марковна",
                 PhoneNumber = "79031127350"
             },
-            new Passenger
+            new()
             {
                 Id = 3,
                 FirstName = "Злата",
@@ -156,7 +150,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Робертовна",
                 PhoneNumber = "79029517723"
             },
-            new Passenger
+            new()
             {
                 Id = 4,
                 FirstName = "Елизавета",
@@ -164,7 +158,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Павловна",
                 PhoneNumber = "79634132986"
             },
-            new Passenger
+            new()
             {
                 Id = 5,
                 FirstName = "Вадим",
@@ -172,7 +166,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Денисович",
                 PhoneNumber = "79664807986"
             },
-            new Passenger
+            new()
             {
                 Id = 6,
                 FirstName = "Иван",
@@ -180,7 +174,7 @@ public class TaxiRepository: ITaxiRepository
                 Patronymic = "Леонидович",
                 PhoneNumber = "79696086252"
             },
-            new Passenger
+            new()
             {
                 Id = 7,
                 FirstName = "Дарья",
@@ -189,8 +183,8 @@ public class TaxiRepository: ITaxiRepository
                 PhoneNumber = "79023367578"
             }
         };
-        
-        _rides = new List<Ride>(20);
+
+        Rides = new List<Ride>(20);
         var streets = new List<string> { "Советская", "Ульяновская", "Победы", "Володарского", "Дзержинского" };
         var dates = new List<DateTime>
         {
@@ -214,18 +208,17 @@ public class TaxiRepository: ITaxiRepository
                 PassengerId = ((ulong)i % 7) + 1,
                 VehicleId = ((ulong)i % 5) + 1
             };
-            _rides.Add(ride);
+            Rides.Add(ride);
         }
     }
 
-    public List<VehicleClassification> VehicleClassifications => _vehicleClassifications;
+    public List<VehicleClassification> VehicleClassifications { get; }
 
-    public List<Driver> Drivers => _drivers;
+    public List<Driver> Drivers { get; }
 
-    public List<Vehicle> Vehicles => _vehicles;
+    public List<Vehicle> Vehicles { get; }
 
-    public List<Passenger> Passengers => _passengers;
+    public List<Passenger> Passengers { get; }
 
-    public List<Ride> Rides => _rides;
-
+    public List<Ride> Rides { get; }
 }

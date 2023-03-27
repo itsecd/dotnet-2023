@@ -3,10 +3,10 @@ using AutoMapper;
 using Taxi.Server;
 using Taxi.Server.Repository;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
-var mapper = mapperConfig.CreateMapper();
+IMapper? mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<ITaxiRepository, TaxiRepository>();
@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

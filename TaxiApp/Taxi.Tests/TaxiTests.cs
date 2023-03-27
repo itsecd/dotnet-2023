@@ -162,9 +162,9 @@ public class TaxiTests : IClassFixture<TaxiFixture>
                     vehicleId = grp.Key,
                     count = grp.Count(),
                     avg = grp.Average(ride =>
-                        ride.RideTime.Second + (60 * ride.RideTime.Minute) + (3600 * ride.RideTime.Hour)),
+                        ride.RideTime.Seconds + (60 * ride.RideTime.Minutes) + (3600 * ride.RideTime.Hours)),
                     max = grp.Max(ride =>
-                        ride.RideTime.Second + (60 * ride.RideTime.Minute) + (3600 * ride.RideTime.Hour))
+                        ride.RideTime.Seconds + (60 * ride.RideTime.Minutes) + (3600 * ride.RideTime.Hours))
                 }
             from driver in drivers
             where driver.Id == ridesInfo.vehicleId

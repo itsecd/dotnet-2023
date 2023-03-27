@@ -27,7 +27,7 @@ public class DriverController : ControllerBase
     [HttpGet]
     public IEnumerable<Driver> Get()
     {
-        _logger.LogInformation("Get driver");
+        _logger.LogInformation("Get drivers");
         return _taxiRepository.Drivers;
     }
 

@@ -248,7 +248,7 @@ public class TaxiFixture
                     DeparturePoint = streets[i % 5] + " " + (i * 10),
                     DestinationPoint = streets[(i + 2) % 5] + " " + (i * 5),
                     RideDate = dates[i % 5],
-                    RideTime = new TimeOnly(0, (i * 2) + 10),
+                    RideTime = new TimeSpan(0, (i * 2) + 10, 0),
                     Cost = (uint)(100 + (i * 20)),
                     PassengerId = ((ulong)i % 7) + 1,
                     VehicleId = ((ulong)i % 5) + 1

@@ -1,15 +1,7 @@
-namespace Taxi.Domain;
+namespace Taxi.Server.Dto;
 
-/// <summary>
-///     Ride - a class that contains information about the rides made by passengers
-/// </summary>
-public class Ride
+public class RidePostDto
 {
-    /// <summary>
-    ///     Id - unique identifier of the ride
-    /// </summary>
-    public ulong Id { get; set; }
-
     /// <summary>
     ///     DeparturePoint - a address where the ride starts
     /// </summary>
@@ -26,9 +18,9 @@ public class Ride
     public DateTime RideDate { get; set; } = new();
 
     /// <summary>
-    ///     RideTime - duration of the ride
+    ///     RideTime - duration of the ride in seconds
     /// </summary>
-    public TimeSpan RideTime { get; set; } = new();
+    public uint RideTime { get; set; }
 
     /// <summary>
     ///     Cost - cost of ride

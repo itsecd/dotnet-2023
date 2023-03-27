@@ -8,8 +8,19 @@ namespace DotNet2023.WebApi.Repository.Queries;
 public class QueriesRepository : IQueries
 {
     private readonly DbContextWebApi _dbContext;
-    public QueriesRepository(DbContextWebApi dbContext) =>
+    public QueriesRepository(DbContextWebApi dbContext)
+    {
         _dbContext = dbContext;
+        _dbContext.Institutes.ToList();
+        _dbContext.InstituteSpecialties.ToList();
+        _dbContext.Faculties.ToList();
+        _dbContext.Departments.ToList();
+        _dbContext.GroupOfStudents.ToList();
+        _dbContext.Students.ToList();
+        _dbContext.EducationWorker.ToList();
+        _dbContext.Specialties.ToList();
+    }
+
 
     public HigherEducationInstitution? GetInstitutionById(string id) =>
         QueriesToDomainModel.GetInstitutionById(_dbContext, id);

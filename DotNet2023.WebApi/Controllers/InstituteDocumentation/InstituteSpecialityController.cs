@@ -45,7 +45,7 @@ public class InstituteSpecialityController : Controller
     [HttpGet("GetInstituteSpecialitiesByCode")]
     public IActionResult GetInstituteSpecialitiesByCode(string code)
     {
-        var instituteSpecialit = _mapper
+        var instituteSpeciality = _mapper
             .Map<List<InstituteSpecialityDto>>
             (_repository.GetInstituteSpecialitiesByCode(code));
         _logger.LogInformation($"ModelState {ModelState}, method GetInstituteSpecialitiesByCode");
@@ -53,7 +53,7 @@ public class InstituteSpecialityController : Controller
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(instituteSpecialit);
+        return Ok(instituteSpeciality);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class InstituteSpecialityController : Controller
     [HttpGet("GetInstituteSpecialitiesByInstitution")]
     public IActionResult GetInstituteSpecialitiesByInstitution(string idInstitution)
     {
-        var instituteSpecialit = _mapper
+        var instituteSpeciality = _mapper
             .Map<List<InstituteSpecialityDto>>
             (_repository.GetInstituteSpecialitiesByInstitution(idInstitution));
         _logger.LogInformation($"ModelState {ModelState}, " +
@@ -73,7 +73,7 @@ public class InstituteSpecialityController : Controller
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(instituteSpecialit);
+        return Ok(instituteSpeciality);
     }
 
     /// <summary>

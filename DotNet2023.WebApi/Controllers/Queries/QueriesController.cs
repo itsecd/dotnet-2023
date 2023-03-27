@@ -113,7 +113,7 @@ public class QueriesController : Controller
     [HttpGet("GetInstitutionsWithMaxDepartments")]
     public IActionResult GetInstitutionsWithMaxDepartments()
     {
-        var result = _mapper.Map<HigherEducationInstitutionDto>(
+        var result = _mapper.Map<List<HigherEducationInstitutionDto>>(
             _repository.GetInstitutionsWithMaxDepartments());
 
         if (!ModelState.IsValid)
@@ -151,7 +151,7 @@ public class QueriesController : Controller
     [HttpGet("GetPopularSpeciality")]
     public IActionResult GetPopularSpeciality()
     {
-        var result = _mapper.Map<SpecialityDto>(_repository.GetPopularSpeciality());
+        var result = _mapper.Map<List<SpecialityDto>>(_repository.GetPopularSpeciality());
 
         if (!ModelState.IsValid)
         {

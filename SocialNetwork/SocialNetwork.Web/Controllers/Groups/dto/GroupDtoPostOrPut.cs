@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Web;
+﻿namespace SocialNetwork.Web.Controllers.Groups.Dto;
 
 /// <summary>
 /// Dto группы для POST и PUT операций.

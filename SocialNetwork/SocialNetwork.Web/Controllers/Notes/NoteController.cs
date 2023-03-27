@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Core;
 using SocialNetwork.Domain;
+using SocialNetwork.Web.Controllers.Notes.Dto;
 
-namespace SocialNetwork.Web;
+namespace SocialNetwork.Web.Controllers.Notes;
 
 /// <summary>
 /// Выполнение CRUD операций для записи.
@@ -19,7 +20,7 @@ public class NoteController : ControllerBase
 	/// <summary>
 	/// Создает контроллер с помощью указанных данных.
 	/// </summary>
-	/// <param name="socialNetworkRepository">Содержит данные сущностей социальной сети.</param>
+	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public NoteController(ISocialNetworkService socialNetworkService)
 	{
 		_socialNetworkService = socialNetworkService;

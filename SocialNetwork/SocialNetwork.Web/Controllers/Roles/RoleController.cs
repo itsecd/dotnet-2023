@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Core;
 using SocialNetwork.Domain;
+using SocialNetwork.Web.Controllers.Roles.Dto;
 
-namespace SocialNetwork.Web;
+namespace SocialNetwork.Web.Controllers.Roles;
 
 /// <summary>
 /// Выполнение CRUD операций для роли.
@@ -19,7 +20,7 @@ public class RoleController : ControllerBase
 	/// <summary>
 	/// Создает контроллер с помощью указанных данных.
 	/// </summary>
-	/// <param name="socialNetworkRepository">Содержит данные сущностей социальной сети.</param>
+	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public RoleController(ISocialNetworkService socialNetworkService) 
 	{
 		_socialNetworkService = socialNetworkService;

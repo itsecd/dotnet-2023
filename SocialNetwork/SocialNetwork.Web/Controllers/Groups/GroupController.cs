@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Core;
+using SocialNetwork.Web.Controllers.Groups.Dto;
 
-namespace SocialNetwork.Web; 
+namespace SocialNetwork.Web.Controllers.Groups; 
 
 /// <summary>
 /// Выполнение CRUD операций для группы.
@@ -18,7 +19,7 @@ public class GroupController : ControllerBase
 	/// <summary>
 	/// Создает контроллер с помощью указанных данных.
 	/// </summary>
-	/// <param name="socialNetworkRepository">Содержит данные сущностей социальной сети.</param>
+	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public GroupController(ISocialNetworkService socialNetworkService)
     {
         _socialNetworkService = socialNetworkService;

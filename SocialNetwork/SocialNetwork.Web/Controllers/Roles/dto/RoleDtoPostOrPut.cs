@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Web;
+﻿namespace SocialNetwork.Web.Controllers.Roles.Dto;
 
 /// <summary>
 /// Dto роли для POST и PUT операций.

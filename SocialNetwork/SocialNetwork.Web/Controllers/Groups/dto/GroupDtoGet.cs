@@ -1,6 +1,6 @@
 ﻿using SocialNetwork.Domain;
 
-namespace SocialNetwork.Web;
+namespace SocialNetwork.Web.Controllers.Groups.Dto;
 
 /// <summary>
 /// Dto группы для GET операций.

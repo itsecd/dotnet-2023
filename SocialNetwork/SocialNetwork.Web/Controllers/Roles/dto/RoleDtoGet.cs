@@ -1,6 +1,6 @@
 ﻿using SocialNetwork.Domain;
 
-namespace SocialNetwork.Web;
+namespace SocialNetwork.Web.Controllers.Roles.Dto;
 
 /// <summary>
 /// Dto роли для GET операций.

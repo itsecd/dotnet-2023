@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Web;
+﻿namespace SocialNetwork.Web.Controllers.Users.Dto;
 
 /// <summary>
 /// Dto пользователя для POST и PUT операций.

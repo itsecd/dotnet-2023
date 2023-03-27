@@ -40,8 +40,8 @@ public class AnalyticsController : ControllerBase
     public ActionResult<UniversityGetDto> GetInformationOfUniversity(string number)
     {
         var result = (from university in _universityDataRepository.Universities
-                         where university.Number == number
-                         select _mapper.Map<University, UniversityGetDto>(university)).ToList();
+                      where university.Number == number
+                      select _mapper.Map<University, UniversityGetDto>(university)).ToList();
         if (result.Count == 0)
         {
             _logger.LogInformation("Not found university with number: {0}", number);
@@ -101,20 +101,20 @@ public class AnalyticsController : ControllerBase
     [HttpGet("university_with_max_departments")]
     public IEnumerable<UniversityGetDto> MaxCountDepartments()
     {
-        _logger.LogInformation("Get universitites with max count departments");
+        _logger.LogInformation("Get universities with max count departments");
         return (from university in _universityDataRepository.Universities
-                where university.DepartmentsData.Count == _universityDataRepository.Universities.Max(university => university.DepartmentsData.Count)
+                where university.DepartmentsData.Count == _universityDataRepository.Universities.Max(element => element.DepartmentsData.Count)
                 select _mapper.Map<University, UniversityGetDto>(university)).ToList();
     }
     /// <summary>
     /// Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.
     /// </summary>
-    /// <param name="universityproperty"></param>
+    /// <param name="universityProperty"></param>
     /// <returns></returns>
     [HttpGet("university_with_target_property")]
     public IEnumerable<object> UniversityWithProperty(string universityProperty)
     {
-        _logger.LogInformation("Get information about universities with target Propety");
+        _logger.LogInformation("Get information about universities with target property");
         return (from university in _universityDataRepository.Universities
                 where (university.UniversityProperty == universityProperty)
                 select new

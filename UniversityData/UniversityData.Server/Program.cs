@@ -1,6 +1,5 @@
 using System.Reflection;
 using AutoMapper;
-using Microsoft.OpenApi.Models;
 using UniversityData.Server;
 using UniversityData.Server.Repository;
 

@@ -39,7 +39,7 @@ public class University
     /// <summary>
     /// Факультеты университета
     /// </summary>
-    public List<Faculty>? FacultiesData { get; set; } = new List<Faculty>();
+    public List<Faculty> FacultiesData { get; set; } = new List<Faculty>();
     /// <summary>
     /// Кафедры университета
     /// </summary>

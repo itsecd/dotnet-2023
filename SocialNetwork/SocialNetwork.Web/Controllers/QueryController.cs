@@ -19,7 +19,7 @@ public class QueryController : ControllerBase
 	/// <summary>
 	/// Создает контроллер с помощью указанных данных.
 	/// </summary>
-	/// <param name="socialNetworkRepository">Содержит данные сущностей социальной сети.</param>
+	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public QueryController(ISocialNetworkService socialNetworkService)
 	{
 		_socialNetworkService = socialNetworkService;

@@ -12,7 +12,7 @@ public class Group
 
     /// <summary>	
     /// Название.	
-    /// </summary>	
+    /// </summary>	  
     public string Name { get; set; } = string.Empty;
 
     /// <summary>	

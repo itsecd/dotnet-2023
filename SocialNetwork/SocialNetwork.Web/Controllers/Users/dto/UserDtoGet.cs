@@ -14,7 +14,7 @@ public class UserDtoGet
 
 	/// <summary>	
 	/// Имя.	
-	/// </summary>	
+	/// </summary>	 
 	public string FirstName { get; set; }
 	/// <summary>	
 	/// Фамилия.	

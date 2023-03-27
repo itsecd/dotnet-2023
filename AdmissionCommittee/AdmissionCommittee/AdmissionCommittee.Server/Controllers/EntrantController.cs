@@ -2,7 +2,6 @@
 using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]

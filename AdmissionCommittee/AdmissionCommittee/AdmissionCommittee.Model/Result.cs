@@ -17,6 +17,8 @@ public class Result
     /// </summary>
     public int Mark { get; set; }
 
+    public Result() { }
+
     public Result(int idResult, string nameSubject, int mark)
     {
         IdResult = idResult;

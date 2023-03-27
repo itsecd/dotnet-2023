@@ -9,7 +9,11 @@ public class MappingProfile : Profile
     {
         CreateMap<Entrant, EntrantGetDto>();
         CreateMap<Entrant, EntrantPostDto>();
-
         CreateMap<EntrantPostDto, Entrant>();
+
+        //CreateMap<ResultPostDto, Result>();
+
+        CreateMap<Speciality, SpecialityPostDto>();
+        CreateMap<SpecialityPostDto, Speciality>();
     }
 }

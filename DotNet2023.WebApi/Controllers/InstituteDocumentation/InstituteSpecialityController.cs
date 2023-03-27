@@ -46,7 +46,7 @@ public class InstituteSpecialityController : Controller
     public IActionResult GetInstituteSpecialitiesByCode(string code)
     {
         var instituteSpecialit = _mapper
-            .Map<InstituteSpecialityDto>
+            .Map<List<InstituteSpecialityDto>>
             (_repository.GetInstituteSpecialitiesByCode(code));
         _logger.LogInformation($"ModelState {ModelState}, method GetInstituteSpecialitiesByCode");
 
@@ -65,7 +65,7 @@ public class InstituteSpecialityController : Controller
     public IActionResult GetInstituteSpecialitiesByInstitution(string idInstitution)
     {
         var instituteSpecialit = _mapper
-            .Map<InstituteSpeciality>
+            .Map<List<InstituteSpecialityDto>>
             (_repository.GetInstituteSpecialitiesByInstitution(idInstitution));
         _logger.LogInformation($"ModelState {ModelState}, " +
             $"method GetInstituteSpecialitiesByInstitution");

@@ -56,10 +56,10 @@ public class ResultController : ControllerBase
 
 
     [HttpPost("CreateResult")]
-    public void Post([FromBody] ResultPostDto res)
+    public void Post([FromBody] List<ResultPostDto> res)
     {
         _logger.LogInformation("Create new Results");
-        //_admissionCommitteeRepository.GetResults.Add();
+        _admissionCommitteeRepository.GetResults.Add(_mapper.Map<List<Result>>(res));
     }
 
 

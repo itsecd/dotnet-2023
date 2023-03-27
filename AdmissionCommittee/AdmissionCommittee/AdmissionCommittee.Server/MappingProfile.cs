@@ -11,7 +11,7 @@ public class MappingProfile : Profile
         CreateMap<Entrant, EntrantPostDto>();
         CreateMap<EntrantPostDto, Entrant>();
 
-        //CreateMap<ResultPostDto, Result>();
+        CreateMap<List<Result>, List<ResultPostDto>>();
 
         CreateMap<Speciality, SpecialityPostDto>();
         CreateMap<SpecialityPostDto, Speciality>();

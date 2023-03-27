@@ -37,7 +37,7 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <param name="idEntrant">id entrant</param>
     /// <returns>EntrantGetDto with http code</returns>
-    [HttpGet("GetEntrantById{idEntrant}")]
+    [HttpGet("GetEntrantById")]
     public ActionResult<EntrantGetDto> Get(int idEntrant)
     {
         var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
@@ -70,7 +70,7 @@ public class EntrantController : ControllerBase
     /// <param name="idEntrant">id Entrant</param>
     /// <param name="entrantToPut">Entrant that is updated</param>
     /// <returns></returns>
-    [HttpPut("UpdateEntrantById{idEntrant}")]
+    [HttpPut("UpdateEntrantById")]
     public IActionResult Put(int idEntrant, [FromBody] EntrantPostDto entrantToPut)
     {
         var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
@@ -92,7 +92,7 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <param name="idEntrant">id Entrant for delete</param>
     /// <returns>Ok or NotFound</returns>
-    [HttpDelete("DeleteEntrantById{idEntrant}")]
+    [HttpDelete("DeleteEntrantById")]
     public IActionResult Delete(int idEntrant)
     {
         var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);

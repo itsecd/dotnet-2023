@@ -7,7 +7,7 @@ public class Driver
     /// <summary>
     /// Unique key of driver
     /// </summary>
-    public int DriverId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// First name of driver
     /// </summary>
@@ -17,9 +17,9 @@ public class Driver
     /// </summary>
     public string LastName { get; set; } = string.Empty;
     /// <summary>
-    /// Midle name of driver
+    /// Middle name of driver
     /// </summary>
-    public string MidleName { get; set; } = string.Empty;
+    public string MiddleName { get; set; } = string.Empty;
     /// <summary>
     /// Driver's passport number
     /// </summary>
@@ -37,12 +37,12 @@ public class Driver
     /// </summary>
     public string PhoneNumber { get; set; } = string.Empty;
     public Driver() { }
-    public Driver(int driverId, string firstName, string lastName, string midleName, int passport, int driverLicense, string address, string phoneNumber)
+    public Driver(int driverId, string firstName, string lastName, string middleName, int passport, int driverLicense, string address, string phoneNumber)
     {
-        DriverId = driverId;
+        Id = driverId;
         FirstName = firstName;
         LastName = lastName;
-        MidleName = midleName;
+        MiddleName = middleName;
         Passport = passport;
         DriverLicense = driverLicense;
         Address = address;

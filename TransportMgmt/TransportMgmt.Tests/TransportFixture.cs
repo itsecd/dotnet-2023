@@ -13,9 +13,9 @@ public class TransportFixture
         {
             return new List<TransportType>()
             {
-                new TransportType { TypeId = 1, TypeName = "автобус" },
-                new TransportType { TypeId = 2, TypeName = "троллейбус" },
-                new TransportType { TypeId = 3, TypeName = "трамвай" }
+                new TransportType { Id = 1, TypeName = "автобус" },
+                new TransportType { Id = 2, TypeName = "троллейбус" },
+                new TransportType { Id = 3, TypeName = "трамвай" }
 
             };
         }
@@ -29,13 +29,13 @@ public class TransportFixture
         {
             return new List<Model>()
             {
-                new Model {ModelId = 1, ModelName = "ГАЗель NN", FloorLevel = "Low", MaxCapacity = 20},
-                new Model {ModelId = 2, ModelName = "MAN Lion's City", FloorLevel = "High", MaxCapacity = 35},
-                new Model {ModelId = 3, ModelName = "ЗИЛ", FloorLevel = "Low", MaxCapacity = 15},
-                new Model {ModelId = 4, ModelName = "ЛиАЗ-4292", FloorLevel = "High", MaxCapacity = 25},
-                new Model {ModelId = 5, ModelName = "Ситирим-10", FloorLevel = "High", MaxCapacity = 40},
-                new Model {ModelId = 6, ModelName = "МАЗ-232", FloorLevel = "Low", MaxCapacity = 20},
-                new Model {ModelId = 7, ModelName = "Mercedes-Benz Sprinter", FloorLevel = "Low", MaxCapacity = 20},
+                new Model {Id = 1, ModelName = "ГАЗель NN", FloorLevel = "Low", MaxCapacity = 20},
+                new Model {Id = 2, ModelName = "MAN Lion's City", FloorLevel = "High", MaxCapacity = 35},
+                new Model {Id = 3, ModelName = "ЗИЛ", FloorLevel = "Low", MaxCapacity = 15},
+                new Model {Id = 4, ModelName = "ЛиАЗ-4292", FloorLevel = "High", MaxCapacity = 25},
+                new Model {Id = 5, ModelName = "Ситирим-10", FloorLevel = "High", MaxCapacity = 40},
+                new Model {Id = 6, ModelName = "МАЗ-232", FloorLevel = "Low", MaxCapacity = 20},
+                new Model {Id = 7, ModelName = "Mercedes-Benz Sprinter", FloorLevel = "Low", MaxCapacity = 20},
             };
 
         }
@@ -49,18 +49,18 @@ public class TransportFixture
         {
             return new List<Route>()
             {
-                new Route { RouteId = 1, RouteNumber = "1"},
-                new Route { RouteId = 2, RouteNumber = "2"},
-                new Route { RouteId = 3, RouteNumber = "3"},
-                new Route { RouteId = 4, RouteNumber = "4"},
-                new Route { RouteId = 5, RouteNumber = "5Д"},
-                new Route { RouteId = 6, RouteNumber = "67"},
-                new Route { RouteId = 7, RouteNumber = "126с"},
-                new Route { RouteId = 8, RouteNumber = "126ю"},
-                new Route { RouteId = 9, RouteNumber = "20"},
-                new Route { RouteId = 10, RouteNumber = "22"},
-                new Route { RouteId = 11, RouteNumber = "5"},
-                new Route { RouteId = 12, RouteNumber = "13"}
+                new Route { Id = 1, RouteNumber = "1"},
+                new Route { Id = 2, RouteNumber = "2"},
+                new Route { Id = 3, RouteNumber = "3"},
+                new Route { Id = 4, RouteNumber = "4"},
+                new Route { Id = 5, RouteNumber = "5Д"},
+                new Route { Id = 6, RouteNumber = "67"},
+                new Route { Id = 7, RouteNumber = "126с"},
+                new Route { Id = 8, RouteNumber = "126ю"},
+                new Route { Id = 9, RouteNumber = "20"},
+                new Route { Id = 10, RouteNumber = "22"},
+                new Route { Id = 11, RouteNumber = "5"},
+                new Route { Id = 12, RouteNumber = "13"}
 
             };
         }

@@ -7,7 +7,7 @@ public class TransportType
     /// <summary>
     /// Unique key of transport type
     /// </summary>
-    public int TypeId { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Name type of trasport
     /// </summary>
@@ -15,7 +15,7 @@ public class TransportType
     public TransportType() { }
     public TransportType(int typeId, string typeName)
     {
-        TypeId = typeId;
+        Id = typeId;
         TypeName = typeName;
     }
 }

@@ -7,7 +7,7 @@ public class Trip
     /// <summary>
     /// Unique key of trip
     /// </summary>
-    public int TripId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Trip date
     /// </summary> 
@@ -15,11 +15,11 @@ public class Trip
     /// <summary>
     /// Trip start time
     /// </summary>
-    public DateTime TimeON { get; set; } = new DateTime();
+    public DateTime TimeOn { get; set; } = new DateTime();
     /// <summary>
     /// Trip end time
     /// </summary>
-    public DateTime TimeOFF { get; set; } = new DateTime();
+    public DateTime TimeOff { get; set; } = new DateTime();
     /// <summary>
     /// Trip route
     /// </summary>
@@ -36,12 +36,12 @@ public class Trip
     /// Driver for a trip
     /// </summary>
     public Trip() { }
-    public Trip(int tripId, DateOnly date, DateTime timeON, DateTime timeOFF, Route route, Transport transport, Driver driver)
+    public Trip(int tripId, DateOnly date, DateTime timeOn, DateTime timeOff, Route route, Transport transport, Driver driver)
     {
-        TripId = tripId;
+        Id = tripId;
         Date = date;
-        TimeON = timeON;
-        TimeOFF = timeOFF;
+        TimeOn = timeOn;
+        TimeOff = timeOff;
         Route = route;
         Transport = transport;
         Driver = driver;

@@ -7,7 +7,7 @@ public class Route
     /// <summary>
     /// Unique key of route
     /// </summary>
-    public int RouteId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Route number
     /// </summary>

@@ -7,7 +7,7 @@ public class Transport
     /// <summary>
     /// Unique key of transport
     /// </summary>
-    public int TransportId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Transport type
     /// </summary>
@@ -23,7 +23,7 @@ public class Transport
     public Transport() { }
     public Transport(int transportId, TransportType type, Model model, DateOnly dateMake)
     {
-        TransportId = transportId;
+        Id = transportId;
         Type = type;
         Model = model;
         DateMake = dateMake;

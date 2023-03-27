@@ -18,7 +18,7 @@ public class TransportTests : IClassFixture<TransportFixture>
     {
         var fixtureTransport = _fixture.Transports.ToList();
         var query = (from transports in fixtureTransport
-                     where transports.TransportId == 2 && transports.Model.ModelName == "MAN Lion's City"
+                     where transports.Id == 2 && transports.Model.ModelName == "MAN Lion's City"
                      select transports).ToList();
         Assert.Single(query);
         Assert.Contains(query, x => x.Model.ModelName == "MAN Lion's City");
@@ -31,18 +31,18 @@ public class TransportTests : IClassFixture<TransportFixture>
     {
         var fixtureTrip = _fixture.Trips.ToList();
         var query = (from trip in fixtureTrip
-                     where trip.Date == new DateOnly(2023, 03, 19) && trip.TimeON == new DateTime(2023, 03, 19, 08, 00, 00)
-                     && trip.TimeOFF == new DateTime(2023, 03, 19, 17, 30, 00)
-                     group trip by trip.Driver.DriverId into res
-                     orderby res.First().Driver.LastName, res.First().Driver.FirstName, res.First().Driver.MidleName
+                     where trip.Date == new DateOnly(2023, 03, 19) && trip.TimeOn == new DateTime(2023, 03, 19, 08, 00, 00)
+                     && trip.TimeOff == new DateTime(2023, 03, 19, 17, 30, 00)
+                     group trip by trip.Driver.Id into res
+                     orderby res.First().Driver.LastName, res.First().Driver.FirstName, res.First().Driver.MiddleName
                      select new
                      {
-                         driverId = res.First().Driver.DriverId,
+                         driverId = res.First().Driver.Id,
                          firstName = res.First().Driver.FirstName,
                          lastName = res.First().Driver.LastName,
-                         midleName = res.First().Driver.MidleName
+                         midleName = res.First().Driver.MiddleName
                      }).ToList();
-        Assert.Equal(5, query.Count());
+        Assert.Equal(5, query.Count);
         Assert.Contains(query, x => x.lastName == "Водянов");
         Assert.Contains(query, x => x.driverId == 2);
         Assert.Contains(query, x => x.firstName == "Михаил" && x.midleName == "Владиславович");
@@ -57,18 +57,18 @@ public class TransportTests : IClassFixture<TransportFixture>
         var fixtureTrip = _fixture.Trips.ToList();
         var fixtureTransport = _fixture.Transports.ToList();
         var query = (from trip in fixtureTrip
-                     join transport in fixtureTransport on trip.Transport.TransportId equals transport.TransportId
+                     join transport in fixtureTransport on trip.Transport.Id equals transport.Id
                      group trip by new { transport.Type, transport.Model } into res
-                     orderby res.Sum(query => query.TimeOFF.ToBinary() - query.TimeON.ToBinary()) descending
+                     orderby res.Sum(query => query.TimeOff.ToBinary() - query.TimeOn.ToBinary()) descending
                      select new
                      {
-                         transportId = res.First().Transport.TransportId,
+                         transportId = res.First().Transport.Id,
                          type = res.First().Transport.Type,
                          model = res.First().Transport.Model,
-                         time = res.Sum(query => query.TimeOFF.ToBinary() - query.TimeON.ToBinary())
+                         time = res.Sum(query => query.TimeOff.ToBinary() - query.TimeOn.ToBinary())
                      }
                      ).ToList();
-        Assert.Equal(7, query.Count());
+        Assert.Equal(7, query.Count);
         Assert.Contains(query, transport => transport.transportId == 2);
         Assert.Contains(query, transport => transport.transportId == 1);
         Assert.Contains(query, transport => transport.transportId == 3);
@@ -85,39 +85,39 @@ public class TransportTests : IClassFixture<TransportFixture>
         var fixtureTrip = _fixture.Trips.ToList();
         var fixtureDriver = _fixture.Drivers.ToList();
         var query = (from trip in fixtureTrip
-                     join driver in fixtureDriver on trip.Driver.DriverId equals driver.DriverId
-                     group trip by trip.Driver.DriverId into res
+                     join driver in fixtureDriver on trip.Driver.Id equals driver.Id
+                     group trip by trip.Driver.Id into res
                      orderby res.Count() descending
                      select res).Take(5).ToList();
-        Assert.Equal(5, query.Count());
-        Assert.Contains(query, driver => driver.ToList()[0].Driver.DriverId == 1);
-        Assert.Contains(query, driver => driver.ToList()[0].Driver.DriverId == 2);
-        Assert.Contains(query, driver => driver.ToList()[0].Driver.DriverId == 3);
-        Assert.Contains(query, driver => driver.ToList()[0].Driver.DriverId == 4);
-        Assert.Contains(query, driver => driver.ToList()[0].Driver.DriverId == 5);
+        Assert.Equal(5, query.Count);
+        Assert.Contains(query, driver => driver.ToList()[0].Driver.Id == 1);
+        Assert.Contains(query, driver => driver.ToList()[0].Driver.Id == 2);
+        Assert.Contains(query, driver => driver.ToList()[0].Driver.Id == 3);
+        Assert.Contains(query, driver => driver.ToList()[0].Driver.Id == 4);
+        Assert.Contains(query, driver => driver.ToList()[0].Driver.Id == 5);
     }
     /// <summary>
     /// Fifth request - Display information about the number of trips, average time and maximum travel time for each driver.
     /// </summary>
     [Fact]
-    public void InfoAboutCountTravelAvgTimeTranvelMaxTimeTravel()
+    public void InfoAboutCountTravelAvgTimeTravelMaxTimeTravel()
     {
         var fixtureTrip = _fixture.Trips.ToList();
         var fixtureDriver = _fixture.Drivers.ToList();
         var query = (from trip in fixtureTrip
-                     join driver in fixtureDriver on trip.Driver.DriverId equals driver.DriverId
-                     group trip by trip.Driver.DriverId into res
+                     join driver in fixtureDriver on trip.Driver.Id equals driver.Id
+                     group trip by trip.Driver.Id into res
                      select new
                      {
                          fistName = res.First().Driver.FirstName,
                          lastName = res.First().Driver.LastName,
-                         midleName = res.First().Driver.MidleName,
-                         tripsAmount = res.Count(trip => trip.Driver.DriverId == trip.Driver.DriverId),
-                         averageTrips = res.Average(trip => trip.TimeOFF.ToBinary() - trip.TimeON.ToBinary()),
-                         maxTrip = res.Max((trip => trip.TimeOFF.ToBinary() - trip.TimeON.ToBinary()))
+                         midleName = res.First().Driver.MiddleName,
+                         tripsAmount = res.Count(),
+                         averageTrips = res.Average(trip => trip.TimeOff.ToBinary() - trip.TimeOn.ToBinary()),
+                         maxTrip = res.Max((trip => trip.TimeOff.ToBinary() - trip.TimeOn.ToBinary()))
                      }
                      ).ToList();
-        Assert.Equal(5, query.Count());
+        Assert.Equal(5, query.Count);
         Assert.Contains(query, driver => driver.tripsAmount == 4);
         Assert.Contains(query, driver => driver.lastName == "Денисов");
         Assert.Contains(query, driver => driver.fistName == "Степан");
@@ -133,15 +133,15 @@ public class TransportTests : IClassFixture<TransportFixture>
         var fixtureTrip = _fixture.Trips.ToList();
         var fixtureTransport = _fixture.Transports.ToList();
         var numOfTrips = (from trip in fixtureTrip
-                          group trip by trip.Transport.TransportId into res
+                          group trip by trip.Transport.Id into res
                           where res.First().Date < new DateOnly(2023, 03, 20) && res.First().Date < new DateOnly(2023, 03, 20)
                           select new
                           {
-                              tansportId = res.First().Transport.TransportId,
-                              tripsAmount = res.Count(trip => trip.Driver.DriverId == trip.Driver.DriverId)
+                              tansportId = res.First().Transport.Id,
+                              tripsAmount = res.Count()
                           }).ToList();
         var query = (from trip in numOfTrips
-                     join transport in fixtureTransport on trip.tansportId equals transport.TransportId
+                     join transport in fixtureTransport on trip.tansportId equals transport.Id
                      where (trip.tripsAmount == numOfTrips.Max(x => x.tripsAmount))
                      select new
                      {
@@ -151,7 +151,7 @@ public class TransportTests : IClassFixture<TransportFixture>
                      ).ToList();
         Assert.Single(query);
         Assert.Contains(query, trip => trip.tripsAmount == 3);
-        Assert.Contains(query, trip => trip.transport.TransportId == 2);
+        Assert.Contains(query, trip => trip.transport.Id == 2);
     }
 
 }

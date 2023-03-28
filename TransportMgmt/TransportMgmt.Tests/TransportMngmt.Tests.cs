@@ -40,12 +40,12 @@ public class TransportTests : IClassFixture<TransportFixture>
                          driverId = res.First().Driver.Id,
                          firstName = res.First().Driver.FirstName,
                          lastName = res.First().Driver.LastName,
-                         midleName = res.First().Driver.MiddleName
+                         middleName = res.First().Driver.MiddleName
                      }).ToList();
         Assert.Equal(5, query.Count);
         Assert.Contains(query, x => x.lastName == "Водянов");
         Assert.Contains(query, x => x.driverId == 2);
-        Assert.Contains(query, x => x.firstName == "Михаил" && x.midleName == "Владиславович");
+        Assert.Contains(query, x => x.firstName == "Михаил" && x.middleName == "Владиславович");
         Assert.Contains(query, x => x.driverId == 5);
     }
     /// <summary>
@@ -59,15 +59,16 @@ public class TransportTests : IClassFixture<TransportFixture>
         var query = (from trip in fixtureTrip
                      join transport in fixtureTransport on trip.Transport.Id equals transport.Id
                      group trip by new { transport.Type, transport.Model } into res
-                     orderby res.Sum(query => query.TimeOff.ToBinary() - query.TimeOn.ToBinary()) descending
+                     orderby res.Sum(trip => (trip.TimeOff - trip.TimeOn).TotalHours) descending
                      select new
                      {
                          transportId = res.First().Transport.Id,
                          type = res.First().Transport.Type,
                          model = res.First().Transport.Model,
-                         time = res.Sum(query => query.TimeOff.ToBinary() - query.TimeOn.ToBinary())
+                         time = res.Sum(trip => (trip.TimeOff - trip.TimeOn).TotalHours)
                      }
-                     ).ToList();
+             ).ToList();
+
         Assert.Equal(7, query.Count);
         Assert.Contains(query, transport => transport.transportId == 2);
         Assert.Contains(query, transport => transport.transportId == 1);
@@ -111,18 +112,18 @@ public class TransportTests : IClassFixture<TransportFixture>
                      {
                          fistName = res.First().Driver.FirstName,
                          lastName = res.First().Driver.LastName,
-                         midleName = res.First().Driver.MiddleName,
+                         middleName = res.First().Driver.MiddleName,
                          tripsAmount = res.Count(),
-                         averageTrips = res.Average(trip => trip.TimeOff.ToBinary() - trip.TimeOn.ToBinary()),
-                         maxTrip = res.Max((trip => trip.TimeOff.ToBinary() - trip.TimeOn.ToBinary()))
+                         averageTrips = res.Average(trip => (trip.TimeOff - trip.TimeOn).TotalHours),
+                         maxTrip = res.Max(trip => (trip.TimeOff - trip.TimeOn).TotalHours)
                      }
                      ).ToList();
         Assert.Equal(5, query.Count);
         Assert.Contains(query, driver => driver.tripsAmount == 4);
         Assert.Contains(query, driver => driver.lastName == "Денисов");
         Assert.Contains(query, driver => driver.fistName == "Степан");
-        Assert.Contains(query, driver => driver.midleName == "Денисович");
-        Assert.Contains(query, driver => driver.maxTrip == 342000000000);
+        Assert.Contains(query, driver => driver.middleName == "Денисович");
+        Assert.Contains(query, driver => driver.maxTrip == 9.5);
     }
     /// <summary>
     /// Sixth request - Display information about the transports that made the maximum number of trips for the specified period.

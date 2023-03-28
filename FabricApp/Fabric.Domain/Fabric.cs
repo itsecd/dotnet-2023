@@ -1,4 +1,4 @@
-﻿namespace Fabric.Domain;
+﻿namespace Fabrics.Domain;
 /// <summary>
 /// Class Fabric is used to store information of the fabric.
 /// </summary>

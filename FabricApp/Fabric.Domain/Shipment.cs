@@ -1,4 +1,4 @@
-﻿namespace Fabric.Domain;
+﻿namespace Fabrics.Domain;
 /// <summary>
 /// Class Shipment is used to store information about shipment from Providers to Fabrics.
 /// </summary>

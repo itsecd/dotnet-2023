@@ -1,10 +1,10 @@
-﻿namespace Fabric.Test;
+﻿namespace Fabrics.Test;
 
-public class FabricTests : IClassFixture<FabricFixture>
+public class FabricsTests : IClassFixture<FabricsFixture>
 {
-    private readonly FabricFixture _fixture;
+    private readonly FabricsFixture _fixture;
 
-    public FabricTests(FabricFixture fixture)
+    public FabricsTests(FabricsFixture fixture)
     { _fixture = fixture; }
     /// <summary>
     /// First request: get information from one fabric.
@@ -14,7 +14,7 @@ public class FabricTests : IClassFixture<FabricFixture>
     {
         var fixtureFabrics = _fixture.FixtureFabrics;
         var request = (from fabric in fixtureFabrics
-                       where (fabric.Id == 2)
+                       where fabric.Id == 2
                        select fabric).ToList().Count();
         Assert.Equal(1, request);
     }
@@ -28,7 +28,7 @@ public class FabricTests : IClassFixture<FabricFixture>
         var firstDate = new DateTime(2022, 5, 21);
         var secondDate = new DateTime(2022, 9, 21);
         var request = (from shipment in fixtureShipments
-                       where (shipment.Date.CompareTo(firstDate) > 0) && (shipment.Date.CompareTo(secondDate) < 0)
+                       where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
                        select shipment).ToList().Count();
         Assert.Equal(3, request);
     }
@@ -105,14 +105,14 @@ public class FabricTests : IClassFixture<FabricFixture>
         var firstDate = new DateTime(2022, 5, 21);
         var secondDate = new DateTime(2022, 9, 21);
         var shipmentsInInterval = (from shipment in fixtureShipments
-                                   where (shipment.Date.CompareTo(firstDate) > 0) && (shipment.Date.CompareTo(secondDate) < 0)
+                                   where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
                                    select new
                                    {
                                        provider = shipment.ProviderId,
                                        number = shipment.NumberOfGoods
                                    }).ToList();
         var request = (from prov in shipmentsInInterval
-                       where (prov.number == shipmentsInInterval.Max(x => x.number))
+                       where prov.number == shipmentsInInterval.Max(x => x.number)
                        select prov.provider).ToList().Count();
         Assert.Equal(2, request);
     }

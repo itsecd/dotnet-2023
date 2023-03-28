@@ -1,4 +1,4 @@
-﻿namespace Fabric.Domain;
+﻿namespace Fabrics.Domain;
 /// <summary>
 /// Class Provider is used to store information of the provider.
 /// </summary>

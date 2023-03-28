@@ -1,8 +1,8 @@
-﻿namespace Fabric.Test;
+﻿namespace Fabrics.Test;
 
-using Fabric.Domain;
+using Fabrics.Domain;
 using System.Collections.Generic;
-public class FabricFixture
+public class FabricsFixture
 {
     public List<Fabric> FixtureFabrics
     {

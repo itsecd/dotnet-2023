@@ -32,10 +32,14 @@ public class EmployeeController : Controller
     }
 
     [HttpPost]
-    public void Post([FromBody] EmployeeDTO employee)
+    public ActionResult<Employee> Post([FromBody] EmployeeDTO employee)
     {
         var mappedEmployee = _mapper.Map<Employee>(employee);
+        var workshop =
+               _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
+        if (workshop == null) return NotFound("A workshop with given id doesn't exist");
         _organizationRepository.Employees.Add(mappedEmployee);
+        return Ok(mappedEmployee);
     }
 
 
@@ -44,8 +48,11 @@ public class EmployeeController : Controller
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
-        _organizationRepository.Employees.Remove(employee);
+        var workshop =
+       _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == newEmployee.WorkshopId);
+        if (workshop == null) return NotFound("A workshop with given id doesn't exist");
         var mappedEmployee = _mapper.Map<Employee>(newEmployee);
+        _organizationRepository.Employees.Remove(employee);
         _organizationRepository.Employees.Add(mappedEmployee);
         return Ok();
     }

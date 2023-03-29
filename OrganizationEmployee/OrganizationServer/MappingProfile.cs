@@ -16,5 +16,6 @@ public class MappingProfile : Profile
         CreateMap<EmployeeDTO, Employee>();
         CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>();
         CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>();
+        CreateMap<EmployeeVacationVoucherDTO, EmployeeVacationVoucher>();
     }
 }

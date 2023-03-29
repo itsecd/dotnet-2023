@@ -37,8 +37,8 @@ public class VacationVoucherController : Controller
         var mappedVacationVoucher = _mapper.Map<VacationVoucher>(vacationVoucher);
         var voucherType =
         _organizationRepository.VoucherTypes.FirstOrDefault
-                            (type => type.Name == mappedVacationVoucher?.VoucherType?.Name);
-        if (voucherType == null) return NotFound("Тип путевки не найден");
+                            (type => type.Id == mappedVacationVoucher.VoucherTypeId);
+        if (voucherType == null) return NotFound("A voucher type with given id doesn't exist");
         _organizationRepository.VacationVouchers.Add(mappedVacationVoucher);
         voucherType.VacationVouchers.Add(mappedVacationVoucher);
         return Ok(mappedVacationVoucher);
@@ -50,12 +50,13 @@ public class VacationVoucherController : Controller
     {
         var vacationVoucher = _organizationRepository.VacationVouchers.FirstOrDefault(voucher => voucher.Id == id);
         if (vacationVoucher == null) return NotFound();
-        _organizationRepository.VacationVouchers.Remove(vacationVoucher);
         var mappedVacationVoucher = _mapper.Map<VacationVoucher>(newVacationVoucher);
-        var voucherType = 
-            _organizationRepository.VoucherTypes.FirstOrDefault
-                                    (type => type.Name == mappedVacationVoucher?.VoucherType?.Name);
-        if (voucherType == null) return NotFound("Тип путевки не найден");
+        var voucherType =
+       _organizationRepository.VoucherTypes.FirstOrDefault
+                           (type => type.Id == newVacationVoucher.VoucherTypeId);
+        if (voucherType == null) return NotFound("A voucher type with given id doesn't exist");
+
+        _organizationRepository.VacationVouchers.Remove(vacationVoucher);
         _organizationRepository.VacationVouchers.Add(mappedVacationVoucher);
         return Ok();
     }

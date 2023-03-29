@@ -7,7 +7,7 @@ public class Workshop
     /// <summary>
     /// Id - an id of the workshop
     /// </summary>
-    public uint Id { get; set; }
+    public uint? Id { get; set; }
     /// <summary>
     /// Name - a name of the workshop
     /// </summary>

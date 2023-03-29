@@ -3,10 +3,10 @@
 /// <summary>
 /// Class describing type of industry
 /// </summary>
-internal class Type
+public class TypeIndustry
 {
     /// <summary>
-    /// Type's ID
+    /// Type ID
     /// </summary>
     public int TypeID { get; set; } = 0;
 
@@ -15,9 +15,9 @@ internal class Type
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
-    public Type() { }
+    public TypeIndustry() { }
 
-    public Type(int typeID, string name)
+    public TypeIndustry(int typeID, string name)
     {
         TypeID = typeID;
         Name = name;

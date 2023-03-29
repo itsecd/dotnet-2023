@@ -5,15 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Factory.Domain;
-internal class OwnershipForm
+
+/// <summary>
+/// Class describing Ownership Form
+/// </summary>
+public class OwnershipForm
 {
     /// <summary>
-    /// OwnershipForm's ID
+    /// Ownership Form ID
     /// </summary>
     public int OwnershipFormID { get; set; } = 0;
 
     /// <summary>
-    /// OwnershipForm name
+    /// Ownership Form name
     /// </summary>
     public string Name { get; set; } = string.Empty;
 

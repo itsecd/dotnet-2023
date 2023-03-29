@@ -5,21 +5,34 @@ namespace Factory.Test;
 public class FactoryTest
 {
     /// <summary>
-    /// Creating a list of supplies
+    /// Creating a list of types of industry
     /// </summary>
     /// <returns></returns>
-    private List<Supply> CreateSupply()
+    private List<TypeIndustry> CreateType()
     {
-        return new List<Supply>()
+        return new List<TypeIndustry>()
         {
-            new Supply(1, 1, "20.01.2023", 3), // СТАН - Артур
-            new Supply(1, 2, "31.10.2022", 5), // СТАН - Чендлер
-            new Supply(3, 3, "14.08.2022", 1), // ВЗМК -Барни
-            new Supply(4, 4, "05.02.2023", 10), // АВИАКОР - Джон
-            new Supply(2, 5, "27.02.2023", 6), // ЗГМ - Райан
-            new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
-            new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
-            new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
+            new TypeIndustry(1, "Cельское хозяйство"),
+            new TypeIndustry(2, "Транспорт"),
+            new TypeIndustry(3, "Легкая промышленность"),
+            new TypeIndustry(4, "Тяжелая промышленность"),
+            new TypeIndustry(5, "Строительство"),
+            new TypeIndustry(6, "Материально - техническое снабжение")
+        };
+    }
+
+    /// <summary>
+    /// Creating a list of ownership forms
+    /// </summary>
+    /// <returns></returns>
+    private List<OwnershipForm> CreateOwnership()
+    {
+        return new List<OwnershipForm>()
+        {
+            new OwnershipForm(1, "ЗАО"),
+            new OwnershipForm(2, "ООО"),
+            new OwnershipForm(3, "АО"),
+            new OwnershipForm(4, "ОАО")
         };
     }
 
@@ -32,11 +45,11 @@ public class FactoryTest
         var supply = CreateSupply();
         return new List<Enterprise>()
         {
-            new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000, new List<Supply>(){supply[0], supply[1] }),
-            new Enterprise(2, "1156313028981", "Материально-техническое снабжение", "ЗГМ", "ул.22 партъезда д.10а", "88462295931", "ООО", 150, 1500, new List<Supply>(){supply[4], supply[7] }),
-            new Enterprise(3, "1116318009510", "Тяжелая промышленность", "ВЗМК", "ул.Балаковская д.6а", "884692007711", "ООО", 200, 2000, new List<Supply>(){supply[2] }),
-            new Enterprise(4, "1026300767899", "Транспорт", "АВИАКОР", "ул.Земеца д.32", "88463720888", "АО", 250, 2500, new List < Supply >() { supply[3], supply[6] }),
-            new Enterprise(5, "1026301697487", "Материально-техническое снабжение", "ЭКРАН", "ул.Кирова д.24", "88469983785", "ОАО", 130, 1300, new List < Supply >() { supply[5]}),
+            new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>(){supply[0], supply[1] }),
+            new Enterprise(2, "1156313028981", 6, "ЗГМ", "ул.22 партъезда д.10а", "88462295931", 2, 150, 1500, new List<Supply>(){supply[4], supply[7] }),
+            new Enterprise(3, "1116318009510", 4, "ВЗМК", "ул.Балаковская д.6а", "884692007711", 2, 200, 2000, new List<Supply>(){supply[2] }),
+            new Enterprise(4, "1026300767899", 2, "АВИАКОР", "ул.Земеца д.32", "88463720888", 3, 250, 2500, new List < Supply >() { supply[3], supply[6] }),
+            new Enterprise(5, "1026301697487", 6, "ЭКРАН", "ул.Кирова д.24", "88469983785", 4, 130, 1300, new List < Supply >() { supply[5]}),
         };
     }
 
@@ -54,6 +67,25 @@ public class FactoryTest
             new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289", new List<Supply>(){supply[2], supply[6] }),
             new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>(){supply[3] }),
             new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567", new List<Supply>(){supply[4], supply[5] })
+        };
+    }
+
+    /// <summary>
+    /// Creating a list of supplies
+    /// </summary>
+    /// <returns></returns>
+    private List<Supply> CreateSupply()
+    {
+        return new List<Supply>()
+        {
+            new Supply(1, 1, "20.01.2023", 3), // СТАН - Артур
+            new Supply(1, 2, "31.10.2022", 5), // СТАН - Чендлер
+            new Supply(3, 3, "14.08.2022", 1), // ВЗМК -Барни
+            new Supply(4, 4, "05.02.2023", 10), // АВИАКОР - Джон
+            new Supply(2, 5, "27.02.2023", 6), // ЗГМ - Райан
+            new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
+            new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
+            new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
         };
     }
 
@@ -118,7 +150,7 @@ public class FactoryTest
     }
 
     /// <summary>
-    /// Selecting count of suppliers for every type and ownership
+    /// Selecting count of suppliers for every type
     /// </summary>
     [Fact]
     public void RequestTest4()
@@ -130,16 +162,16 @@ public class FactoryTest
         var result = from e in enterprise
                      join sp in supply on e.EnterpriseID equals sp.EnterpriseID
                      join s in supplier on sp.SupplierID equals s.SupplierID
-                     group s by e.Type into g
+                     group s by e.TypeID into g
                      select new
                      {
                          IndustryType = g.Key,
                          SupplierCount = g.Count()
                      };
 
-        Assert.Equal(5, result.FirstOrDefault(x => x.IndustryType == "Материально-техническое снабжение").SupplierCount);
-        Assert.Equal(1, result.FirstOrDefault(x => x.IndustryType == "Тяжелая промышленность").SupplierCount);
-        Assert.Equal(2, result.FirstOrDefault(x => x.IndustryType == "Транспорт").SupplierCount);
+        Assert.Equal(5, result.FirstOrDefault(x => x.IndustryType == 6).SupplierCount);
+        Assert.Equal(1, result.FirstOrDefault(x => x.IndustryType == 4).SupplierCount);
+        Assert.Equal(2, result.FirstOrDefault(x => x.IndustryType == 2).SupplierCount);
 
     }
 
@@ -183,21 +215,43 @@ public class FactoryTest
     }
 
     /// <summary>
+    /// TypeIndustry constructor with parameters test
+    /// </summary>
+    [Fact]
+    public void TypeConstructoryTest() 
+    {
+        var type = new TypeIndustry(2, "Транспорт");
+        Assert.Equal(2, type.TypeID);
+        Assert.Equal("Транспорт", type.Name);
+    }
+
+    /// <summary>
+    /// Ownership Form constructor with parameters test
+    /// </summary>
+    [Fact]
+    public void OwnershipConstructoryTest()
+    {
+        var ownership = new OwnershipForm(1, "ЗАО");
+        Assert.Equal(1, ownership.OwnershipFormID);
+        Assert.Equal("ЗАО", ownership.Name);
+    }
+
+    /// <summary>
     /// Enterprise constructor with parameters test
     /// </summary>
     [Fact]
     public void EnterpriseConstructorTest()
     {
         var supply = new Supply(1, 1, "20.01.2023", 3);
-        var enterprise = new Enterprise(1, "1036300446093", "Материально-техническое снабжение", "СТАН", "ул.22 партъезда д.7а", "88469926984", "ЗАО", 100, 1000, new List<Supply>() { supply });
+        var enterprise = new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>() { supply });
         
         Assert.Equal(1, enterprise.EnterpriseID);
         Assert.Equal("1036300446093", enterprise.RegistrationNumber);
-        Assert.Equal("Материально-техническое снабжение", enterprise.Type);
+        Assert.Equal(6, enterprise.TypeID);
         Assert.Equal("СТАН", enterprise.Name);
         Assert.Equal("ул.22 партъезда д.7а", enterprise.Address);
         Assert.Equal("88469926984", enterprise.TelephoneNumber);
-        Assert.Equal("ЗАО", enterprise.OwnershipForm);
+        Assert.Equal(1, enterprise.OwnershipFormID);
         Assert.Equal(100, enterprise.EmployeesCount);
         Assert.Equal(1000, enterprise.TotalArea);
         Assert.Equal(1000, enterprise.TotalArea);
@@ -233,6 +287,28 @@ public class FactoryTest
     }
 
     /// <summary>
+    /// TypeIndustry default constructor test
+    /// </summary>
+    [Fact]
+    public void TDefaultConstructorTest()
+    {
+        var type = new TypeIndustry();
+        Assert.Equal(0, type.TypeID);
+        Assert.Equal(string.Empty, type.Name);
+    }
+
+    /// <summary>
+    /// Ownership Form default constructor test
+    /// </summary>
+    [Fact]
+    public void ODefaultConstructorTest()
+    {
+        var ownership = new OwnershipForm();
+        Assert.Equal(0, ownership.OwnershipFormID);
+        Assert.Equal(string.Empty, ownership.Name);
+    }
+
+    /// <summary>
     /// Enterprise default constructor test
     /// </summary>
     [Fact]
@@ -241,11 +317,11 @@ public class FactoryTest
         var enterprise = new Enterprise();
         Assert.Equal(0, enterprise.EnterpriseID);
         Assert.Equal(string.Empty, enterprise.RegistrationNumber);
-        Assert.Equal(string.Empty, enterprise.Type);
+        Assert.Equal(0, enterprise.TypeID);
         Assert.Equal(string.Empty, enterprise.Name);
         Assert.Equal(string.Empty, enterprise.Address);
         Assert.Equal(string.Empty, enterprise.TelephoneNumber);
-        Assert.Equal(string.Empty, enterprise.OwnershipForm);
+        Assert.Equal(0, enterprise.OwnershipFormID);
         Assert.Equal(0, enterprise.EmployeesCount);
         Assert.Equal(0, enterprise.TotalArea);
     }

@@ -117,52 +117,52 @@ public class NonResidentialFundFixture
         {
             return new List<Building>
             {
-                new Building(1, "Ул. Московскосе шоссе д. 22 кв. 8", 1, 43.9, 9, new DateOnly(1980, 1, 10),
+                new Building(1, "Ул. Московскосе шоссе д. 22 кв. 8", 1, 43.9, 9, new DateTime(1980, 1, 10),
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(1, 1)
                     }),
-                new Building(2, "Ул. Ново-вокзальная д. 1 кв. 19", 1, 63.0, 9, new DateOnly(1988, 10, 21),
+                new Building(2, "Ул. Ново-вокзальная д. 1 кв. 19", 1, 63.0, 9, new DateTime(1988, 10, 21),
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(2, 2)
                     }),
-                new Building(3, "Ул. Фадеева д. 62", 1, 1243.9, 2, new DateOnly(1966, 6, 1),
+                new Building(3, "Ул. Фадеева д. 62", 1, 1243.9, 2, new DateTime(1966, 6, 1),
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(3, 3)
                     }),
-                new Building(4, "Ул. Стара-Загора д. 78 кв. 41", 1, 98.3, 12, new DateOnly(1978, 6,13),
+                new Building(4, "Ул. Стара-Загора д. 78 кв. 41", 1, 98.3, 12, new DateTime(1978, 6,13),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(4, 5)
                     }),
-                new Building(5, "Ул. Cолнечная д. 30", 1, 298.3, 12, new DateOnly(2006, 3, 1),
+                new Building(5, "Ул. Cолнечная д. 30", 1, 298.3, 12, new DateTime(2006, 3, 1),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(5, 4),
                         new BuildingAuctionConnection(5, 10),
                     }),
-                new Building(6, "Ул. Ставропольская д. 214 кв. 8", 2, 33.9, 16, new DateOnly(2007,10,11),
+                new Building(6, "Ул. Ставропольская д. 214 кв. 8", 2, 33.9, 16, new DateTime(2007,10,11),
                     new List<BuildingAuctionConnection>{}),
-                new Building(7, "Ул. Советская д. 119 кв. 1", 2, 43.0, 2, new DateOnly(1941, 3, 3),
+                new Building(7, "Ул. Советская д. 119 кв. 1", 2, 43.0, 2, new DateTime(1941, 3, 3),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(7, 5)
                     }),
-                new Building(8, "Ул. Мирная д. 165", 2, 283.9, 2, new DateOnly(2003, 7, 13),
+                new Building(8, "Ул. Мирная д. 165", 2, 283.9, 2, new DateTime(2003, 7, 13),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(8, 6),
                         new BuildingAuctionConnection(8, 8)
                     }),
-                new Building(9, "Ул. Черемшанская д. 158 кв. 41", 2, 112.3, 5, new DateOnly(1973, 5, 30),
+                new Building(9, "Ул. Черемшанская д. 158 кв. 41", 2, 112.3, 5, new DateTime(1973, 5, 30),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(9, 1),
                         new BuildingAuctionConnection(9, 7)
                     }),
-                new Building(10, "Ул. Юнных пионеров д. 154А", 2, 2482.3, 3, new DateOnly(1969, 12, 30),
+                new Building(10, "Ул. Юнных пионеров д. 154А", 2, 2482.3, 3, new DateTime(1969, 12, 30),
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(10, 4),

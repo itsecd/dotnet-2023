@@ -1,8 +1,6 @@
-﻿namespace NonResidentialFund.Domain;
-/// <summary>
-/// Building - a class that describes characteristics of a building
-/// </summary>
-public class Building
+﻿namespace NonResidentialFund.Server.Dto;
+
+public class BuildingPostDto
 {
     /// <summary>
     /// RegistrationNumber - registration number of building
@@ -31,16 +29,4 @@ public class Building
     /// <summary>
     /// Auctions - list of auctions for which the building was offered
     /// </summary>
-    public List<BuildingAuctionConnection> Auctions = new();
-    public Building() { }
-    public Building(int regNum, string address, int districtId, double area, int flourCount, DateTime buildDate, List<BuildingAuctionConnection> auctions)
-    {
-        RegistrationNumber = regNum;
-        Address = address;
-        DistrictId = districtId;
-        Area = area;
-        FloorCount = flourCount;
-        BuildDate = buildDate;
-        Auctions = auctions;
-    }
 }

@@ -6,21 +6,21 @@ using OrganizationServer.DTO;
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class DepartmentController : Controller
+public class DepartmentEmployeeController : Controller
 {
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
 
-    public DepartmentController(OrganizationRepository organizationRepository, IMapper mapper)
+    public DepartmentEmployeeController(OrganizationRepository organizationRepository, IMapper mapper)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
-    public IEnumerable<Department> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<DepartmentEmployee> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.Departments;
+        return _organizationRepository.DepartmentEmployees;
     }
 
     [HttpGet("{id}")]

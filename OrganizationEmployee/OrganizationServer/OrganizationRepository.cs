@@ -143,4 +143,188 @@ public class OrganizationRepository
             EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
         }
     };
+
+    public List<Occupation> Occupations = new()
+    {
+        new Occupation
+        {
+            Name = "Аналитик данных",
+            Id = 0,
+            EmployeeOccupations = new List<EmployeeOccupation>()
+        },
+        new Occupation
+        {
+            Name = "Программист",
+            Id = 1,
+            EmployeeOccupations = new List<EmployeeOccupation>()
+        },
+        new Occupation
+        {
+            Name = "Тестировщик",
+            Id = 2,
+            EmployeeOccupations = new List<EmployeeOccupation>()
+        },
+        new Occupation
+        {
+            Name = "Технический персонал",
+            Id = 3,
+            EmployeeOccupations = new List<EmployeeOccupation>()
+        },
+        new Occupation
+        {
+            Name = "Менеджер",
+            Id = 4,
+            EmployeeOccupations = new List<EmployeeOccupation>()
+        }
+    };
+
+    public List<Employee> Employees
+    {
+        get
+        {
+            var workshopList = Workshops;
+            var employeeList = new List<Employee>()
+                {
+                        new Employee
+                        {
+                            Id = Guid.NewGuid(),
+                            RegNumber = 1337,
+                            FirstName = "Владислав",
+                            LastName = "Мещеряков",
+                            PatronymicName = "Даниилович",
+                            BirthDate = new DateTime(1978, 3, 22),
+                            Workshop = null,
+                            HomeAddress = "пгт. Безенчук, ул.Нефтянников д.35",
+                            HomeTelephone = "89633154365",
+                            WorkTelephone = "88462322442",
+                            FamilyStatus = "женат",
+                            FamilyMembersCount = 4,
+                            ChildrenCount = 2,
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
+                        },
+                        new Employee
+                        {
+                            Id = Guid.NewGuid(),
+                            RegNumber = 443,
+                            FirstName = "Сергей",
+                            LastName = "Ляхов",
+                            PatronymicName = "Сергеевич",
+                            BirthDate = new DateTime(2000, 1, 23),
+                            Workshop = null,
+                            HomeAddress = "г.Самара, ул.Ленина, д.57",
+                            HomeTelephone = "89633154365",
+                            WorkTelephone = "88462322442",
+                            FamilyStatus = "холост",
+                            FamilyMembersCount = 3,
+                            ChildrenCount = 0,
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
+                        },
+                        new Employee
+                        {
+                            Id = Guid.NewGuid(),
+                            RegNumber = 3,
+                            FirstName = "Михаил",
+                            LastName = "Зайцев",
+                            PatronymicName = "Иванович",
+                            BirthDate = new DateTime(1978, 8, 6),
+                            Workshop = null,
+                            HomeAddress = "г.Самара Московское шоссе, д.108",
+                            HomeTelephone = "89633154365",
+                            WorkTelephone = "88462322442",
+                            FamilyStatus = "женат",
+                            FamilyMembersCount = 5,
+                            ChildrenCount = 3,
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
+                        },
+                        new Employee
+                        {
+                            Id = Guid.NewGuid(),
+                            RegNumber = 5,
+                            FirstName = "Дарья",
+                            LastName = "Заварзина",
+                            PatronymicName = "Анатольевна",
+                            BirthDate = new DateTime(1980, 10, 10),
+                            Workshop = null,
+                            HomeAddress =  "пгт.Безенчук ул.Чапева д.43",
+                            HomeTelephone = "89633154365",
+                            WorkTelephone = "88462322442",
+                            FamilyStatus = "замужем",
+                            FamilyMembersCount = 3,
+                            ChildrenCount = 1,
+                            EmployeeOccupations = new List<EmployeeOccupation>(),
+                            DepartmentEmployees = new List<DepartmentEmployee>(),
+                            EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
+                        }
+                };
+            workshopList[0].Employees.Add(employeeList[3]);
+            workshopList[1].Employees.Add(employeeList[2]);
+            workshopList[2].Employees.Add(employeeList[1]);
+            workshopList[3].Employees.Add(employeeList[0]);
+            employeeList[3].Workshop = workshopList[0];
+            employeeList[2].Workshop = workshopList[1];
+            employeeList[1].Workshop = workshopList[2];
+            employeeList[0].Workshop = workshopList[3];
+            return employeeList;
+        }
+
+    }
+
+    public List<DepartmentEmployee> DepartmentEmployees
+    {
+        get
+        {
+            var departmentList = Departments;
+            return new List<DepartmentEmployee>
+            {
+                new DepartmentEmployee
+                {
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 1
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 2
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 3
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 4
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[0],
+                    Employee = null,
+                    Id = 5
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 6
+                },
+                new DepartmentEmployee
+                {
+                    Department = departmentList[1],
+                    Employee = null,
+                    Id = 7
+                }
+            };
+        }
+    }
 }

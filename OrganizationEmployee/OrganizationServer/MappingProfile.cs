@@ -13,5 +13,7 @@ public class MappingProfile : Profile
         CreateMap<VoucherTypeDTO, VoucherType>();
         CreateMap<VacationVoucherDTO, VacationVoucher>();
         CreateMap<OccupationDTO, Occupation>();
+        CreateMap<EmployeeDTO, Employee>();
+        CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>();
     }
 }

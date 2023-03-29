@@ -57,7 +57,6 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     public void CountTypesTest()
     {
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
-        var fixtureTypeEdition = _fixture.FixtureTypeEdition.ToList();
         var request = (from mass in
                        (from department in fixtureDepartment
                         from book in department.IdBooks

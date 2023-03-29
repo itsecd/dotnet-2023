@@ -37,6 +37,25 @@ public class FactoryTest
     }
 
     /// <summary>
+    /// Creating a list of supplies
+    /// </summary>
+    /// <returns></returns>
+    private List<Supply> CreateSupply()
+    {
+        return new List<Supply>()
+        {
+            new Supply(1, 1, "20.01.2023", 3), // СТАН - Артур
+            new Supply(1, 2, "31.10.2022", 5), // СТАН - Чендлер
+            new Supply(3, 3, "14.08.2022", 1), // ВЗМК -Барни
+            new Supply(4, 4, "05.02.2023", 10), // АВИАКОР - Джон
+            new Supply(2, 5, "27.02.2023", 6), // ЗГМ - Райан
+            new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
+            new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
+            new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
+        };
+    }
+
+    /// <summary>
     /// Creating a list of enterprises
     /// </summary>
     /// <returns></returns>
@@ -67,25 +86,6 @@ public class FactoryTest
             new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289", new List<Supply>(){supply[2], supply[6] }),
             new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>(){supply[3] }),
             new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567", new List<Supply>(){supply[4], supply[5] })
-        };
-    }
-
-    /// <summary>
-    /// Creating a list of supplies
-    /// </summary>
-    /// <returns></returns>
-    private List<Supply> CreateSupply()
-    {
-        return new List<Supply>()
-        {
-            new Supply(1, 1, "20.01.2023", 3), // СТАН - Артур
-            new Supply(1, 2, "31.10.2022", 5), // СТАН - Чендлер
-            new Supply(3, 3, "14.08.2022", 1), // ВЗМК -Барни
-            new Supply(4, 4, "05.02.2023", 10), // АВИАКОР - Джон
-            new Supply(2, 5, "27.02.2023", 6), // ЗГМ - Райан
-            new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
-            new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
-            new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
         };
     }
 

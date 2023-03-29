@@ -1,5 +1,8 @@
+using Factory.Server;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<FactoryRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();

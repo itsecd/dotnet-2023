@@ -26,7 +26,7 @@ public class UnitTest : IClassFixture<PonrfFixture>
                        join building in buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
                        where privatizedBuilding.Customer?.Passport == null
                        group auction by auction.Organizer into auct
-                       select auct).ToList().Count();
+                       select auct).ToList().Count;
         Assert.Equal(1, request);
     }
 
@@ -41,7 +41,7 @@ public class UnitTest : IClassFixture<PonrfFixture>
                         join building in buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
                         where building.District == "Кировский"
                         orderby customer.Fio
-                        select customer).ToList().Count();
+                        select customer).ToList().Count;
         Assert.Equal(2, request1);
         var request2 = (from privatizedBuilding in privatizedBuildings
                         join customer in customers on privatizedBuilding.Customer?.Passport equals customer.Passport
@@ -62,7 +62,7 @@ public class UnitTest : IClassFixture<PonrfFixture>
                        join privatizedBuilding in privatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
                        join auction in auctions on privatizedBuilding.Auction?.Id equals auction.Id
                        where auction.Date == date
-                       select customer.Address).ToList().Count();
+                       select customer.Address).ToList().Count;
         Assert.Equal(2, request);
     }
 

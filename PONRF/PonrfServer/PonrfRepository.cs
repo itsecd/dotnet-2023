@@ -1,12 +1,12 @@
-using PonrfDomain;
+﻿using PonrfDomain;
+using System.IO;
+using System.Net;
 
-namespace PonrfTests;
-public class PonrfFixture
+namespace PonrfServer;
+
+public class PonrfRepository
 {
-    /// <summary>
-    /// List of customers for testing
-    /// </summary>
-    public List<Customer> CustomersFixture
+    public List<Customer> Customers
     {
         get
         {
@@ -22,10 +22,8 @@ public class PonrfFixture
             return customers;
         }
     }
-    /// <summary>
-    /// List of buildings for testing
-    /// </summary>
-    public List<Building> BuildingsFixture
+
+    public List<Building> Buildings
     {
         get
         {
@@ -41,10 +39,8 @@ public class PonrfFixture
             return buildings;
         }
     }
-    /// <summary>
-    /// List of auctions for testing
-    /// </summary>
-    public List<Auction> AuctionsFixture
+
+    public List<Auction> Auctions
     {
         get
         {
@@ -57,26 +53,25 @@ public class PonrfFixture
             return auctions;
         }
     }
-    /// <summary>
-    /// List of privatized buildings for testing
-    /// </summary>
-    public List<PrivatizedBuilding> PrivatizedBuildingsFixture
+
+    public List<PrivatizedBuilding> PrivatizedBuildings
     {
         get
         {
-            var customers = CustomersFixture;
-            var buildings = BuildingsFixture;
-            var auctions = AuctionsFixture;
+            var customers = Customers;
+            var buildings = Buildings;
+            var auctions = Auctions;
             var privatizedBuildings = new List<PrivatizedBuilding>()
             {
                 new PrivatizedBuilding(1, DateTime.Parse("2023-02-02"), 100000, 300000, customers[0], auctions[0], buildings[0]),
-                new PrivatizedBuilding(1, DateTime.Parse("2023-02-02"), 178000, int.MinValue, null, auctions[0], buildings[2]),
-                new PrivatizedBuilding(2, DateTime.Parse("2003-02-02"), 400000, 750000, customers[1], auctions[0], buildings[1]),
-                new PrivatizedBuilding(3, DateTime.Parse("2023-03-04"), 560000, 640000, customers[1], auctions[2], buildings[3]),
-                new PrivatizedBuilding(4, DateTime.Parse("2023-03-03"), 600000, 650000, customers[2], auctions[2], buildings[2]),
-                new PrivatizedBuilding(5, DateTime.Parse("2023-09-11"), 303000, 708000, customers[3], auctions[1], buildings[5]),
-                new PrivatizedBuilding(6, DateTime.Parse("2023-09-11"), 3100000, 6700000, customers[5], auctions[1], buildings[4]),
+                new PrivatizedBuilding(2, DateTime.Parse("2023-02-02"), 178000, int.MinValue, null, auctions[0], buildings[2]),
+                new PrivatizedBuilding(3, DateTime.Parse("2003-02-02"), 400000, 750000, customers[1], auctions[0], buildings[1]),
+                new PrivatizedBuilding(4, DateTime.Parse("2023-03-04"), 560000, 640000, customers[1], auctions[2], buildings[3]),
+                new PrivatizedBuilding(5, DateTime.Parse("2023-03-03"), 600000, 650000, customers[2], auctions[2], buildings[2]),
+                new PrivatizedBuilding(6, DateTime.Parse("2023-09-11"), 303000, 708000, customers[3], auctions[1], buildings[5]),
+                new PrivatizedBuilding(7, DateTime.Parse("2023-09-11"), 3100000, 6700000, customers[5], auctions[1], buildings[4]),
             };
+
             auctions[0].PrivatizedBuilding.Add(privatizedBuildings[0]);
             auctions[0].PrivatizedBuilding.Add(privatizedBuildings[1]);
             auctions[0].PrivatizedBuilding.Add(privatizedBuildings[2]);

@@ -2,8 +2,14 @@ using RentalService.Domain;
 
 namespace RentalService.Tests;
 
+/// <summary>
+/// RentalServiceFixture - class that generates test data
+/// </summary>
 public class RentalServiceFixture
 {
+    /// <summary>
+    /// FixtureClient return list of element of the Client
+    /// </summary>
     public List<Client> FixtureClient
     {
         get
@@ -57,6 +63,9 @@ public class RentalServiceFixture
         }
     }
 
+    /// <summary>
+    /// FixtureRentalPoint return list of element of the RentalPoint
+    /// </summary>
     public List<RentalPoint> FixtureRentalPoint
     {
         get
@@ -96,6 +105,9 @@ public class RentalServiceFixture
         }
     }
 
+    /// <summary>
+    /// FixtureVehicleModel return list of element of the VehicleModel
+    /// </summary>
     public List<VehicleModel> FixtureVehicleModel
     {
         get
@@ -135,6 +147,9 @@ public class RentalServiceFixture
         }
     }
     
+    /// <summary>
+    /// FixtureVehicle return list of element of the Vehicle
+    /// </summary>
     public List<Vehicle> FixtureVehicle
     {
         get
@@ -179,6 +194,9 @@ public class RentalServiceFixture
         }
     }
     
+    /// <summary>
+    /// FixtureRefundInformation return list of element of the RefundInformation
+    /// </summary>
     public List<RefundInformation> FixtureRefundInformation
     {
         get
@@ -218,6 +236,9 @@ public class RentalServiceFixture
         }
     }
     
+    /// <summary>
+    /// FixtureRentalInformation return list of element of the RentalInformation
+    /// </summary>
     public List<RentalInformation> FixtureRentalInformation
     {
         get
@@ -253,7 +274,7 @@ public class RentalServiceFixture
             var fifthRentalInformation = new RentalInformation
             {
                 Id = 5,
-                RentalPointId = 5,
+                RentalPointId = 1,
                 RentalDate = new DateTime(2013, 04, 19, 12, 12, 12),
                 RentalPeriod = 5
             };
@@ -262,6 +283,9 @@ public class RentalServiceFixture
         }
     }
     
+    /// <summary>
+    /// FixtureIssuedCar return list of element of the IssuedCar
+    /// </summary>
     public List<IssuedCar> FixtureIssuedCar
     {
         get
@@ -303,7 +327,7 @@ public class RentalServiceFixture
                 Id = 5,
                 ClientId = 5,
                 VehicleId = 5,
-                RefundInformationId = 5,
+                RefundInformationId = null,
                 RentalInformationId = 5
             };
             return new List<IssuedCar> { firstIssuedCar, secondIssuedCar, 

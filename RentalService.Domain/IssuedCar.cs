@@ -28,5 +28,5 @@ public class IssuedCar
     /// <summary>
     /// RefundInformationId - ID of the refund information
     /// </summary>
-    public ulong RefundInformationId { get; set; }
+    public ulong? RefundInformationId { get; set; }
 }

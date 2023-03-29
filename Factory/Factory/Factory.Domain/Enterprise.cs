@@ -18,9 +18,9 @@ public class Enterprise
     public string RegistrationNumber { get; set; } = string.Empty;
 
     /// <summary>
-    /// Industry Type
+    /// Industry Type ID
     /// </summary>
-    public string Type { get; set; } = string.Empty;
+    public int TypeID { get; set; } = 0;
 
     /// <summary>
     /// Factory name
@@ -38,9 +38,9 @@ public class Enterprise
     public string TelephoneNumber { get; set; } = string.Empty;
 
     /// <summary>
-    /// Ownership form
+    /// Ownership form ID
     /// </summary>
-    public string OwnershipForm { get; set; } = string.Empty;
+    public int OwnershipFormID { get; set; } = 0;
 
     /// <summary>
     /// Employees count
@@ -59,15 +59,15 @@ public class Enterprise
 
     public Enterprise() { }
 
-    public Enterprise(int enterpriseID, string registrationNumber, string type, string name, string address, string telephoneNumber, string ownershipForm, int employeesCount, double totalArea, List<Supply> supplies)
+    public Enterprise(int enterpriseID, string registrationNumber, int typeID, string name, string address, string telephoneNumber, int ownershipFormID, int employeesCount, double totalArea, List<Supply> supplies)
     {
         EnterpriseID = enterpriseID;
         RegistrationNumber = registrationNumber;
-        Type = type;
+        TypeID = typeID;
         Name = name;
         Address = address;
         TelephoneNumber = telephoneNumber;
-        OwnershipForm = ownershipForm;
+        OwnershipFormID = ownershipFormID;
         EmployeesCount = employeesCount;
         TotalArea = totalArea;
         Supplies = supplies;

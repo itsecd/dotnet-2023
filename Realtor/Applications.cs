@@ -1,4 +1,4 @@
-namespace realtor;
+namespace Realtor;
 public class Application
 {
     /// <summary>

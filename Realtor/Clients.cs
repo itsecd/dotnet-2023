@@ -1,4 +1,4 @@
-namespace realtor;
+namespace Realtor;
 /// <summary>
 /// ClientType sellers and buyers of the real estate agency
 /// </summary>

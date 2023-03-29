@@ -1,22 +1,22 @@
 namespace RentalService.Domain;
 
 /// <summary>
-/// class VehicleModel contains all the information about the car model
+///     class VehicleModel contains all the information about the car model
 /// </summary>
 public class VehicleModel
 {
     /// <summary>
-    /// Id - unique Model ID
+    ///     Id - unique Model identifier
     /// </summary>
     public ulong Id { get; set; }
 
     /// <summary>
-    /// Model - car model
+    ///     Model - car model
     /// </summary>
-    public string Model{ get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
 
     /// <summary>
-    /// Brand - car brand
+    ///     Brand - car brand
     /// </summary>
     public string Brand { get; set; } = string.Empty;
 }

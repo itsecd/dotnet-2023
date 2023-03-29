@@ -3,12 +3,12 @@ using RentalService.Domain;
 namespace RentalService.Tests;
 
 /// <summary>
-/// RentalServiceFixture - class that generates test data
+///     RentalServiceFixture - class that generates test data
 /// </summary>
 public class RentalServiceFixture
 {
     /// <summary>
-    /// FixtureClient return list of element of the Client
+    ///     FixtureClient return list of element of the Client
     /// </summary>
     public List<Client> FixtureClient
     {
@@ -20,7 +20,7 @@ public class RentalServiceFixture
                 LastName = "Яруллин",
                 FirstName = "Лаврентий",
                 Patronymic = "Никитьевич",
-                BirthDate = new DateTime(1967, 11, 17, 11,34,1),
+                BirthDate = new DateTime(1967, 11, 17, 11, 34, 1),
                 Passport = "4939 153040"
             };
             var secondClient = new Client
@@ -29,7 +29,7 @@ public class RentalServiceFixture
                 LastName = "Аникин",
                 FirstName = "Степан",
                 Patronymic = "Валерьевич",
-                BirthDate = new DateTime(1971, 12, 16, 13,09,1),
+                BirthDate = new DateTime(1971, 12, 16, 13, 09, 1),
                 Passport = "4599 723567"
             };
             var thirdClient = new Client
@@ -38,7 +38,7 @@ public class RentalServiceFixture
                 LastName = "Щербинина",
                 FirstName = "Таисия",
                 Patronymic = "Фадеевна",
-                BirthDate = new DateTime(1993, 09, 24, 16,12,1),
+                BirthDate = new DateTime(1993, 09, 24, 16, 12, 1),
                 Passport = "4796 806443"
             };
             var fourthClient = new Client
@@ -47,7 +47,7 @@ public class RentalServiceFixture
                 LastName = "Горева",
                 FirstName = "Алиса",
                 Patronymic = "Федоровна",
-                BirthDate = new DateTime(1966, 09, 27, 12,12,1),
+                BirthDate = new DateTime(1966, 09, 27, 12, 12, 1),
                 Passport = "4439 510590"
             };
             var fifthClient = new Client
@@ -56,7 +56,7 @@ public class RentalServiceFixture
                 LastName = "Лапидус",
                 FirstName = "Григорий",
                 Patronymic = "Федорович",
-                BirthDate = new DateTime(1983, 08, 21, 16,02,1),
+                BirthDate = new DateTime(1983, 08, 21, 16, 02, 1),
                 Passport = "4896 462655"
             };
             return new List<Client> { firstClient, secondClient, thirdClient, fourthClient, fifthClient };
@@ -64,7 +64,7 @@ public class RentalServiceFixture
     }
 
     /// <summary>
-    /// FixtureRentalPoint return list of element of the RentalPoint
+    ///     FixtureRentalPoint return list of element of the RentalPoint
     /// </summary>
     public List<RentalPoint> FixtureRentalPoint
     {
@@ -100,13 +100,13 @@ public class RentalServiceFixture
                 Title = "Соло",
                 Address = "г.Самара, ул. 22 Партсъезда, 207"
             };
-            return new List<RentalPoint> 
+            return new List<RentalPoint>
                 { firstRentalPoint, secondRentalPoint, thirdRentalPoint, fourthRentalPoint, fifthRentalPoint };
         }
     }
 
     /// <summary>
-    /// FixtureVehicleModel return list of element of the VehicleModel
+    ///     FixtureVehicleModel return list of element of the VehicleModel
     /// </summary>
     public List<VehicleModel> FixtureVehicleModel
     {
@@ -146,9 +146,9 @@ public class RentalServiceFixture
                 { firstVehicleModel, secondVehicleModel, thirdVehicleModel, fourthVehicleModel, fifthVehicleModel };
         }
     }
-    
+
     /// <summary>
-    /// FixtureVehicle return list of element of the Vehicle
+    ///     FixtureVehicle return list of element of the Vehicle
     /// </summary>
     public List<Vehicle> FixtureVehicle
     {
@@ -161,7 +161,7 @@ public class RentalServiceFixture
                 ModelId = 1,
                 Colour = "Тёмно-синий"
             };
-            var secondVehicle= new Vehicle
+            var secondVehicle = new Vehicle
             {
                 Id = 2,
                 Number = "Х547ХМ18",
@@ -193,9 +193,9 @@ public class RentalServiceFixture
                 { firstVehicle, secondVehicle, thirdVehicle, fourthVehicle, fifthVehicle };
         }
     }
-    
+
     /// <summary>
-    /// FixtureRefundInformation return list of element of the RefundInformation
+    ///     FixtureRefundInformation return list of element of the RefundInformation
     /// </summary>
     public List<RefundInformation> FixtureRefundInformation
     {
@@ -231,13 +231,16 @@ public class RentalServiceFixture
                 RefundPointId = 5,
                 RefundDate = new DateTime(2013, 04, 24, 12, 12, 12)
             };
-            return new List<RefundInformation> { firstRefundInformation, secondRefundInformation, 
-                thirdRefundInformation, fourthRefundInformation, fifthRefundInformation };
+            return new List<RefundInformation>
+            {
+                firstRefundInformation, secondRefundInformation,
+                thirdRefundInformation, fourthRefundInformation, fifthRefundInformation
+            };
         }
     }
-    
+
     /// <summary>
-    /// FixtureRentalInformation return list of element of the RentalInformation
+    ///     FixtureRentalInformation return list of element of the RentalInformation
     /// </summary>
     public List<RentalInformation> FixtureRentalInformation
     {
@@ -278,13 +281,16 @@ public class RentalServiceFixture
                 RentalDate = new DateTime(2013, 04, 19, 12, 12, 12),
                 RentalPeriod = 5
             };
-            return new List<RentalInformation> { firstRentalInformation, secondRentalInformation, 
-                thirdRentalInformation, fourthRentalInformation, fifthRentalInformation };
+            return new List<RentalInformation>
+            {
+                firstRentalInformation, secondRentalInformation,
+                thirdRentalInformation, fourthRentalInformation, fifthRentalInformation
+            };
         }
     }
-    
+
     /// <summary>
-    /// FixtureIssuedCar return list of element of the IssuedCar
+    ///     FixtureIssuedCar return list of element of the IssuedCar
     /// </summary>
     public List<IssuedCar> FixtureIssuedCar
     {
@@ -330,8 +336,11 @@ public class RentalServiceFixture
                 RefundInformationId = null,
                 RentalInformationId = 5
             };
-            return new List<IssuedCar> { firstIssuedCar, secondIssuedCar, 
-                thirdIssuedCar, fourthIssuedCar, fifthIssuedCar };
+            return new List<IssuedCar>
+            {
+                firstIssuedCar, secondIssuedCar,
+                thirdIssuedCar, fourthIssuedCar, fifthIssuedCar
+            };
         }
     }
 }

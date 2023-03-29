@@ -187,7 +187,7 @@ public class OrganizationRepository
                 {
                         new Employee
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 0,
                             RegNumber = 1337,
                             FirstName = "Владислав",
                             LastName = "Мещеряков",
@@ -206,7 +206,7 @@ public class OrganizationRepository
                         },
                         new Employee
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 1,
                             RegNumber = 443,
                             FirstName = "Сергей",
                             LastName = "Ляхов",
@@ -225,7 +225,7 @@ public class OrganizationRepository
                         },
                         new Employee
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 2,
                             RegNumber = 3,
                             FirstName = "Михаил",
                             LastName = "Зайцев",
@@ -244,7 +244,7 @@ public class OrganizationRepository
                         },
                         new Employee
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 3,
                             RegNumber = 5,
                             FirstName = "Дарья",
                             LastName = "Заварзина",

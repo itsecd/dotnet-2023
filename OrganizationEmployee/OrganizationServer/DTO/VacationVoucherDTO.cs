@@ -16,11 +16,7 @@ public class VacationVoucherDTO
     /// </summary>
     public DateTime IssueDate { get; set; }
     /// <summary>
-    /// VoucherType - a link to VoucherType of the given voucher
+    /// VoucherTypeId - an id of VoucherType object
     /// </summary>
-    public VoucherTypeDTO? VoucherType { get; set; }
-    /// <summary>
-    /// EmployeeVacationVoucher - a list of EmployeeVacationVoucher objects. For more details proceed to EmployeeVacationVoucher class
-    /// </summary>
-    public List<EmployeeVacationVoucher> EmployeeVacationVouchers { get; set; } = new List<EmployeeVacationVoucher>();
+    public uint? VoucherTypeId { get; set; }
 }

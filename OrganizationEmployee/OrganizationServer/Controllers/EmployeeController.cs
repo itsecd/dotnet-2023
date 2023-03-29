@@ -24,7 +24,7 @@ public class EmployeeController : Controller
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Employee> Get(Guid id)
+    public ActionResult<Employee> Get(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
@@ -40,7 +40,7 @@ public class EmployeeController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<Employee> Put(Guid id, [FromBody] EmployeeDTO newEmployee)
+    public ActionResult<Employee> Put(uint id, [FromBody] EmployeeDTO newEmployee)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
@@ -51,7 +51,7 @@ public class EmployeeController : Controller
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Department> Delete(Guid id)
+    public ActionResult<Department> Delete(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();

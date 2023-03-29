@@ -24,38 +24,62 @@ public class DepartmentEmployeeController : Controller
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Department> Get(int id)
+    public ActionResult<DepartmentEmployee> Get(int id)
     {
-        var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
-        return Ok(department);
+        var departmentEmployee =
+            _organizationRepository.DepartmentEmployees
+            .FirstOrDefault(departEmployee => departEmployee.Id == id);
+        if (departmentEmployee == null) return NotFound();
+        return Ok(departmentEmployee);
     }
 
     [HttpPost]
-    public void Post([FromBody] DepartmentDTO department)
+    public ActionResult<DepartmentEmployee> Post([FromBody] DepartmentEmployeeDTO departmentEmployee)
     {
-        var mappedDepartment = _mapper.Map<Department>(department);
-        _organizationRepository.Departments.Add(mappedDepartment);
+        var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(departmentEmployee);
+        var employee =
+            _organizationRepository.Employees
+            .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
+        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        var department =
+            _organizationRepository.Departments
+            .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
+        if (employee == null) return NotFound("A department with given id doesn't exist");
+        mappedDepartmentEmployee.Department = department;
+        mappedDepartmentEmployee.Employee = employee;
+        _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
+        return Ok(mappedDepartmentEmployee);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<Department> Put(int id, [FromBody] DepartmentDTO newDepartment)
+    public ActionResult<DepartmentEmployee> Put(int id, [FromBody] DepartmentEmployee newDepartmentEmployee)
     {
-        var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
-        _organizationRepository.Departments.Remove(department);
-        var mappedDepartment = _mapper.Map<Department>(newDepartment);
-        _organizationRepository.Departments.Add(mappedDepartment);
+        var departmentEmployee = _organizationRepository
+            .DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
+        if (departmentEmployee == null) return NotFound();
+        var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(newDepartmentEmployee);
+        var employee =
+                       _organizationRepository.Employees
+                       .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
+        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        var department =
+                        _organizationRepository.Departments
+                        .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
+        if (employee == null) return NotFound("A department with given id doesn't exist");
+        mappedDepartmentEmployee.Department = department;
+        mappedDepartmentEmployee.Employee = employee;
+        _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
+        _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public ActionResult<Department> Delete(int id)
     {
-        var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
-        _organizationRepository.Departments.Remove(department);
+        var departmentEmployee = _organizationRepository.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
+        if (departmentEmployee == null) return NotFound();
+        _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
         return Ok();
     }
 }

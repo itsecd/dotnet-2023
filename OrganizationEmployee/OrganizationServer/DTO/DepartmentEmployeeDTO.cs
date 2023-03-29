@@ -7,11 +7,11 @@ using EmployeeDomain;
 public class DepartmentEmployeeDTO
 {
     /// <summary>
-    /// Department - a link to Department object
+    /// DepartmentId - an id of Department object
     /// </summary>
-    public DepartmentDTO? Department { get; set; }
+    public uint? DepartmentId { get; set; }
     /// <summary>
-    /// Employee - a link to Employee object
+    /// EmployeeId - an id of Employee object
     /// </summary>
-    public EmployeeDTO? Employee { get; set; }
+    public uint? EmployeeId { get; set; }
 }

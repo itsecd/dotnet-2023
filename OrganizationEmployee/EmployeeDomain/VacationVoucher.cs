@@ -15,6 +15,10 @@ public class VacationVoucher
     /// </summary>
     public DateTime IssueDate { get; set; }
     /// <summary>
+    /// VoucherTypeId - an id of VoucherType object
+    /// </summary>
+    public uint? VoucherTypeId { get; set; }
+    /// <summary>
     /// VoucherType - a link to VoucherType of the given voucher
     /// </summary>
     public VoucherType? VoucherType { get; set; }

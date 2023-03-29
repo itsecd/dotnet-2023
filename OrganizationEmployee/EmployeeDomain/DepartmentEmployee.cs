@@ -10,9 +10,17 @@ public class DepartmentEmployee
     /// </summary>
     public uint Id { get; set; }
     /// <summary>
+    /// DepartmentId - an id of Department object
+    /// </summary>
+    public uint? DepartmentId { get; set; }
+    /// <summary>
     /// Department - a link to Department object
     /// </summary>
     public Department? Department { get; set; }
+    /// <summary>
+    /// EmployeeId - an id of Employee object
+    /// </summary>
+    public uint? EmployeeId { get; set; }
     /// <summary>
     /// Employee - a link to Employee object
     /// </summary>

@@ -1,14 +1,11 @@
-﻿namespace EmployeeDomain;
+﻿namespace OrganizationServer.DTO;
+using EmployeeDomain;
 /// <summary>
 /// class EmployeeOccupation - represents a many-to-many relationship
 /// between Employee and Occupation, also it contains date, when an employee was hired, and date, when employee was dismissed.
 /// </summary>
-public class EmployeeOccupation
+public class EmployeeOccupationDTO
 {
-    /// <summary>
-    /// Id - an id of the class object
-    /// </summary>
-    public uint Id { get; set; }
     /// <summary>
     /// HireDate - a date, when an employee was hired on the given occupation.
     /// </summary>
@@ -23,15 +20,7 @@ public class EmployeeOccupation
     /// </summary>
     public uint? OccupationId { get; set; }
     /// <summary>
-    /// Occupation - a link to Occupation object, used for many-to-many relationship
-    /// </summary>
-    public Occupation? Occupation { get; set; }
-    /// <summary>
     /// EmployeeId - an id of Employee object
     /// </summary>
     public uint? EmployeeId { get; set; }
-    /// <summary>
-    /// Employee - a link to Employee object, used for many-to-many relationship
-    /// </summary>
-    public Employee? Employee { get; set; }
 }

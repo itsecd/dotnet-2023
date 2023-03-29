@@ -9,7 +9,7 @@ public class Employee
     /// <summary>
     /// Id - Identificator for each Employee object
     /// </summary>
-    public Guid Id { get; set; } = Guid.Empty;
+    public uint Id { get; set; }
     /// <summary>
     /// RegNumber - registration number of an Employee
     /// </summary>
@@ -30,6 +30,10 @@ public class Employee
     /// BirthDate - birth date of an Employee
     /// </summary>
     public DateTime BirthDate { get; set; } = DateTime.MinValue;
+    /// <summary>
+    /// WorkshopId - an id of the Workshop
+    /// </summary>
+    public uint WorkshopId { get; set; }
     /// <summary>
     /// Workshop - an workshop, where the employee is working
     /// </summary>

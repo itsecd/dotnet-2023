@@ -30,7 +30,7 @@ public class EmployeeDTO
     /// <summary>
     /// Workshop - an workshop, where the employee is working
     /// </summary>
-    public Workshop? Workshop { get; set; }
+    public int WorkshopId { get; set; }  // добавить подобное везде!
     /// <summary>
     /// HomeAddress - home address of an employee
     /// </summary>

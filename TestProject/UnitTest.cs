@@ -9,7 +9,6 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// <summary>
     /// first request - information about all clients looking for real estate of a given type
     /// </summary>
-    /// 
     [Fact]
     public void FirstRequest()
     {

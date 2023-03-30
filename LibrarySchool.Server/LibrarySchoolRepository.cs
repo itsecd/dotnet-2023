@@ -1,4 +1,5 @@
 ﻿using LibrarySchool;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibrarySchoolServer;
 /// <summary>
@@ -126,11 +127,163 @@ public class LibrarySchoolRepository : ILibrarySchoolRepository
 
     public LibrarySchoolRepository()
     {
+        _marks = CreateListMark();
         _students = CreateListStudent();
         _classes = CreateListClass();
         _subjects = CreateListSubject();
-        _marks = CreateListMark();
     }
+
+    /// <summary>
+    /// Add new student
+    /// </summary>
+    /// <param name="student"></param>
+    /// <exception cref="Exception"></exception>
+    public void AddStudent(Student student)
+    {
+        var foundClass = _classes.FirstOrDefault(x => x.ClassId == student.ClassId);
+        student.StudentId = _students.Select(x => x.StudentId).Max() + 1;
+        if (foundClass == null)
+            return;
+        foundClass.Students.Add(student);
+        _students.Add(student);
+    }
+
+    /// <summary>
+    /// Delete student by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="Exception"></exception>
+    public bool DeleteStudent(int id)
+    {
+        var foundStudent = _students.FirstOrDefault(x => x.StudentId == id);
+        if (foundStudent == null)
+            return false;
+        _students.Remove(foundStudent);
+        _marks.RemoveAll(x => x.StudentId == id);
+        return true;
+    }
+
+    /// <summary>
+    /// Change information of student
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="newStudent"></param>
+    /// <returns></returns>
+    public bool ChangeStudent(int id, [FromBody]Student newStudent)
+    {
+        var foundStudent = _students.FirstOrDefault(x => x.StudentId == id);
+
+        if (foundStudent == null)
+            return false;
+        var foundClass = _classes.FirstOrDefault(x => x.ClassId == foundStudent.ClassId);
+        var newClass = _classes.FirstOrDefault(x => x.ClassId == newStudent.ClassId);
+
+        if (foundClass == null || newClass == null) 
+            return false;
+
+        foundClass.Students.RemoveAll(x => x.StudentId == id);
+        newClass.Students.Add(newStudent);
+
+        foundStudent.StudentName = newStudent.StudentName;
+        foundStudent.StudentId = newStudent.StudentId;
+        foundStudent.DateOfBirth = newStudent.DateOfBirth;
+        foundStudent.Passport = newStudent.Passport;
+        foundStudent.ClassId = newStudent.ClassId;
+
+        return true;
+    }
+
+    /// <summary>
+    /// All new class
+    /// </summary>
+    /// <param name="classType"></param>
+    public void AddClass(ClassType classType)
+    {
+        classType.ClassId = _classes.Select(x => x.ClassId).Max() + 1;  
+        _classes.Add(classType);
+    }
+
+    /// <summary>
+    /// All new class
+    /// </summary>
+    /// <param name="classId"></param>
+    public bool DeleteClass(int classId)
+    {
+        var foundClass = _classes.FirstOrDefault(classType => classType.ClassId == classId);
+        if (foundClass == null) return false;
+        _classes.Remove(foundClass);
+        return true;
+    }
+
+    /// <summary>
+    /// Change information of class
+    /// </summary>
+    /// <param name="classId"></param>
+    /// <param name="newClass"></param>
+    /// <returns></returns>
+    public bool ChangeClass(int classId, ClassType newClass)
+    {
+        var foundClass = _classes.FirstOrDefault(x => x.ClassId == classId);
+        if (foundClass == null) return false;
+        foundClass.Letter = newClass.Letter;
+        foundClass.Number = newClass.Number;
+        return true;
+    }
+
+    /// <summary>
+    /// Add new mark
+    /// </summary>
+    /// <param name="mark"></param>
+    public void AddMark(Mark mark)
+    {
+        mark.MarkId = _marks.Select(x => x.MarkId).Max() + 1;
+        _marks.Add(mark);
+        
+        var foundStudent = _students.Where(x => x.StudentId == mark.StudentId).FirstOrDefault();
+        if (foundStudent == null) return;
+        foundStudent.Marks.Add(mark);
+    }
+
+    /// <summary>
+    /// Delete mark
+    /// </summary>
+    /// <param name="markId"></param>
+    /// <returns></returns>
+    public bool DeleteMark(int markId)
+    {
+        var foundMark = _marks.FirstOrDefault(x => x.MarkId == markId);
+        if (foundMark == null) return false;
+        _marks.Remove(foundMark);
+        var foundStudent = _students.Where(x => x.StudentId == foundMark.StudentId).FirstOrDefault();
+        if (foundStudent != null) 
+            foundStudent.Marks.RemoveAll(mark => mark.MarkId == markId);    
+        return true;
+    }
+
+    /// <summary>
+    /// Change Mark information
+    /// </summary>
+    /// <param name="markId"></param>
+    /// <param name="newMark"></param>
+    /// <returns></returns>
+    public bool ChangeMark(int markId, Mark newMark)
+    {
+        var foundMark = _marks.FirstOrDefault(x => x.MarkId == markId);
+        if (foundMark == null) return false;
+        var foundStudent = _students.FirstOrDefault(x => x.StudentId == foundMark.StudentId);
+        var newStudent = _students.FirstOrDefault(x=> x.StudentId == newMark.StudentId);
+        if (foundStudent == null || newStudent == null) return false;
+        foundStudent.Marks.RemoveAll(x=>x.MarkId == markId);
+        newStudent.Marks.Add(newMark);
+
+        foundMark.StudentId = newMark.StudentId;
+        foundMark.SubjectId = newMark.SubjectId;
+        foundMark.MarkValue = newMark.MarkValue;
+        foundMark.TimeReceive= newMark.TimeReceive;
+        return true;
+    }
+
+
     /// <summary>
     /// Property list students in data
     /// </summary>

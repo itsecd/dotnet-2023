@@ -34,10 +34,9 @@ public class QueryController : Controller
     /// <returns>
     /// Return: list student
     /// </returns>
-    [HttpGet("{idClass}")]
+    [HttpGet("StudenInClass/{idClass}")]
     public ActionResult<IEnumerable<StudentGetDto>> GetListStudent(int idClass)
     {
-        //return NotFound();
         _logger.LogInformation("Get list student");
         var foundClass = _librarySchoolRepository.ClassTypes.FirstOrDefault(classType => classType.ClassId == idClass);
         if (foundClass == null)
@@ -46,7 +45,7 @@ public class QueryController : Controller
             return NotFound();
         }
         var listStudent = foundClass!.Students.OrderBy(student => student.StudentName).ToList();
-        return Ok(listStudent.Select(student => _mapper.Map<StudentGetDto>(student)));
+        return Ok(listStudent!.Select(x => _mapper.Map<StudentGetDto>(x)));
     }
 
 
@@ -98,7 +97,7 @@ public class QueryController : Controller
     /// <param name="idSubject"></param>
     /// <returns></returns>
     [HttpGet("CountMaxMinAverage/{idSubject}")]
-    public ActionResult<IEnumerable<int>> Get(int idSubject)
+    public ActionResult<IEnumerable<MaxMinAverageMarkDto>> Get(int idSubject)
     {
         var foundSubject = _librarySchoolRepository.Marks.Where(mark => mark.SubjectId == idSubject);
         if (!foundSubject.Any())
@@ -109,7 +108,7 @@ public class QueryController : Controller
         var markInSubject = foundSubject.Select(mark => mark.MarkValue);
         if (!markInSubject.Any())
         {
-            return Ok(new List<int> { 0, 0, 0 });
+            return Ok(new MaxMinAverageMarkDto { Max = 0, Min = 0, Average = 0 });
         }
         return Ok(new MaxMinAverageMarkDto
         {
@@ -125,7 +124,7 @@ public class QueryController : Controller
     /// Return: list student
     /// </returns>
     [HttpGet("{beginPeriod},{endPeriod}")]
-    public ActionResult<IEnumerable<Student>> GetListStudent(DateTime beginPeriod, DateTime endPeriod)
+    public ActionResult<IEnumerable<StudentGetAverageDto>> GetListStudent(DateTime beginPeriod, DateTime endPeriod)
     {
         var listStudent = _librarySchoolRepository.Students
                             .Select(student =>
@@ -138,9 +137,16 @@ public class QueryController : Controller
                                 Passport = student.Passport,
                                 Marks = student.Marks.Where(mark => (mark.TimeReceive > beginPeriod) && (mark.TimeReceive < endPeriod)).ToList()
                             }).ToList()
-                            .Select(student => _mapper.Map<StudentGetAverageDto>(student))
-                            .OrderByDescending(student => student.AverageMark).ToList()
-                            .Take(5);
+                            .Select( student =>
+                                        new StudentGetAverageDto
+                                        {
+                                            ClassId = student.ClassId,
+                                            StudentId = student.StudentId,
+                                            StudentName = student.StudentName,
+                                            DateOfBirth = student.DateOfBirth,
+                                            Passport = student.Passport,
+                                            AverageMark = student.Marks.Select(x => x.MarkValue).Average()
+                                        }).OrderByDescending(student => student.AverageMark).ToList().Take(5);
         if (listStudent != null)
         {
             return Ok(listStudent);
@@ -154,13 +160,21 @@ public class QueryController : Controller
     /// Return: list student
     /// </returns>
     [HttpGet("ListTop5Student")]
-    public ActionResult<IEnumerable<Student>> GetListStudent()
+    public ActionResult<IEnumerable<StudentGetAverageDto>> GetListStudent()
     {
         var listStudent = _librarySchoolRepository.Students
-                            .Select(student => _mapper.Map<StudentGetAverageDto>(student))
+                            .Select(student =>
+                            new StudentGetAverageDto
+                            {
+                                ClassId = student.ClassId,
+                                StudentId = student.StudentId,
+                                StudentName = student.StudentName,
+                                DateOfBirth = student.DateOfBirth,
+                                Passport = student.Passport,
+                                AverageMark = student.Marks.Select(x => x.MarkValue).Average()
+                            })
                             .OrderByDescending(student => student.AverageMark).ToList()
                             .Take(5);
-
         if (listStudent != null)
         {
             return Ok(listStudent);

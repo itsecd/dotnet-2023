@@ -40,6 +40,9 @@ public class StudentController : Controller
         _logger.LogInformation("Get list students");
         return _librarySchoolRepository.Students.Select(student => _mapper.Map<StudentGetDto>(student));
     }
+
+
+
     /// <summary>
     /// Get student with certain id
     /// </summary>
@@ -66,7 +69,7 @@ public class StudentController : Controller
     [HttpPost]
     public void Post([FromBody] StudentPostDto studentDtoToPost)
     {
-        _librarySchoolRepository.Students.Add(_mapper.Map<Student>(studentDtoToPost));
+        _librarySchoolRepository.AddStudent(_mapper.Map<Student>(studentDtoToPost));
     }
 
     /// <summary>
@@ -86,7 +89,8 @@ public class StudentController : Controller
             _logger.LogInformation("Not found student {id}", id);
             return NotFound();
         }
-        _mapper.Map(fixedStudent, studentToFix);
+        _librarySchoolRepository.ChangeStudent(id, _mapper.Map<Student>(fixedStudent));
+       // _mapper.Map(fixedStudent, studentToFix);
         return Ok();
     }
 
@@ -107,7 +111,7 @@ public class StudentController : Controller
             _logger.LogInformation("Not found student {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.Students.Remove(studentToDelete);
+        _librarySchoolRepository.DeleteStudent(id);
         return Ok();
     }
 }

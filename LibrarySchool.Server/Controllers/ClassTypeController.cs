@@ -71,7 +71,7 @@ public class ClassTypeController : Controller
     [HttpPost]
     public void Post(ClassTypePostDto classTypeToPost)
     {
-        _librarySchoolRepository.ClassTypes.Add(_mapper.Map<ClassType>(classTypeToPost));
+        _librarySchoolRepository.AddClass(_mapper.Map<ClassType>(classTypeToPost));
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class ClassTypeController : Controller
             _logger.LogInformation("Not found class-type {id}", id);
             return NotFound();
         }
-        _mapper.Map(fixedClass, foundClassType);
+        _librarySchoolRepository.ChangeClass(id, _mapper.Map<ClassType>(fixedClass));
         return Ok();
     }
 
@@ -107,7 +107,7 @@ public class ClassTypeController : Controller
             _logger.LogInformation("Not found class-type {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.ClassTypes.Remove(foundClassType);
+        _librarySchoolRepository.DeleteClass(id);
         return Ok();
     }
 }

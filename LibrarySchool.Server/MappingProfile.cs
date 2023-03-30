@@ -24,7 +24,7 @@ public class MappingProfile : Profile
         CreateMap<StudentPostDto, Student>();
         CreateMap<Student, StudentPostDto>();
         CreateMap<MarkPostDto, Mark>();
-        CreateMap<Student, StudentGetAverageDto>();
         CreateMap<SubjectPostDto, Subject>();
+        CreateMap<Student, StudentGetAverageDto>();
     }
 }

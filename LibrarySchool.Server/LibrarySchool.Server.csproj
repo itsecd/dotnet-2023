@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibrarySchool\LibrarySchool.csproj" />
+    <ProjectReference Include="..\LibrarySchool.Domain\LibrarySchool.Domain.csproj" />
   </ItemGroup>
 
 </Project>

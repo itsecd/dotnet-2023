@@ -65,7 +65,7 @@ public class MarkController : Controller
     [HttpPost]
     public void Post([FromBody] MarkPostDto markToPost)
     {
-        _librarySchoolRepository.Marks.Add(_mapper.Map<Mark>(markToPost));
+        _librarySchoolRepository.AddMark(_mapper.Map<Mark>(markToPost));
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class MarkController : Controller
             _logger.LogInformation("Not found mark {id}", id);
             return NotFound();
         }
-        _mapper.Map(fixedMark, markToFix);
+        _librarySchoolRepository.ChangeMark(id, _mapper.Map<Mark>(fixedMark));
         return Ok();
     }
 
@@ -106,7 +106,7 @@ public class MarkController : Controller
             _logger.LogInformation("Not found mark {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.Marks.Remove(markToDelete);
+        _librarySchoolRepository.DeleteMark(id);
         return Ok();
     }
 }

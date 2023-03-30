@@ -44,14 +44,14 @@ public class FactoryTest
     {
         return new List<Supply>()
         {
-            new Supply(1, 1, "20.01.2023", 3), // СТАН - Артур
-            new Supply(1, 2, "31.10.2022", 5), // СТАН - Чендлер
-            new Supply(3, 3, "14.08.2022", 1), // ВЗМК -Барни
-            new Supply(4, 4, "05.02.2023", 10), // АВИАКОР - Джон
-            new Supply(2, 5, "27.02.2023", 6), // ЗГМ - Райан
-            new Supply(5, 5, "13.01.2023", 2), // ЭКРАН - Райан
-            new Supply(4, 3, "04.01.2023", 12), // АВИАКОР - Барни
-            new Supply(2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
+            new Supply(1, 1, 1, "20.01.2023", 3), // СТАН - Артур
+            new Supply(2, 1, 2, "31.10.2022", 5), // СТАН - Чендлер
+            new Supply(3, 3, 3, "14.08.2022", 1), // ВЗМК -Барни
+            new Supply(4, 4, 4, "05.02.2023", 10), // АВИАКОР - Джон
+            new Supply(5, 2, 5, "27.02.2023", 6), // ЗГМ - Райан
+            new Supply(6, 5, 5, "13.01.2023", 2), // ЭКРАН - Райан
+            new Supply(7, 4, 3, "04.01.2023", 12), // АВИАКОР - Барни
+            new Supply(8, 2, 2, "09.12.2022", 4) // ЗГМ - Чендлер
         };
     }
 
@@ -242,7 +242,7 @@ public class FactoryTest
     [Fact]
     public void EnterpriseConstructorTest()
     {
-        var supply = new Supply(1, 1, "20.01.2023", 3);
+        var supply = new Supply(1, 1, 1, "20.01.2023", 3);
         var enterprise = new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>() { supply });
         
         Assert.Equal(1, enterprise.EnterpriseID);
@@ -264,7 +264,7 @@ public class FactoryTest
     [Fact]
     public void SupplierConstructorTest()
     {
-        var supply = new Supply(1, 1, "20.01.2023", 3);
+        var supply = new Supply(1, 1, 1, "20.01.2023", 3);
         var supplier = new Supplier(1, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>() { supply });
         Assert.Equal(1, supplier.SupplierID);
         Assert.Equal("Джон Сноу", supplier.Name);
@@ -279,7 +279,8 @@ public class FactoryTest
     [Fact]
     public void SupplyConstructorTest()
     {
-        var supply = new Supply(1, 2, "20.01.2023", 3);
+        var supply = new Supply(1, 1, 2, "20.01.2023", 3);
+        Assert.Equal(1, supply.SupplyID);
         Assert.Equal(1, supply.EnterpriseID);
         Assert.Equal(2, supply.SupplierID);
         Assert.Equal(DateTime.Parse("20.01.2023"), supply.Date);
@@ -346,6 +347,7 @@ public class FactoryTest
     public void SPDefaultConstructorTest()
     {
         var supply = new Supply();
+        Assert.Equal(0, supply.SupplyID);
         Assert.Equal(0, supply.EnterpriseID);
         Assert.Equal(0, supply.SupplierID);
         Assert.Equal(new DateTime(1970, 1, 1), supply.Date);

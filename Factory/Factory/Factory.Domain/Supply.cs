@@ -6,6 +6,11 @@
 public class Supply
 {
     /// <summary>
+    /// Supply identifier
+    /// </summary>
+    public int SupplyID { get; set; } = 0;
+
+    /// <summary>
     /// Enterprise identifier
     /// </summary>
     public int EnterpriseID { get; set; } = 0;
@@ -27,8 +32,9 @@ public class Supply
 
     public Supply() { }
 
-    public Supply(int enterpriseID, int supplierID, string date, int quantity)
+    public Supply(int supplyID, int enterpriseID, int supplierID, string date, int quantity)
     {
+        SupplyID = supplyID;
         EnterpriseID = enterpriseID;
         SupplierID = supplierID;
         Date = DateTime.Parse(date);

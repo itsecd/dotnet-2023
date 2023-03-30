@@ -8,6 +8,7 @@ namespace Factory.Server.Controllers;
 public class TypeIndustryController : ControllerBase
 {
     private readonly ILogger<TypeIndustryController> _logger;
+
     private readonly FactoryRepository _factoryRepository;
 
     public TypeIndustryController(ILogger<TypeIndustryController> logger, FactoryRepository factoryRepository)
@@ -26,9 +27,18 @@ public class TypeIndustryController : ControllerBase
 
     // GET api/<TypeIndustryController>/5
     [HttpGet("{id}")]
-    public TypeIndustry? Get(int id)
+    public ActionResult<TypeIndustry> Get(int id)
     {
-        _logger.LogInformation($"Get Industry Type with id {id}");
-        return _factoryRepository.IndustryTypes.FirstOrDefault(industryType => industryType.TypeID == id);
+        var typeIndustry = _factoryRepository.IndustryTypes.FirstOrDefault(industryType => industryType.TypeID == id);
+        if (typeIndustry == null) 
+        {
+            _logger.LogInformation($"Not found type industry: {id}");
+            return NotFound();
+        }
+        else 
+        { 
+            _logger.LogInformation($"Get Industry Type with id {id}");
+            return Ok(typeIndustry); 
+        }
     }
 }

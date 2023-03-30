@@ -204,31 +204,31 @@ public class RentalServiceFixture
             var firstRefundInformation = new RefundInformation
             {
                 Id = 1,
-                RefundPointId = 1,
+                RentalPointId = 1,
                 RefundDate = new DateTime(2019, 05, 20, 11, 11, 11)
             };
             var secondRefundInformation = new RefundInformation
             {
                 Id = 2,
-                RefundPointId = 2,
+                RentalPointId = 2,
                 RefundDate = new DateTime(2019, 03, 14, 14, 14, 14)
             };
             var thirdRefundInformation = new RefundInformation
             {
                 Id = 3,
-                RefundPointId = 3,
+                RentalPointId = 3,
                 RefundDate = new DateTime(2022, 07, 16, 09, 15, 12)
             };
             var fourthRefundInformation = new RefundInformation
             {
                 Id = 4,
-                RefundPointId = 4,
+                RentalPointId = 4,
                 RefundDate = new DateTime(2022, 02, 04, 07, 09, 12)
             };
             var fifthRefundInformation = new RefundInformation
             {
                 Id = 5,
-                RefundPointId = 5,
+                RentalPointId = 5,
                 RefundDate = new DateTime(2013, 04, 24, 12, 12, 12)
             };
             return new List<RefundInformation>

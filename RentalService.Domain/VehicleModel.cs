@@ -19,4 +19,9 @@ public class VehicleModel
     ///     Brand - car brand
     /// </summary>
     public string Brand { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     Vehicles - all cars with this model
+    /// </summary>
+    public List<Vehicle> Vehicles { get; set; } = new();
 }

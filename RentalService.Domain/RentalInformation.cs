@@ -24,4 +24,9 @@ public class RentalInformation
     ///     RentalPeriod - for what time the car was rented (in days)
     /// </summary>
     public ulong RentalPeriod { get; set; }
+
+    /// <summary>
+    ///     IssuedCarId - identifier of the rental car that contains the information
+    /// </summary>
+    public ulong IssuedCarId { get; set; }
 }

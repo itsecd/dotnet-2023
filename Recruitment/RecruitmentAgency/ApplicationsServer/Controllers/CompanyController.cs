@@ -5,6 +5,10 @@ using ApplicationsServer.Repository;
 using AutoMapper;
 
 namespace ApplicationsServer.Controllers;
+
+/// <summary>
+///     Controller for companies
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class CompanyController : ControllerBase
@@ -12,6 +16,9 @@ public class CompanyController : ControllerBase
     private readonly ILogger<CompanyController> _logger;
     private readonly IApplicationsServerRepository _companiesRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    ///     Controller constructor
+    /// </summary>
     public CompanyController(ILogger<CompanyController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
     {
         _logger = logger;
@@ -28,7 +35,11 @@ public class CompanyController : ControllerBase
         _logger.LogInformation("Get companies");
         return _companiesRepository.Companies.Select(company =>_mapper.Map<CompanyGetDTO>(company));
     }
-
+    /// <summary>
+    ///  Get method that returns a company with a specific id
+    /// </summary>
+    /// <param name="id">Company id</param>
+    /// <returns>Company with required id</returns>
     [HttpGet("{id}")]
     public ActionResult<CompanyGetDTO> Get(int id)
     {
@@ -41,13 +52,22 @@ public class CompanyController : ControllerBase
         }
         return Ok(_mapper.Map<CompanyGetDTO>(company));
     }
-
+    /// <summary>
+    /// Post method that adding a new company 
+    /// </summary>
+    /// <param name="company"></param>
     [HttpPost]
     public void Post([FromBody] CompanyPostDTO company)
     {
         _companiesRepository.Companies.Add(_mapper.Map<Company>(company));
      }
 
+    /// <summary>
+    /// Put method which allows change the data of a company with a specific id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="companyToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] CompanyPostDTO companyToPut)
     {
@@ -58,6 +78,11 @@ public class CompanyController : ControllerBase
 
         return Ok();
     }
+    /// <summary>
+    /// Delete method which allows delete a company with a specific id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

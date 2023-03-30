@@ -1,13 +1,14 @@
-﻿namespace RecruitmentAgency;
+﻿namespace ApplicationsServer.DTO;
+
 /// <summary>
 /// Company - a class that describes the company application
 /// </summary>
-public class CompanyApplication
+public class CompanyApplicationGetDTO
 {
     /// <summary>
-    /// Company - contains information about the company
+    /// Company - contains the name of the company
     /// </summary>  
-    public Company? Company { get; set; }
+    public string? Company { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  
@@ -23,7 +24,7 @@ public class CompanyApplication
     /// <summary>
     /// Title - shows the job id
     /// </summary>
-    public Title? Title { set; get; }
+    public int Title { set; get; }
     /// <summary>
     /// Education - shows the education level
     /// </summary>

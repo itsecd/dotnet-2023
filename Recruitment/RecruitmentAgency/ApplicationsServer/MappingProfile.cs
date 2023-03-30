@@ -17,5 +17,6 @@ public class MappingProfile : Profile
         CreateMap<Company, CompanyGetDTO>();
         CreateMap<Company, CompanyPostDTO>();
         CreateMap<CompanyPostDTO, Company>();
+        CreateMap<CompanyApplication, CompanyApplicationGetDTO>();
     }
 }

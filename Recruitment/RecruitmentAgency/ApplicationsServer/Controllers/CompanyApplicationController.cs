@@ -7,33 +7,32 @@ using AutoMapper;
 namespace ApplicationsServer.Controllers;
 
 /// <summary>
-///     Controller for companies
+///     Controller for companies applications
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class CompanyController : ControllerBase
+public class CompanyApplicationController : ControllerBase
 {
-    private readonly ILogger<CompanyController> _logger;
+    private readonly ILogger<CompanyApplicationController> _logger;
     private readonly IApplicationsServerRepository _companiesRepository;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public CompanyController(ILogger<CompanyController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
+    public CompanyApplicationController(ILogger<CompanyApplicationController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
     {
         _logger = logger;
         _companiesRepository = companiesRepository;
         _mapper = mapper;
     }
     /// <summary>
-    ///  Returns a list of all companies
+    /// Returns the list of all applications of the companies
     /// </summary>
-    /// <returns>Returns a list of all companies</returns>
+    /// <returns>Returns the list of all applications of the companies</returns>
     [HttpGet]
-    public IEnumerable<CompanyGetDTO> Get()
+    public IEnumerable<CompanyApplicationGetDTO> Get()
     {
-        _logger.LogInformation("Get companies");
-        return _companiesRepository.Companies.Select(company =>_mapper.Map<CompanyGetDTO>(company));
+
     }
     /// <summary>
     ///  Get method that returns a company with a specific id

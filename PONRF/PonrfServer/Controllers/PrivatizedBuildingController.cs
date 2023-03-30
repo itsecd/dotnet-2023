@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PonrfDomain;
+using PonrfServer.Dto;
+using System.Collections.Generic;
 
 namespace PonrfServer.Controllers;
 
@@ -11,22 +14,24 @@ public class PrivatizedBuildingController : ControllerBase
 
     private readonly PonrfRepository _ponrfRepository;
 
-    public PrivatizedBuildingController(ILogger<PrivatizedBuildingController> logger, PonrfRepository ponrfRepository)
+    private readonly IMapper _mapper;
+
+    public PrivatizedBuildingController(ILogger<PrivatizedBuildingController> logger, PonrfRepository ponrfRepository, IMapper mapper)
     {
         _logger = logger;
         _ponrfRepository = ponrfRepository;
+        _mapper = mapper;
     }
 
-
     [HttpGet]
-    public IEnumerable<PrivatizedBuilding> Get()
+    public IEnumerable<PrivatizedBuildingDto> Get()
     {
         _logger.LogInformation("Get all privatized buildings");
-        return _ponrfRepository.PrivatizedBuildings;
+        return _mapper.Map<IEnumerable<PrivatizedBuildingDto>>(_ponrfRepository.PrivatizedBuildings);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<PrivatizedBuilding?> Get(int id)
+    public ActionResult<PrivatizedBuildingDto?> Get(int id)
     {
         var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
@@ -34,7 +39,7 @@ public class PrivatizedBuildingController : ControllerBase
             _logger.LogInformation($"Not found privatized building with {id}");
             return NotFound();
         }
-        else return Ok(privatizedBuilding);
+        else return Ok(_mapper.Map<PrivatizedBuildingDto>(privatizedBuilding));
     }
 
     [HttpPost]

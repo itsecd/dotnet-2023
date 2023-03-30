@@ -16,7 +16,7 @@ public class Auction
     /// Organizer is a auction company 
     /// </summary>
     public string Organizer { get; set; } = string.Empty;
-    public List<PrivatizedBuilding> PrivatizedBuilding { set; get; } = new List<PrivatizedBuilding>();
+    public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
 
     public Auction() { }
     public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)

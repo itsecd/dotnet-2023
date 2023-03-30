@@ -12,19 +12,19 @@ public class PrivatizedBuilding
     /// <summary>
     /// DateOfSale contains information about date of sale of the building
     /// </summary>
-    public DateTime DateOfSale { get; set; } = DateTime.MinValue;
+    public DateTime DateOfSale { get; set; }
     /// <summary>
     /// FirstCost is a original auction price
     /// </summary>
-    public int FirstCost { get; set; } = int.MinValue;
+    public int FirstCost { get; set; }
     /// <summary>
     /// SecondCost is a final cost
     /// </summary>
-    public int SecondCost { get; set; } = int.MinValue;
+    public int SecondCost { get; set; }
 
-    public Customer? Customer { get; set; } = new();
-    public Auction? Auction { get; set; } = new();
-    public Building? Building { get; set; } = new();
+    public Customer? Customer { get; set; }
+    public Auction? Auction { get; set; }
+    public Building? Building { get; set; }
 
     public PrivatizedBuilding() { }
     public PrivatizedBuilding(int id, DateTime dateOfSale, int firstCost, int secondCost, Customer? customer, Auction? auction, Building? building)

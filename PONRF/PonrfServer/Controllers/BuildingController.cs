@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PonrfDomain;
+using PonrfServer.Dto;
 
 namespace PonrfServer.Controllers;
 
@@ -11,21 +13,24 @@ public class BuildingController : ControllerBase
 
     private readonly PonrfRepository _ponrfRepository;
 
-    public BuildingController(ILogger<BuildingController> logger, PonrfRepository ponrfRepository)
+    private readonly IMapper _mapper;
+
+    public BuildingController(ILogger<BuildingController> logger, PonrfRepository ponrfRepository, IMapper mapper)
     {
         _logger = logger;
         _ponrfRepository = ponrfRepository;
+        _mapper = mapper;
     }
 
     [HttpGet]
-    public IEnumerable<Building> Get()
+    public IEnumerable<BuildingDto> Get()
     {
         _logger.LogInformation("Get all buildings");
-        return _ponrfRepository.Buildings;
+        return _mapper.Map<IEnumerable<BuildingDto>>(_ponrfRepository.Buildings);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Building?> Get(int id)
+    public ActionResult<BuildingDto?> Get(int id)
     {
         var building = _ponrfRepository.Buildings.FirstOrDefault(building => building.Id == id);
         if (building == null)
@@ -33,7 +38,7 @@ public class BuildingController : ControllerBase
             _logger.LogInformation($"Not found building with {id}");
             return NotFound();
         }
-        else return Ok(building);
+        else return Ok(_mapper.Map<BuildingDto>(building));
     }
 
     [HttpPost]

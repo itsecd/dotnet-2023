@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PonrfDomain;
+using PonrfServer.Dto;
+using System.Collections.Generic;
 
 namespace PonrfServer.Controllers;
 
@@ -11,22 +14,24 @@ public class AuctionController : ControllerBase
 
     private readonly PonrfRepository _ponrfRepository;
 
-    public AuctionController(ILogger<AuctionController> logger, PonrfRepository ponrfRepository)
+    private readonly IMapper _mapper;
+
+    public AuctionController(ILogger<AuctionController> logger, PonrfRepository ponrfRepository, IMapper mapper)
     {
         _logger = logger;
         _ponrfRepository = ponrfRepository;
+        _mapper = mapper;
     }
 
-
     [HttpGet]
-    public IEnumerable<Auction> Get()
+    public IEnumerable<AuctionDto> Get()
     {
         _logger.LogInformation("Get all auctions");
-        return _ponrfRepository.Auctions;
+        return _mapper.Map<IEnumerable<AuctionDto>>(_ponrfRepository.Auctions);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Auction?> Get(int id)
+    public ActionResult<AuctionDto?> Get(int id)
     {
         var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
@@ -34,7 +39,7 @@ public class AuctionController : ControllerBase
             _logger.LogInformation($"Not found auction with {id}");
             return NotFound();
         }
-        else return Ok(auction);
+        else return Ok(_mapper.Map<AuctionDto>(auction));
     }
 
     [HttpPost]

@@ -11,7 +11,7 @@ public class Auction
     /// <summary>
     /// Date - auction date
     /// </summary>
-    public DateOnly Date { get; set; } = new DateOnly();
+    public DateTime Date { get; set; } = new DateTime();
     /// <summary>
     /// OrganizationId - the id of the organization that organized the auction
     /// </summary>
@@ -25,7 +25,8 @@ public class Auction
     /// </summary>
     public List<BuyerAuctionConnection> Buyers { get; set; } = new();
 
-    public Auction(int auctionId, DateOnly date, int organizationId, List<BuildingAuctionConnection> buildings, List<BuyerAuctionConnection> buyers)
+    public Auction() { }
+    public Auction(int auctionId, DateTime date, int organizationId, List<BuildingAuctionConnection> buildings, List<BuyerAuctionConnection> buyers)
     {
         AuctionId = auctionId;
         Date = date;

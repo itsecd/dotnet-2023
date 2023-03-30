@@ -1,8 +1,6 @@
-﻿namespace NonResidentialFund.Domain;
-/// <summary>
-/// Privatized - a class that describes characteristics of a privatized building 
-/// </summary>
-public class Privatized
+﻿namespace NonResidentialFund.Server.Dto;
+
+public class PrivatizedPostDto
 {
     /// <summary>
     /// RegistrationNumber - registration number of privatized building
@@ -28,15 +26,4 @@ public class Privatized
     /// EndPrice - The final price of this building at the auction
     /// </summary>
     public double EndPrice { get; set; } = 0.0;
-    public Privatized() { }
-
-    public Privatized(int registrationNumber, int buyerId, int auctionId, DateTime saleDate, double startPrice, double endPrice)
-    {
-        RegistrationNumber = registrationNumber;
-        BuyerId = buyerId;
-        AuctionId = auctionId;
-        SaleDate = saleDate;
-        StartPrice = startPrice;
-        EndPrice = endPrice;
-    }
 }

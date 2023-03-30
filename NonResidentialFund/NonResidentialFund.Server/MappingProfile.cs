@@ -8,16 +8,17 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Building, BuildingPostDto>();
-        CreateMap<BuildingPostDto, Building>();
+        CreateMap<Auction, AuctionGetDto>();
+        CreateMap<Auction, AuctionPostDto>().ReverseMap();
 
-        CreateMap<Buyer, BuyerPostDto>();
-        CreateMap<BuyerPostDto, Buyer>();
+        CreateMap<Building, BuildingPostDto>().ReverseMap();
 
-        CreateMap<District, DistrictPostDto>();
-        CreateMap<DistrictPostDto, District>();
+        CreateMap<Buyer, BuyerPostDto>().ReverseMap();
 
-        CreateMap<Organization, OrganizationPostDto>();
-        CreateMap<OrganizationPostDto, Organization>();
+        CreateMap<District, DistrictPostDto>().ReverseMap();
+
+        CreateMap<Organization, OrganizationPostDto>().ReverseMap();
+
+        CreateMap<Privatized, PrivatizedPostDto>().ReverseMap();
     }
 }

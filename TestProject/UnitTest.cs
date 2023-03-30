@@ -1,4 +1,4 @@
-namespace UnitTest;
+namespace TestProject;
 public class RealtorTest : IClassFixture<FixtureRealt>
 {
     private readonly FixtureRealt _fixture;
@@ -76,7 +76,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
                          grp.Key.Registration,
                          grp.Key.Passport
                      }).ToList();
-        Assert.Equal(1, query.Count);
+        Assert.Single(query);
         Assert.Equal("King", query[0].Surname);
         Assert.Equal("Stiven", query[0].Name);
         Assert.Equal("Lesnaya, 23", query[0].Registration);
@@ -106,7 +106,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
                          house.Address
 
                      }).ToList();
-        Assert.Equal(1, query.Count);
+        Assert.Single(query);
         Assert.Equal("King", query[0].Surname);
         Assert.Equal("Stiven", query[0].Name);
         Assert.Equal("Lesnaya, 23", query[0].Registration);
@@ -118,7 +118,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
         Assert.Equal("Uninhabited", query[0].Type);
     }
     /// <summary>
-    /// fourth request - information about the number of applications for each type of property    /// </summary>
+    /// fourth request - information about the number of applications for each type of property    
     // </summary>
     [Fact]
     public void FourthRequest()
@@ -180,7 +180,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
         var result2 = (from client in query2
                        orderby query2.Count descending
                        select client).Take(5).ToList();
-        Assert.Equal(1, result2.Count);
+        Assert.Single(result2);
         Assert.Equal(1, result2[0].Count);
         Assert.Equal("King", result2[0].Surname);
     }

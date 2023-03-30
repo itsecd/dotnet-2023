@@ -1,5 +1,5 @@
 using Realtor;
-namespace UnitTest;
+namespace TestProject;
 public class FixtureRealt
 {
     public List<Application> FixtureApplication

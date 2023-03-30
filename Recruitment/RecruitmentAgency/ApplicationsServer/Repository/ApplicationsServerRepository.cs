@@ -2,6 +2,9 @@
 
 namespace ApplicationsServer.Repository;
 
+/// <summary>
+/// A class for storing and modifying table data
+/// </summary>
 public class ApplicationsServerRepository : IApplicationsServerRepository
 {
     private readonly List<Company> _companies;
@@ -9,6 +12,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
     private readonly List<CompanyApplication> _companiesApplications;
     private readonly List<Employee> _employees;
     private readonly List<JobApplication> _jobApplications;
+    /// <summary>
+    /// A constructor that adds some default values for tables
+    /// </summary>
     public ApplicationsServerRepository()
     {
         _companies = RepositoryCompanies;
@@ -17,6 +23,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
         _employees = RepositoryEmployees;
         _jobApplications = RepositoryJobApplications;
     }
+    /// <summary>
+    /// Return the list of companies with default values
+    /// </summary>
     private List<Company> RepositoryCompanies
     {
         get
@@ -47,6 +56,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             return companies;
         }
     }
+    /// <summary>
+    /// Return the list of titles with default values
+    /// </summary>
     private List<Title> RepositoryTitles
     {
         get
@@ -73,6 +85,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             return titles;
         }
     }
+    /// <summary>
+    ///  Return the list of CompaniesApplications with default values
+    /// </summary>
     private List<CompanyApplication> RepositoryCompaniesApplications
     {
         get
@@ -131,6 +146,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             return companiesApplications;
         }
     }
+    /// <summary>
+    /// Return the list of Employees with default values
+    /// </summary>
     private List<Employee> RepositoryEmployees
     {
         get
@@ -167,6 +185,9 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             return employees;
         }
     }
+    /// <summary>
+    /// Return the list of JobApplications with default values
+    /// </summary>
     private List<JobApplication> RepositoryJobApplications
     {
         get
@@ -214,9 +235,24 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             return jobApplications;
         }
     }
+    /// <summary>
+    /// A list of Companies that will change by methods
+    /// </summary>
     public List<Company> Companies => _companies;
+    /// <summary>
+    /// A list of Titles that will change by methods
+    /// </summary>
     public List<Title> Titles => _titles;
+    /// <summary>
+    /// A list of CompaniesApplications that will change by methods
+    /// </summary>
     public List<CompanyApplication> CompaniesApplications => _companiesApplications;
+    /// <summary>
+    /// A list of Employess that will change by methods
+    /// </summary>
     public List<Employee> Employees => _employees;
+    /// <summary>
+    /// A list of JobApplications that will change by methods
+    /// </summary>
     public List<JobApplication> JobApplications => _jobApplications;
 }

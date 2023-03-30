@@ -21,7 +21,7 @@ public class CompanyGetDTO
     /// id - shows the company's id
     /// </summary>  
     public int Id { set; get; }
-    /// <summary><
+    /// <summary>
     /// Applications - shows the applications id's
     /// </summary>
     public List<int> ApplicationsIds { set; get; } = new List<int>();

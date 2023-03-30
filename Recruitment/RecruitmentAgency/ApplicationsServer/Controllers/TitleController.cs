@@ -59,8 +59,8 @@ public class TitlesController : ControllerBase
     [HttpPost]
     public void Post([FromBody] TitleGetDTO title)
     {
-        _companiesRepository.Titles.Add(_mapper.Map<Company>(title));
-     }
+        _companiesRepository.Titles.Add(_mapper.Map<Title>(title));
+    }
 
     /// <summary>
     /// Put method which allows change the data of a title with a specific id

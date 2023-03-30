@@ -60,7 +60,7 @@ public class CompanyApplicationController : ControllerBase
     public void Post([FromBody] CompanyApplicationGetDTO companyApplication)
     {
         _companiesRepository.CompaniesApplications.Add(_mapper.Map<CompanyApplication>(companyApplication));
-     }
+    }
 
     /// <summary>
     /// Put method which allows change the data of company application with a specific id

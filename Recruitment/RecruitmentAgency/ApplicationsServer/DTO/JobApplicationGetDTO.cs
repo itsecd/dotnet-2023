@@ -2,7 +2,7 @@
 /// <summary>
 /// JobApplication - a class that describes the employee's application
 /// </summary>
-public class JobApplication
+public class JobApplicationGetDTO
 {
     /// <summary>
     /// Employee - contains employee id

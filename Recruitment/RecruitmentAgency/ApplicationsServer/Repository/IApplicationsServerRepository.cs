@@ -24,5 +24,5 @@ public interface IApplicationsServerRepository
     /// <summary>
     /// A list of Titles that will change by methods
     /// </summary>
-    public List<TitleGetDTO> Titles { get; }
+    public List<Title> Titles { get; }
 }

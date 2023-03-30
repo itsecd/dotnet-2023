@@ -8,7 +8,7 @@ namespace ApplicationsServer.Repository;
 public class ApplicationsServerRepository : IApplicationsServerRepository
 {
     private readonly List<Company> _companies;
-    private readonly List<TitleGetDTO> _titles;
+    private readonly List<Title> _titles;
     private readonly List<CompanyApplication> _companiesApplications;
     private readonly List<Employee> _employees;
     private readonly List<JobApplication> _jobApplications;
@@ -59,14 +59,14 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
     /// <summary>
     /// Return the list of titles with default values
     /// </summary>
-    private List<TitleGetDTO> RepositoryTitles
+    private List<Title> RepositoryTitles
     {
         get
         {
             var companiesApplications = RepositoryCompaniesApplications;
             var employeesApplications = RepositoryJobApplications;
-            var titles = new List<TitleGetDTO>();
-            var firstTitle = new TitleGetDTO();
+            var titles = new List<Title>();
+            var firstTitle = new Title();
             firstTitle.Section = "It";
             firstTitle.JobTitle = "Backend";
             firstTitle.Id = 0;
@@ -75,7 +75,7 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
             firstTitle.EmployeeApplications.Add(employeesApplications[0]);
             firstTitle.EmployeeApplications.Add(employeesApplications[2]);
             titles.Add(firstTitle);
-            var secondTitle = new TitleGetDTO();
+            var secondTitle = new Title();
             secondTitle.Section = "It";
             secondTitle.JobTitle = "Frontend";
             secondTitle.Id = 1;
@@ -93,11 +93,11 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
         get
         {
             var companiesApplications = new List<CompanyApplication>();
-            var firstTitle = new TitleGetDTO();
+            var firstTitle = new Title();
             firstTitle.Section = "It";
             firstTitle.JobTitle = "Backend";
             firstTitle.Id = 0;
-            var secondTitle = new TitleGetDTO();
+            var secondTitle = new Title();
             secondTitle.Section = "It";
             secondTitle.JobTitle = "Frontend";
             secondTitle.Id = 1;
@@ -242,7 +242,7 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
     /// <summary>
     /// A list of Titles that will change by methods
     /// </summary>
-    public List<TitleGetDTO> Titles => _titles;
+    public List<Title> Titles => _titles;
     /// <summary>
     /// A list of CompaniesApplications that will change by methods
     /// </summary>

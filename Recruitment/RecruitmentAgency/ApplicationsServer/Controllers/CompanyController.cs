@@ -7,7 +7,7 @@ using AutoMapper;
 namespace ApplicationsServer.Controllers;
 
 /// <summary>
-///     Controller for companies
+/// Controller for companies
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]

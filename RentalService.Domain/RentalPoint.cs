@@ -19,4 +19,14 @@ public class RentalPoint
     ///     Address - the address where the rental point is located
     /// </summary>
     public string Address { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     RentalInformations - information about all leases at this point
+    /// </summary>
+    public List<RentalInformation> RentalInformations { get; set; } = new();
+
+    /// <summary>
+    ///     RefundInformations - information about all returns to this point
+    /// </summary>
+    public List<RefundInformation> RefundInformations { get; set; } = new();
 }

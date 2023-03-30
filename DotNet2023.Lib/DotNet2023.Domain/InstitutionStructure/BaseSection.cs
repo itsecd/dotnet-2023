@@ -16,7 +16,7 @@ public class BaseSection
     // TODO rename Name to Title
     public string? Name { get; set; }
 
-    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
+    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
     public string? Email { get; set; }
     [RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }

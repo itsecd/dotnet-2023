@@ -18,7 +18,7 @@ public class HigherEducationInstitutionDto
     [RegularExpression(@"[0-9]{10}")]
     public string? Phone { get; set; }
 
-    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
+    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
     public string? Email { get; set; }
 
     public InstitutionalProperty? InstitutionalProperty { get; set; }

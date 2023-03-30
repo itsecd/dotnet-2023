@@ -23,7 +23,7 @@ public class BasePerson
 
     public DateTime? BirthDay { get; set; }
 
-    [RegularExpression(@"\\S+@\\S+\\.\\S+$")]
+    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
     public string? Email { get; set; }
 
     [RegularExpression(@"[0-9]{10}")]

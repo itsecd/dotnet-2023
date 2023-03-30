@@ -10,6 +10,7 @@ using DotNet2023.WebApi.Repository.Organization;
 using DotNet2023.WebApi.Repository.Person;
 using DotNet2023.WebApi.Repository.Queries;
 using DotNet2023.WebApi.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<DbContextWebApi>();
+    dbContext.Database.Migrate();
+}
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
@@ -50,7 +58,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
 
 app.Run();

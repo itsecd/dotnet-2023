@@ -33,7 +33,7 @@ public class CompanyController : ControllerBase
     public IEnumerable<CompanyGetDTO> Get()
     {
         _logger.LogInformation("Get companies");
-        return _companiesRepository.Companies.Select(company =>_mapper.Map<CompanyGetDTO>(company));
+        return _companiesRepository.Companies.Select(employee=>_mapper.Map<CompanyGetDTO>(employee));
     }
     /// <summary>
     ///  Get method that returns a company with a specific id

@@ -16,11 +16,11 @@ public class Title
     /// id - shows the title's
     /// </summary>  
     public int Id { set; get; }
-    /// <summary><
+    /// <summary>
     /// Applications - shows the employees' applications 
     /// </summary>
     public List<JobApplication> EmployeeApplications { set; get; } = new List<JobApplication>();
-    /// <summary><
+    /// <summary>
     /// Applications - shows the company requests
     /// </summary>
     public List<CompanyApplication> CompanyApplications { set; get; } = new List<CompanyApplication>();

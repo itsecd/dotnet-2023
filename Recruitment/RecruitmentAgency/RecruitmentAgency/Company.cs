@@ -20,7 +20,7 @@ public class Company
     /// id - shows the company's id
     /// </summary>  
     public int Id { set; get; }
-    /// <summary><
+    /// <summary>
     /// Applications - shows the applications 
     /// </summary>
     public List<CompanyApplication> Applications { set; get; } = new List<CompanyApplication>();

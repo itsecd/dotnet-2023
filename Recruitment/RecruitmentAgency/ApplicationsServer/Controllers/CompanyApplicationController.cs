@@ -26,69 +26,70 @@ public class CompanyApplicationController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Returns the list of all applications of the companies
+    ///  Returns a list of all companies applications
     /// </summary>
-    /// <returns>Returns the list of all applications of the companies</returns>
+    /// <returns>Returns a list of all companies applications</returns>
     [HttpGet]
     public IEnumerable<CompanyApplicationGetDTO> Get()
     {
-
+        _logger.LogInformation("Get companies applications");
+        return _companiesRepository.CompaniesApplications.Select(companyApplication=>_mapper.Map<CompanyApplicationGetDTO>(companyApplication));
     }
     /// <summary>
-    ///  Get method that returns a company with a specific id
+    ///  Get method that returns company application with a specific id
     /// </summary>
-    /// <param name="id">Company id</param>
+    /// <param name="id">Company application id</param>
     /// <returns>Company with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<CompanyGetDTO> Get(int id)
+    public ActionResult<CompanyApplicationGetDTO> Get(int id)
     {
-        _logger.LogInformation($"Get company with id {id}");
-        var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
-        if (company == null) 
+        _logger.LogInformation($"Get company application with id {id}");
+        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        if (companyApplication == null) 
         {
-            _logger.LogInformation("Not found company with id equals to: {id}", id);
+            _logger.LogInformation("Not found company application with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<CompanyGetDTO>(company));
+        return Ok(_mapper.Map<CompanyApplicationGetDTO>(companyApplication));
     }
     /// <summary>
-    /// Post method that adding a new company 
+    /// Post method that adding a new company application
     /// </summary>
-    /// <param name="company"></param>
+    /// <param name="companyApplication"></param>
     [HttpPost]
-    public void Post([FromBody] CompanyPostDTO company)
+    public void Post([FromBody] CompanyApplicationGetDTO companyApplication)
     {
-        _companiesRepository.Companies.Add(_mapper.Map<Company>(company));
+        _companiesRepository.CompaniesApplications.Add(_mapper.Map<CompanyApplication>(companyApplication));
      }
 
     /// <summary>
-    /// Put method which allows change the data of a company with a specific id
+    /// Put method which allows change the data of company application with a specific id
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="companyToPut"></param>
+    /// <param name="companyApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CompanyPostDTO companyToPut)
+    public IActionResult Put(int id, [FromBody] CompanyApplicationGetDTO companyApplicationToPut)
     {
-        _logger.LogInformation($" Attempting to change a company with an id equal to =  {id}");
-        var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
-        if (company == null) return NotFound();
-        _mapper.Map<CompanyPostDTO, Company>(companyToPut, company);
+        _logger.LogInformation($" Attempting to change a company application with an id equal to =  {id}");
+        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        if (companyApplication == null) return NotFound();
+        _mapper.Map<CompanyApplicationGetDTO, CompanyApplication>(companyApplicationToPut, companyApplication);
 
         return Ok();
     }
     /// <summary>
-    /// Delete method which allows delete a company with a specific id
+    /// Delete method which allows delete a company application with a specific id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($" Attempting to delete a company with an id equal to =  {id}");
-        var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
-        if (company == null) return NotFound();
-        _companiesRepository.Companies.Remove(company);
+        _logger.LogInformation($" Attempting to delete a company application with an id equal to =  {id}");
+        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        if (companyApplication == null) return NotFound();
+        _companiesRepository.CompaniesApplications.Remove(companyApplication);
         return Ok();
     }
 }

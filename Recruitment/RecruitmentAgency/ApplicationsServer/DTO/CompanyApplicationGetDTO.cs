@@ -1,14 +1,9 @@
 ﻿namespace ApplicationsServer.DTO;
-
 /// <summary>
-/// Company - a class that describes the company application
+/// CompanyApplication - a class that describes the company application
 /// </summary>
 public class CompanyApplicationGetDTO
 {
-    /// <summary>
-    /// Company - contains the name of the company
-    /// </summary>  
-    public string? Company { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  
@@ -24,11 +19,7 @@ public class CompanyApplicationGetDTO
     /// <summary>
     /// Title - shows the job id
     /// </summary>
-    public int Title { set; get; }
-    /// <summary>
-    /// Education - shows the education level
-    /// </summary>
-    public string Education { set; get; } = string.Empty;
+    public string? Education { set; get; }
     /// <summary>  
     /// id - shows the company's application id
     /// </summary>  

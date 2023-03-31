@@ -1,15 +1,7 @@
-namespace RentalService.Domain;
+namespace RentalService.Server.Dto;
 
-/// <summary>
-///     class RentalInformation contains all the information about car rental
-/// </summary>
-public class RentalInformation
+public class RentalInformationPostDto
 {
-    /// <summary>
-    ///     Id - unique client identifier
-    /// </summary>
-    public ulong Id { get; set; }
-
     /// <summary>
     ///     RentalPointId - identifier of the rental point
     /// </summary>

@@ -1,15 +1,7 @@
-namespace RentalService.Domain;
+namespace RentalService.Server.Dto;
 
-/// <summary>
-///     class RefundInformation contains all the information about the return of the car
-/// </summary>
-public class RefundInformation
+public class RefundInformationPostDto
 {
-    /// <summary>
-    ///     Id - unique client identifier
-    /// </summary>
-    public ulong Id { get; set; }
-
     /// <summary>
     ///     RefundPointId - identifier of the rental point
     /// </summary>

@@ -34,7 +34,7 @@ public class QueryController : Controller
     /// <returns>
     /// Return: list student
     /// </returns>
-    [HttpGet("StudenInClass/{idClass}")]
+    [HttpGet("StudentInClass/{idClass}")]
     public ActionResult<IEnumerable<StudentGetDto>> GetListStudent(int idClass)
     {
         _logger.LogInformation("Get list student");
@@ -55,7 +55,7 @@ public class QueryController : Controller
     /// <returns>
     /// Return: list student
     /// </returns>
-    [HttpGet("{day}")]
+    [HttpGet("ListStudentInDay/{day}")]
     public ActionResult<IEnumerable<Student>> GetListStudent(DateTime day)
     {
         var listStudent = _librarySchoolRepository.Students
@@ -84,7 +84,7 @@ public class QueryController : Controller
     /// <returns>
     /// Return: list subject
     /// </returns>
-    [HttpGet("informationAllsubject")]
+    [HttpGet("InformationAllsubject")]
     public IEnumerable<Subject> GetListSubject()
     {
         _logger.LogInformation("Get list subject");
@@ -123,10 +123,10 @@ public class QueryController : Controller
     /// <returns>
     /// Return: list student
     /// </returns>
-    [HttpGet("{beginPeriod},{endPeriod}")]
-    public ActionResult<IEnumerable<StudentGetAverageDto>> GetListStudent(DateTime beginPeriod, DateTime endPeriod)
+    [HttpGet("Top5InPeriod")]
+    public ActionResult<IEnumerable<StudentGetAverageDto>> GetListStudent([FromQuery]DateTime beginPeriod, [FromQuery]DateTime endPeriod)
     {
-        var listStudent = _librarySchoolRepository.Students
+        var listStudentInPeriod = _librarySchoolRepository.Students
                             .Select(student =>
                             new Student
                             {
@@ -136,22 +136,24 @@ public class QueryController : Controller
                                 DateOfBirth = student.DateOfBirth,
                                 Passport = student.Passport,
                                 Marks = student.Marks.Where(mark => (mark.TimeReceive > beginPeriod) && (mark.TimeReceive < endPeriod)).ToList()
-                            }).ToList()
-                            .Select( student =>
-                                        new StudentGetAverageDto
-                                        {
-                                            ClassId = student.ClassId,
-                                            StudentId = student.StudentId,
-                                            StudentName = student.StudentName,
-                                            DateOfBirth = student.DateOfBirth,
-                                            Passport = student.Passport,
-                                            AverageMark = student.Marks.Select(x => x.MarkValue).Average()
-                                        }).OrderByDescending(student => student.AverageMark).ToList().Take(5);
-        if (listStudent != null)
+                            }).ToList();
+                          
+        if (!listStudentInPeriod.Any())
         {
-            return Ok(listStudent);
+            return NotFound();
         }
-        return NotFound();
+        var topInPeriod = listStudentInPeriod.Select(student =>
+                                      new StudentGetAverageDto
+                                      {
+                                          ClassId = student.ClassId,
+                                          StudentId = student.StudentId,
+                                          StudentName = student.StudentName,
+                                          DateOfBirth = student.DateOfBirth,
+                                          Passport = student.Passport,
+                                          AverageMark = _librarySchoolRepository.AverageMark(student)
+                                      });
+        if (!topInPeriod.Any()) { return NotFound(); }
+        return Ok(topInPeriod.OrderByDescending(x=> x.AverageMark).Take(5));
     }
     /// <summary>
     /// Display the top 5 students by GPA.
@@ -171,7 +173,7 @@ public class QueryController : Controller
                                 StudentName = student.StudentName,
                                 DateOfBirth = student.DateOfBirth,
                                 Passport = student.Passport,
-                                AverageMark = student.Marks.Select(x => x.MarkValue).Average()
+                                AverageMark = _librarySchoolRepository.AverageMark(student)
                             })
                             .OrderByDescending(student => student.AverageMark).ToList()
                             .Take(5);

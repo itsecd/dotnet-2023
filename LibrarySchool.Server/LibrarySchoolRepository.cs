@@ -283,6 +283,17 @@ public class LibrarySchoolRepository : ILibrarySchoolRepository
         return true;
     }
 
+    /// <summary>
+    /// Get averagemark of student
+    /// </summary>
+    /// <param name="student"></param>
+    /// <returns></returns>
+    public double AverageMark(Student student) 
+    {
+        if (student == null) return 0;
+        if (!student.Marks.Any()) return 0;
+        return student.Marks.Average(x => x.MarkValue);
+    }
 
     /// <summary>
     /// Property list students in data

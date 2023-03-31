@@ -122,13 +122,13 @@ public class AnalyticsController : ControllerBase
 
     /// <summary>
     /// Get supplier who delivered max quantity 
-    /// of goods from 01.01.2023 to 01.03.2023
+    /// of goods from 01.01.2023 to 30.01.2023
     /// </summary>
     /// <returns></returns>
     [HttpGet("/supplier-who-delivered-max-quantity-of-goods-on-date")]
     public IEnumerable<SupplierGetDto> GetSupplierWhoDeliveredMaxGoodsOnDate()
     {
-        _logger.LogInformation("Get supplier who delivered max quantity of goods from 01.01.2023 to 01.03.2023");
+        _logger.LogInformation("Get supplier who delivered max quantity of goods from 01.01.2023 to 30.01.2023");
 
         var result = (from s in _factoryRepository.Suppliers
                       join sp in _factoryRepository.Supplies on s.SupplierID equals sp.SupplierID

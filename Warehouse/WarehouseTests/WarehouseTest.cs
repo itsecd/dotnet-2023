@@ -38,6 +38,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
                      from supply in goods.Supply
                      where supply.SupplyDate == new DateTime(2023, 02, 11)
                      select goods).ToList();
+
         Assert.Equal(2, query.Count);
         Assert.Contains(query, queryElem => queryElem.Name == "Столовая ложка из нерж. стали");
         Assert.Contains(query, queryElem => queryElem.Id == 319510);
@@ -56,6 +57,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
                      from cell in goods.WarehouseCell
                      orderby cell.CellNumber
                      select new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }).ToList();
+
         Assert.Equal(11, query.Count);
         Assert.Equal("Контейнер 640мл с крышкой", query[0].goodsTitle);
         Assert.Equal("Ваза из стекла 3л", query[7].goodsTitle);
@@ -82,6 +84,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
                          grp.Key.CompanyAddress,
                          goodsCount = grp.Sum(x => x.SupplyCount)
                      }).ToList();
+
         var max = query.Max(x => x.goodsCount);
         foreach (var q in query)
         {
@@ -101,6 +104,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
         var query = (from goods in _fixture.GoodsFixture
                      orderby goods.ProductCount descending
                      select goods).Take(5).ToList();
+
         Assert.Equal(5, query.Count);
         Assert.True(query[0].ProductCount == 100);
         Assert.True(query[1].ProductCount == 50);
@@ -131,6 +135,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
                          grp.Key.Name,
                          quntity = grp.Sum(x => x.SupplyCount)
                      }).ToList();
+
         Assert.Equal(4, query.Count);
         Assert.Contains(query, queryElem => queryElem.Id == 103722);
         Assert.Contains(query, queryElem => queryElem.Id == 218302);

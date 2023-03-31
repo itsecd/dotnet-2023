@@ -29,29 +29,29 @@ public class AnalyticsController : ControllerBase
     /// Get information about some enterprise
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/information-about-enterprise")]
-    public IEnumerable<EnterpriseGetDto> GetInformationAboutEnterprise()
+    [HttpGet("/InformationAboutEnterprise")]
+    public IEnumerable<EnterpriseGetDto> GetInformationAboutEnterprise(string registration)
     {
         _logger.LogInformation("Get information about enterprise");
        
         var result = from e in _factoryRepository.Enterprises
-                     where e.RegistrationNumber == "1116318009510"
+                     where e.RegistrationNumber == registration
                      select _mapper.Map<EnterpriseGetDto>(e);
 
         return result;
     }
 
     /// <summary>
-    /// Get all suppliers who made supplies from 01.01.2023 to 30.01.2023
+    /// Get all suppliers who made supplies from date1 to date2
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/suppliers-who-made-supplies-on-date")]
-    public IEnumerable<SupplierGetDto> GetSuppliersWhoMadeSupliesOnDate()
+    [HttpGet("/SuppliersWhoMadeSuppliesOnDate")]
+    public IEnumerable<SupplierGetDto> GetSuppliersWhoMadeSupliesOnDate(DateTime date1, DateTime date2)
     {
-        _logger.LogInformation("Get suppliers who made supplies from 01.01.2023 to 30.01.2023");
+        _logger.LogInformation("Get suppliers who made supplies from date1 to date2");
         var result = from sr in _factoryRepository.Suppliers
                      join s in _factoryRepository.Supplies on sr.SupplierID equals s.SupplierID
-                     where s.Date > new DateTime(2023, 1, 1) && s.Date < new DateTime(2023, 1, 30)
+                     where s.Date > date1 && s.Date < date2
                      orderby sr.Name
                      select _mapper.Map<SupplierGetDto>(sr);
 
@@ -59,10 +59,10 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Get count of factories working with every supplier
+    /// Get count of enterprises working with every supplier
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/count-of-enterprises-working-with-every-supplier")]
+    [HttpGet("/CountOfEnterprisesWorkingWithEverySupplier")]
     public IActionResult GetCountOfEnterprisesWorkingWithEverySupplier()
     {
         _logger.LogInformation("Get count of enterprises working with every supplier");
@@ -83,7 +83,7 @@ public class AnalyticsController : ControllerBase
     /// Get count of suppliers for every type and ownership form
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/count-of-suppliers-for-every-type-and-owneship")]
+    [HttpGet("/CountOfSuppliersForEveryTypeAndOwneship")]
     public IActionResult GetCountOfSuppliersForEveryTypeAndOwnership()
     {
         _logger.LogInformation("Get count of suppliers for every type of industry and owneship form");
@@ -102,10 +102,10 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Get top-5 factories by supply count 
+    /// Get top-5 enterprises by supply count 
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/top5-enterprises-by-supply-count")]
+    [HttpGet("/Top5EnterprisesBySupplyCount")]
     public IEnumerable<EnterpriseGetDto> GetTop5EnterprisesBySupplies()
     {
         _logger.LogInformation("Get top-5 enterprises by supply count");
@@ -122,17 +122,17 @@ public class AnalyticsController : ControllerBase
 
     /// <summary>
     /// Get supplier who delivered max quantity 
-    /// of goods from 01.01.2023 to 30.01.2023
+    /// of goods from date1 to date2
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/supplier-who-delivered-max-quantity-of-goods-on-date")]
-    public IEnumerable<SupplierGetDto> GetSupplierWhoDeliveredMaxGoodsOnDate()
+    [HttpGet("/SupplierWhoDeliveredMaxQuantityOfGoodsOnDate")]
+    public IEnumerable<SupplierGetDto> GetSupplierWhoDeliveredMaxGoodsOnDate(DateTime date1, DateTime date2)
     {
-        _logger.LogInformation("Get supplier who delivered max quantity of goods from 01.01.2023 to 30.01.2023");
+        _logger.LogInformation("Get supplier who delivered max quantity of goods from date1 to date2");
 
         var result = (from s in _factoryRepository.Suppliers
                       join sp in _factoryRepository.Supplies on s.SupplierID equals sp.SupplierID
-                      where sp.Date > new DateTime(2023, 1, 1) && sp.Date < new DateTime(2023, 1, 30)
+                      where sp.Date > date1 && sp.Date < date2
                       orderby sp.Quantity descending
                       select _mapper.Map<SupplierGetDto>(s)).Take(1);
 

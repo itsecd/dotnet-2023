@@ -28,5 +28,7 @@ public class MappingProfile : Profile
         
         CreateMap<IssuedCar,IssuedCarPostDto>();
         CreateMap<IssuedCarPostDto, IssuedCar>();
+        
+        CreateMap<VehicleModel,VehicleModelGetDto>();
     }
 }

@@ -284,6 +284,14 @@ public class RentalServiceRepository : IRentalServiceRepository
                 VehicleId = 5,
                 RefundInformationId = null,
                 RentalInformationId = 5
+            },
+            new()
+            {
+                Id = 6,
+                ClientId = 5,
+                VehicleId = 5,
+                RefundInformationId = null,
+                RentalInformationId = 5
             }
         };
     }

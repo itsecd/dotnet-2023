@@ -11,9 +11,7 @@ namespace RentalService.Server.Controllers;
 public class ClientController : ControllerBase
 {
     private readonly ILogger<ClientController> _logger;
-    
     private readonly IRentalServiceRepository _rentalServiceRepository;
-
     private readonly IMapper _mapper;
     
     public ClientController(ILogger<ClientController> logger, IRentalServiceRepository rentalServiceRepository, IMapper mapper)

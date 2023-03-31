@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RentalService.Domain;
+using RentalService.Server.Dto;
 using RentalService.Server.Repository;
 
 namespace RentalService.Server.Controllers;
@@ -9,23 +11,24 @@ namespace RentalService.Server.Controllers;
 public class VehicleModelController : ControllerBase
 {
     private readonly ILogger<VehicleModelController> _logger;
-    
     private readonly IRentalServiceRepository _rentalServiceRepository;
+    private readonly IMapper _mapper;
     
-    public VehicleModelController(ILogger<VehicleModelController> logger, IRentalServiceRepository rentalServiceRepository )
+    public VehicleModelController(ILogger<VehicleModelController> logger, IRentalServiceRepository rentalServiceRepository, IMapper mapper)
     {
         _logger = logger;
         _rentalServiceRepository = rentalServiceRepository;
+        _mapper = mapper;
     }
-    
+
     [HttpGet]
-    public IEnumerable<VehicleModel> Get()
+    public IEnumerable<VehicleModelGetDto> Get()
     {
-        return _rentalServiceRepository.VehicleModels;
+        return _rentalServiceRepository.VehicleModels.Select(model  => _mapper.Map<VehicleModelGetDto>(model));
     }
     
     [HttpGet("{id}")]
-    public ActionResult<VehicleModel> Get(ulong id)
+    public ActionResult<VehicleModelGetDto> Get(ulong id)
     {
         var vehicleModel = _rentalServiceRepository.VehicleModels.FirstOrDefault(vehicleModel => vehicleModel.Id == id);
         if (vehicleModel == null)
@@ -35,7 +38,7 @@ public class VehicleModelController : ControllerBase
         }
         else
         {
-            return Ok(vehicleModel);
+            return Ok(_mapper.Map<VehicleModelGetDto>(vehicleModel));
         }
     }
 }

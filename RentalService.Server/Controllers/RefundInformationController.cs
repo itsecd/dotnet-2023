@@ -6,78 +6,93 @@ using RentalService.Server.Repository;
 
 namespace RentalService.Server.Controllers;
 
+/// <summary>
+///     Controller for refund information table
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class RefundInformationController : ControllerBase
 {
     private readonly ILogger<RefundInformationController> _logger;
-    private readonly IRentalServiceRepository _rentalServiceRepository;
     private readonly IMapper _mapper;
-    
-    public RefundInformationController(ILogger<RefundInformationController> logger, IRentalServiceRepository rentalServiceRepository, IMapper mapper)
+    private readonly IRentalServiceRepository _rentalServiceRepository;
+
+    public RefundInformationController(ILogger<RefundInformationController> logger,
+        IRentalServiceRepository rentalServiceRepository, IMapper mapper)
     {
         _logger = logger;
         _rentalServiceRepository = rentalServiceRepository;
         _mapper = mapper;
     }
-    
+
+    /// <summary>
+    ///     Get method which returns all refund information
+    /// </summary>
     [HttpGet]
     public IEnumerable<RefundInformation> Get()
     {
         return _rentalServiceRepository.RefundInformations;
     }
-    
+
+    /// <summary>
+    ///     Get method which returns refund information by id
+    /// </summary>
     [HttpGet("{id}")]
     public ActionResult<RefundInformation> Get(ulong id)
     {
-        var refundInformation = _rentalServiceRepository.RefundInformations.FirstOrDefault(refundInformation => refundInformation.Id == id);
+        RefundInformation? refundInformation =
+            _rentalServiceRepository.RefundInformations.FirstOrDefault(refundInformation => refundInformation.Id == id);
         if (refundInformation == null)
         {
             _logger.LogInformation($"Not found refundInformation: {id}");
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            return Ok(refundInformation);
-        }
+
+        return Ok(refundInformation);
     }
-    
+
+    /// <summary>
+    ///     Post method which add new refund information
+    /// </summary>
     [HttpPost]
     public void Post([FromBody] RefundInformationPostDto refundInformation)
     {
         _rentalServiceRepository.RefundInformations.Add(_mapper.Map<RefundInformation>(refundInformation));
     }
-    
+
+    /// <summary>
+    ///     Put method for changing data in the refund information table
+    /// </summary>
     [HttpPut("{id}")]
     public IActionResult Put(ulong id, [FromBody] RefundInformationPostDto refundInformationToPut)
     {
-        var refundInformation = _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
+        RefundInformation? refundInformation =
+            _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
         if (refundInformation == null)
         {
             _logger.LogInformation("Not found refundInformationToPut: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            _mapper.Map(refundInformationToPut, refundInformation);
-            return Ok();
-        }
+
+        _mapper.Map(refundInformationToPut, refundInformation);
+        return Ok();
     }
-    
+
+    /// <summary>
+    ///     Delete method for deleting a refund information
+    /// </summary>
     [HttpDelete("{id}")]
     public IActionResult Delete(ulong id)
     {
-        var refundInformation = _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
+        RefundInformation? refundInformation =
+            _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
         if (refundInformation == null)
         {
             _logger.LogInformation($"Not found refundInformation: {id}");
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            _rentalServiceRepository.RefundInformations.Remove(refundInformation);
-            return Ok();
-        }
+
+        _rentalServiceRepository.RefundInformations.Remove(refundInformation);
+        return Ok();
     }
 }
-

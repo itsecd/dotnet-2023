@@ -3,12 +3,12 @@ using AutoMapper;
 using RentalService.Server;
 using RentalService.Server.Repository;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IRentalServiceRepository, RentalServiceRepository>();
 
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
-var mapper = mapperConfig.CreateMapper();
+IMapper? mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddControllers();
@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

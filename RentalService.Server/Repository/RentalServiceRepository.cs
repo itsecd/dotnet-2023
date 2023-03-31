@@ -1,11 +1,12 @@
-namespace RentalService.Server.Repository;
 using RentalService.Domain;
+
+namespace RentalService.Server.Repository;
 
 public class RentalServiceRepository : IRentalServiceRepository
 {
     public RentalServiceRepository()
     {
-        Clients = new List<Client>()
+        Clients = new List<Client>
         {
             new()
             {
@@ -54,7 +55,7 @@ public class RentalServiceRepository : IRentalServiceRepository
             }
         };
 
-        RentalPoints = new List<RentalPoint>()
+        RentalPoints = new List<RentalPoint>
         {
             new()
             {
@@ -88,7 +89,7 @@ public class RentalServiceRepository : IRentalServiceRepository
             }
         };
 
-        VehicleModels = new List<VehicleModel>()
+        VehicleModels = new List<VehicleModel>
         {
             new()
             {
@@ -121,8 +122,8 @@ public class RentalServiceRepository : IRentalServiceRepository
                 Brand = "Geely"
             }
         };
-        
-        Vehicles = new List<Vehicle>()
+
+        Vehicles = new List<Vehicle>
         {
             new()
             {
@@ -131,21 +132,21 @@ public class RentalServiceRepository : IRentalServiceRepository
                 ModelId = 1,
                 Colour = "Тёмно-синий"
             },
-            new() 
+            new()
             {
                 Id = 2,
                 Number = "Х547ХМ18",
                 ModelId = 3,
                 Colour = "Серо-зелёный"
             },
-            new() 
+            new()
             {
                 Id = 3,
                 Number = "М018ЕС73",
                 ModelId = 3,
                 Colour = "Серебристо-серо-зеленоватый"
             },
-            new() 
+            new()
             {
                 Id = 4,
                 Number = "Н728МН81",
@@ -161,7 +162,7 @@ public class RentalServiceRepository : IRentalServiceRepository
             }
         };
 
-        RentalInformations = new List<RentalInformation>()
+        RentalInformations = new List<RentalInformation>
         {
             new()
             {
@@ -235,7 +236,8 @@ public class RentalServiceRepository : IRentalServiceRepository
                 RefundDate = new DateTime(2022, 02, 04, 07, 09, 12),
                 IssuedCarId = 4
             },
-            new()            {
+            new()
+            {
                 Id = 5,
                 RentalPointId = 5,
                 RefundDate = new DateTime(2013, 04, 24, 12, 12, 12),
@@ -243,7 +245,7 @@ public class RentalServiceRepository : IRentalServiceRepository
             }
         };
 
-        IssuedCars = new List<IssuedCar>()
+        IssuedCars = new List<IssuedCar>
         {
             new()
             {
@@ -297,16 +299,16 @@ public class RentalServiceRepository : IRentalServiceRepository
     }
 
     public List<Client> Clients { get; }
-    
+
     public List<RentalPoint> RentalPoints { get; }
-    
+
     public List<VehicleModel> VehicleModels { get; }
-    
+
     public List<Vehicle> Vehicles { get; }
-    
+
     public List<RefundInformation> RefundInformations { get; }
-    
+
     public List<RentalInformation> RentalInformations { get; }
-    
+
     public List<IssuedCar> IssuedCars { get; }
 }

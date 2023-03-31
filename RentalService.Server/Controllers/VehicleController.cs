@@ -6,85 +6,93 @@ using RentalService.Server.Repository;
 
 namespace RentalService.Server.Controllers;
 
+/// <summary>
+///     Controller for vehicle table
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class VehicleController : ControllerBase
 {
     private readonly ILogger<VehicleController> _logger;
-    
-    private readonly IRentalServiceRepository _rentalServiceRepository;
 
     private readonly IMapper _mapper;
-    
-    public VehicleController(ILogger<VehicleController> logger, IRentalServiceRepository rentalServiceRepository, IMapper mapper)
+
+    private readonly IRentalServiceRepository _rentalServiceRepository;
+
+    public VehicleController(ILogger<VehicleController> logger, IRentalServiceRepository rentalServiceRepository,
+        IMapper mapper)
     {
         _logger = logger;
         _rentalServiceRepository = rentalServiceRepository;
         _mapper = mapper;
     }
-    
+
     /// <summary>
-    /// ffddgfhgsfvs
+    ///     Get method which returns all vehicles
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     public IEnumerable<VehicleGetDto> Get()
     {
         return _rentalServiceRepository.Vehicles.Select(vehicle => _mapper.Map<VehicleGetDto>(vehicle));
     }
-    
+
+    /// <summary>
+    ///     Get method which returns vehicle by id
+    /// </summary>
     [HttpGet("{id}")]
     public ActionResult<VehicleGetDto> Get(ulong id)
     {
-        var vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle: {id}");
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            return Ok(_mapper.Map<VehicleGetDto>(vehicle));
-        }
+
+        return Ok(_mapper.Map<VehicleGetDto>(vehicle));
     }
-    
+
+    /// <summary>
+    ///     Post method which add new vehicle
+    /// </summary>
     [HttpPost]
     public void Post([FromBody] VehiclePostDto vehicle)
     {
         _rentalServiceRepository.Vehicles.Add(_mapper.Map<Vehicle>(vehicle));
     }
-    
+
+    /// <summary>
+    ///     Put method for changing data in the vehicle table
+    /// </summary>
     [HttpPut("{id}")]
     public IActionResult Put(ulong id, [FromBody] VehiclePostDto vehicleToPut)
     {
-        var vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            _mapper.Map(vehicleToPut, vehicle);
-    
-            return Ok();
-        }
+
+        _mapper.Map(vehicleToPut, vehicle);
+
+        return Ok();
     }
-    
+
+    /// <summary>
+    ///     Delete method for deleting a vehicle
+    /// </summary>
     [HttpDelete("{id}")]
     public IActionResult Delete(ulong id)
     {
-        var vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle: {id}");
-            return NotFound(); 
+            return NotFound();
         }
-        else
-        {
-            _rentalServiceRepository.Vehicles.Remove(vehicle);
-            return Ok();
-        }
+
+        _rentalServiceRepository.Vehicles.Remove(vehicle);
+        return Ok();
     }
 }
-

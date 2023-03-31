@@ -2,6 +2,7 @@
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using OrganizationServer.DTO;
+using System.Collections.Generic;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -18,33 +19,34 @@ public class EmployeeController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<Employee> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.Employees;
+        return _mapper.Map<IEnumerable<EmployeeDTO>>(_organizationRepository.Employees);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Employee> Get(uint id)
+    public ActionResult<EmployeeDTO> Get(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
-        return Ok(employee);
+        var mappedEmployee = _mapper.Map<EmployeeDTO>(employee);
+        return Ok(mappedEmployee);
     }
 
     [HttpPost]
-    public ActionResult<Employee> Post([FromBody] EmployeeDTO employee)
+    public ActionResult<EmployeeDTO> Post([FromBody] EmployeeDTO employee)
     {
         var mappedEmployee = _mapper.Map<Employee>(employee);
         var workshop =
                _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
         if (workshop == null) return NotFound("A workshop with given id doesn't exist");
         _organizationRepository.Employees.Add(mappedEmployee);
-        return Ok(mappedEmployee);
+        return Ok(employee);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<Employee> Put(uint id, [FromBody] EmployeeDTO newEmployee)
+    public ActionResult<EmployeeDTO> Put(uint id, [FromBody] EmployeeDTO newEmployee)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
@@ -54,11 +56,11 @@ public class EmployeeController : Controller
         var mappedEmployee = _mapper.Map<Employee>(newEmployee);
         _organizationRepository.Employees.Remove(employee);
         _organizationRepository.Employees.Add(mappedEmployee);
-        return Ok();
+        return Ok(newEmployee);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Department> Delete(uint id)
+    public ActionResult<EmployeeDTO> Delete(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();

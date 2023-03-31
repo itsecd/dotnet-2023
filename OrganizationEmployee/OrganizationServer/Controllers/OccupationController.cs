@@ -2,6 +2,7 @@
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using OrganizationServer.DTO;
+using System.Collections.Generic;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -18,40 +19,42 @@ public class OccupationController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<Occupation> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<OccupationDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.Occupations;
+        return _mapper.Map<IEnumerable<OccupationDTO>>(_organizationRepository.Occupations);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Occupation> Get(int id)
+    public ActionResult<OccupationDTO> Get(int id)
     {
         var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null) return NotFound();
-        return Ok(occupation);
+        var mappedOccupation = _mapper.Map<OccupationDTO>(occupation);
+        return Ok(mappedOccupation);
     }
 
     [HttpPost]
-    public void Post([FromBody] OccupationDTO occupation)
+    public ActionResult<OccupationDTO> Post([FromBody] OccupationDTO occupation)
     {
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
         _organizationRepository.Occupations.Add(mappedOccupation);
+        return Ok(occupation);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<Occupation> Put(int id, [FromBody] OccupationDTO newDepartment)
+    public ActionResult<OccupationDTO> Put(int id, [FromBody] OccupationDTO newDepartment)
     {
         var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null) return NotFound();
         _organizationRepository.Occupations.Remove(occupation);
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
         _organizationRepository.Occupations.Add(mappedOccupation);
-        return Ok();
+        return Ok(newDepartment);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Occupation> Delete(int id)
+    public ActionResult<OccupationDTO> Delete(int id)
     {
         var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null) return NotFound();

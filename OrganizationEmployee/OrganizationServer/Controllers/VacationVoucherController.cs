@@ -18,21 +18,22 @@ public class VacationVoucherController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<VacationVoucher> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<VacationVoucherDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.VacationVouchers;
+        return _mapper.Map<IEnumerable<VacationVoucherDTO>>(_organizationRepository.VacationVouchers);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<VacationVoucher> Get(int id)
+    public ActionResult<VacationVoucherDTO> Get(int id)
     {
         var vacationVoucher = _organizationRepository.VacationVouchers.FirstOrDefault(vacationVoucher => vacationVoucher.Id == id);
         if (vacationVoucher == null) return NotFound();
-        return Ok(vacationVoucher);
+        var mappedVacationVoucher = _mapper.Map<VacationVoucherDTO>(vacationVoucher);
+        return Ok(mappedVacationVoucher);
     }
 
     [HttpPost]
-    public ActionResult<VacationVoucher> Post([FromBody] VacationVoucherDTO vacationVoucher)
+    public ActionResult<VacationVoucherDTO> Post([FromBody] VacationVoucherDTO vacationVoucher)
     {
         var mappedVacationVoucher = _mapper.Map<VacationVoucher>(vacationVoucher);
         var voucherType =
@@ -41,12 +42,12 @@ public class VacationVoucherController : Controller
         if (voucherType == null) return NotFound("A voucher type with given id doesn't exist");
         _organizationRepository.VacationVouchers.Add(mappedVacationVoucher);
         voucherType.VacationVouchers.Add(mappedVacationVoucher);
-        return Ok(mappedVacationVoucher);
+        return Ok(vacationVoucher);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<VacationVoucher> Put(int id, [FromBody] VacationVoucherDTO newVacationVoucher)
+    public ActionResult<VacationVoucherDTO> Put(int id, [FromBody] VacationVoucherDTO newVacationVoucher)
     {
         var vacationVoucher = _organizationRepository.VacationVouchers.FirstOrDefault(voucher => voucher.Id == id);
         if (vacationVoucher == null) return NotFound();
@@ -58,11 +59,11 @@ public class VacationVoucherController : Controller
 
         _organizationRepository.VacationVouchers.Remove(vacationVoucher);
         _organizationRepository.VacationVouchers.Add(mappedVacationVoucher);
-        return Ok();
+        return Ok(newVacationVoucher);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<VacationVoucher> Delete(int id)
+    public ActionResult<VacationVoucherDTO> Delete(int id)
     {
         var vacationVoucher = _organizationRepository.VacationVouchers.FirstOrDefault(voucher => voucher.Id == id);
         if (vacationVoucher == null) return NotFound();

@@ -18,23 +18,24 @@ public class EmployeeVacationVoucherController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<EmployeeVacationVoucher> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeVacationVoucherDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.EmployeeVacationVouchers;
+        return _mapper.Map<IEnumerable<EmployeeVacationVoucherDTO>>(_organizationRepository.EmployeeVacationVouchers);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<EmployeeVacationVoucher> Get(int id)
+    public ActionResult<EmployeeVacationVoucherDTO> Get(int id)
     {
         var employeeVacationVoucher =
             _organizationRepository.EmployeeVacationVouchers
             .FirstOrDefault(employeeVacationVoucher => employeeVacationVoucher.Id == id);
         if (employeeVacationVoucher == null) return NotFound();
-        return Ok(employeeVacationVoucher);
+        var mappedEmployeeVacationVoucher = _mapper.Map<EmployeeVacationVoucherDTO>(employeeVacationVoucher);
+        return Ok(mappedEmployeeVacationVoucher);
     }
 
     [HttpPost]
-    public ActionResult<EmployeeVacationVoucher> Post([FromBody] EmployeeVacationVoucherDTO employeeVoucher)
+    public ActionResult<EmployeeVacationVoucherDTO> Post([FromBody] EmployeeVacationVoucherDTO employeeVoucher)
     {
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(employeeVoucher);
         var employee =
@@ -48,12 +49,12 @@ public class EmployeeVacationVoucherController : Controller
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
         _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
-        return Ok(mappedEmployeeVoucher);
+        return Ok(employeeVoucher);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<EmployeeVacationVoucher> Put(int id, [FromBody] EmployeeVacationVoucherDTO newEmployeeVoucher)
+    public ActionResult<EmployeeVacationVoucherDTO> Put(int id, [FromBody] EmployeeVacationVoucherDTO newEmployeeVoucher)
     {
         var employeeVoucher = _organizationRepository
             .EmployeeVacationVouchers.FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
@@ -73,11 +74,11 @@ public class EmployeeVacationVoucherController : Controller
 
         _organizationRepository.EmployeeVacationVouchers.Remove(employeeVoucher);
         _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
-        return Ok();
+        return Ok(newEmployeeVoucher);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Department> Delete(int id)
+    public ActionResult<EmployeeVacationVoucherDTO> Delete(int id)
     {
         var employeeVoucher =
             _organizationRepository.EmployeeVacationVouchers

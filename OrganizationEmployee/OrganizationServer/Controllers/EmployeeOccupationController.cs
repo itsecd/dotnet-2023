@@ -18,23 +18,24 @@ public class EmployeeOccupationController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<EmployeeOccupation> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeOccupationDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _organizationRepository.EmployeeOccupations;
+        return _mapper.Map<IEnumerable<EmployeeOccupationDTO>>(_organizationRepository.EmployeeOccupations);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<EmployeeOccupation> Get(int id)
+    public ActionResult<EmployeeOccupationDTO> Get(int id)
     {
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations
             .FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
         if (employeeOccupation == null) return NotFound();
-        return Ok(employeeOccupation);
+        var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDTO>(employeeOccupation);
+        return Ok(mappedEmployeeOccupation);
     }
 
     [HttpPost]
-    public ActionResult<EmployeeOccupation> Post([FromBody] EmployeeOccupationDTO employeeOccupation)
+    public ActionResult<EmployeeOccupationDTO> Post([FromBody] EmployeeOccupationDTO employeeOccupation)
     {
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupation>(employeeOccupation);
         var employee =
@@ -48,12 +49,12 @@ public class EmployeeOccupationController : Controller
         mappedEmployeeOccupation.Occupation = occupation;
         mappedEmployeeOccupation.Employee = employee;
         _organizationRepository.EmployeeOccupations.Add(mappedEmployeeOccupation);
-        return Ok(mappedEmployeeOccupation);
+        return Ok(employeeOccupation);
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult<EmployeeOccupation> Put(int id, [FromBody] EmployeeOccupationDTO newEmployeeOccupation)
+    public ActionResult<EmployeeOccupationDTO> Put(int id, [FromBody] EmployeeOccupationDTO newEmployeeOccupation)
     {
         var employeeOccupation = _organizationRepository
             .EmployeeOccupations.FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
@@ -72,11 +73,11 @@ public class EmployeeOccupationController : Controller
         mappedEmployeeOccupation.Employee = employee;
         _organizationRepository.EmployeeOccupations.Remove(employeeOccupation);
         _organizationRepository.EmployeeOccupations.Add(mappedEmployeeOccupation);
-        return Ok(mappedEmployeeOccupation);
+        return Ok(newEmployeeOccupation);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeOccupation> Delete(int id)
+    public ActionResult<EmployeeOccupationDTO> Delete(int id)
     {
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations

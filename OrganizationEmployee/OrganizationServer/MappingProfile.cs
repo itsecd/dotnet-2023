@@ -8,14 +8,14 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<WorkshopDTO, Workshop>();
-        CreateMap<DepartmentDTO, Department>();
-        CreateMap<VoucherTypeDTO, VoucherType>();
-        CreateMap<VacationVoucherDTO, VacationVoucher>();
-        CreateMap<OccupationDTO, Occupation>();
-        CreateMap<EmployeeDTO, Employee>();
-        CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>();
-        CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>();
-        CreateMap<EmployeeVacationVoucherDTO, EmployeeVacationVoucher>();
+        CreateMap<WorkshopDTO, Workshop>().ReverseMap();
+        CreateMap<DepartmentDTO, Department>().ReverseMap();
+        CreateMap<DepartmentEmployeeDTO, DepartmentEmployee>().ReverseMap();
+        CreateMap<EmployeeOccupationDTO, EmployeeOccupation>().ReverseMap();
+        CreateMap<EmployeeDTO, Employee>().ReverseMap();
+        CreateMap<VoucherTypeDTO, VoucherType>().ReverseMap();
+        CreateMap<VacationVoucherDTO, VacationVoucher>().ReverseMap();
+        CreateMap<OccupationDTO, Occupation>().ReverseMap();
+        CreateMap<EmployeeVacationVoucherDTO, EmployeeVacationVoucher>().ReverseMap();
     }
 }

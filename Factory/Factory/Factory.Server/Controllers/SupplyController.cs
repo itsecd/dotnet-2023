@@ -1,25 +1,35 @@
-﻿using Factory.Domain;
+﻿using AutoMapper;
+using Factory.Domain;
 using Factory.Server.Dto;
+using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Factory.Server.Controllers;
+
+/// <summary>
+/// Supply controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SupplyController : ControllerBase
 {
     private readonly ILogger<SupplyController> _logger;
 
-    private readonly FactoryRepository _factoryRepository;
+    private readonly IFactoryRepository _factoryRepository;
 
-    public SupplyController(ILogger<SupplyController> logger, FactoryRepository factoryRepository)
+    private readonly IMapper _mapper;
+
+    public SupplyController(ILogger<SupplyController> logger, IFactoryRepository factoryRepository, IMapper mapper)
     {
         _logger = logger;
         _factoryRepository = factoryRepository;
+        _mapper = mapper;
     }
 
-    // GET: api/<SupplyController>
+    /// <summary>
+    /// Get supplies
+    /// </summary>
+    /// <returns>supplies</returns>
     [HttpGet]
     public IEnumerable<Supply> Get()
     {
@@ -27,7 +37,11 @@ public class SupplyController : ControllerBase
         return _factoryRepository.Supplies;
     }
 
-    // GET api/<SupplyController>/5
+    /// <summary>
+    /// Get supply by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>supply</returns>
     [HttpGet("{id}")]
     public ActionResult<Supply> Get(int id)
     {
@@ -44,20 +58,22 @@ public class SupplyController : ControllerBase
         }
     }
 
-    // POST api/<SupplyController>
+    /// <summary>
+    /// Post supply
+    /// </summary>
+    /// <param name="supply"></param>
     [HttpPost]
     public void Post([FromBody] SupplyPostDto supply)
     {
-        _factoryRepository.Supplies.Add(new Supply()
-        {
-            EnterpriseID = supply.EnterpriseID,
-            SupplierID = supply.SupplierID,
-            Date = supply.Date,
-            Quantity = supply.Quantity
-        });
+        _factoryRepository.Supplies.Add(_mapper.Map<Supply>(supply));
     }
 
-    // PUT api/<SupplyController>/5
+    /// <summary>
+    /// Put supply by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="supplyToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
@@ -70,15 +86,16 @@ public class SupplyController : ControllerBase
         else
         {
             _logger.LogInformation($"Put supplier with id {id}");
-            supply.EnterpriseID = supplyToPut.EnterpriseID;
-            supply.SupplierID = supplyToPut.SupplierID;
-            supply.Date = supplyToPut.Date;
-            supply.Quantity = supplyToPut.Quantity;
+            _mapper.Map(supplyToPut, supply);
             return Ok();
         }
     }
 
-    // DELETE api/<SupplyController>/5
+    /// <summary>
+    /// Delete supply by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

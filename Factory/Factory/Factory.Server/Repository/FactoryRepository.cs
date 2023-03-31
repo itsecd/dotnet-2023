@@ -1,9 +1,9 @@
 ﻿using Factory.Domain;
 using System.Data.Common;
 
-namespace Factory.Server;
+namespace Factory.Server.Repository;
 
-public class FactoryRepository
+public class FactoryRepository : IFactoryRepository
 {
     private readonly List<TypeIndustry> _industryTypes;
 
@@ -27,7 +27,7 @@ public class FactoryRepository
             new TypeIndustry(6, "Материально - техническое снабжение")
         };
 
-       _ownershipForms =  new List<OwnershipForm>
+        _ownershipForms = new List<OwnershipForm>
         {
             new OwnershipForm(1, "ЗАО"),
             new OwnershipForm(2, "ООО"),
@@ -35,7 +35,7 @@ public class FactoryRepository
             new OwnershipForm(4, "ОАО")
         };
 
-       _supplies = new List<Supply>
+        _supplies = new List<Supply>
         {
             new Supply(1, 1, 1, "20.01.2023", 3), // СТАН - Артур
             new Supply(2, 1, 2, "31.10.2022", 5), // СТАН - Чендлер
@@ -48,14 +48,14 @@ public class FactoryRepository
         };
 
         _enterprises = new List<Enterprise>
-        { 
+        {
             new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>(){_supplies[0], _supplies[1] }),
             new Enterprise(2, "1156313028981", 6, "ЗГМ", "ул.22 партъезда д.10а", "88462295931", 2, 150, 1500, new List<Supply>(){ _supplies[4], _supplies[7] }),
             new Enterprise(3, "1116318009510", 4, "ВЗМК", "ул.Балаковская д.6а", "884692007711", 2, 200, 2000, new List<Supply>(){ _supplies[2] }),
             new Enterprise(4, "1026300767899", 2, "АВИАКОР", "ул.Земеца д.32", "88463720888", 3, 250, 2500, new List < Supply >() { _supplies[3], _supplies[6] }),
             new Enterprise(5, "1026301697487", 6, "ЭКРАН", "ул.Кирова д.24", "88469983785", 4, 130, 1300, new List < Supply >() { _supplies[5]}),
         };
-        
+
         _suppliers = new List<Supplier>
         {
             new Supplier(1, "Артур Пирожков", "ул. Зацепильная д.42", "89375550203", new List<Supply>(){ _supplies[0]}),
@@ -67,9 +67,9 @@ public class FactoryRepository
 
     }
     public List<TypeIndustry> IndustryTypes => _industryTypes;
-    public List<OwnershipForm> OwnershipForms => _ownershipForms;   
+    public List<OwnershipForm> OwnershipForms => _ownershipForms;
     public List<Supply> Supplies => _supplies;
-    public List<Enterprise> Enterprises => _enterprises;    
+    public List<Enterprise> Enterprises => _enterprises;
     public List<Supplier> Suppliers => _suppliers;
 
 }

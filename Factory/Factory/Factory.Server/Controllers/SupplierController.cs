@@ -1,41 +1,48 @@
-﻿using Factory.Domain;
+﻿using AutoMapper;
+using Factory.Domain;
 using Factory.Server.Dto;
+using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Factory.Server.Controllers;
+
+/// <summary>
+/// Supplier controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SupplierController : ControllerBase
 {
     private readonly ILogger<SupplierController> _logger;
 
-    private readonly FactoryRepository _factoryRepository;
+    private readonly IFactoryRepository _factoryRepository;
 
-    public SupplierController(ILogger<SupplierController> logger, FactoryRepository factoryRepository)
+    private readonly IMapper _mapper;
+
+    public SupplierController(ILogger<SupplierController> logger, IFactoryRepository factoryRepository, IMapper mapper)
     {
         _logger = logger;
         _factoryRepository = factoryRepository;
+        _mapper = mapper;
     }
 
-    // GET: api/<SupplierController>
+    /// <summary>
+    /// Get suppliers
+    /// </summary>
+    /// <returns>suppliers</returns>
     [HttpGet]
     public IEnumerable<SupplierGetDto> Get()
     {
         _logger.LogInformation("Get Suppliers");
-        return _factoryRepository.Suppliers.Select(supplier => 
-            new SupplierGetDto
-            {
-                SupplierID = supplier.SupplierID,
-                Name = supplier.Name,   
-                Address = supplier.Address,
-                Phone = supplier.Phone
-            }
-        );
+        return _factoryRepository.Suppliers.Select(supplier =>
+            _mapper.Map<SupplierGetDto>(supplier));
     }
 
-    // GET api/<SupplierController>/5
+    /// <summary>
+    /// Get supplier by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>supplier</returns>
     [HttpGet("{id}")]
     public ActionResult<SupplierGetDto> Get(int id)
     {
@@ -48,29 +55,26 @@ public class SupplierController : ControllerBase
         else
         {
             _logger.LogInformation($"Get supplier with id {id}");
-            return Ok(new SupplierGetDto
-            {
-                SupplierID = supplier.SupplierID,
-                Name = supplier.Name,
-                Address = supplier.Address,
-                Phone = supplier.Phone
-            });
+            return Ok(_mapper.Map<SupplierGetDto>(supplier));
         }
     }
 
-    // POST api/<SupplierController>
+    /// <summary>
+    /// Post supplier
+    /// </summary>
+    /// <param name="supplier"></param>
     [HttpPost]
     public void Post([FromBody] SupplierPostDto supplier)
     {
-        _factoryRepository.Suppliers.Add(new Supplier() 
-        {
-            Name = supplier.Name,
-            Address = supplier.Address,
-            Phone = supplier.Phone
-        });
+        _factoryRepository.Suppliers.Add(_mapper.Map<Supplier>(supplier));
     }
 
-    // PUT api/<SupplierController>/5
+    /// <summary>
+    /// Put supplier by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="supplierToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SupplierPostDto supplierToPut)
     {
@@ -83,14 +87,16 @@ public class SupplierController : ControllerBase
         else
         {
             _logger.LogInformation($"Put supplier with id {id}");
-            supplier.Name = supplierToPut.Name;
-            supplier.Address = supplierToPut.Address;
-            supplier.Phone = supplierToPut.Phone;
+            _mapper.Map(supplierToPut, supplier);
             return Ok();
         }
     }
 
-    // DELETE api/<SupplierController>/5
+    /// <summary>
+    /// Delete supplier by ID/5
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

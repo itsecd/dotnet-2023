@@ -4,91 +4,79 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Xml.Linq;
 using System;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Factory.Server.Repository;
+using AutoMapper;
 
 namespace Factory.Server.Controllers;
+
+/// <summary>
+/// Enterprise controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class EnterpriseController : ControllerBase
 {
     private readonly ILogger<EnterpriseController> _logger;
 
-    private readonly FactoryRepository _factoryRepository;
+    private readonly IFactoryRepository _factoryRepository;
 
-    public EnterpriseController(ILogger<EnterpriseController> logger, FactoryRepository factoryRepository)
+    private readonly IMapper _mapper;
+    public EnterpriseController(ILogger<EnterpriseController> logger, IFactoryRepository factoryRepository, IMapper mapper)
     {
         _logger = logger;
         _factoryRepository = factoryRepository;
+        _mapper = mapper;
     }
 
-    // GET: api/<EnterpriseController>
+    /// <summary>
+    /// Get enterprises
+    /// </summary>
+    /// <returns>enterprises</returns>
     [HttpGet]
     public IEnumerable<EnterpriseGetDto> Get()
     {
         _logger.LogInformation("Get Enterprises");
         return _factoryRepository.Enterprises.Select(enterprise =>
-            new EnterpriseGetDto
-            {
-                EnterpriseID = enterprise.EnterpriseID,
-                RegistrationNumber = enterprise.RegistrationNumber,
-                TypeID = enterprise.TypeID,
-                Name = enterprise.Name,
-                Address = enterprise.Address,
-                TelephoneNumber = enterprise.TelephoneNumber,
-                OwnershipFormID = enterprise.OwnershipFormID,
-                EmployeesCount  = enterprise.EmployeesCount,
-                TotalArea = enterprise.TotalArea
-            }
-        );
+            _mapper.Map<EnterpriseGetDto>(enterprise)) ;
     }
 
-    // GET api/<EnterpriseController>/5
+    /// <summary>
+    /// Get enterprise by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>enterprise</returns>
     [HttpGet("{id}")]
     public ActionResult<EnterpriseGetDto> Get(int id)
     {
         var enterprise = _factoryRepository.Enterprises.FirstOrDefault(enterprise => enterprise.EnterpriseID == id);
         if (enterprise == null)
         {
-            _logger.LogInformation($"Not found enterprise: {id}");
+            _logger.LogInformation("Not found enterprise: {id}", id);
             return NotFound();
         }
         else
         {
             _logger.LogInformation($"Get enterprise with id {id}");
-            return Ok(new EnterpriseGetDto
-            {
-                EnterpriseID = enterprise.EnterpriseID,
-                RegistrationNumber = enterprise.RegistrationNumber,
-                TypeID = enterprise.TypeID,
-                Name = enterprise.Name,
-                Address = enterprise.Address,
-                TelephoneNumber = enterprise.TelephoneNumber,
-                OwnershipFormID = enterprise.OwnershipFormID,
-                EmployeesCount = enterprise.EmployeesCount,
-                TotalArea = enterprise.TotalArea
-            });
+            return Ok(_mapper.Map<EnterpriseGetDto>(enterprise));
         }
     }
 
-    // POST api/<EnterpriseController>
+    /// <summary>
+    /// Post enterprise
+    /// </summary>
+    /// <param name="enterprise"></param>
     [HttpPost]
     public void Post([FromBody] EnterprisePostDto enterprise)
     {
-        _factoryRepository.Enterprises.Add(new Enterprise()
-        {
-            RegistrationNumber = enterprise.RegistrationNumber,
-            TypeID = enterprise.TypeID,
-            Name = enterprise.Name,
-            Address = enterprise.Address,
-            TelephoneNumber = enterprise.TelephoneNumber,
-            OwnershipFormID = enterprise.OwnershipFormID,
-            EmployeesCount = enterprise.EmployeesCount,
-            TotalArea = enterprise.TotalArea
-        });
+        _factoryRepository.Enterprises.Add(_mapper.Map<Enterprise>(enterprise));
     }
 
-    // PUT api/<EnterpriseController>/5
+    /// <summary>
+    /// Put enterprise by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="enterpriseToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] EnterprisePostDto enterpriseToPut)
     {
@@ -101,19 +89,16 @@ public class EnterpriseController : ControllerBase
         else
         {
             _logger.LogInformation($"Put enterprise with id {id}");
-            enterprise.RegistrationNumber = enterpriseToPut.RegistrationNumber;
-            enterprise.TypeID = enterpriseToPut.TypeID;
-            enterprise.Name = enterpriseToPut.Name;
-            enterprise.Address = enterpriseToPut.Address;
-            enterprise.TelephoneNumber = enterpriseToPut.TelephoneNumber;
-            enterprise.OwnershipFormID = enterpriseToPut.OwnershipFormID;
-            enterprise.EmployeesCount = enterpriseToPut.EmployeesCount;
-            enterprise.TotalArea = enterpriseToPut.TotalArea;
+            _mapper.Map(enterpriseToPut, enterprise);
             return Ok();
         }
     }
 
-    // DELETE api/<EnterpriseController>/5
+    /// <summary>
+    /// Delete enterprise by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

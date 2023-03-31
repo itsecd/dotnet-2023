@@ -1,24 +1,30 @@
 ﻿using Factory.Domain;
+using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Factory.Server.Controllers;
+
+/// <summary>
+/// Ownership form controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class OwnershipFormController : ControllerBase
 {
     private readonly ILogger<OwnershipFormController> _logger;
 
-    private readonly FactoryRepository _factoryRepository;
+    private readonly IFactoryRepository _factoryRepository;
 
-    public OwnershipFormController(ILogger<OwnershipFormController> logger, FactoryRepository factoryRepository)
+    public OwnershipFormController(ILogger<OwnershipFormController> logger, IFactoryRepository factoryRepository)
     {
         _logger = logger;
         _factoryRepository = factoryRepository;
     }
 
-    // GET: api/<OwnershipFormController>
+    /// <summary>
+    /// Get ownership forms
+    /// </summary>
+    /// <returns>ownership forms</returns>
     [HttpGet]
     public IEnumerable<OwnershipForm> Get()
     {
@@ -26,7 +32,11 @@ public class OwnershipFormController : ControllerBase
         return _factoryRepository.OwnershipForms;
     }
 
-    // GET api/<OwnershipFormController>/5
+    /// <summary>
+    /// Get ownership form by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>ownership forms</returns>
     [HttpGet("{id}")]
     public ActionResult<OwnershipForm> Get(int id)
     {

@@ -1,23 +1,31 @@
 ﻿using Factory.Domain;
+using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace Factory.Server.Controllers;
+
+/// <summary>
+/// Type industry controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class TypeIndustryController : ControllerBase
 {
     private readonly ILogger<TypeIndustryController> _logger;
 
-    private readonly FactoryRepository _factoryRepository;
+    private readonly IFactoryRepository _factoryRepository;
 
-    public TypeIndustryController(ILogger<TypeIndustryController> logger, FactoryRepository factoryRepository)
+    public TypeIndustryController(ILogger<TypeIndustryController> logger, IFactoryRepository factoryRepository)
     {
         _logger = logger;
         _factoryRepository = factoryRepository;
     }
-   
-    // GET: api/<TypeIndustryController>
+
+    /// <summary>
+    /// Get type industry
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<TypeIndustry> Get()
     {
@@ -25,7 +33,11 @@ public class TypeIndustryController : ControllerBase
         return _factoryRepository.IndustryTypes;
     }
 
-    // GET api/<TypeIndustryController>/5
+    /// <summary>
+    /// Get type industry by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<TypeIndustry> Get(int id)
     {

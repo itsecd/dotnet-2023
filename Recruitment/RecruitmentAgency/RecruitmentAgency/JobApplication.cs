@@ -15,7 +15,7 @@ public class JobApplication
     /// <summary>
     /// Title - responsible for the job title
     /// </summary>
-    public string Title { set; get; } = string.Empty;
+    public string Title { set; get; } = "Backend";
     /// <summary>  
     /// id - shows the JobApplication id
     /// </summary>  

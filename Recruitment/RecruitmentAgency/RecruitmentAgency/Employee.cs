@@ -7,11 +7,11 @@ public class Employee
     /// <summary>
     /// PersonalName - a string for name, second_name and surname
     /// </summary>  
-    public string PersonalName { set; get; } = string.Empty;
+    public string PersonalName { set; get; } = "Unknown";
     /// <summary>
     /// Telephone - a string that stores the phone number
     /// </summary>
-    public string Telephone { set; get; } = string.Empty;
+    public string? Telephone { set; get; }
     /// <summary>
     /// WorkExperience - shows the number of years a person has worked
     /// </summary>  

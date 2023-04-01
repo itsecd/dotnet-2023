@@ -27,10 +27,10 @@ public class DistrictController : ControllerBase
     /// </summary>
     /// <returns>List of districts</returns>
     [HttpGet]
-    public IEnumerable<District> Get()
+    public IEnumerable<DistrictGetDto> Get()
     {
         _logger.LogInformation("Get all districts");
-        return _districtsRepository.Districts;
+        return _mapper.Map<IEnumerable<DistrictGetDto>>(_districtsRepository.Districts);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class DistrictController : ControllerBase
     /// <param name="id">id of the district</param>
     /// <returns>Result of operation and district object</returns>
     [HttpGet("{id}")]
-    public ActionResult<District> Get(int id)
+    public ActionResult<DistrictGetDto> Get(int id)
     {
         var district = _districtsRepository.Districts.FirstOrDefault(district => district.DistrictId == id);
         if (district == null)
@@ -50,7 +50,7 @@ public class DistrictController : ControllerBase
         else
         {
             _logger.LogInformation("Get district with id: {id}", id);
-            return Ok(district);
+            return Ok(_mapper.Map<DistrictGetDto>(district));
         }
     }
 

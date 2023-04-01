@@ -28,10 +28,10 @@ public class PrivatizedController : ControllerBase
     /// </summary>
     /// <returns>List of prtivatized buildings</returns>
     [HttpGet]
-    public IEnumerable<Privatized> Get()
+    public IEnumerable<PrivatizedGetDto> Get()
     {
         _logger.LogInformation("Get all privatized buildings");
-        return _privatizedRepository.Privatized;
+        return _mapper.Map<IEnumerable<PrivatizedGetDto>>(_privatizedRepository.Privatized);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class PrivatizedController : ControllerBase
     /// <param name="registrationNumber">registration number of the privatized building</param>
     /// <returns>Result of operation and privatized building object</returns>
     [HttpGet("{registrationNumber}")]
-    public ActionResult<Building> Get(int registrationNumber)
+    public ActionResult<PrivatizedGetDto> Get(int registrationNumber)
     {
         var privatized = _privatizedRepository.Privatized.FirstOrDefault(privatized => privatized.RegistrationNumber == registrationNumber);
         if (privatized == null)
@@ -51,7 +51,7 @@ public class PrivatizedController : ControllerBase
         else
         {
             _logger.LogInformation("Get privatized building with registration number: {registrationNumber}", registrationNumber);
-            return Ok(privatized);
+            return Ok(_mapper.Map<PrivatizedGetDto>(privatized));
         }
     }
 
@@ -61,8 +61,8 @@ public class PrivatizedController : ControllerBase
     /// <param name="privatized">Privatized building to be created</param>
     [HttpPost]
     public void Post([FromBody] PrivatizedPostDto privatized)
-    {  
-        _privatizedRepository.Privatized.Add(_mapper.Map<Privatized>(privatized));   
+    {
+        _privatizedRepository.Privatized.Add(_mapper.Map<Privatized>(privatized));
     }
 
     /// <summary>

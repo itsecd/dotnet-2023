@@ -27,19 +27,19 @@ public class BuyerController : ControllerBase
     /// </summary>
     /// <returns>List of buyers</returns>
     [HttpGet]
-    public IEnumerable<Buyer> Get()
+    public IEnumerable<BuyerGetDto> Get()
     {
         _logger.LogInformation("Get all buyers");
-        return _buyersRepository.Buyers;
+        return _mapper.Map<IEnumerable<BuyerGetDto>>(_buyersRepository.Buyers);
     }
 
     /// <summary>
     /// Returns the buyer by the specified id
     /// </summary>
     /// <param name="id">id of the buyer</param>
-    /// <returns>Result of operation and building object</returns>
+    /// <returns>Result of operation and buyer object</returns>
     [HttpGet("{id}")]
-    public ActionResult<Building> Get(int id)
+    public ActionResult<BuyerGetDto> Get(int id)
     {
         var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
         if (buyer == null)
@@ -50,7 +50,7 @@ public class BuyerController : ControllerBase
         else
         {
             _logger.LogInformation("Not found buyer with id: {id}", id);
-            return Ok(buyer);
+            return Ok(_mapper.Map<BuyerGetDto>(buyer));
         }
     }
 
@@ -110,20 +110,20 @@ public class BuyerController : ControllerBase
     /// <summary>
     /// Returns auctions in which the specified buyer participated
     /// </summary>
-    /// <param name="Id">Id of the buyer</param>
+    /// <param name="id">Id of the buyer</param>
     /// <returns>List of auctions, in which the specified buyer participated</returns>
-    [HttpGet("auctions/{Id}")]
-    public ActionResult<IEnumerable<BuyerAuctionConnectionForBuyerDto>> GetAuctions(int Id)
+    [HttpGet("{id}/Auctions")]
+    public ActionResult<IEnumerable<BuyerAuctionConnectionForBuyerDto>> GetAuctions(int id)
     {
-        var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == Id);
+        var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
         if (buyer == null)
         {
-            _logger.LogInformation("Not found buyer with id: {Id}", Id);
+            _logger.LogInformation("Not found buyer with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get auctions in which the buyer with id {Id} participated", Id);
+            _logger.LogInformation("Get auctions in which the buyer with id {id} participated", id);
             return Ok(_mapper.Map<IEnumerable<BuyerAuctionConnectionForBuyerDto>>(buyer.Auctions));
         }
     }
@@ -134,7 +134,7 @@ public class BuyerController : ControllerBase
     /// <param name="id">Id of the buyer</param>
     /// <param name="connection">Auction to be add</param>
     /// <returns>Result of operation</returns>
-    [HttpPost("auctions/{id}")]
+    [HttpPost("{id}/Auctions")]
     public IActionResult PostAuction(int id, [FromBody] BuyerAuctionConnectionForBuyerDto connection)
     {
         var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
@@ -148,7 +148,7 @@ public class BuyerController : ControllerBase
         {
             if (auction != null && buyer.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId) == null)
             {
-                BuyerAuctionConnection connectionToAdd = new BuyerAuctionConnection(id, connection.AuctionId);
+                var connectionToAdd = new BuyerAuctionConnection(id, connection.AuctionId);
                 buyer.Auctions.Add(connectionToAdd);
                 auction.Buyers.Add(connectionToAdd);
                 return Ok();
@@ -163,17 +163,17 @@ public class BuyerController : ControllerBase
     /// <summary>
     /// Removes a auction from the list of auctions in which the specified buyer participated
     /// </summary>
-    /// <param name="Id">Id of the buyer</param>
+    /// <param name="id">Id of the buyer</param>
     /// <param name="connection">Auction to be remove</param>
     /// <returns>Result of operation</returns>
-    [HttpDelete("auctions/{Id}")]
-    public IActionResult DeleteAuction(int Id, [FromBody] BuyerAuctionConnectionForBuyerDto connection)
+    [HttpDelete("{id}/Auctions")]
+    public IActionResult DeleteAuction(int id, [FromBody] BuyerAuctionConnectionForBuyerDto connection)
     {
-        var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == Id);
+        var buyer = _buyersRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
         var auction = _buyersRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
         if (buyer == null)
         {
-            _logger.LogInformation("Not found buyer with id: {Id}", Id);
+            _logger.LogInformation("Not found buyer with id: {id}", id);
             return NotFound();
         }
         else

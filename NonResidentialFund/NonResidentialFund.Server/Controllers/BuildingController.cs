@@ -27,10 +27,10 @@ public class BuildingController : ControllerBase
     /// </summary>
     /// <returns>List of buildings</returns>
     [HttpGet]
-    public IEnumerable<Building> Get()
+    public IEnumerable<BuildingGetDto> Get()
     {
         _logger.LogInformation("Get all buildings");
-        return _buildingsRepository.Buildings;
+        return _mapper.Map<IEnumerable<BuildingGetDto>>(_buildingsRepository.Buildings);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class BuildingController : ControllerBase
     /// <param name="registrationNumber">registration number of the building</param>
     /// <returns>Result of operation and building object</returns>
     [HttpGet("{registrationNumber}")]
-    public ActionResult<Building> Get(int registrationNumber)
+    public ActionResult<BuildingGetDto> Get(int registrationNumber)
     {
         var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
         if (building == null)
@@ -50,7 +50,7 @@ public class BuildingController : ControllerBase
         else
         {
             _logger.LogInformation("Get building with registration number: {registrationNumber}", registrationNumber);
-            return Ok(building);
+            return Ok(_mapper.Map<BuildingGetDto>(building));
         }
     }
 
@@ -112,7 +112,7 @@ public class BuildingController : ControllerBase
     /// </summary>
     /// <param name="registrationNumber">Registration number of the building</param>
     /// <returns>List of auctions, in which the building was put up for sale</returns>
-    [HttpGet("auctions/{registrationNumber}")]
+    [HttpGet("{registrationNumber}/Auctions")]
     public ActionResult<IEnumerable<BuildingAuctionConnectionForBuildingDto>> GetAuctions(int registrationNumber)
     {
         var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
@@ -134,7 +134,7 @@ public class BuildingController : ControllerBase
     /// <param name="registrationNumber">Registration number of the building</param>
     /// <param name="connection">Auction to be add</param>
     /// <returns>Result of operation</returns>
-    [HttpPost("auctions/{registrationNumber}")]
+    [HttpPost("{registrationNumber}/Auctions")]
     public IActionResult PostAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
     {
         var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
@@ -166,7 +166,7 @@ public class BuildingController : ControllerBase
     /// <param name="registrationNumber">Registration number of building</param>
     /// <param name="connection">Auction to be remove</param>
     /// <returns>Result of operation</returns>
-    [HttpDelete("auctions/{registrationNumber}")]
+    [HttpDelete("{registrationNumber}/Auctions")]
     public IActionResult DeleteAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
     {
         var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);

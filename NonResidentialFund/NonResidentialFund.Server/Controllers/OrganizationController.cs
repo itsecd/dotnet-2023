@@ -27,10 +27,10 @@ public class OrganizationController : ControllerBase
     /// </summary>
     /// <returns>List of organizations</returns>
     [HttpGet]
-    public IEnumerable<Organization> Get()
+    public IEnumerable<OrganizationGetDto> Get()
     {
         _logger.LogInformation("Get all organization");
-        return _organizationsRepository.Organizations;
+        return _mapper.Map<IEnumerable<OrganizationGetDto>>(_organizationsRepository.Organizations);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class OrganizationController : ControllerBase
     /// <param name="id">id of the organization</param>
     /// <returns>Result of operation and organization object</returns>
     [HttpGet("{id}")]
-    public ActionResult<Organization> Get(int id)
+    public ActionResult<OrganizationGetDto> Get(int id)
     {
         var organization = _organizationsRepository.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
         if (organization == null)
@@ -50,7 +50,7 @@ public class OrganizationController : ControllerBase
         else
         {
             _logger.LogInformation("Get organization with id: {id}", id);
-            return Ok(organization);
+            return Ok(_mapper.Map<OrganizationGetDto>(organization));
         }
     }
 

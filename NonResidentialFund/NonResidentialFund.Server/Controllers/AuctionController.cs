@@ -113,7 +113,7 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <param name="id">Id of the auction</param>
     /// <returns>List of buildings that were offered at the specified auction</returns>
-    [HttpGet("buildings/{id}")]
+    [HttpGet("{id}/Buildings")]
     public ActionResult<IEnumerable<BuildingAuctionConnectionForAuctionDto>> GetBuildings(int id)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -135,7 +135,7 @@ public class AuctionController : ControllerBase
     /// <param name="id">Id of auction</param>
     /// <param name="connection">Building to be add</param>
     /// <returns>Result of operation</returns>
-    [HttpPost("buildings/{id}")]
+    [HttpPost("{id}/Buildings")]
     public IActionResult PostBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -167,7 +167,7 @@ public class AuctionController : ControllerBase
     /// <param name="id">Id of auction</param>
     /// <param name="connection">Building to be removed</param>
     /// <returns>Result of operation</returns>
-    [HttpDelete("buildings/{id}")]
+    [HttpDelete("{id}/Buildings")]
     public IActionResult DeleteBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -198,7 +198,7 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <param name="id">Id of the auction</param>
     /// <returns>List of buyers who participated in the specified auction</returns>
-    [HttpGet("buyers/{id}")]
+    [HttpGet("{id}/Buyers")]
     public ActionResult<IEnumerable<BuyerAuctionConnectionForAuctionDto>> GetBuyers(int id)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -220,7 +220,7 @@ public class AuctionController : ControllerBase
     /// <param name="id">Id of auction</param>
     /// <param name="connection">Buyer to be add</param>
     /// <returns>Result of operation</returns>
-    [HttpPost("buyers/{id}")]
+    [HttpPost("{id}/Buyers")]
     public IActionResult PostBuilding(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -252,7 +252,7 @@ public class AuctionController : ControllerBase
     /// <param name="id">Id of auction</param>
     /// <param name="connection">Buyer to be remove</param>
     /// <returns>Result of operation</returns>
-    [HttpDelete("buyers/{id}")]
+    [HttpDelete("{id}/Buyers")]
     public IActionResult DeleteBuyer(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);

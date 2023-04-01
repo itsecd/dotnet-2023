@@ -1,6 +1,4 @@
-﻿using NonResidentialFund.Domain;
-
-namespace NonResidentialFund.Server.Dto;
+﻿namespace NonResidentialFund.Server.Dto;
 
 public class AuctionPostDto
 {

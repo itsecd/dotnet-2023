@@ -56,8 +56,8 @@ public class RequestsController : ControllerBase
 
     /// <summary>
     /// Output the information about the buyers who received the nonresidential fund for a certain the district of the city, and the total amount of privatized fund of the district. Arrange by full name
-    /// <param name="id">District id</param>
     /// </summary>
+    /// <param name="id">District id</param>
     /// <returns>List of buyers</returns>
     [HttpGet("GetBuyersInSpecifiedDistrict/{id}")]
     public IEnumerable<BuyerGetDto> GetBuyersInSpecifiedDistrict(int id)
@@ -82,7 +82,7 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Find the addresses of all buyers participating in the auction of the specified date (Date format: YYYY-MM-DD)
+    /// Find the addresses of all buyers participating in the auction of the specified date (Date format: 2022-03-21)
     /// </summary>
     /// <returns></returns>
     [HttpGet("GetAddressesOfAuctionParticipantsInSpecifiedDate/{date:DateTime}")]

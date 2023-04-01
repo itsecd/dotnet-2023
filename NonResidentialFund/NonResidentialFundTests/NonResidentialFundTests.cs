@@ -88,7 +88,7 @@ public class NonResidentialFundTests
         var result = (from auction in _fixture.FixtureAuctions
                       from participant in auction.Buyers
                       join buyer in _fixture.FixtureBuyers on participant.BuyerId equals buyer.BuyerId
-                      where auction.Date == new DateOnly(2022, 3, 21)
+                      where auction.Date == new DateTime(2022, 3, 21)
                       select new { buyer.BuyerId, buyer.Address }).ToList();
         Assert.Equal(5, result.Count);
         Assert.Contains(result, buyer => buyer.BuyerId == 1);

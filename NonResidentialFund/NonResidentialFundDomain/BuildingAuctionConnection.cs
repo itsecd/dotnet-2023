@@ -7,11 +7,12 @@ public class BuildingAuctionConnection
     /// <summary>
     /// BuildingId - The id of the building being auctioned off
     /// </summary>
-    public int BuildingId { get; set; } = 0;
+    public int BuildingId { get; set; }
     /// <summary>
     /// AuctionId - The id of auction
     /// </summary>
-    public int AuctionId { get; set; } = 0;
+    public int AuctionId { get; set; } 
+    public BuildingAuctionConnection() { }
 
     public BuildingAuctionConnection(int buildingId, int auctionId)
     {

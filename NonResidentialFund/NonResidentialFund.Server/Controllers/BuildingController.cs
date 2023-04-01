@@ -106,4 +106,89 @@ public class BuildingController : ControllerBase
             return Ok();
         }
     }
+
+    /// <summary>
+    /// Returning auctions, in which the building was put up for sale
+    /// </summary>
+    /// <param name="registrationNumber">Registration number of the building</param>
+    /// <returns>List of auctions, in which the building was put up for sale</returns>
+    [HttpGet("auctions/{registrationNumber}")]
+    public ActionResult<IEnumerable<BuildingAuctionConnectionForBuildingDto>> GetAuctions(int registrationNumber)
+    {
+        var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        if (building == null)
+        {
+            _logger.LogInformation("Not found building with registrationNumber: {registrationNumber}", registrationNumber);
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation("Get auctions in which the building with registration number {registrationNumber} was put up for sale", registrationNumber);
+            return Ok(_mapper.Map<IEnumerable<BuildingAuctionConnectionForBuildingDto>>(building.Auctions));
+        }
+    }
+
+    /// <summary>
+    /// Adds a new auction to the list of auctions in which the building was put up for sale
+    /// </summary>
+    /// <param name="registrationNumber">Registration number of the building</param>
+    /// <param name="connection">Auction to be add</param>
+    /// <returns>Result of operation</returns>
+    [HttpPost("auctions/{registrationNumber}")]
+    public IActionResult PostAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
+    {
+        var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        var auction = _buildingsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
+        if (building == null)
+        {
+            _logger.LogInformation("Not found building with registration number: {registrationNumber}", registrationNumber);
+            return NotFound();
+        }
+        else
+        {
+            if (auction != null && building.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId) == null)
+            {
+                var connectionToAdd = new BuildingAuctionConnection(registrationNumber, connection.AuctionId);
+                building.Auctions.Add(connectionToAdd);
+                auction.Buildings.Add(connectionToAdd);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes a auction from the list of auctions in which the building was put up for sale
+    /// </summary>
+    /// <param name="registrationNumber">Registration number of building</param>
+    /// <param name="connection">Auction to be remove</param>
+    /// <returns>Result of operation</returns>
+    [HttpDelete("auctions/{registrationNumber}")]
+    public IActionResult DeleteAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
+    {
+        var building = _buildingsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        var auction = _buildingsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
+        if (building == null)
+        {
+            _logger.LogInformation("Not found buildiing with registration number: {registrationNumber}", registrationNumber);
+            return NotFound();
+        }
+        else
+        {
+            var connectionToDelete = building.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
+            if (connectionToDelete != null)
+            {
+                building.Auctions.Remove(connectionToDelete);
+                auction?.Buildings.Remove(connectionToDelete);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
 }

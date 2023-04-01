@@ -178,12 +178,12 @@ public class NonResidentialFundFixture
         {
             return new List<Privatized>
             {
-                new Privatized(1, 1, 1, new DateOnly(2022, 3, 17), 615827.99, 1297618.13),
-                new Privatized(2, 4, 2, new DateOnly(2022, 3, 17), 862100.93, 1231971.10),
-                new Privatized(3, 8, 3, new DateOnly(2022, 3, 17), 1062109.00, 14301872.17),
-                new Privatized(7, 2, 5, new DateOnly(2022, 3, 17), 1846378.72, 2647635.37),
-                new Privatized(8, 1, 8, new DateOnly(2022, 3, 20), 628476.17, 964372.09),
-                new Privatized(9, 8, 7, new DateOnly(2022, 3, 19), 2657387.93, 4726478.00)
+                new Privatized(1, 1, 1, new DateTime(2022, 3, 17), 615827.99, 1297618.13),
+                new Privatized(2, 4, 2, new DateTime(2022, 3, 17), 862100.93, 1231971.10),
+                new Privatized(3, 8, 3, new DateTime(2022, 3, 17), 1062109.00, 14301872.17),
+                new Privatized(7, 2, 5, new DateTime(2022, 3, 17), 1846378.72, 2647635.37),
+                new Privatized(8, 1, 8, new DateTime(2022, 3, 20), 628476.17, 964372.09),
+                new Privatized(9, 8, 7, new DateTime(2022, 3, 19), 2657387.93, 4726478.00)
             };
         }
     }
@@ -195,7 +195,7 @@ public class NonResidentialFundFixture
             var buildings = FixtureBuildings;
             var buyers = FixtureBuyers;
             return new List<Auction> {
-                new Auction(1, new DateOnly(2022, 3, 17), 1,
+                new Auction(1, new DateTime(2022, 3, 17), 1,
                     new List<BuildingAuctionConnection>{
                         new BuildingAuctionConnection(1, 1),
                         new BuildingAuctionConnection(9, 1)
@@ -205,7 +205,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(2, 1)
                     }
                 ),
-                new Auction(2, new DateOnly(2022, 3, 17), 3,
+                new Auction(2, new DateTime(2022, 3, 17), 3,
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(2, 2)
@@ -216,7 +216,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(5, 2)
                     }
                 ),
-                new Auction(3, new DateOnly(2022, 3, 17), 7,
+                new Auction(3, new DateTime(2022, 3, 17), 7,
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(3, 3)
@@ -227,7 +227,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(7, 3)
                     }
                 ),
-                new Auction(4, new DateOnly(2022, 3, 17), 8,
+                new Auction(4, new DateTime(2022, 3, 17), 8,
                     new List<BuildingAuctionConnection>
                     {
                         new BuildingAuctionConnection(5, 4),
@@ -239,7 +239,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(6, 4)
                     }
                 ),
-                new Auction(5, new DateOnly(2022, 3, 17), 4,
+                new Auction(5, new DateTime(2022, 3, 17), 4,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(4, 5),
@@ -256,7 +256,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(7, 5),
                         new BuyerAuctionConnection(8, 5)
                     }),
-                new Auction(6, new DateOnly(2022, 3, 17), 2,
+                new Auction(6, new DateTime(2022, 3, 17), 2,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(8, 6)
@@ -266,7 +266,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(1, 6),
                         new BuyerAuctionConnection(2, 6)
                     }),
-                new Auction(7, new DateOnly(2022, 3, 19), 1,
+                new Auction(7, new DateTime(2022, 3, 19), 1,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(9, 7)
@@ -282,7 +282,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(7, 7),
                         new BuyerAuctionConnection(8, 7)
                     }),
-                new Auction(8, new DateOnly(2022, 3, 20), 7,
+                new Auction(8, new DateTime(2022, 3, 20), 7,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(8, 8)
@@ -298,7 +298,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(7, 8),
                         new BuyerAuctionConnection(8, 8)
                     }),
-                new Auction(9, new DateOnly(2022, 3, 21), 2,
+                new Auction(9, new DateTime(2022, 3, 21), 2,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(10, 9)
@@ -308,7 +308,7 @@ public class NonResidentialFundFixture
                         new BuyerAuctionConnection(7, 9),
                         new BuyerAuctionConnection(3, 9)
                     }),
-                new Auction(10, new DateOnly(2022, 3, 21), 3,
+                new Auction(10, new DateTime(2022, 3, 21), 3,
                     new List < BuildingAuctionConnection >
                     {
                         new BuildingAuctionConnection(5, 10)

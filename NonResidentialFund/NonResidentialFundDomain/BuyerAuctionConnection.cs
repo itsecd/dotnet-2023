@@ -13,6 +13,7 @@ public class BuyerAuctionConnection
     /// </summary>
     public int AuctionId { get; set; } = 0;
 
+    public BuyerAuctionConnection() { }
     public BuyerAuctionConnection(int buyerId, int auctionId)
     {
         BuyerId = buyerId;

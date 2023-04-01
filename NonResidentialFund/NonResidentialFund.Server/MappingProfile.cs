@@ -13,8 +13,13 @@ public class MappingProfile : Profile
 
         CreateMap<Building, BuildingPostDto>().ReverseMap();
 
-        CreateMap<Buyer, BuyerPostDto>().ReverseMap();
+        CreateMap<BuildingAuctionConnection, BuildingAuctionConnectionForAuctionDto>().ReverseMap();
+        CreateMap<BuildingAuctionConnection, BuildingAuctionConnectionForBuildingDto>().ReverseMap();
 
+        CreateMap<Buyer, BuyerPostDto>().ReverseMap();
+        CreateMap<BuyerAuctionConnection, BuyerAuctionConnectionForAuctionDto>().ReverseMap();
+        CreateMap<BuyerAuctionConnection, BuyerAuctionConnectionForBuyerDto>().ReverseMap();
+        
         CreateMap<District, DistrictPostDto>().ReverseMap();
 
         CreateMap<Organization, OrganizationPostDto>().ReverseMap();

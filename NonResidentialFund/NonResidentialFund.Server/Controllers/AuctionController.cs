@@ -39,7 +39,7 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <param name="id">id of the auction</param>
     /// <returns>Result of operation and auction object</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public ActionResult<AuctionGetDto> Get(int id)
     {
         var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
@@ -105,6 +105,176 @@ public class AuctionController : ControllerBase
         {
             _auctionsRepository.Auctions.Remove(auction);
             return Ok();
+        }
+    }
+
+    /// <summary>
+    /// Returns the registration numbers of the buildings that were offered at the specified auction
+    /// </summary>
+    /// <param name="id">Id of the auction</param>
+    /// <returns>List of buildings that were offered at the specified auction</returns>
+    [HttpGet("buildings/{id}")]
+    public ActionResult<IEnumerable<BuildingAuctionConnectionForAuctionDto>> GetBuildings(int id)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation("Get building offered on auction with id: {id}", id);
+            return Ok(_mapper.Map<IEnumerable<BuildingAuctionConnectionForAuctionDto>>(auction.Buildings));
+        }
+    }
+
+    /// <summary>
+    /// Adds a new building to the list of buildings for sale at the specified auction
+    /// </summary>
+    /// <param name="id">Id of auction</param>
+    /// <param name="connection">Building to be add</param>
+    /// <returns>Result of operation</returns>
+    [HttpPost("buildings/{id}")]
+    public IActionResult PostBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var building = _auctionsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            if (building != null && auction.Buildings.FirstOrDefault(conn => conn.BuildingId == connection.BuildingId) == null)
+            {
+                var connectionToAdd = new BuildingAuctionConnection(connection.BuildingId, id);
+                auction.Buildings.Add(connectionToAdd);
+                building.Auctions.Add(connectionToAdd);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes a building from the list of buildings for sale at the specified auction
+    /// </summary>
+    /// <param name="id">Id of auction</param>
+    /// <param name="connection">Building to be removed</param>
+    /// <returns>Result of operation</returns>
+    [HttpDelete("buildings/{id}")]
+    public IActionResult DeleteBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var building = _auctionsRepository.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            var connectionToDelete = auction.Buildings.FirstOrDefault(building => building.BuildingId == connection.BuildingId);
+            if (connectionToDelete != null)
+            {
+                auction.Buildings.Remove(connectionToDelete);
+                building?.Auctions.Remove(connectionToDelete);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns the id of the buyers who participated in the specified auction
+    /// </summary>
+    /// <param name="id">Id of the auction</param>
+    /// <returns>List of buyers who participated in the specified auction</returns>
+    [HttpGet("buyers/{id}")]
+    public ActionResult<IEnumerable<BuyerAuctionConnectionForAuctionDto>> GetBuyers(int id)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation("Get building offered on auction with id: {id}", id);
+            return Ok(_mapper.Map<IEnumerable<BuyerAuctionConnectionForAuctionDto>>(auction.Buyers));
+        }
+    }
+
+    /// <summary>
+    /// Adds a new buyer to the list of buyers who participated in the specified auction
+    /// </summary>
+    /// <param name="id">Id of auction</param>
+    /// <param name="connection">Buyer to be add</param>
+    /// <returns>Result of operation</returns>
+    [HttpPost("buyers/{id}")]
+    public IActionResult PostBuilding(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var buyer = _auctionsRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            if (buyer != null && auction.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId) == null)
+            {
+                var connectionToAdd = new BuyerAuctionConnection(connection.BuyerId, id);
+                auction.Buyers.Add(connectionToAdd);
+                buyer.Auctions.Add(connectionToAdd);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes a buyer from the list of buyers who participated in the specified auction
+    /// </summary>
+    /// <param name="id">Id of auction</param>
+    /// <param name="connection">Buyer to be remove</param>
+    /// <returns>Result of operation</returns>
+    [HttpDelete("buyers/{id}")]
+    public IActionResult DeleteBuyer(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
+    {
+        var auction = _auctionsRepository.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var buyer = _auctionsRepository.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
+        if (auction == null)
+        {
+            _logger.LogInformation("Not found auction with id: {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            var connectionToDelete = auction.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
+            if (connectionToDelete != null)
+            {
+                auction.Buyers.Remove(connectionToDelete);
+                buyer?.Auctions.Remove(connectionToDelete);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

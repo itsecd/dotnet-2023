@@ -2,7 +2,7 @@ namespace RecruitmentAgency;
 
 public class RecruitmentAgencyTests
 {
-    public List<Vacancy> VacancyList()
+    public static List<Vacancy> VacancyList()
     {
         return new List<Vacancy>()
         {
@@ -19,7 +19,7 @@ public class RecruitmentAgencyTests
         };
     }
 
-    public List<Employee> EmployeeList()
+    public static List<Employee> EmployeeList()
     {
         return new List<Employee>()
         {
@@ -32,7 +32,7 @@ public class RecruitmentAgencyTests
         };
     }
 
-    public List<EmployeeApplication> EmployeeApplicationList(List<Employee> employees, List<Vacancy> vacancies)
+    public static List<EmployeeApplication> EmployeeApplicationList(List<Employee> employees, List<Vacancy> vacancies)
     {
         return new List<EmployeeApplication>()
         {
@@ -51,7 +51,7 @@ public class RecruitmentAgencyTests
 
     }
 
-    public List<Employer> EmployerList()
+    public static List<Employer> EmployerList()
     {
         return new List<Employer>()
         {
@@ -64,7 +64,7 @@ public class RecruitmentAgencyTests
         };
     }
 
-    public List<EmployerApplication> EmployerApplicationList(List<Employer> employers, List<Vacancy> vacancies)
+    public static List<EmployerApplication> EmployerApplicationList(List<Employer> employers, List<Vacancy> vacancies)
     {
         return new List<EmployerApplication>()
         {

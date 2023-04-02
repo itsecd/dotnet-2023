@@ -11,6 +11,11 @@ public class EmployeeApplication
     public Employee? Employee { get; set; }
 
     /// <summary>
+    /// Desired vacancy
+    /// </summary>
+    public Vacancy? Vacancy { get; set; }
+
+    /// <summary>
     /// Filing date of application
     /// </summary>
     public DateTime Date { get; set; }

@@ -33,7 +33,7 @@ public class Employee
     /// <summary>
     /// List of all employee applications
     /// </summary>
-    public List<EmployeeApplication> EmployeeApplicationsList { get; set; } = new List<EmployeeApplication>();
+    public List<EmployeeApplication> EmployeeApplicationList { get; set; } = new List<EmployeeApplication>();
 
     /// <summary>
     /// Unique ID of employee

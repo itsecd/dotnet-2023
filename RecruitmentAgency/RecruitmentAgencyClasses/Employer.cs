@@ -23,7 +23,7 @@ public class Employer
     /// <summary>
     /// List of all employer applications
     /// </summary>
-    public List<EmployerApplication> EmployerApplicationsList { get; set; } = new List<EmployerApplication>();
+    public List<EmployerApplication> EmployerApplicationList { get; set; } = new List<EmployerApplication>();
 
     /// <summary>
     /// Unique ID of employer

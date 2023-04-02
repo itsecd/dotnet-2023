@@ -18,12 +18,12 @@ public class Vacancy
     /// <summary>
     /// List of all employee applications for that vacancy
     /// </summary>
-    public List<EmployeeApplication> EmployeeApplicationsList { get; set; } = new List<EmployeeApplication>();
+    public List<EmployeeApplication> EmployeeApplicationList { get; set; } = new List<EmployeeApplication>();
 
     /// <summary>
     /// List of all employer applications for that vacancy
     /// </summary>
-    public List<EmployerApplication> EmployerApplicationsList { get; set; } = new List<EmployerApplication>();
+    public List<EmployerApplication> EmployerApplicationList { get; set; } = new List<EmployerApplication>();
 
     /// <summary>
     /// Unique ID of Vacancy

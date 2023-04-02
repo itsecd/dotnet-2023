@@ -1,36 +1,86 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using AutoMapper;
+using Fabrics.Domain;
+using Fabrics.Server.Dto;
+using Fabrics.Server.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fabrics.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ShipmentController : ControllerBase
 {
-    // GET: api/<ShipmentController>
-    [HttpGet]
-    public IEnumerable<string> Get()
+    private readonly ILogger<ShipmentController> _logger;
+
+    private readonly IFabricsRepository _fabricsRepository;
+
+    private readonly IMapper _mapper;
+    public ShipmentController(ILogger<ShipmentController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
     {
-        return new string[] { "value1", "value2" };
+        _logger = logger;
+        _fabricsRepository = fabricsRepository;
+        _mapper = mapper;
+    }
+    /// <summary>
+    /// Returns list of all shipments.
+    /// </summary>
+    /// <returns>List of fabrics</returns>
+    [HttpGet]
+    public IEnumerable<ShipmentGetDto> Get()
+    {
+        _logger.LogInformation("Get provider");
+        return _fabricsRepository.Shipments.Select(shipment => _mapper.Map<ShipmentGetDto>(shipment));
     }
 
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ActionResult<ShipmentGetDto> Get(int id)
     {
-        return "value";
+        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        if (shipment == null)
+        {
+            _logger.LogInformation("Not found shipment:{id}", id);
+            return NotFound();
+        }
+        else
+        {
+            return Ok(_mapper.Map<ShipmentGetDto>(shipment));
+        }
     }
 
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] ShipmentPostDto shipment)
     {
+        _fabricsRepository.Shipments.Add(_mapper.Map<Shipment>(shipment));
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] ShipmentPostDto shipmentToPut)
     {
+        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        if (shipment == null)
+        {
+            _logger.LogInformation("Not found shipment:{id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _mapper.Map(shipmentToPut, shipment);
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        if (shipment == null)
+        {
+            _logger.LogInformation("Not found shipment:{id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _fabricsRepository.Shipments.Remove(shipment);
+            return Ok();
+        }
     }
 }

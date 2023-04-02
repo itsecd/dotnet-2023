@@ -1,7 +1,7 @@
-﻿using Fabrics.Domain;
-
-namespace Fabrics.Server.Dto;
-
+﻿namespace Fabrics.Server.Dto;
+/// <summary>
+/// Class ProviderPostDto is used to make HTTP POST request.
+/// </summary>
 public class FabricPostDto
 {
     /// <summary>

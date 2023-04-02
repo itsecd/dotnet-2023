@@ -28,7 +28,7 @@ public class FabricController : ControllerBase
     public IEnumerable<FabricGetDto> Get()
     {
         _logger.LogInformation("Get fabric");
-        return _fabricsRepository.Fabrics.Select(fabric =>_mapper.Map<FabricGetDto>(fabric));
+        return _fabricsRepository.Fabrics.Select(fabric => _mapper.Map<FabricGetDto>(fabric));
     }
 
     [HttpGet("{id}")]

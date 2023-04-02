@@ -1,5 +1,7 @@
 ﻿namespace Fabrics.Server.Dto;
-
+/// <summary>
+/// Class FabricGetDto is used to make HTTP GET request.
+/// </summary>
 public class FabricGetDto
 {
     /// <summary>

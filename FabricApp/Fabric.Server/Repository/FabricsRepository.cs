@@ -42,6 +42,6 @@ public class FabricsRepository : IFabricsRepository
 
     public List<Provider> Providers => _providers;
 
-    public List<Shipment> Shipment => _shipments;
+    public List<Shipment> Shipments => _shipments;
 }
 

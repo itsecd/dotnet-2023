@@ -5,5 +5,5 @@ public interface IFabricsRepository
 {
     List<Fabric> Fabrics { get; }
     List<Provider> Providers { get; }
-    List<Shipment> Shipment { get; }
+    List<Shipment> Shipments { get; }
 }

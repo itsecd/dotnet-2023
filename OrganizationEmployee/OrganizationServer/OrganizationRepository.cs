@@ -473,13 +473,13 @@ public class OrganizationRepository
         departmentList = _departments;
         employees = _employees;
         departmentEmployeeList = _departmentEmployees;
-        employees[0].DepartmentEmployees.Add(departmentEmployeeList[0]);
+        /*employees[0].DepartmentEmployees.Add(departmentEmployeeList[0]);
         employees[0].DepartmentEmployees.Add(departmentEmployeeList[1]);
         employees[1].DepartmentEmployees.Add(departmentEmployeeList[2]);
         employees[1].DepartmentEmployees.Add(departmentEmployeeList[3]);
         employees[2].DepartmentEmployees.Add(departmentEmployeeList[4]);
         employees[2].DepartmentEmployees.Add(departmentEmployeeList[5]);
-        employees[3].DepartmentEmployees.Add(departmentEmployeeList[6]);
+        employees[3].DepartmentEmployees.Add(departmentEmployeeList[6]);*/
         departmentEmployeeList[0].Employee = employees[0];
         departmentEmployeeList[1].Employee = employees[0];
         departmentEmployeeList[2].Employee = employees[1];

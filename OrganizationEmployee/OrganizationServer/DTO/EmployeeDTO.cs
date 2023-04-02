@@ -27,9 +27,9 @@ public class EmployeeDTO
     /// </summary>
     public DateTime BirthDate { get; set; } = DateTime.MinValue;
     /// <summary>
-    /// Workshop - an workshop, where the employee is working
+    /// Workshop - an id of the Workshop
     /// </summary>
-    public int WorkshopId { get; set; }  // добавить подобное везде!
+    public int WorkshopId { get; set; } 
     /// <summary>
     /// HomeAddress - home address of an employee
     /// </summary>

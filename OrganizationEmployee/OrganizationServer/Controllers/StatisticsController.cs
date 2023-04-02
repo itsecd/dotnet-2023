@@ -16,7 +16,7 @@ public class StatisticsController : Controller
     }
 
 
-    [HttpGet("department_id_{departmentId}")]
+    [HttpGet("DepartmentId/{departmentId}")]
     public ActionResult<IEnumerable<EmployeeDTO>> Get(int departmentId)
     {
         var firstQuery = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
@@ -27,8 +27,8 @@ public class StatisticsController : Controller
         return Ok(firstQuery);
     }
 
-    [HttpGet("employee_with_few_departments")]
-    public ActionResult<IEnumerable<object>> Get()
+    [HttpGet("EmployeeWithFewDepartments")]
+    public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDTO>> GetEmployeeWithFewDepartments()
     {
         var secondQuery = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
                            orderby employee.LastName, employee.FirstName, employee.PatronymicName
@@ -42,14 +42,117 @@ public class StatisticsController : Controller
                            } into grp
                            where grp.Count() > 1
                            orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
-                           select new
+                           select new EmployeeWithFewDepartmentsDTO()
                            {
-                               grp.Key.RegNumber,
-                               grp.Key.FirstName,
-                               grp.Key.LastName,
-                               grp.Key.PatronymicName,
+                               RegNumber = grp.Key.RegNumber,
+                               FirstName = grp.Key.FirstName,
+                               LastName = grp.Key.LastName,
+                               PatronymicName = grp.Key.PatronymicName,
                                CountDepart = grp.Count()
                            }).ToList();
         return secondQuery;
+    }
+
+    [HttpGet("ArchiveOfDismissals")]
+    public ActionResult<IEnumerable<ArchiveOfDismissals>> GetArchiveOfDismissals()
+    {
+        var thirdQuery = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
+                          where employeeOccupationItem?.DismissalDate != null
+                          from department in employeeOccupationItem?.Employee?.DepartmentEmployees
+                          select
+                          new ArchiveOfDismissals()
+                          {
+                              RegNumber = employeeOccupationItem.Employee?.RegNumber,
+                              FirstName = employeeOccupationItem.Employee?.FirstName,
+                              LastName = employeeOccupationItem.Employee?.LastName,
+                              PatronymicName = employeeOccupationItem.Employee?.PatronymicName,
+                              BirthDate = employeeOccupationItem.Employee?.BirthDate,
+                              WorkshopName = employeeOccupationItem.Employee?.Workshop?.Name,
+                              DepartmentName = department.Department?.Name,
+                              OccupationName = employeeOccupationItem?.Occupation?.Name
+                          }
+                      ).ToList();
+        return thirdQuery;
+    }
+    [HttpGet("AvgAgeInDepartments")]
+    public ActionResult<IEnumerable<AverageAgeInDepartmentDTO>> GetAvgAgeInDepartments()
+    {
+        var employees = _organizationRepository.EmployeesWithDepartmentEmployeeFilled;
+        var fourthQuery =
+            (from tuple in
+                 (from employee in employees
+                  from departmentEmployeeItem in employee.DepartmentEmployees
+                  where departmentEmployeeItem.Department != null
+                  select new
+                  {
+                      EmployeeAge = ((DateTime.Now -
+                                      employee.BirthDate).TotalDays / 365.2422),
+                      DepartmentId = departmentEmployeeItem.Department?.Id,
+                      DepartmentName = departmentEmployeeItem.Department?.Name,
+                  }
+                  )
+             group tuple by new
+             {
+                 tuple.DepartmentId,
+                 tuple.DepartmentName,
+             } into grp
+             select new AverageAgeInDepartmentDTO()
+             {
+                 AverageAge = grp.Average(employee => employee.EmployeeAge),
+                 DepartmentName = grp.Key.DepartmentName
+             }
+             ).ToList();
+        return fourthQuery;
+    }
+    [HttpGet("EmployeeLastYearVoucher")]
+    public ActionResult<IEnumerable<EmployeeLastYearVoucher>> GetEmployeeLastYearVoucher()
+    {
+        var fifthQuery = (from employeeVoucherItem in _organizationRepository.EmployeeVacationVouchers
+                          where (new DateTime(2023, 3, 10) -
+                                 employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
+                          select new EmployeeLastYearVoucher()
+                          {
+                              RegNumber = employeeVoucherItem.Employee?.RegNumber,
+                              FirstName = employeeVoucherItem.Employee?.FirstName,
+                              LastName = employeeVoucherItem.Employee?.LastName,
+                              VoucherTypeName = employeeVoucherItem.VacationVoucher?.VoucherType?.Name
+                          }
+                  ).ToList();
+        return fifthQuery;
+    }
+    [HttpGet("EmployeeWithLongestWorkExperience")]
+    public ActionResult<IEnumerable<EmployeeWorkExperience>> GetEmployeeWithLongestWorkExperience()
+    {
+        var subqueryReplaceNull = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
+                                   select new
+                                   {
+                                       employeeOccupationItem.Employee?.RegNumber,
+                                       employeeOccupationItem.HireDate,
+                                       DismissalDate = employeeOccupationItem.DismissalDate ?? DateTime.Now,
+                                       employeeOccupationItem.Employee?.FirstName,
+                                       employeeOccupationItem.Employee?.LastName
+                                   }
+                               ).ToList();
+        var sixthQuery = (from subqueryElem in subqueryReplaceNull
+                          group subqueryElem by new
+                          {
+                              subqueryElem.RegNumber,
+                              subqueryElem.FirstName,
+                              subqueryElem.LastName
+                          } into grp
+                          orderby grp.Sum(subqueryElem =>
+                                          (subqueryElem.DismissalDate -
+                                           subqueryElem.HireDate).TotalDays / 365.2422) descending
+                          select new EmployeeWorkExperience()
+                          {
+                              RegNumber = grp.Key.RegNumber,
+                              FirstName = grp.Key.FirstName,
+                              LastName = grp.Key.LastName,
+                              WorkExperience = grp.Sum(subqueryElem =>
+                              (subqueryElem.DismissalDate -
+                               subqueryElem.HireDate).TotalDays / 365.2422)
+                          }
+                          ).Take(5).ToList();
+        return sixthQuery;
     }
 }

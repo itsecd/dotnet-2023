@@ -76,7 +76,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                               department,
                               employeeOccupationItem.Occupation
                           }
-                          ).ToList();
+              ).ToList();
         Assert.Equal(4, thirdQuery.Count);
         Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 1337);
         Assert.DoesNotContain(thirdQuery, requestElem => requestElem.RegNumber == 443);

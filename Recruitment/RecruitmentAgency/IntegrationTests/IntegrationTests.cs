@@ -19,7 +19,8 @@ public class IntegrationTests : IClassFixture<WebApplicationFactory<Program>>
 
         var response = await client.GetAsync("api/Company");
 
-        var companies = JsonConvert.DeserializeObject<List<Company>>(response);
+        var content = await response.Content.ReadAsStringAsync();
+        var companies = JsonConvert.DeserializeObject<List<Company>>(content);
         Assert.Equal(3, companies.Count());
     }
 }

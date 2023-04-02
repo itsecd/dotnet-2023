@@ -6,19 +6,9 @@ namespace RecruitmentAgency;
 public class Employee
 {
     /// <summary>
-    /// Name of employee
+    /// Surname, name and patronymic of employee
     /// </summary>
     public string? Name { get; set; }
-
-    /// <summary>
-    /// Surname of employee
-    /// </summary>
-    public string? Surname { get; set; }
-
-    /// <summary>
-    /// Patronymic of employee
-    /// </summary>
-    public string? Patronymic { get; set; }
 
     /// <summary>
     /// Phone number of employee

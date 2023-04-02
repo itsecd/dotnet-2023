@@ -33,7 +33,7 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void AllRented()
     {
         var carsInRent = _fixture.FixtureRentedCar.ToList();
-        var rentedCar = (from car in carsInRent where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToList();
+        var rentedCar = (from car in carsInRent where car.TimeOfReturn < DateTime.Now select car.Car.Model).ToList();
         Assert.Equal(carsInRent[0].Car.Model, rentedCar[0]);
     }
     ///<summary>
@@ -43,7 +43,7 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void TopFiveRents()
     {
         var rentedCars = _fixture.FixtureRentedCar.ToList();
-        DateTime nowadays = DateTime.Parse("2023-03-13");
+        var nowadays = DateTime.Parse("2023-03-13");
         var counter = (from cartop in rentedCars
                        where cartop.TimeOfReturn < nowadays
                        group cartop by cartop.Car.CarId into g

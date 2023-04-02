@@ -19,7 +19,7 @@ public class RentedCar
     /// <summary>
     /// id of rented car
     /// </summary>
-    public Guid Id { get; set; } = Guid.Empty;
+    public uint Id { get; set; } 
     /// <summary>
     /// date and time when client rented a car
     /// </summary>
@@ -33,7 +33,7 @@ public class RentedCar
     /// </summary>
     public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
     public RentedCar() { }
-    public RentedCar(Guid id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod)
+    public RentedCar(uint id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod)
     {
         Id = id;
         Client = client;

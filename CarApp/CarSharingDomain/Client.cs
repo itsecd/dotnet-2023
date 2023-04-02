@@ -23,9 +23,9 @@ public class Client
     /// <summary>
     /// client's id
     /// </summary>
-    public Guid Uid { set; get; } = Guid.Empty;
+    public uint Uid { set; get; }
     public Client() { }
-    public Client(Guid uid, string passport, DateTime birthDate, string firstName, string lastName)
+    public Client(uint uid, string passport, DateTime birthDate, string firstName, string lastName)
     {
         Uid = uid;
         Passport = passport;

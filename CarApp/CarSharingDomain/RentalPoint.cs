@@ -15,9 +15,9 @@ public class RentalPoint
     /// <summary>
     /// id of the rental point
     /// </summary>
-    public Guid PointId { get; set; } = Guid.Empty;
+    public uint PointId { get; set; }
     public RentalPoint() { }
-    public RentalPoint(Guid pointId, string pointName, string pointAddress)
+    public RentalPoint(uint pointId, string pointName, string pointAddress)
     {
         PointId = pointId;
         PointName = pointName;

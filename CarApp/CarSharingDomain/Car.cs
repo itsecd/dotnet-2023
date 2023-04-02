@@ -19,9 +19,9 @@ public class Car
     /// <summary>
     /// id of the car
     /// </summary>
-    public Guid CarId { get; set; } = Guid.Empty;
+    public uint CarId { get; set; }
     public Car() { }
-    public Car(Guid carId, string model, string colour, string number)
+    public Car(uint carId, string model, string colour, string number)
     {
         CarId = carId;
         Model = model;

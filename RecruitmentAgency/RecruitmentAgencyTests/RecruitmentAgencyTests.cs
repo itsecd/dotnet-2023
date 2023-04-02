@@ -84,7 +84,7 @@ public class RecruitmentAgencyTests
     }
 
     /// <summary>
-    /// Task 1 - Display information about all employee by vacancy name sorted by employee name
+    /// Task 1 - Filter employee by vacancy name; sort by employee name
     /// </summary>
     [Fact]
     public void EmployeeFilterVacancy()
@@ -100,7 +100,7 @@ public class RecruitmentAgencyTests
     }
 
     /// <summary>
-    /// Task 1 - Display information about all employee by vacancy name sorted by employee name
+    /// Task 2 - Filter employee for a specified period
     /// </summary>
     [Fact]
     public void EmployeeFilterDate()
@@ -111,6 +111,7 @@ public class RecruitmentAgencyTests
                       where applications.Date >= new DateTime(2022, 2, 9) && applications.Date <= new DateTime(2022, 8, 8)
                       select applications.Employee).ToList();
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(5, result.Count);
     }
+
 }

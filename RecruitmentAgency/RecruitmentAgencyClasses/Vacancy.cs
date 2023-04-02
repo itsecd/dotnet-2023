@@ -8,12 +8,12 @@ public class Vacancy
     /// <summary>
     /// Sector of vacancy
     /// </summary>
-    public string? Sector { get; set; }
+    public string Sector { get; set; }
 
     /// <summary>
     /// Name of vacancy (duty)
     /// </summary>
-	public string? Name { get; set; }
+	public string Name { get; set; }
 
     /// <summary>
     /// List of all employee applications for that vacancy
@@ -28,5 +28,20 @@ public class Vacancy
     /// <summary>
     /// Unique ID of Vacancy
     /// </summary>
-	public uint Id { get; set; }
+	public uint Id { get; }
+
+    /// <summary>
+    /// Vacancy counter
+    /// </summary>
+    private static uint _vacancyCount = 0;
+
+    /// <summary>
+    /// Construct Vacancy object
+    /// </summary>
+    public Vacancy(string sector, string name)
+    {
+        Sector = sector;
+        Name = name;
+        Id = _vacancyCount++;
+    }
 }

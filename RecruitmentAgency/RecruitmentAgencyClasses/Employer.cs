@@ -8,17 +8,17 @@ public class Employer
     /// <summary>
     /// Name of company or person
     /// </summary>
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Name of recruiter
     /// </summary>
-    public string? ContactName { get; set; }
+    public string ContactName { get; set; }
 
     /// <summary>
     /// Phone number of recruiter
     /// </summary>
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     /// <summary>
     /// List of all employer applications
@@ -28,5 +28,21 @@ public class Employer
     /// <summary>
     /// Unique ID of employer
     /// </summary>
-    public uint Id { set; get; }
+    public uint Id { get; }
+
+    /// <summary>
+    /// Emplyer counter
+    /// </summary>
+    private static uint _employerCount = 0;
+
+    /// <summary>
+    /// Construct Employer object
+    /// </summary>
+    public Employer(string name, string contactName, string phoneNumber)
+    {
+        Name = name;
+        ContactName = contactName;
+        PhoneNumber = phoneNumber;
+        Id = _employerCount++;
+    }
 }

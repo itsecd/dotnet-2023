@@ -8,12 +8,12 @@ public class EmployeeApplication
     /// <summary>
     /// Class of job seeker
     /// </summary>
-    public Employee? Employee { get; set; }
+    public Employee Employee { get; set; }
 
     /// <summary>
     /// Desired vacancy
     /// </summary>
-    public Vacancy? Vacancy { get; set; }
+    public Vacancy Vacancy { get; set; }
 
     /// <summary>
     /// Filing date of application
@@ -23,5 +23,21 @@ public class EmployeeApplication
     /// <summary>
     /// Unique ID of application
     /// </summary>
-    public uint Id { set; get; }
+    public uint Id { get; }
+
+    /// <summary>
+    /// Emplyee applications counter
+    /// </summary>
+    private static uint _employeeApplicationCount = 0;
+
+    /// <summary>
+    /// Construct EmployeeApplication object
+    /// </summary>
+    public EmployeeApplication(Employee employee, Vacancy vacancy, DateTime date)
+    {
+        Employee = employee;
+        Vacancy = vacancy;
+        Date = date;
+        Id = _employeeApplicationCount++;
+    }
 }

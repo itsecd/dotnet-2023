@@ -136,7 +136,7 @@ public class RequestsController : ControllerBase
     /// <summary>
     ///   Output information about the most popular companies
     /// </summary>
-    /// <returns>
+    /// <returns>   
     ///     Output information about the most popular companies
     ///     Signalization of success or error
     /// </returns>

@@ -28,8 +28,7 @@ public class MappingProfile : Profile
 
         CreateMap<JobApplicationGetDTO, JobApplication>();
 
-        CreateMap<CompanyApplication, CompanyApplicationGetDTO>()
-        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Company.CompanyName));
+        CreateMap<CompanyApplication, CompanyApplicationGetDTO>();
 
         CreateMap<CompanyApplicationGetDTO, CompanyApplication>();
 

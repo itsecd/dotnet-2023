@@ -31,9 +31,9 @@ public class Employee
     public uint Salary { get; set; }
 
     /// <summary>
-    /// Desired vacancies
+    /// List of all employee applications
     /// </summary>
-    public List<Vacancy> VacancyList { get; set; } = new List<Vacancy>();
+    public List<EmployeeApplication> EmployeeApplicationsList { get; set; } = new List<EmployeeApplication>();
 
     /// <summary>
     /// Unique ID of employee

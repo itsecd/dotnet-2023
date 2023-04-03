@@ -26,7 +26,4 @@ public class BuildingPostDto
     /// BuildDate - date of building construction
     /// </summary>
     public DateTime BuildDate { get; set; } = new DateTime();
-    /// <summary>
-    /// Auctions - list of auctions for which the building was offered
-    /// </summary>
 }

@@ -30,7 +30,4 @@ public class BuyerGetDto
     /// Address - buyer's residence address 
     /// </summary>
     public string Address { get; set; } = string.Empty;
-    /// <summary>
-    /// Auctions - List of auctions in which the buyer participated
-    /// </summary>
 }

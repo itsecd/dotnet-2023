@@ -56,7 +56,7 @@ public class FabricsTests : IClassFixture<FabricsFixture>
         Assert.Equal(1, request.First(r => r.provider.Id == 1).count);
     }
     /// <summary>
-    /// Fourth request: information about the number of providers for each type of type and form of ownership.
+    /// Fourth request: information about the number of providers for each form of ownership of fabric.
     /// </summary>
     [Fact]
     public void FourthRequest()

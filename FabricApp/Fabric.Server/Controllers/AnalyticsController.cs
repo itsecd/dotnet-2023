@@ -73,7 +73,7 @@ public class AnalyticsController : ControllerBase
                       select _mapper.Map<Shipment, ShipmentGetDto>(shipment)).ToList();
         if (result.Count == 0)
         {
-            _logger.LogInformation("No providers delivired goods during given inteval");
+            _logger.LogInformation("No providers delivered goods during given inteval");
             return NotFound();
         }
         else
@@ -165,7 +165,7 @@ public class AnalyticsController : ControllerBase
     /// <param name="secondDate">Bigger interval boundary</param>
     /// <returns>List of providers</returns>
     [HttpGet("providers-information-in-interval-max")]
-    public IActionResult GetProvidersWithMaxQantity(DateTime firstDate, DateTime secondDate)
+    public IActionResult GetProvidersWithMaxQuantity(DateTime firstDate, DateTime secondDate)
     {
         _logger.LogInformation("Get providers who delivered goods during the given interval");
         var shipmentsInInterval = (from shipment in _fabricsRepository.Shipments
@@ -181,7 +181,7 @@ public class AnalyticsController : ControllerBase
                       select prov).ToList();
         if (result.Count == 0)
         {
-            _logger.LogInformation("No providers delivired goods during given inteval");
+            _logger.LogInformation("No providers delivered goods during given inteval");
             return NotFound();
         }
         else

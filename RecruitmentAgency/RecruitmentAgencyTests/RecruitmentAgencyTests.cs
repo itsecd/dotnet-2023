@@ -23,12 +23,12 @@ public class RecruitmentAgencyTests
     {
         return new List<Employee>()
         {
-            new Employee("Osokin Daniil Dmitrievich", "+79871112233", null, "Secondary Education", 50000),
-            new Employee("Jason Curtis Newsted", "+12568974152", 30, "Baccalaureate", 200000),
-            new Employee("Lelouch Lamperouge", "+811503651451", 3, "Secondary Education", 160000),
-            new Employee("Handsome Jack", "+0009123457810", 16, "Doctor of engineering", 999999999),
-            new Employee("Il Palazzo", "+819998887766", 10, "Baccalaureate", null),
-            new Employee("Rick Rubin", "+18881234568", 40, null, 20000000)
+            new Employee("Osokin Daniil Dmitrievich", "+79871112233", 0, "Secondary education", 50000),
+            new Employee("Jason Curtis Newsted", "+12568974152", 30, "Higher education", 200000),
+            new Employee("Lelouch Lamperouge", "+811503651451", 3, "Secondary education", 160000),
+            new Employee("Handsome Jack", "+0009123457810", 16, "Higher education", 999999999),
+            new Employee("Il Palazzo", "+819998887766", 10, "Higher education", null),
+            new Employee("Rick Rubin", "+18881234568", 40, "None", 20000000)
         };
     }
 
@@ -38,7 +38,7 @@ public class RecruitmentAgencyTests
         {
             new EmployeeApplication(employees[0], vacancies[0], new DateTime(2023, 03, 25)),
             new EmployeeApplication(employees[0], vacancies[5], new DateTime(2026, 07, 30)),
-            new EmployeeApplication(employees[0], vacancies[6], new DateTime(2023, 07, 30)),
+            new EmployeeApplication(employees[0], vacancies[6], new DateTime(2023, 02, 28)),
             new EmployeeApplication(employees[1], vacancies[3], new DateTime(1986, 05, 15)),
             new EmployeeApplication(employees[2], vacancies[4], new DateTime(2019, 10, 1)),
             new EmployeeApplication(employees[2], vacancies[8], new DateTime(2020, 02, 29)),
@@ -47,8 +47,6 @@ public class RecruitmentAgencyTests
             new EmployeeApplication(employees[4], vacancies[2], new DateTime(1997, 08, 15)),
             new EmployeeApplication(employees[5], vacancies[3], new DateTime(2016, 05, 8)),
         };
-
-
     }
 
     public static List<Employer> EmployerList()
@@ -68,50 +66,137 @@ public class RecruitmentAgencyTests
     {
         return new List<EmployerApplication>()
         {
-            new EmployerApplication(employers[0], vacancies[5], 10, "IT Higher education", 350000, new DateTime(2020, 12, 31)),
-            new EmployerApplication(employers[0], vacancies[7], 3, null, 200000, new DateTime(2018, 06, 19)),
-            new EmployerApplication(employers[1], vacancies[0], null, null, 30000, new DateTime(2019, 05, 6)),
-            new EmployerApplication(employers[2], vacancies[5], 7, null, 200000, new DateTime(2015, 10, 9)),
-            new EmployerApplication(employers[2], vacancies[6], 3, null, 140000, new DateTime(2023, 04, 1)),
+            new EmployerApplication(employers[0], vacancies[5], 10, "Higher education", 350000, new DateTime(2020, 12, 31)),
+            new EmployerApplication(employers[0], vacancies[7], 3, "None", 120000, new DateTime(2018, 06, 19)),
+            new EmployerApplication(employers[1], vacancies[0], 0, "None", 30000, new DateTime(2019, 05, 6)),
+            new EmployerApplication(employers[2], vacancies[5], 7, "None", 200000, new DateTime(2015, 10, 9)),
+            new EmployerApplication(employers[2], vacancies[6], 0, "Secondary education", 100000, new DateTime(2022, 12, 24)),
             new EmployerApplication(employers[3], vacancies[2], 10, "Secondary education", 100000, new DateTime(1986, 09, 15)),
-            new EmployerApplication(employers[4], vacancies[7], null, "Higher education", 25125, new DateTime(2017, 09, 12)),
+            new EmployerApplication(employers[4], vacancies[7], 0, "Higher education", 25125, new DateTime(2017, 09, 12)),
             new EmployerApplication(employers[4], vacancies[8], 2, "Higher education", 28694, new DateTime(2017, 10, 4)),
-            new EmployerApplication(employers[4], vacancies[9], null, "Higher education", 21420, new DateTime(2017, 10, 17)),
-            new EmployerApplication(employers[5], vacancies[1], null, null, null, new DateTime(2020, 01, 1)),
-            new EmployerApplication(employers[5], vacancies[3], null, null, 80000, new DateTime(2023, 03, 25)),
-            new EmployerApplication(employers[5], vacancies[4], null, null, 45000, new DateTime(2020, 03, 25)),
+            new EmployerApplication(employers[4], vacancies[9], 0, "Higher education", 21420, new DateTime(2017, 10, 17)),
+            new EmployerApplication(employers[5], vacancies[1], 0, "None", 0, new DateTime(2020, 01, 1)),
+            new EmployerApplication(employers[5], vacancies[3], 2, "None", 80000, new DateTime(2023, 03, 25)),
+            new EmployerApplication(employers[5], vacancies[4], 2, "None", 45000, new DateTime(2020, 03, 25)),
         };
     }
 
+    public static List<Vacancy> VacancyListWithApplications()
+    {
+        var vacancies = VacancyList();
+        EmployeeApplicationList(EmployeeList(), vacancies);
+        EmployerApplicationList(EmployerList(), vacancies);
+
+        return vacancies;
+    }
+
     /// <summary>
-    /// Task 1 - Filter employee by vacancy name; sort by employee name
+    /// Task 1 - Filter employee by vacancy's name; sort by employee's name
     /// </summary>
     [Fact]
-    public void EmployeeFilterVacancy()
+    public void EmployeeFilterByVacancy()
     {
-        var employeeApplicationList = EmployeeApplicationList(EmployeeList(), VacancyList());
-
-        var result = (from applications in employeeApplicationList
-                      where applications.Vacancy.Name == "Name"
+        var result = (from applications in EmployeeApplicationList(EmployeeList(), VacancyList())
+                      where applications.Vacancy.Name == "Guitarist"
                       orderby applications.Employee.Name
                       select applications.Employee).ToList();
 
-        Assert.Equal(5, result.Count);
+        Assert.Equal(2, result.Count);
     }
 
     /// <summary>
     /// Task 2 - Filter employee for a specified period
     /// </summary>
     [Fact]
-    public void EmployeeFilterDate()
+    public void EmployeeFilterByDate()
     {
-        var employeeApplicationList = EmployeeApplicationList(EmployeeList(), VacancyList());
-
-        var result = (from applications in employeeApplicationList
-                      where applications.Date >= new DateTime(2022, 2, 9) && applications.Date <= new DateTime(2022, 8, 8)
+        var result = (from applications in EmployeeApplicationList(EmployeeList(), VacancyList())
+                      where applications.Date >= new DateTime(1986, 06, 01) && applications.Date <= new DateTime(2013, 01, 1)
                       select applications.Employee).ToList();
 
-        Assert.Equal(5, result.Count);
+        Assert.Equal(3, result.Count);
     }
 
+    /// <summary>
+    /// Task 3 - Filter employee by employer requirments
+    /// </summary>
+    [Fact]
+    public void EmployeeFilterByEmployerApplication()
+    {
+        var vacancyList = VacancyListWithApplications();
+
+        var result = from vacancies in vacancyList
+                     from employerApplication in vacancies.EmployerApplicationList.Where(employerApplication => employerApplication.Id == 4)
+                     from employeeApplication in vacancies.EmployeeApplicationList.Where(employeeApplication => employeeApplication?.Employee?.Salary <= employerApplication.Salary &&
+                        employeeApplication.Employee?.Education == employerApplication.Education && employeeApplication.Vacancy.Name == employerApplication?.Vacancy?.Name &&
+                        employeeApplication.Employee?.WorkExperience >= employerApplication.WorkExperience)
+                     select new
+                     {
+                         employee = employeeApplication.Employee,
+                     };
+
+
+        Assert.Single(result);
+    }
+
+    /// <summary>
+    /// Task 4 - Show info about applications for each sector and for each name
+    /// </summary>
+    [Fact]
+    public void ApplicationCount()
+    {
+        var vacancyList = VacancyListWithApplications();
+
+        var result = from vacancies in vacancyList
+                     select new
+                     {
+                         vacancySector = vacancies.Sector,
+                         vacancyName = vacancies.Name,
+                         employeeApplicationsCount = vacancies.EmployeeApplicationList.Count(employeeApplication => employeeApplication.Vacancy.Name == vacancies.Name),
+                         employerApplicationsCount = vacancies.EmployerApplicationList.Count(employerApplication => employerApplication?.Vacancy?.Name == vacancies.Name)
+                     };
+
+        Assert.Equal(2, result.First().employeeApplicationsCount);
+        Assert.Equal("Guitarist", result.First().vacancyName);
+    }
+
+    /// <summary>
+    /// Task 5 - Show top 5 employer by application count
+    /// </summary>
+    [Fact]
+    public void EmployerTop5List()
+    {
+        var employerList = EmployerList();
+        var result = (from employerApplication in EmployerApplicationList(employerList, VacancyList())
+                      group employerApplication by employerApplication?.Employer?.Name into tableGroup
+                      orderby tableGroup.Count() descending
+                      select new
+                      {
+                          Company = tableGroup.Key,
+                          NumRequests = tableGroup.Count()
+                      }).Take(5).ToList();
+
+        Assert.Equal(employerList[0].Name, result[2].Company);
+        Assert.Equal(employerList[1].Name, result[4].Company);
+        Assert.Equal(employerList[2].Name, result[3].Company);
+        Assert.Equal(employerList[4].Name, result[0].Company);
+        Assert.Equal(employerList[5].Name, result[1].Company);
+    }
+
+    /// <summary>
+    /// Task 6 - Filter employers by offered salary
+    /// </summary>
+    [Fact]
+    public void FilterEmployerBiggestSalary()
+    {
+        var employerApplicationList = EmployerApplicationList(EmployerList(), VacancyList());
+        var result = from employerApplication in employerApplicationList
+                     where employerApplication.Salary == (from employerApplicationSalaries in employerApplicationList
+                                                          select employerApplicationSalaries.Salary).Max()
+                     select new
+                     {
+                         CompanyRequest = employerApplication,
+                     };
+        Assert.Equal((uint)350000, result.First().CompanyRequest.Salary);
+    }
 }

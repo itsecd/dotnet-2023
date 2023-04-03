@@ -17,7 +17,7 @@ public class Provider
     /// </summary>
     public string TypeOfGoods { get; set; } = string.Empty;
     /// <summary>
-    /// PhoneNumber is used to store phone number of Fabric.
+    /// Address is used to store address of provider.
     /// </summary>
     public string Address { get; set; } = string.Empty;
 

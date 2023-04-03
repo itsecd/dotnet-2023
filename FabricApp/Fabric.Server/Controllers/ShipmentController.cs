@@ -5,15 +5,28 @@ using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fabrics.Server.Controllers;
+/// <summary>
+/// Shipment controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ShipmentController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<ShipmentController> _logger;
-
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly IFabricsRepository _fabricsRepository;
-
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
+    /// <summary>
+    /// ShipmentController constructor
+    /// </summary>
     public ShipmentController(ILogger<ShipmentController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
     {
         _logger = logger;
@@ -21,7 +34,7 @@ public class ShipmentController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Returns list of all shipments.
+    /// Get list of all shipments.
     /// </summary>
     /// <returns>List of fabrics</returns>
     [HttpGet]
@@ -30,7 +43,11 @@ public class ShipmentController : ControllerBase
         _logger.LogInformation("Get provider");
         return _fabricsRepository.Shipments.Select(shipment => _mapper.Map<ShipmentGetDto>(shipment));
     }
-
+    /// <summary>
+    /// Get shipment by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Shipment</returns>
     [HttpGet("{id}")]
     public ActionResult<ShipmentGetDto> Get(int id)
     {
@@ -45,13 +62,21 @@ public class ShipmentController : ControllerBase
             return Ok(_mapper.Map<ShipmentGetDto>(shipment));
         }
     }
-
+    /// <summary>
+    /// Post new shipment
+    /// </summary>
+    /// <param name="shipment"></param>
     [HttpPost]
     public void Post([FromBody] ShipmentPostDto shipment)
     {
         _fabricsRepository.Shipments.Add(_mapper.Map<Shipment>(shipment));
     }
-
+    /// <summary>
+    /// Put shipment
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="shipmentToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ShipmentPostDto shipmentToPut)
     {
@@ -67,7 +92,11 @@ public class ShipmentController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete shipment
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

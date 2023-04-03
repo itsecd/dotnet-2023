@@ -5,23 +5,39 @@ using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fabrics.Server.Controllers;
+/// <summary>
+/// Provider controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ProviderController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<ProviderController> _logger;
-
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly IFabricsRepository _fabricsRepository;
-
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
+    /// <summary>
+    /// ProviderController constructor
+    /// </summary>
+    /// <param name="logger">Logger</param>
+    /// <param name="fabricsRepository">Repository</param>
+    /// <param name="mapper">Map-object</param>
     public ProviderController(ILogger<ProviderController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
     {
-        _logger = logger;
+        _logger =  logger;
         _fabricsRepository = fabricsRepository;
         _mapper = mapper;
     }
     /// <summary>
-    /// Returns list of all providers.
+    /// Get list of all providers.
     /// </summary>
     /// <returns>List of providers</returns>
     [HttpGet]
@@ -30,7 +46,11 @@ public class ProviderController : ControllerBase
         _logger.LogInformation("Get provider");
         return _fabricsRepository.Providers.Select(provider => _mapper.Map<ProviderGetDto>(provider));
     }
-
+    /// <summary>
+    /// Get provider by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Provider</returns>
     [HttpGet("{id}")]
     public ActionResult<ProviderGetDto> Get(int id)
     {
@@ -45,13 +65,21 @@ public class ProviderController : ControllerBase
             return Ok(_mapper.Map<ProviderGetDto>(provider));
         }
     }
-
+    /// <summary>
+    /// Post new provider
+    /// </summary>
+    /// <param name="provider"></param>
     [HttpPost]
     public void Post([FromBody] ProviderPostDto provider)
     {
         _fabricsRepository.Providers.Add(_mapper.Map<Provider>(provider));
     }
-
+    /// <summary>
+    /// Put provider
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="providerToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProviderPostDto providerToPut)
     {
@@ -67,7 +95,11 @@ public class ProviderController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete provider
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

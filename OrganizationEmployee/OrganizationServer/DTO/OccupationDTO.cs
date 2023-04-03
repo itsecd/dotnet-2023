@@ -1,9 +1,8 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
-/// Occupation - represents an employee occupation.
-/// The class has list of EmployeeOccupation objects for many-to-many relationship.
+/// OccupationDto - represents an employee occupation.
 /// </summary>
-public class OccupationDTO
+public class OccupationDto
 {
     /// <summary>
     /// Name - a name of the given occupation

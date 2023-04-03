@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
+[Route("api/[controller]")]
+[ApiController]
 public class StatisticsController : Controller
 {
     private OrganizationRepository _organizationRepository;
@@ -17,18 +18,18 @@ public class StatisticsController : Controller
 
 
     [HttpGet("DepartmentId/{departmentId}")]
-    public ActionResult<IEnumerable<EmployeeDTO>> Get(int departmentId)
+    public ActionResult<IEnumerable<EmployeeDto>> Get(int departmentId)
     {
         var firstQuery = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
                           from departmentEmployeeItem in employee.DepartmentEmployees
                           where departmentEmployeeItem.Department?.Id == departmentId
-                          select _mapper.Map<EmployeeDTO>(employee)).ToList();
+                          select _mapper.Map<EmployeeDto>(employee)).ToList();
         if (firstQuery.Count() == 0) return NotFound("Employees with a given department id don't exist");
         return Ok(firstQuery);
     }
 
-    [HttpGet("EmployeeWithFewDepartments")]
-    public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDTO>> GetEmployeeWithFewDepartments()
+    [HttpGet("EmployeesWithFewDepartments")]
+    public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDto>> GetEmployeesWithFewDepartments()
     {
         var secondQuery = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
                            orderby employee.LastName, employee.FirstName, employee.PatronymicName
@@ -42,7 +43,7 @@ public class StatisticsController : Controller
                            } into grp
                            where grp.Count() > 1
                            orderby grp.Key.LastName, grp.Key.FirstName, grp.Key.PatronymicName
-                           select new EmployeeWithFewDepartmentsDTO()
+                           select new EmployeeWithFewDepartmentsDto()
                            {
                                RegNumber = grp.Key.RegNumber,
                                FirstName = grp.Key.FirstName,
@@ -54,13 +55,13 @@ public class StatisticsController : Controller
     }
 
     [HttpGet("ArchiveOfDismissals")]
-    public ActionResult<IEnumerable<ArchiveOfDismissals>> GetArchiveOfDismissals()
+    public ActionResult<IEnumerable<ArchiveOfDismissalsDto>> GetArchiveOfDismissals()
     {
         var thirdQuery = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
                           where employeeOccupationItem?.DismissalDate != null
                           from department in employeeOccupationItem?.Employee?.DepartmentEmployees
                           select
-                          new ArchiveOfDismissals()
+                          new ArchiveOfDismissalsDto()
                           {
                               RegNumber = employeeOccupationItem.Employee?.RegNumber,
                               FirstName = employeeOccupationItem.Employee?.FirstName,
@@ -75,7 +76,7 @@ public class StatisticsController : Controller
         return thirdQuery;
     }
     [HttpGet("AvgAgeInDepartments")]
-    public ActionResult<IEnumerable<AverageAgeInDepartmentDTO>> GetAvgAgeInDepartments()
+    public ActionResult<IEnumerable<AverageAgeInDepartmentDto>> GetAvgAgeInDepartments()
     {
         var employees = _organizationRepository.EmployeesWithDepartmentEmployeeFilled;
         var fourthQuery =
@@ -96,7 +97,7 @@ public class StatisticsController : Controller
                  tuple.DepartmentId,
                  tuple.DepartmentName,
              } into grp
-             select new AverageAgeInDepartmentDTO()
+             select new AverageAgeInDepartmentDto()
              {
                  AverageAge = grp.Average(employee => employee.EmployeeAge),
                  DepartmentName = grp.Key.DepartmentName
@@ -105,12 +106,12 @@ public class StatisticsController : Controller
         return fourthQuery;
     }
     [HttpGet("EmployeeLastYearVoucher")]
-    public ActionResult<IEnumerable<EmployeeLastYearVoucher>> GetEmployeeLastYearVoucher()
+    public ActionResult<IEnumerable<EmployeeLastYearVoucherDto>> GetEmployeeLastYearVoucher()
     {
         var fifthQuery = (from employeeVoucherItem in _organizationRepository.EmployeeVacationVouchers
                           where (new DateTime(2023, 3, 10) -
                                  employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
-                          select new EmployeeLastYearVoucher()
+                          select new EmployeeLastYearVoucherDto()
                           {
                               RegNumber = employeeVoucherItem.Employee?.RegNumber,
                               FirstName = employeeVoucherItem.Employee?.FirstName,
@@ -121,7 +122,7 @@ public class StatisticsController : Controller
         return fifthQuery;
     }
     [HttpGet("EmployeeWithLongestWorkExperience")]
-    public ActionResult<IEnumerable<EmployeeWorkExperience>> GetEmployeeWithLongestWorkExperience()
+    public ActionResult<IEnumerable<EmployeeWorkExperienceDto>> GetEmployeeWithLongestWorkExperience()
     {
         var subqueryReplaceNull = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
                                    select new
@@ -143,7 +144,7 @@ public class StatisticsController : Controller
                           orderby grp.Sum(subqueryElem =>
                                           (subqueryElem.DismissalDate -
                                            subqueryElem.HireDate).TotalDays / 365.2422) descending
-                          select new EmployeeWorkExperience()
+                          select new EmployeeWorkExperienceDto()
                           {
                               RegNumber = grp.Key.RegNumber,
                               FirstName = grp.Key.FirstName,

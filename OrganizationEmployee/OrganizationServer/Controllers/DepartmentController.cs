@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -32,7 +32,7 @@ public class DepartmentController : Controller
     }
 
     [HttpPost]
-    public void Post([FromBody] DepartmentDTO department)
+    public void Post([FromBody] DepartmentDto department)
     {
         var mappedDepartment = _mapper.Map<Department>(department);
         _organizationRepository.Departments.Add(mappedDepartment);
@@ -40,7 +40,7 @@ public class DepartmentController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<Department> Put(int id, [FromBody] DepartmentDTO newDepartment)
+    public ActionResult<Department> Put(int id, [FromBody] DepartmentDto newDepartment)
     {
         var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
         if (department == null) return NotFound();

@@ -1,8 +1,8 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
-/// EmployeeWorkExperience - represents an employee and employee's work experience
+/// EmployeeLastYearVoucherDto - represents an employee and employee's vacation voucher, that they has received
 /// </summary>
-public class EmployeeWorkExperience
+public class EmployeeLastYearVoucherDto
 {
     /// <summary>
     /// RegNumber - registration number of an Employee
@@ -17,7 +17,7 @@ public class EmployeeWorkExperience
     /// </summary>
     public string? LastName { get; set; }
     /// <summary>
-    /// WorkExperience - a work experience of an Employee 
+    /// VoucherTypeName - a name of a VoucherType
     /// </summary>
-    public double? WorkExperience { get; set; }
+    public string? VoucherTypeName { get; set; }
 }

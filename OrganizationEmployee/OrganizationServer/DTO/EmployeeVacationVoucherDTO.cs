@@ -1,8 +1,8 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// class EmployeeVacationVoucher - represents a many-to-many relationship between Employee and VacationVoucher
 /// </summary>
-public class EmployeeVacationVoucherDTO
+public class EmployeeVacationVoucherDto
 {
     /// <summary>
     /// Id - an id of the object

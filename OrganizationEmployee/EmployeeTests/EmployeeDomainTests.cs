@@ -121,7 +121,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
     public void TestFifthQuery()
     {
         var fifthQuery = (from employeeVoucherItem in _fixture.EmployeeVacationVoucher
-                          where (new DateTime(2023, 3, 10) -
+                          where (DateTime.Now -
                                  employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
                           select new
                           {

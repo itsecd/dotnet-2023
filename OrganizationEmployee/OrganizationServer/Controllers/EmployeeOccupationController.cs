@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -18,24 +18,24 @@ public class EmployeeOccupationController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<EmployeeOccupationDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeOccupationDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _mapper.Map<IEnumerable<EmployeeOccupationDTO>>(_organizationRepository.EmployeeOccupations);
+        return _mapper.Map<IEnumerable<EmployeeOccupationDto>>(_organizationRepository.EmployeeOccupations);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<EmployeeOccupationDTO> Get(int id)
+    public ActionResult<EmployeeOccupationDto> Get(int id)
     {
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations
             .FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
         if (employeeOccupation == null) return NotFound();
-        var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDTO>(employeeOccupation);
+        var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDto>(employeeOccupation);
         return Ok(mappedEmployeeOccupation);
     }
 
     [HttpPost]
-    public ActionResult<EmployeeOccupationDTO> Post([FromBody] EmployeeOccupationDTO employeeOccupation)
+    public ActionResult<EmployeeOccupationDto> Post([FromBody] EmployeeOccupationDto employeeOccupation)
     {
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupation>(employeeOccupation);
         var employee =
@@ -54,7 +54,7 @@ public class EmployeeOccupationController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<EmployeeOccupationDTO> Put(int id, [FromBody] EmployeeOccupationDTO newEmployeeOccupation)
+    public ActionResult<EmployeeOccupationDto> Put(int id, [FromBody] EmployeeOccupationDto newEmployeeOccupation)
     {
         var employeeOccupation = _organizationRepository
             .EmployeeOccupations.FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
@@ -77,7 +77,7 @@ public class EmployeeOccupationController : Controller
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeOccupationDTO> Delete(int id)
+    public ActionResult<EmployeeOccupationDto> Delete(int id)
     {
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations

@@ -1,11 +1,11 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
-/// Class WorkshopDTO represents a workshop on the organization
+/// Class WorkshopDto represents a workshop on the organization
 /// </summary>
-public class WorkshopDTO  //rename later..
+public class WorkshopDto  //rename later..
 {
     /// <summary>
     /// Name - a name of the workshop
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

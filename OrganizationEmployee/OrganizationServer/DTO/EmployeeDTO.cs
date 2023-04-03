@@ -1,10 +1,10 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// Classs Employee represents an employee in organization, it contains personal information and
 /// it has lists of other classes -  EmployeeOccupation, DepartmentEmployee, EmployeeVacationVoucher to represent many-to-many relationship.
 /// It also has a link to Workshop class for one-to-many relationship.
 /// </summary>
-public class EmployeeDTO
+public class EmployeeDto
 {
     /// <summary>
     /// RegNumber - registration number of an Employee
@@ -29,7 +29,7 @@ public class EmployeeDTO
     /// <summary>
     /// Workshop - an id of the Workshop
     /// </summary>
-    public int WorkshopId { get; set; } 
+    public int WorkshopId { get; set; }
     /// <summary>
     /// HomeAddress - home address of an employee
     /// </summary>

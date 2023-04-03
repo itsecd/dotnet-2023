@@ -1,9 +1,9 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
-/// AverageAgeInDepartmentDTO represents a department and a calculated employees' average age in that department
+/// AverageAgeInDepartmentDto represents a department and a calculated employees' average age in that department
 /// </summary>
 
-public class AverageAgeInDepartmentDTO
+public class AverageAgeInDepartmentDto
 {
     /// <summary>
     /// AverageAge - an average age of employees in the department

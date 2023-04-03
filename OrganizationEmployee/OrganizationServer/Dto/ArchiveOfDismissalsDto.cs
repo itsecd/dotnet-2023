@@ -1,8 +1,8 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// ArchiveOfDismissals represents an archive of dismissed employees
 /// </summary>
-public class ArchiveOfDismissals
+public class ArchiveOfDismissalsDto
 {
     /// <summary>
     /// RegNumber - registration number of an Employee

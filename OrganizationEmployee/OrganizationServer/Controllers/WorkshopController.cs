@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,23 +20,23 @@ public class WorkshopController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<WorkshopDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)  //здесь можно сделать page-nation, он принимает
-                                                                                            //номер страницы и размер страницы (чтобы если у нас очень много данных - выводить их страницами)
+    public IEnumerable<WorkshopDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)  //здесь можно сделать page-nation, он принимает
+                                                                                               //номер страницы и размер страницы (чтобы если у нас очень много данных - выводить их страницами)
     {
-        return _mapper.Map<IEnumerable<WorkshopDTO>>(_organizationRepository.Workshops); // использовать Take() и Skip()
+        return _mapper.Map<IEnumerable<WorkshopDto>>(_organizationRepository.Workshops); // использовать Take() и Skip()
     }
 
     [HttpGet("{id}")]
-    public ActionResult<WorkshopDTO> Get(int id)
+    public ActionResult<WorkshopDto> Get(int id)
     {
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null) return NotFound();
-        var mappedWorkshop = _mapper.Map<WorkshopDTO>(workshop);
+        var mappedWorkshop = _mapper.Map<WorkshopDto>(workshop);
         return Ok(mappedWorkshop);
     }
 
     [HttpPost]
-    public ActionResult<WorkshopDTO> Post([FromBody] WorkshopDTO workshop)
+    public ActionResult<WorkshopDto> Post([FromBody] WorkshopDto workshop)
     {
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
         _organizationRepository.Workshops.Add(mappedWorkshop);
@@ -44,7 +44,7 @@ public class WorkshopController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult<WorkshopDTO> Put(int id, [FromBody] WorkshopDTO newWorkshop)
+    public ActionResult<WorkshopDto> Put(int id, [FromBody] WorkshopDto newWorkshop)
     {
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null) return NotFound();
@@ -55,7 +55,7 @@ public class WorkshopController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<WorkshopDTO> Delete(int id)
+    public ActionResult<WorkshopDto> Delete(int id)
     {
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null) return NotFound();

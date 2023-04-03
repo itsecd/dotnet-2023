@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -18,20 +18,20 @@ public class VoucherTypeController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<VoucherTypeDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<VoucherTypeDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _mapper.Map<IEnumerable<VoucherTypeDTO>>(_organizationRepository.VoucherTypes); // использовать Take() и Skip()
+        return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes); // использовать Take() и Skip()
     }
     [HttpGet("{id}")]
-    public ActionResult<VoucherTypeDTO> Get(int id)
+    public ActionResult<VoucherTypeDto> Get(int id)
     {
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null) return NotFound();
-        var mappedVoucherType = _mapper.Map<VoucherTypeDTO>(voucherType);
+        var mappedVoucherType = _mapper.Map<VoucherTypeDto>(voucherType);
         return Ok(mappedVoucherType);
     }
     [HttpPost]
-    public ActionResult<VoucherTypeDTO> Post([FromBody] VoucherTypeDTO voucherType)
+    public ActionResult<VoucherTypeDto> Post([FromBody] VoucherTypeDto voucherType)
     {
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
         _organizationRepository.VoucherTypes.Add(mappedVoucherType);
@@ -40,7 +40,7 @@ public class VoucherTypeController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<VoucherTypeDTO> Put(int id, [FromBody] VoucherTypeDTO newVoucherType)
+    public ActionResult<VoucherTypeDto> Put(int id, [FromBody] VoucherTypeDto newVoucherType)
     {
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null) return NotFound();
@@ -51,7 +51,7 @@ public class VoucherTypeController : Controller
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<VoucherTypeDTO> Delete(int id)
+    public ActionResult<VoucherTypeDto> Delete(int id)
     {
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null) return NotFound();

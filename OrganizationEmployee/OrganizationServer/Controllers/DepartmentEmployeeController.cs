@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -18,24 +18,24 @@ public class DepartmentEmployeeController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<DepartmentEmployeeDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<DepartmentEmployeeDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _mapper.Map<IEnumerable<DepartmentEmployeeDTO>>(_organizationRepository.DepartmentEmployees);
+        return _mapper.Map<IEnumerable<DepartmentEmployeeDto>>(_organizationRepository.DepartmentEmployees);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<DepartmentEmployeeDTO> Get(int id)
+    public ActionResult<DepartmentEmployeeDto> Get(int id)
     {
         var departmentEmployee =
             _organizationRepository.DepartmentEmployees
             .FirstOrDefault(departEmployee => departEmployee.Id == id);
         if (departmentEmployee == null) return NotFound();
-        var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployeeDTO>(departmentEmployee);
+        var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployeeDto>(departmentEmployee);
         return Ok(mappedDepartmentEmployee);
     }
 
     [HttpPost]
-    public ActionResult<DepartmentEmployeeDTO> Post([FromBody] DepartmentEmployeeDTO departmentEmployee)
+    public ActionResult<DepartmentEmployeeDto> Post([FromBody] DepartmentEmployeeDto departmentEmployee)
     {
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(departmentEmployee);
         var employee =
@@ -54,7 +54,7 @@ public class DepartmentEmployeeController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<DepartmentEmployeeDTO> Put(int id, [FromBody] DepartmentEmployee newDepartmentEmployee)
+    public ActionResult<DepartmentEmployeeDto> Put(int id, [FromBody] DepartmentEmployee newDepartmentEmployee)
     {
         var departmentEmployee = _organizationRepository
             .DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
@@ -76,7 +76,7 @@ public class DepartmentEmployeeController : Controller
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<DepartmentEmployeeDTO> Delete(int id)
+    public ActionResult<DepartmentEmployeeDto> Delete(int id)
     {
         var departmentEmployee = _organizationRepository.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
         if (departmentEmployee == null) return NotFound();

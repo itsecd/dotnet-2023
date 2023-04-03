@@ -1,9 +1,9 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// class DepartmentEmployee - represents a many-to-many relationship
 /// between Employee and Department
 /// </summary>
-public class DepartmentEmployeeDTO
+public class DepartmentEmployeeDto
 {
     /// <summary>
     /// DepartmentId - an id of Department object

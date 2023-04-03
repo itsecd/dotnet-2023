@@ -490,21 +490,21 @@ public class EmployeeDomainFixture
                 {
                     Id = 1,
                     VoucherType = null,
-                    IssueDate = new DateTime(2022, 3, 22),
+                    IssueDate = DateTime.Now.AddDays(-330),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 2,
                     VoucherType = null,
-                    IssueDate = new DateTime(2022, 5, 12),
+                    IssueDate = DateTime.Now.AddDays(-300),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 3,
                     VoucherType = null,
-                    IssueDate = new DateTime(2020, 1, 5),
+                    IssueDate = DateTime.Now.AddYears(-2),
                     EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 }
             };

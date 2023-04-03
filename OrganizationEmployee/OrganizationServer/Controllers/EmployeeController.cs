@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.DTO;
-using System.Collections.Generic;
+using OrganizationServer.Dto;
 
 namespace OrganizationServer.Controllers;
 [Route("api/[controller]")]
@@ -19,26 +18,29 @@ public class EmployeeController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<EmployeeDTO> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
     {
-        return _mapper.Map<IEnumerable<EmployeeDTO>>(_organizationRepository.Employees);
+        return _mapper.Map<IEnumerable<EmployeeDto>>(_organizationRepository.Employees);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<EmployeeDTO> Get(uint id)
+    public ActionResult<EmployeeDto> Get(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
-        var mappedEmployee = _mapper.Map<EmployeeDTO>(employee);
+        var mappedEmployee = _mapper.Map<EmployeeDto>(employee);
         return Ok(mappedEmployee);
     }
 
     [HttpPost]
-    public ActionResult<EmployeeDTO> Post([FromBody] EmployeeDTO employee)
+    public ActionResult<EmployeeDto> Post([FromBody] EmployeeDto employee)
     {
         var mappedEmployee = _mapper.Map<Employee>(employee);
         var workshop =
                _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
+        var employeeWithRegNumber = _organizationRepository.Employees
+            .FirstOrDefault(employee => employee.RegNumber == mappedEmployee.RegNumber);
+        if (employeeWithRegNumber != null) return Conflict("An employee with given registration number already exits");
         if (workshop == null) return NotFound("A workshop with given id doesn't exist");
         _organizationRepository.Employees.Add(mappedEmployee);
         return Ok(employee);
@@ -46,7 +48,7 @@ public class EmployeeController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<EmployeeDTO> Put(uint id, [FromBody] EmployeeDTO newEmployee)
+    public ActionResult<EmployeeDto> Put(uint id, [FromBody] EmployeeDto newEmployee)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();
@@ -60,7 +62,7 @@ public class EmployeeController : Controller
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeDTO> Delete(uint id)
+    public ActionResult<EmployeeDto> Delete(uint id)
     {
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null) return NotFound();

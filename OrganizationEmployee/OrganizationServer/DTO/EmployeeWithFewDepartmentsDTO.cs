@@ -1,8 +1,8 @@
-﻿namespace OrganizationServer.DTO;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
-/// Classs EmployeeWithFewDepartmentsDTO represents an employee, who works in 2 or more departments of the organization
+/// Classs EmployeeWithFewDepartmentsDto represents an employee, who works in 2 or more departments of the organization
 /// </summary>
-public class EmployeeWithFewDepartmentsDTO
+public class EmployeeWithFewDepartmentsDto
 {
     /// <summary>
     /// RegNumber - registration number of an Employee

@@ -16,7 +16,7 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     {
         var result = (from jobApplications in _fixture.FixtureJobApplications
                       where jobApplications.Title == "Backend"
-                      orderby jobApplications.Employee.PersonalName
+                      orderby jobApplications?.Employee?.PersonalName
                       select jobApplications).ToList();
 
         Assert.Equal(2, result.Count);
@@ -35,8 +35,8 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     {
         var result = from applications in _fixture.FixtureTitles
                      from appCompany in applications.CompanyApplications.Where(appCompany => appCompany.Id == 2)
-                     from appEmployee in applications.EmployeeApplications.Where(appEmployee => appEmployee.Employee.Salary <= appCompany.Salary &&
-                     appEmployee.Employee.Education == appCompany.Education && appEmployee.Title == appCompany.Title.JobTitle &&
+                     from appEmployee in applications.EmployeeApplications.Where(appEmployee => appEmployee?.Employee?.Salary <= appCompany.Salary &&
+                     appEmployee.Employee?.Education == appCompany.Education && appEmployee.Title == appCompany?.Title?.JobTitle &&
                      appEmployee.Employee.WorkExperience >= appCompany.WorkExperience)
                      select new
                      {
@@ -55,7 +55,7 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
                          JobSection = titles.Section,
                          JobTitle = titles.JobTitle,
                          NumJobApplications = titles.EmployeeApplications.Count(jobApplication => jobApplication.Title == titles.JobTitle),
-                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication.Title.JobTitle == titles.JobTitle)
+                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication?.Title?.JobTitle == titles.JobTitle)
                      };
         var firstItem = result.First();
         var secondItem = result.Last();
@@ -68,7 +68,7 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
     public void MostPopularCompaniesTest()
     {
         var result = (from companyApplication in _fixture.FixtureCompaniesApplications
-                      group companyApplication by companyApplication.Company.CompanyName into tableGroup
+                      group companyApplication by companyApplication?.Company?.CompanyName into tableGroup
                       orderby tableGroup.Count() descending
                       select new
                       {

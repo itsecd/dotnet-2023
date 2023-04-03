@@ -11,15 +11,15 @@ namespace ApplicationsServer.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TitlesController : ControllerBase
+public class TitleController : ControllerBase
 {
-    private readonly ILogger<TitlesController> _logger;
+    private readonly ILogger<TitleController> _logger;
     private readonly IApplicationsServerRepository _companiesRepository;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public TitlesController(ILogger<TitlesController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
+    public TitleController(ILogger<TitleController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
     {
         _logger = logger;
         _companiesRepository = companiesRepository;

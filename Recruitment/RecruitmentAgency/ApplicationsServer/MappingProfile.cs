@@ -27,6 +27,7 @@ public class MappingProfile : Profile
              .ForMember(dest => dest.Employee, opt => opt.MapFrom(src => src.Employee.Id));
 
         CreateMap<JobApplicationGetDTO, JobApplication>();
+        CreateMap<JobApplication, JobApplicationGetDTO>();
 
         CreateMap<CompanyApplication, CompanyApplicationGetDTO>();
 

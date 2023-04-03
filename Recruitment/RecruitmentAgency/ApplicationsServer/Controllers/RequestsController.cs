@@ -38,7 +38,7 @@ public class RequestsController : ControllerBase
     {
         var query = (from jobApplications in _companiesRepository.JobApplications
                      where jobApplications.Title == jobTitle
-                     orderby jobApplications.Employee.PersonalName
+                     orderby jobApplications?.Employee?.PersonalName
                      select _mapper.Map<JobApplicationGetDTO>(jobApplications)).ToList();
         if (query.Count == 0)
         {
@@ -88,8 +88,8 @@ public class RequestsController : ControllerBase
     {
         var query = from applications in _companiesRepository.Titles
                     from appCompany in applications.CompanyApplications.Where(appCompany => appCompany.Id == id)
-                    from appEmployee in applications.EmployeeApplications.Where(appEmployee => appEmployee.Employee.Salary <= appCompany.Salary &&
-                    appEmployee.Employee.Education == appCompany.Education && appEmployee.Title == appCompany.Title.JobTitle &&
+                    from appEmployee in applications.EmployeeApplications.Where(appEmployee => appEmployee?.Employee?.Salary <= appCompany.Salary &&
+                    appEmployee.Employee.Education == appCompany?.Education && appEmployee.Title == appCompany?.Title?.JobTitle &&
                     appEmployee.Employee.WorkExperience >= appCompany.WorkExperience)
                     select new
                     {
@@ -121,7 +121,7 @@ public class RequestsController : ControllerBase
                          JobSection = titles.Section,
                          JobTitle = titles.JobTitle,
                          NumJobApplications = titles.EmployeeApplications.Count(jobApplication => jobApplication.Title == titles.JobTitle),
-                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication.Title.JobTitle == titles.JobTitle)
+                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication?.Title?.JobTitle == titles.JobTitle)
                      };
         if (!query.Any())
         {
@@ -144,7 +144,7 @@ public class RequestsController : ControllerBase
     public ActionResult<IEnumerable<Company>> GetTheMostPopularCompanies()
     {
         var query = (from companyApplication in _companiesRepository.CompaniesApplications
-                     group companyApplication by companyApplication.Company.CompanyName into tableGroup
+                     group companyApplication by companyApplication?.Company?.CompanyName into tableGroup
                      orderby tableGroup.Count() descending
                      select new
                      {

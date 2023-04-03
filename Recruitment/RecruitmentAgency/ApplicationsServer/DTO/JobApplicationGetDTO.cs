@@ -7,7 +7,7 @@ public class JobApplicationGetDTO
     /// <summary>
     /// Employee - contains employee id
     /// </summary>  
-    public int Employee { get; set; }
+    public EmployeePostDTO? Employee { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  

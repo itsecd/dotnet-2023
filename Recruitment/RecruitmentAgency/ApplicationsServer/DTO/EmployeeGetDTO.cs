@@ -1,8 +1,8 @@
-﻿namespace ApplicationsServer.DTO;
+﻿namespace ApplicationsServer.Dto;
 /// <summary>
 /// Employee - a class that describes the characteristics of a worker
 /// </summary>
-public class EmployeeGetDTO
+public class EmployeeGetDto
 {
     /// <summary>
     /// PersonalName - a string for name, second_name and surname

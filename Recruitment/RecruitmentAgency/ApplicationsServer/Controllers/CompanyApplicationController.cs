@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -30,10 +30,10 @@ public class CompanyApplicationController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all companies applications</returns>
     [HttpGet]
-    public IEnumerable<CompanyApplicationGetDTO> Get()
+    public IEnumerable<CompanyApplicationGetDto> Get()
     {
         _logger.LogInformation("Get companies applications");
-        return _companiesRepository.CompaniesApplications.Select(companyApplication=>_mapper.Map<CompanyApplicationGetDTO>(companyApplication));
+        return _companiesRepository.CompaniesApplications.Select(companyApplication=>_mapper.Map<CompanyApplicationGetDto>(companyApplication));
     }
     /// <summary>
     ///  Get method that returns company application with a specific id
@@ -41,7 +41,7 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="id">Company application id</param>
     /// <returns>Company with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<CompanyApplicationGetDTO> Get(int id)
+    public ActionResult<CompanyApplicationGetDto> Get(int id)
     {
         _logger.LogInformation($"Get company application with id {id}");
         var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
@@ -50,14 +50,14 @@ public class CompanyApplicationController : ControllerBase
             _logger.LogInformation("Not found company application with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<CompanyApplicationGetDTO>(companyApplication));
+        return Ok(_mapper.Map<CompanyApplicationGetDto>(companyApplication));
     }
     /// <summary>
     /// Post method that adding a new company application
     /// </summary>
     /// <param name="companyApplication"></param>
     [HttpPost]
-    public void Post([FromBody] CompanyApplicationGetDTO companyApplication)
+    public void Post([FromBody] CompanyApplicationGetDto companyApplication)
     {
         _companiesRepository.CompaniesApplications.Add(_mapper.Map<CompanyApplication>(companyApplication));
     }
@@ -69,12 +69,12 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="companyApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CompanyApplicationGetDTO companyApplicationToPut)
+    public IActionResult Put(int id, [FromBody] CompanyApplicationGetDto companyApplicationToPut)
     {
         _logger.LogInformation($" Attempting to change a company application with an id equal to =  {id}");
         var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
         if (companyApplication == null) return NotFound();
-        _mapper.Map<CompanyApplicationGetDTO, CompanyApplication>(companyApplicationToPut, companyApplication);
+        _mapper.Map<CompanyApplicationGetDto, CompanyApplication>(companyApplicationToPut, companyApplication);
 
         return Ok();
     }

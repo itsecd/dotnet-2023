@@ -1,8 +1,8 @@
-﻿namespace ApplicationsServer.DTO;
+﻿namespace ApplicationsServer.Dto;
 /// <summary>
 /// CompanyApplication - a class that describes the company application
 /// </summary>
-public class CompanyApplicationGetDTO
+public class CompanyApplicationGetDto
 {
     /// <summary>
     /// Date - date of application

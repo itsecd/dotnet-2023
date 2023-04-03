@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -30,10 +30,10 @@ public class CompanyController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all companies</returns>
     [HttpGet]
-    public IEnumerable<CompanyGetDTO> Get()
+    public IEnumerable<CompanyGetDto> Get()
     {
         _logger.LogInformation("Get companies");
-        return _companiesRepository.Companies.Select(employee=>_mapper.Map<CompanyGetDTO>(employee));
+        return _companiesRepository.Companies.Select(employee=>_mapper.Map<CompanyGetDto>(employee));
     }
     /// <summary>
     ///  Get method that returns a company with a specific id
@@ -41,7 +41,7 @@ public class CompanyController : ControllerBase
     /// <param name="id">Company id</param>
     /// <returns>Company with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<CompanyGetDTO> Get(int id)
+    public ActionResult<CompanyGetDto> Get(int id)
     {
         _logger.LogInformation($"Get company with id {id}");
         var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
@@ -50,14 +50,14 @@ public class CompanyController : ControllerBase
             _logger.LogInformation("Not found company with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<CompanyGetDTO>(company));
+        return Ok(_mapper.Map<CompanyGetDto>(company));
     }
     /// <summary>
     /// Post method that adding a new company 
     /// </summary>
     /// <param name="company"></param>
     [HttpPost]
-    public void Post([FromBody] CompanyPostDTO company)
+    public void Post([FromBody] CompanyPostDto company)
     {
         _companiesRepository.Companies.Add(_mapper.Map<Company>(company));
      }
@@ -69,12 +69,12 @@ public class CompanyController : ControllerBase
     /// <param name="companyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CompanyPostDTO companyToPut)
+    public IActionResult Put(int id, [FromBody] CompanyPostDto companyToPut)
     {
         _logger.LogInformation($" Attempting to change a company with an id equal to =  {id}");
         var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
         if (company == null) return NotFound();
-        _mapper.Map<CompanyPostDTO, Company>(companyToPut, company);
+        _mapper.Map<CompanyPostDto, Company>(companyToPut, company);
 
         return Ok();
     }

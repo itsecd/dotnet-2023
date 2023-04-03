@@ -1,9 +1,11 @@
-﻿using ApplicationsServer.DTO;
+﻿using Server;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Text;
+using ApplicationsServer.Dto;
+using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration tests for CompanyApplicationController
 /// </summary>
@@ -27,8 +29,13 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         var response = await client.GetAsync("api/CompanyApplication");
 
         var content = await response.Content.ReadAsStringAsync();
-        var companiesApplciations = JsonConvert.DeserializeObject<List<CompanyApplicationGetDTO>>(content);
-        Assert.Equal(3, companiesApplciations?.Count);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var companiesApplications = JsonSerializer.Deserialize<List<CompanyApplicationGetDto>>(content, options);
+
+        Assert.Equal(3, companiesApplications?.Count);
     }
     /// <summary>
     /// Test of the post method
@@ -39,7 +46,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var newApplication = new CompanyApplicationGetDTO()
+        var newApplication = new CompanyApplicationGetDto()
         {
             Date = DateTime.Now,
             WorkExperience = 2,
@@ -47,8 +54,12 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
             Education = "None",
             Id = 0
         };
-
-        var requestContent = JsonConvert.SerializeObject(newApplication);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newApplication, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/api/CompanyApplication", postData);
 
@@ -63,7 +74,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var newApplication = new CompanyApplicationGetDTO()
+        var newApplication = new CompanyApplicationGetDto()
         {
             Date = DateTime.Now,
             WorkExperience = 2,
@@ -72,7 +83,12 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newApplication);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newApplication, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PutAsync("/api/CompanyApplication/0", putData);
 
@@ -100,7 +116,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var expectedApplication = new CompanyApplicationGetDTO()
+        var expectedApplication = new CompanyApplicationGetDto()
         {
             Date = DateTime.Now,
             WorkExperience = 2,
@@ -111,7 +127,11 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
 
         var response = await client.GetAsync("api/CompanyApplication/0");
         var content = await response.Content.ReadAsStringAsync();
-        var applicationReturned = JsonConvert.DeserializeObject<CompanyApplicationGetDTO>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var applicationReturned = JsonSerializer.Deserialize<CompanyApplicationGetDto> (content, options);
         Assert.Equal(expectedApplication.Id, applicationReturned?.Id);
     }
 }

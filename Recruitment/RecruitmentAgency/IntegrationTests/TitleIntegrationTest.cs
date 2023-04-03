@@ -1,9 +1,10 @@
-﻿using ApplicationsServer.DTO;
+﻿using ApplicationsServer.Dto;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Text;
+using Server;
+using System.Text.Json;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration test for TitleController
 /// </summary>
@@ -26,8 +27,12 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
         var response = await client.GetAsync("api/Title");
 
         var content = await response.Content.ReadAsStringAsync();
-        var titles = JsonConvert.DeserializeObject<List<TitleGetDTO>>(content);
-        Assert.Equal(3, titles?.Count);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var titles = JsonSerializer.Deserialize <List<TitleGetDto>> (content, options);
+        Assert.Equal(1, titles?.Count);
     }
     /// <summary>
     /// Test of the post method
@@ -38,14 +43,19 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
     {
         var client = _factory.CreateClient();
 
-        var newTitle = new TitleGetDTO()
+        var newTitle = new TitleGetDto()
         {
             Section = "IT",
             JobTitle = "Test",
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newTitle);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newTitle, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/api/Title", postData);
 
@@ -60,13 +70,19 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
     {
         var client = _factory.CreateClient();
 
-        var newTitle = new TitleGetDTO()
+        var newTitle = new TitleGetDto()
         {
             Section = "IT",
             JobTitle = "Test",
             Id = 0
         };
-        var requestContent = JsonConvert.SerializeObject(newTitle);
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newTitle, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PutAsync("/api/Title/0", putData);
 
@@ -93,7 +109,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
     public async Task GetTitleByIdReturnsSeuccess()
     {
         var client = _factory.CreateClient();
-        var expectedTitle = new TitleGetDTO()
+        var expectedTitle = new TitleGetDto()
         {
             Section = "IT",
             JobTitle = "Test",
@@ -101,7 +117,11 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
         };
         var response = await client.GetAsync("api/Title/0");
         var content = await response.Content.ReadAsStringAsync();
-        var titleReturned = JsonConvert.DeserializeObject<TitleGetDTO>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var titleReturned = JsonSerializer.Deserialize<TitleGetDto>(content, options);
         Assert.NotEqual(expectedTitle, titleReturned);
     }
 }

@@ -1,9 +1,9 @@
-﻿namespace ApplicationsServer.DTO;
+﻿namespace ApplicationsServer.Dto;
 
 /// <summary>
 /// Company - a class that describes the company representative
 /// </summary>
-public class CompanyPostDTO
+public class CompanyPostDto
 {
     /// <summary>
     /// CompanyName - a string that stores the company name

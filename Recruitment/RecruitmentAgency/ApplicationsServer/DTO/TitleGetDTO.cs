@@ -1,8 +1,8 @@
-﻿namespace ApplicationsServer.DTO;
+﻿namespace ApplicationsServer.Dto;
 /// <summary>
 /// Title - a class that describes the field of work and position
 /// </summary>
-public class TitleGetDTO
+public class TitleGetDto
 {
     /// <summary>
     /// Section - a string that stores section, for example: IT, Finance, etc...

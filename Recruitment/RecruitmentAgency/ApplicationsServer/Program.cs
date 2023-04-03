@@ -3,7 +3,7 @@ using ApplicationsServer.Repository;
 using AutoMapper;
 using System.Reflection;
 
-namespace MyServer;
+namespace Server;
 
 /// <summary>
 /// A class for a web service

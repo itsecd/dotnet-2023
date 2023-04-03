@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -30,10 +30,10 @@ public class TitleController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all titles</returns>
     [HttpGet]
-    public IEnumerable<TitleGetDTO> Get()
+    public IEnumerable<TitleGetDto> Get()
     {
         _logger.LogInformation("Get titles");
-        return _companiesRepository.Titles.Select(title=>_mapper.Map<TitleGetDTO>(title));
+        return _companiesRepository.Titles.Select(title=>_mapper.Map<TitleGetDto>(title));
     }
     /// <summary>
     ///  Get method that returns a title with a specific id
@@ -41,7 +41,7 @@ public class TitleController : ControllerBase
     /// <param name="id">Title id</param>
     /// <returns>Title with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<TitleGetDTO> Get(int id)
+    public ActionResult<TitleGetDto> Get(int id)
     {
         _logger.LogInformation($"Get title with id {id}");
         var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
@@ -50,14 +50,14 @@ public class TitleController : ControllerBase
             _logger.LogInformation("Not found title with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<TitleGetDTO>(title));
+        return Ok(_mapper.Map<TitleGetDto>(title));
     }
     /// <summary>
     /// Post method that adding a new title 
     /// </summary>
     /// <param name="title"></param>
     [HttpPost]
-    public void Post([FromBody] TitleGetDTO title)
+    public void Post([FromBody] TitleGetDto title)
     {
         _companiesRepository.Titles.Add(_mapper.Map<Title>(title));
     }
@@ -69,12 +69,12 @@ public class TitleController : ControllerBase
     /// <param name="titleToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TitleGetDTO titleToPut)
+    public IActionResult Put(int id, [FromBody] TitleGetDto titleToPut)
     {
         _logger.LogInformation($" Attempting to change a title with an id equal to =  {id}");
         var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
         if (title == null) return NotFound();
-        _mapper.Map<TitleGetDTO, Title>(titleToPut, title);
+        _mapper.Map<TitleGetDto,Title>(titleToPut, title);
 
         return Ok();
     }

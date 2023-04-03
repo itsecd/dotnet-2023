@@ -1,9 +1,10 @@
-﻿using ApplicationsServer.DTO;
+﻿using ApplicationsServer.Dto;
+using Server;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using RecruitmentAgency;
+using System.Text.Json;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration test for RequestsController
 /// </summary>
@@ -24,7 +25,11 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Prog
         var client = _factory.CreateClient();
         var response = await client.GetAsync("api/requests/applicants_requests/Backend");
         var content = await response.Content.ReadAsStringAsync();
-        var jobApplications = JsonConvert.DeserializeObject<List<JobApplicationGetDTO>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var jobApplications = JsonSerializer.Deserialize<List<JobApplicationGetDto>>(content, options);
         Assert.Equal(2, jobApplications?.Count);
     }
     /// <summary>
@@ -41,7 +46,11 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Prog
 
         var response = await client.GetAsync($"/api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}");
         var content = await response.Content.ReadAsStringAsync();
-        var employeeReturned = JsonConvert.DeserializeObject<List<EmployeeGetDTO>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var employeeReturned = JsonSerializer.Deserialize<List<EmployeeGetDto>>(content, options);
         Assert.True(response.IsSuccessStatusCode);
         Assert.Equal(2, employeeReturned?.Count);
     }
@@ -77,7 +86,11 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Prog
         var client = _factory.CreateClient();
         var response = await client.GetAsync($"/api/requests/the_most_popular_companies");
         var content = await response.Content.ReadAsStringAsync();
-        var companiesReturned = JsonConvert.DeserializeObject<List<Company>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var companiesReturned = JsonSerializer.Deserialize<List<Company>>(content, options);
         Assert.True(response.IsSuccessStatusCode);
         Assert.Equal(3, companiesReturned?.Count);
     }
@@ -91,7 +104,11 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Prog
         var client = _factory.CreateClient();
         var response = await client.GetAsync($"/api/requests/the_highest_wage");
         var content = await response.Content.ReadAsStringAsync();
-        var applicationsReturned = JsonConvert.DeserializeObject<List<CompanyApplication>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var applicationsReturned = JsonSerializer.Deserialize<List<CompanyApplication>>(content, options);
         Assert.True(response.IsSuccessStatusCode);
         Assert.Equal(1, applicationsReturned?.Count);
     }

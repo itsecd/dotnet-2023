@@ -1,6 +1,6 @@
 ﻿namespace ApplicationsServer;
 
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using AutoMapper;
 using RecruitmentAgency;
 
@@ -15,25 +15,25 @@ public class MappingProfile : Profile
     /// </summary>
     public MappingProfile()
     {
-        CreateMap<Company, CompanyGetDTO>();
-        CreateMap<Company, CompanyPostDTO>();
-        CreateMap<CompanyPostDTO, Company>();
+        CreateMap<Company, CompanyGetDto>();
+        CreateMap<Company, CompanyPostDto>();
+        CreateMap<CompanyPostDto, Company>();
 
-        CreateMap<Employee, EmployeeGetDTO>();
-        CreateMap<Employee, EmployeePostDTO>();
-        CreateMap<EmployeePostDTO, Employee>();
+        CreateMap<Employee, EmployeeGetDto>();
+        CreateMap<Employee, EmployeePostDto>();
+        CreateMap<EmployeePostDto, Employee>();
 
-        CreateMap<JobApplication, JobApplicationGetDTO>()
+        CreateMap<JobApplication, JobApplicationGetDto>()
              .ForMember(dest => dest.Employee, opt => opt.MapFrom(src => src.Employee.Id));
 
-        CreateMap<JobApplicationGetDTO, JobApplication>();
-        CreateMap<JobApplication, JobApplicationGetDTO>();
+        CreateMap<JobApplicationGetDto, JobApplication>();
+        CreateMap<JobApplication, JobApplicationGetDto>();
 
-        CreateMap<CompanyApplication, CompanyApplicationGetDTO>();
+        CreateMap<CompanyApplication, CompanyApplicationGetDto>();
 
-        CreateMap<CompanyApplicationGetDTO, CompanyApplication>();
+        CreateMap<CompanyApplicationGetDto, CompanyApplication>();
 
-        CreateMap<Title, TitleGetDTO>();
-        CreateMap<TitleGetDTO, Title>();
+        CreateMap<Title, TitleGetDto>();
+        CreateMap<TitleGetDto, Title>();
     }
 }

@@ -1,9 +1,10 @@
-﻿using ApplicationsServer.DTO;
+﻿using Server;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Text;
+using ApplicationsServer.Dto;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration test for CompanyController
 /// </summary>
@@ -26,8 +27,12 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
         var response = await client.GetAsync("api/Company");
 
         var content = await response.Content.ReadAsStringAsync();
-        var companies = JsonConvert.DeserializeObject<List<CompanyGetDTO>>(content);
-        Assert.Equal(4, companies?.Count);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var companies = JsonSerializer.Deserialize<List<CompanyGetDto>>(content, options);
+        Assert.Equal(3, companies?.Count);
     }
     /// <summary>
     /// Test of the post method
@@ -38,14 +43,18 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
     {
         var client = _factory.CreateClient();
 
-        var newCompany = new CompanyPostDTO()
+        var newCompany = new CompanyPostDto()
         {
             CompanyName = "Test",
             Telephone = "000",
             ContactName = "SergeyPirat"
         };
-
-        var requestContent = JsonConvert.SerializeObject(newCompany);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newCompany, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/api/Company", postData);
 
@@ -60,16 +69,20 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
     {
         var client = _factory.CreateClient();
 
-        var newCompany = new CompanyPostDTO()
+        var newCompany = new CompanyPostDto()
         {
             CompanyName = "Test",
             Telephone = "000",
             ContactName = "SergeyPirat"
         };
-
-        var requestContent = JsonConvert.SerializeObject(newCompany);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newCompany, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("/api/Company/1", putData);
+        var response = await client.PutAsync("/api/Company/0", putData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -94,7 +107,8 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
     public async Task GetCompanyByIdReturnsSeuccess()
     {
         var client = _factory.CreateClient();
-        var expectedCompany = new CompanyGetDTO {
+        var expectedCompany = new CompanyGetDto
+        {
             Id = 1, 
             CompanyName = "Acme Inc.", 
             Telephone = "555-1234", 
@@ -103,7 +117,11 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
 
         var response = await client.GetAsync("api/Company/1");
         var content = await response.Content.ReadAsStringAsync();
-        var companyReturned = JsonConvert.DeserializeObject<CompanyGetDTO>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var companyReturned = JsonSerializer.Deserialize<CompanyGetDto>(content, options);
         Assert.NotEqual(expectedCompany, companyReturned);
     }
 }

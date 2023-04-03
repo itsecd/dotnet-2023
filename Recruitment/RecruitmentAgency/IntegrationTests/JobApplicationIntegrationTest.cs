@@ -1,9 +1,10 @@
-﻿using ApplicationsServer.DTO;
+﻿using ApplicationsServer.Dto;
+using Server;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration test for JobApplicationController
 /// </summary>
@@ -26,7 +27,11 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
         var response = await client.GetAsync("api/JobApplication");
 
         var content = await response.Content.ReadAsStringAsync();
-        var jobApplciations = JsonConvert.DeserializeObject<List<JobApplicationGetDTO>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var jobApplciations = JsonSerializer.Deserialize<List<JobApplicationGetDto>>(content, options);
         Assert.Equal(3, jobApplciations?.Count);
     }
     /// <summary>
@@ -37,7 +42,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     public async Task PostValuesReturnsSuccess()
     {
         var client = _factory.CreateClient();
-        var newEmployee = new EmployeePostDTO()
+        var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -46,14 +51,19 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
             Salary = 123000,
             Id = 0
         };
-        var newApplication = new JobApplicationGetDTO()
+        var newApplication = new JobApplicationGetDto()
         {
             Employee = newEmployee,
             Title = "Backend",
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newApplication);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newApplication, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/api/JobApplication", postData);
 
@@ -67,7 +77,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     public async Task PutValuesReturnsSuccess()
     {
         var client = _factory.CreateClient();
-        var newEmployee = new EmployeePostDTO()
+        var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -76,14 +86,20 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
             Salary = 123000,
             Id = 0
         };
-        var newApplication = new JobApplicationGetDTO()
+        var newApplication = new JobApplicationGetDto()
         {
             Employee = newEmployee,
             Title = "Backend",
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newApplication);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newApplication, options);
+
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PutAsync("/api/JobApplication/0", putData);
 
@@ -110,7 +126,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     public async Task GetJobApplicationByIdReturnsSeuccess()
     {
         var client = _factory.CreateClient();
-        var newEmployee = new EmployeePostDTO()
+        var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -119,7 +135,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
             Salary = 123000,
             Id = 0
         };
-        var expectedApplication = new JobApplicationGetDTO()
+        var expectedApplication = new JobApplicationGetDto()
         {
             Employee = newEmployee,
             Date = DateTime.Now,
@@ -129,7 +145,11 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
 
         var response = await client.GetAsync("api/JobApplication/0");
         var content = await response.Content.ReadAsStringAsync();
-        var applicationReturned = JsonConvert.DeserializeObject<JobApplicationGetDTO>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var applicationReturned = JsonSerializer.Deserialize<JobApplicationGetDto>(content, options);
         Assert.Equal(expectedApplication.Id, applicationReturned?.Id);
     }
 }

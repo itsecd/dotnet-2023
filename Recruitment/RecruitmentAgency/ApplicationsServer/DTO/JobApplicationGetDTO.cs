@@ -1,13 +1,13 @@
-﻿namespace ApplicationsServer.DTO;
+﻿namespace ApplicationsServer.Dto;
 /// <summary>
 /// JobApplication - a class that describes the employee's application
 /// </summary>
-public class JobApplicationGetDTO
+public class JobApplicationGetDto
 {
     /// <summary>
     /// Employee - contains employee id
     /// </summary>  
-    public EmployeePostDTO? Employee { get; set; }
+    public EmployeePostDto? Employee { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  

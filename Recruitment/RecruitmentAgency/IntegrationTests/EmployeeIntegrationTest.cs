@@ -1,9 +1,10 @@
-﻿using ApplicationsServer.DTO;
+﻿using ApplicationsServer.Dto;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
 using System.Text;
+using Server;
+using System.Text.Json;
 
-namespace MyServer.Tests;
+namespace IntegrationTests;
 /// <summary>
 /// Integration test for EmployeeController
 /// </summary>
@@ -26,7 +27,11 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
         var response = await client.GetAsync("api/Employee");
 
         var content = await response.Content.ReadAsStringAsync();
-        var employees = JsonConvert.DeserializeObject<List<EmployeeGetDTO>>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var employees = JsonSerializer.Deserialize<List<EmployeeGetDto>>(content, options);
         Assert.Equal(3, employees?.Count);
     }
     /// <summary>
@@ -38,7 +43,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
     {
         var client = _factory.CreateClient();
 
-        var newEmployee = new EmployeePostDTO()
+        var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -48,7 +53,12 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newEmployee);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newEmployee, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/api/Employee", postData);
 
@@ -63,7 +73,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
     {
         var client = _factory.CreateClient();
 
-        var newEmployee = new EmployeePostDTO()
+        var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -73,7 +83,12 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
             Id = 0
         };
 
-        var requestContent = JsonConvert.SerializeObject(newEmployee);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        var requestContent = JsonSerializer.Serialize(newEmployee, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PutAsync("/api/Employee/1", putData);
 
@@ -100,7 +115,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
     public async Task GetEmployeeByIdReturnsSeuccess()
     {
         var client = _factory.CreateClient();
-        var expectedEmployee = new EmployeeGetDTO()
+        var expectedEmployee = new EmployeeGetDto()
         {
             PersonalName = "Sergey Pirat",
             Telephone = "000",
@@ -112,7 +127,11 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
 
         var response = await client.GetAsync("api/Employee/0");
         var content = await response.Content.ReadAsStringAsync();
-        var employeeReturned = JsonConvert.DeserializeObject<EmployeeGetDTO>(content);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var employeeReturned = JsonSerializer.Deserialize<EmployeeGetDto>(content, options);
         Assert.Equal(expectedEmployee.Id, employeeReturned?.Id);
     }
 }

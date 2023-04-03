@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -30,10 +30,10 @@ public class JobApplicationController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all job applications</returns>
     [HttpGet]
-    public IEnumerable<JobApplicationGetDTO> Get()
+    public IEnumerable<JobApplicationGetDto> Get()
     {
         _logger.LogInformation("Get job applications");
-        return _companiesRepository.JobApplications.Select(jobApplication=>_mapper.Map<JobApplicationGetDTO>(jobApplication));
+        return _companiesRepository.JobApplications.Select(jobApplication=>_mapper.Map<JobApplicationGetDto>(jobApplication));
     }
     /// <summary>
     ///  Get method that returns a job Application with a specific id
@@ -41,7 +41,7 @@ public class JobApplicationController : ControllerBase
     /// <param name="id">Job Application id</param>
     /// <returns>Job application with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<JobApplicationGetDTO> Get(int id)
+    public ActionResult<JobApplicationGetDto> Get(int id)
     {
         _logger.LogInformation($"Get job application with id {id}");
         var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
@@ -50,14 +50,14 @@ public class JobApplicationController : ControllerBase
             _logger.LogInformation("Not found job application with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<JobApplicationGetDTO>(jobApplication));
+        return Ok(_mapper.Map<JobApplicationGetDto>(jobApplication));
     }
     /// <summary>
     /// Post method that adding a new job application
     /// </summary>
     /// <param name="jobApplication"></param>
     [HttpPost]
-    public void Post([FromBody] JobApplicationGetDTO jobApplication)
+    public void Post([FromBody] JobApplicationGetDto jobApplication)
     {
         _companiesRepository.JobApplications.Add(_mapper.Map<JobApplication>(jobApplication));
      }
@@ -69,12 +69,12 @@ public class JobApplicationController : ControllerBase
     /// <param name="jobApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] JobApplicationGetDTO jobApplicationToPut)
+    public IActionResult Put(int id, [FromBody] JobApplicationGetDto jobApplicationToPut)
     {
         _logger.LogInformation($" Attempting to change a company with an id equal to =  {id}");
         var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
         if (jobApplication == null) return NotFound();
-        _mapper.Map<JobApplicationGetDTO, JobApplication>(jobApplicationToPut, jobApplication);
+        _mapper.Map<JobApplicationGetDto, JobApplication>(jobApplicationToPut, jobApplication);
         return Ok();
     }
     /// <summary>

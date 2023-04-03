@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -34,12 +34,12 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("applicants_requests/{jobTitle}")]
-    public ActionResult<IEnumerable<JobApplicationGetDTO>> GetApplicantsRequestsForSpecificJobTitle(string jobTitle)
+    public ActionResult<IEnumerable<JobApplicationGetDto>> GetApplicantsRequestsForSpecificJobTitle(string jobTitle)
     {
         var query = (from jobApplications in _companiesRepository.JobApplications
                      where jobApplications.Title == jobTitle
                      orderby jobApplications?.Employee?.PersonalName
-                     select _mapper.Map<JobApplicationGetDTO>(jobApplications)).ToList();
+                     select _mapper.Map<JobApplicationGetDto>(jobApplications)).ToList();
         if (query.Count == 0)
         {
             _logger.LogInformation("No applications for the title={jobTitle} position were found", jobTitle);
@@ -59,7 +59,7 @@ public class RequestsController : ControllerBase
     ///     Return list of applicants
     /// </returns>
     [HttpGet("applicants_over_given_period")]
-    public ActionResult<IEnumerable<EmployeeGetDTO>> GetPassengerOverGivenPeriod(DateTime minDate, DateTime maxDate)
+    public ActionResult<IEnumerable<EmployeeGetDto>> GetPassengerOverGivenPeriod(DateTime minDate, DateTime maxDate)
     {
         var query = (from jobApplications in _companiesRepository.JobApplications
                      where jobApplications.Date >= minDate && jobApplications.Date <= maxDate
@@ -84,7 +84,7 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("applicants_matches/{id}")]
-    public ActionResult<IEnumerable<EmployeeGetDTO>> GetApplicantsThatMatchCompanyApplication(int id)
+    public ActionResult<IEnumerable<EmployeeGetDto>> GetApplicantsThatMatchCompanyApplication(int id)
     {
         var query = from applications in _companiesRepository.Titles
                     from appCompany in applications.CompanyApplications.Where(appCompany => appCompany.Id == id)
@@ -113,7 +113,7 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("applications_number")]
-    public ActionResult<IEnumerable<TitleGetDTO>> GetNumberApplications()
+    public ActionResult<IEnumerable<TitleGetDto>> GetNumberApplications()
     {
         var query = from titles in _companiesRepository.Titles
                      select new

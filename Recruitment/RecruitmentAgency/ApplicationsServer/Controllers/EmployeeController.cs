@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.DTO;
+using ApplicationsServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
@@ -30,10 +30,10 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all employees</returns>
     [HttpGet]
-    public IEnumerable<EmployeeGetDTO> Get()
+    public IEnumerable<EmployeeGetDto> Get()
     {
         _logger.LogInformation("Get employees");
-        return _companiesRepository.Employees.Select(employee => _mapper.Map<EmployeeGetDTO>(employee));
+        return _companiesRepository.Employees.Select(employee => _mapper.Map<EmployeeGetDto>(employee));
     }
     /// <summary>
     ///  Get method that returns an employee with a specific id
@@ -41,7 +41,7 @@ public class EmployeeController : ControllerBase
     /// <param name="id">Employee id</param>
     /// <returns>Employee with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<EmployeeGetDTO> Get(int id)
+    public ActionResult<EmployeeGetDto> Get(int id)
     {
         _logger.LogInformation($"Get employee with id {id}");
         var employee = _companiesRepository.Employees.FirstOrDefault(employee => employee.Id == id);
@@ -50,14 +50,14 @@ public class EmployeeController : ControllerBase
             _logger.LogInformation("Not found employee with id equals to: {id}", id);
             return NotFound(); 
         }
-        return Ok(_mapper.Map<EmployeeGetDTO>(employee));
+        return Ok(_mapper.Map<EmployeeGetDto>(employee));
     }
     /// <summary>
     /// Post method that adding a new employee
     /// </summary>
     /// <param name="employee"></param>
     [HttpPost]
-    public void Post([FromBody] EmployeePostDTO employee)
+    public void Post([FromBody] EmployeePostDto employee)
     {
         _companiesRepository.Employees.Add(_mapper.Map<Employee>(employee));
      }
@@ -69,7 +69,7 @@ public class EmployeeController : ControllerBase
     /// <param name="employeeToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] EmployeePostDTO employeeToPut)
+    public IActionResult Put(int id, [FromBody] EmployeePostDto employeeToPut)
     {
         _logger.LogInformation($" Attempting to change an employee with an id equal to =  {id}");
         var employee = _companiesRepository.Companies.FirstOrDefault(employee => employee.Id == id);

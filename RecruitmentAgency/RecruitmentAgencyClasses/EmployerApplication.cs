@@ -18,17 +18,17 @@ public class EmployerApplication
     /// <summary>
     /// Expected work experience in years
     /// </summary>
-    public uint? WorkExperience { get; set; }
+    public uint WorkExperience { get; set; }
 
     /// <summary>
     /// Expected education level
     /// </summary>
-	public string? Education { get; set; }
+	public string Education { get; set; }
 
     /// <summary>
     /// Offered salary in RUB
     /// </summary>
-    public uint? Salary { get; set; }
+    public uint Salary { get; set; }
 
     /// <summary>
     /// Filing date of application
@@ -48,7 +48,7 @@ public class EmployerApplication
     /// <summary>
     /// Construct EmployerApplication object
     /// </summary>
-    public EmployerApplication(Employer employer, Vacancy vacancy, uint? workExperience, string? education, uint? salary, DateTime date)
+    public EmployerApplication(Employer employer, Vacancy vacancy, uint workExperience, string education, uint salary, DateTime date)
     {
         vacancy.EmployerApplicationList.Add(this);
         employer.EmployerApplicationList.Add(this);

@@ -18,17 +18,17 @@ public class Employee
     /// <summary>
     /// Work experience of employee in years
     /// </summary>
-    public uint? WorkExperience { get; set; }
+    public uint WorkExperience { get; set; }
 
     /// <summary>
     /// Info about education
     /// </summary>
-    public string? Education { get; set; }
+    public string Education { get; set; }
 
     /// <summary>
     /// Expected salary in RUB
     /// </summary>
-    public uint? Salary { get; set; }
+    public uint Salary { get; set; }
 
     /// <summary>
     /// List of all employee applications
@@ -48,7 +48,7 @@ public class Employee
     /// <summary>
     /// Construct Employee object
     /// </summary>
-    public Employee(string name, string phoneNumber, uint? workExperience, string? education, uint? salary)
+    public Employee(string name, string phoneNumber, uint workExperience, string education, uint salary)
     {
         Name = name;
         PhoneNumber = phoneNumber;

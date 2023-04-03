@@ -35,6 +35,9 @@ public class EmployeeApplication
     /// </summary>
     public EmployeeApplication(Employee employee, Vacancy vacancy, DateTime date)
     {
+        vacancy.EmployeeApplicationList.Add(this);
+        employee.EmployeeApplicationList.Add(this);
+
         Employee = employee;
         Vacancy = vacancy;
         Date = date;

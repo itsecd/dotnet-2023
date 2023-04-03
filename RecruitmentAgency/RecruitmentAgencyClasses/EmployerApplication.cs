@@ -50,6 +50,9 @@ public class EmployerApplication
     /// </summary>
     public EmployerApplication(Employer employer, Vacancy vacancy, uint? workExperience, string? education, uint? salary, DateTime date)
     {
+        vacancy.EmployerApplicationList.Add(this);
+        employer.EmployerApplicationList.Add(this);
+
         Employer = employer;
         Vacancy = vacancy;
         WorkExperience = workExperience;

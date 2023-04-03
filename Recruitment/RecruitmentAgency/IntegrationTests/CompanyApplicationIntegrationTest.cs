@@ -63,7 +63,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var newApplication= new CompanyApplicationGetDTO()
+        var newApplication = new CompanyApplicationGetDTO()
         {
             Date = DateTime.Now,
             WorkExperience = 2,

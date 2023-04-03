@@ -94,7 +94,12 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Progr
     public async Task GetCompanyByIdReturnsSeuccess()
     {
         var client = _factory.CreateClient();
-        var expectedCompany = new CompanyGetDTO { Id = 1, CompanyName = "Acme Inc.", Telephone = "555-1234", ContactName = "John Doe" };
+        var expectedCompany = new CompanyGetDTO {
+            Id = 1, 
+            CompanyName = "Acme Inc.", 
+            Telephone = "555-1234", 
+            ContactName = "John Doe" 
+        };
 
         var response = await client.GetAsync("api/Company/1");
         var content = await response.Content.ReadAsStringAsync();

@@ -23,7 +23,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
     {
         var client = _factory.CreateClient();
 
-        var response = await client.GetAsync("api/Title"); 
+        var response = await client.GetAsync("api/Title");
 
         var content = await response.Content.ReadAsStringAsync();
         var titles = JsonConvert.DeserializeObject<List<TitleGetDTO>>(content);

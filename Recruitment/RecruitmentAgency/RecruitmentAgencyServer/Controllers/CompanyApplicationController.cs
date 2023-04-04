@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -33,7 +33,7 @@ public class CompanyApplicationController : ControllerBase
     public IEnumerable<CompanyApplicationGetDto> Get()
     {
         _logger.LogInformation("Get companies applications");
-        return _companiesRepository.CompaniesApplications.Select(companyApplication=>_mapper.Map<CompanyApplicationGetDto>(companyApplication));
+        return _companiesRepository.CompaniesApplications.Select(companyApplication => _mapper.Map<CompanyApplicationGetDto>(companyApplication));
     }
     /// <summary>
     ///  Get method that returns company application with a specific id
@@ -45,10 +45,10 @@ public class CompanyApplicationController : ControllerBase
     {
         _logger.LogInformation($"Get company application with id {id}");
         var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
-        if (companyApplication == null) 
+        if (companyApplication == null)
         {
             _logger.LogInformation("Not found company application with id equals to: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
         return Ok(_mapper.Map<CompanyApplicationGetDto>(companyApplication));
     }

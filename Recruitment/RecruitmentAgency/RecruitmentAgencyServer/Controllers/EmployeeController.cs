@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -45,10 +45,10 @@ public class EmployeeController : ControllerBase
     {
         _logger.LogInformation($"Get employee with id {id}");
         var employee = _companiesRepository.Employees.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) 
+        if (employee == null)
         {
             _logger.LogInformation("Not found employee with id equals to: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
         return Ok(_mapper.Map<EmployeeGetDto>(employee));
     }
@@ -60,7 +60,7 @@ public class EmployeeController : ControllerBase
     public void Post([FromBody] EmployeePostDto employee)
     {
         _companiesRepository.Employees.Add(_mapper.Map<Employee>(employee));
-     }
+    }
 
     /// <summary>
     /// Put method which allows change the data of an employee with a specific id

@@ -1,5 +1,5 @@
-﻿using RecruitmentAgencyServer.Repository;
-using AutoMapper;
+﻿using AutoMapper;
+using RecruitmentAgencyServer.Repository;
 using System.Reflection;
 
 namespace RecruitmentAgencyServer;

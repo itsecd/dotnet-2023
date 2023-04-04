@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -33,7 +33,7 @@ public class JobApplicationController : ControllerBase
     public IEnumerable<JobApplicationGetDto> Get()
     {
         _logger.LogInformation("Get job applications");
-        return _companiesRepository.JobApplications.Select(jobApplication=>_mapper.Map<JobApplicationGetDto>(jobApplication));
+        return _companiesRepository.JobApplications.Select(jobApplication => _mapper.Map<JobApplicationGetDto>(jobApplication));
     }
     /// <summary>
     ///  Get method that returns a job Application with a specific id
@@ -45,10 +45,10 @@ public class JobApplicationController : ControllerBase
     {
         _logger.LogInformation($"Get job application with id {id}");
         var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
-        if (jobApplication == null) 
+        if (jobApplication == null)
         {
             _logger.LogInformation("Not found job application with id equals to: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
         return Ok(_mapper.Map<JobApplicationGetDto>(jobApplication));
     }
@@ -60,7 +60,7 @@ public class JobApplicationController : ControllerBase
     public void Post([FromBody] JobApplicationGetDto jobApplication)
     {
         _companiesRepository.JobApplications.Add(_mapper.Map<JobApplication>(jobApplication));
-     }
+    }
 
     /// <summary>
     /// Put method which allows change the data of a job application with a specific id

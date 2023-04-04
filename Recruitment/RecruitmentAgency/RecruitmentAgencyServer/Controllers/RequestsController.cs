@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -97,7 +97,7 @@ public class RequestsController : ControllerBase
                     };
         if (!query.Any())
         {
-            _logger.LogInformation("No match for company application with id = {id}", id); 
+            _logger.LogInformation("No match for company application with id = {id}", id);
             return NotFound();
         }
 
@@ -116,13 +116,13 @@ public class RequestsController : ControllerBase
     public ActionResult<IEnumerable<TitleGetDto>> GetNumberApplications()
     {
         var query = from titles in _companiesRepository.Titles
-                     select new
-                     {
-                         JobSection = titles.Section,
-                         JobTitle = titles.JobTitle,
-                         NumJobApplications = titles.EmployeeApplications.Count(jobApplication => jobApplication.Title == titles.JobTitle),
-                         NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication?.Title?.JobTitle == titles.JobTitle)
-                     };
+                    select new
+                    {
+                        JobSection = titles.Section,
+                        JobTitle = titles.JobTitle,
+                        NumJobApplications = titles.EmployeeApplications.Count(jobApplication => jobApplication.Title == titles.JobTitle),
+                        NumCompanyApplications = titles.CompanyApplications.Count(companyApplication => companyApplication?.Title?.JobTitle == titles.JobTitle)
+                    };
         if (!query.Any())
         {
             _logger.LogInformation("There are no requests");
@@ -173,12 +173,12 @@ public class RequestsController : ControllerBase
     public ActionResult<IEnumerable<CompanyApplication>> GetTheCompanyWithHighestWage()
     {
         var query = from companyApplication in _companiesRepository.CompaniesApplications
-                     where companyApplication.Salary == (from companyApplicationSalaries in _companiesRepository.CompaniesApplications
-                                                         select companyApplicationSalaries.Salary).Max()
-                     select new
-                     {
-                         CompanyRequest = companyApplication,
-                     };
+                    where companyApplication.Salary == (from companyApplicationSalaries in _companiesRepository.CompaniesApplications
+                                                        select companyApplicationSalaries.Salary).Max()
+                    select new
+                    {
+                        CompanyRequest = companyApplication,
+                    };
 
         if (!query.Any())
         {

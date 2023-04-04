@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -33,7 +33,7 @@ public class CompanyController : ControllerBase
     public IEnumerable<CompanyGetDto> Get()
     {
         _logger.LogInformation("Get companies");
-        return _companiesRepository.Companies.Select(employee=>_mapper.Map<CompanyGetDto>(employee));
+        return _companiesRepository.Companies.Select(employee => _mapper.Map<CompanyGetDto>(employee));
     }
     /// <summary>
     ///  Get method that returns a company with a specific id
@@ -45,10 +45,10 @@ public class CompanyController : ControllerBase
     {
         _logger.LogInformation($"Get company with id {id}");
         var company = _companiesRepository.Companies.FirstOrDefault(company => company.Id == id);
-        if (company == null) 
+        if (company == null)
         {
             _logger.LogInformation("Not found company with id equals to: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
         return Ok(_mapper.Map<CompanyGetDto>(company));
     }
@@ -60,7 +60,7 @@ public class CompanyController : ControllerBase
     public void Post([FromBody] CompanyPostDto company)
     {
         _companiesRepository.Companies.Add(_mapper.Map<Company>(company));
-     }
+    }
 
     /// <summary>
     /// Put method which allows change the data of a company with a specific id

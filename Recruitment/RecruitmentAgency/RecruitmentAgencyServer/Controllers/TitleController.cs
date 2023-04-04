@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
-using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -33,7 +33,7 @@ public class TitleController : ControllerBase
     public IEnumerable<TitleGetDto> Get()
     {
         _logger.LogInformation("Get titles");
-        return _companiesRepository.Titles.Select(title=>_mapper.Map<TitleGetDto>(title));
+        return _companiesRepository.Titles.Select(title => _mapper.Map<TitleGetDto>(title));
     }
     /// <summary>
     ///  Get method that returns a title with a specific id
@@ -45,10 +45,10 @@ public class TitleController : ControllerBase
     {
         _logger.LogInformation($"Get title with id {id}");
         var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
-        if (title == null) 
+        if (title == null)
         {
             _logger.LogInformation("Not found title with id equals to: {id}", id);
-            return NotFound(); 
+            return NotFound();
         }
         return Ok(_mapper.Map<TitleGetDto>(title));
     }
@@ -74,7 +74,7 @@ public class TitleController : ControllerBase
         _logger.LogInformation($" Attempting to change a title with an id equal to =  {id}");
         var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
         if (title == null) return NotFound();
-        _mapper.Map<TitleGetDto,Title>(titleToPut, title);
+        _mapper.Map<TitleGetDto, Title>(titleToPut, title);
 
         return Ok();
     }

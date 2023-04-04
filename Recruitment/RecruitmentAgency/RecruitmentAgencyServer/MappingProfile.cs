@@ -1,8 +1,8 @@
 ﻿namespace RecruitmentAgencyServer;
 
-using RecruitmentAgencyServer.Dto;
 using AutoMapper;
 using RecruitmentAgency;
+using RecruitmentAgencyServer.Dto;
 
 
 /// <summary>

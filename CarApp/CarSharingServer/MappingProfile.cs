@@ -15,5 +15,7 @@ public class MappingProfile : Profile
         CreateMap<Car, CarPostDto>();
         CreateMap<CarGetDto, Car>();
         CreateMap<CarPostDto, Car>();
+        CreateMap<RentalPoint, RentalPointPostDto>();
+        CreateMap<RentalPointPostDto, RentalPoint>();
     }
 }

@@ -193,9 +193,9 @@ public class UnitTests
                                                           select employerApplicationSalaries.Salary).Max()
                      select new
                      {
-                         CompanyRequest = employerApplication
+                         employerApplication
                      };
 
-        Assert.Equal((uint)350000, result.First().CompanyRequest.Salary);
+        Assert.Equal((uint)350000, result.First().employerApplication.Salary);
     }
 }

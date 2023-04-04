@@ -1,4 +1,6 @@
-﻿namespace PharmacyCityNetwork
+﻿using System.Collections.Generic;
+
+namespace PharmacyCityNetwork
 {
     /// <summary>
     /// Сlass describing an pharma group
@@ -13,6 +15,15 @@
         /// Pharma Group Name
         /// </summary>
         public string PharmaGroupName { get; set; } = string.Empty;
-        
+        /// <summary>
+        /// List Products
+        /// </summary>
+        //public List<Product> Products = new();
+
+        public PharmaGroup() { }
+        public PharmaGroup(string PharmaGroupName)
+        {
+            this.PharmaGroupName = PharmaGroupName;
+        }
     }
 }

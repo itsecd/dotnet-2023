@@ -9,26 +9,21 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Vehicle, VehicleGetDto>();
-        CreateMap<Vehicle, VehiclePostDto>();
-        CreateMap<VehiclePostDto, Vehicle>();
+        CreateMap<VehiclePostDto, Vehicle>().ReverseMap();
 
         CreateMap<RentalPoint, RentalPointGetDto>();
-        CreateMap<RentalPoint, RentalPointPostDto>();
-        CreateMap<RentalPointPostDto, RentalPoint>();
+        CreateMap<RentalPointPostDto, RentalPoint>().ReverseMap();;
 
         CreateMap<Client, ClientGetDto>();
-        CreateMap<Client, ClientPostDto>();
-        CreateMap<ClientPostDto, Client>();
-
-        CreateMap<RefundInformation, RefundInformationPostDto>();
-        CreateMap<RefundInformationPostDto, RefundInformation>();
-
-        CreateMap<RentalInformation, RentalInformationPostDto>();
-        CreateMap<RentalInformationPostDto, RentalInformation>();
-
-        CreateMap<IssuedCar, IssuedCarPostDto>();
-        CreateMap<IssuedCarPostDto, IssuedCar>();
+        CreateMap<ClientPostDto, Client>().ReverseMap();
+        
+        CreateMap<RefundInformationPostDto, RefundInformation>().ReverseMap();
+        
+        CreateMap<RentalInformationPostDto, RentalInformation>().ReverseMap();
+        
+        CreateMap<IssuedCarPostDto, IssuedCar>().ReverseMap();
 
         CreateMap<VehicleModel, VehicleModelGetDto>();
+        CreateMap<VehicleModelPostDto, VehicleModel>().ReverseMap();
     }
 }

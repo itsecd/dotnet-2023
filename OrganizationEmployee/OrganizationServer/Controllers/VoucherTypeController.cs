@@ -47,8 +47,8 @@ public class VoucherTypeController : Controller
     /// <summary>
     /// The method adds a new VoucherType into organization
     /// </summary>
-    /// <param name="voucherType">A new occupation that needs to be added</param>
-    /// <returns>Code 200 with an added occupation</returns>
+    /// <param name="voucherType">A new VoucherType that needs to be added</param>
+    /// <returns>Code 200 with an added VoucherType</returns>
     [HttpPost]
     public ActionResult<VoucherTypeDto> Post([FromBody] VoucherTypeDto voucherType)
     {
@@ -56,7 +56,13 @@ public class VoucherTypeController : Controller
         _organizationRepository.VoucherTypes.Add(mappedVoucherType);
         return Ok(voucherType);
     }
-
+    /// <summary>
+    /// The method updates an VoucherType information by ID
+    /// </summary>
+    /// <param name="id">An ID of the VoucherType</param>
+    /// <param name="newVoucherType">New information of the VoucherType</param>
+    /// <returns>Code 200 and the updated VoucherType class if success; 
+    /// 404 code if an VoucherType is not found;</returns>
 
     [HttpPut("{id}")]
     public ActionResult<VoucherTypeDto> Put(int id, [FromBody] VoucherTypeDto newVoucherType)
@@ -68,7 +74,11 @@ public class VoucherTypeController : Controller
         _organizationRepository.VoucherTypes.Add(mappedVoucherType);
         return Ok(newVoucherType);
     }
-
+    /// <summary>
+    /// The method deletes an VoucherType by ID
+    /// </summary>
+    /// <param name="id">An ID of the VoucherType</param>
+    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<VoucherTypeDto> Delete(int id)
     {

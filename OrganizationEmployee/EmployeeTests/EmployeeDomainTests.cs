@@ -23,7 +23,8 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
         Assert.Equal(countObjects, firstQuery.Count);
     }
     /// <summary>
-    /// Second query - output all employees working in more than 1 department. Sort the result by last name, first name, patronymic name.
+    /// Second query - output all employees working in more than 1 department. 
+    /// Sort the result by last name, first name, patronymic name.
     /// </summary>
     [Fact]
     public void TestSecondQuery()

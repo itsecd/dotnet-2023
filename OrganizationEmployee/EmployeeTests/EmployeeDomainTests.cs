@@ -1,4 +1,4 @@
-﻿namespace EmployeeDomainTests;
+﻿namespace OrganizationEmployee.EmployeeDomainTests;
 using System.Linq;
 
 public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>

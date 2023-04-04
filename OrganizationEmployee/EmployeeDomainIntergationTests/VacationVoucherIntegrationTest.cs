@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
 using System.Text;
-namespace EmployeeDomain.IntegrationTests;
+namespace OrganizationEmployee.IntegrationTests;
 public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
@@ -47,12 +47,12 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    
+
     [Theory]
     [InlineData(2020, 11, 23, 0, true)]
     [InlineData(2011, 3, 15, 1, true)]
     [InlineData(2011, 3, 15, 33, false)]
-    public async Task PostVacationVoucher(int issueYear, int issueMonth, int issueDay, 
+    public async Task PostVacationVoucher(int issueYear, int issueMonth, int issueDay,
         uint voucherTypeId, bool isSuccess)
     {
         var vacationVoucherDto = new VacationVoucherDto()

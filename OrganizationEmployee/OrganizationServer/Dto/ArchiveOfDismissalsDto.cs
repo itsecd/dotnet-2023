@@ -1,4 +1,4 @@
-﻿namespace OrganizationServer.Dto;
+﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
 /// ArchiveOfDismissals represents an archive of dismissed employees
 /// </summary>

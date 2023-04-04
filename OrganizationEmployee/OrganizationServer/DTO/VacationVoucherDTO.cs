@@ -1,4 +1,4 @@
-﻿namespace OrganizationServer.Dto;
+﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
 /// VacationVoucherDto - represents a vacation voucher, that may be issued to an employee.
 /// The class stores information about issue date and voucher type.

@@ -1,4 +1,4 @@
-﻿namespace EmployeeDomain;
+﻿namespace OrganizationEmployee.EmployeeDomain;
 /// <summary>
 /// class EmployeeOccupation - represents a many-to-many relationship
 /// between Employee and Occupation, also it contains date, when an employee was hired, and date, when employee was dismissed.

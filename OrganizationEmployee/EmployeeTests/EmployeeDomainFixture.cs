@@ -1,6 +1,6 @@
-﻿using EmployeeDomain;
+﻿using OrganizationEmployee.EmployeeDomain;
 
-namespace EmployeeDomainTests;
+namespace OrganizationEmployee.EmployeeDomainTests;
 public class EmployeeDomainFixture
 {
     /// <summary>

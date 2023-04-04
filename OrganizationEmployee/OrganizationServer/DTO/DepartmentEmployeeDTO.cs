@@ -1,4 +1,4 @@
-﻿namespace OrganizationServer.Dto;
+﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
 /// class DepartmentEmployee - represents a many-to-many relationship
 /// between Employee and Department

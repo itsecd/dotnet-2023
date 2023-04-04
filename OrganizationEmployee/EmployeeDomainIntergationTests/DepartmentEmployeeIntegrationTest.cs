@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
-using System.Text;
-namespace EmployeeDomain.IntegrationTests;
+using OrganizationEmployee.Server.Dto;
+namespace OrganizationEmployee.IntegrationTests;
 public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

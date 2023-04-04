@@ -1,28 +1,41 @@
 ﻿using AutoMapper;
-using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
+using OrganizationEmployee.Server.Repository;
+using OrganizationEmployee.EmployeeDomain;
 
-namespace OrganizationServer.Controllers;
+namespace OrganizationEmployee.Server.Controllers;
+/// <summary>
+/// Controller for EmployeeOccupation class
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class EmployeeOccupationController : Controller
 {
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
-
+    /// <summary>
+    /// A constructor of the EmployeeOccupationController
+    /// </summary>
     public EmployeeOccupationController(OrganizationRepository organizationRepository, IMapper mapper)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// The method returns all the connections between Employee and Occupation
+    /// </summary>
+    /// <returns>All the connections between Employee and Occupation in the organization</returns>
     [HttpGet]
-    public IEnumerable<EmployeeOccupationDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<EmployeeOccupationDto> Get()
     {
         return _mapper.Map<IEnumerable<EmployeeOccupationDto>>(_organizationRepository.EmployeeOccupations);
     }
-
+    /// <summary>
+    /// The method returns a EmployeeOccupation by ID
+    /// </summary>
+    /// <param name="id">EmployeeOccupation ID</param>
+    /// <returns>EmployeeOccupation with the given ID or 404 code if EmployeeOccupation is not found</returns>
     [HttpGet("{id}")]
     public ActionResult<EmployeeOccupationDto> Get(int id)
     {
@@ -33,7 +46,12 @@ public class EmployeeOccupationController : Controller
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDto>(employeeOccupation);
         return Ok(mappedEmployeeOccupation);
     }
-
+    /// <summary>
+    /// The method adds a new EmployeeOccupation into organization
+    /// </summary>
+    /// <param name="departmentEmployee">A new EmployeeOccupation that needs to be added</param>
+    /// <returns>Code 200 and the added EmployeeOccupation is success; 404 code if department or occupation is not found
+    /// </returns>
     [HttpPost]
     public ActionResult<EmployeeOccupationDto> Post([FromBody] EmployeeOccupationDto employeeOccupation)
     {
@@ -51,8 +69,12 @@ public class EmployeeOccupationController : Controller
         _organizationRepository.EmployeeOccupations.Add(mappedEmployeeOccupation);
         return Ok(employeeOccupation);
     }
-
-
+    /// <summary>
+    /// The method updates an EmployeeOccupation information by ID
+    /// </summary>
+    /// <param name="id">An ID of the EmployeeOccupation</param>
+    /// <param name="newDepartmentEmployee">New information of the EmployeeOccupation</param>
+    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpPut("{id}")]
     public ActionResult<EmployeeOccupationDto> Put(int id, [FromBody] EmployeeOccupationDto newEmployeeOccupation)
     {
@@ -75,7 +97,11 @@ public class EmployeeOccupationController : Controller
         _organizationRepository.EmployeeOccupations.Add(mappedEmployeeOccupation);
         return Ok(newEmployeeOccupation);
     }
-
+    /// <summary>
+    /// The method deletes a EmployeeOccupation by ID
+    /// </summary>
+    /// <param name="id">An ID of the EmployeeOccupation</param>
+    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<EmployeeOccupationDto> Delete(int id)
     {

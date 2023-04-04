@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
 using System.Text;
 
-namespace EmployeeDomain.IntegrationTests;
+namespace OrganizationEmployee.IntegrationTests;
 public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
@@ -49,7 +49,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    
+
     [Theory]
     [InlineData(1, 1, 2000, 1, 3, 2020, 3, 24, true)]
     [InlineData(1, 2011, 2000, 1, 3, 2020, 3, 24, false)]
@@ -83,8 +83,8 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
     [InlineData(55, 1, 1, 2000, 1, 3, 2020, 3, 24, false)]
     [InlineData(2, 1333, 1, 2000, 1, 3, 2020, 3, 24, false)]
     [InlineData(2, 1, 1333, 2000, 1, 3, 2020, 3, 24, false)]
-    public async Task PutEmployeeOccupation(uint employeeOccupationId, uint occupationId, uint employeeId, 
-        int hireYear, int hireMonth, int hireDay, int dismissalYear, 
+    public async Task PutEmployeeOccupation(uint employeeOccupationId, uint occupationId, uint employeeId,
+        int hireYear, int hireMonth, int hireDay, int dismissalYear,
         int dismissalMonth, int dismissalDay, bool isSuccess)
     {
         var employeeOccupationDto = new EmployeeOccupationDto()

@@ -1,4 +1,4 @@
-﻿namespace EmployeeDomain;
+﻿namespace OrganizationEmployee.EmployeeDomain;
 /// <summary>
 /// Classs Employee represents an employee in organization, it contains personal information and
 /// it has lists of other classes -  EmployeeOccupation, DepartmentEmployee, EmployeeVacationVoucher to represent many-to-many relationship.

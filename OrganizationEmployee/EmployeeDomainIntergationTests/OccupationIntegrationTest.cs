@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
 using System.Text;
-namespace EmployeeDomain.IntegrationTests;
-
-//TOOOOOODO !!!!
+namespace OrganizationEmployee.IntegrationTests;
 public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
@@ -67,7 +65,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.PostAsync("api/Occupation", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
-    
+
     [Theory]
     [InlineData(2, "Отдел здравоохранения", true)]
     [InlineData(155, "Отдел здравоохранения", false)]

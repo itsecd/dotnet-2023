@@ -1,27 +1,41 @@
 ﻿using AutoMapper;
-using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
+using OrganizationEmployee.Server.Repository;
+using OrganizationEmployee.EmployeeDomain;
 
-namespace OrganizationServer.Controllers;
+namespace OrganizationEmployee.Server.Controllers;
+/// <summary>
+/// Controller for VoucherType class
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class VoucherTypeController : Controller
 {
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
-
+    /// <summary>
+    /// A constructor of the VoucherTypeController
+    /// </summary>
     public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// The method returns all the voucher types in the organization
+    /// </summary>
+    /// <returns>All the voucher types in the organization</returns>
     [HttpGet]
     public IEnumerable<VoucherTypeDto> Get()
     {
         return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes);
     }
+    /// <summary>
+    /// The method returns an voucher type by ID
+    /// </summary>
+    /// <param name="id">VoucherType ID</param>
+    /// <returns>VoucherType with the given ID or 404 code if VoucherType is not found</returns>
     [HttpGet("{id}")]
     public ActionResult<VoucherTypeDto> Get(int id)
     {
@@ -30,6 +44,11 @@ public class VoucherTypeController : Controller
         var mappedVoucherType = _mapper.Map<VoucherTypeDto>(voucherType);
         return Ok(mappedVoucherType);
     }
+    /// <summary>
+    /// The method adds a new VoucherType into organization
+    /// </summary>
+    /// <param name="voucherType">A new occupation that needs to be added</param>
+    /// <returns>Code 200 with an added occupation</returns>
     [HttpPost]
     public ActionResult<VoucherTypeDto> Post([FromBody] VoucherTypeDto voucherType)
     {

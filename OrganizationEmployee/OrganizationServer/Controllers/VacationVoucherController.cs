@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
+using OrganizationEmployee.Server.Repository;
+using OrganizationEmployee.EmployeeDomain;
 
-namespace OrganizationServer.Controllers;
+namespace OrganizationEmployee.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class VacationVoucherController : Controller

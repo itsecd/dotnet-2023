@@ -1,31 +1,41 @@
 ﻿using AutoMapper;
-using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
+using OrganizationEmployee.Server.Repository;
+using OrganizationEmployee.EmployeeDomain;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace OrganizationServer.Controllers;
+namespace OrganizationEmployee.Server.Controllers;
+/// <summary>
+/// Controller for Workshop class
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class WorkshopController : ControllerBase
 {
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
-
+    /// <summary>
+    /// A constructor of the WorkshopController
+    /// </summary>
     public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// The method returns all the workshops in the organization
+    /// </summary>
+    /// <returns>All the workshops in the organization</returns>
     [HttpGet]
-    public IEnumerable<WorkshopDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)  //здесь можно сделать page-nation, он принимает
-                                                                                               //номер страницы и размер страницы (чтобы если у нас очень много данных - выводить их страницами)
+    public IEnumerable<WorkshopDto> Get()
     {
-        return _mapper.Map<IEnumerable<WorkshopDto>>(_organizationRepository.Workshops); // использовать Take() и Skip()
+        return _mapper.Map<IEnumerable<WorkshopDto>>(_organizationRepository.Workshops);
     }
-
+    /// <summary>
+    /// The method returns an workshop by ID
+    /// </summary>
+    /// <param name="id">Workshop ID</param>
+    /// <returns>Workshop with the given ID or 404 code if workshop is not found</returns>
     [HttpGet("{id}")]
     public ActionResult<WorkshopDto> Get(int id)
     {
@@ -34,7 +44,11 @@ public class WorkshopController : ControllerBase
         var mappedWorkshop = _mapper.Map<WorkshopDto>(workshop);
         return Ok(mappedWorkshop);
     }
-
+    /// <summary>
+    /// The method adds a new workshop into organization
+    /// </summary>
+    /// <param name="workshop">A new workshop that needs to be added</param>
+    /// <returns>Code 200 with an added workshop</returns>
     [HttpPost]
     public ActionResult<WorkshopDto> Post([FromBody] WorkshopDto workshop)
     {
@@ -42,7 +56,13 @@ public class WorkshopController : ControllerBase
         _organizationRepository.Workshops.Add(mappedWorkshop);
         return Ok(workshop);
     }
-
+    /// <summary>
+    /// The method updates a workshop information by ID
+    /// </summary>
+    /// <param name="id">An ID of the workshop</param>
+    /// <param name="newWorkshop">New information of the workshop</param>
+    /// <returns>Code 200 and the updated workshop class if success; 
+    /// 404 code if a workshop is not found;</returns>
     [HttpPut("{id}")]
     public ActionResult<WorkshopDto> Put(int id, [FromBody] WorkshopDto newWorkshop)
     {
@@ -53,7 +73,11 @@ public class WorkshopController : ControllerBase
         _organizationRepository.Workshops.Add(mappedWorkshop);
         return Ok(newWorkshop);
     }
-
+    /// <summary>
+    /// The method deletes a workshop by ID
+    /// </summary>
+    /// <param name="id">An ID of the workshop</param>
+    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<WorkshopDto> Delete(int id)
     {

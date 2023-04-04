@@ -1,4 +1,4 @@
-﻿namespace EmployeeDomain;
+﻿namespace OrganizationEmployee.EmployeeDomain;
 /// <summary>
 /// Occupation - represents an employee occupation.
 /// The class has list of EmployeeOccupation objects for many-to-many relationship.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
-namespace EmployeeDomain.IntegrationTests;
+using OrganizationEmployee.Server.Dto;
+namespace OrganizationEmployee.IntegrationTests;
 
 public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {

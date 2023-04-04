@@ -1,4 +1,4 @@
-﻿namespace OrganizationServer.Dto;
+﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
 /// EmployeeLastYearVoucherDto - represents an employee and employee's vacation voucher, that they has received
 /// </summary>

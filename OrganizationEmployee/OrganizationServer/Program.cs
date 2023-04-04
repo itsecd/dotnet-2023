@@ -1,4 +1,5 @@
-using OrganizationServer;
+using OrganizationEmployee.Server;
+using OrganizationEmployee.Server.Repository;
 public class Program
 {
     public static void Main(string[] args)

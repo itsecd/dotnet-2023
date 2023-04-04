@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
 using System.Text;
 
-namespace EmployeeDomain.IntegrationTests;
+namespace OrganizationEmployee.IntegrationTests;
 public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
@@ -49,7 +49,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    
+
     [Theory]
     [InlineData(1, 1, true)]
     [InlineData(1, 2011, false)]
@@ -74,7 +74,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    
+
     [Theory]
     [InlineData(2, 1, 1, true)]
     [InlineData(2, 1, 1111, false)]
@@ -102,7 +102,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    
+
     [Theory]
     [InlineData(3, true)]
     [InlineData(133, false)]

@@ -1,4 +1,4 @@
-﻿namespace OrganizationServer.Dto;
+﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
 /// VoucherType - represents a type of vacation voucher, e.g. "sanatorium", "vacation home", etc.
 /// </summary>

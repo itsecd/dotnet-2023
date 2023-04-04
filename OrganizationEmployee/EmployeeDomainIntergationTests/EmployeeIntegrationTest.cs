@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using OrganizationServer.Dto;
+using OrganizationEmployee.Server.Dto;
 using System.Text;
-namespace EmployeeDomain.IntegrationTests;
+namespace OrganizationEmployee.IntegrationTests;
 
 public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -93,11 +93,11 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         }
     }
     [Theory]
-    [InlineData(2, 1456, "Иван", "Иванов", "Иванович", 2000, 10, 28, 1, "г.Самара Московское шоссе, д.12",
+    [InlineData(2, 888, "Иван", "Иванов", "Иванович", 2000, 10, 28, 1, "г.Самара Московское шоссе, д.12",
         "89633154365", "88005553535", "холост", 2, 0, true)]
-    [InlineData(2, 1456, "Иван", "Иванов", "Иванович", 2000, 10, 28, 0, "г.Самара Московское шоссе, д.12",
+    [InlineData(2, 888, "Иван", "Иванов", "Иванович", 2000, 10, 28, 0, "г.Самара Московское шоссе, д.12",
         "89633154365", "88005553535", "холост", 2, 0, false)]
-    [InlineData(5653, 1456, "Иван", "Иванов", "Иванович", 2000, 10, 28, 1, "г.Самара Московское шоссе, д.12",
+    [InlineData(5653, 888, "Иван", "Иванов", "Иванович", 2000, 10, 28, 1, "г.Самара Московское шоссе, д.12",
         "89633154365", "88005553535", "холост", 2, 0, false)]
     public async Task PutEmployee(uint employeeId, uint regNumber, string firstName, string lastName, string patronymicName,
         int birthYear, int birthMonth, int birthDay, int workshopId, string homeAddress, string homeTelephone,

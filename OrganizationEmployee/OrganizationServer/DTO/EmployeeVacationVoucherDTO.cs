@@ -5,10 +5,6 @@
 public class EmployeeVacationVoucherDto
 {
     /// <summary>
-    /// Id - an id of the object
-    /// </summary>
-    public uint Id { get; set; }
-    /// <summary>
     /// EmployeeId - an id of Employee object
     /// </summary>
     public uint? EmployeeId { get; set; }

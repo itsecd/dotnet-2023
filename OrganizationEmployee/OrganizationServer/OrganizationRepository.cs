@@ -139,6 +139,12 @@ public class OrganizationRepository
                 Name = "Пионерский лагерь предприятия",
                 Id = 2,
                 VacationVouchers = new List<VacationVoucher>()
+            },
+            new VoucherType
+            {
+                Name = "Путевка на горнолыжный курорт",
+                Id = 3,
+                VacationVouchers = new List<VacationVoucher>()
             }
         };
 

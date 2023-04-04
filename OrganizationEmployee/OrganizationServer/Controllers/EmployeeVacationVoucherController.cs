@@ -45,7 +45,7 @@ public class EmployeeVacationVoucherController : Controller
         var voucher =
             _organizationRepository.VacationVouchers
             .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
-        if (employee == null) return NotFound("A vacation voucher with given id doesn't exist");
+        if (voucher == null) return NotFound("A vacation voucher with given id doesn't exist");
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
         _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
@@ -68,7 +68,7 @@ public class EmployeeVacationVoucherController : Controller
         var voucher =
             _organizationRepository.VacationVouchers
             .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
-        if (employee == null) return NotFound("A vacation voucher with given id doesn't exist");
+        if (voucher == null) return NotFound("A vacation voucher with given id doesn't exist");
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
 

@@ -4,10 +4,10 @@ using OrganizationServer.Dto;
 using System.Text;
 namespace EmployeeDomain.IntegrationTests;
 
-public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
-    public EmployeeIntegrationTests(WebApplicationFactory<Program> factory)
+    public EmployeeIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }

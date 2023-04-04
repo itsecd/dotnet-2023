@@ -45,7 +45,7 @@ public class DepartmentEmployeeController : Controller
         var department =
             _organizationRepository.Departments
             .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
-        if (employee == null) return NotFound("A department with given id doesn't exist");
+        if (department == null) return NotFound("A department with given id doesn't exist");
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
@@ -54,7 +54,7 @@ public class DepartmentEmployeeController : Controller
 
 
     [HttpPut("{id}")]
-    public ActionResult<DepartmentEmployeeDto> Put(int id, [FromBody] DepartmentEmployee newDepartmentEmployee)
+    public ActionResult<DepartmentEmployeeDto> Put(int id, [FromBody] DepartmentEmployeeDto newDepartmentEmployee)
     {
         var departmentEmployee = _organizationRepository
             .DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
@@ -67,7 +67,7 @@ public class DepartmentEmployeeController : Controller
         var department =
                         _organizationRepository.Departments
                         .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
-        if (employee == null) return NotFound("A department with given id doesn't exist");
+        if (department == null) return NotFound("A department with given id doesn't exist");
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);

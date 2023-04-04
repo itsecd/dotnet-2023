@@ -18,9 +18,9 @@ public class VoucherTypeController : Controller
     }
 
     [HttpGet]
-    public IEnumerable<VoucherTypeDto> Get([FromQuery] int pageNumber, [FromQuery] int pageSize)
+    public IEnumerable<VoucherTypeDto> Get()
     {
-        return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes); // использовать Take() и Skip()
+        return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes);
     }
     [HttpGet("{id}")]
     public ActionResult<VoucherTypeDto> Get(int id)

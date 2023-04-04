@@ -6,10 +6,6 @@
 public class VacationVoucherDto
 {
     /// <summary>
-    /// Id - an id of a VacationVoucher
-    /// </summary>
-    public uint Id { get; set; }
-    /// <summary>
     /// IssueDate - a date, when the VacationVoucher was issued
     /// </summary>
     public DateTime IssueDate { get; set; }

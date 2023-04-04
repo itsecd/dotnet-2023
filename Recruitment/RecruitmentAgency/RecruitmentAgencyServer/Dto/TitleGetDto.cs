@@ -1,4 +1,4 @@
-﻿namespace ApplicationsServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// Title - a class that describes the field of work and position
 /// </summary>

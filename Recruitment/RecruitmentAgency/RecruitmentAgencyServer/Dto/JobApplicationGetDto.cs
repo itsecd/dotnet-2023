@@ -1,4 +1,4 @@
-﻿namespace ApplicationsServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// JobApplication - a class that describes the employee's application
 /// </summary>

@@ -3,7 +3,7 @@ using ApplicationsServer.Repository;
 using AutoMapper;
 using System.Reflection;
 
-namespace ApplicationRecruitmentAgency;
+namespace RecruitmentAgencyServer;
 
 /// <summary>
 /// A class for a web service

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using ApplicationRecruitmentAgency;
+using RecruitmentAgencyServer;
+using RecruitmentAgencyServer.Dto;
 using System.Text;
-using ApplicationsServer.Dto;
 using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 

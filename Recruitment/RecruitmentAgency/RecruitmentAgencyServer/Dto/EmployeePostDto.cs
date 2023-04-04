@@ -1,8 +1,8 @@
-﻿namespace ApplicationsServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// Employee - a class that describes the characteristics of a worker
 /// </summary>
-public class EmployeeGetDto
+public class EmployeePostDto
 {
     /// <summary>
     /// PersonalName - a string for name, second_name and surname

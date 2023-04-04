@@ -1,7 +1,7 @@
-﻿using ApplicationsServer.Dto;
+﻿using RecruitmentAgencyServer.Dto;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Text;
-using ApplicationRecruitmentAgency;
+using RecruitmentAgencyServer;
 using System.Text.Json;
 
 namespace IntegrationTests;

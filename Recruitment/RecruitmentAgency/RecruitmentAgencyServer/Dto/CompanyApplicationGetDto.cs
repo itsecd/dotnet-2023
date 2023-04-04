@@ -1,4 +1,4 @@
-﻿namespace ApplicationsServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// CompanyApplication - a class that describes the company application
 /// </summary>

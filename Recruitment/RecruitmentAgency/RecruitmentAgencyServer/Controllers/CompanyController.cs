@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
-using ApplicationsServer.Dto;
+using RecruitmentAgencyServer.Dto;
 using ApplicationsServer.Repository;
 using AutoMapper;
 
-namespace ApplicationsServer.Controllers;
+namespace RecruitmentAgencyServer.Controllers;
 
 /// <summary>
 /// Controller for companies

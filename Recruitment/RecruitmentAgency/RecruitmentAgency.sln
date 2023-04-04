@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecruitmentAgency", "Recrui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecruitmentTests", "RecruitmentTests\RecruitmentTests.csproj", "{4E0D78E0-493C-432F-ACC1-42330ABA8AA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationsServer", "ApplicationsServer\ApplicationsServer.csproj", "{B1AFDCEC-319E-4B07-9AA2-DB5AD4B846EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecruitmentAgencyServer", "RecruitmentAgencyServer\RecruitmentAgencyServer.csproj", "{B1AFDCEC-319E-4B07-9AA2-DB5AD4B846EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}"
 EndProject

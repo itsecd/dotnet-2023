@@ -1,9 +1,9 @@
-﻿namespace ApplicationsServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 
 /// <summary>
 /// Company - a class that describes the company representative
 /// </summary>
-public class CompanyGetDto
+public class CompanyPostDto
 {
     /// <summary>
     /// CompanyName - a string that stores the company name
@@ -17,9 +17,5 @@ public class CompanyGetDto
     /// Telephone - a string that stores the phone number
     /// </summary>
     public string Telephone { set; get; } = string.Empty;
-    /// <summary>  
-    /// id - shows the company's id
-    /// </summary>  
-    public int Id { set; get; }
 }
 

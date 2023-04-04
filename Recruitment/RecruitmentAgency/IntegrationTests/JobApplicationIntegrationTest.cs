@@ -1,5 +1,5 @@
-﻿using ApplicationsServer.Dto;
-using ApplicationRecruitmentAgency;
+﻿using RecruitmentAgencyServer.Dto;
+using RecruitmentAgencyServer;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Text;
 using System.Text.Json;

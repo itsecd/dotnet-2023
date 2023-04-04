@@ -1,5 +1,5 @@
-﻿using Server;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using ApplicationRecruitmentAgency;
 using System.Text;
 using ApplicationsServer.Dto;
 using System.Text.Json;
@@ -9,10 +9,10 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration tests for CompanyApplicationController
 /// </summary>
-public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    public CompanyApplicationIntegrationTests(WebApplicationFactory<Program> factory)
+    private readonly WebApplicationFactory<Server> _factory;
+    public CompanyApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
     }
@@ -112,7 +112,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task GetCompanyApplicationByIdReturnsSeuccess()
+    public async Task GetCompanyApplicationByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
 

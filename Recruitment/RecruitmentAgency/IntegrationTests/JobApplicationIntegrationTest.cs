@@ -1,5 +1,5 @@
 ﻿using ApplicationsServer.Dto;
-using Server;
+using ApplicationRecruitmentAgency;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Text;
 using System.Text.Json;
@@ -8,10 +8,10 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for JobApplicationController
 /// </summary>
-public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    public JobApplicationIntegrationTests(WebApplicationFactory<Program> factory)
+    private readonly WebApplicationFactory<Server> _factory;
+    public JobApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
     }
@@ -123,7 +123,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task GetJobApplicationByIdReturnsSeuccess()
+    public async Task GetJobApplicationByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
         var newEmployee = new EmployeePostDto()

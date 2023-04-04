@@ -1,17 +1,17 @@
 ﻿using ApplicationsServer.Dto;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Text;
-using Server;
+using ApplicationRecruitmentAgency;
 using System.Text.Json;
 
 namespace IntegrationTests;
 /// <summary>
 /// Integration test for EmployeeController
 /// </summary>
-public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    public EmployeeIntegrationTests(WebApplicationFactory<Program> factory)
+    private readonly WebApplicationFactory<Server> _factory;
+    public EmployeeIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
     }
@@ -112,7 +112,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Prog
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task GetEmployeeByIdReturnsSeuccess()
+    public async Task GetEmployeeByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
         var expectedEmployee = new EmployeeGetDto()

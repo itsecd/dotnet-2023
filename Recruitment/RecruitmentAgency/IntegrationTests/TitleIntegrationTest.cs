@@ -1,17 +1,17 @@
 ﻿using ApplicationsServer.Dto;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Text;
-using Server;
 using System.Text.Json;
+using ApplicationRecruitmentAgency;
 
 namespace IntegrationTests;
 /// <summary>
 /// Integration test for TitleController
 /// </summary>
-public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    public TitleIntegrationTests(WebApplicationFactory<Program> factory)
+    private readonly WebApplicationFactory<Server> _factory;
+    public TitleIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
     }
@@ -106,7 +106,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Program
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task GetTitleByIdReturnsSeuccess()
+    public async Task GetTitleByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
         var expectedTitle = new TitleGetDto()

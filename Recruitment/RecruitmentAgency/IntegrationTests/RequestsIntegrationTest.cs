@@ -1,5 +1,5 @@
 ﻿using ApplicationsServer.Dto;
-using Server;
+using ApplicationRecruitmentAgency;
 using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgency;
 using System.Text.Json;
@@ -8,10 +8,10 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for RequestsController
 /// </summary>
-public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    public RequestsIntegrationTests(WebApplicationFactory<Program> factory)
+    private readonly WebApplicationFactory<Server> _factory;
+    public RequestsIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
     }

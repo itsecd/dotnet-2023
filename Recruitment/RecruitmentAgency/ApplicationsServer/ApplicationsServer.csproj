@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<StartupObject>Server.Program</StartupObject>
+		<StartupObject>ApplicationRecruitmentAgency.Server</StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>

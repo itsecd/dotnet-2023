@@ -1,16 +1,17 @@
 ﻿using ApplicationsServer;
 using ApplicationsServer.Repository;
 using AutoMapper;
+using System.Reflection;
 
-namespace Server;
+namespace ApplicationRecruitmentAgency;
 
 /// <summary>
 /// A class for a web service
 /// </summary>
-public class Program
+public class Server
 {
     /// <summary>
-    /// The main body for a web service program
+    /// The main body for a web service server
     /// </summary>
     /// <param name="args"></param>
     public static void Main(string[] args)

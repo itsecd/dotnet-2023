@@ -40,7 +40,7 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     ///fourth request - top five most rented cars 
     ///</summary>
     [Fact]
-    public void TopFiveRents()
+    public void TopFive()
     {
         var rentedCars = _fixture.FixtureRentedCar.ToList();
         var nowadays = DateTime.Parse("2023-04-04");

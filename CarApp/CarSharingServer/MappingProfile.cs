@@ -3,7 +3,6 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 
 namespace CarSharingServer;
-
 public class MappingProfile : Profile
 {
     public MappingProfile() {
@@ -17,5 +16,9 @@ public class MappingProfile : Profile
         CreateMap<CarPostDto, Car>();
         CreateMap<RentalPoint, RentalPointPostDto>();
         CreateMap<RentalPointPostDto, RentalPoint>();
+        CreateMap<RentedCar, RentedCarGetDto>();
+        CreateMap<RentedCarGetDto, RentedCar>();
+        CreateMap<RentedCar, RentedCarPostDto>();
+        CreateMap<RentedCarPostDto, RentedCar>();
     }
 }

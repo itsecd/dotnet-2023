@@ -43,7 +43,7 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void TopFiveRents()
     {
         var rentedCars = _fixture.FixtureRentedCar.ToList();
-        var nowadays = DateTime.Parse("2023-03-13");
+        var nowadays = DateTime.Parse("2023-04-04");
         var counter = (from cartop in rentedCars
                        where cartop.TimeOfReturn < nowadays
                        group cartop by cartop.Car.CarId into g

@@ -12,11 +12,11 @@ public class CarSharingRepository:ICarSharingRepository
 
         _clients = new List<Client>()
         {
-                new Client(1, "20227171", DateTime.Parse("2002-09-06"), "Gusev", "Vladimir"),
-                new Client(2, "20200121", DateTime.Parse("2003-01-16"), "Ivanov", "Ivan"),
-                new Client(3, "39393939", DateTime.Parse("2007-08-31"), "Hatsune", "Miku"),
-                new Client(4, "20202942", DateTime.Parse("2005-04-09"), "Schoenheit", "Vil"),
-                new Client(5, "20219372", DateTime.Parse("2004-09-28"), "Archiviste", "Noe")
+            new Client(1, "20227171", DateTime.Parse("2002-09-06"), "Gusev", "Vladimir"),
+            new Client(2, "20200121", DateTime.Parse("2003-01-16"), "Ivanov", "Ivan"),
+            new Client(3, "39393939", DateTime.Parse("2007-08-31"), "Hatsune", "Miku"),
+            new Client(4, "20202942", DateTime.Parse("2005-04-09"), "Schoenheit", "Vil"),
+            new Client(5, "20219372", DateTime.Parse("2004-09-28"), "Archiviste", "Noe")
         };
 
         _cars = new List<Car>()
@@ -38,15 +38,15 @@ public class CarSharingRepository:ICarSharingRepository
 
         _rentedCars = new List<RentedCar>()
         {
-             new RentedCar(1, _clients[0], _rentalPoints[3] , _cars[0], DateTime.Parse("2023-02-21"), 5),
-             new RentedCar(2, _clients[2], _rentalPoints[0] , _cars[1], DateTime.Parse("2023-03-02"), 3),
-             new RentedCar(3, _clients[1], _rentalPoints[1] , _cars[0], DateTime.Parse("2023-02-25"), 1),
-             new RentedCar(4, _clients[3], _rentalPoints[2] , _cars[2], DateTime.Parse("2023-02-21"), 2),
-             new RentedCar(5, _clients[2], _rentalPoints[3] , _cars[0], DateTime.Parse("2023-03-01"), 5),
-             new RentedCar(6, _clients[1], _rentalPoints[1] , _cars[0], DateTime.Parse("2023-03-11"), 9),
-             new RentedCar(7, _clients[0], _rentalPoints[0] , _cars[3], DateTime.Parse("2023-03-04"), 4),
-             new RentedCar(8, _clients[1], _rentalPoints[2] , _cars[4], DateTime.Parse("2023-03-05"), 2),
-             new RentedCar(9, _clients[0], _rentalPoints[0] , _cars[4], DateTime.Parse("2023-03-04"), 5)
+             new RentedCar(1, _clients[0], 1, _rentalPoints[3], 4, _cars[0], 1, DateTime.Parse("2023-02-21"), 5),
+             new RentedCar(2, _clients[2], 3, _rentalPoints[0], 1, _cars[1], 2, DateTime.Parse("2023-03-02"), 3),
+             new RentedCar(3, _clients[1], 2, _rentalPoints[1], 2, _cars[0], 1, DateTime.Parse("2023-02-25"), 1),
+             new RentedCar(4, _clients[3], 4, _rentalPoints[2], 3, _cars[2], 3, DateTime.Parse("2023-03-21"), 2),
+             new RentedCar(5, _clients[2], 3, _rentalPoints[3], 4, _cars[0], 1, DateTime.Parse("2023-03-01"), 5),
+             new RentedCar(6, _clients[1], 2, _rentalPoints[1], 2, _cars[0], 1, DateTime.Parse("2023-03-11"), 9),
+             new RentedCar(7, _clients[0], 1, _rentalPoints[0], 1, _cars[3], 4, DateTime.Parse("2023-04-04"), 4),
+             new RentedCar(8, _clients[1], 2, _rentalPoints[2], 3, _cars[4], 5, DateTime.Parse("2023-03-05"), 2),
+             new RentedCar(9, _clients[0], 1, _rentalPoints[0], 1, _cars[4], 5, DateTime.Parse("2023-04-04"), 5)
         };
     }
     public List<Client> Clients => _clients;

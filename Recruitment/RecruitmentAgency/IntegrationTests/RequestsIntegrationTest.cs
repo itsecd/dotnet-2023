@@ -41,10 +41,10 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     {
         var client = _factory.CreateClient();
 
-        var minDate = "2022-04-09T00:00:00Z";
+        var minDate = "2022-01-01T00:00:00Z";
         var maxDate = "2022-06-05T23:59:59Z";
 
-        var response = await client.GetAsync($"/api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}");
+        var response = await client.GetAsync($"api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}"); ;
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {
@@ -62,7 +62,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetApplicantsThatMatchCompanyApplicationTest()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"/api/requests/applicants_matches/2");
+        var response = await client.GetAsync("api/requests/applicants_matches/2");
         Assert.True(response.IsSuccessStatusCode);
     }
     /// <summary>
@@ -73,7 +73,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetNumberApplicationsTest()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"/api/requests/applications_number");
+        var response = await client.GetAsync("api/requests/applications_number");
         Assert.True(response.IsSuccessStatusCode);
     }
     /// <summary>
@@ -84,7 +84,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetTheMostPopularCompaniesTest()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"/api/requests/the_most_popular_companies");
+        var response = await client.GetAsync("api/requests/the_most_popular_companies");
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {
@@ -102,7 +102,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetTheCompanyWithHighestWageTest()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"/api/requests/the_highest_wage");
+        var response = await client.GetAsync("api/requests/the_highest_wage");
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {

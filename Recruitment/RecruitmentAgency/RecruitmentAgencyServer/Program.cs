@@ -1,5 +1,4 @@
-﻿using ApplicationsServer;
-using ApplicationsServer.Repository;
+﻿using RecruitmentAgencyServer.Repository;
 using AutoMapper;
 using System.Reflection;
 
@@ -22,7 +21,7 @@ public class Server
         var mapper = mapperConfig.CreateMapper();
         builder.Services.AddSingleton(mapper);
 
-        builder.Services.AddSingleton<IApplicationsServerRepository, ApplicationsServerRepository>();
+        builder.Services.AddSingleton<IRecruitmentAgencyServerRepository, RecruitmentAgencyServerRepository>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

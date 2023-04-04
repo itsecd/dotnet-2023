@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using ApplicationsServer.Repository;
+using RecruitmentAgencyServer.Repository;
 using AutoMapper;
 
 namespace RecruitmentAgencyServer.Controllers;
@@ -14,12 +14,12 @@ namespace RecruitmentAgencyServer.Controllers;
 public class JobApplicationController : ControllerBase
 {
     private readonly ILogger<JobApplicationController> _logger;
-    private readonly IApplicationsServerRepository _companiesRepository;
+    private readonly IRecruitmentAgencyServerRepository _companiesRepository;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public JobApplicationController(ILogger<JobApplicationController> logger, IApplicationsServerRepository companiesRepository, IMapper mapper)
+    public JobApplicationController(ILogger<JobApplicationController> logger, IRecruitmentAgencyServerRepository companiesRepository, IMapper mapper)
     {
         _logger = logger;
         _companiesRepository = companiesRepository;

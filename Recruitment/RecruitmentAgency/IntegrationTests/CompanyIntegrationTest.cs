@@ -56,7 +56,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         };
         var requestContent = JsonSerializer.Serialize(newCompany, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("/api/Company", postData);
+        var response = await client.PostAsync("api/Company", postData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -82,7 +82,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         };
         var requestContent = JsonSerializer.Serialize(newCompany, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("/api/Company/0", putData);
+        var response = await client.PutAsync("api/Company/0", putData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -95,7 +95,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("/api/Company/1");
+        var response = await client.DeleteAsync("api/Company/1");
 
         Assert.True(response.IsSuccessStatusCode);
     }

@@ -1,11 +1,11 @@
 ﻿using RecruitmentAgency;
 
-namespace ApplicationsServer.Repository;
+namespace RecruitmentAgencyServer.Repository;
 
 /// <summary>
 /// A class for storing and modifying table data
 /// </summary>
-public class ApplicationsServerRepository : IApplicationsServerRepository
+public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerRepository
 {
     private readonly List<Company> _companies;
     private readonly List<Title> _titles;
@@ -15,7 +15,7 @@ public class ApplicationsServerRepository : IApplicationsServerRepository
     /// <summary>
     /// A constructor that adds some default values for tables
     /// </summary>
-    public ApplicationsServerRepository()
+    public RecruitmentAgencyServerRepository()
     {
         _companies = RepositoryCompanies;
         _titles = RepositoryTitles;

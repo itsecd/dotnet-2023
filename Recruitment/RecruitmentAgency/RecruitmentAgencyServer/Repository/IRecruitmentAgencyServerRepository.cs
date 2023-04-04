@@ -1,9 +1,9 @@
 ﻿using RecruitmentAgency;
-namespace ApplicationsServer.Repository;
+namespace RecruitmentAgencyServer.Repository;
 /// <summary>
-/// Interface for the ApplicationsServerRepository class
+/// Interface for the RecruitmentAgencyServerRepository class
 /// </summary>
-public interface IApplicationsServerRepository
+public interface IRecruitmentAgencyServerRepository
 {
     /// <summary>
     /// A list of Companies that will change by methods

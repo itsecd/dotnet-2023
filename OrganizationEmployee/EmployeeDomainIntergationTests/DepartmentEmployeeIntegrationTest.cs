@@ -1,15 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using OrganizationEmployee.Server.Dto;
+using System.Text;
+
 namespace OrganizationEmployee.IntegrationTests;
+/// <summary>
+/// DepartmentEmployeeIntegrationTest  - represents a integration test of DepartmentEmployeeController
+/// </summary>
 public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the DepartmentEmployeeIntegrationTest
+    /// </summary>
     public DepartmentEmployeeIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
+    /// <summary>
+    /// Tests the parameterless GET method
+    /// </summary>
     [Fact]
     public async Task GetDepartmentEmployees()
     {
@@ -23,7 +33,11 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
         Assert.NotNull(departmentEmployees);
         Assert.True(departmentEmployees.Count >= 5);
     }
-
+    /// <summary>
+    /// Tests the parameterized GET method
+    /// </summary>
+    /// <param name="departmentEmployeeId">ID of DepartmentEmployee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, true)]
     [InlineData(1337, false)]
@@ -46,23 +60,28 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-    /*
+    /// <summary>
+    /// Tests the parameterized POST method
+    /// </summary>
+    /// <param name="departmentId">ID of Department</param>
+    /// <param name="employeeId">ID of Employee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(2020, 11, 23, 0, true)]
-    [InlineData(2011, 3, 15, 1, true)]
-    [InlineData(2011, 3, 15, 33, false)]
-    public async Task PostVacationVoucher(int issueYear, int issueMonth, int issueDay,
-        uint voucherTypeId, bool isSuccess)
+    [InlineData(1, 1, true)]
+    [InlineData(1, 555, false)]
+    [InlineData(565, 1, false)]
+    [InlineData(565, 15345, false)]
+    public async Task PostDepartmentEmployee(uint departmentId, uint employeeId, bool isSuccess)
     {
-        var vacationVoucherDto = new VacationVoucherDto()
+        var departmentEmployeeDto = new DepartmentEmployeeDto()
         {
-            IssueDate = new DateTime(issueYear, issueMonth, issueDay),
-            VoucherTypeId = voucherTypeId
+            DepartmentId = departmentId,
+            EmployeeId = employeeId
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(vacationVoucherDto);
+        var jsonObject = JsonConvert.SerializeObject(departmentEmployeeDto);
         var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/VacationVoucher", stringContent);
+        var response = await client.PostAsync("api/DepartmentEmployee", stringContent);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -72,23 +91,30 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the parameterized PUT method
+    /// </summary>
+    /// <param name="departmentEmployeeId">ID of existing DepartmentEmployee</param>
+    /// <param name="departmentId">ID of Department</param>
+    /// <param name="employeeId">ID of Employee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(2, 2020, 11, 23, 0, true)]
-    [InlineData(2, 2020, 11, 23, 55, false)]
-    [InlineData(55, 2011, 3, 15, 0, false)]
-    public async Task PutVacationVoucher(uint vacationVoucherId, int issueYear, int issueMonth, int issueDay,
-        uint voucherTypeId, bool isSuccess)
+    [InlineData(6, 1, 1, true)]
+    [InlineData(111, 1, 1, false)]
+    [InlineData(6, 333, 1, false)]
+    [InlineData(6, 1, 333, false)]
+    [InlineData(6, 353, 333, false)]
+    public async Task PutDepartmentEmployee(uint departmentEmployeeId, uint departmentId, uint employeeId, bool isSuccess)
     {
-        var vacationVoucherDto = new VacationVoucherDto()
+        var departmentEmployeeDto = new DepartmentEmployeeDto()
         {
-            IssueDate = new DateTime(issueYear, issueMonth, issueDay),
-            VoucherTypeId = voucherTypeId
+            DepartmentId = departmentId,
+            EmployeeId = employeeId
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(vacationVoucherDto);
+        var jsonObject = JsonConvert.SerializeObject(departmentEmployeeDto);
         var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
-        var response = await client.PutAsync(string.Format("api/VacationVoucher/{0}", vacationVoucherId), stringContent);
+        var response = await client.PutAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId), stringContent);
 
         if (isSuccess)
         {
@@ -99,15 +125,19 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the parameterized DELETE method
+    /// </summary>
+    /// <param name="departmentEmployeeId">ID of existing DepartmentEmployee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(3, true)]
+    [InlineData(7, true)]
     [InlineData(133, false)]
-    public async Task DeleteVacationVoucher(int vacationVoucherId, bool isSuccess)
+    public async Task DeleteDepartmentEmployee(int departmentEmployeeId, bool isSuccess)
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync(string.Format("api/VacationVoucher/{0}", vacationVoucherId));
+        var response = await client.DeleteAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId));
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -116,5 +146,5 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
         {
             Assert.False(response.IsSuccessStatusCode);
         }
-    }*/
+    }
 }

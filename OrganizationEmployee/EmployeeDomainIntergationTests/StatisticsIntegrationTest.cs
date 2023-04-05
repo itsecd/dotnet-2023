@@ -2,18 +2,24 @@
 using Newtonsoft.Json;
 using OrganizationEmployee.Server.Dto;
 namespace OrganizationEmployee.IntegrationTests;
-
+/// <summary>
+/// StatisticsIntegrationTest  - represents a integration test of StatisticsController
+/// </summary>
 public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the StatisticsIntegrationTest
+    /// </summary>
     public StatisticsIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
     /// <summary>
-    /// First query - output all employees of the given department
+    /// Tests correctness of the following task: "Output all employees of the given department"
     /// </summary>
+    /// <param name="departmentId">The ID of the Department</param>
+    /// <param name="employeeCount">The correct number of employees in the deparment</param>
     [Theory]
     [InlineData(1, 3)]
     [InlineData(2, 4)]
@@ -29,7 +35,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.Equal(employeeCount, employees.Count);
     }
     /// <summary>
-    /// Second query - output all employees working in more than 1 department. Sort the result by last name, first name, patronymic name.
+    /// Tests correctness of the following task: "Output all employees working in more than 1 department. 
+    /// Sort the result by last name, first name, patronymic name."
     /// </summary>
     [Fact]
     public async Task GetEmployeesWithFewDepartmentsDto()
@@ -48,8 +55,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.Contains(employees, requestElem => requestElem.RegNumber == 3);
     }
     /// <summary>
-    /// Third query - output the archive of dismissals, including registration number, first name, last name, patronymic name,
-    /// date of birth, workshop, department, occupation of the employee.
+    /// Tests correctness of the following task: "Output the archive of dismissals, including registration number, 
+    /// first name, last name, patronymic name, date of birth, workshop, department, occupation of the employee."
     /// </summary>
     [Fact]
     public async Task GetArchiveOfDismissals()
@@ -68,7 +75,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.Contains(archiveOfDismissals, requestElem => requestElem.RegNumber == 3);
     }
     /// <summary>
-    /// Fourth Query - output an average age of employees for each department
+    /// Tests correctness of the following task: "Output an average age of employees for each department"
     /// </summary>
     [Fact]
     public async Task GetAverageAgeInDepartmentDto()
@@ -86,7 +93,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.Equal(2, avgAgeInDepartments.Count);
     }
     /// <summary>
-    /// Fifth query - output the info about employees, who received a vacation voucher in past year.
+    /// Tests correctness of the following task: "Output the info about employees, 
+    /// who received a vacation voucher in past year."
     /// </summary>
     [Fact]
     public async Task GetEmployeeLastYearVoucher()
@@ -103,7 +111,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.Equal(2, employeesLastYearVoucher.Count);
     }
     /// <summary>
-    /// Output the top-5 employees who have the longest working experience at the company
+    /// Tests correctness of the following task: 
+    /// "Output the top-5 employees who have the longest working experience at the company"
     /// </summary>
     [Fact]
     public async Task GetEmployeeWithLongestWorkExperience()

@@ -1,7 +1,9 @@
 ﻿using OrganizationEmployee.EmployeeDomain;
+using OrganizationServer.Repository;
+
 namespace OrganizationEmployee.Server.Repository;
 
-public class OrganizationRepository
+public class OrganizationRepository : IOrganizationRepository
 {
     private List<Workshop> _workshops;
 

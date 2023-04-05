@@ -3,14 +3,22 @@ using Newtonsoft.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
+/// <summary>
+/// VoucherTypeIntegrationTest  - represents a integration test of VoucherTypeController
+/// </summary>
 public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the VoucherTypeIntegrationTest
+    /// </summary>
     public VoucherTypeIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
+    /// <summary>
+    /// Tests the parameterless GET method
+    /// </summary>
     [Fact]
     public async Task GetVoucherTypes()
     {
@@ -24,7 +32,12 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         Assert.NotNull(voucherTypes);
         Assert.True(voucherTypes.Count >= 1);
     }
-
+    /// <summary>
+    /// Tests the parameterized GET method
+    /// </summary>
+    /// <param name="voucherTypeId">ID of the voucher type</param>
+    /// <param name="voucherTypeName">Correct name of the voucher type</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(0, "Санаторий", true)]
     [InlineData(1, "Дом отдыха", true)]
@@ -49,7 +62,10 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the POST method
+    /// </summary>
+    /// <param name="voucherTypeName">Name of the voucher type</param>
     [Theory]
     [InlineData("Путевка на Черное море")]
     [InlineData("Путевка на озеро Байкал")]
@@ -65,7 +81,12 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         var response = await client.PostAsync("api/VoucherType", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
-
+    /// <summary>
+    /// Tests the PUT method
+    /// </summary>
+    /// <param name="voucherTypeId">ID of the existing voucher type</param>
+    /// <param name="voucherTypeName">A new name of the voucher type</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(2, "Пионерский лагерь организации", true)]
     [InlineData(155, "Путевка в Европу", false)]
@@ -89,8 +110,11 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
-
+    /// <summary>
+    /// Tests the DELETE method
+    /// </summary>
+    /// <param name="voucherTypeId">ID of the existing voucher type</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(3, true)]
     [InlineData(133, false)]

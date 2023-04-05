@@ -4,14 +4,22 @@ using OrganizationEmployee.Server.Dto;
 using System.Text;
 
 namespace OrganizationEmployee.IntegrationTests;
+/// <summary>
+/// EmployeeOccupationIntegrationTest  - represents a integration test of EmployeeOccupationController
+/// </summary>
 public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the EmployeeOccupationIntegrationTest
+    /// </summary>
     public EmployeeOccupationIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
+    /// <summary>
+    /// Tests the parameterless GET method
+    /// </summary>
     [Fact]
     public async Task GetEmployeeOccupations()
     {
@@ -25,7 +33,11 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         Assert.NotNull(employeeOccupations);
         Assert.True(employeeOccupations.Count >= 1);
     }
-
+    /// <summary>
+    /// Tests the parameterized GET method
+    /// </summary>
+    /// <param name="employeeOccupationId">ID of the EmployeeOccupation</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, true)]
     [InlineData(1337, false)]
@@ -49,7 +61,18 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the POST method
+    /// </summary>
+    /// <param name="occupationId">The ID of the occupation</param>
+    /// <param name="employeeId">The ID of the employee</param>
+    /// <param name="hireYear">The year, in which the employee was hired on the occupation</param>
+    /// <param name="hireMonth">The month, in which the employee was hired on the occupation</param>
+    /// <param name="hireDay">The day, in which the employee was hired on the occupation</param>
+    /// <param name="dismissalYear">The year, in which the employee was dismissed from the occupation</param>
+    /// <param name="dismissalMonth">The month, in which the employee was dismissed from the occupation</param>
+    /// <param name="dismissalDay">The day, in which the employee was dismissed from the occupation</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, 1, 2000, 1, 3, 2020, 3, 24, true)]
     [InlineData(1, 2011, 2000, 1, 3, 2020, 3, 24, false)]
@@ -77,7 +100,19 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the PUT method
+    /// </summary>
+    /// <param name="employeeOccupationId">The ID of the existing EmployeeOccupation</param>
+    /// <param name="occupationId">The new ID of the occupation</param>
+    /// <param name="employeeId">The new ID of the employee</param>
+    /// <param name="hireYear">The new year, in which the employee was hired on the occupation</param>
+    /// <param name="hireMonth">The new month, in which the employee was hired on the occupation</param>
+    /// <param name="hireDay">The new day, in which the employee was hired on the occupation</param>
+    /// <param name="dismissalYear">The new year, in which the employee was dismissed from the occupation</param>
+    /// <param name="dismissalMonth">The new month, in which the employee was dismissed from the occupation</param>
+    /// <param name="dismissalDay">The new day, in which the employee was dismissed from the occupation</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(2, 1, 1, 2000, 1, 3, 2020, 3, 24, true)]
     [InlineData(55, 1, 1, 2000, 1, 3, 2020, 3, 24, false)]
@@ -109,6 +144,11 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             Assert.False(response.IsSuccessStatusCode);
         }
     }
+    /// <summary>
+    /// Tests the DELETE method
+    /// </summary>
+    /// <param name="employeeOccupationId">The ID of the existing EmployeeOccupation</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(3, true)]
     [InlineData(133, false)]

@@ -3,14 +3,22 @@ using Newtonsoft.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
+/// <summary>
+/// VacationVoucherIntegrationTest  - represents a integration test of VacationVoucherController
+/// </summary>
 public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the VacationVoucherIntegrationTest
+    /// </summary>
     public VacationVoucherIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
+    /// <summary>
+    /// Tests the parameterless GET method
+    /// </summary>
     [Fact]
     public async Task GetVacationVouchers()
     {
@@ -24,7 +32,11 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
         Assert.NotNull(vacationVouchers);
         Assert.True(vacationVouchers.Count >= 1);
     }
-
+    /// <summary>
+    /// Tests the parameterized GET method
+    /// </summary>
+    /// <param name="vactionVoucherId">ID of the VactionVoucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, true)]
     [InlineData(1337, false)]
@@ -47,7 +59,14 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the POST method
+    /// </summary>
+    /// <param name="issueYear">The year when the vacation voucher was been issued</param>
+    /// <param name="issueMonth">The month when the vacation voucher was been issued</param>
+    /// <param name="issueDay">The day when the vacation voucher was been issued</param>
+    /// <param name="voucherTypeId">The voucher type id of the vacation voucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(2020, 11, 23, 0, true)]
     [InlineData(2011, 3, 15, 1, true)]
@@ -73,7 +92,15 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the PUT method
+    /// </summary>
+    /// <param name="vacationVoucherId">The ID of the existing vacation voucher</param>
+    /// <param name="issueYear">The new year when the vacation voucher was been issued</param>
+    /// <param name="issueMonth">The new month when the vacation voucher was been issued</param>
+    /// <param name="issueDay">The new day when the vacation voucher was been issued</param>
+    /// <param name="voucherTypeId">The new voucher type id of the vacation voucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(2, 2020, 11, 23, 0, true)]
     [InlineData(2, 2020, 11, 23, 55, false)]
@@ -100,7 +127,11 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the DELETE method
+    /// </summary>
+    /// <param name="vacationVoucherId">The ID of the existing vacation voucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(3, true)]
     [InlineData(133, false)]

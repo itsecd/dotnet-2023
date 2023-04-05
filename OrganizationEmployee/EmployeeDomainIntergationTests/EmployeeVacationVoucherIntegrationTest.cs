@@ -4,14 +4,22 @@ using OrganizationEmployee.Server.Dto;
 using System.Text;
 
 namespace OrganizationEmployee.IntegrationTests;
+/// <summary>
+/// EmployeeVacationVoucherIntegrationTest  - represents a integration test of EmployeeVacationVoucherController
+/// </summary>
 public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
+    /// <summary>
+    /// A constructor of the EmployeeVacationVoucherIntegrationTest
+    /// </summary>
     public EmployeeVacationVoucherIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }
-
+    /// <summary>
+    /// Tests the parameterless GET method
+    /// </summary>
     [Fact]
     public async Task GetEmployeeVacationVouchers()
     {
@@ -25,7 +33,11 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         Assert.NotNull(employeeVacationVouchers);
         Assert.True(employeeVacationVouchers.Count >= 1);
     }
-
+    /// <summary>
+    /// Tests the parameterized GET method
+    /// </summary>
+    /// <param name="employeeVacationVoucherId">ID of the EmployeeVacationVoucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, true)]
     [InlineData(1337, false)]
@@ -49,7 +61,12 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the POST method
+    /// </summary>
+    /// <param name="voucherId">The ID of the VacationVoucher</param>
+    /// <param name="employeeId">The ID of the Employee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, 1, true)]
     [InlineData(1, 2011, false)]
@@ -74,13 +91,20 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the PUT method
+    /// </summary>
+    /// <param name="employeeVacationVoucherId">The ID of the existing EmployeeVacationVoucher</param>
+    /// <param name="voucherId">The new ID of the VacationVoucher</param>
+    /// <param name="employeeId">The new ID of the Employee</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(2, 1, 1, true)]
     [InlineData(2, 1, 1111, false)]
     [InlineData(2, 1111, 1, false)]
     [InlineData(2226, 1, 1, false)]
-    public async Task PutEmployeeVacationVoucher(uint employeeVacationVoucherId, uint voucherId, uint employeeId, bool isSuccess)
+    public async Task PutEmployeeVacationVoucher(uint employeeVacationVoucherId, uint voucherId, uint employeeId,
+        bool isSuccess)
     {
         var employeeVacationVoucherDto = new EmployeeVacationVoucherDto()
         {
@@ -102,7 +126,11 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             Assert.False(response.IsSuccessStatusCode);
         }
     }
-
+    /// <summary>
+    /// Tests the DELETE method
+    /// </summary>
+    /// <param name="employeeVacationVoucherId">The ID of the existing EmployeeVacationVoucher</param>
+    /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(3, true)]
     [InlineData(133, false)]

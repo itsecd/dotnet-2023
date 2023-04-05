@@ -1,4 +1,6 @@
-﻿namespace BicycleRentals.Server.Dto;
+﻿using BicycleRentals.Domain;
+
+namespace BicycleRentals.Server.Dto;
 
 public class CustomerGetDto
 {
@@ -21,5 +23,5 @@ public class CustomerGetDto
     /// <summary>
     /// Rentals - shows the Rentals 
     /// </summary>
-    public List<BicycleRentals.BicycleRental> Rentals { get; set; } = new List<BicycleRentals.BicycleRental>();
+    public List<BicycleRental> Rentals { get; set; } = new List<BicycleRental>();
 }

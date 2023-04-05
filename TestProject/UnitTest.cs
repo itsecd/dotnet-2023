@@ -1,8 +1,8 @@
 namespace TestProject;
-public class RealtorTest : IClassFixture<FixtureRealt>
+public class UnitTest : IClassFixture<FixtureRealt>
 {
     private readonly FixtureRealt _fixture;
-    public RealtorTest(FixtureRealt fixture)
+    public UnitTest(FixtureRealt fixture)
     {
         _fixture = fixture;
     }
@@ -10,7 +10,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// first request - information about all clients looking for real estate of a given type
     /// </summary>
     [Fact]
-    public void FirstRequest()
+    public void AllClients()
     {
         var allApplication = _fixture.FixtureApplication;
         var resultList = (from application in allApplication
@@ -54,7 +54,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// second request - all sellers who left orders for a given period
     /// </summary>
     [Fact]
-    public void SecondRequest()
+    public void ApplicationsForThePeriod()
     {
         var query = (from application in _fixture.FixtureApplication
                      from client in application.Clients
@@ -86,7 +86,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// third request - information about sellers and real estate objects that correspond to a specific buyer's request
     /// </summary>
     [Fact]
-    public void ThirdRequest()
+    public void BuyerRequest()
     {
         var query = (from applications in _fixture.FixtureApplication
                      from client in applications.Clients
@@ -118,9 +118,9 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     }
     /// <summary>
     /// fourth request - information about the number of applications for each type of property    
-    // </summary>
+    /// </summary>
     [Fact]
-    public void FourthRequest()
+    public void QuantityHousesOfOneType() 
     {
         var query1 = (from application in _fixture.FixtureApplication
                       from house in application.House
@@ -137,7 +137,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// fifth request - Display the top 5 clients by the number of applications
     /// </summary>
     [Fact]
-    public void FifthRequest()
+    public void TopFive()
     {
         var query1 = (from application in _fixture.FixtureApplication
                       from client in application.Clients
@@ -187,7 +187,7 @@ public class RealtorTest : IClassFixture<FixtureRealt>
     /// sixth request - information about clients who opened orders with the minimum cost    
     /// </summary>
     [Fact]
-    public void SixthRequest()
+    public void MinimumCost()
     {
         var query = (from application in _fixture.FixtureApplication
                      from client in application.Clients

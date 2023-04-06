@@ -18,7 +18,7 @@ public class VoucherTypeController : Controller
     /// <summary>
     /// A constructor of the VoucherTypeController
     /// </summary>
-    public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper, 
+    public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper,
         ILogger<VoucherTypeController> logger)
     {
         _organizationRepository = organizationRepository;

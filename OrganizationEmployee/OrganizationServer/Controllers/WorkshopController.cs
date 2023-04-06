@@ -18,7 +18,7 @@ public class WorkshopController : ControllerBase
     /// <summary>
     /// A constructor of the WorkshopController
     /// </summary>
-    public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper, 
+    public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper,
         ILogger<WorkshopController> logger)
     {
         _organizationRepository = organizationRepository;

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using System;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>
@@ -19,7 +18,7 @@ public class OccupationController : Controller
     /// <summary>
     /// A constructor of the OccupationController
     /// </summary>
-    public OccupationController(OrganizationRepository organizationRepository, IMapper mapper, 
+    public OccupationController(OrganizationRepository organizationRepository, IMapper mapper,
         ILogger<OccupationController> logger)
     {
         _organizationRepository = organizationRepository;
@@ -51,7 +50,7 @@ public class OccupationController : Controller
             _logger.LogInformation("The occupation with ID {id} is not found", id);
             return NotFound();
         }
-            var mappedOccupation = _mapper.Map<GetOccupationDto>(occupation);
+        var mappedOccupation = _mapper.Map<GetOccupationDto>(occupation);
         return Ok(mappedOccupation);
     }
     /// <summary>

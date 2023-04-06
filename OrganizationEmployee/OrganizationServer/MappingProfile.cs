@@ -26,7 +26,7 @@ public class MappingProfile : Profile
         CreateMap<EmployeeOccupation, GetEmployeeOccupationDto>();
         CreateMap<VacationVoucher, GetVacationVoucherDto>();
         CreateMap<PostVacationVoucherDto, VacationVoucher>();
-        
+
         CreateMap<PostEmployeeVacationVoucherDto, EmployeeVacationVoucher>();
         CreateMap<EmployeeVacationVoucher, GetEmployeeVacationVoucherDto>();
     }

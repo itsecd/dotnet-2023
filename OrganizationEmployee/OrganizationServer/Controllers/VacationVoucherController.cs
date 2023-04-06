@@ -18,7 +18,7 @@ public class VacationVoucherController : Controller
     /// <summary>
     /// A constructor of the VacationVoucherController
     /// </summary>
-    public VacationVoucherController(OrganizationRepository organizationRepository, IMapper mapper, 
+    public VacationVoucherController(OrganizationRepository organizationRepository, IMapper mapper,
         ILogger<VacationVoucherController> logger)
     {
         _organizationRepository = organizationRepository;
@@ -69,7 +69,7 @@ public class VacationVoucherController : Controller
                             (type => type.Id == mappedVacationVoucher.VoucherTypeId);
         if (voucherType == null)
         {
-            _logger.LogInformation("An voucher type with id {id} doesn't exist", 
+            _logger.LogInformation("An voucher type with id {id} doesn't exist",
                 mappedVacationVoucher.VoucherTypeId);
             return NotFound("A voucher type with given id doesn't exist");
         }

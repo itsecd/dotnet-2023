@@ -17,7 +17,7 @@ public class StatisticsController : Controller
     /// <summary>
     /// A constructor of the StatisticsController
     /// </summary>
-    public StatisticsController(OrganizationRepository organizationRepository, IMapper mapper, 
+    public StatisticsController(OrganizationRepository organizationRepository, IMapper mapper,
         ILogger<StatisticsController> logger)
     {
         _organizationRepository = organizationRepository;

@@ -4,6 +4,9 @@ using CarSharingServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarSharingServer.Controllers;
+/// <summary>
+/// Analytics controller for queries
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
@@ -11,6 +14,12 @@ public class AnalyticsController : ControllerBase
     private readonly ILogger<AnalyticsController> _logger;
     private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor for AnalyticsController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="carRepository"></param>
+    /// <param name="mapper"></param>
     public AnalyticsController(ILogger<AnalyticsController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
         _logger = logger;
@@ -18,7 +27,7 @@ public class AnalyticsController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// info about all cars
+    ///Get info about all cars
     /// </summary>
     /// <returns></returns>
     [HttpGet("all_cars")]
@@ -29,7 +38,7 @@ public class AnalyticsController : ControllerBase
                 select _mapper.Map<CarGetDto>(car)).ToList();
     }
     /// <summary>
-    /// info about clients who rented car by id
+    ///Get info about clients who rented car by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -46,7 +55,7 @@ public class AnalyticsController : ControllerBase
         else return Ok(result);
     }
     /// <summary>
-    /// info about all cars which are now in rent
+    ///Get info about all cars which are now in rent
     /// </summary>
     /// <returns></returns>
     [HttpGet("all_cars_in_rent")]
@@ -57,7 +66,7 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// top five most rented cars
+    ///Get top five cars by the number of rents
     /// </summary>
     /// <returns></returns>
     [HttpGet("top_five_rented_cars")]
@@ -75,7 +84,7 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// info about how much each car was rented
+    ///Get info about how much each car was rented
     /// </summary>
     /// <returns></returns>
     [HttpGet("number_of_rents_for_each_car")]
@@ -91,7 +100,7 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// info about rental point where max number of cars were rented
+    ///Get info about rental point where max number of cars were rented
     /// </summary>
     /// <returns></returns>
     [HttpGet("rental_points_with_max_number_of_clients")]

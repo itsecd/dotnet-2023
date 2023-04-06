@@ -1,5 +1,7 @@
 ﻿namespace CarSharingServer.Dto;
-
+/// <summary>
+/// ClientPostDto for HTTP POST request
+/// </summary>
 public class ClientPostDto
 {
     /// <summary>

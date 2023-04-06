@@ -1,5 +1,7 @@
 ﻿namespace CarSharingServer.Dto;
-
+/// <summary>
+/// CarGetDto for HTTP GET request
+/// </summary>
 public class CarGetDto
 {
     /// <summary>

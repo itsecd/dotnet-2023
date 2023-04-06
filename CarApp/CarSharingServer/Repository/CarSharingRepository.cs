@@ -1,12 +1,17 @@
 ﻿namespace CarSharingServer.Repository;
 using CarSharingDomain;
+/// <summary>
+/// Data repository to contain all data about Cars, Rental points, Clients and Rented cars
+/// </summary>
 public class CarSharingRepository:ICarSharingRepository
 {
     private readonly List<Client> _clients;
     private readonly List<Car> _cars;
     private readonly List<RentalPoint> _rentalPoints;
     private readonly List<RentedCar> _rentedCars;
-
+    /// <summary>
+    /// Constructor for CarSharingRepository
+    /// </summary>
     public CarSharingRepository()
     {
 
@@ -49,8 +54,20 @@ public class CarSharingRepository:ICarSharingRepository
              new RentedCar(9, _clients[0], 1, _rentalPoints[0], 1, _cars[4], 5, DateTime.Parse("2023-04-04"), 5)
         };
     }
+    /// <summary>
+    /// List of all clients and info about them
+    /// </summary>
     public List<Client> Clients => _clients;
+    /// <summary>
+    /// List of all cars and info about it
+    /// </summary>
     public List<Car> Cars => _cars;
+    /// <summary>
+    /// List of all rental points and info about it
+    /// </summary>
     public List<RentalPoint> RentalPoints => _rentalPoints;
+    /// <summary>
+    /// List of rented cars and info about it
+    /// </summary>
     public List<RentedCar> RentedCars => _rentedCars;
 }

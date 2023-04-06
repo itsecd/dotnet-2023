@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CarSharingDomain;
+﻿using AutoMapper;
 using CarSharingServer.Dto;
-using AutoMapper;
 using CarSharingServer.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarSharingServer.Controllers;
 [Route("api/[controller]")]
@@ -38,7 +37,7 @@ public class AnalyticsController : ControllerBase
     public IActionResult GetClientsRentedRolls(uint id)
     {
         _logger.LogInformation("Get info about clients rented the car with id");
-        var result = (from client in _carRepository.RentedCars where client.CarId==id select client.Client.FirstName).ToList();
+        var result = (from client in _carRepository.RentedCars where client.CarId == id select client.Client.FirstName).ToList();
         if (result.Count == 0)
         {
             _logger.LogInformation($"No one rented car with id {id}", id);
@@ -65,7 +64,7 @@ public class AnalyticsController : ControllerBase
     public IActionResult GetTopFiveCars()
     {
         _logger.LogInformation("Get info about top five rented cars");
-        var counter = (from car in _carRepository.RentedCars 
+        var counter = (from car in _carRepository.RentedCars
                        group car by car.Car.CarId into g
                        select new
                        {
@@ -75,7 +74,6 @@ public class AnalyticsController : ControllerBase
         var result = (from c in counter orderby c.count descending select c).Take(5).ToList();
         return Ok(result);
     }
-
     /// <summary>
     /// info about how much each car was rented
     /// </summary>

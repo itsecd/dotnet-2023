@@ -3,8 +3,14 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 
 namespace CarSharingServer;
+/// <summary>
+/// MappingProfile to map Dto objects on Domain objects and  backwards
+/// </summary>
 public class MappingProfile : Profile
 {
+    /// <summary>
+    /// Constructor for MappingProfile
+    /// </summary>
     public MappingProfile() {
         CreateMap<Client, ClientGetDto>();
         CreateMap<ClientGetDto, Client>();

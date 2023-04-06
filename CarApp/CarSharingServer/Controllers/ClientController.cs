@@ -5,6 +5,9 @@ using AutoMapper;
 using CarSharingServer.Repository;
 
 namespace CarSharingServer.Controllers;
+/// <summary>
+/// Client controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClientController : ControllerBase
@@ -12,6 +15,12 @@ public class ClientController : ControllerBase
     private readonly ILogger<ClientController> _logger;
     private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor for ClientController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="carRepository"></param>
+    /// <param name="mapper"></param>
     public ClientController(ILogger<ClientController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
         _logger = logger;
@@ -20,7 +29,7 @@ public class ClientController : ControllerBase
     }
 
     /// <summary>
-    /// returns info about all clients
+    /// Get info about all clients
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +39,7 @@ public class ClientController : ControllerBase
         return _carRepository.Clients.Select(client => _mapper.Map<ClientGetDto>(client));
     }
     /// <summary>
-    /// returns client info by id
+    /// Get client info by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -50,7 +59,7 @@ public class ClientController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Post a new client
     /// </summary>
     /// <param name="client"></param>
     [HttpPost]
@@ -60,10 +69,11 @@ public class ClientController : ControllerBase
         _carRepository.Clients.Add(_mapper.Map<Client>(client));
     }
     /// <summary>
-    /// 
+    /// Put a client
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="value"></param>
+    /// <param name="clientToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(uint id, [FromBody] ClientPostDto clientToPut)
     {
@@ -82,7 +92,7 @@ public class ClientController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Delete a client
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

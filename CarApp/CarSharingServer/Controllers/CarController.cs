@@ -5,6 +5,9 @@ using AutoMapper;
 using CarSharingServer.Repository;
 
 namespace CarSharingServer.Controllers;
+/// <summary>
+/// Car controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class CarController : ControllerBase
@@ -12,6 +15,12 @@ public class CarController : ControllerBase
     private readonly ILogger<CarController> _logger;
     private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor for CarController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="carRepository"></param>
+    /// <param name="mapper"></param>
     public CarController(ILogger<CarController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
         _logger = logger;
@@ -20,7 +29,7 @@ public class CarController : ControllerBase
     }
 
     /// <summary>
-    /// returns info about all cars
+    /// Get info about all cars
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +39,7 @@ public class CarController : ControllerBase
         return _carRepository.Cars.Select(car => _mapper.Map<CarGetDto>(car));
     }
     /// <summary>
-    /// returns car info by id
+    /// Get car info by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -50,7 +59,7 @@ public class CarController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Post a new car
     /// </summary>
     /// <param name="car"></param>
     [HttpPost]
@@ -60,10 +69,11 @@ public class CarController : ControllerBase
         _carRepository.Cars.Add(_mapper.Map<Car>(car));
     }
     /// <summary>
-    /// 
+    /// Put car
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="value"></param>
+    /// <param name="carToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(uint id, [FromBody] CarPostDto carToPut)
     {
@@ -82,7 +92,7 @@ public class CarController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Delete a car
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

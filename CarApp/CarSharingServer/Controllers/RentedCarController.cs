@@ -5,6 +5,9 @@ using AutoMapper;
 using CarSharingServer.Repository;
 
 namespace CarSharingServer.Controllers;
+/// <summary>
+/// Rented car controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class RentedCarController : ControllerBase
@@ -12,6 +15,12 @@ public class RentedCarController : ControllerBase
     private readonly ILogger<RentedCarController> _logger;
     private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor for RentedCarController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="carRepository"></param>
+    /// <param name="mapper"></param>
     public RentedCarController(ILogger<RentedCarController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
         _logger = logger;
@@ -20,7 +29,7 @@ public class RentedCarController : ControllerBase
     }
 
     /// <summary>
-    /// returns info about all cars
+    /// Get info about all rented cars
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +39,7 @@ public class RentedCarController : ControllerBase
         return _carRepository.RentedCars.Select(rentedCar => _mapper.Map<RentedCarGetDto>(rentedCar));
     }
     /// <summary>
-    /// returns car info by id
+    /// Get rented car by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -50,20 +59,21 @@ public class RentedCarController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Post a new rented car
     /// </summary>
-    /// <param name="car"></param>
+    /// <param name="rentedCar"></param>
     [HttpPost]
     public void Post([FromBody] RentedCarPostDto rentedCar)
     {
         _logger.LogInformation("Post a new car");
         _carRepository.RentedCars.Add(_mapper.Map<RentedCar>(rentedCar));
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="value"></param>
+   /// <summary>
+   /// Put a rented car
+   /// </summary>
+   /// <param name="id"></param>
+   /// <param name="rentedCarToPut"></param>
+   /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(uint id, [FromBody] RentedCarPostDto rentedCarToPut)
     {
@@ -82,7 +92,7 @@ public class RentedCarController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Delete rented car
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

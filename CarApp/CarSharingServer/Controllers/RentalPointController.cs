@@ -5,6 +5,9 @@ using AutoMapper;
 using CarSharingServer.Repository;
 
 namespace CarSharingServer.Controllers;
+/// <summary>
+/// Rental point controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class RentalPointController : ControllerBase
@@ -12,15 +15,20 @@ public class RentalPointController : ControllerBase
     private readonly ILogger<RentalPointController> _logger;
     private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor for RentalPointController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="carRepository"></param>
+    /// <param name="mapper"></param>
     public RentalPointController(ILogger<RentalPointController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
         _logger = logger;
         _carRepository = carRepository;
         _mapper = mapper;
     }
-
     /// <summary>
-    /// 
+    /// Get info about all rental points
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +38,7 @@ public class RentalPointController : ControllerBase
         return _carRepository.RentalPoints;
     }
     /// <summary>
-    /// 
+    /// Get rental point by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -50,7 +58,7 @@ public class RentalPointController : ControllerBase
         }
     }
    /// <summary>
-   /// 
+   /// Post a new rental point
    /// </summary>
    /// <param name="rentalPoint"></param>
     [HttpPost]
@@ -60,7 +68,7 @@ public class RentalPointController : ControllerBase
         _carRepository.RentalPoints.Add(_mapper.Map<RentalPoint>(rentalPoint));
     }
     /// <summary>
-    /// 
+    /// Put a rental point
     /// </summary>
     /// <param name="id"></param>
     /// <param name="rentalPointToPut"></param>
@@ -83,7 +91,7 @@ public class RentalPointController : ControllerBase
         }
     }
     /// <summary>
-    /// 
+    /// Delete a rental point
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

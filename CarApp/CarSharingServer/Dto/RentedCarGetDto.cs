@@ -1,7 +1,7 @@
-﻿using CarSharingDomain;
-
-namespace CarSharingServer.Dto;
-
+﻿namespace CarSharingServer.Dto;
+/// <summary>
+/// RentedCarGetDto for HTTP GET request
+/// </summary>
 public class RentedCarGetDto
 {
     /// <summary>
@@ -12,7 +12,6 @@ public class RentedCarGetDto
     /// id of model of rented car
     /// </summary>
     public uint CarId { get; set; }
-   
     /// <summary>
     /// date and time when client rented a car
     /// </summary>

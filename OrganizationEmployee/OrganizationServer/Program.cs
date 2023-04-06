@@ -1,5 +1,7 @@
 using OrganizationEmployee.Server;
 using OrganizationEmployee.Server.Repository;
+using System.Reflection;
+
 public class Program
 {
     public static void Main(string[] args)
@@ -12,7 +14,12 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAutoMapper(typeof(MappingProfile));
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            var docName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var docPath = Path.Combine(AppContext.BaseDirectory, docName);
+            options.IncludeXmlComments(docPath);
+        });
 
 
 

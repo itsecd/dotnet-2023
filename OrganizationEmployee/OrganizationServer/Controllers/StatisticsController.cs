@@ -11,40 +11,49 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class StatisticsController : Controller
 {
+    private readonly ILogger<StatisticsController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the StatisticsController
     /// </summary>
-    public StatisticsController(OrganizationRepository organizationRepository, IMapper mapper)
+    public StatisticsController(OrganizationRepository organizationRepository, IMapper mapper, 
+        ILogger<StatisticsController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method outputs all employees of the given department
     /// </summary>
     /// <param name="departmentId">An ID of the department</param>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<EmployeeDto>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeDto
     /// Code 404 if a department with given ID doesn't exist</returns>
     [HttpGet("DepartmentId/{departmentId}")]
     public ActionResult<IEnumerable<EmployeeDto>> Get(int departmentId)
     {
+        _logger.LogInformation("Get all employees of the given department");
         var employeesInDepartment = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
                                      from departmentEmployeeItem in employee.DepartmentEmployees
                                      where departmentEmployeeItem.Department?.Id == departmentId
                                      select _mapper.Map<EmployeeDto>(employee)).ToList();
-        if (employeesInDepartment.Count() == 0) return NotFound("Employees with a given department id don't exist");
+        if (employeesInDepartment.Count() == 0)
+        {
+            _logger.LogInformation("Employees with a given department id {id} don't exist", departmentId);
+            return NotFound("Employees with a given department id don't exist");
+        }
         return Ok(employeesInDepartment);
     }
     /// <summary>
     /// The method outputs all employees working in more than 1 department. 
     /// The result is sorted by last name, first name, patronymic name.
     /// </summary>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<EmployeeWithFewDepartmentsDto></returns>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeWithFewDepartmentsDto</returns>
     [HttpGet("EmployeesWithFewDepartments")]
     public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDto>> GetEmployeesWithFewDepartments()
     {
+        _logger.LogInformation("Get all employees working in more than 1 department");
         var employeesWithFewDepartments =
             (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
              orderby employee.LastName, employee.FirstName, employee.PatronymicName
@@ -72,10 +81,11 @@ public class StatisticsController : Controller
     /// The method outputs the archive of dismissals, including registration number, first name, last name, patronymic name,
     /// date of birth, workshop, department, occupation of the employee.
     /// </summary>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<ArchiveOfDismissalsDto></returns>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of ArchiveOfDismissalsDto</returns>
     [HttpGet("ArchiveOfDismissals")]
     public ActionResult<IEnumerable<ArchiveOfDismissalsDto>> GetArchiveOfDismissals()
     {
+        _logger.LogInformation("Get archive of dismissals");
         var archiveOfDismissals = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
                                    where employeeOccupationItem?.DismissalDate != null
                                    from department in employeeOccupationItem?.Employee?.DepartmentEmployees
@@ -97,10 +107,11 @@ public class StatisticsController : Controller
     /// <summary>
     /// The method outputs an average age of employees for each department
     /// </summary>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<AverageAgeInDepartmentDto></returns>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of AverageAgeInDepartmentDto</returns>
     [HttpGet("AvgAgeInDepartments")]
     public ActionResult<IEnumerable<AverageAgeInDepartmentDto>> GetAvgAgeInDepartments()
     {
+        _logger.LogInformation("Get average age of employees for each department");
         var employees = _organizationRepository.EmployeesWithDepartmentEmployeeFilled;
         var avgAgeInDepartments =
             (from tuple in
@@ -131,10 +142,11 @@ public class StatisticsController : Controller
     /// <summary>
     /// The method outputs the info about employees, who received a vacation voucher in past year.
     /// </summary>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<EmployeeLastYearVoucherDto></returns>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeLastYearVoucherDto</returns>
     [HttpGet("EmployeeLastYearVoucher")]
     public ActionResult<IEnumerable<EmployeeLastYearVoucherDto>> GetEmployeeLastYearVoucher()
     {
+        _logger.LogInformation("Get the info about employees, who received a vacation voucher in past year");
         var employeeLastYearVoucher =
             (from employeeVoucherItem in _organizationRepository.EmployeeVacationVouchers
              where (new DateTime(2023, 3, 10) - employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
@@ -149,12 +161,13 @@ public class StatisticsController : Controller
         return Ok(employeeLastYearVoucher);
     }
     /// <summary>
-    /// The method outputs the top-5 employees who have the longest working experience at the company
+    /// The method outputs the top-5 employees who have the longest working experience at the company.
     /// </summary>
-    /// <returns>Code 200 with statistical data in form of IEnumerable<EmployeeWorkExperienceDto></returns>
+    /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeWorkExperienceDto</returns>
     [HttpGet("EmployeeWithLongestWorkExperience")]
     public ActionResult<IEnumerable<EmployeeWorkExperienceDto>> GetEmployeeWithLongestWorkExperience()
     {
+        _logger.LogInformation("Get the top-5 employees who have the longest working experience at the company");
         var subqueryReplaceNull = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
                                    select new
                                    {

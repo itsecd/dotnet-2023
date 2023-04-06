@@ -50,7 +50,7 @@ public class EmployeeOccupationController : Controller
         if (employeeOccupation == null)
         {
             _logger.LogInformation("The EmployeeOccupation with ID {id} is not found", id);
-            return NotFound("The EmployeeOccupation with given id is not found");
+            return NotFound();
         }
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDto>(employeeOccupation);
         return Ok(mappedEmployeeOccupation);
@@ -58,7 +58,7 @@ public class EmployeeOccupationController : Controller
     /// <summary>
     /// The method adds a new EmployeeOccupation into organization
     /// </summary>
-    /// <param name="departmentEmployee">A new EmployeeOccupation that needs to be added</param>
+    /// <param name="employeeOccupation">A new EmployeeOccupation that needs to be added</param>
     /// <returns>Code 200 and the added EmployeeOccupation is success; 404 code if department or occupation is not found
     /// </returns>
     [HttpPost]
@@ -91,7 +91,7 @@ public class EmployeeOccupationController : Controller
     /// The method updates an EmployeeOccupation information by ID
     /// </summary>
     /// <param name="id">An ID of the EmployeeOccupation</param>
-    /// <param name="newDepartmentEmployee">New information of the EmployeeOccupation</param>
+    /// <param name="newEmployeeOccupation">New information of the EmployeeOccupation</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpPut("{id}")]
     public ActionResult<EmployeeOccupationDto> Put(int id, [FromBody] EmployeeOccupationDto newEmployeeOccupation)

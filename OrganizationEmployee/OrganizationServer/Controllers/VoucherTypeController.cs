@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class VoucherTypeController : Controller
 {
+    private readonly ILogger<VoucherTypeController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the VoucherTypeController
     /// </summary>
-    public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper)
+    public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper, 
+        ILogger<VoucherTypeController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the voucher types in the organization
@@ -29,6 +32,7 @@ public class VoucherTypeController : Controller
     [HttpGet]
     public IEnumerable<VoucherTypeDto> Get()
     {
+        _logger.LogInformation("Get vacation voucher types");
         return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes);
     }
     /// <summary>
@@ -39,8 +43,13 @@ public class VoucherTypeController : Controller
     [HttpGet("{id}")]
     public ActionResult<VoucherTypeDto> Get(int id)
     {
+        _logger.LogInformation("Get voucher type with id {id}", id);
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
-        if (voucherType == null) return NotFound();
+        if (voucherType == null)
+        {
+            _logger.LogInformation("The voucher type with ID {id} is not found", id);
+            return NotFound();
+        }
         var mappedVoucherType = _mapper.Map<VoucherTypeDto>(voucherType);
         return Ok(mappedVoucherType);
     }
@@ -52,6 +61,7 @@ public class VoucherTypeController : Controller
     [HttpPost]
     public ActionResult<VoucherTypeDto> Post([FromBody] VoucherTypeDto voucherType)
     {
+        _logger.LogInformation("POST voucher type method");
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
         _organizationRepository.VoucherTypes.Add(mappedVoucherType);
         return Ok(voucherType);
@@ -67,8 +77,13 @@ public class VoucherTypeController : Controller
     [HttpPut("{id}")]
     public ActionResult<VoucherTypeDto> Put(int id, [FromBody] VoucherTypeDto newVoucherType)
     {
+        _logger.LogInformation("PUT voucher type method");
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
-        if (voucherType == null) return NotFound();
+        if (voucherType == null)
+        {
+            _logger.LogInformation("An voucher type with id {id} doesn't exist", id);
+            return NotFound();
+        }
         _organizationRepository.VoucherTypes.Remove(voucherType);
         var mappedVoucherType = _mapper.Map<VoucherType>(newVoucherType);
         _organizationRepository.VoucherTypes.Add(mappedVoucherType);
@@ -82,8 +97,13 @@ public class VoucherTypeController : Controller
     [HttpDelete("{id}")]
     public ActionResult<VoucherTypeDto> Delete(int id)
     {
+        _logger.LogInformation("DELETE voucher type method");
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
-        if (voucherType == null) return NotFound();
+        if (voucherType == null)
+        {
+            _logger.LogInformation("An voucher type with id {id} doesn't exist", id);
+            return NotFound();
+        }
         _organizationRepository.VoucherTypes.Remove(voucherType);
         return Ok();
     }

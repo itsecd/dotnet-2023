@@ -50,7 +50,7 @@ public class EmployeeVacationVoucherController : Controller
         if (employeeVacationVoucher == null)
         {
             _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
-            return NotFound("The EmployeeVacationVoucher with given id is not found");
+            return NotFound();
         }
         var mappedEmployeeVacationVoucher = _mapper.Map<EmployeeVacationVoucherDto>(employeeVacationVoucher);
         return Ok(mappedEmployeeVacationVoucher);

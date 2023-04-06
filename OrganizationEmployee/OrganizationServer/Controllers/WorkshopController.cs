@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class WorkshopController : ControllerBase
 {
+    private readonly ILogger<WorkshopController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the WorkshopController
     /// </summary>
-    public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper)
+    public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper, 
+        ILogger<WorkshopController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the workshops in the organization
@@ -29,6 +32,7 @@ public class WorkshopController : ControllerBase
     [HttpGet]
     public IEnumerable<WorkshopDto> Get()
     {
+        _logger.LogInformation("Get workshops");
         return _mapper.Map<IEnumerable<WorkshopDto>>(_organizationRepository.Workshops);
     }
     /// <summary>
@@ -39,8 +43,13 @@ public class WorkshopController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<WorkshopDto> Get(int id)
     {
+        _logger.LogInformation("Get workshop with id {id}", id);
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
-        if (workshop == null) return NotFound();
+        if (workshop == null)
+        {
+            _logger.LogInformation("The workshop with ID {id} is not found", id);
+            return NotFound();
+        }
         var mappedWorkshop = _mapper.Map<WorkshopDto>(workshop);
         return Ok(mappedWorkshop);
     }
@@ -52,6 +61,7 @@ public class WorkshopController : ControllerBase
     [HttpPost]
     public ActionResult<WorkshopDto> Post([FromBody] WorkshopDto workshop)
     {
+        _logger.LogInformation("POST workshop method");
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
         _organizationRepository.Workshops.Add(mappedWorkshop);
         return Ok(workshop);
@@ -66,8 +76,13 @@ public class WorkshopController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult<WorkshopDto> Put(int id, [FromBody] WorkshopDto newWorkshop)
     {
+        _logger.LogInformation("PUT workshop method");
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
-        if (workshop == null) return NotFound();
+        if (workshop == null)
+        {
+            _logger.LogInformation("An workshop with id {id} doesn't exist", id);
+            return NotFound();
+        }
         _organizationRepository.Workshops.Remove(workshop);
         var mappedWorkshop = _mapper.Map<Workshop>(newWorkshop);
         _organizationRepository.Workshops.Add(mappedWorkshop);
@@ -81,8 +96,13 @@ public class WorkshopController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult<WorkshopDto> Delete(int id)
     {
+        _logger.LogInformation("DELETE workshop method");
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
-        if (workshop == null) return NotFound();
+        if (workshop == null)
+        {
+            _logger.LogInformation("An workshop with id {id} doesn't exist", id);
+            return NotFound();
+        }
         _organizationRepository.Workshops.Remove(workshop);
         return Ok();
     }

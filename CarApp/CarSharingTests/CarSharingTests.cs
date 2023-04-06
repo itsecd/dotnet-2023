@@ -13,8 +13,8 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void AllCars()
     {
         var carList = _fixture.FixtureCar;
-        var carRequest = (from car in carList select car).ToList().Count();
-        Assert.Equal(5, carRequest);
+        var result = (from car in carList select car).ToList().Count();
+        Assert.Equal(5, result);
     }
     /// <summary>
     /// second request - all clients who rented requested car - Rolls-Royce
@@ -23,8 +23,8 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void AllClientsRented()
     {
         var rentedCarList = _fixture.FixtureRentedCar.ToList();
-        var whoRentedRolls = (from car in rentedCarList where car.Car.Model == "Rolls-Royce Boat Tail" select car.Client.FirstName).ToList();
-        Assert.Equal(whoRentedRolls[0], rentedCarList[1].Client.FirstName);
+        var result = (from car in rentedCarList where car.Car.Model == "Rolls-Royce Boat Tail" select car.Client.FirstName).ToList();
+        Assert.Equal(result[0], rentedCarList[1].Client.FirstName);
     }
     ///<summary>
     ///third request - info about cars which are in rent now
@@ -33,8 +33,8 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void AllRented()
     {
         var carsInRent = _fixture.FixtureRentedCar.ToList();
-        var rentedCar = (from car in carsInRent where car.TimeOfReturn < DateTime.Now select car.Car.Model).ToList();
-        Assert.Equal(carsInRent[0].Car.Model, rentedCar[0]);
+        var result = (from car in carsInRent where car.TimeOfReturn < DateTime.Now select car.Car.Model).ToList();
+        Assert.Equal(carsInRent[0].Car.Model, result[0]);
     }
     ///<summary>
     ///fourth request - top five most rented cars 
@@ -43,17 +43,15 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void TopFive()
     {
         var rentedCars = _fixture.FixtureRentedCar.ToList();
-        var nowadays = DateTime.Parse("2023-04-04");
         var counter = (from cartop in rentedCars
-                       where cartop.TimeOfReturn < nowadays
                        group cartop by cartop.Car.CarId into g
                        select new
                        {
                            carmodel = g.Key,
                            count = g.Count()
                        }).ToList();
-        var top = (from carcounter in counter orderby carcounter.count descending select carcounter).Take(5).ToList();
-        Assert.Equal(5, top.Count());
+        var result = (from carcounter in counter orderby carcounter.count descending select carcounter).Take(5).ToList();
+        Assert.Equal(5, result.Count());
     }
     ///<summary>
     ///fifth request - number of rents for each car
@@ -62,14 +60,14 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void NumberOfRents()
     {
         var rentInfo = _fixture.FixtureRentedCar.ToList();
-        var numOfRents = (from rent in rentInfo
+        var result = (from rent in rentInfo
                           group rent by rent.Car.Model into g
                           select new
                           {
                               model = g.Key,
                               cntr = g.Distinct().Count()
                           }).ToList();
-        Assert.Equal(4, numOfRents[0].cntr);
+        Assert.Equal(4, result[0].cntr);
     }
     ///<summary>
     ///sixth request - rental point where the most cars were rented

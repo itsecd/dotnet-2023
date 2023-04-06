@@ -42,8 +42,8 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("clients_who_rented_this_model")]
-    public IActionResult GetClientsRentedRolls(uint id)
+    [HttpGet("clients_who_rented_model_by_id")]
+    public IActionResult GetClientsRentedCar(uint id)
     {
         _logger.LogInformation("Get info about clients rented the car with id");
         var result = (from client in _carRepository.RentedCars where client.CarId == id select client.Client.FirstName).ToList();
@@ -109,7 +109,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("rental_points_with_max_number_of_clients")]
-    public IActionResult GetRentalPoints()
+    public IActionResult GetRentalPointsStatistics()
     {
         var counter = (from rentalPoint in _carRepository.RentedCars
                        group rentalPoint by rentalPoint.Point.PointName into g

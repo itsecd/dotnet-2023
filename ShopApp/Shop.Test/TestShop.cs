@@ -52,7 +52,7 @@ public class TestShop : IClassFixture<ShopFixture>
 
         var result =
             (from ps in productInShop
-             join p in productList on ps.ProductId equals p.ProductId
+             join p in productList on ps.ProductId equals p.Id
              join s in fixtureShop on ps.ShopId equals s.Id
              group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
              select new
@@ -105,7 +105,7 @@ public class TestShop : IClassFixture<ShopFixture>
              select products).ToList();
         var expiredProduct =
             (from ps in productInShop
-             join p in productList on ps.ProductId equals p.ProductId
+             join p in productList on ps.ProductId equals p.Id
              join s in fixtureShop on ps.ShopId equals s.Id
              where p.StorageLimitDate < DateTime.Now
              select new

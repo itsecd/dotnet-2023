@@ -14,7 +14,7 @@ public class ShopRepository : IShopRepository
     {
         _shop = ShopsList;
         _products = ListProducts;
-        _customers = Customers;
+        _customers = ListCustomers;
         _productGroups = ListProductGroups;
         _productQuantities = ListProductQuantities;
         _purchaseRecords = new List<PurchaseRecord>(ListPurchaseRecords1.Count +
@@ -69,25 +69,25 @@ public class ShopRepository : IShopRepository
             var products = ListProducts;
             return new List<ProductQuantity>()
             {
-            new ProductQuantity(products[0].ProductId, 1, 250),
-            new ProductQuantity(products[1].ProductId, 1, 100),
-            new ProductQuantity(products[2].ProductId, 1, 50),
-            new ProductQuantity(products[4].ProductId, 1, 60),
-            new ProductQuantity(products[5].ProductId, 1, 75),
-            new ProductQuantity(products[6].ProductId, 1, 100),
-            new ProductQuantity(products[8].ProductId, 1, 200),
-            new ProductQuantity(products[1].ProductId, 2, 200),
-            new ProductQuantity(products[4].ProductId, 2, 100),
-            new ProductQuantity(products[5].ProductId, 2, 100),
-            new ProductQuantity(products[6].ProductId, 2, 90),
-            new ProductQuantity(products[8].ProductId, 2, 40),
-            new ProductQuantity(products[0].ProductId, 3, 200),
-            new ProductQuantity(products[2].ProductId, 3, 100),
-            new ProductQuantity(products[3].ProductId, 3, 50),
-            new ProductQuantity(products[4].ProductId, 3, 60),
-            new ProductQuantity(products[5].ProductId, 3, 75),
-            new ProductQuantity(products[6].ProductId, 3, 30),
-            new ProductQuantity(products[7].ProductId, 3, 130)
+            new ProductQuantity(products[0].Id, 1, 250),
+            new ProductQuantity(products[1].Id, 1, 100),
+            new ProductQuantity(products[2].Id, 1, 50),
+            new ProductQuantity(products[4].Id, 1, 60),
+            new ProductQuantity(products[5].Id, 1, 75),
+            new ProductQuantity(products[6].Id, 1, 100),
+            new ProductQuantity(products[8].Id, 1, 200),
+            new ProductQuantity(products[1].Id, 2, 200),
+            new ProductQuantity(products[4].Id, 2, 100),
+            new ProductQuantity(products[5].Id, 2, 100),
+            new ProductQuantity(products[6].Id, 2, 90),
+            new ProductQuantity(products[8].Id, 2, 40),
+            new ProductQuantity(products[0].Id, 3, 200),
+            new ProductQuantity(products[2].Id, 3, 100),
+            new ProductQuantity(products[3].Id, 3, 50),
+            new ProductQuantity(products[4].Id, 3, 60),
+            new ProductQuantity(products[5].Id, 3, 75),
+            new ProductQuantity(products[6].Id, 3, 30),
+            new ProductQuantity(products[7].Id, 3, 130)
             };
         }
     }

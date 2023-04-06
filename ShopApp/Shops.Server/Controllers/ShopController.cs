@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Shops.Domain;
+using Shops.Server.Dto;
 using Shops.Server.Repository;
 
 namespace Shops.Server.Controllers;
@@ -10,42 +12,107 @@ namespace Shops.Server.Controllers;
 [ApiController]
 public class ShopController : ControllerBase
 {
-    private readonly ILogger<ProductsController> _logger;
+    private readonly ILogger<ShopController> _logger;
     private readonly IShopRepository _shopRepository;
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
     /// </summary>
-    public ShopController(ILogger<ProductsController> logger, IShopRepository shopRepository, IMapper mapper)
+    public ShopController(ILogger<ShopController> logger, IShopRepository shopRepository, IMapper mapper)
     {
         _logger = logger;
         _shopRepository = shopRepository;
         _mapper = mapper;
     }
+    /// <summary>
+    /// Return list of shop
+    /// </summary>
+    /// <returns>Ok(list of shop)</returns>
     [HttpGet]
-    public IEnumerable<string> Get()
+    public ActionResult<IEnumerable<ShopGetDto>> Get()
     {
-        return new string[] { "value1", "value2" };
+        _logger.LogInformation($"Get list of shop");
+        return Ok(_shopRepository.Shops.Select(shop=> _mapper.Map<ShopGetDto>(shop)));
     }
-
+    /// <summary>
+    /// Return shop by id
+    /// </summary>
+    /// <param name="id"> Shop id</param>
+    /// <returns>Shop</returns>
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ActionResult<ShopGetDto> Get(int id)
     {
-        return "value";
+        var shop = _shopRepository.Shops.FirstOrDefault(shop => shop.Id == id);
+        if (shop == null)
+        {
+            _logger.LogInformation($"Not found shop with id = {id}");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"Shop with id = {id}");
+            return Ok(_mapper.Map<ShopGetDto>(shop));
+        }
     }
-
+    /// <summary>
+    /// Add new shop in list of shops
+    /// </summary>
+    /// <param name="shop"> New shop</param>
+    /// <returns>Ok(add new shop) </returns>
     [HttpPost]
-    public void Post([FromBody] string value)
+    public IActionResult Post([FromBody] ShopPostDto shop)
     {
+        var newid = _shopRepository.Shops
+           .Select(shop => shop.Id)
+           .DefaultIfEmpty()
+           .Max() + 1;
+        var newShop = _mapper.Map<Shop>(shop);
+        newShop.Id = newid;
+        _shopRepository.Shops.Add(newShop);
+        _logger.LogInformation($"Post shop, id = {newid}");
+        return Ok();
     }
-
+    /// <summary>
+    /// Updates shop information
+    /// </summary>
+    /// <param name="id">Shop id</param>
+    /// <param name="shopToPut">New information</param>
+    /// <returns>Ok (update shop by id) or NotFound</returns>
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] ShopPostDto shopToPut)
     {
+        var shop = _shopRepository.Shops.FirstOrDefault(shop => shop.Id == id);
+        if (shop == null)
+        {
+            _logger.LogInformation($"Not found shop with id = {id}");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"Update information shop with id = {id}");
+            _mapper.Map<ShopPostDto, Shop>(shopToPut, shop);
+            return Ok();
+        }
     }
-
+    /// <summary>
+    /// Delete shop by id
+    /// </summary>
+    /// <param name="id">Shop id</param>
+    /// <returns>Ok (delete shop by id) or NotFound</returns>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var shop = _shopRepository.Shops.FirstOrDefault(shop => shop.Id == id);
+        if (shop == null)
+        {
+            _logger.LogInformation($"Not found shop with id = {id}");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"Delete shop with id = {id}");
+            _shopRepository.Shops.Remove(shop);
+            return Ok();
+        }
     }
 }

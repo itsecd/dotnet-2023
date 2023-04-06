@@ -27,29 +27,31 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Return list of propduct
     /// </summary>
-    /// <returns>List of propduct</returns>
+    /// <returns>Ok(List of propduct)</returns>
     [HttpGet]
     public ActionResult<IEnumerable<ProductGetDto>> Get()
     {
+        _logger.LogInformation("Get list of product");
         return Ok(_shopRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product)));
     }
     /// <summary>
     /// Return product by id
     /// </summary>
     /// <param name="id"> Product id</param>
-    /// <returns>Product</returns>
+    /// <returns>Ok (the product found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
     public ActionResult<ProductGetDto> Get(int id)
     {
 
-        var product = _shopRepository.Products.FirstOrDefault(product => product.ProductId == id);
+        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with barcode = {id}");
+            _logger.LogInformation($"Not found product with id = {id}");
             return NotFound();
         }
         else
         {
+            _logger.LogInformation($"Product with id = {id}");
             return Ok(_mapper.Map<ProductGetDto>(product));
         }
     }
@@ -57,12 +59,19 @@ public class ProductsController : ControllerBase
     /// Add new product in list of products
     /// </summary>
     /// <param name="product"> New product</param>
-    /// <returns>Status code - 200 </returns>
+    /// <returns>Ok(add new product) </returns>
     [HttpPost]
     public IActionResult Post([FromBody] ProductPostDto product)
     {
 
-        _shopRepository.Products.Add(_mapper.Map<Product>(product));
+        var newid = _shopRepository.Products
+            .Select(product => product.Id)
+            .DefaultIfEmpty()
+            .Max() + 1;
+        var newProduct = _mapper.Map<Product>(product);
+        newProduct.Id = newid;
+        _shopRepository.Products.Add(newProduct);
+        _logger.LogInformation($"Post product, id = {newid}");
         return Ok();
     }
     /// <summary>
@@ -70,17 +79,19 @@ public class ProductsController : ControllerBase
     /// </summary>
     /// <param name="id">Product id</param>
     /// <param name="productToPut">New information</param>
-    /// <returns>Status code 404 if not found, elsee status code 200</returns>
+    /// <returns>Ok (update product by id) or NotFound</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.ProductId == id);
+        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
+            _logger.LogInformation($"Not found product with id = {id}");
             return NotFound();
         }
         else
         {
+            _logger.LogInformation($"Update information product with id = {id}");
             _mapper.Map<ProductPostDto, Product>(productToPut, product);
             return Ok();
         }
@@ -90,17 +101,19 @@ public class ProductsController : ControllerBase
     /// </summary>
     /// <param name="id">Product id</param>
     /// <param name="newDateLimite">New storage limit date</param>
-    /// <returns>Status code 404 if not found, elsee status code 200</returns>
-    [HttpPut("{id}, {update-limite-date}")]
+    /// <returns>Ok (update  limit date product by id) or NotFound</returns>
+    [HttpPut("{id}, update-limite-date")]
     public IActionResult PutDate(int id, [FromBody] DateTime newDateLimite)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.ProductId == id);
+        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
+            _logger.LogInformation($"Not found product with id = {id}");
             return NotFound();
         }
         else
         {
+            _logger.LogInformation($"Update storage limit date product with id = {id}");
             product.StorageLimitDate = newDateLimite;
             return Ok();
         }
@@ -109,17 +122,19 @@ public class ProductsController : ControllerBase
     /// Delete product by id
     /// </summary>
     /// <param name="id">Product id</param>
-    /// <returns>Status code 404 if not found, elsee status code 200</returns>
+    /// <returns>Ok (delete product by id) or NotFound</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.ProductId == id);
+        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
+            _logger.LogInformation($"Not found product with id = {id}");
             return NotFound();
         }
         else
         {
+            _logger.LogInformation($"Delete product with id = {id}");
             _shopRepository.Products.Remove(product);
             return Ok();
         }

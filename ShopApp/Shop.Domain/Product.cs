@@ -5,10 +5,10 @@
 public class Product
 {
     public Product() { }
-    public Product(int productId, string barcode, string name, int productGroupCode, double weight, string productType,
+    public Product(int id, string barcode, string name, int productGroupCode, double weight, string productType,
         double price, DateTime storageLimitDate)
     {
-        ProductId = productId;
+        Id = id;
         Barcode = barcode;
         Name = name;
         ProductGroupCode = productGroupCode;
@@ -17,7 +17,7 @@ public class Product
         Price = price;
         StorageLimitDate = storageLimitDate;
     }
-    public int ProductId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Product barcode
     /// </summary>

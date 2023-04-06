@@ -20,7 +20,17 @@ public class Car
     /// id of the car
     /// </summary>
     public uint CarId { get; set; }
+    /// <summary>
+    /// Default constructor
+    /// </summary>
     public Car() { }
+    /// <summary>
+    /// Constructor with parameters
+    /// </summary>
+    /// <param name="carId"></param>
+    /// <param name="model"></param>
+    /// <param name="colour"></param>
+    /// <param name="number"></param>
     public Car(uint carId, string model, string colour, string number)
     {
         CarId = carId;

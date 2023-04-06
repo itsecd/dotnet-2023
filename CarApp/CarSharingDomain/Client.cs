@@ -24,7 +24,18 @@ public class Client
     /// client's id
     /// </summary>
     public uint Uid { set; get; }
+    /// <summary>
+    /// Default constructor
+    /// </summary>
     public Client() { }
+    /// <summary>
+    /// Constructor with parameters
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="passport"></param>
+    /// <param name="birthDate"></param>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
     public Client(uint uid, string passport, DateTime birthDate, string firstName, string lastName)
     {
         Uid = uid;

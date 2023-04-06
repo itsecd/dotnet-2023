@@ -44,7 +44,22 @@ public class RentedCar
     /// a day when car must be returned to the rental point
     /// </summary>
     public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
+    /// <summary>
+    /// Default constructor
+    /// </summary>
     public RentedCar() { }
+    /// <summary>
+    /// Constructor with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="client"></param>
+    /// <param name="clientId"></param>
+    /// <param name="point"></param>
+    /// <param name="rentalPointId"></param>
+    /// <param name="car"></param>
+    /// <param name="carId"></param>
+    /// <param name="timeOfRent"></param>
+    /// <param name="rentPeriod"></param>
     public RentedCar(uint id, Client client,uint clientId, RentalPoint point,uint rentalPointId, Car car, uint carId, DateTime timeOfRent, uint rentPeriod)
     {
         Id = id;

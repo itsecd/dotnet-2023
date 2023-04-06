@@ -63,7 +63,12 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get info about cars in rent");
         var result = (from car in _carRepository.RentedCars where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToList();
-        return Ok(result);
+        if (result.Count == 0)
+        {
+            _logger.LogInformation("There are no cars in rent right now");
+            return NotFound();
+        }
+        else return Ok(result);
     }
     /// <summary>
     ///Get top five cars by the number of rents

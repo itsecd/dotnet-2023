@@ -49,9 +49,9 @@ public class CarSharingRepository:ICarSharingRepository
              new RentedCar(4, _clients[3], 4, _rentalPoints[2], 3, _cars[2], 3, DateTime.Parse("2023-03-21"), 2),
              new RentedCar(5, _clients[2], 3, _rentalPoints[3], 4, _cars[0], 1, DateTime.Parse("2023-03-01"), 5),
              new RentedCar(6, _clients[1], 2, _rentalPoints[1], 2, _cars[0], 1, DateTime.Parse("2023-03-11"), 9),
-             new RentedCar(7, _clients[0], 1, _rentalPoints[0], 1, _cars[3], 4, DateTime.Parse("2023-04-04"), 4),
+             new RentedCar(7, _clients[0], 1, _rentalPoints[0], 1, _cars[3], 4, DateTime.Parse("2023-04-04"), 5),
              new RentedCar(8, _clients[1], 2, _rentalPoints[2], 3, _cars[4], 5, DateTime.Parse("2023-03-05"), 2),
-             new RentedCar(9, _clients[0], 1, _rentalPoints[0], 1, _cars[4], 5, DateTime.Parse("2023-04-04"), 5)
+             new RentedCar(9, _clients[0], 1, _rentalPoints[0], 1, _cars[4], 5, DateTime.Parse("2023-04-04"), 10)
         };
     }
     /// <summary>

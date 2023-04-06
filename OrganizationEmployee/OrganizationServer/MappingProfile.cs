@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.EmployeeDomain;
+using OrganizationEmployee.Server.Dto;
 
 namespace OrganizationEmployee.Server;
 

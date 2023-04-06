@@ -10,7 +10,7 @@ public interface IOrganizationRepository
     public List<Occupation> Occupations { get; }
     public List<Employee> Employees { get; }
     public List<Employee> EmployeesWithDepartmentEmployeeFilled { get; }
-    public List<DepartmentEmployee> DepartmentEmployees  { get; }
+    public List<DepartmentEmployee> DepartmentEmployees { get; }
     public List<EmployeeVacationVoucher> EmployeeVacationVouchers { get; }
     public List<EmployeeOccupation> EmployeeOccupations { get; }
 }

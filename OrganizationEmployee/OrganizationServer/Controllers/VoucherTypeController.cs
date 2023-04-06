@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>

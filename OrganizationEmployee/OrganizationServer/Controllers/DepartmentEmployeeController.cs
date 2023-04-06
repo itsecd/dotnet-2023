@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>
@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class DepartmentEmployeeController : Controller
 {
+    private readonly ILogger<DepartmentEmployeeController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the DepartmentEmployeeController
     /// </summary>
-    public DepartmentEmployeeController(OrganizationRepository organizationRepository, IMapper mapper)
+    public DepartmentEmployeeController(OrganizationRepository organizationRepository, IMapper mapper,
+        ILogger<DepartmentEmployeeController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the connections between Department and Employee
@@ -29,6 +32,7 @@ public class DepartmentEmployeeController : Controller
     [HttpGet]
     public IEnumerable<DepartmentEmployeeDto> Get()
     {
+        _logger.LogInformation("Get DepartmentEmployees");
         return _mapper.Map<IEnumerable<DepartmentEmployeeDto>>(_organizationRepository.DepartmentEmployees);
     }
     /// <summary>
@@ -39,10 +43,15 @@ public class DepartmentEmployeeController : Controller
     [HttpGet("{id}")]
     public ActionResult<DepartmentEmployeeDto> Get(int id)
     {
+        _logger.LogInformation("Get DepartmentEmployee with id {id}", id);
         var departmentEmployee =
             _organizationRepository.DepartmentEmployees
             .FirstOrDefault(departEmployee => departEmployee.Id == id);
-        if (departmentEmployee == null) return NotFound();
+        if (departmentEmployee == null)
+        {
+            _logger.LogInformation("The DepartmentEmployee with ID {id} is not found", id);
+            return NotFound();
+        }
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployeeDto>(departmentEmployee);
         return Ok(mappedDepartmentEmployee);
     }
@@ -55,15 +64,26 @@ public class DepartmentEmployeeController : Controller
     [HttpPost]
     public ActionResult<DepartmentEmployeeDto> Post([FromBody] DepartmentEmployeeDto departmentEmployee)
     {
+        _logger.LogInformation("POST DepartmentEmployee method");
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(departmentEmployee);
         var employee =
             _organizationRepository.Employees
             .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", mappedDepartmentEmployee.EmployeeId);
+            return NotFound(string.Format("An employee with given id={0} doesn't exist",
+                mappedDepartmentEmployee.EmployeeId));
+        }
         var department =
             _organizationRepository.Departments
             .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
-        if (department == null) return NotFound("A department with given id doesn't exist");
+        if (department == null)
+        {
+            _logger.LogInformation("The department with ID {id} is not found", mappedDepartmentEmployee.DepartmentId);
+            return NotFound(string.Format("An department with given id={0} doesn't exist",
+                mappedDepartmentEmployee.DepartmentId));
+        }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
@@ -78,18 +98,33 @@ public class DepartmentEmployeeController : Controller
     [HttpPut("{id}")]
     public ActionResult<DepartmentEmployeeDto> Put(int id, [FromBody] DepartmentEmployeeDto newDepartmentEmployee)
     {
+        _logger.LogInformation("PUT DepartmentEmployee method");
         var departmentEmployee = _organizationRepository
             .DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
-        if (departmentEmployee == null) return NotFound();
+        if (departmentEmployee == null)
+        {
+            _logger.LogInformation("The DepartmentEmployee with ID {id} is not found", id);
+            return NotFound("The DepartmentEmployee with given id is not found");
+        }
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(newDepartmentEmployee);
         var employee =
                        _organizationRepository.Employees
                        .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", mappedDepartmentEmployee.EmployeeId);
+            return NotFound(string.Format("An employee with given id={0} doesn't exist",
+                mappedDepartmentEmployee.EmployeeId));
+        }
         var department =
                         _organizationRepository.Departments
                         .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
-        if (department == null) return NotFound("A department with given id doesn't exist");
+        if (department == null)
+        {
+            _logger.LogInformation("The department with ID {id} is not found", mappedDepartmentEmployee.DepartmentId);
+            return NotFound(string.Format("An department with given id={0} doesn't exist",
+                mappedDepartmentEmployee.DepartmentId));
+        }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
@@ -104,8 +139,13 @@ public class DepartmentEmployeeController : Controller
     [HttpDelete("{id}")]
     public ActionResult<DepartmentEmployeeDto> Delete(int id)
     {
+        _logger.LogInformation("DELETE DepartmentEmployee method with ID: {id}", id);
         var departmentEmployee = _organizationRepository.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
-        if (departmentEmployee == null) return NotFound();
+        if (departmentEmployee == null)
+        {
+            _logger.LogInformation("The DepartmentEmployee with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
         return Ok();
     }

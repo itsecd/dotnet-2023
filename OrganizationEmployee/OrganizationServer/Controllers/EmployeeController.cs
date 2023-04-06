@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>
@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class EmployeeController : Controller
 {
+    private readonly ILogger<EmployeeController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the EmployeeController
     /// </summary>
-    public EmployeeController(OrganizationRepository organizationRepository, IMapper mapper)
+    public EmployeeController(OrganizationRepository organizationRepository, IMapper mapper,
+        ILogger<EmployeeController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the employee in the organization
@@ -29,6 +32,7 @@ public class EmployeeController : Controller
     [HttpGet]
     public IEnumerable<EmployeeDto> Get()
     {
+        _logger.LogInformation("Get employees");
         return _mapper.Map<IEnumerable<EmployeeDto>>(_organizationRepository.Employees);
     }
     /// <summary>
@@ -39,8 +43,13 @@ public class EmployeeController : Controller
     [HttpGet("{id}")]
     public ActionResult<EmployeeDto> Get(uint id)
     {
+        _logger.LogInformation("Get employee with id {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) return NotFound();
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", id);
+            return NotFound();
+        }
         var mappedEmployee = _mapper.Map<EmployeeDto>(employee);
         return Ok(mappedEmployee);
     }
@@ -54,13 +63,23 @@ public class EmployeeController : Controller
     [HttpPost]
     public ActionResult<EmployeeDto> Post([FromBody] EmployeeDto employee)
     {
+        _logger.LogInformation("POST employee method");
         var mappedEmployee = _mapper.Map<Employee>(employee);
         var workshop =
                _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
         var employeeWithRegNumber = _organizationRepository.Employees
             .FirstOrDefault(employee => employee.RegNumber == mappedEmployee.RegNumber);
-        if (employeeWithRegNumber != null) return Conflict("An employee with given registration number already exists");
-        if (workshop == null) return NotFound("A workshop with given id doesn't exist");
+        if (employeeWithRegNumber != null)
+        {
+            _logger.LogInformation("The employee with regNumber {regNumb} already exists",
+                employee.RegNumber);
+            return Conflict("An employee with given registration number already exists");
+        }
+        if (workshop == null)
+        {
+            _logger.LogInformation("The workshop with ID {id} is not found", employee.WorkshopId);
+            return NotFound("A workshop with given id doesn't exist");
+        }
         _organizationRepository.Employees.Add(mappedEmployee);
         return Ok(employee);
     }
@@ -75,17 +94,30 @@ public class EmployeeController : Controller
     [HttpPut("{id}")]
     public ActionResult<EmployeeDto> Put(uint id, [FromBody] EmployeeDto newEmployee)
     {
+        _logger.LogInformation("PUT employee method with ID: {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) return NotFound();
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", id);
+            return NotFound(string.Format("Employee with ID {0} doesn't exist", id));
+        }
         var workshop =
        _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == newEmployee.WorkshopId);
-        if (workshop == null) return NotFound("A workshop with given id doesn't exist");
+        if (workshop == null)
+        {
+            _logger.LogInformation("The workshop with ID {id} is not found", employee.WorkshopId);
+            return NotFound("A workshop with given id doesn't exist");
+        }
         var mappedEmployee = _mapper.Map<Employee>(newEmployee);
 
         var employeeWithRegNumber = _organizationRepository.Employees.FirstOrDefault(
             employee => (employee.RegNumber == mappedEmployee.RegNumber
                           && employee.Id != mappedEmployee.Id));
-        if (employeeWithRegNumber != null) return Conflict("An employee with given registration number already exists");
+        if (employeeWithRegNumber != null)
+        {
+            _logger.LogInformation("The employee with regNumber {regNumb} already exists", employee.RegNumber);
+            return Conflict("An employee with given registration number already exists");
+        }
         _organizationRepository.Employees.Remove(employee);
         _organizationRepository.Employees.Add(mappedEmployee);
         return Ok(newEmployee);
@@ -98,8 +130,13 @@ public class EmployeeController : Controller
     [HttpDelete("{id}")]
     public ActionResult<EmployeeDto> Delete(uint id)
     {
+        _logger.LogInformation("DELETE employee method with ID: {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) return NotFound();
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.Employees.Remove(employee);
         return Ok();
     }

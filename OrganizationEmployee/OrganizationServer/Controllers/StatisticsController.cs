@@ -31,9 +31,9 @@ public class StatisticsController : Controller
     public ActionResult<IEnumerable<EmployeeDto>> Get(int departmentId)
     {
         var employeesInDepartment = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
-                          from departmentEmployeeItem in employee.DepartmentEmployees
-                          where departmentEmployeeItem.Department?.Id == departmentId
-                          select _mapper.Map<EmployeeDto>(employee)).ToList();
+                                     from departmentEmployeeItem in employee.DepartmentEmployees
+                                     where departmentEmployeeItem.Department?.Id == departmentId
+                                     select _mapper.Map<EmployeeDto>(employee)).ToList();
         if (employeesInDepartment.Count() == 0) return NotFound("Employees with a given department id don't exist");
         return Ok(employeesInDepartment);
     }
@@ -45,7 +45,7 @@ public class StatisticsController : Controller
     [HttpGet("EmployeesWithFewDepartments")]
     public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDto>> GetEmployeesWithFewDepartments()
     {
-        var employeesWithFewDepartments = 
+        var employeesWithFewDepartments =
             (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
              orderby employee.LastName, employee.FirstName, employee.PatronymicName
              from departmentEmployeeItem in employee.DepartmentEmployees
@@ -77,20 +77,20 @@ public class StatisticsController : Controller
     public ActionResult<IEnumerable<ArchiveOfDismissalsDto>> GetArchiveOfDismissals()
     {
         var archiveOfDismissals = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
-                          where employeeOccupationItem?.DismissalDate != null
-                          from department in employeeOccupationItem?.Employee?.DepartmentEmployees
-                          select
-                          new ArchiveOfDismissalsDto()
-                          {
-                              RegNumber = employeeOccupationItem.Employee?.RegNumber,
-                              FirstName = employeeOccupationItem.Employee?.FirstName,
-                              LastName = employeeOccupationItem.Employee?.LastName,
-                              PatronymicName = employeeOccupationItem.Employee?.PatronymicName,
-                              BirthDate = employeeOccupationItem.Employee?.BirthDate,
-                              WorkshopName = employeeOccupationItem.Employee?.Workshop?.Name,
-                              DepartmentName = department.Department?.Name,
-                              OccupationName = employeeOccupationItem?.Occupation?.Name
-                          }
+                                   where employeeOccupationItem?.DismissalDate != null
+                                   from department in employeeOccupationItem?.Employee?.DepartmentEmployees
+                                   select
+                                   new ArchiveOfDismissalsDto()
+                                   {
+                                       RegNumber = employeeOccupationItem.Employee?.RegNumber,
+                                       FirstName = employeeOccupationItem.Employee?.FirstName,
+                                       LastName = employeeOccupationItem.Employee?.LastName,
+                                       PatronymicName = employeeOccupationItem.Employee?.PatronymicName,
+                                       BirthDate = employeeOccupationItem.Employee?.BirthDate,
+                                       WorkshopName = employeeOccupationItem.Employee?.Workshop?.Name,
+                                       DepartmentName = department.Department?.Name,
+                                       OccupationName = employeeOccupationItem?.Occupation?.Name
+                                   }
                       ).ToList();
         return Ok(archiveOfDismissals);
     }
@@ -135,7 +135,7 @@ public class StatisticsController : Controller
     [HttpGet("EmployeeLastYearVoucher")]
     public ActionResult<IEnumerable<EmployeeLastYearVoucherDto>> GetEmployeeLastYearVoucher()
     {
-        var employeeLastYearVoucher = 
+        var employeeLastYearVoucher =
             (from employeeVoucherItem in _organizationRepository.EmployeeVacationVouchers
              where (new DateTime(2023, 3, 10) - employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
              select new EmployeeLastYearVoucherDto()
@@ -165,7 +165,7 @@ public class StatisticsController : Controller
                                        employeeOccupationItem.Employee?.LastName
                                    }
                                ).ToList();
-        var employeeWorkExperience = 
+        var employeeWorkExperience =
             (from subqueryElem in subqueryReplaceNull
              group subqueryElem by new
              {

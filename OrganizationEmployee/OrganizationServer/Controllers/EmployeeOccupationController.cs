@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>
@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class EmployeeOccupationController : Controller
 {
+    private readonly ILogger<EmployeeOccupationController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the EmployeeOccupationController
     /// </summary>
-    public EmployeeOccupationController(OrganizationRepository organizationRepository, IMapper mapper)
+    public EmployeeOccupationController(OrganizationRepository organizationRepository, IMapper mapper,
+        ILogger<EmployeeOccupationController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the connections between Employee and Occupation
@@ -29,6 +32,7 @@ public class EmployeeOccupationController : Controller
     [HttpGet]
     public IEnumerable<EmployeeOccupationDto> Get()
     {
+        _logger.LogInformation("Get EmployeeOccupations");
         return _mapper.Map<IEnumerable<EmployeeOccupationDto>>(_organizationRepository.EmployeeOccupations);
     }
     /// <summary>
@@ -39,10 +43,15 @@ public class EmployeeOccupationController : Controller
     [HttpGet("{id}")]
     public ActionResult<EmployeeOccupationDto> Get(int id)
     {
+        _logger.LogInformation("Get EmployeeOccupation with id {id}", id);
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations
             .FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
-        if (employeeOccupation == null) return NotFound();
+        if (employeeOccupation == null)
+        {
+            _logger.LogInformation("The EmployeeOccupation with ID {id} is not found", id);
+            return NotFound("The EmployeeOccupation with given id is not found");
+        }
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDto>(employeeOccupation);
         return Ok(mappedEmployeeOccupation);
     }
@@ -55,15 +64,24 @@ public class EmployeeOccupationController : Controller
     [HttpPost]
     public ActionResult<EmployeeOccupationDto> Post([FromBody] EmployeeOccupationDto employeeOccupation)
     {
+        _logger.LogInformation("POST EmployeeOccupation method");
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupation>(employeeOccupation);
         var employee =
             _organizationRepository.Employees
             .FirstOrDefault(employee => employee.Id == mappedEmployeeOccupation.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("An employee with id {id} doesn't exist", employeeOccupation.EmployeeId);
+            return NotFound("An employee with given id doesn't exist");
+        }
         var occupation =
             _organizationRepository.Occupations
             .FirstOrDefault(occupation => occupation.Id == mappedEmployeeOccupation.OccupationId);
-        if (occupation == null) return NotFound("An occupation with given id doesn't exist");
+        if (occupation == null)
+        {
+            _logger.LogInformation("An occupation with id {id} doesn't exist", employeeOccupation.OccupationId);
+            return NotFound("An occupation with given id doesn't exist");
+        }
         mappedEmployeeOccupation.Occupation = occupation;
         mappedEmployeeOccupation.Employee = employee;
         _organizationRepository.EmployeeOccupations.Add(mappedEmployeeOccupation);
@@ -78,19 +96,32 @@ public class EmployeeOccupationController : Controller
     [HttpPut("{id}")]
     public ActionResult<EmployeeOccupationDto> Put(int id, [FromBody] EmployeeOccupationDto newEmployeeOccupation)
     {
+        _logger.LogInformation("PUT EmployeeOccupation method");
         var employeeOccupation = _organizationRepository
             .EmployeeOccupations.FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
-        if (employeeOccupation == null) return NotFound();
-
+        if (employeeOccupation == null)
+        {
+            _logger.LogInformation("The EmployeeOccupation with ID {id} is not found", id);
+            return NotFound("The EmployeeOccupation with given id is not found");
+        }
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupation>(newEmployeeOccupation);
         var employee =
             _organizationRepository.Employees
             .FirstOrDefault(employee => employee.Id == mappedEmployeeOccupation.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("The employee with ID {id} is not found", mappedEmployeeOccupation.EmployeeId);
+            return NotFound("An employee with given id doesn't exist");
+        }
         var occupation =
             _organizationRepository.Occupations
             .FirstOrDefault(occupation => occupation.Id == mappedEmployeeOccupation.OccupationId);
-        if (occupation == null) return NotFound("An occupation with given id doesn't exist");
+        if (occupation == null)
+        {
+            _logger.LogInformation("The occupation with ID {id} is not found",
+                mappedEmployeeOccupation.OccupationId);
+            return NotFound("An occupation with given id doesn't exist");
+        }
         mappedEmployeeOccupation.Occupation = occupation;
         mappedEmployeeOccupation.Employee = employee;
         _organizationRepository.EmployeeOccupations.Remove(employeeOccupation);
@@ -105,10 +136,15 @@ public class EmployeeOccupationController : Controller
     [HttpDelete("{id}")]
     public ActionResult<EmployeeOccupationDto> Delete(int id)
     {
+        _logger.LogInformation("DELETE EmployeeOccupation method");
         var employeeOccupation =
             _organizationRepository.EmployeeOccupations
             .FirstOrDefault(employeeOccupation => employeeOccupation.Id == id);
-        if (employeeOccupation == null) return NotFound();
+        if (employeeOccupation == null)
+        {
+            _logger.LogInformation("The EmployeeOccupation with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.EmployeeOccupations.Remove(employeeOccupation);
         return Ok();
     }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.Server.Controllers;
 /// <summary>
@@ -12,15 +12,18 @@ namespace OrganizationEmployee.Server.Controllers;
 [ApiController]
 public class EmployeeVacationVoucherController : Controller
 {
+    private readonly ILogger<EmployeeVacationVoucherController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the EmployeeVacationVoucher
     /// </summary>
-    public EmployeeVacationVoucherController(OrganizationRepository organizationRepository, IMapper mapper)
+    public EmployeeVacationVoucherController(OrganizationRepository organizationRepository, IMapper mapper,
+        ILogger<EmployeeVacationVoucherController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the connections between Employee and VacationVoucher
@@ -29,6 +32,7 @@ public class EmployeeVacationVoucherController : Controller
     [HttpGet]
     public IEnumerable<EmployeeVacationVoucherDto> Get()
     {
+        _logger.LogInformation("Get EmployeeVacationVouchers");
         return _mapper.Map<IEnumerable<EmployeeVacationVoucherDto>>(_organizationRepository.EmployeeVacationVouchers);
     }
     /// <summary>
@@ -39,10 +43,15 @@ public class EmployeeVacationVoucherController : Controller
     [HttpGet("{id}")]
     public ActionResult<EmployeeVacationVoucherDto> Get(int id)
     {
+        _logger.LogInformation("Get EmployeeVacationVoucher with id {id}", id);
         var employeeVacationVoucher =
             _organizationRepository.EmployeeVacationVouchers
             .FirstOrDefault(employeeVacationVoucher => employeeVacationVoucher.Id == id);
-        if (employeeVacationVoucher == null) return NotFound();
+        if (employeeVacationVoucher == null)
+        {
+            _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
+            return NotFound("The EmployeeVacationVoucher with given id is not found");
+        }
         var mappedEmployeeVacationVoucher = _mapper.Map<EmployeeVacationVoucherDto>(employeeVacationVoucher);
         return Ok(mappedEmployeeVacationVoucher);
     }
@@ -55,15 +64,25 @@ public class EmployeeVacationVoucherController : Controller
     [HttpPost]
     public ActionResult<EmployeeVacationVoucherDto> Post([FromBody] EmployeeVacationVoucherDto employeeVoucher)
     {
+        _logger.LogInformation("POST EmployeeVacationVoucher method");
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(employeeVoucher);
         var employee =
             _organizationRepository.Employees
             .FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("An employee with id {id} doesn't exist", employeeVoucher.EmployeeId);
+            return NotFound("An employee with given id doesn't exist");
+        }
         var voucher =
             _organizationRepository.VacationVouchers
             .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
-        if (voucher == null) return NotFound("A vacation voucher with given id doesn't exist");
+        if (voucher == null)
+        {
+            _logger.LogInformation("An vacation voucher with id {id} doesn't exist",
+                employeeVoucher.VacationVoucherId);
+            return NotFound("A vacation voucher with given id doesn't exist");
+        }
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
         _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
@@ -78,19 +97,34 @@ public class EmployeeVacationVoucherController : Controller
     [HttpPut("{id}")]
     public ActionResult<EmployeeVacationVoucherDto> Put(int id, [FromBody] EmployeeVacationVoucherDto newEmployeeVoucher)
     {
+        _logger.LogInformation("PUT EmployeeVacationVoucher method");
         var employeeVoucher = _organizationRepository
             .EmployeeVacationVouchers.FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
-        if (employeeVoucher == null) return NotFound();
+        if (employeeVoucher == null)
+        {
+            _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
+            return NotFound("The EmployeeVacationVoucher with given id is not found");
+        }
 
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(newEmployeeVoucher);
         var employee =
             _organizationRepository.Employees
             .FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
-        if (employee == null) return NotFound("An employee with given id doesn't exist");
+        if (employee == null)
+        {
+            _logger.LogInformation("An employee with id {id} doesn't exist", newEmployeeVoucher.EmployeeId);
+            return NotFound("An employee with given id doesn't exist");
+        }
+
         var voucher =
             _organizationRepository.VacationVouchers
             .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
-        if (voucher == null) return NotFound("A vacation voucher with given id doesn't exist");
+        if (voucher == null)
+        {
+            _logger.LogInformation("An vacation voucher with id {id} doesn't exist",
+                employeeVoucher.VacationVoucherId);
+            return NotFound("A vacation voucher with given id doesn't exist");
+        }
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
 
@@ -106,10 +140,15 @@ public class EmployeeVacationVoucherController : Controller
     [HttpDelete("{id}")]
     public ActionResult<EmployeeVacationVoucherDto> Delete(int id)
     {
+        _logger.LogInformation("DELETE EmployeeVacationVoucher method");
         var employeeVoucher =
             _organizationRepository.EmployeeVacationVouchers
             .FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
-        if (employeeVoucher == null) return NotFound();
+        if (employeeVoucher == null)
+        {
+            _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.EmployeeVacationVouchers.Remove(employeeVoucher);
         return Ok();
     }

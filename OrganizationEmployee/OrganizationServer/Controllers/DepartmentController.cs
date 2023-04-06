@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using OrganizationEmployee.EmployeeDomain;
 using OrganizationEmployee.Server.Dto;
 using OrganizationEmployee.Server.Repository;
-using OrganizationEmployee.EmployeeDomain;
 
 namespace OrganizationEmployee.OrganizationServer.Controllers;
 /// <summary>
@@ -12,15 +12,18 @@ namespace OrganizationEmployee.OrganizationServer.Controllers;
 [ApiController]
 public class DepartmentController : Controller
 {
+    private readonly ILogger<DepartmentController> _logger;
     private OrganizationRepository _organizationRepository;
     private IMapper _mapper;
     /// <summary>
     /// A constructor of the DepartmentController
     /// </summary>
-    public DepartmentController(OrganizationRepository organizationRepository, IMapper mapper)
+    public DepartmentController(OrganizationRepository organizationRepository, IMapper mapper,
+        ILogger<DepartmentController> logger)
     {
         _organizationRepository = organizationRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// The method returns all the departments in the organization
@@ -29,6 +32,7 @@ public class DepartmentController : Controller
     [HttpGet]
     public IEnumerable<Department> Get()
     {
+        _logger.LogInformation("Get departments");
         return _organizationRepository.Departments;
     }
     /// <summary>
@@ -39,8 +43,13 @@ public class DepartmentController : Controller
     [HttpGet("{id}")]
     public ActionResult<Department> Get(int id)
     {
+        _logger.LogInformation("Get department with id {id}", id);
         var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
+        if (department == null)
+        {
+            _logger.LogInformation("The department with ID {id} is not found", id);
+            return NotFound();
+        }
         return Ok(department);
     }
     /// <summary>
@@ -50,6 +59,7 @@ public class DepartmentController : Controller
     [HttpPost]
     public void Post([FromBody] DepartmentDto department)
     {
+        _logger.LogInformation("POST department method");
         var mappedDepartment = _mapper.Map<Department>(department);
         _organizationRepository.Departments.Add(mappedDepartment);
     }
@@ -62,8 +72,13 @@ public class DepartmentController : Controller
     [HttpPut("{id}")]
     public ActionResult<Department> Put(int id, [FromBody] DepartmentDto newDepartment)
     {
+        _logger.LogInformation("PUT department method with ID: {id}", id);
         var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
+        if (department == null)
+        {
+            _logger.LogInformation("The department with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.Departments.Remove(department);
         var mappedDepartment = _mapper.Map<Department>(newDepartment);
         _organizationRepository.Departments.Add(mappedDepartment);
@@ -77,8 +92,13 @@ public class DepartmentController : Controller
     [HttpDelete("{id}")]
     public ActionResult<Department> Delete(int id)
     {
+        _logger.LogInformation("DELETE department method with ID: {id}", id);
         var department = _organizationRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null) return NotFound();
+        if (department == null)
+        {
+            _logger.LogInformation("The department with ID {id} is not found", id);
+            return NotFound();
+        }
         _organizationRepository.Departments.Remove(department);
         return Ok();
     }

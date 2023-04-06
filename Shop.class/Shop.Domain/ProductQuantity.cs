@@ -5,16 +5,16 @@
 public class ProductQuantity
 {
     public ProductQuantity() { }
-    public ProductQuantity(string barcode, int shopId, double quantity)
+    public ProductQuantity(int productId, int shopId, double quantity)
     {
-        Barcode = barcode;
+        ProductId = productId;
         ShopId = shopId;
         Quantity = quantity;
     }
     /// <summary>
     /// Product barcode
     /// </summary>
-    public string Barcode { get; set; } = string.Empty;
+    public int ProductId { get; set; } = 0;
     /// <summary>
     /// Shop id
     /// </summary>

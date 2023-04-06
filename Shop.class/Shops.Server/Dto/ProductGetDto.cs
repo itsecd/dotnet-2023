@@ -1,22 +1,10 @@
-﻿namespace Shops.Domain;
-/// <summary>
-/// Product - class describing products
-/// </summary>
-public class Product
+﻿namespace Shops.Server.Dto;
+
+public class ProductGetDto
 {
-    public Product() { }
-    public Product(int productId, string barcode, string name, int productGroupCode, double weight, string productType,
-        double price, DateTime storageLimitDate)
-    {
-        ProductId = productId;
-        Barcode = barcode;
-        Name = name;
-        ProductGroupCode = productGroupCode;
-        Weight = weight;
-        ProductType = productType;
-        Price = price;
-        StorageLimitDate = storageLimitDate;
-    }
+    /// <summary>
+    /// Product id
+    /// </summary>
     public int ProductId { get; set; } = 0;
     /// <summary>
     /// Product barcode

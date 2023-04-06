@@ -1,15 +1,16 @@
 ﻿using Shops.Domain;
 
-namespace Shops.Test;
-public class ShopFixture
+namespace Shops.Server.Repository;
+
+public class ShopRepository : IShopRepository
 {
-    private readonly List<Shop> _shopList;
+    private readonly List<Shop> _shop;
     private readonly List<Product> _products;
     private readonly List<Customer> _customers;
     private readonly List<ProductGroup> _productGroups;
-    public ShopFixture()
+    public ShopRepository()
     {
-        _shopList = ShopsList;
+        _shop = ShopsList;
         _products = ListProducts;
         _customers = Customers;
         _productGroups = ListProductGroups;
@@ -182,7 +183,7 @@ public class ShopFixture
         }
     }
     public List<Product> Products => _products;
-    public List<Shop> Shops => _shopList;
+    public List<Shop> Shops => _shop;
     public List<Customer> Customers => _customers;
     public List<ProductGroup> ProductGroups => _productGroups;
 }

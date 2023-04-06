@@ -115,7 +115,7 @@ public class TestShop : IClassFixture<ShopFixture>
                  ProductName = p.Name,
              }
             ).ToList();
-        Assert.Equal(5, expiredProduct.Count());
+        Assert.Equal(7, expiredProduct.Count());
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "1" && x.ShopId == 1 && x.ProductName == "Молоко");
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "6" && x.ShopId == 3 && x.ProductName == "Хлеб");
     }

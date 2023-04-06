@@ -28,7 +28,7 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var departments = JsonConvert.DeserializeObject<List<DepartmentDto>>(content);
+        var departments = JsonConvert.DeserializeObject<List<GetDepartmentDto>>(content);
         Assert.NotNull(departments);
         Assert.True(departments.Count >= 8);
     }
@@ -51,7 +51,7 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync(string.Format("api/Department/{0}", departmentId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var department = JsonConvert.DeserializeObject<DepartmentDto>(content);
+        var department = JsonConvert.DeserializeObject<GetDepartmentDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -72,7 +72,7 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     [InlineData("Отдел медицинской помощи")]
     public async Task PostDepartment(string departmentName)
     {
-        var departmentDto = new DepartmentDto()
+        var departmentDto = new PostDepartmentDto()
         {
             Name = departmentName
         };
@@ -93,7 +93,7 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     [InlineData(155, "Отдел здравоохранения", false)]
     public async Task PutDepartment(uint departmentId, string departmentName, bool isSuccess)
     {
-        var departmentDto = new DepartmentDto()
+        var departmentDto = new PostDepartmentDto()
         {
             Name = departmentName
         };

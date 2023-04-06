@@ -12,4 +12,9 @@ public class Department
     /// Name - a name of the department
     /// </summary>
     public string Name { get; set; } = string.Empty;
+    /// <summary>
+    /// DepartmentEmployees - a list of employee's departments in which the employee is currently working
+    /// One employee can work in multiple departments
+    /// </summary>
+    public List<DepartmentEmployee> DepartmentEmployees { get; set; } = new List<DepartmentEmployee>();
 }

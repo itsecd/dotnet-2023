@@ -28,7 +28,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var voucherTypes = JsonConvert.DeserializeObject<List<VoucherTypeDto>>(content);
+        var voucherTypes = JsonConvert.DeserializeObject<List<GetVoucherTypeDto>>(content);
         Assert.NotNull(voucherTypes);
         Assert.True(voucherTypes.Count >= 1);
     }
@@ -50,7 +50,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         var response = await client.GetAsync(string.Format("api/VoucherType/{0}", voucherTypeId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var voucherType = JsonConvert.DeserializeObject<VoucherTypeDto>(content);
+        var voucherType = JsonConvert.DeserializeObject<GetVoucherTypeDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -71,7 +71,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     [InlineData("Путевка на озеро Байкал")]
     public async Task PostVoucherType(string voucherTypeName)
     {
-        var voucherTypeDto = new VoucherTypeDto()
+        var voucherTypeDto = new PostVoucherTypeDto()
         {
             Name = voucherTypeName
         };
@@ -92,7 +92,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     [InlineData(155, "Путевка в Европу", false)]
     public async Task PutVoucherType(uint voucherTypeId, string voucherTypeName, bool isSuccess)
     {
-        var voucherTypeDto = new VoucherTypeDto()
+        var voucherTypeDto = new PostVoucherTypeDto()
         {
             Name = voucherTypeName
         };

@@ -1,9 +1,9 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// class EmployeeOccupationDto - represents a many-to-many relationship
+/// class PostEmployeeOccupationDto - represents a many-to-many relationship
 /// between Employee and Occupation, also it contains date, when an employee was hired, and date, when employee was dismissed.
 /// </summary>
-public class EmployeeOccupationDto
+public class PostEmployeeOccupationDto
 {
     /// <summary>
     /// HireDate - a date, when an employee was hired on the given occupation.

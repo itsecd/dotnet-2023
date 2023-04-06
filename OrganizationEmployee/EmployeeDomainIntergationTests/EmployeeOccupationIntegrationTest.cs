@@ -29,7 +29,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeOccupations = JsonConvert.DeserializeObject<List<EmployeeOccupationDto>>(content);
+        var employeeOccupations = JsonConvert.DeserializeObject<List<GetEmployeeOccupationDto>>(content);
         Assert.NotNull(employeeOccupations);
         Assert.True(employeeOccupations.Count >= 1);
     }
@@ -50,7 +50,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             .GetAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeOccupation = JsonConvert.DeserializeObject<EmployeeOccupationDto>(content);
+        var employeeOccupation = JsonConvert.DeserializeObject<GetEmployeeOccupationDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -80,7 +80,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
     public async Task PostEmployeeOccupation(uint occupationId, uint employeeId, int hireYear, int hireMonth, int hireDay,
         int dismissalYear, int dismissalMonth, int dismissalDay, bool isSuccess)
     {
-        var employeeOccupationDto = new EmployeeOccupationDto()
+        var employeeOccupationDto = new PostEmployeeOccupationDto()
         {
             HireDate = new DateTime(hireYear, hireMonth, hireDay),
             DismissalDate = new DateTime(dismissalYear, dismissalMonth, dismissalDay),
@@ -122,7 +122,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         int hireYear, int hireMonth, int hireDay, int dismissalYear,
         int dismissalMonth, int dismissalDay, bool isSuccess)
     {
-        var employeeOccupationDto = new EmployeeOccupationDto()
+        var employeeOccupationDto = new PostEmployeeOccupationDto()
         {
             HireDate = new DateTime(hireYear, hireMonth, hireDay),
             DismissalDate = new DateTime(dismissalYear, dismissalMonth, dismissalDay),

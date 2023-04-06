@@ -30,7 +30,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync(string.Format("api/Statistics/DepartmentId/{0}", departmentId));
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var employees = JsonConvert.DeserializeObject<List<EmployeeDto>>(content);
+        var employees = JsonConvert.DeserializeObject<List<GetEmployeeDto>>(content);
         Assert.NotNull(employees);
         Assert.Equal(employeeCount, employees.Count);
     }

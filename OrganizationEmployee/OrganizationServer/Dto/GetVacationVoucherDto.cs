@@ -1,10 +1,14 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// VacationVoucherDto - represents a vacation voucher, that may be issued to an employee.
+/// PostVacationVoucherDto - represents a vacation voucher, that may be issued to an employee.
 /// The class stores information about issue date and voucher type.
 /// </summary>
-public class VacationVoucherDto
+public class GetVacationVoucherDto
 {
+    /// <summary>
+    /// Id - an id of a VacationVoucher
+    /// </summary>
+    public uint Id { get; set; }
     /// <summary>
     /// IssueDate - a date, when the VacationVoucher was issued
     /// </summary>

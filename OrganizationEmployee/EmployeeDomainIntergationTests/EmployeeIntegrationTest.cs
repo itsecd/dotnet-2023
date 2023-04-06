@@ -27,7 +27,7 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         var response = await client.GetAsync("api/Employee");
 
         var content = await response.Content.ReadAsStringAsync();
-        var employees = JsonConvert.DeserializeObject<List<EmployeeDto>>(content);
+        var employees = JsonConvert.DeserializeObject<List<GetEmployeeDto>>(content);
         Assert.NotNull(employees);
         Assert.True(employees.Count >= 3);
     }
@@ -50,7 +50,7 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         var response = await client.GetAsync(string.Format("api/Employee/{0}", employeeId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var employee = JsonConvert.DeserializeObject<EmployeeDto>(content);
+        var employee = JsonConvert.DeserializeObject<GetEmployeeDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -91,7 +91,7 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         int birthYear, int birthMonth, int birthDay, int workshopId, string homeAddress, string homeTelephone,
         string workTelephone, string familyStatus, uint familyMembersCount, uint childrenCount, bool isSuccess)
     {
-        var employeeDto = new EmployeeDto()
+        var employeeDto = new PostEmployeeDto()
         {
             RegNumber = regNumber,
             FirstName = firstName,
@@ -151,7 +151,7 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         int birthYear, int birthMonth, int birthDay, int workshopId, string homeAddress, string homeTelephone,
         string workTelephone, string familyStatus, uint familyMembersCount, uint childrenCount, bool isSuccess)
     {
-        var employeeDto = new EmployeeDto()
+        var employeeDto = new PostEmployeeDto()
         {
             RegNumber = regNumber,
             FirstName = firstName,

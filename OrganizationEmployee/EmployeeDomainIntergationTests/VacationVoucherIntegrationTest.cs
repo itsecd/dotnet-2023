@@ -28,7 +28,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var vacationVouchers = JsonConvert.DeserializeObject<List<VacationVoucherDto>>(content);
+        var vacationVouchers = JsonConvert.DeserializeObject<List<GetVacationVoucherDto>>(content);
         Assert.NotNull(vacationVouchers);
         Assert.True(vacationVouchers.Count >= 1);
     }
@@ -48,7 +48,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
         var response = await client.GetAsync(string.Format("api/VacationVoucher/{0}", vactionVoucherId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var vacationVoucher = JsonConvert.DeserializeObject<VacationVoucherDto>(content);
+        var vacationVoucher = JsonConvert.DeserializeObject<GetVacationVoucherDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -74,7 +74,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
     public async Task PostVacationVoucher(int issueYear, int issueMonth, int issueDay,
         uint voucherTypeId, bool isSuccess)
     {
-        var vacationVoucherDto = new VacationVoucherDto()
+        var vacationVoucherDto = new PostVacationVoucherDto()
         {
             IssueDate = new DateTime(issueYear, issueMonth, issueDay),
             VoucherTypeId = voucherTypeId
@@ -108,7 +108,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
     public async Task PutVacationVoucher(uint vacationVoucherId, int issueYear, int issueMonth, int issueDay,
         uint voucherTypeId, bool isSuccess)
     {
-        var vacationVoucherDto = new VacationVoucherDto()
+        var vacationVoucherDto = new PostVacationVoucherDto()
         {
             IssueDate = new DateTime(issueYear, issueMonth, issueDay),
             VoucherTypeId = voucherTypeId

@@ -30,10 +30,10 @@ public class EmployeeOccupationController : Controller
     /// </summary>
     /// <returns>All the connections between Employee and Occupation in the organization</returns>
     [HttpGet]
-    public IEnumerable<EmployeeOccupationDto> Get()
+    public IEnumerable<GetEmployeeOccupationDto> Get()
     {
         _logger.LogInformation("Get EmployeeOccupations");
-        return _mapper.Map<IEnumerable<EmployeeOccupationDto>>(_organizationRepository.EmployeeOccupations);
+        return _mapper.Map<IEnumerable<GetEmployeeOccupationDto>>(_organizationRepository.EmployeeOccupations);
     }
     /// <summary>
     /// The method returns a EmployeeOccupation by ID
@@ -41,7 +41,7 @@ public class EmployeeOccupationController : Controller
     /// <param name="id">EmployeeOccupation ID</param>
     /// <returns>EmployeeOccupation with the given ID or 404 code if EmployeeOccupation is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<EmployeeOccupationDto> Get(int id)
+    public ActionResult<GetEmployeeOccupationDto> Get(int id)
     {
         _logger.LogInformation("Get EmployeeOccupation with id {id}", id);
         var employeeOccupation =
@@ -52,7 +52,7 @@ public class EmployeeOccupationController : Controller
             _logger.LogInformation("The EmployeeOccupation with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupationDto>(employeeOccupation);
+        var mappedEmployeeOccupation = _mapper.Map<GetEmployeeOccupationDto>(employeeOccupation);
         return Ok(mappedEmployeeOccupation);
     }
     /// <summary>
@@ -62,7 +62,7 @@ public class EmployeeOccupationController : Controller
     /// <returns>Code 200 and the added EmployeeOccupation is success; 404 code if department or occupation is not found
     /// </returns>
     [HttpPost]
-    public ActionResult<EmployeeOccupationDto> Post([FromBody] EmployeeOccupationDto employeeOccupation)
+    public ActionResult<PostEmployeeOccupationDto> Post([FromBody] PostEmployeeOccupationDto employeeOccupation)
     {
         _logger.LogInformation("POST EmployeeOccupation method");
         var mappedEmployeeOccupation = _mapper.Map<EmployeeOccupation>(employeeOccupation);
@@ -94,7 +94,7 @@ public class EmployeeOccupationController : Controller
     /// <param name="newEmployeeOccupation">New information of the EmployeeOccupation</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpPut("{id}")]
-    public ActionResult<EmployeeOccupationDto> Put(int id, [FromBody] EmployeeOccupationDto newEmployeeOccupation)
+    public ActionResult<PostEmployeeOccupationDto> Put(int id, [FromBody] PostEmployeeOccupationDto newEmployeeOccupation)
     {
         _logger.LogInformation("PUT EmployeeOccupation method");
         var employeeOccupation = _organizationRepository
@@ -134,7 +134,7 @@ public class EmployeeOccupationController : Controller
     /// <param name="id">An ID of the EmployeeOccupation</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeOccupationDto> Delete(int id)
+    public ActionResult<PostEmployeeOccupationDto> Delete(int id)
     {
         _logger.LogInformation("DELETE EmployeeOccupation method");
         var employeeOccupation =

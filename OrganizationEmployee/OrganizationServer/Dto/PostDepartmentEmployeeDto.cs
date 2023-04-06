@@ -3,7 +3,7 @@
 /// class DepartmentEmployee - represents a many-to-many relationship
 /// between Employee and Department
 /// </summary>
-public class DepartmentEmployeeDto
+public class PostDepartmentEmployeeDto
 {
     /// <summary>
     /// DepartmentId - an id of Department object

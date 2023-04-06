@@ -28,7 +28,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var occupations = JsonConvert.DeserializeObject<List<OccupationDto>>(content);
+        var occupations = JsonConvert.DeserializeObject<List<GetOccupationDto>>(content);
         Assert.NotNull(occupations);
         Assert.True(occupations.Count >= 3);
     }
@@ -50,7 +50,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync(string.Format("api/Occupation/{0}", occupationId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var occupation = JsonConvert.DeserializeObject<OccupationDto>(content);
+        var occupation = JsonConvert.DeserializeObject<GetOccupationDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -71,7 +71,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     [InlineData("Специалист по информационной безопасности")]
     public async Task PostOccupation(string occupationName)
     {
-        var occupationDto = new OccupationDto()
+        var occupationDto = new PostOccupationDto()
         {
             Name = occupationName
         };
@@ -92,7 +92,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     [InlineData(155, "Отдел здравоохранения", false)]
     public async Task PutOccupation(uint occupationId, string occupationName, bool isSuccess)
     {
-        var departmentDto = new OccupationDto()
+        var departmentDto = new PostOccupationDto()
         {
             Name = occupationName
         };

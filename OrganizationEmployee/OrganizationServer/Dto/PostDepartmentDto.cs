@@ -1,8 +1,8 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// class DepartmentDto - represents a department in company
+/// class PostDepartmentDto - represents a department in company
 /// </summary>
-public class DepartmentDto
+public class PostDepartmentDto
 {
     /// <summary>
     /// Name - a name of the department

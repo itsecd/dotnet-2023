@@ -30,10 +30,10 @@ public class WorkshopController : ControllerBase
     /// </summary>
     /// <returns>All the workshops in the organization</returns>
     [HttpGet]
-    public IEnumerable<WorkshopDto> Get()
+    public IEnumerable<GetWorkshopDto> Get()
     {
         _logger.LogInformation("Get workshops");
-        return _mapper.Map<IEnumerable<WorkshopDto>>(_organizationRepository.Workshops);
+        return _mapper.Map<IEnumerable<GetWorkshopDto>>(_organizationRepository.Workshops);
     }
     /// <summary>
     /// The method returns an workshop by ID
@@ -41,7 +41,7 @@ public class WorkshopController : ControllerBase
     /// <param name="id">Workshop ID</param>
     /// <returns>Workshop with the given ID or 404 code if workshop is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<WorkshopDto> Get(int id)
+    public ActionResult<GetWorkshopDto> Get(int id)
     {
         _logger.LogInformation("Get workshop with id {id}", id);
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
@@ -50,7 +50,7 @@ public class WorkshopController : ControllerBase
             _logger.LogInformation("The workshop with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedWorkshop = _mapper.Map<WorkshopDto>(workshop);
+        var mappedWorkshop = _mapper.Map<GetWorkshopDto>(workshop);
         return Ok(mappedWorkshop);
     }
     /// <summary>
@@ -59,7 +59,7 @@ public class WorkshopController : ControllerBase
     /// <param name="workshop">A new workshop that needs to be added</param>
     /// <returns>Code 200 with an added workshop</returns>
     [HttpPost]
-    public ActionResult<WorkshopDto> Post([FromBody] WorkshopDto workshop)
+    public ActionResult<PostWorkshopDto> Post([FromBody] PostWorkshopDto workshop)
     {
         _logger.LogInformation("POST workshop method");
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
@@ -74,7 +74,7 @@ public class WorkshopController : ControllerBase
     /// <returns>Code 200 and the updated workshop class if success; 
     /// 404 code if a workshop is not found;</returns>
     [HttpPut("{id}")]
-    public ActionResult<WorkshopDto> Put(int id, [FromBody] WorkshopDto newWorkshop)
+    public ActionResult<PostWorkshopDto> Put(int id, [FromBody] PostWorkshopDto newWorkshop)
     {
         _logger.LogInformation("PUT workshop method");
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
@@ -94,7 +94,7 @@ public class WorkshopController : ControllerBase
     /// <param name="id">An ID of the workshop</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<WorkshopDto> Delete(int id)
+    public ActionResult<PostWorkshopDto> Delete(int id)
     {
         _logger.LogInformation("DELETE workshop method");
         var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);

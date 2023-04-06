@@ -1,8 +1,8 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// OccupationDto - represents an employee occupation.
+/// PostOccupationDto - represents an employee occupation.
 /// </summary>
-public class OccupationDto
+public class PostOccupationDto
 {
     /// <summary>
     /// Name - a name of the given occupation

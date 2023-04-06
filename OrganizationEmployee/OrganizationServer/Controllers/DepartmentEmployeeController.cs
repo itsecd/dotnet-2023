@@ -30,10 +30,10 @@ public class DepartmentEmployeeController : Controller
     /// </summary>
     /// <returns>All the connections between Department and Employee in the organization</returns>
     [HttpGet]
-    public IEnumerable<DepartmentEmployeeDto> Get()
+    public IEnumerable<GetDepartmentEmployeeDto> Get()
     {
         _logger.LogInformation("Get DepartmentEmployees");
-        return _mapper.Map<IEnumerable<DepartmentEmployeeDto>>(_organizationRepository.DepartmentEmployees);
+        return _mapper.Map<IEnumerable<GetDepartmentEmployeeDto>>(_organizationRepository.DepartmentEmployees);
     }
     /// <summary>
     /// The method returns a DepartmentEmployee by ID
@@ -41,7 +41,7 @@ public class DepartmentEmployeeController : Controller
     /// <param name="id">DepartmentEmployee ID</param>
     /// <returns>DepartmentEmployee with the given ID or 404 code if DepartmentEmployee is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<DepartmentEmployeeDto> Get(int id)
+    public ActionResult<GetDepartmentEmployeeDto> Get(int id)
     {
         _logger.LogInformation("Get DepartmentEmployee with id {id}", id);
         var departmentEmployee =
@@ -52,7 +52,7 @@ public class DepartmentEmployeeController : Controller
             _logger.LogInformation("The DepartmentEmployee with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployeeDto>(departmentEmployee);
+        var mappedDepartmentEmployee = _mapper.Map<GetDepartmentEmployeeDto>(departmentEmployee);
         return Ok(mappedDepartmentEmployee);
     }
     /// <summary>
@@ -62,7 +62,7 @@ public class DepartmentEmployeeController : Controller
     /// <returns>Code 200 and the added DepartmentEmployee is success; 404 code if department or employee is not found
     /// </returns>
     [HttpPost]
-    public ActionResult<DepartmentEmployeeDto> Post([FromBody] DepartmentEmployeeDto departmentEmployee)
+    public ActionResult<PostDepartmentEmployeeDto> Post([FromBody] PostDepartmentEmployeeDto departmentEmployee)
     {
         _logger.LogInformation("POST DepartmentEmployee method");
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(departmentEmployee);
@@ -96,7 +96,7 @@ public class DepartmentEmployeeController : Controller
     /// <param name="newDepartmentEmployee">New information of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpPut("{id}")]
-    public ActionResult<DepartmentEmployeeDto> Put(int id, [FromBody] DepartmentEmployeeDto newDepartmentEmployee)
+    public ActionResult<PostDepartmentEmployeeDto> Put(int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
     {
         _logger.LogInformation("PUT DepartmentEmployee method");
         var departmentEmployee = _organizationRepository
@@ -137,7 +137,7 @@ public class DepartmentEmployeeController : Controller
     /// <param name="id">An ID of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<DepartmentEmployeeDto> Delete(int id)
+    public ActionResult<PostDepartmentEmployeeDto> Delete(int id)
     {
         _logger.LogInformation("DELETE DepartmentEmployee method with ID: {id}", id);
         var departmentEmployee = _organizationRepository.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);

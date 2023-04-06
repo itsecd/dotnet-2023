@@ -28,7 +28,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var workshops = JsonConvert.DeserializeObject<List<WorkshopDto>>(content);
+        var workshops = JsonConvert.DeserializeObject<List<GetWorkshopDto>>(content);
         Assert.NotNull(workshops);
         Assert.True(workshops.Count >= 4);
     }
@@ -50,7 +50,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
         var response = await client.GetAsync(string.Format("api/Workshop/{0}", workshopId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var workshop = JsonConvert.DeserializeObject<WorkshopDto>(content);
+        var workshop = JsonConvert.DeserializeObject<GetWorkshopDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -71,7 +71,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
     [InlineData("Московский цех")]
     public async Task PostWorkshop(string workshopName)
     {
-        var workshopDto = new WorkshopDto()
+        var workshopDto = new PostWorkshopDto()
         {
             Name = workshopName
         };
@@ -92,7 +92,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
     [InlineData(155, "Московский цех", false)]
     public async Task PutWorkshop(uint workshopId, string workshopName, bool isSuccess)
     {
-        var departmentDto = new WorkshopDto()
+        var departmentDto = new PostWorkshopDto()
         {
             Name = workshopName
         };

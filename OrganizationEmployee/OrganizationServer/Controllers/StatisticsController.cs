@@ -28,16 +28,16 @@ public class StatisticsController : Controller
     /// The method outputs all employees of the given department
     /// </summary>
     /// <param name="departmentId">An ID of the department</param>
-    /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeDto
+    /// <returns>Code 200 with statistical data in form of IEnumerable of PostEmployeeDto
     /// Code 404 if a department with given ID doesn't exist</returns>
     [HttpGet("DepartmentId/{departmentId}")]
-    public ActionResult<IEnumerable<EmployeeDto>> Get(int departmentId)
+    public ActionResult<IEnumerable<GetEmployeeDto>> Get(int departmentId)
     {
         _logger.LogInformation("Get all employees of the given department");
         var employeesInDepartment = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
                                      from departmentEmployeeItem in employee.DepartmentEmployees
                                      where departmentEmployeeItem.Department?.Id == departmentId
-                                     select _mapper.Map<EmployeeDto>(employee)).ToList();
+                                     select _mapper.Map<GetEmployeeDto>(employee)).ToList();
         if (employeesInDepartment.Count() == 0)
         {
             _logger.LogInformation("Employees with a given department id {id} don't exist", departmentId);

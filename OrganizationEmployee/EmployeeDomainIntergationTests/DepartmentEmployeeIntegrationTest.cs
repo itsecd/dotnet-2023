@@ -29,7 +29,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var departmentEmployees = JsonConvert.DeserializeObject<List<DepartmentEmployeeDto>>(content);
+        var departmentEmployees = JsonConvert.DeserializeObject<List<GetDepartmentEmployeeDto>>(content);
         Assert.NotNull(departmentEmployees);
         Assert.True(departmentEmployees.Count >= 5);
     }
@@ -49,7 +49,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
         var response = await client.GetAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var departmentEmployee = JsonConvert.DeserializeObject<DepartmentEmployeeDto>(content);
+        var departmentEmployee = JsonConvert.DeserializeObject<GetDepartmentEmployeeDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -73,7 +73,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     [InlineData(565, 15345, false)]
     public async Task PostDepartmentEmployee(uint departmentId, uint employeeId, bool isSuccess)
     {
-        var departmentEmployeeDto = new DepartmentEmployeeDto()
+        var departmentEmployeeDto = new PostDepartmentEmployeeDto()
         {
             DepartmentId = departmentId,
             EmployeeId = employeeId
@@ -106,7 +106,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     [InlineData(6, 353, 333, false)]
     public async Task PutDepartmentEmployee(uint departmentEmployeeId, uint departmentId, uint employeeId, bool isSuccess)
     {
-        var departmentEmployeeDto = new DepartmentEmployeeDto()
+        var departmentEmployeeDto = new PostDepartmentEmployeeDto()
         {
             DepartmentId = departmentId,
             EmployeeId = employeeId

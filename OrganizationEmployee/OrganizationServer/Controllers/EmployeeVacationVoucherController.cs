@@ -30,10 +30,10 @@ public class EmployeeVacationVoucherController : Controller
     /// </summary>
     /// <returns>All the connections between Employee and VacationVoucher in the organization</returns>
     [HttpGet]
-    public IEnumerable<EmployeeVacationVoucherDto> Get()
+    public IEnumerable<GetEmployeeVacationVoucherDto> Get()
     {
         _logger.LogInformation("Get EmployeeVacationVouchers");
-        return _mapper.Map<IEnumerable<EmployeeVacationVoucherDto>>(_organizationRepository.EmployeeVacationVouchers);
+        return _mapper.Map<IEnumerable<GetEmployeeVacationVoucherDto>>(_organizationRepository.EmployeeVacationVouchers);
     }
     /// <summary>
     /// The method returns a EmployeeVacationVoucher by ID
@@ -41,7 +41,7 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="id">EmployeeVacationVoucher ID</param>
     /// <returns>EmployeeVacationVoucher with the given ID or 404 code if EmployeeVacationVoucher is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<EmployeeVacationVoucherDto> Get(int id)
+    public ActionResult<GetEmployeeVacationVoucherDto> Get(int id)
     {
         _logger.LogInformation("Get EmployeeVacationVoucher with id {id}", id);
         var employeeVacationVoucher =
@@ -52,7 +52,7 @@ public class EmployeeVacationVoucherController : Controller
             _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedEmployeeVacationVoucher = _mapper.Map<EmployeeVacationVoucherDto>(employeeVacationVoucher);
+        var mappedEmployeeVacationVoucher = _mapper.Map<GetEmployeeVacationVoucherDto>(employeeVacationVoucher);
         return Ok(mappedEmployeeVacationVoucher);
     }
     /// <summary>
@@ -62,7 +62,7 @@ public class EmployeeVacationVoucherController : Controller
     /// <returns>Code 200 and the added EmployeeVacationVoucher is success; 404 code if department or 
     /// vacation voucher is not found </returns>
     [HttpPost]
-    public ActionResult<EmployeeVacationVoucherDto> Post([FromBody] EmployeeVacationVoucherDto employeeVoucher)
+    public ActionResult<PostEmployeeVacationVoucherDto> Post([FromBody] PostEmployeeVacationVoucherDto employeeVoucher)
     {
         _logger.LogInformation("POST EmployeeVacationVoucher method");
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(employeeVoucher);
@@ -95,7 +95,7 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="newEmployeeVoucher">New information of the EmployeeVacationVoucher</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpPut("{id}")]
-    public ActionResult<EmployeeVacationVoucherDto> Put(int id, [FromBody] EmployeeVacationVoucherDto newEmployeeVoucher)
+    public ActionResult<PostEmployeeVacationVoucherDto> Put(int id, [FromBody] PostEmployeeVacationVoucherDto newEmployeeVoucher)
     {
         _logger.LogInformation("PUT EmployeeVacationVoucher method");
         var employeeVoucher = _organizationRepository
@@ -138,7 +138,7 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="id">An ID of the EmployeeVacationVoucher</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeVacationVoucherDto> Delete(int id)
+    public ActionResult<PostEmployeeVacationVoucherDto> Delete(int id)
     {
         _logger.LogInformation("DELETE EmployeeVacationVoucher method");
         var employeeVoucher =

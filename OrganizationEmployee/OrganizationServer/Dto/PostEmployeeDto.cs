@@ -1,8 +1,8 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// Classs EmployeeDto represents an employee in organization, it contains personal information.
+/// Classs PostEmployeeDto represents an employee in organization, it contains personal information.
 /// </summary>
-public class EmployeeDto
+public class PostEmployeeDto
 {
     /// <summary>
     /// RegNumber - registration number of an Employee

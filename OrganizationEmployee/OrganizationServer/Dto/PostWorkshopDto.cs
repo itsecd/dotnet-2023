@@ -1,8 +1,8 @@
 ﻿namespace OrganizationEmployee.Server.Dto;
 /// <summary>
-/// Class WorkshopDto represents a workshop on the organization
+/// Class PostWorkshopDto represents a workshop on the organization
 /// </summary>
-public class WorkshopDto
+public class PostWorkshopDto
 {
     /// <summary>
     /// Name - a name of the workshop

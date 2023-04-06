@@ -30,10 +30,10 @@ public class VoucherTypeController : Controller
     /// </summary>
     /// <returns>All the voucher types in the organization</returns>
     [HttpGet]
-    public IEnumerable<VoucherTypeDto> Get()
+    public IEnumerable<GetVoucherTypeDto> Get()
     {
         _logger.LogInformation("Get vacation voucher types");
-        return _mapper.Map<IEnumerable<VoucherTypeDto>>(_organizationRepository.VoucherTypes);
+        return _mapper.Map<IEnumerable<GetVoucherTypeDto>>(_organizationRepository.VoucherTypes);
     }
     /// <summary>
     /// The method returns an voucher type by ID
@@ -41,7 +41,7 @@ public class VoucherTypeController : Controller
     /// <param name="id">VoucherType ID</param>
     /// <returns>VoucherType with the given ID or 404 code if VoucherType is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<VoucherTypeDto> Get(int id)
+    public ActionResult<GetVoucherTypeDto> Get(int id)
     {
         _logger.LogInformation("Get voucher type with id {id}", id);
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
@@ -50,7 +50,7 @@ public class VoucherTypeController : Controller
             _logger.LogInformation("The voucher type with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedVoucherType = _mapper.Map<VoucherTypeDto>(voucherType);
+        var mappedVoucherType = _mapper.Map<GetVoucherTypeDto>(voucherType);
         return Ok(mappedVoucherType);
     }
     /// <summary>
@@ -59,7 +59,7 @@ public class VoucherTypeController : Controller
     /// <param name="voucherType">A new VoucherType that needs to be added</param>
     /// <returns>Code 200 with an added VoucherType</returns>
     [HttpPost]
-    public ActionResult<VoucherTypeDto> Post([FromBody] VoucherTypeDto voucherType)
+    public ActionResult<PostVoucherTypeDto> Post([FromBody] PostVoucherTypeDto voucherType)
     {
         _logger.LogInformation("POST voucher type method");
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
@@ -75,7 +75,7 @@ public class VoucherTypeController : Controller
     /// 404 code if an VoucherType is not found;</returns>
 
     [HttpPut("{id}")]
-    public ActionResult<VoucherTypeDto> Put(int id, [FromBody] VoucherTypeDto newVoucherType)
+    public ActionResult<PostVoucherTypeDto> Put(int id, [FromBody] PostVoucherTypeDto newVoucherType)
     {
         _logger.LogInformation("PUT voucher type method");
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
@@ -95,7 +95,7 @@ public class VoucherTypeController : Controller
     /// <param name="id">An ID of the VoucherType</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<VoucherTypeDto> Delete(int id)
+    public ActionResult<PostVoucherTypeDto> Delete(int id)
     {
         _logger.LogInformation("DELETE voucher type method");
         var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);

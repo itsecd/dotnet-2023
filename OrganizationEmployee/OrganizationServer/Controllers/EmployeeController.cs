@@ -30,10 +30,10 @@ public class EmployeeController : Controller
     /// </summary>
     /// <returns>All the employee in the organization</returns>
     [HttpGet]
-    public IEnumerable<EmployeeDto> Get()
+    public IEnumerable<GetEmployeeDto> Get()
     {
         _logger.LogInformation("Get employees");
-        return _mapper.Map<IEnumerable<EmployeeDto>>(_organizationRepository.Employees);
+        return _mapper.Map<IEnumerable<GetEmployeeDto>>(_organizationRepository.Employees);
     }
     /// <summary>
     /// The method returns an employee by ID
@@ -41,7 +41,7 @@ public class EmployeeController : Controller
     /// <param name="id">Employee ID</param>
     /// <returns>Employee with the given ID or 404 code if employee is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<EmployeeDto> Get(uint id)
+    public ActionResult<GetEmployeeDto> Get(uint id)
     {
         _logger.LogInformation("Get employee with id {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
@@ -50,7 +50,7 @@ public class EmployeeController : Controller
             _logger.LogInformation("The employee with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedEmployee = _mapper.Map<EmployeeDto>(employee);
+        var mappedEmployee = _mapper.Map<GetEmployeeDto>(employee);
         return Ok(mappedEmployee);
     }
     /// <summary>
@@ -61,7 +61,7 @@ public class EmployeeController : Controller
     /// 404 code if a workshop is not found;
     /// 409 code if an employee with same RegNumber already exists</returns>
     [HttpPost]
-    public ActionResult<EmployeeDto> Post([FromBody] EmployeeDto employee)
+    public ActionResult<PostEmployeeDto> Post([FromBody] PostEmployeeDto employee)
     {
         _logger.LogInformation("POST employee method");
         var mappedEmployee = _mapper.Map<Employee>(employee);
@@ -92,7 +92,7 @@ public class EmployeeController : Controller
     /// 404 code if a workshop is not found;
     /// 409 code if an employee with same RegNumber and different ID already exists</returns>
     [HttpPut("{id}")]
-    public ActionResult<EmployeeDto> Put(uint id, [FromBody] EmployeeDto newEmployee)
+    public ActionResult<PostEmployeeDto> Put(uint id, [FromBody] PostEmployeeDto newEmployee)
     {
         _logger.LogInformation("PUT employee method with ID: {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
@@ -128,7 +128,7 @@ public class EmployeeController : Controller
     /// <param name="id">An ID of the employee</param>
     /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<EmployeeDto> Delete(uint id)
+    public ActionResult<PostEmployeeDto> Delete(uint id)
     {
         _logger.LogInformation("DELETE employee method with ID: {id}", id);
         var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);

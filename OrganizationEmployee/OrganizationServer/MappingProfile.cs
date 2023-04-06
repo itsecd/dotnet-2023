@@ -8,14 +8,26 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<WorkshopDto, Workshop>().ReverseMap();
-        CreateMap<DepartmentDto, Department>().ReverseMap();
-        CreateMap<DepartmentEmployeeDto, DepartmentEmployee>().ReverseMap();
-        CreateMap<EmployeeOccupationDto, EmployeeOccupation>().ReverseMap();
-        CreateMap<EmployeeDto, Employee>().ReverseMap();
-        CreateMap<VoucherTypeDto, VoucherType>().ReverseMap();
-        CreateMap<VacationVoucherDto, VacationVoucher>().ReverseMap();
-        CreateMap<OccupationDto, Occupation>().ReverseMap();
-        CreateMap<EmployeeVacationVoucherDto, EmployeeVacationVoucher>().ReverseMap();
+        CreateMap<PostWorkshopDto, Workshop>();
+        CreateMap<Workshop, GetWorkshopDto>();
+        CreateMap<PostDepartmentDto, Department>();
+        CreateMap<Department, GetDepartmentDto>();
+        CreateMap<PostVoucherTypeDto, VoucherType>();
+        CreateMap<VoucherType, GetVoucherTypeDto>();
+
+        CreateMap<PostOccupationDto, Occupation>();
+        CreateMap<Occupation, GetOccupationDto>();
+
+        CreateMap<PostDepartmentEmployeeDto, DepartmentEmployee>();
+        CreateMap<DepartmentEmployee, GetDepartmentEmployeeDto>();
+        CreateMap<Employee, GetEmployeeDto>();
+        CreateMap<PostEmployeeDto, Employee>();
+        CreateMap<PostEmployeeOccupationDto, EmployeeOccupation>();
+        CreateMap<EmployeeOccupation, GetEmployeeOccupationDto>();
+        CreateMap<VacationVoucher, GetVacationVoucherDto>();
+        CreateMap<PostVacationVoucherDto, VacationVoucher>();
+        
+        CreateMap<PostEmployeeVacationVoucherDto, EmployeeVacationVoucher>();
+        CreateMap<EmployeeVacationVoucher, GetEmployeeVacationVoucherDto>();
     }
 }

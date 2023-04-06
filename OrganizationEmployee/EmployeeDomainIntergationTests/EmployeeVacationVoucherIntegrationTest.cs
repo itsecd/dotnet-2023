@@ -29,7 +29,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeVacationVouchers = JsonConvert.DeserializeObject<List<EmployeeVacationVoucherDto>>(content);
+        var employeeVacationVouchers = JsonConvert.DeserializeObject<List<GetEmployeeVacationVoucherDto>>(content);
         Assert.NotNull(employeeVacationVouchers);
         Assert.True(employeeVacationVouchers.Count >= 1);
     }
@@ -50,7 +50,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             .GetAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeVacationVoucher = JsonConvert.DeserializeObject<EmployeeVacationVoucherDto>(content);
+        var employeeVacationVoucher = JsonConvert.DeserializeObject<GetEmployeeVacationVoucherDto>(content);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -73,7 +73,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
     [InlineData(2011, 1, false)]
     public async Task PostEmployeeVacationVoucher(uint voucherId, uint employeeId, bool isSuccess)
     {
-        var employeeVacationVoucherDto = new EmployeeVacationVoucherDto()
+        var employeeVacationVoucherDto = new PostEmployeeVacationVoucherDto()
         {
             VacationVoucherId = voucherId,
             EmployeeId = employeeId,
@@ -106,7 +106,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
     public async Task PutEmployeeVacationVoucher(uint employeeVacationVoucherId, uint voucherId, uint employeeId,
         bool isSuccess)
     {
-        var employeeVacationVoucherDto = new EmployeeVacationVoucherDto()
+        var employeeVacationVoucherDto = new PostEmployeeVacationVoucherDto()
         {
             VacationVoucherId = voucherId,
             EmployeeId = employeeId,

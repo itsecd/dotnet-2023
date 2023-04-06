@@ -8,27 +8,36 @@ public class ShopRepository : IShopRepository
     private readonly List<Product> _products;
     private readonly List<Customer> _customers;
     private readonly List<ProductGroup> _productGroups;
+    private readonly List<ProductQuantity> _productQuantities;
+    private readonly List<PurchaseRecord> _purchaseRecords;
     public ShopRepository()
     {
         _shop = ShopsList;
         _products = ListProducts;
         _customers = Customers;
         _productGroups = ListProductGroups;
+        _productQuantities = ListProductQuantities;
+        _purchaseRecords = new List<PurchaseRecord>(ListPurchaseRecords1.Count +
+                                                    ListPurchaseRecords2.Count +
+                                                    ListPurchaseRecords3.Count);
+        _purchaseRecords.AddRange(ListPurchaseRecords1);
+        _purchaseRecords.AddRange(ListPurchaseRecords2);
+        _purchaseRecords.AddRange(ListPurchaseRecords3);
     }
     public List<Shop> ShopsList
     {
         get
         {
             var shops = new List<Shop>();
-            var products = ProductQuantities;
+            var products = ListProductQuantities;
             var purchases1 = ListPurchaseRecords1;
-            var firstShop = new Shop(1, "Чан-чан", "Гагарин, 29", new List<ProductQuantity>() { products[0][0], products[0][1], products[0][2], products[0][3], products[0][4], products[0][5], products[0][6] }, purchases1);
+            var firstShop = new Shop(1, "Чан-чан", "Гагарин, 29", new List<ProductQuantity>() { products[0], products[1], products[2], products[3], products[4], products[5], products[6] }, purchases1);
             shops.Add(firstShop);
             var purchases2 = ListPurchaseRecords2;
-            var secondShop = new Shop(2, "Магазин продуктов", "Московсковское шоссе, 34Б", new List<ProductQuantity>() { products[1][0], products[1][1], products[1][2], products[1][3], products[1][4] }, purchases2);
+            var secondShop = new Shop(2, "Магазин продуктов", "Московсковское шоссе, 34Б", new List<ProductQuantity>() { products[7], products[8], products[9], products[10], products[11] }, purchases2);
             shops.Add(secondShop);
             var purchases3 = ListPurchaseRecords3;
-            var thirdShop = new Shop(3, "Один для всех", "Потапова, 65", new List<ProductQuantity>() { products[2][0], products[2][1], products[2][2], products[2][3], products[2][4], products[2][5], products[2][6] }, purchases3);
+            var thirdShop = new Shop(3, "Один для всех", "Потапова, 65", new List<ProductQuantity>() { products[12], products[13], products[14], products[15], products[16], products[17], products[18] }, purchases3);
             shops.Add(thirdShop);
             return shops;
         }
@@ -52,45 +61,34 @@ public class ShopRepository : IShopRepository
         }
     }
 
-    public List<List<ProductQuantity>> ProductQuantities
+    public List<ProductQuantity> ListProductQuantities
     {
         get
         {
             var productQuantities = new List<List<ProductQuantity>>();
             var products = ListProducts;
-            var firstProductQuantities = new List<ProductQuantity>
-                {
-                    new ProductQuantity(products[0].ProductId, 1, 250),
-                    new ProductQuantity(products[1].ProductId, 1, 100),
-                    new ProductQuantity(products[2].ProductId, 1, 50),
-                    new ProductQuantity(products[4].ProductId, 1, 60),
-                    new ProductQuantity(products[5].ProductId, 1, 75),
-                    new ProductQuantity(products[6].ProductId, 1, 100),
-                    new ProductQuantity(products[8].ProductId, 1, 200)
-                };
-            productQuantities.Add(firstProductQuantities);
-            var secondProductQuantities = new List<ProductQuantity>
-                {
-                    new ProductQuantity(products[1].ProductId, 2, 200),
-                    new ProductQuantity(products[4].ProductId, 2, 100),
-                    new ProductQuantity(products[5].ProductId, 2, 100),
-                    new ProductQuantity(products[6].ProductId, 2, 90),
-                    new ProductQuantity(products[8].ProductId, 2, 40)
-                };
-            productQuantities.Add(secondProductQuantities);
-            var thirdProductQuantities = new List<ProductQuantity>
-                {
-                    new ProductQuantity(products[0].ProductId, 3, 200),
-                    new ProductQuantity(products[2].ProductId, 3, 100),
-                    new ProductQuantity(products[3].ProductId, 3, 50),
-                    new ProductQuantity(products[4].ProductId, 3, 60),
-                    new ProductQuantity(products[5].ProductId, 3, 75),
-                    new ProductQuantity(products[6].ProductId, 3, 30),
-                    new ProductQuantity(products[7].ProductId, 3, 130),
-                };
-            productQuantities.Add(thirdProductQuantities);
-
-            return productQuantities;
+            return new List<ProductQuantity>()
+            {
+            new ProductQuantity(products[0].ProductId, 1, 250),
+            new ProductQuantity(products[1].ProductId, 1, 100),
+            new ProductQuantity(products[2].ProductId, 1, 50),
+            new ProductQuantity(products[4].ProductId, 1, 60),
+            new ProductQuantity(products[5].ProductId, 1, 75),
+            new ProductQuantity(products[6].ProductId, 1, 100),
+            new ProductQuantity(products[8].ProductId, 1, 200),
+            new ProductQuantity(products[1].ProductId, 2, 200),
+            new ProductQuantity(products[4].ProductId, 2, 100),
+            new ProductQuantity(products[5].ProductId, 2, 100),
+            new ProductQuantity(products[6].ProductId, 2, 90),
+            new ProductQuantity(products[8].ProductId, 2, 40),
+            new ProductQuantity(products[0].ProductId, 3, 200),
+            new ProductQuantity(products[2].ProductId, 3, 100),
+            new ProductQuantity(products[3].ProductId, 3, 50),
+            new ProductQuantity(products[4].ProductId, 3, 60),
+            new ProductQuantity(products[5].ProductId, 3, 75),
+            new ProductQuantity(products[6].ProductId, 3, 30),
+            new ProductQuantity(products[7].ProductId, 3, 130)
+            };
         }
     }
     public List<Customer> ListCustomers
@@ -171,13 +169,13 @@ public class ShopRepository : IShopRepository
         {
             return new List<ProductGroup>
                 {
-                    new ProductGroup(1, "milky"),
-                    new ProductGroup(2, "meat"),
-                    new ProductGroup(3, "fish"),
-                    new ProductGroup(4, "bakery"),
-                    new ProductGroup(5, "grocery"),
-                    new ProductGroup(6, "drinks"),
-                    new ProductGroup(7, "candies"),
+                    new ProductGroup(1, "Молочный"),
+                    new ProductGroup(2, "Мясной"),
+                    new ProductGroup(3, "Рыбный"),
+                    new ProductGroup(4, "Выпечка"),
+                    new ProductGroup(5, "Бакалея"),
+                    new ProductGroup(6, "Напитки"),
+                    new ProductGroup(7, "Конфеты"),
 
                 };
         }
@@ -186,6 +184,9 @@ public class ShopRepository : IShopRepository
     public List<Shop> Shops => _shop;
     public List<Customer> Customers => _customers;
     public List<ProductGroup> ProductGroups => _productGroups;
+    public List<ProductQuantity> ProductQuantities => _productQuantities;
+    public List<PurchaseRecord> PurchaseRecords => _purchaseRecords;
+
 }
 
 

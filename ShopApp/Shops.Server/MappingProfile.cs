@@ -10,6 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<Product, ProductGetDto>();
         CreateMap<Product, ProductPostDto>().ReverseMap();
-
+        CreateMap<Shop, ShopGetDto>();
+        CreateMap<Shop, ShopPostDto>().ReverseMap();
     }
 }

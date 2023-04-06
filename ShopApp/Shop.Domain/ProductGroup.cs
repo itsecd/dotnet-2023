@@ -9,5 +9,5 @@ public class ProductGroup
     }
 
     public int Id { get; set; } = 0;
-    public string GroupName { get; set; } = string.Empty;   
+    public string GroupName { get; set; } = string.Empty;
 }

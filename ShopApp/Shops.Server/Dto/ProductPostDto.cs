@@ -2,6 +2,9 @@
 
 public class ProductPostDto
 {
+    /// <summary>
+    /// Product barcode
+    /// </summary>
     public string Barcode { get; set; } = string.Empty;
     /// <summary>
     /// Product name

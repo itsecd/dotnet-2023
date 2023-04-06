@@ -33,7 +33,7 @@ public class TestShop : IClassFixture<ShopFixture>
         var query =
             (from shop in fixtureShop
              from products in shop.Products
-             where products.Barcode == "1"
+             where products.ProductId == 1
              select shop).ToList();
         Assert.Equal(2, query.Count());
     }
@@ -52,7 +52,7 @@ public class TestShop : IClassFixture<ShopFixture>
 
         var result =
             (from ps in productInShop
-             join p in productList on ps.Barcode equals p.Barcode
+             join p in productList on ps.ProductId equals p.ProductId
              join s in fixtureShop on ps.ShopId equals s.Id
              group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
              select new
@@ -105,7 +105,7 @@ public class TestShop : IClassFixture<ShopFixture>
              select products).ToList();
         var expiredProduct =
             (from ps in productInShop
-             join p in productList on ps.Barcode equals p.Barcode
+             join p in productList on ps.ProductId equals p.ProductId
              join s in fixtureShop on ps.ShopId equals s.Id
              where p.StorageLimitDate < DateTime.Now
              select new
@@ -115,7 +115,7 @@ public class TestShop : IClassFixture<ShopFixture>
                  ProductName = p.Name,
              }
             ).ToList();
-        Assert.Equal(7, expiredProduct.Count());
+        Assert.Equal(9, expiredProduct.Count());
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "1" && x.ShopId == 1 && x.ProductName == "Молоко");
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "6" && x.ShopId == 3 && x.ProductName == "Хлеб");
     }

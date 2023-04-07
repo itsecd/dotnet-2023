@@ -13,7 +13,13 @@ public class Ticket
     /// Number of ticket
     /// </summary>
     public int TicketNumber { get; set; } = 0;
+    /// <summary>
+    /// Сlient who owns the ticket
+    /// </summary>
     public Client Client { get; set; }
+    /// <summary>
+    /// Flight for which the ticket is registered
+    /// </summary>
     public Flight Flight { get; set; }
 
     public Ticket() { }

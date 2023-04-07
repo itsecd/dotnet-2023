@@ -12,7 +12,7 @@ public class Client
     /// <summary>
     /// Client`s passport number 
     /// </summary>
-    public int PassportNumber { get; set; } = 0;
+    public string PassportNumber { get; set; } = string.Empty;
     /// <summary>
     /// Client`s birthday
     /// </summary>
@@ -26,7 +26,7 @@ public class Client
     /// </summary>
     public List<Ticket> Tickets { get; set; } = new List<Ticket>();
     public Client() { }
-    public Client(int passportNumber, DateTime birthdayData, string name)
+    public Client(string passportNumber, DateTime birthdayData, string name)
     {
         PassportNumber = passportNumber;
         BirthdayData = birthdayData;

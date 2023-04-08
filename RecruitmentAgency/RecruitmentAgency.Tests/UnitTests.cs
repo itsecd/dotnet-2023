@@ -125,9 +125,7 @@ public class UnitTests
     [Fact]
     public void EmployeeFilterByEmployerApplication()
     {
-        var vacancyList = VacancyListWithApplications();
-
-        Assert.Single(from vacancies in vacancyList
+        Assert.Single(from vacancies in VacancyListWithApplications()
                       from employerApplication in vacancies.EmployerApplicationList.Where(employerApplication => employerApplication.Id == 4)
                       from employeeApplication in vacancies.EmployeeApplicationList.Where(employeeApplication => employeeApplication?.Employee?.Salary <= employerApplication.Salary &&
                          employeeApplication.Employee?.Education == employerApplication.Education && employeeApplication.Vacancy.Name == employerApplication?.Vacancy?.Name &&
@@ -144,8 +142,7 @@ public class UnitTests
     [Fact]
     public void ApplicationCount()
     {
-        var vacancyList = VacancyListWithApplications();
-        var result = from vacancies in vacancyList
+        var result = from vacancies in VacancyListWithApplications()
                      select new
                      {
                          vacancySector = vacancies.Sector,

@@ -2,7 +2,7 @@ using RecruitmentAgency.Classes;
 
 namespace RecruitmentAgency.Tests;
 
-public class UnitTests
+public class ClassesTests
 {
     public static List<Vacancy> VacancyList()
     {

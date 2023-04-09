@@ -126,7 +126,7 @@ public class EmployeeController : Controller
     /// The method deletes an employee by ID
     /// </summary>
     /// <param name="id">An ID of the employee</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<PostEmployeeDto> Delete(uint id)
     {

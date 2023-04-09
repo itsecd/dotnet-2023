@@ -1,20 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
 /// <summary>
-/// WorkshopIntergrationTest  - represents a integration test of WorkshopController
+/// WorkshopIntegrationTest  - represents a integration test of WorkshopController
 /// </summary>
-public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Program>>
+public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
-    /// A constructor of the WorkshopIntergrationTest
+    /// _serializeOptions - options for JsonSerializer
     /// </summary>
-    public WorkshopIntergrationTest(WebApplicationFactory<Program> factory)
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
+    /// A constructor of the WorkshopIntegrationTest
+    /// </summary>
+    public WorkshopIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -28,7 +37,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var workshops = JsonConvert.DeserializeObject<List<GetWorkshopDto>>(content);
+        var workshops = JsonSerializer.Deserialize<List<GetWorkshopDto>>(content, _serializeOptions);
         Assert.NotNull(workshops);
         Assert.True(workshops.Count >= 4);
     }
@@ -50,7 +59,7 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
         var response = await client.GetAsync(string.Format("api/Workshop/{0}", workshopId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var workshop = JsonConvert.DeserializeObject<GetWorkshopDto>(content);
+        var workshop = JsonSerializer.Deserialize<GetWorkshopDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -76,8 +85,8 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
             Name = workshopName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(workshopDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(workshopDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/Workshop", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -97,8 +106,8 @@ public class WorkshopIntergrationTest : IClassFixture<WebApplicationFactory<Prog
             Name = workshopName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(departmentDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(string.Format("api/Workshop/{0}", workshopId), stringContent);
 
         var content = await response.Content.ReadAsStringAsync();

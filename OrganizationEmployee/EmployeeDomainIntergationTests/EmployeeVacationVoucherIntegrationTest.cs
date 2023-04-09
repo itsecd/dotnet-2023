@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 
@@ -11,11 +11,20 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the EmployeeVacationVoucherIntegrationTest
     /// </summary>
     public EmployeeVacationVoucherIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -29,7 +38,8 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeVacationVouchers = JsonConvert.DeserializeObject<List<GetEmployeeVacationVoucherDto>>(content);
+        var employeeVacationVouchers = JsonSerializer
+            .Deserialize<List<GetEmployeeVacationVoucherDto>>(content, _serializeOptions);
         Assert.NotNull(employeeVacationVouchers);
         Assert.True(employeeVacationVouchers.Count >= 1);
     }
@@ -50,7 +60,8 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             .GetAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeVacationVoucher = JsonConvert.DeserializeObject<GetEmployeeVacationVoucherDto>(content);
+        var employeeVacationVoucher = JsonSerializer
+            .Deserialize<GetEmployeeVacationVoucherDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -79,8 +90,8 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             EmployeeId = employeeId,
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(employeeVacationVoucherDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(employeeVacationVoucherDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/EmployeeVacationVoucher", stringContent);
         if (isSuccess)
         {
@@ -112,8 +123,8 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
             EmployeeId = employeeId,
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(employeeVacationVoucherDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(employeeVacationVoucherDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client
             .PutAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId), stringContent);
 

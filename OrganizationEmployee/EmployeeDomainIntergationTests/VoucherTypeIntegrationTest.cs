@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
@@ -10,11 +10,20 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the VoucherTypeIntegrationTest
     /// </summary>
     public VoucherTypeIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -28,7 +37,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var voucherTypes = JsonConvert.DeserializeObject<List<GetVoucherTypeDto>>(content);
+        var voucherTypes = JsonSerializer.Deserialize<List<GetVoucherTypeDto>>(content, _serializeOptions);
         Assert.NotNull(voucherTypes);
         Assert.True(voucherTypes.Count >= 1);
     }
@@ -50,7 +59,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         var response = await client.GetAsync(string.Format("api/VoucherType/{0}", voucherTypeId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var voucherType = JsonConvert.DeserializeObject<GetVoucherTypeDto>(content);
+        var voucherType = JsonSerializer.Deserialize<GetVoucherTypeDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -76,8 +85,8 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
             Name = voucherTypeName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(voucherTypeDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(voucherTypeDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/VoucherType", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -97,8 +106,8 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
             Name = voucherTypeName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(voucherTypeDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(voucherTypeDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(string.Format("api/VoucherType/{0}", voucherTypeId), stringContent);
 
         if (isSuccess)

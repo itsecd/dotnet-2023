@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
@@ -10,11 +10,20 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the OccupationIntegrationTest
     /// </summary>
     public OccupationIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -28,7 +37,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var occupations = JsonConvert.DeserializeObject<List<GetOccupationDto>>(content);
+        var occupations = JsonSerializer.Deserialize<List<GetOccupationDto>>(content, _serializeOptions);
         Assert.NotNull(occupations);
         Assert.True(occupations.Count >= 3);
     }
@@ -50,7 +59,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync(string.Format("api/Occupation/{0}", occupationId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var occupation = JsonConvert.DeserializeObject<GetOccupationDto>(content);
+        var occupation = JsonSerializer.Deserialize<GetOccupationDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -76,8 +85,8 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
             Name = occupationName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(occupationDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(occupationDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/Occupation", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -97,8 +106,8 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
             Name = occupationName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(departmentDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(string.Format("api/Occupation/{0}", occupationId), stringContent);
 
         var content = await response.Content.ReadAsStringAsync();

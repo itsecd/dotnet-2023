@@ -50,8 +50,8 @@ public class DepartmentController : Controller
             _logger.LogInformation("The department with ID {id} is not found", id);
             return NotFound();
         }
-        var mappedDeparment = _mapper.Map<GetDepartmentDto>(department);
-        return Ok(mappedDeparment);
+        var mappedDepartment = _mapper.Map<GetDepartmentDto>(department);
+        return Ok(mappedDepartment);
     }
     /// <summary>
     /// The method adds a new department into organization
@@ -69,7 +69,7 @@ public class DepartmentController : Controller
     /// </summary>
     /// <param name="id">An ID of the department</param>
     /// <param name="newDepartment">New information of the department</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
     public ActionResult<GetDepartmentDto> Put(int id, [FromBody] PostDepartmentDto newDepartment)
     {
@@ -89,7 +89,7 @@ public class DepartmentController : Controller
     /// The method deletes a department by ID
     /// </summary>
     /// <param name="id">An ID of the department</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<GetDepartmentDto> Delete(int id)
     {

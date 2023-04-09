@@ -93,7 +93,7 @@ public class EmployeeVacationVoucherController : Controller
     /// </summary>
     /// <param name="id">An ID of the EmployeeVacationVoucher</param>
     /// <param name="newEmployeeVoucher">New information of the EmployeeVacationVoucher</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
     public ActionResult<PostEmployeeVacationVoucherDto> Put(int id, [FromBody] PostEmployeeVacationVoucherDto newEmployeeVoucher)
     {
@@ -136,7 +136,7 @@ public class EmployeeVacationVoucherController : Controller
     /// The method deletes a EmployeeVacationVoucher by ID
     /// </summary>
     /// <param name="id">An ID of the EmployeeVacationVoucher</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<PostEmployeeVacationVoucherDto> Delete(int id)
     {

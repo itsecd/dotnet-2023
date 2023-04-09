@@ -94,7 +94,7 @@ public class DepartmentEmployeeController : Controller
     /// </summary>
     /// <param name="id">An ID of the DepartmentEmployee</param>
     /// <param name="newDepartmentEmployee">New information of the DepartmentEmployee</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
     public ActionResult<PostDepartmentEmployeeDto> Put(int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
     {
@@ -135,7 +135,7 @@ public class DepartmentEmployeeController : Controller
     /// The method deletes a DepartmentEmployee by ID
     /// </summary>
     /// <param name="id">An ID of the DepartmentEmployee</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<PostDepartmentEmployeeDto> Delete(int id)
     {

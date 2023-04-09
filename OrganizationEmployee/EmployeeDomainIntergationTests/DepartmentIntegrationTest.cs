@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 namespace OrganizationEmployee.IntegrationTests;
@@ -10,11 +10,20 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the DepartmentIntegrationTest
     /// </summary>
     public DepartmentIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -28,7 +37,7 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var departments = JsonConvert.DeserializeObject<List<GetDepartmentDto>>(content);
+        var departments = JsonSerializer.Deserialize<List<GetDepartmentDto>>(content, _serializeOptions);
         Assert.NotNull(departments);
         Assert.True(departments.Count >= 8);
     }
@@ -49,9 +58,8 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var client = _factory.CreateClient();
 
         var response = await client.GetAsync(string.Format("api/Department/{0}", departmentId));
-
         var content = await response.Content.ReadAsStringAsync();
-        var department = JsonConvert.DeserializeObject<GetDepartmentDto>(content);
+        var department = JsonSerializer.Deserialize<GetDepartmentDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -77,8 +85,8 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
             Name = departmentName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(departmentDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/Department", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -98,8 +106,8 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
             Name = departmentName
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(departmentDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(string.Format("api/Department/{0}", departmentId), stringContent);
 
         var content = await response.Content.ReadAsStringAsync();

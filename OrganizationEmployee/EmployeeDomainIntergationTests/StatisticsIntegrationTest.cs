@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 namespace OrganizationEmployee.IntegrationTests;
 /// <summary>
@@ -9,11 +9,20 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the StatisticsIntegrationTest
     /// </summary>
     public StatisticsIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests correctness of the following task: "Output all employees of the given department"
@@ -30,7 +39,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync(string.Format("api/Statistics/DepartmentId/{0}", departmentId));
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var employees = JsonConvert.DeserializeObject<List<GetEmployeeDto>>(content);
+        var employees = JsonSerializer.Deserialize<List<GetEmployeeDto>>(content, _serializeOptions);
         Assert.NotNull(employees);
         Assert.Equal(employeeCount, employees.Count);
     }
@@ -46,7 +55,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync("api/Statistics/EmployeesWithFewDepartments");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var employees = JsonConvert.DeserializeObject<List<EmployeeWithFewDepartmentsDto>>(content);
+        var employees = JsonSerializer
+            .Deserialize<List<EmployeeWithFewDepartmentsDto>>(content, _serializeOptions);
         Assert.NotNull(employees);
         Assert.Equal(3, employees.Count);
         Assert.DoesNotContain(employees, requestElem => requestElem.RegNumber == 5);
@@ -66,7 +76,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync("api/Statistics/ArchiveOfDismissals");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var archiveOfDismissals = JsonConvert.DeserializeObject<List<ArchiveOfDismissalsDto>>(content);
+        var archiveOfDismissals = JsonSerializer
+            .Deserialize<List<ArchiveOfDismissalsDto>>(content, _serializeOptions);
         Assert.NotNull(archiveOfDismissals);
         Assert.Equal(4, archiveOfDismissals.Count);
         Assert.DoesNotContain(archiveOfDismissals, requestElem => requestElem.RegNumber == 1337);
@@ -85,7 +96,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync("api/Statistics/AvgAgeInDepartments");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var avgAgeInDepartments = JsonConvert.DeserializeObject<List<AverageAgeInDepartmentDto>>(content);
+        var avgAgeInDepartments = JsonSerializer
+            .Deserialize<List<AverageAgeInDepartmentDto>>(content, _serializeOptions);
         Assert.NotNull(avgAgeInDepartments);
         Assert.True(avgAgeInDepartments[0].AverageAge >= 37);
         Assert.True(avgAgeInDepartments[1].AverageAge >= 38);
@@ -104,7 +116,8 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync("api/Statistics/EmployeeLastYearVoucher");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var employeesLastYearVoucher = JsonConvert.DeserializeObject<List<EmployeeLastYearVoucherDto>>(content);
+        var employeesLastYearVoucher = JsonSerializer
+            .Deserialize<List<EmployeeLastYearVoucherDto>>(content, _serializeOptions);
         Assert.NotNull(employeesLastYearVoucher);
         Assert.Contains(employeesLastYearVoucher, queryElem => queryElem.RegNumber == 1337);
         Assert.Contains(employeesLastYearVoucher, queryElem => queryElem.RegNumber == 443);
@@ -122,16 +135,17 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
         var response = await client.GetAsync("api/Statistics/EmployeeWithLongestWorkExperience");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
-        var employeseWorkExperience = JsonConvert.DeserializeObject<List<EmployeeWorkExperienceDto>>(content);
-        Assert.NotNull(employeseWorkExperience);
-        Assert.Equal(4, employeseWorkExperience.Count);
-        Assert.True(employeseWorkExperience[0].WorkExperience > 24);
-        Assert.True(employeseWorkExperience[1].WorkExperience > 23);
-        Assert.True(employeseWorkExperience[2].WorkExperience > 22);
-        Assert.True(employeseWorkExperience[2].WorkExperience > 4);
-        Assert.Equal((uint)3, employeseWorkExperience[0].RegNumber);
-        Assert.Equal((uint)1337, employeseWorkExperience[1].RegNumber);
-        Assert.Equal((uint)5, employeseWorkExperience[2].RegNumber);
-        Assert.Equal((uint)443, employeseWorkExperience[3].RegNumber);
+        var employeeWorkExperience = JsonSerializer
+            .Deserialize<List<EmployeeWorkExperienceDto>>(content, _serializeOptions);
+        Assert.NotNull(employeeWorkExperience);
+        Assert.Equal(4, employeeWorkExperience.Count);
+        Assert.True(employeeWorkExperience[0].WorkExperience > 24);
+        Assert.True(employeeWorkExperience[1].WorkExperience > 23);
+        Assert.True(employeeWorkExperience[2].WorkExperience > 22);
+        Assert.True(employeeWorkExperience[2].WorkExperience > 4);
+        Assert.Equal((uint)3, employeeWorkExperience[0].RegNumber);
+        Assert.Equal((uint)1337, employeeWorkExperience[1].RegNumber);
+        Assert.Equal((uint)5, employeeWorkExperience[2].RegNumber);
+        Assert.Equal((uint)443, employeeWorkExperience[3].RegNumber);
     }
 }

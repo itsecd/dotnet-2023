@@ -92,7 +92,7 @@ public class OccupationController : Controller
     /// The method deletes an occupation by ID
     /// </summary>
     /// <param name="id">An ID of the occupation</param>
-    /// <returns>Code 200 if operation is successful, code 404 overwise</returns>
+    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
     public ActionResult<PostOccupationDto> Delete(int id)
     {

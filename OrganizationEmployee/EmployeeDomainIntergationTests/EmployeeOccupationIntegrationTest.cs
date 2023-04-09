@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
+using System.Text.Json;
 using OrganizationEmployee.Server.Dto;
 using System.Text;
 
@@ -11,11 +11,20 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
+    /// _serializeOptions - options for JsonSerializer
+    /// </summary>
+    private readonly JsonSerializerOptions _serializeOptions;
+    /// <summary>
     /// A constructor of the EmployeeOccupationIntegrationTest
     /// </summary>
     public EmployeeOccupationIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        _serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -29,7 +38,8 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeOccupations = JsonConvert.DeserializeObject<List<GetEmployeeOccupationDto>>(content);
+        var employeeOccupations = JsonSerializer
+            .Deserialize<List<GetEmployeeOccupationDto>>(content, _serializeOptions);
         Assert.NotNull(employeeOccupations);
         Assert.True(employeeOccupations.Count >= 1);
     }
@@ -50,7 +60,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             .GetAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId));
 
         var content = await response.Content.ReadAsStringAsync();
-        var employeeOccupation = JsonConvert.DeserializeObject<GetEmployeeOccupationDto>(content);
+        var employeeOccupation = JsonSerializer.Deserialize<GetEmployeeOccupationDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -88,8 +98,8 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             EmployeeId = employeeId,
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(employeeOccupationDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(employeeOccupationDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/EmployeeOccupation", stringContent);
         if (isSuccess)
         {
@@ -130,8 +140,8 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
             EmployeeId = employeeId,
         };
         var client = _factory.CreateClient();
-        var jsonObject = JsonConvert.SerializeObject(employeeOccupationDto);
-        var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
+        var jsonObject = JsonSerializer.Serialize(employeeOccupationDto, _serializeOptions);
+        var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client
             .PutAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId), stringContent);
 

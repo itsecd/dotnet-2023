@@ -1,10 +1,8 @@
 ﻿using PonrfDomain;
-using System.IO;
-using System.Net;
 
-namespace PonrfServer;
+namespace PonrfServer.Repository;
 
-public class PonrfRepository
+public class PonrfRepository : IPonrfRepository
 {
     private readonly List<Customer> _customers;
     private readonly List<Building> _buildings;
@@ -72,5 +70,5 @@ public class PonrfRepository
     public List<Building> Buildings => _buildings;
     public List<Auction> Auctions => _auctions;
     public List<PrivatizedBuilding> PrivatizedBuildings => _privatizedBuildings;
-    
+
 }

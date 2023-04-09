@@ -4,12 +4,26 @@ using PonrfServer.Dto;
 
 namespace PonrfServer;
 
-public class MappingProfile: Profile
+/// <summary>
+/// MappingProfile used for mapping Dto objects in Domain objects
+/// </summary>
+public class MappingProfile : Profile
 {
+    /// <summary>
+    /// Constructor for MappingProfile 
+    /// </summary>
     public MappingProfile()
     {
-        CreateMap<Building, BuildingDto>().ReverseMap();
-        CreateMap<Auction, AuctionDto>().ReverseMap();
-        CreateMap<PrivatizedBuilding, PrivatizedBuildingDto>().ReverseMap();
+        CreateMap<Auction, AuctionGetDto>().ReverseMap();
+        CreateMap<Auction, AuctionPostDto>().ReverseMap();
+
+        CreateMap<Building, BuildingGetDto>().ReverseMap();
+        CreateMap<Building, BuildingPostDto>().ReverseMap();
+
+        CreateMap<Customer, CustomerGetDto>().ReverseMap();
+        CreateMap<Customer, CustomerPostDto>().ReverseMap();
+
+        CreateMap<PrivatizedBuilding, PrivatizedBuildingGetDto>().ReverseMap();
+        CreateMap<PrivatizedBuilding, PrivatizedBuildingPostDto>().ReverseMap();
     }
 }

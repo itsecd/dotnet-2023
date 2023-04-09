@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// PostOccupationDto - represents an employee occupation.
 /// </summary>

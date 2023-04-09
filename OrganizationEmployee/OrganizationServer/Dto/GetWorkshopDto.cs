@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// Class PostWorkshopDto represents a workshop on the organization
 /// </summary>

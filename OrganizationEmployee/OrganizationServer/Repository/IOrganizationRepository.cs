@@ -1,4 +1,4 @@
-﻿using OrganizationEmployee.EmployeeDomain;
+﻿using EmployeeDomain;
 namespace OrganizationServer.Repository;
 
 public interface IOrganizationRepository

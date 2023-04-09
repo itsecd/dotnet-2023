@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.EmployeeDomain;
+﻿namespace EmployeeDomain;
 /// <summary>
 /// class Department - represents a department in company
 /// </summary>

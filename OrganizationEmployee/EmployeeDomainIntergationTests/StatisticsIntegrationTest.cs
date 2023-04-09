@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using OrganizationServer.Dto;
 using System.Text.Json;
-using OrganizationEmployee.Server.Dto;
-namespace OrganizationEmployee.IntegrationTests;
+namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// StatisticsIntegrationTest  - represents a integration test of StatisticsController
 /// </summary>

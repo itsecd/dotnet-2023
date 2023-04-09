@@ -1,5 +1,5 @@
-using OrganizationEmployee.Server;
-using OrganizationEmployee.Server.Repository;
+using OrganizationServer;
+using OrganizationServer.Repository;
 using System.Reflection;
 
 public class Program

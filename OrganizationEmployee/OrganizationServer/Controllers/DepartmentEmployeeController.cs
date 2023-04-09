@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationEmployee.EmployeeDomain;
-using OrganizationEmployee.Server.Dto;
-using OrganizationEmployee.Server.Repository;
+using OrganizationServer.Dto;
+using OrganizationServer.Repository;
 
-namespace OrganizationEmployee.Server.Controllers;
+namespace OrganizationServer.Controllers;
 /// <summary>
 /// Controller for DepartmentEmployee class
 /// </summary>
@@ -71,7 +71,7 @@ public class DepartmentEmployeeController : Controller
             .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
         if (employee == null)
         {
-            _logger.LogInformation("The employee with ID {id} is not found", 
+            _logger.LogInformation("The employee with ID {id} is not found",
                 mappedDepartmentEmployee.EmployeeId);
             return NotFound($"An employee with given id={mappedDepartmentEmployee.EmployeeId} doesn't exist");
         }
@@ -80,7 +80,7 @@ public class DepartmentEmployeeController : Controller
             .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
         if (department == null)
         {
-            _logger.LogInformation("The department with ID {id} is not found", 
+            _logger.LogInformation("The department with ID {id} is not found",
                 mappedDepartmentEmployee.DepartmentId);
             return NotFound($"An department with given id={mappedDepartmentEmployee.DepartmentId} doesn't exist");
         }

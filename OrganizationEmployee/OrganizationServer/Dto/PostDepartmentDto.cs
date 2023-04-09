@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// class PostDepartmentDto - represents a department in company
 /// </summary>

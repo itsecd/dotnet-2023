@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using OrganizationEmployee.EmployeeDomain;
-using OrganizationEmployee.Server.Dto;
+using EmployeeDomain;
+using OrganizationServer.Dto;
 
-namespace OrganizationEmployee.Server;
+namespace OrganizationServer;
 
 public class MappingProfile : Profile
 {

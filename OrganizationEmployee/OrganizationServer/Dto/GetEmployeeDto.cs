@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// Classs PostEmployeeDto represents an employee in organization, it contains personal information.
 /// </summary>

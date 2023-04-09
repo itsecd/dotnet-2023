@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.EmployeeDomain;
+﻿namespace EmployeeDomain;
 /// <summary>
 /// Class Workshop represents a workshop on the organization
 /// </summary>

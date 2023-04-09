@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// Classs EmployeeWithFewDepartmentsDto represents an employee, who works in 2 or more departments of the organization
 /// </summary>

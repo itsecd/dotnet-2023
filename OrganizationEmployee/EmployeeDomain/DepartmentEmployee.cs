@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.EmployeeDomain;
+﻿namespace EmployeeDomain;
 /// <summary>
 /// class DepartmentEmployee - represents a many-to-many relationship
 /// between Employee and Department

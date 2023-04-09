@@ -1,7 +1,5 @@
-﻿using OrganizationEmployee.EmployeeDomain;
-using OrganizationServer.Repository;
-
-namespace OrganizationEmployee.Server.Repository;
+﻿using EmployeeDomain;
+namespace OrganizationServer.Repository;
 
 public class OrganizationRepository : IOrganizationRepository
 {

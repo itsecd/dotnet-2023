@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.EmployeeDomain;
+﻿namespace EmployeeDomain;
 /// <summary>
 /// class EmployeeVacationVoucher - represents a many-to-many relationship between Employee and VacationVoucher
 /// </summary>

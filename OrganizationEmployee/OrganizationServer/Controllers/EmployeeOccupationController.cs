@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
-using OrganizationEmployee.EmployeeDomain;
-using OrganizationEmployee.Server.Dto;
-using OrganizationEmployee.Server.Repository;
+using OrganizationServer.Dto;
+using OrganizationServer.Repository;
 
-namespace OrganizationEmployee.Server.Controllers;
+namespace OrganizationServer.Controllers;
 /// <summary>
 /// Controller for EmployeeOccupation class
 /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.EmployeeDomain;
+﻿namespace EmployeeDomain;
 /// <summary>
 /// VoucherType - represents a type of vacation voucher, e.g. "sanatorium", "vacation home", etc.
 /// </summary>

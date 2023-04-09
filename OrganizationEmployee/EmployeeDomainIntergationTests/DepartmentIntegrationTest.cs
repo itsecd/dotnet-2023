@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System.Text.Json;
-using OrganizationEmployee.Server.Dto;
+using OrganizationServer.Dto;
 using System.Text;
-namespace OrganizationEmployee.IntegrationTests;
+using System.Text.Json;
+namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// DepartmentIntegrationTest  - represents a integration test of DepartmentController
 /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// EmployeeWorkExperienceDto - represents an employee and employee's work experience
 /// </summary>

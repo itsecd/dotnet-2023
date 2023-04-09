@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System.Text.Json;
-using OrganizationEmployee.Server.Dto;
+using OrganizationServer.Dto;
 using System.Text;
+using System.Text.Json;
 
-namespace OrganizationEmployee.IntegrationTests;
+namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// EmployeeVacationVoucherIntegrationTest  - represents a integration test of EmployeeVacationVoucherController
 /// </summary>

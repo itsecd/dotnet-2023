@@ -1,4 +1,4 @@
-﻿namespace OrganizationEmployee.Server.Dto;
+﻿namespace OrganizationServer.Dto;
 /// <summary>
 /// class PostEmployeeVacationVoucherDto - represents a many-to-many relationship between Employee and VacationVoucher
 /// </summary>

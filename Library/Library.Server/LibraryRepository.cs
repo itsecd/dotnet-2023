@@ -1,8 +1,8 @@
-﻿namespace Library.Tests;
+﻿using Library.Domain;
 
-using Library.Domain;
+namespace Library.Server;
 
-public class LibraryFixture
+public class LibraryRepository
 {
     public List<TypeEdition> FixtureTypeEdition
     {

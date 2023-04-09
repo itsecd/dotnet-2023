@@ -1,9 +1,8 @@
-﻿namespace Library.Domain;
+﻿using Library.Domain;
 
-/// <summary>
-/// Class Book is used to store info about the books
-/// </summary>
-public class Book
+namespace Library.Server.Dto;
+
+public class BookGetDto
 {
     /// <summary>
     /// Id stores book's id
@@ -33,10 +32,6 @@ public class Book
     /// TypeEditionId stores id of type book
     /// </summary>
     public int TypeEditionId { set; get; }
-    /// <summary>
-    /// TypeEdition stores list of types book
-    /// </summary>
-    public List<TypeEdition> TypeEdition { set; get; } = new List<TypeEdition>();
     /// <summary>
     /// IsIssued stores information about whether a book has been issued
     /// </summary>

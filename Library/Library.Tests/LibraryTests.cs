@@ -60,7 +60,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var request = (from mass in
                        (from department in fixtureDepartment
                         from book in department.IdBooks
-                        from type in book.IdTypeEdition
+                        from type in book.TypeEdition
                         select new
                         {
                             types = type.Name,

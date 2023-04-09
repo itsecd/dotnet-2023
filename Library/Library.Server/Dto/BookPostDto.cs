@@ -1,14 +1,7 @@
-﻿namespace Library.Domain;
+﻿namespace Library.Server.Dto;
 
-/// <summary>
-/// Class Book is used to store info about the books
-/// </summary>
-public class Book
+public class BookPostDto
 {
-    /// <summary>
-    /// Id stores book's id
-    /// </summary>
-    public int Id { set; get; }
     /// <summary>
     /// Cipher stores cipher of the book
     /// </summary>
@@ -33,10 +26,6 @@ public class Book
     /// TypeEditionId stores id of type book
     /// </summary>
     public int TypeEditionId { set; get; }
-    /// <summary>
-    /// TypeEdition stores list of types book
-    /// </summary>
-    public List<TypeEdition> TypeEdition { set; get; } = new List<TypeEdition>();
     /// <summary>
     /// IsIssued stores information about whether a book has been issued
     /// </summary>

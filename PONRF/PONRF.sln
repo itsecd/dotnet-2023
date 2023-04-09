@@ -9,13 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PonrfTests", "PonrfTests\Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PonrfServer", "PonrfServer\PonrfServer.csproj", "{233CEE68-E3E6-4B71-928C-8F4F1D5453D6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7B981FF7-4370-4DDE-A5B6-03DB950849E0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E3A19F1A-65CB-4750-941C-829834AAEB58}"
-	ProjectSection(SolutionItems) = preProject
-		check.yml = check.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,9 +30,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E3A19F1A-65CB-4750-941C-829834AAEB58} = {7B981FF7-4370-4DDE-A5B6-03DB950849E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD0D5F50-5F83-48C7-ACCF-7A17A39F1EC8}

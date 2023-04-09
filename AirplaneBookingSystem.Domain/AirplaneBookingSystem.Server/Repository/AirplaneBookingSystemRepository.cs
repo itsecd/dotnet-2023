@@ -1,6 +1,4 @@
 ﻿using AirplaneBookingSystem.Domain;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace AirplaneBookingSystem.Server.Repository;
 
 public class AirplaneBookingSystemRepository : IAirplaneBookingSystemRepository
@@ -23,48 +21,48 @@ public class AirplaneBookingSystemRepository : IAirplaneBookingSystemRepository
         var fifthFlight = new Flight(5, 5, "Chiko", "Kem", new DateTime(2023, 6, 6), new DateTime(2023, 6, 7), fourthAirplane) { AirplaneId = 4 };
 
         var firstClient = new Client(1, "738096", new DateTime(1969, 8, 15), "Samoylov A. K.");
-        var firstTicket = new Ticket(1, 100, firstClient, firstFlight);
+        var firstTicket = new Ticket(1, 100, firstClient, firstFlight) { ClientId =1, FlightId = 1};
         firstClient.Tickets.Add(firstTicket);
         firstFlight.Tickets.Add(firstTicket);
 
         var secondClient = new Client(2, "258204", new DateTime(2002, 6, 4), "Shestakov N. D.");
-        var secondTicket = new Ticket(2, 101, secondClient, firstFlight);
-        var thirdTicket = new Ticket(3, 200, secondClient, secondFlight);
+        var secondTicket = new Ticket(2, 101, secondClient, firstFlight) { ClientId = 2, FlightId = 1 };
+        var thirdTicket = new Ticket(3, 200, secondClient, secondFlight) { ClientId = 2, FlightId = 2 };
         secondClient.Tickets.Add(secondTicket);
         secondClient.Tickets.Add(thirdTicket);
         firstFlight.Tickets.Add(secondTicket);
         secondFlight.Tickets.Add(thirdTicket);
 
         var thirdClient = new Client(3, "211702", new DateTime(1984, 10, 28), "Fomina M. D.");
-        var fourthTicket = new Ticket(4, 01, thirdClient, secondFlight);
+        var fourthTicket = new Ticket(4, 01, thirdClient, secondFlight) { ClientId = 3, FlightId = 2 };
         thirdClient.Tickets.Add(fourthTicket);
         secondFlight.Tickets.Add(fourthTicket);
 
         var fourthClient = new Client(4, "783469", new DateTime(1978, 10, 17), "Novikov Y. M.");
-        var fifthTicket = new Ticket(5, 202, fourthClient, secondFlight);
+        var fifthTicket = new Ticket(5, 202, fourthClient, secondFlight) { ClientId = 4, FlightId = 2 };
         fourthClient.Tickets.Add(fifthTicket);
         secondFlight.Tickets.Add(fifthTicket);
 
         var fifthClient = new Client(5, "481761", new DateTime(2013, 12, 7), "Myasnikov S. I.");
-        var sixtTicket = new Ticket(6, 300, fifthClient, thirdFlight);
-        var seventhTicket = new Ticket(7, 500, fifthClient, fifthFlight);
+        var sixtTicket = new Ticket(6, 300, fifthClient, thirdFlight) { ClientId = 5, FlightId = 3 };
+        var seventhTicket = new Ticket(7, 500, fifthClient, fifthFlight) { ClientId = 5, FlightId = 5 };
         fifthClient.Tickets.Add(sixtTicket);
         fifthClient.Tickets.Add(seventhTicket);
         thirdFlight.Tickets.Add(sixtTicket);
         fifthFlight.Tickets.Add(seventhTicket);
 
         var sixthClient = new Client(6, "154590", new DateTime(1993, 3, 21), "Kapustina D. F.");
-        var eighthTicket = new Ticket(8, 400, sixthClient, fourthFlight);
+        var eighthTicket = new Ticket(8, 400, sixthClient, fourthFlight) { ClientId = 6, FlightId = 4 };
         sixthClient.Tickets.Add(eighthTicket);
         fourthFlight.Tickets.Add(eighthTicket);
 
         var seventhClient = new Client(7, "303386", new DateTime(2013, 4, 3), "Panfilova K. T.");
-        var ninthTicket = new Ticket(9, 401, seventhClient, fourthFlight);
+        var ninthTicket = new Ticket(9, 401, seventhClient, fourthFlight) { ClientId = 7, FlightId = 4 };
         seventhClient.Tickets.Add(ninthTicket);
         fourthFlight.Tickets.Add(ninthTicket);
 
         var eighthClient = new Client(8, "240348", new DateTime(1966, 8, 17), "Birukov D. M.");
-        var tenthTicket = new Ticket(10, 402, eighthClient, fourthFlight);
+        var tenthTicket = new Ticket(10, 402, eighthClient, fourthFlight) { ClientId = 8, FlightId = 4 };
         eighthClient.Tickets.Add(tenthTicket);
         fourthFlight.Tickets.Add(tenthTicket);
 

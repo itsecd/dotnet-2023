@@ -1,7 +1,4 @@
-﻿using AirplaneBookingSystem.Domain;
-
-namespace AirplaneBookingSystem.Server.Dto;
-
+﻿namespace AirplaneBookingSystem.Server.Dto;
 public class FlightPostDto
 {
     /// <summary>
@@ -25,11 +22,7 @@ public class FlightPostDto
     /// </summary>
     public DateTime ArrivalDate { get; set; } = new DateTime();
     /// <summary>
-    /// List of tickets on this flight
-    /// </summary>
-    //public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
-    /// <summary>
-    /// Airplane id of flight
+    /// Airplane`s id of flight
     /// </summary>
     public int AirplaneId { get; set; }
 }

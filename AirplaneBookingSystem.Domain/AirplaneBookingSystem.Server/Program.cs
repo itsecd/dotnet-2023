@@ -4,13 +4,11 @@ using AutoMapper;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
+
 builder.Services.AddSingleton(mapper);
-
 builder.Services.AddSingleton<IAirplaneBookingSystemRepository, AirplaneBookingSystemRepository>();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -29,5 +27,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();

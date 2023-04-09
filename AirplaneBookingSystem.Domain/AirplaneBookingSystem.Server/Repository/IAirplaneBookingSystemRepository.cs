@@ -1,5 +1,4 @@
 ﻿using AirplaneBookingSystem.Domain;
-
 namespace AirplaneBookingSystem.Server.Repository;
 public interface IAirplaneBookingSystemRepository
 {

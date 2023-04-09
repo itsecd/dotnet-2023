@@ -18,12 +18,18 @@ public class Ticket
     /// </summary>
     public Client Client { get; set; }
     /// <summary>
+    /// Client`s id of ticket
+    /// </summary>
+    public int ClientId { get; set; }
+    /// <summary>
     /// Flight for which the ticket is registered
     /// </summary>
     public Flight Flight { get; set; }
-
+    /// <summary>
+    /// Flight`s id of ticket
+    /// </summary>
+    public int FlightId { get; set; }
     public Ticket() { }
-
     public Ticket(int id, int ticketNumber, Client client, Flight flight)
     {
         Id = id;

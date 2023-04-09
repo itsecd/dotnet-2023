@@ -1,6 +1,4 @@
-﻿using Library.Domain;
-
-namespace Library.Server.Dto;
+﻿namespace Library.Server.Dto;
 /// <summary>
 /// Class CardGetDto is used to store info about the cards on the books
 /// </summary>

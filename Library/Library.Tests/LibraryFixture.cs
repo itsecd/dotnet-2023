@@ -212,7 +212,7 @@ public class LibraryFixture
             secondCard.Id = 1;
             secondCard.DateOfIssue = new DateTime(2022, 12, 29);
             secondCard.DateOfReturn = new DateTime(2023, 1, 28);
-            secondCard.DayCount = 31;   
+            secondCard.DayCount = 31;
             secondCard.ReaderId = 0;
             secondCard.Reader.Add(readers[0]);
             secondCard.BooksId = 3;

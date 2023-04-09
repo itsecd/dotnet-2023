@@ -63,7 +63,6 @@ public class PurchaseRecordController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] PurchaseRecordPostDto record)
     {
-        //проверка на наличе продукта и магазина
         var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == record.ProductId);
         if (found_Product == null)
             return NotFound();

@@ -63,7 +63,6 @@ public class ProductQuantityController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] ProductQuantityPostDto product)
     {
-        //проверка на наличе продукта и магазина
         var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == product.ProductId);
         if (found_Product == null) 
             return NotFound(); 

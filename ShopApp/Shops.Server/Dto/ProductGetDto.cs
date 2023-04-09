@@ -7,7 +7,7 @@ public class ProductGetDto
     /// <summary>
     /// Product id
     /// </summary>
-    public int ProductId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Product barcode
     /// </summary>

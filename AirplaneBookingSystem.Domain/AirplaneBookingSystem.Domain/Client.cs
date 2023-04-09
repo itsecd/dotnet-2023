@@ -26,8 +26,9 @@ public class Client
     /// </summary>
     public List<Ticket> Tickets { get; set; } = new List<Ticket>();
     public Client() { }
-    public Client(string passportNumber, DateTime birthdayData, string name)
+    public Client(int id, string passportNumber, DateTime birthdayData, string name)
     {
+        Id = id;
         PassportNumber = passportNumber;
         BirthdayData = birthdayData;
         Name = name;

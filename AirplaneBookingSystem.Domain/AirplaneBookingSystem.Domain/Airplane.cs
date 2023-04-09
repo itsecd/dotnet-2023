@@ -17,9 +17,9 @@ public class Airplane
     /// </summary>
     public List<Flight> Flights { get; set; } = new List<Flight>();
     public Airplane() { }
-    public Airplane(string model)
+    public Airplane(int id, string model)
     {
+        Id = id;
         Model = model;
-        Flights = new List<Flight>();
     }
 }

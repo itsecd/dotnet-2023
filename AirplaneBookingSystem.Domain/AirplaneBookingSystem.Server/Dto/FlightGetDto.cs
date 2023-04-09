@@ -1,9 +1,8 @@
-﻿namespace AirplaneBookingSystem.Domain;
+﻿using AirplaneBookingSystem.Domain;
 
-/// <summary>
-/// Сlass describing the flight of an airplane
-/// </summary>
-public class Flight
+namespace AirplaneBookingSystem.Server.Dto;
+
+public class FlightGetDto
 {
     /// <summary>
     /// Unique Id of flight
@@ -32,21 +31,9 @@ public class Flight
     /// <summary>
     /// List of tickets on this flight
     /// </summary>
-    public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
+    //public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
     /// <summary>
-    /// Airplane of flight
+    /// Airplane id of flight
     /// </summary>
-    public Airplane Airplane { get; set; }
     public int AirplaneId { get; set; }
-    public Flight() { }
-    public Flight(int id, int numberOfFlight, string departureCity, string arrivalCity, DateTime departureDate, DateTime arrivalDate, Airplane airplane)
-    {
-        Id = id;
-        NumberOfFlight = numberOfFlight;
-        DepartureCity = departureCity;
-        ArrivalCity = arrivalCity;
-        DepartureDate = departureDate;
-        ArrivalDate = arrivalDate;
-        Airplane = airplane;
-    }
 }

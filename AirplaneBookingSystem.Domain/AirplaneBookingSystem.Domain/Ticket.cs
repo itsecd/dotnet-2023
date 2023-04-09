@@ -24,8 +24,9 @@ public class Ticket
 
     public Ticket() { }
 
-    public Ticket(int ticketNumber, Client client, Flight flight)
+    public Ticket(int id, int ticketNumber, Client client, Flight flight)
     {
+        Id = id;
         TicketNumber = ticketNumber;
         Client = client;
         Flight = flight;

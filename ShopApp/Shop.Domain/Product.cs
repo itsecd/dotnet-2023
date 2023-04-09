@@ -17,6 +17,9 @@ public class Product
         Price = price;
         StorageLimitDate = storageLimitDate;
     }
+    /// <summary>
+    /// Id is used to product the ID.
+    /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
     /// Product barcode

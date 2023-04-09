@@ -151,12 +151,12 @@ public class AnalyticsController: ControllerBase
     /// Display a list of stores in which goods were sold for a month in excess of the specified amount.
     /// </summary>
     /// <param name="amount">Specified amount.</param>
-    /// <param name="beginDate">The number from which the month is counted.<param>
+    /// <param name="beginDate">The number from which the month is counted.</param>
     /// <returns>Ok(stores in which goods were sold for a month in excess of the specified amount)</returns>
     [HttpGet("shop-earned-more")]
     public ActionResult GetShopEarnedMore(double amount, DateTime beginDate)
     {
-        _logger.LogInformation("Get list of product delay");
+        _logger.LogInformation("Get list of stores in which goods were sold for a month in excess of the specified amount");
         var fixtureShop = _shopRepository.Shops;
         var purchases =
            (from shop in fixtureShop

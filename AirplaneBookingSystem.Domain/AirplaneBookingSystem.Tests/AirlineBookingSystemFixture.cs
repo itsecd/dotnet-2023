@@ -1,6 +1,4 @@
-﻿using AirplaneBookingSystem.Domain;
-
-namespace AirplaneBookingSystem.Tests;
+﻿namespace AirplaneBookingSystem.Tests;
 
 using AirplaneBookingSystem.Domain;
 
@@ -40,7 +38,7 @@ public class AirlineBookingSystemFixture
             secondFlight.Tickets.Add(new Ticket(5, 202, fourthClient, secondFlight));
 
             var fifthClient = new Client(5, "481761", new DateTime(2013, 12, 7), "Myasnikov S. I.");
-            fifthClient.Tickets.Add(new Ticket(6,300, fifthClient, thirdFlight));
+            fifthClient.Tickets.Add(new Ticket(6, 300, fifthClient, thirdFlight));
             fifthClient.Tickets.Add(new Ticket(7, 500, fifthClient, fifthFlight));
             thirdFlight.Tickets.Add(new Ticket(6, 300, fifthClient, thirdFlight));
             fifthFlight.Tickets.Add(new Ticket(7, 500, fifthClient, fifthFlight));

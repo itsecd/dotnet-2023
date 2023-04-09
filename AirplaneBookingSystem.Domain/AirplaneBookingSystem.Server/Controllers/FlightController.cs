@@ -15,7 +15,7 @@ public class FlightController : ControllerBase
     private readonly ILogger<AirplaneController> _logger;
     private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
     private readonly IMapper _mapper;
-   public FlightController(ILogger<AirplaneController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    public FlightController(ILogger<AirplaneController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
     {
         _logger = logger;
         _airplaneBookingSystemRepository = airplaneBookingSystemRepository;

@@ -21,7 +21,7 @@ public class AirplaneBookingSystemRepository : IAirplaneBookingSystemRepository
         var fifthFlight = new Flight(5, 5, "Chiko", "Kem", new DateTime(2023, 6, 6), new DateTime(2023, 6, 7), fourthAirplane) { AirplaneId = 4 };
 
         var firstClient = new Client(1, "738096", new DateTime(1969, 8, 15), "Samoylov A. K.");
-        var firstTicket = new Ticket(1, 100, firstClient, firstFlight) { ClientId =1, FlightId = 1};
+        var firstTicket = new Ticket(1, 100, firstClient, firstFlight) { ClientId = 1, FlightId = 1 };
         firstClient.Tickets.Add(firstTicket);
         firstFlight.Tickets.Add(firstTicket);
 
@@ -94,7 +94,7 @@ public class AirplaneBookingSystemRepository : IAirplaneBookingSystemRepository
             };
         var ticket = new List<Ticket>
             {
-            fifthTicket,
+            firstTicket,
             secondTicket,
             thirdTicket,
             fourthTicket,

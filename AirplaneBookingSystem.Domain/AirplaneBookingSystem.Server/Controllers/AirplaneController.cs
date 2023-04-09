@@ -43,7 +43,7 @@ public class AirplaneController : ControllerBase
     public ActionResult<AirplaneGetDto> Get(int id)
     {
         _logger.LogInformation($"Get airplane with id {id}");
-        var  airplane = _airplaneBookingSystemRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
+        var airplane = _airplaneBookingSystemRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
             _logger.LogInformation($"Not found airplane with id {id}");

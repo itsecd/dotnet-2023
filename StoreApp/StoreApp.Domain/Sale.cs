@@ -17,12 +17,12 @@ public class Sale
     /// <summary>
     /// Customer
     /// </summary>
-    public Customer Customer { get; set; }
+    public int CustomerId { get; set; }
 
     /// <summary>
     /// Store
     /// </summary>
-    public Store Store { get; set; }
+    public int StoreId { get; set; }
 
     /// <summary>
     /// List of products purchased by the customer 
@@ -38,8 +38,8 @@ public class Sale
     {
         SaleId = saleId;
         DateSale = DateTime.Parse(dateSale);
-        Customer = customer;
-        Store = store;
+        CustomerId = customer.CustomerId;
+        StoreId = store.StoreId;
         Products = products;
 
         foreach (Product product in products)

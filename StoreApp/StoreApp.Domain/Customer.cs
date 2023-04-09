@@ -6,6 +6,10 @@
 public class Customer
 {
     /// <summary>
+    /// ID of customer
+    /// </summary>
+    public int CustomerId { get; set; }
+    /// <summary>
     /// Full name of customer
     /// </summary>
     public string CustomerName { get; set; } = string.Empty;
@@ -22,6 +26,7 @@ public class Customer
 
     public Customer(string customerName, int customerCardNumber)
     {
+        CustomerId = Random.Shared.Next(0, 1000);
         CustomerName = customerName;
         CustomerCardNumber = customerCardNumber;
         SalesId = new List<int>();

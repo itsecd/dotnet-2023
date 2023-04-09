@@ -8,12 +8,12 @@ public class Product
     /// <summary>
     /// Product ID, corresponds to its barcode
     /// </summary>
-    public int ProductId { get; set; }
+    public int ProductId { get; set; } = -1;
 
     /// <summary>
     /// Product Group
     /// </summary>
-    public int ProductGroup { get; set; }
+    public int ProductGroup { get; set; } = -1;
 
     /// <summary>
     /// Product name
@@ -43,9 +43,9 @@ public class Product
     /// <summary>
     /// Collection of product sale IDs
     /// </summary>
-    public List<int> SalesId { get; set; }
+    public List<int> SalesId { get; set; } = new List<int>();
 
-
+    public Product() { }
     public Product(int productId, int productGroup, string productName, double productWeight, bool productType, double productPrice, string dateStorage)
     {
         ProductId = productId;

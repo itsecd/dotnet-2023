@@ -8,7 +8,7 @@ public class Customer
     /// <summary>
     /// ID of customer
     /// </summary>
-    public int CustomerId { get; set; }
+    public int CustomerId { get; set; } = -1;
     /// <summary>
     /// Full name of customer
     /// </summary>
@@ -22,11 +22,12 @@ public class Customer
     /// <summary>
     /// Customer purchase ID collection
     /// </summary>
-    public List<int> SalesId { get; set; }
+    public List<int> SalesId { get; set; } = new List<int>();
 
-    public Customer(string customerName, int customerCardNumber)
+    public Customer() { }
+    public Customer(int customerId, string customerName, int customerCardNumber)
     {
-        CustomerId = Random.Shared.Next(0, 1000);
+        CustomerId = customerId;
         CustomerName = customerName;
         CustomerCardNumber = customerCardNumber;
         SalesId = new List<int>();

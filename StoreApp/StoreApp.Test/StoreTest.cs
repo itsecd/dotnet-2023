@@ -31,11 +31,11 @@ public class StoreTest
     {
         return new List<Customer>()
         {
-            new Customer("Michelle Padilla", 111111),
-            new Customer("Manuel Gomez", 222222),
-            new Customer("Raymond Oliver", 333333),
-            new Customer("Enrique Morgan", 444444),
-            new Customer("Walter Mullins", 555555)
+            new Customer(1, "Michelle Padilla", 111111),
+            new Customer(2, "Manuel Gomez", 222222),
+            new Customer(3, "Raymond Oliver", 333333),
+            new Customer(4, "Enrique Morgan", 444444),
+            new Customer(5, "Walter Mullins", 555555)
         };
     }
 
@@ -124,7 +124,7 @@ public class StoreTest
     [Fact]
     public void CustomerConstructorTest()
     {
-        var customer = new Customer("Michelle Padilla", 111111);
+        var customer = new Customer(1, "Michelle Padilla", 111111);
         Assert.Equal("Michelle Padilla", customer.CustomerName);
         Assert.Equal(111111, customer.CustomerCardNumber);
     }

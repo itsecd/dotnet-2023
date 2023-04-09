@@ -1,6 +1,7 @@
 ﻿using Library.Domain;
 using Library.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace Library.Server.Controllers;
 
@@ -21,7 +22,7 @@ public class BookController : ControllerBase
     [HttpGet]
     public IEnumerable<BookGetDto> Get()
     {
-        return _librariesRepository.FixtureBook.Select(book => 
+        return _librariesRepository.Books.Select(book => 
             new BookGetDto
             {
                 Id = book.Id,
@@ -39,7 +40,7 @@ public class BookController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<BookGetDto> Get(int id)
     {
-        var book = _librariesRepository.FixtureBook.FirstOrDefault(book => book.Id == id);
+        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
             _logger.LogInformation($"Not found book type: {id}");
@@ -64,7 +65,7 @@ public class BookController : ControllerBase
     [HttpPost]
     public void Post([FromBody] BookPostDto book)
     {
-        _librariesRepository.FixtureBook.Add(new Book()
+        _librariesRepository.Books.Add(new Book()
         {
             Cipher = book.Cipher,
             Author = book.Author,
@@ -74,15 +75,44 @@ public class BookController : ControllerBase
             TypeEditionId = book.TypeEditionId,
             IsIssued = book.IsIssued
         });
+        _logger.LogInformation("Added");
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] BookPostDto bookToPut)
     {
+        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
+        if (book == null)
+        {
+            _logger.LogInformation($"Not found book type: {id}");
+            return NotFound();
+        }
+        else
+        {
+            book.Cipher = bookToPut.Cipher;
+            book.Author = bookToPut.Author;
+            book.Name = bookToPut.Name;
+            book.PlaceEdition = bookToPut.PlaceEdition;
+            book.YearEdition = bookToPut.YearEdition;
+            book.TypeEditionId = bookToPut.TypeEditionId;
+            book.IsIssued = bookToPut.IsIssued;
+            return Ok();
+        }
     }
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
+        if (book == null)
+        {
+            _logger.LogInformation($"Not found book type: {id}");
+            return NotFound();
+        }
+        else
+        {
+            _librariesRepository.Books.Remove(book);
+            return Ok();
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Library.Domain;
-
-namespace Library.Server.Dto;
+﻿namespace Library.Server.Dto;
 
 public class BookGetDto
 {

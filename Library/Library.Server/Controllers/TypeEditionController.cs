@@ -20,13 +20,13 @@ public class TypeEditionController : ControllerBase
     [HttpGet]
     public IEnumerable<TypeEdition> Get()
     {
-        return _librariesRepository.FixtureTypeEdition;
+        return _librariesRepository.BookTypes;
     }
 
     [HttpGet("{id}")]
     public ActionResult<TypeEdition> Get(int id)
     {
-        var bookType = _librariesRepository.FixtureTypeEdition.FirstOrDefault(type => type.Id == id);
+        var bookType = _librariesRepository.BookTypes.FirstOrDefault(type => type.Id == id);
         if (bookType == null)
         {
             _logger.LogInformation($"Not found book type: {id}");

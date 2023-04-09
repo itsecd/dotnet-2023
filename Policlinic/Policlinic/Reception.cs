@@ -17,38 +17,55 @@ public class Reception
     /// </summary>
     public string Status { get; set; } = string.Empty;
     /// <summary>
-    /// Doctor is a value for storing the data about the doctor
+    /// DoctorId is an int typed value for storing the id of the doctor
     /// </summary>
-    public Doctor Doctor { get; set; } = new Doctor();
+    public int DoctorId { get; set; }
     /// <summary>
-    /// Patient is a value for storing the data about the patient
+    /// PatientId is an int typed value for storing the id of the Patient
     /// </summary>
-    public Patient Patient { get; set; } = new Patient();
+    public int PatientId { get; set; }
     /// <summary>
     /// Conclusion is a string typed value of the conclusion (if status == "Healthy", this will be empty)
     /// </summary>
     public string Conclusion { get; set; } = string.Empty;
-
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
     public Reception() { }
-
-    public Reception(int idReception, DateTime dateAndTime, string status, Doctor doctor, Patient patient, string conclution)
+    /// <summary>
+    /// Constructor with parameters
+    /// </summary>
+    /// <param name="idReception"></param>
+    /// <param name="dateAndTime"></param>
+    /// <param name="status"></param>
+    /// <param name="doctorId"></param>
+    /// <param name="patientId"></param>
+    /// <param name="conclution"></param>
+    public Reception(int idReception, DateTime dateAndTime, string status, int doctorId, int patientId, string conclution)
     {
         IdReception = idReception;
         DateAndTime = dateAndTime;
         Status = status;
-        Doctor = doctor;
-        Patient = patient;
+        DoctorId = doctorId;
+        PatientId = patientId;
         Conclusion = conclution;
     }
-
+    /// <summary>
+    /// Redefined comparison function
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public override bool Equals(object? obj)
     {
         if (obj is not Reception param)
             return false;
-        return Doctor.Equals(param.Doctor) && Patient.Equals(param.Patient) &&
+        return //Doctor.Equals(param.Doctor) && Patient.Equals(param.Patient) &&
              DateAndTime == param.DateAndTime && Status == param.Status;
     }
-
+    /// <summary>
+    /// Redefined hash function
+    /// </summary>
+    /// <returns></returns>
     public override int GetHashCode()
     {
         return HashCode.Combine(IdReception);

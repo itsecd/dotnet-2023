@@ -45,7 +45,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
     /// <summary>
     /// Tests the parameterized GET method
     /// </summary>
-    /// <param name="vacationVoucherId">ID of the VactionVoucher</param>
+    /// <param name="vacationVoucherId">ID of the VacationVoucher</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
     [InlineData(1, true)]

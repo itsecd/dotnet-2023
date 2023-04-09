@@ -28,7 +28,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// Tests correctness of the following task: "Output all employees of the given department"
     /// </summary>
     /// <param name="departmentId">The ID of the Department</param>
-    /// <param name="employeeCount">The correct number of employees in the deparment</param>
+    /// <param name="employeeCount">The correct number of employees in the department</param>
     [Theory]
     [InlineData(1, 3)]
     [InlineData(2, 4)]

@@ -14,11 +14,19 @@ public class Department
     /// </summary>
     public int Count { set; get; }
     /// <summary>
-    /// IdBooks stores list of id books
+    /// BooksId stores book's id
     /// </summary>
-    public List<Book> IdBooks { set; get; } = new List<Book>();
+    public int BooksId { set; get; }
     /// <summary>
-    /// IdTypeDepartments stores list of id types department
+    /// Books stores list of books
     /// </summary>
-    public List<TypeDepartment> IdTypeDepartments { set; get; } = new List<TypeDepartment>();
+    public List<Book> Books { set; get; } = new List<Book>();
+    /// <summary>
+    /// TypeDepartmentsId stores department's id
+    /// </summary>
+    public int TypeDepartmentsId { set; get; }
+    /// <summary>
+    /// TypeDepartments stores list of types department
+    /// </summary>
+    public List<TypeDepartment> TypeDepartments { set; get; } = new List<TypeDepartment>();
 }

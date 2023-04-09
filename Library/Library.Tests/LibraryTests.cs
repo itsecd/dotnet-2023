@@ -43,7 +43,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     {
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from department in fixtureDepartment
-                       from b in department.IdBooks
+                       from b in department.Books
                        where b.Id == 3
                        select new { departments = department, count = department.Count }).ToList();
         Assert.Equal(2, request.Count());
@@ -59,7 +59,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from mass in
                        (from department in fixtureDepartment
-                        from book in department.IdBooks
+                        from book in department.Books
                         from type in book.TypeEdition
                         select new
                         {
@@ -85,7 +85,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureCard = _fixture.FixtureCard.ToList();
         var date = new DateOnly(2023, 3, 1);
         var numOfReaders = (from card in fixtureCard
-                            from reader in card.IdReader
+                            from reader in card.Reader
                             where card.DateOfReturn < date
                             group card by reader.Id into g
                             select new
@@ -108,7 +108,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     {
         var fixtureCard = _fixture.FixtureCard.ToList();
         var maxDelay = (from card in fixtureCard
-                        from reader in card.IdReader
+                        from reader in card.Reader
                         group card by reader.FullName into g
                         select new
                         {

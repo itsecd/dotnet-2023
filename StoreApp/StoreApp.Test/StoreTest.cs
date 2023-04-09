@@ -291,20 +291,23 @@ public class StoreTest
 
         DateTime startDate = DateTime.Now.AddMonths(-1);
         var minSalesAmount = 900.0;
-
         var result = from sale in sales
                      where sale.DateSale >= startDate
-                     group sale by sale.Store into storeGroup
+                     group sale by sale.StoreId into storeGroup
                      select new
                      {
-                         StoreName = storeGroup.Key.StoreName,
-                         TotalSales = storeGroup.Sum(sale => sale.Sum)
+                         StoreId = storeGroup.Key,
+                         TotalSales = storeGroup.Sum(sale => sale.Sum),
                      } into storeSales
                      where storeSales.TotalSales >= minSalesAmount
-                     select new { StoreName = storeSales.StoreName, TotalSales = storeSales.TotalSales };
+                     select new { StoreId = storeSales.StoreId, TotalSales = storeSales.TotalSales };
+
+
+
+
 
         Assert.Single(result);
-        Assert.Contains(result, x => x.StoreName == "Walmart" && x.TotalSales == 1467.0);
-        Assert.DoesNotContain(result, x => x.StoreName == "Pyaterochka" && x.TotalSales == 978.0);
+        Assert.Contains(result, x => x.StoreId == 0 && x.TotalSales == 1467.0);
+        Assert.DoesNotContain(result, x => x.StoreId == 1 && x.TotalSales == 978.0);
     }
 }

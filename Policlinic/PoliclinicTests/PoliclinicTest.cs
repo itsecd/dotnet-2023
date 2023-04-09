@@ -17,8 +17,8 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
         var doctorList = _fixture.CreateDefaultDoctors;
         var requestDoctorList = (from doctor in doctorList
                                  where doctor.WorkExperience >= 10
-                                 select doctor.Fio).ToList();
-        Assert.Equal(doctorList[1].Fio, requestDoctorList[0]);
+                                 select doctor).ToList();
+        Assert.Equal(doctorList[1], requestDoctorList[0]);
     }
     /// <summary>
     /// Display information about all patients who have made an appointment with the specified doctor, arrange by name
@@ -28,10 +28,14 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
     {
         var patientList = _fixture.CreateDefaultPatients;
         var doctorList = _fixture.CreateDefaultDoctors;
+        var receptionList = _fixture.CreateDefaultReceptions;
         var requestPatientList = (from patient in patientList
-                                  join doctor in doctorList on patient.Receptions[0].IdReception equals doctor.Receptions[0].IdReception
+                                  join reception in receptionList on patient.IdPatient equals reception.PatientId
+                                  join doctor in doctorList on reception.DoctorId equals doctor.IdDoctor
+                                  where reception.DoctorId == 10
+                                  orderby patient.Fio
                                   select patient).ToList();
-        Assert.Equal(patientList[0], requestPatientList[0]);
+        Assert.Equal(patientList[1], requestPatientList[0]);
     }
     /// <summary>
     /// Display information about currently healthy patients
@@ -40,11 +44,13 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
     public void ThirdRequest()
     {
         var receptionList = _fixture.CreateDefaultReceptions;
-        var requestHealthyPatientList = (from reception in receptionList
+        var patientList = _fixture.CreateDefaultPatients;
+        var requestHealthyPatientList = (from patient in patientList
+                                         join reception in receptionList on patient.IdPatient equals reception.PatientId
                                          where reception.Status == "Healthy"
-                                         select reception.Patient).ToList();
-        Assert.Equal(receptionList[1].Patient, requestHealthyPatientList[0]);
-        Assert.Equal(receptionList[2].Patient, requestHealthyPatientList[1]);
+                                         select patient).Distinct().ToList();
+        Assert.Equal(patientList[1], requestHealthyPatientList[0]);
+        Assert.Equal(patientList[2], requestHealthyPatientList[1]);
     }
     /// <summary>
     /// Display information about the number of patient appointments by doctors for the last month
@@ -52,13 +58,18 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
     [Fact]
     public void FourthRequest()
     {
-        var patientList = _fixture.CreateDefaultPatients;
+        var receptionList = _fixture.CreateDefaultReceptions;
         var doctorList = _fixture.CreateDefaultDoctors;
         var requestCountReceptionsInOneMonth = (from doctor in doctorList
-                                                where doctor.Receptions[0].DateAndTime > new DateTime(2023, 1, 31) && doctor.Receptions[0].DateAndTime < new DateTime(2023, 3, 1)
+                                                join reception in receptionList on doctor.IdDoctor equals reception.DoctorId
+                                                where reception.DateAndTime > new DateTime(2023, 1, 31) && reception.DateAndTime < new DateTime(2023, 3, 1)
                                                 orderby doctor.Receptions.Count descending
-                                                select doctor).ToList();
-        Assert.Equal(doctorList[0], requestCountReceptionsInOneMonth[0]);
+                                                select new
+                                                {
+                                                    count = doctor.Receptions.Count,
+                                                    key = doctor.Fio
+                                                }).Distinct().ToList();
+        Assert.Equal(2, requestCountReceptionsInOneMonth[0].count);
     }
     /// <summary>
     /// Display information about the top 5 most common diseases among patients
@@ -81,9 +92,19 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
     public void SixthRequest()
     {
         var patientList = _fixture.CreateDefaultPatients;
-        var requestOlderPatients = (from patient in patientList
-                                    where DateTime.Today.Year - patient.BirthDate.Year > 30 && patient.Receptions.Count > 1
-                                    select patient).ToList();
-        Assert.Equal(patientList[1], requestOlderPatients[0]);
+        var receptionList = _fixture.CreateDefaultReceptions;
+        var requestPatientsAndSeveralDoctors = (from patient in patientList
+                                                join reception in receptionList on patient.IdPatient equals reception.PatientId
+                                                where patient.Receptions.Count > 1
+                                                select new
+                                                {
+                                                    count = patient.Receptions.Count,
+                                                    fio = patient.Fio,
+                                                    birthDate = patient.BirthDate
+                                                }).ToList();
+        var requestOlderPatients = (from patient in requestPatientsAndSeveralDoctors
+                                    where DateTime.Today.Year - patient.birthDate.Year > 30
+                                    select patient).Distinct().ToList();
+        Assert.Equal(patientList[1].Fio, requestOlderPatients[0].fio);
     }
 }

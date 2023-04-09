@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomain", "EmployeeDomain\EmployeeDomain.csproj", "{23A42F92-3DCD-4327-8E2F-38412C1A95AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainTests", "EmployeeTests\EmployeeDomainTests.csproj", "{3043D4DA-6146-459B-8E4A-4C82B769E199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainTests", "EmployeeDomainTests\EmployeeDomainTests.csproj", "{3043D4DA-6146-459B-8E4A-4C82B769E199}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationServer", "OrganizationServer\OrganizationServer.csproj", "{3C56F3CB-5D74-47EC-A6F2-5EAF6239FE3F}"
 EndProject

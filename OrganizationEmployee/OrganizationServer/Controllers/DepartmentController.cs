@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
-namespace OrganizationEmployee.OrganizationServer.Controllers;
+namespace OrganizationServer.Controllers;
 /// <summary>
 /// Controller for Department of an organization
 /// </summary>

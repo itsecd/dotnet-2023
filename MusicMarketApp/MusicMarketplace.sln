@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicMarketplace", "Music Marketplace\MusicMarketplace.csproj", "{DC10FC1C-7043-4FDB-B915-F9312A0F2332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicMarketplace", "MusicMarketplace\MusicMarketplace.csproj", "{DC10FC1C-7043-4FDB-B915-F9312A0F2332}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicMarketTests", "MusicMarketTests\MusicMarketTests.csproj", "{F3E7109E-72FC-4E21-B317-0990B27E2625}"
 EndProject

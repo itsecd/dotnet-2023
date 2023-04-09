@@ -114,15 +114,6 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            //product0.Seller = "Muzzona";
-            //product1.Seller = "Muzzona";
-            //product2.Seller = "Muzzona";
-            //product3.Seller = "Muzzona";
-            //product4.Seller = "Skifmusic";
-            //product5.Seller = "StopRobot";
-            //product6.Seller = "StopRobot";
-            //product7.Seller = "StopRobot";
-
             product0.Seller = new Seller(0, "Muzzona", "Russia", 300);
             product1.Seller = new Seller(1, "Muzzona", "Russia", 300);
             product2.Seller = new Seller(2, "Muzzona", "Russia", 300);
@@ -233,17 +224,17 @@ public class MusicMarketFixture
         }
     }
 
-    public List<製stomer> Fixture製stomers
+    public List<Customer> FixtureCustomers
     {
         get
         {
             var purchases = FixturePurchases;
-            var 駏stomers = new List<Customer>();
-            var customer0 = new Customer();
-            var customer1 = new Customer();
-            var customer2 = new Customer();
-            var customer3 = new Customer();
-            var customer4 = new Customer();
+            var 褋ustomers = new List<小ustomer>();
+            var customer0 = new 小ustomer();
+            var customer1 = new 小ustomer();
+            var customer2 = new 小ustomer();
+            var customer3 = new 小ustomer();
+            var customer4 = new 小ustomer();
 
             customer0.Id = 0;
             customer1.Id = 1;

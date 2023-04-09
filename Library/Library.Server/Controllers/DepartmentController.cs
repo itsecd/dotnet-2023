@@ -25,7 +25,7 @@ public class DepartmentController : ControllerBase
     /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
-    /// Reader controller's constructor
+    /// Department controller's constructor
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="librariesRepository"></param>

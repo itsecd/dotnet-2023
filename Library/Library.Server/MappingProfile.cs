@@ -10,11 +10,14 @@ public class MappingProfile : Profile
     {
         CreateMap<Book, BookGetDto>();
         CreateMap<Book, BookPostDto>();
+        CreateMap<Card, CardGetDto>();
+        CreateMap<Card, CardPostDto>();
         CreateMap<Department, DepartmentGetDto>();
         CreateMap<Department, DepartmentPostDto>();
         CreateMap<Reader, ReaderPostDto>();
 
         CreateMap<BookPostDto, Book>();
+        CreateMap<CardPostDto, Card>();
         CreateMap<DepartmentPostDto, Department>();
         CreateMap<ReaderPostDto, Reader>();
     }

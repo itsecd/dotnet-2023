@@ -1,5 +1,7 @@
 ﻿namespace Shops.Server.Dto;
-
+/// <summary>
+/// Class ProductGroupPostDto is used to make HTTP POST request.
+/// </summary>
 public class ProductGroupPostDto
 {    
     /// <summary>

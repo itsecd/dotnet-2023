@@ -5,8 +5,9 @@
 public class PurchaseRecord
 {
     public PurchaseRecord() { }
-    public PurchaseRecord(int shopId, int customerId, Customer customer, int productId, Product product, double quantity, DateTime dateSale)
+    public PurchaseRecord(int id, int shopId, int customerId, Customer customer, int productId, Product product, double quantity, DateTime dateSale)
     {
+        Id = id;
         ShopId = shopId;
         CustomerId = customerId;
         Customer = customer;
@@ -16,6 +17,10 @@ public class PurchaseRecord
         DateSale = dateSale;
         Sum = product.Price * quantity;
     }
+    /// <summary>
+    /// Id is used to store the ID.
+    /// </summary>
+    public int Id { get; set; }
     /// <summary>
     /// Were bought
     /// </summary>

@@ -16,6 +16,9 @@ public class MappingProfile : Profile
         CreateMap<Customer, CustomerPostDto>().ReverseMap();
         CreateMap<ProductGroup, ProductGroupGetDto>();
         CreateMap<ProductGroup, ProductGroupPostDto>().ReverseMap();
-
+        CreateMap<ProductQuantity, ProductQuantityGetDto>();
+        CreateMap<ProductQuantity, ProductQuantityPostDto>().ReverseMap();
+        CreateMap<PurchaseRecord, PurchaseRecordGetDto>();
+        CreateMap<PurchaseRecord, PurchaseRecordPostDto>().ReverseMap();
     }
 }

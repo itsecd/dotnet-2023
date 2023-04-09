@@ -1,17 +1,9 @@
-﻿namespace Shops.Domain;
+﻿namespace Shops.Server.Dto;
 /// <summary>
-/// ProductQuantity - class describing quantity of products in stores
+/// Class ProductQuantityGetDto is used to make HTTP GET request.
 /// </summary>
-public class ProductQuantity
+public class ProductQuantityGetDto
 {
-    public ProductQuantity() { }
-    public ProductQuantity(int id, int productId, int shopId, double quantity)
-    {
-        Id = id;
-        ProductId = productId;
-        ShopId = shopId;
-        Quantity = quantity;
-    }
     /// <summary>
     /// Id is used to store the ID.
     /// </summary>

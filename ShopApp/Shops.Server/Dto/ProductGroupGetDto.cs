@@ -1,5 +1,7 @@
 ﻿namespace Shops.Server.Dto;
-
+/// <summary>
+/// Class ProductGroupGetDto is used to make HTTP GET request.
+/// </summary>
 public class ProductGroupGetDto
 {
     /// <summary>

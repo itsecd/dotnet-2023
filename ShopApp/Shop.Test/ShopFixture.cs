@@ -68,25 +68,25 @@ public class ShopFixture
             var products = ListProducts;
             return new List<ProductQuantity>()
             {
-            new ProductQuantity(products[0].Id, 1, 250),
-            new ProductQuantity(products[1].Id, 1, 100),
-            new ProductQuantity(products[2].Id, 1, 50),
-            new ProductQuantity(products[4].Id, 1, 60),
-            new ProductQuantity(products[5].Id, 1, 75),
-            new ProductQuantity(products[6].Id, 1, 100),
-            new ProductQuantity(products[8].Id, 1, 200),
-            new ProductQuantity(products[1].Id, 2, 200),
-            new ProductQuantity(products[4].Id, 2, 100),
-            new ProductQuantity(products[5].Id, 2, 100),
-            new ProductQuantity(products[6].Id, 2, 90),
-            new ProductQuantity(products[8].Id, 2, 40),
-            new ProductQuantity(products[0].Id, 3, 200),
-            new ProductQuantity(products[2].Id, 3, 100),
-            new ProductQuantity(products[3].Id, 3, 50),
-            new ProductQuantity(products[4].Id, 3, 60),
-            new ProductQuantity(products[5].Id, 3, 75),
-            new ProductQuantity(products[6].Id, 3, 30),
-            new ProductQuantity(products[7].Id, 3, 130)
+             new ProductQuantity(1,products[0].Id, 1, 250),
+            new ProductQuantity(2 ,products[1].Id, 1, 100),
+            new ProductQuantity(3 ,products[2].Id, 1, 50),
+            new ProductQuantity(4 ,products[4].Id, 1, 60),
+            new ProductQuantity(5 ,products[5].Id, 1, 75),
+            new ProductQuantity(6 ,products[6].Id, 1, 100),
+            new ProductQuantity(7 ,products[8].Id, 1, 200),
+            new ProductQuantity(8 ,products[1].Id, 2, 200),
+            new ProductQuantity(9 ,products[4].Id, 2, 100),
+            new ProductQuantity(10 ,products[5].Id, 2, 100),
+            new ProductQuantity(11 ,products[6].Id, 2, 90),
+            new ProductQuantity(12 ,products[8].Id, 2, 40),
+            new ProductQuantity(13 ,products[0].Id, 3, 200),
+            new ProductQuantity(14 ,products[2].Id, 3, 100),
+            new ProductQuantity(15 ,products[3].Id, 3, 50),
+            new ProductQuantity(16 ,products[4].Id, 3, 60),
+            new ProductQuantity(17 ,products[5].Id, 3, 75),
+            new ProductQuantity(18 ,products[6].Id, 3, 30),
+            new ProductQuantity(19 ,products[7].Id, 3, 130)
             };
         }
     }
@@ -112,14 +112,14 @@ public class ShopFixture
             var products = ListProducts;
             return new List<PurchaseRecord>
                 {
-                    new PurchaseRecord(1, 1, customers[0], 1, products[0], 5.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(1, 1, customers[0], 2, products[1], 7.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(1, 2, customers[1], 1 ,products[0], 2.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(1, 2, customers[1], 4, products[3], 3.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(1, 3, customers[2], 1, products[0], 6.0, new DateTime(2023, 01, 20)),
-                    new PurchaseRecord(1, 3, customers[2], 2, products[1], 4.0, new DateTime(2023, 01, 20)),
-                    new PurchaseRecord(1, 5, customers[4], 1, products[0], 1.0, new DateTime(2023, 02, 23)),
-                    new PurchaseRecord(1, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 02, 23)),
+                    new PurchaseRecord(1, 1, 1, customers[0], 1, products[0], 5.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(2, 1, 1, customers[0], 2, products[1], 7.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(3, 1, 2, customers[1], 1 ,products[0], 2.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(4, 1, 2, customers[1], 4, products[3], 3.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(5, 1, 3, customers[2], 1, products[0], 6.0, new DateTime(2023, 01, 20)),
+                    new PurchaseRecord(6, 1, 3, customers[2], 2, products[1], 4.0, new DateTime(2023, 01, 20)),
+                    new PurchaseRecord(7, 1, 5, customers[4], 1, products[0], 1.0, new DateTime(2023, 02, 23)),
+                    new PurchaseRecord(8, 1, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 02, 23)),
                 };
         }
     }
@@ -131,14 +131,14 @@ public class ShopFixture
             var products = ListProducts;
             return new List<PurchaseRecord>
                 {
-                    new PurchaseRecord(2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(2, 5, customers[4], 6, products[6], 5.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(2, 4, customers[3], 1, products[0], 1.0, new DateTime(2023, 01, 14)),
-                    new PurchaseRecord(2, 4, customers[3], 4, products[3], 4.0, new DateTime(2023, 01, 14)),
-                    new PurchaseRecord(2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(2, 5, customers[4], 7, products[6], 3.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(2, 3, customers[2], 1, products[0], 2.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(2, 3, customers[2], 4,  products[3], 1.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(9, 2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(10, 2, 5, customers[4], 6, products[6], 5.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(11, 2, 4, customers[3], 1, products[0], 1.0, new DateTime(2023, 01, 14)),
+                    new PurchaseRecord(12, 2, 4, customers[3], 4, products[3], 4.0, new DateTime(2023, 01, 14)),
+                    new PurchaseRecord(13, 2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(14, 2, 5, customers[4], 7, products[6], 3.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(15, 2, 3, customers[2], 1, products[0], 2.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(16, 2, 3, customers[2], 4,  products[3], 1.0, new DateTime(2023, 03, 14)),
                 };
         }
     }
@@ -150,14 +150,14 @@ public class ShopFixture
             var products = ListProducts;
             return new List<PurchaseRecord>
                 {
-                    new PurchaseRecord(3, 3, customers[2], 1, products[0], 5.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(3, 3, customers[2], 2, products[1], 1.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(3, 5, customers[4], 1, products[0], 3.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(3, 5, customers[4], 4, products[3], 6.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(3, 1, customers[1], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(3, 1, customers[1], 7, products[6], 1.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(3, 1, customers[0], 1, products[0], 3.0, new DateTime(2023, 03, 14)),
-                    new PurchaseRecord(3, 1, customers[0], 4, products[3], 5.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(17, 3, 3, customers[2], 1, products[0], 5.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(18, 3, 3, customers[2], 2, products[1], 1.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(19, 3, 5, customers[4], 1, products[0], 3.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(20, 3, 5, customers[4], 4, products[3], 6.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(21, 3, 1, customers[1], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(22, 3, 1, customers[1], 7, products[6], 1.0, new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(23, 3, 1, customers[0], 1, products[0], 3.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(24, 3, 1, customers[0], 4, products[3], 5.0, new DateTime(2023, 03, 14)),
                     };
         }
     }

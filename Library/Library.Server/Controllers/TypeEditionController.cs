@@ -1,4 +1,5 @@
 ﻿using Library.Domain;
+using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
@@ -9,9 +10,9 @@ public class TypeEditionController : ControllerBase
 {
     private readonly ILogger<TypeEditionController> _logger;
 
-    private readonly LibraryRepository _librariesRepository;
+    private readonly ILibraryRepository _librariesRepository;
 
-    public TypeEditionController(ILogger<TypeEditionController> logger, LibraryRepository librariesRepository)
+    public TypeEditionController(ILogger<TypeEditionController> logger, ILibraryRepository librariesRepository)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
@@ -29,7 +30,7 @@ public class TypeEditionController : ControllerBase
         var bookType = _librariesRepository.BookTypes.FirstOrDefault(type => type.Id == id);
         if (bookType == null)
         {
-            _logger.LogInformation($"Not found book type: {id}");
+            _logger.LogInformation("Not found book type: {id}", id);
             return NotFound();
         }
         else

@@ -1,7 +1,8 @@
-﻿using Library.Domain;
+﻿using AutoMapper;
+using Library.Domain;
 using Library.Server.Dto;
+using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
 
 namespace Library.Server.Controllers;
 
@@ -11,30 +12,25 @@ public class BookController : ControllerBase
 {
     private readonly ILogger<BookController> _logger;
 
-    private readonly LibraryRepository _librariesRepository;
+    private readonly ILibraryRepository _librariesRepository;
 
-    public BookController(ILogger<BookController> logger, LibraryRepository librariesRepository)
+    private readonly IMapper _mapper;
+
+    public BookController(ILogger<BookController> logger, ILibraryRepository librariesRepository, IMapper mapper)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
+        _mapper = mapper;
     }
 
+    /// <summary>
+    /// Return list of all books
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<BookGetDto> Get()
     {
-        return _librariesRepository.Books.Select(book => 
-            new BookGetDto
-            {
-                Id = book.Id,
-                Cipher = book.Cipher,
-                Author = book.Author,
-                Name = book.Name,
-                PlaceEdition = book.PlaceEdition,
-                YearEdition = book.YearEdition,
-                TypeEditionId = book.TypeEditionId,
-                IsIssued = book.IsIssued
-            }
-        );
+        return _librariesRepository.Books.Select(book => _mapper.Map<BookGetDto>(book));
     }
 
     [HttpGet("{id}")]
@@ -43,38 +39,19 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation($"Not found book type: {id}");
+            _logger.LogInformation("Not found book type: {id}", id);
             return NotFound();
         }
         else
         {
-            return Ok(new BookGetDto
-            {
-                Id = book.Id,
-                Cipher = book.Cipher,
-                Author = book.Author,
-                Name = book.Name,
-                PlaceEdition = book.PlaceEdition,
-                YearEdition = book.YearEdition,
-                TypeEditionId = book.TypeEditionId,
-                IsIssued = book.IsIssued
-            });
+            return Ok(_mapper.Map<BookGetDto>(book));
         }
     }
 
     [HttpPost]
     public void Post([FromBody] BookPostDto book)
     {
-        _librariesRepository.Books.Add(new Book()
-        {
-            Cipher = book.Cipher,
-            Author = book.Author,
-            Name = book.Name,
-            PlaceEdition = book.PlaceEdition,
-            YearEdition = book.YearEdition,
-            TypeEditionId = book.TypeEditionId,
-            IsIssued = book.IsIssued
-        });
+        _librariesRepository.Books.Add(_mapper.Map<Book>(book));
         _logger.LogInformation("Added");
     }
 
@@ -84,18 +61,12 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation($"Not found book type: {id}");
+            _logger.LogInformation("Not found book type: {id}", id);
             return NotFound();
         }
         else
         {
-            book.Cipher = bookToPut.Cipher;
-            book.Author = bookToPut.Author;
-            book.Name = bookToPut.Name;
-            book.PlaceEdition = bookToPut.PlaceEdition;
-            book.YearEdition = bookToPut.YearEdition;
-            book.TypeEditionId = bookToPut.TypeEditionId;
-            book.IsIssued = bookToPut.IsIssued;
+            _mapper.Map(bookToPut, book);
             return Ok();
         }
     }
@@ -106,7 +77,7 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation($"Not found book type: {id}");
+            _logger.LogInformation("Not found book type: {id}", id);
             return NotFound();
         }
         else

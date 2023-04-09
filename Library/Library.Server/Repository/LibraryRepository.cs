@@ -1,8 +1,8 @@
 ﻿using Library.Domain;
 
-namespace Library.Server;
+namespace Library.Server.Repository;
 
-public class LibraryRepository
+public class LibraryRepository : ILibraryRepository
 {
     private readonly List<TypeEdition> _bookTypes;
 

@@ -83,7 +83,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     public void TopFiveTest()
     {
         var fixtureCard = _fixture.FixtureCard.ToList();
-        var date = new DateOnly(2023, 3, 1);
+        var date = new DateTime(2023, 3, 1);
         var numOfReaders = (from card in fixtureCard
                             from reader in card.Reader
                             where card.DateOfReturn < date
@@ -113,7 +113,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
                         select new
                         {
                             Delay = g.Key,
-                            MaxDay = g.Select(x => x.DateOfReturn.DayNumber - x.DateOfIssue.DayNumber - x.DayCount).Max(),
+                            MaxDay = g.Select(x => (x.DateOfReturn - x.DateOfIssue).TotalDays - x.DayCount).Max(),
                             Count = g.Count()
                         }).ToList();
         var request = (from readers in maxDelay

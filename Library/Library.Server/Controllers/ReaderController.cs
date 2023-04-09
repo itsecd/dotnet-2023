@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
 /// <summary>
-/// Book controller
+/// Reader controller
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class BookController : ControllerBase
+public class ReaderController : ControllerBase
 {
     /// <summary>
     /// Used to store logger
     /// </summary>
-    private readonly ILogger<BookController> _logger;
+    private readonly ILogger<ReaderController> _logger;
     /// <summary>
     /// Used to store repository
     /// </summary>
@@ -25,93 +25,91 @@ public class BookController : ControllerBase
     /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
-    /// Book controller's constructor
+    /// Reader controller's constructor
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="librariesRepository"></param>
     /// <param name="mapper"></param>
-    public BookController(ILogger<BookController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public ReaderController(ILogger<ReaderController> logger, ILibraryRepository librariesRepository, IMapper mapper)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
         _mapper = mapper;
     }
     /// <summary>
-    /// Return list of all books
+    /// Return list of all readers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<BookGetDto> Get()
+    public IEnumerable<Reader> Get()
     {
-        return _librariesRepository.Books.Select(book => _mapper.Map<BookGetDto>(book));
+        return _librariesRepository.Readers;
     }
     /// <summary>
-    /// Return info about book by id
+    /// Return info about reader by id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<BookGetDto> Get(int id)
+    public ActionResult<Reader> Get(int id)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
+        if (reader == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
         else
         {
-            return Ok(_mapper.Map<BookGetDto>(book));
+            return Ok(reader);
         }
     }
     /// <summary>
-    /// Add a new book
+    /// Add a new reader
     /// </summary>
-    /// <param name="book"></param>
+    /// <param name="reader"></param>
     [HttpPost]
-    public void Post([FromBody] BookPostDto book)
+    public void Post([FromBody] ReaderPostDto reader)
     {
-        _librariesRepository.Books.Add(_mapper.Map<Book>(book));
+        _librariesRepository.Readers.Add(_mapper.Map<Reader>(reader));
         _logger.LogInformation("Added");
     }
     /// <summary>
-    /// Сhange info of selected book
+    /// Сhange info of selected reader
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="bookToPut"></param>
-    /// <returns></returns>
+    /// <param name="readerToPut"></param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BookPostDto bookToPut)
+    public IActionResult Put(int id, [FromBody] ReaderPostDto readerToPut)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
+        if (reader == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
         else
         {
-            _mapper.Map(bookToPut, book);
+            _mapper.Map(readerToPut, reader);
             return Ok();
         }
     }
     /// <summary>
-    /// Delete book by id
+    /// Delete reader by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
+        if (reader == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
         else
         {
-            _librariesRepository.Books.Remove(book);
+            _librariesRepository.Readers.Remove(reader);
             return Ok();
         }
     }

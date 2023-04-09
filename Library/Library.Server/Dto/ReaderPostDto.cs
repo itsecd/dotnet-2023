@@ -1,14 +1,9 @@
-﻿namespace Library.Domain;
-
+﻿namespace Library.Server.Dto;
 /// <summary>
-/// Class Reader is used to store info about readers
+/// Class ReaderPostDto is used to store info about readers
 /// </summary>
-public class Reader
+public class ReaderPostDto
 {
-    /// <summary>
-    /// Id stores reader's id
-    /// </summary>
-    public int Id { set; get; }
     /// <summary>
     /// FullName stores reader's fullname
     /// </summary>

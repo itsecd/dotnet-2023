@@ -4,38 +4,38 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
 /// <summary>
-/// TypeEdition controller
+/// TypeDepartment controller
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TypeEditionController : ControllerBase
+public class TypeDepartmentController : ControllerBase
 {
     /// <summary>
     /// Used to store logger
     /// </summary>
-    private readonly ILogger<TypeEditionController> _logger;
+    private readonly ILogger<TypeDepartmentController> _logger;
     /// <summary>
     /// Used to store repository
     /// </summary>
     private readonly ILibraryRepository _librariesRepository;
     /// <summary>
-    /// TypeEdition controller's constructor
+    /// TypeDepartment controller's constructor
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="librariesRepository"></param>
-    public TypeEditionController(ILogger<TypeEditionController> logger, ILibraryRepository librariesRepository)
+    public TypeDepartmentController(ILogger<TypeDepartmentController> logger, ILibraryRepository librariesRepository)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
     }
     /// <summary>
-    /// Return list of all types of books
+    /// Return list of all types of departments
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeEdition> Get()
+    public IEnumerable<TypeDepartment> Get()
     {
-        return _librariesRepository.BookTypes;
+        return _librariesRepository.DepartmentTypes;
     }
     /// <summary>
     /// Return info about type by id
@@ -43,17 +43,17 @@ public class TypeEditionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeEdition> Get(int id)
+    public ActionResult<TypeDepartment> Get(int id)
     {
-        var bookType = _librariesRepository.BookTypes.FirstOrDefault(type => type.Id == id);
-        if (bookType == null)
+        var departmentType = _librariesRepository.DepartmentTypes.FirstOrDefault(type => type.Id == id);
+        if (departmentType == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found department type: {id}", id);
             return NotFound();
         }
         else
         {
-            return Ok(bookType);
+            return Ok(departmentType);
         }
     }
 }

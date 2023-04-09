@@ -1,5 +1,7 @@
 ﻿namespace Library.Server.Dto;
-
+/// <summary>
+/// Class BookPostDto is used to store info about the books
+/// </summary>
 public class BookPostDto
 {
     /// <summary>

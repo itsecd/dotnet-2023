@@ -56,7 +56,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     {
         var client = _factory.CreateClient();
 
-        var response = await client.GetAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId));
+        var response = await client.GetAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var departmentEmployee = JsonSerializer.Deserialize<GetDepartmentEmployeeDto>(content, _serializeOptions);
@@ -124,7 +124,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
         var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(departmentEmployeeDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId), stringContent);
+        var response = await client.PutAsync($"api/DepartmentEmployee/{departmentEmployeeId}", stringContent);
 
         if (isSuccess)
         {
@@ -147,7 +147,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync(string.Format("api/DepartmentEmployee/{0}", departmentEmployeeId));
+        var response = await client.DeleteAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

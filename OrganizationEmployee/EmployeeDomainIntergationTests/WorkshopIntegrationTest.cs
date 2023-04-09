@@ -56,7 +56,7 @@ public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Progr
     {
         var client = _factory.CreateClient();
 
-        var response = await client.GetAsync(string.Format("api/Workshop/{0}", workshopId));
+        var response = await client.GetAsync($"api/Workshop/{workshopId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var workshop = JsonSerializer.Deserialize<GetWorkshopDto>(content, _serializeOptions);
@@ -108,7 +108,7 @@ public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync(string.Format("api/Workshop/{0}", workshopId), stringContent);
+        var response = await client.PutAsync($"api/Workshop/{workshopId}", stringContent);
 
         var content = await response.Content.ReadAsStringAsync();
         if (isSuccess)
@@ -132,7 +132,7 @@ public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Progr
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync(string.Format("api/Workshop/{0}", workshopId));
+        var response = await client.DeleteAsync($"api/Workshop/{workshopId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

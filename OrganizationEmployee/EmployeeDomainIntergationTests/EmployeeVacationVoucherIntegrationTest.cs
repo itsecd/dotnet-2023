@@ -57,7 +57,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         var client = _factory.CreateClient();
 
         var response = await client
-            .GetAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId));
+            .GetAsync($"api/EmployeeVacationVoucher/{employeeVacationVoucherId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var employeeVacationVoucher = JsonSerializer
@@ -126,7 +126,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         var jsonObject = JsonSerializer.Serialize(employeeVacationVoucherDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client
-            .PutAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId), stringContent);
+            .PutAsync($"api/EmployeeVacationVoucher/{employeeVacationVoucherId}", stringContent);
 
         if (isSuccess)
         {
@@ -150,7 +150,7 @@ public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicati
         var client = _factory.CreateClient();
 
         var response = await client
-            .DeleteAsync(string.Format("api/EmployeeVacationVoucher/{0}", employeeVacationVoucherId));
+            .DeleteAsync($"api/EmployeeVacationVoucher/{employeeVacationVoucherId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

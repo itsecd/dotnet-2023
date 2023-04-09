@@ -71,18 +71,18 @@ public class DepartmentEmployeeController : Controller
             .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
         if (employee == null)
         {
-            _logger.LogInformation("The employee with ID {id} is not found", mappedDepartmentEmployee.EmployeeId);
-            return NotFound(string.Format("An employee with given id={0} doesn't exist",
-                mappedDepartmentEmployee.EmployeeId));
+            _logger.LogInformation("The employee with ID {id} is not found", 
+                mappedDepartmentEmployee.EmployeeId);
+            return NotFound($"An employee with given id={mappedDepartmentEmployee.EmployeeId} doesn't exist");
         }
         var department =
             _organizationRepository.Departments
             .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
         if (department == null)
         {
-            _logger.LogInformation("The department with ID {id} is not found", mappedDepartmentEmployee.DepartmentId);
-            return NotFound(string.Format("An department with given id={0} doesn't exist",
-                mappedDepartmentEmployee.DepartmentId));
+            _logger.LogInformation("The department with ID {id} is not found", 
+                mappedDepartmentEmployee.DepartmentId);
+            return NotFound($"An department with given id={mappedDepartmentEmployee.DepartmentId} doesn't exist");
         }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
@@ -113,8 +113,7 @@ public class DepartmentEmployeeController : Controller
         if (employee == null)
         {
             _logger.LogInformation("The employee with ID {id} is not found", mappedDepartmentEmployee.EmployeeId);
-            return NotFound(string.Format("An employee with given id={0} doesn't exist",
-                mappedDepartmentEmployee.EmployeeId));
+            return NotFound($"An employee with given id={mappedDepartmentEmployee.EmployeeId} doesn't exist");
         }
         var department =
                         _organizationRepository.Departments
@@ -122,8 +121,7 @@ public class DepartmentEmployeeController : Controller
         if (department == null)
         {
             _logger.LogInformation("The department with ID {id} is not found", mappedDepartmentEmployee.DepartmentId);
-            return NotFound(string.Format("An department with given id={0} doesn't exist",
-                mappedDepartmentEmployee.DepartmentId));
+            return NotFound($"An department with given id={mappedDepartmentEmployee.DepartmentId} doesn't exist");
         }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;

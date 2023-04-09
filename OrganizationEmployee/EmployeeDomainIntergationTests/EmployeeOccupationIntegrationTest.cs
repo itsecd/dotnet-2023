@@ -57,7 +57,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         var client = _factory.CreateClient();
 
         var response = await client
-            .GetAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId));
+            .GetAsync($"api/EmployeeOccupation/{employeeOccupationId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var employeeOccupation = JsonSerializer.Deserialize<GetEmployeeOccupationDto>(content, _serializeOptions);
@@ -143,7 +143,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         var jsonObject = JsonSerializer.Serialize(employeeOccupationDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client
-            .PutAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId), stringContent);
+            .PutAsync($"api/EmployeeOccupation/{employeeOccupationId}", stringContent);
 
         if (isSuccess)
         {
@@ -167,7 +167,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
         var client = _factory.CreateClient();
 
         var response = await client
-            .DeleteAsync(string.Format("api/EmployeeOccupation/{0}", employeeOccupationId));
+            .DeleteAsync($"api/EmployeeOccupation/{employeeOccupationId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

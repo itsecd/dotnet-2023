@@ -56,7 +56,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     {
         var client = _factory.CreateClient();
 
-        var response = await client.GetAsync(string.Format("api/VoucherType/{0}", voucherTypeId));
+        var response = await client.GetAsync($"api/VoucherType/{voucherTypeId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var voucherType = JsonSerializer.Deserialize<GetVoucherTypeDto>(content, _serializeOptions);
@@ -108,7 +108,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
         var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(voucherTypeDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync(string.Format("api/VoucherType/{0}", voucherTypeId), stringContent);
+        var response = await client.PutAsync($"api/VoucherType/{voucherTypeId}", stringContent);
 
         if (isSuccess)
         {
@@ -130,7 +130,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     public async Task DeleteVoucherType(int voucherTypeId, bool isSuccess)
     {
         var client = _factory.CreateClient();
-        var response = await client.DeleteAsync(string.Format("api/VoucherType/{0}", voucherTypeId));
+        var response = await client.DeleteAsync($"api/VoucherType/{voucherTypeId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

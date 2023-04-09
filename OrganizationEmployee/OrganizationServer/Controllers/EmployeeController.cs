@@ -99,7 +99,7 @@ public class EmployeeController : Controller
         if (employee == null)
         {
             _logger.LogInformation("The employee with ID {id} is not found", id);
-            return NotFound(string.Format("Employee with ID {0} doesn't exist", id));
+            return NotFound($"Employee with ID {id} doesn't exist");
         }
         var workshop =
        _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == newEmployee.WorkshopId);

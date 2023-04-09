@@ -36,7 +36,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     {
         var client = _factory.CreateClient();
 
-        var response = await client.GetAsync(string.Format("api/Statistics/DepartmentId/{0}", departmentId));
+        var response = await client.GetAsync($"api/Statistics/DepartmentId/{departmentId}");
         Assert.True(response.IsSuccessStatusCode);
         var content = await response.Content.ReadAsStringAsync();
         var employees = JsonSerializer.Deserialize<List<GetEmployeeDto>>(content, _serializeOptions);

@@ -1,4 +1,4 @@
-name: GitHubActions
+name: GitHubActions 
 on:
   push:
     branches: [ "main" ]

@@ -16,11 +16,6 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddEndpointsApiExplorer();
-/*builder.Services.AddSwaggerGen(options =>
-{
-    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
-});*/
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 

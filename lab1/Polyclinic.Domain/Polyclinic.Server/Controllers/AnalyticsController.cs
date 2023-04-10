@@ -4,6 +4,10 @@ using Polyclinic.Server.Dto;
 using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
+
+/// <summary>
+///  Analytics controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
@@ -20,7 +24,10 @@ public class AnalyticsController : ControllerBase
         _mapper = mapper;
     }
 
-    // GET: api/<AnalyticsController>
+    /// <summary>
+    /// Display information about all doctors with at least 10 years of experience
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutDoctorsExp")]
     public IEnumerable<DoctorGetDto> GetInformationAboutDoctors()
     {
@@ -32,7 +39,10 @@ public class AnalyticsController : ControllerBase
         return result;
     }
 
-    // GET api/<AnalyticsController>/5
+    /// <summary>
+    /// Display information about all patients registered with the specified doctor, sorted by full name.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutRegistrationsPatients")]
     public IEnumerable<PatientGetDto> GetInformationAboutPatients()
     {
@@ -48,7 +58,10 @@ public class AnalyticsController : ControllerBase
         return result;
     }
 
-    // POST api/<AnalyticsController>
+    /// <summary>
+    /// Display information about currently healthy patients
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutHealthyPatients")]
     public IEnumerable<PatientGetDto> GetInformationAboutHealtyPatients()
     {
@@ -63,12 +76,16 @@ public class AnalyticsController : ControllerBase
         return result;
     }
 
+    /// <summary>
+    /// Display information about the number of appointments of patients by doctors for the last month.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutAppointmentsPatients")]
-    public IActionResult GetInformationAboutAppointmentsPatients()
+    public IActionResult GetInformationAboutAppointmentsPatients(DateTime lastMonth1, DateTime lastMonth2)
     {
-        _logger.LogInformation("Get information about healthy patients");
-        var lastMonth1 = new DateTime(2023, 4, 1);
-        var lastMonth2 = new DateTime(2023, 4, 30);
+        _logger.LogInformation("Get information about count patients of visits to doctors for last month");
+        /*var lastMonth1 = new DateTime(2023, 4, 1);
+        var lastMonth2 = new DateTime(2023, 4, 30);*/
 
         var result = from r in _polyclinicRepository.Registrations
                      join p in _polyclinicRepository.Patients on r.IdPatient equals p.Id
@@ -80,10 +97,14 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Display information about the top 5 most common diseases among patients
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutTopFiveDiseases")]
     public IActionResult GetInformationAboutTopFiveDiseases()
     {
-        _logger.LogInformation("Get information about healthy patients");
+        _logger.LogInformation("Get information about top 5 most common diseases patients");
 
         var result = (from c in _polyclinicRepository.Completions
                       join p in _polyclinicRepository.Patients on c.IdPatient equals p.Id
@@ -94,10 +115,14 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Display information about patients over 30 years of age who have appointments with several doctors, sorted by date of birth.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("/InformationAboutPatientsOverThirty")]
     public IEnumerable<PatientGetDto> GetInformationAboutPatientsOverThirty()
     {
-        _logger.LogInformation("Get information about healthy patients");
+        _logger.LogInformation("Get information about patients older than 30 who are registered on multiple doctor appointments");
 
         var result = from p in _polyclinicRepository.Patients
                      let age = (int)(DateOnly.FromDateTime(DateTime.Today).Year - p.DateBirth.Year / 365)

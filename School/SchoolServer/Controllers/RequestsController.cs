@@ -9,6 +9,9 @@ using System.Security.Claims;
 
 namespace SchoolServer.Controllers;
 
+/// <summary>
+/// Контроллер запросов
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class RequestsController : ControllerBase
@@ -19,6 +22,9 @@ public class RequestsController : ControllerBase
 
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Конструктор контроллера
+    /// </summary>
     public RequestsController(ILogger<GradeController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {
         _logger = logger;
@@ -69,8 +75,6 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Bring out the top 5 students by average score
     /// </summary>
-    /// <param name="date"></param>
-    /// <returns></returns>
     [HttpGet("Top5StudentsAvrMark")]
     public IEnumerable<StudentGetDto> Top5StudentsAvrMark()
     {
@@ -133,6 +137,6 @@ public class RequestsController : ControllerBase
                     Min = g.Min(s => s.Mark),
                     Max = g.Max(s => s.Mark),
                     Average = g.Average(s => s.Mark)
-                }).ToList();
+                });
     }
 }

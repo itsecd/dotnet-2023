@@ -1,5 +1,8 @@
 ﻿namespace SchoolServer.Dto;
 
+/// <summary>
+/// Grade - класс описывающий оценки ученика
+/// </summary>
 public class GradeGetDto
 {
     /// <summary>

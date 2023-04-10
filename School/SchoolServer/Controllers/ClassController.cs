@@ -6,6 +6,9 @@ using School.Classes;
 
 namespace SchoolServer.Controllers;
 
+/// <summary>
+/// Контроллер класса
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClassController : ControllerBase
@@ -16,6 +19,9 @@ public class ClassController : ControllerBase
 
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Конструктор контроллера 
+    /// </summary>
     public ClassController(ILogger<ClassController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {
         _logger = logger;
@@ -23,12 +29,21 @@ public class ClassController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Получение всех классов
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<ClassGetDto> Get()
     { 
         return _diaryRepository.Classes.Select(obj => _mapper.Map<ClassGetDto>(obj));
     }
 
+    /// <summary>
+    /// Метод получения по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Class> Get(int id)
     {
@@ -44,12 +59,19 @@ public class ClassController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Метод Post
+    /// </summary>
+    /// <param name="class"></param>
     [HttpPost]
     public void Post([FromBody] ClassGetDto @class)
     {
         _diaryRepository.Classes.Add(_mapper.Map<Class>(@class));
     }
     
+    /// <summary>
+    /// Метод получения по  id
+    /// </summary>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ClassPostDto @class)
     {
@@ -66,6 +88,9 @@ public class ClassController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Метод удаления по id
+    /// </summary>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

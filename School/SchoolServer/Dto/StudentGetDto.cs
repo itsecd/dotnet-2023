@@ -1,5 +1,8 @@
 ﻿namespace SchoolServer.Dto;
 
+/// <summary>
+/// Dto для метода Get класса Student  
+/// </summary>
 public class StudentGetDto
 {
     /// <summary>

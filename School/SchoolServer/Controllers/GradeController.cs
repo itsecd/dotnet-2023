@@ -6,6 +6,9 @@ using School.Classes;
 
 namespace SchoolServer.Controllers;
 
+/// <summary>
+/// Контроллер оценок
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class GradeController : ControllerBase
@@ -16,6 +19,9 @@ public class GradeController : ControllerBase
 
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Конструктор коетроллера
+    /// </summary>
     public GradeController(ILogger<GradeController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {
         _logger = logger;
@@ -23,6 +29,10 @@ public class GradeController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Метод получения
+    /// </summary>
+    /// <returns></returns>
     // GET: api/<GradeController>
     [HttpGet]
     public IEnumerable<GradeGetDto> Get()
@@ -30,6 +40,9 @@ public class GradeController : ControllerBase
         return _diaryRepository.Grades.Select(grade => _mapper.Map<GradeGetDto>(grade));
     }
 
+    /// <summary>
+    /// Метод получения по id
+    /// </summary>
     // GET api/<GradeController>/5
     [HttpGet("{id}")]
     public ActionResult<GradeGetDto> Get(int id)
@@ -46,6 +59,10 @@ public class GradeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Метод Post 
+    /// </summary>
+    /// <param name="grade"></param>
     // POST api/<GradeController>
     [HttpPost]
     public void Post([FromBody] GradeGetDto grade)
@@ -53,6 +70,9 @@ public class GradeController : ControllerBase
         _diaryRepository.Grades.Add(_mapper.Map<Grade>(grade));
     }
 
+    /// <summary>
+    /// Метод получения по id
+    /// </summary>
     // PUT api/<GradeController>/5
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GradeGetDto grade)
@@ -70,6 +90,9 @@ public class GradeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Метод удаления по id
+    /// </summary>
     // DELETE api/<GradeController>/5
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

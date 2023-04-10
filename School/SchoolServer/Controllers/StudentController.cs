@@ -5,11 +5,11 @@ using SchoolServer.Repository;
 using School.Classes;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SchoolServer.Controllers;
 
+/// <summary>
+/// Контроллер студента
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class StudentController : ControllerBase
@@ -20,6 +20,9 @@ public class StudentController : ControllerBase
 
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Конструктор контроллера
+    /// </summary>
     public StudentController(ILogger<StudentController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {   
         _logger = logger;
@@ -27,6 +30,10 @@ public class StudentController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Метод Get для студента
+    /// </summary>
+    /// <returns></returns>
     // GET: api/<StudentController>
     [HttpGet]
     public IEnumerable<StudentGetDto> Get()
@@ -34,6 +41,11 @@ public class StudentController : ControllerBase
         return _diaryRepository.Students.Select(student => _mapper.Map<StudentGetDto>(student));
     }
 
+    /// <summary>
+    /// Метод Get для контроллера
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     // GET api/<StudentController>/5
     [HttpGet("{id}")]
     public ActionResult<StudentGetDto> Get(int id)
@@ -50,12 +62,20 @@ public class StudentController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Метод Post для контроллера
+    /// </summary>
+    /// <param name="student"></param>
     // POST api/<StudentController>
     [HttpPost]
     public void Post([FromBody] StudentGetDto student)
     {
         _diaryRepository.Students.Add(_mapper.Map<Student>(student));
     }
+
+    /// <summary>
+    /// метод Put для коетроллера
+    /// </summary>
 
     // PUT api/<StudentController>/5
     [HttpPut("{id}")]
@@ -74,6 +94,9 @@ public class StudentController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Метод удаления студента
+    /// </summary>
     // DELETE api/<StudentController>/5
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

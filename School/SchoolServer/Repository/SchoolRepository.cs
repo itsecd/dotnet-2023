@@ -1,7 +1,9 @@
 ﻿using School.Classes;
 namespace SchoolServer.Repository;
 
-
+/// <summary>
+/// Класс для хранения и изменения данных
+/// </summary>
 public class SchoolRepository : ISchoolRepository
 {
     private readonly List<Student> _students;
@@ -12,6 +14,9 @@ public class SchoolRepository : ISchoolRepository
 
     private readonly List<Class> _classes;
 
+    /// <summary>
+    /// Создание списков наших классов
+    /// </summary>
     public SchoolRepository()
     {
         _subjects = new List<Subject>
@@ -73,12 +78,24 @@ public class SchoolRepository : ISchoolRepository
         };
     }
 
+    /// <summary>
+    /// Список оценок
+    /// </summary>
     public List<Grade> Grades => _grades;
 
+    /// <summary>
+    /// Список Студентов
+    /// </summary>
     public List<Student> Students => _students;
 
+    /// <summary>
+    /// Список предметов
+    /// </summary>
     public List<Subject> Subjects => _subjects;
-
+    
+    /// <summary>
+    /// Список классов
+    /// </summary>
     public List<Class> Classes => _classes;
 
 }

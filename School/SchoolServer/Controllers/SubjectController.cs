@@ -7,69 +7,92 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SchoolServer.Controllers
+namespace SchoolServer.Controllers;
+
+/// <summary>
+/// Контроллер "предмета"
+/// </summary>
+[Route("api/[controller]")]
+[ApiController]
+public class SubjectController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SubjectController : ControllerBase
+    private readonly ILogger<SubjectController> _logger;
+
+    private readonly ISchoolRepository _diaryRepository;
+
+    private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Конструктор контроллера
+    /// </summary>
+    public SubjectController(ILogger<SubjectController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {
-        private readonly ILogger<SubjectController> _logger;
+        _logger = logger;
+        _diaryRepository = diaryRepository;
+        _mapper = mapper;
+    }
 
-        private readonly ISchoolRepository _diaryRepository;
+    /// <summary>
+    /// Метод получения "предмета"
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public IEnumerable<SubjectGetDto> Get()
+    {
+        return _diaryRepository.Subjects.Select(subject => _mapper.Map<SubjectGetDto>(subject));
+    }
 
-        private readonly IMapper _mapper;
+    /// <summary>
+    /// Метод получения "предмета" по id
+    /// </summary>
 
-        public SubjectController(ILogger<SubjectController> logger, ISchoolRepository diaryRepository, IMapper mapper)
+
+    // GET api/<SubjectController>/5
+    [HttpGet("{id}")]
+    public ActionResult<SubjectGetDto> Get(int id)
+    {
+        var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
+        if (diarySubject == null)
         {
-            _logger = logger;
-            _diaryRepository = diaryRepository;
-            _mapper = mapper;
+            _logger.LogInformation("Not Found class with id = {id}", id);
+            return NotFound();
         }
-
-        [HttpGet]
-        public IEnumerable<SubjectGetDto> Get()
+        else
         {
-            return _diaryRepository.Subjects.Select(subject => _mapper.Map<SubjectGetDto>(subject));
+            return Ok(_mapper.Map<SubjectGetDto>(diarySubject));
         }
+    }
 
-        // GET api/<SubjectController>/5
-        [HttpGet("{id}")]
-        public ActionResult<SubjectGetDto> Get(int id)
+    /// <summary>
+    /// Post метод для добавления "предмета"
+    /// </summary>
+    
+    // POST api/<SubjectController>
+    [HttpPost]
+    public void Post([FromBody] SubjectGetDto subject)
+    {
+        _diaryRepository.Subjects.Add(_mapper.Map<Subject>(subject));
+    }
+
+
+    /// <summary>
+    /// Метод удаления из класса
+    /// </summary>
+    
+    // DELETE api/<SubjectController>/5
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
+        if (diarySubject == null)
         {
-            var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
-            if (diarySubject == null)
-            {
-                _logger.LogInformation("Not Found class with id = {id}", id);
-                return NotFound();
-            }
-            else
-            {
-                return Ok(_mapper.Map<SubjectGetDto>(diarySubject));
-            }
+            _logger.LogInformation("Not Found class with id = {id}", id);
+            return NotFound();
         }
-
-        // POST api/<SubjectController>
-        [HttpPost]
-        public void Post([FromBody] SubjectGetDto subject)
+        else
         {
-            _diaryRepository.Subjects.Add(_mapper.Map<Subject>(subject));
-        }
-
-        // DELETE api/<SubjectController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
-            if (diarySubject == null)
-            {
-                _logger.LogInformation("Not Found class with id = {id}", id);
-                return NotFound();
-            }
-            else
-            {
-                _diaryRepository.Subjects.Remove(diarySubject);
-                return Ok();
-            }
+            _diaryRepository.Subjects.Remove(diarySubject);
+            return Ok();
         }
     }
 }

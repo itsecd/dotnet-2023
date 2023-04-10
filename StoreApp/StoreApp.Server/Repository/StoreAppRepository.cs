@@ -36,9 +36,31 @@ public class StoreAppRepository : IStoreAppRepository
             new Store(3, "Magnit", "Moskovskoye shosse 666"),
             new Store(4, "Perekrestok", "Revolyutsionnaya 1917")
         };
+        _productStores = new List<ProductStore>()
+        {
+            new ProductStore { ProductId = 0, StoreId = 1, Quantity = 10 },
+            new ProductStore { ProductId = 1, StoreId = 1, Quantity = 2 },
+            new ProductStore { ProductId = 2, StoreId = 1, Quantity = 5 },
+            new ProductStore { ProductId = 2, StoreId = 2, Quantity = 15 },
+            new ProductStore { ProductId = 3, StoreId = 1, Quantity = 0 },
+            new ProductStore { ProductId = 3, StoreId = 2, Quantity = 20 }
+        };
+        _sales = new List<Sale>()
+        {
+            new Sale(1, "03.03.2023", 1, 0, new List<int> {0, 1, 2}, 357.0),
+            new Sale(2, "03.01.2023", 0, 1, new List<int> {3, 4, 0}, 221.0),
+            new Sale(3, "15.02.2023", 1, 0, new List<int> {1, 2, 3}, 364.0),
+            new Sale(4, "18.02.2023", 2, 2, new List<int> {4, 0, 1}, 284.0),
+            new Sale(5, "16.02.2023", 3, 3, new List<int> {2, 3, 4}, 241.0),
+            new Sale(6, "28.02.2023", 4, 1, new List<int> {1, 2, 3}, 364.0),
+            new Sale(7, "01.03.2023", 4, 0, new List<int> {4, 0, 3}, 284.0),
+        };
+
     }
 
     public List<Product> Products => _products;
     public List<Customer> Customers => _customers;
-    public List<Store> StoredStores => _stores;
+    public List<Store> Stores => _stores;
+    public List<ProductStore> ProductStores => _productStores;
+    public List<Sale> Sales => _sales;
 }

@@ -5,5 +5,7 @@ public interface IStoreAppRepository
 {
     List<Customer> Customers { get; }
     List<Product> Products { get; }
-    List<Store> StoredStores { get; }
+    List<Store> Stores { get; }
+    List<ProductStore> ProductStores { get; }
+    List<Sale> Sales { get; }
 }

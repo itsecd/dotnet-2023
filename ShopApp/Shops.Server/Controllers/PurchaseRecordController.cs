@@ -66,11 +66,11 @@ public class PurchaseRecordController : ControllerBase
         var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == record.ProductId);
         if (foundProduct == null)
             return NotFound();
-        var foundShop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == record.ShopId);
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == record.ShopId);
         if (foundShop == null)
             return NotFound();
-        var found_customer = _shopRepository.Customers.FirstOrDefault(f_customer => f_customer.Id == record.CustomerId);
-        if (found_customer == null)
+        var foundCustomer = _shopRepository.Customers.FirstOrDefault(fCustomer => fCustomer.Id == record.CustomerId);
+        if (foundCustomer == null)
             return NotFound();
         var newid = _shopRepository.PurchaseRecords
             .Select(product => product.Id)
@@ -78,7 +78,7 @@ public class PurchaseRecordController : ControllerBase
             .Max() + 1;
         var newRecord = _mapper.Map<PurchaseRecord>(record);
         newRecord.Id = newid;
-        newRecord.Sum = record.Quantity * found_Product.Price;
+        newRecord.Sum = record.Quantity * foundProduct.Price;
         _shopRepository.PurchaseRecords.Add(newRecord);
         _logger.LogInformation($"Post new purchase record, id = {newid}");
         return Ok();
@@ -92,14 +92,14 @@ public class PurchaseRecordController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PurchaseRecordPostDto recordToPut)
     {
-        var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == recordToPut.ProductId);
-        if (found_Product == null)
+        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == recordToPut.ProductId);
+        if (foundProduct == null)
             return NotFound();
-        var found_Shop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == recordToPut.ShopId);
-        if (found_Shop == null)
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == recordToPut.ShopId);
+        if (foundShop == null)
             return NotFound();
-        var found_customer = _shopRepository.Customers.FirstOrDefault(f_customer => f_customer.Id == recordToPut.CustomerId);
-        if (found_customer == null)
+        var foundCustomer = _shopRepository.Customers.FirstOrDefault(fCustomer => fCustomer.Id == recordToPut.CustomerId);
+        if (foundCustomer == null)
             return NotFound();
 
         var record = _shopRepository.PurchaseRecords.FirstOrDefault(record => record.Id == id);
@@ -113,7 +113,7 @@ public class PurchaseRecordController : ControllerBase
             
             _logger.LogInformation($"Update information purchase record with id = {id}");
             _mapper.Map<PurchaseRecordPostDto, PurchaseRecord>(recordToPut, record);
-            record.Sum = record.Quantity * found_Product.Price;
+            record.Sum = record.Quantity * foundProduct.Price;
             return Ok();
         }
     }

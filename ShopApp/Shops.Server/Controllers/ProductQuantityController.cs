@@ -31,13 +31,13 @@ public class ProductQuantityController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<ProductQuantityGetDto>> Get()
     {
-        _logger.LogInformation("Get list of product quanity");
+        _logger.LogInformation("Get list of product quantity");
         return Ok(_shopRepository.ProductQuantities.Select(product => _mapper.Map<ProductQuantityGetDto>(product)));
     }
     /// <summary>
     /// Return product in shop
     /// </summary>
-    /// <param name="id"> Record produc quantity id</param>
+    /// <param name="id"> Record product quantity id</param>
     /// <returns>Ok (the shop found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
     public ActionResult<ProductQuantityGetDto> Get(int id)
@@ -45,12 +45,12 @@ public class ProductQuantityController : ControllerBase
         var product = _shopRepository.ProductQuantities.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not record of product quanity with id = {id}");
+            _logger.LogInformation($"Not record of product quantity with id = {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Record of product quanity with id = {id}");
+            _logger.LogInformation($"Record of product quantity with id = {id}");
             return Ok(_mapper.Map<ProductQuantityGetDto>(product));
         }
     }
@@ -77,7 +77,7 @@ public class ProductQuantityController : ControllerBase
         var newProduct = _mapper.Map<ProductQuantity>(product);
         newProduct.Id = newid;
         _shopRepository.ProductQuantities.Add(newProduct);
-        _logger.LogInformation($"Post new record of product quanity, id = {newid}");
+        _logger.LogInformation($"Post new record of product quantity, id = {newid}");
         return Ok();
     }
     /// <summary>
@@ -99,12 +99,12 @@ public class ProductQuantityController : ControllerBase
         var product = _shopRepository.ProductQuantities.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found record of product quanity with id = {id}");
+            _logger.LogInformation($"Not found record of product quantity with id = {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information record of product quanity with id = {id}");
+            _logger.LogInformation($"Update information record of product quantity with id = {id}");
             _mapper.Map<ProductQuantityPostDto, ProductQuantity>(productToPut, product);
             return Ok();
         }
@@ -120,12 +120,12 @@ public class ProductQuantityController : ControllerBase
         var product = _shopRepository.ProductQuantities.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found record of product quanity with id = {id}");
+            _logger.LogInformation($"Not found record of product quantity with id = {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete record of product quanityt with id = {id}");
+            _logger.LogInformation($"Delete record of product quantityt with id = {id}");
             _shopRepository.ProductQuantities.Remove(product);
             return Ok();
         }

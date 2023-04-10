@@ -24,14 +24,14 @@ public class CustomerController : ControllerBase
 
 
     [HttpGet]
-    public IEnumerable<Customer> Get()
+    public IEnumerable<CustomerGetDto> Get()
     {
         _logger.LogInformation("Get customers");
-        return _storeAppRepository.Customers;
+        return _storeAppRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Customer> Get(int id)
+    public ActionResult<CustomerGetDto> Get(int id)
     {
         var getCustomer = _storeAppRepository.Customers.FirstOrDefault(customer => customer.CustomerId == id);
         if (getCustomer == null)
@@ -42,7 +42,7 @@ public class CustomerController : ControllerBase
         else
         {
             _logger.LogInformation($"GET customer with ID: {id}.");
-            return Ok(getCustomer);
+            return Ok(_mapper.Map<CustomerGetDto>(getCustomer));
         }
 
     }

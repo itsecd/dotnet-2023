@@ -24,14 +24,14 @@ public class ProductController : ControllerBase
 
 
     [HttpGet]
-    public IEnumerable<Product> Get()
+    public IEnumerable<ProductGetDto> Get()
     {
         _logger.LogInformation("Get products");
-        return _storeAppRepository.Products;
+        return _storeAppRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Product> Get(int id)
+    public ActionResult<ProductGetDto> Get(int id)
     {
         var getProduct = _storeAppRepository.Products.FirstOrDefault(product => product.ProductId == id);
         if (getProduct == null)
@@ -42,7 +42,7 @@ public class ProductController : ControllerBase
         else
         {
             _logger.LogInformation($"GET product with ID: {id}.");
-            return Ok(getProduct);
+            return Ok(_mapper.Map<ProductGetDto>(getProduct));
         }
 
     }
@@ -89,6 +89,4 @@ public class ProductController : ControllerBase
             return Ok();
         }
     }
-
-
 }

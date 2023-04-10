@@ -24,14 +24,14 @@ public class StoreController : ControllerBase
 
 
     [HttpGet]
-    public IEnumerable<Store> Get()
+    public IEnumerable<StoreGetDto> Get()
     {
         _logger.LogInformation("Get stores");
-        return _storeAppRepository.Stores;
+        return _storeAppRepository.Stores.Select(store => _mapper.Map<StoreGetDto>(store));
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Store> Get(int id)
+    public ActionResult<StoreGetDto> Get(int id)
     {
         var getStore = _storeAppRepository.Stores.FirstOrDefault(store => store.StoreId == id);
         if (getStore == null)
@@ -42,7 +42,7 @@ public class StoreController : ControllerBase
         else
         {
             _logger.LogInformation($"GET store with ID: {id}.");
-            return Ok(getStore);
+            return Ok(_mapper.Map<StoreGetDto>(getStore));
         }
 
     }

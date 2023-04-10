@@ -3,6 +3,11 @@
 public class ProductGetDto
 {
     /// <summary>
+    /// Product ID, corresponds to its barcode
+    /// </summary>
+    public int ProductId { get; set; } = -1;
+
+    /// <summary>
     /// Product Group
     /// </summary>
     public int ProductGroup { get; set; } = -1;

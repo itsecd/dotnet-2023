@@ -125,7 +125,7 @@ public class ProductQuantityController : ControllerBase
         }
         else
         {
-            _logger.LogInformation($"Delete record of product quantityt with id = {id}");
+            _logger.LogInformation($"Delete record of product quantity with id = {id}");
             _shopRepository.ProductQuantities.Remove(product);
             return Ok();
         }

@@ -1,0 +1,23 @@
+name: Check 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install dependencies
+      run: |
+        dotnet add PONRF package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.0
+        dotnet add PONRF package Swashbuckle.AspNetCore --version 6.2.3
+    - name: Build with dotnet
+      run: dotnet build
+    - name: Test with dotnet

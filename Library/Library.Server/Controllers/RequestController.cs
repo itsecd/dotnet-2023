@@ -148,10 +148,10 @@ public class RequestController : ControllerBase
         var numOfReaders = (from card in _librariesRepository.Cards
                             from reader in card.Reader
                             where card.DateOfReturn < date
-                            group card by reader.Id into g
+                            group card by reader.FullName into g
                             select new
                             {
-                                readers = g.Key,
+                                Name = g.Key,
                                 count = g.Count()
                             }).ToList();
         var request = (from reader in numOfReaders

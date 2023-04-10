@@ -17,8 +17,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Policlinic
     - name: Build with dotnet
-      run: dotnet build
+      run: dotnet build Policlinic\PoliclinicServer
     - name: Test with dotnet
-      run: dotnet test
+      run: dotnet test Policlinic\PoliclinicServer

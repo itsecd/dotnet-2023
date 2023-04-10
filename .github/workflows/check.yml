@@ -20,3 +20,5 @@ jobs:
         dotnet add PONRF\PonrfServer package Swashbuckle.AspNetCore --version 6.2.3
     - name: Build with dotnet
       run: dotnet build PONRF\PonrfServer
+    - name: Test with dotnet
+      run: dotnet test PONRF

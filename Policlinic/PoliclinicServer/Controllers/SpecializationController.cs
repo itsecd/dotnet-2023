@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Policlinic;
 using PoliclinicServer.Repository;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PoliclinicServer.Controllers;
+
+/// <summary>
+/// Specialization controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SpecializationController : ControllerBase
@@ -11,13 +14,20 @@ public class SpecializationController : ControllerBase
     private readonly ILogger<SpecializationController> _logger;
 
     private readonly IPoliclinicRepository _policlinicRepository;
-
+    /// <summary>
+    /// Constructor for SpecializationController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="policlinicRepository"></param>
     public SpecializationController(ILogger<SpecializationController> logger, IPoliclinicRepository policlinicRepository)
     {
         _logger = logger;
         _policlinicRepository = policlinicRepository;
     }
-
+    /// <summary>
+    /// Get specialization info
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<Specialization> Get()
     {
@@ -25,11 +35,14 @@ public class SpecializationController : ControllerBase
         return _policlinicRepository.Specializations;
     }
 
-    // GET api/<SpecializationController>/5
+    /// <summary>
+    /// Get specialization info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Specialization> Get(int id)
     {
-        //_logger.LogInformation($"Get specialization with id {id}");
         var specialization = _policlinicRepository.Specializations.FirstOrDefault(specialization => specialization.Id == id);
         if (specialization == null)
         {
@@ -41,25 +54,5 @@ public class SpecializationController : ControllerBase
             _logger.LogInformation($"Get specialization with id {id}");
             return Ok(specialization);
         }
-        //_logger.LogInformation($"Get specialization with id {id}");
-        //return _policlinicRepository.CreateDefaultSpecializations.FirstOrDefault(specialization => specialization.Id == id);
     }
-
-    //// POST api/<SpecializationController>
-    //[HttpPost]
-    //public void Post([FromBody] string value)
-    //{
-    //}
-
-    //// PUT api/<SpecializationController>/5
-    //[HttpPut("{id}")]
-    //public void Put(int id, [FromBody] string value)
-    //{
-    //}
-
-    //// DELETE api/<SpecializationController>/5
-    //[HttpDelete("{id}")]
-    //public void Delete(int id)
-    //{
-    //}
 }

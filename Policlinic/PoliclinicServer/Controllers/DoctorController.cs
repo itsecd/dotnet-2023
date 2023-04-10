@@ -5,6 +5,9 @@ using PoliclinicServer.Dto;
 using PoliclinicServer.Repository;
 
 namespace PoliclinicServer.Controllers;
+/// <summary>
+/// Doctor controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class DoctorController : ControllerBase
@@ -14,7 +17,12 @@ public class DoctorController : ControllerBase
     private readonly IPoliclinicRepository _policlinicRepository;
 
     private readonly IMapper _mapper;
-
+    /// <summary>
+    /// Constructor for DoctorController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="policlinicRepository"></param>
+    /// <param name="mapper"></param>
     public DoctorController(ILogger<DoctorController> logger, IPoliclinicRepository policlinicRepository, IMapper mapper)
     {
         _logger = logger;
@@ -22,15 +30,21 @@ public class DoctorController : ControllerBase
         _mapper = mapper;
     }
 
-    // GET: api/<DoctorController>
+    /// <summary>
+    /// Get doctor info
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<DoctorGetDto> Get()
     {
         return _policlinicRepository.Doctors.Select(doctor => _mapper.Map<DoctorGetDto>(doctor));
-        //return _mapper.ProjectTo<DoctorGetDto>(_policlinicRepository.CreateDefaultDoctors.Select(doctor => ))
     }
 
-    // GET api/<DoctorController>/5
+    /// <summary>
+    /// Get doctor info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<DoctorGetDto> Get(int id)
     {
@@ -47,14 +61,22 @@ public class DoctorController : ControllerBase
         }
     }
 
-    // POST api/<DoctorController>
+    /// <summary>
+    /// Post a new doctor
+    /// </summary>
+    /// <param name="doctor"></param>
     [HttpPost]
     public void Post([FromBody] DoctorPostDto doctor)
     {
         _policlinicRepository.Doctors.Add(_mapper.Map<Doctor>(doctor));
     }
 
-    // PUT api/<DoctorController>/5
+    /// <summary>
+    /// Put doctor
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="doctorToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] DoctorPostDto doctorToPut)
     {
@@ -71,7 +93,11 @@ public class DoctorController : ControllerBase
         }
     }
 
-    // DELETE api/<DoctorController>/5
+    /// <summary>
+    /// Delete doctor by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

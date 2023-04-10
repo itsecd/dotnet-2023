@@ -4,9 +4,10 @@ using PoliclinicServer.Repository;
 using PoliclinicServer.Dto;
 using Policlinic;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PoliclinicServer.Controllers;
+/// <summary>
+/// Patient controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PatientController : ControllerBase
@@ -16,22 +17,33 @@ public class PatientController : ControllerBase
     private readonly IPoliclinicRepository _policlinicRepository;
 
     private readonly IMapper _mapper;
-
+    /// <summary>
+    /// Constructor for PatientController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="policlinicRepository"></param>
+    /// <param name="mapper"></param>
     public PatientController(ILogger<PatientController> logger, IPoliclinicRepository policlinicRepository, IMapper mapper)
     {
         _logger = logger;
         _policlinicRepository = policlinicRepository;
         _mapper = mapper;
     }
-    // GET: api/<PatientController>
+    /// <summary>
+    /// Get patient info
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<PatientGetDto> Get()
     {
         return _policlinicRepository.Patients.Select(patient => _mapper.Map<PatientGetDto>(patient));
-        //return _mapper.ProjectTo<DoctorGetDto>(_policlinicRepository.CreateDefaultDoctors.Select(doctor => ))
     }
 
-    // GET api/<PatientController>/5
+    /// <summary>
+    /// Get patient info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<PatientGetDto> Get(int id)
     {
@@ -48,14 +60,22 @@ public class PatientController : ControllerBase
         }
     }
 
-    // POST api/<PatientController>
+    /// <summary>
+    /// Post a new patient
+    /// </summary>
+    /// <param name="patient"></param>
     [HttpPost]
     public void Post([FromBody] PatientPostDto patient)
     {
         _policlinicRepository.Patients.Add(_mapper.Map<Patient>(patient));
     }
 
-    // PUT api/<PatientController>/5
+    /// <summary>
+    /// Put patient
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="patientToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PatientPostDto patientToPut)
     {
@@ -72,7 +92,11 @@ public class PatientController : ControllerBase
         }
     }
 
-    // DELETE api/<PatientController>/5
+    /// <summary>
+    /// Delete patient by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

@@ -63,11 +63,11 @@ public class PurchaseRecordController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] PurchaseRecordPostDto record)
     {
-        var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == record.ProductId);
-        if (found_Product == null)
+        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == record.ProductId);
+        if (foundProduct == null)
             return NotFound();
-        var found_Shop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == record.ShopId);
-        if (found_Shop == null)
+        var foundShop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == record.ShopId);
+        if (foundShop == null)
             return NotFound();
         var found_customer = _shopRepository.Customers.FirstOrDefault(f_customer => f_customer.Id == record.CustomerId);
         if (found_customer == null)

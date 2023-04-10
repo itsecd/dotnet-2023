@@ -31,8 +31,8 @@ public class AnalyticsController: ControllerBase
     [HttpGet("information-product-in-shop")]
     public ActionResult Get(int id)
     {
-        var found_Shop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == id);
-        if (found_Shop == null)
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == id);
+        if (foundShop == null)
             return NotFound();
         _logger.LogInformation("Get list of products in shop");
         var fixtureShop = _shopRepository.Shops;
@@ -59,8 +59,8 @@ public class AnalyticsController: ControllerBase
     [HttpGet("shops-with-product")]
     public ActionResult GetProductAvailable(int id)
     {
-        var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == id);
-        if (found_Product == null)
+        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == id);
+        if (foundProduct == null)
             return NotFound();
         _logger.LogInformation("Get list of shop with product");
         var fixtureShop = _shopRepository.Shops;

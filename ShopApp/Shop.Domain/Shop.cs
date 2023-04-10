@@ -15,7 +15,7 @@ public class Shop
     /// <summary>
     /// Shop address
     /// </summary>
-    public string Adress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
     /// <summary>
     /// Products in shop
     /// </summary>
@@ -25,11 +25,11 @@ public class Shop
     /// </summary>
     public List<PurchaseRecord> PurchaseRecords { get; set; } = new List<PurchaseRecord>();
     public Shop() { }
-    public Shop(int id, string name, string adress, List<ProductQuantity> products, List<PurchaseRecord> purchaseRecords)
+    public Shop(int id, string name, string address, List<ProductQuantity> products, List<PurchaseRecord> purchaseRecords)
     {
         Id = id;
         Name = name;
-        Adress = adress;
+        Address = address;
         Products = products;
         PurchaseRecords = purchaseRecords;
     }

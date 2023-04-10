@@ -25,7 +25,7 @@ public class ProductQuantityController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Return list of produc quanity
+    /// Return list of product quantity
     /// </summary>
     /// <returns>Ok(List of product in shops)</returns>
     [HttpGet]
@@ -37,7 +37,7 @@ public class ProductQuantityController : ControllerBase
     /// <summary>
     /// Return product in shop
     /// </summary>
-    /// <param name="id"> Record produc quanity id</param>
+    /// <param name="id"> Record produc quantity id</param>
     /// <returns>Ok (the shop found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
     public ActionResult<ProductQuantityGetDto> Get(int id)
@@ -63,11 +63,11 @@ public class ProductQuantityController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] ProductQuantityPostDto product)
     {
-        var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == product.ProductId);
-        if (found_Product == null) 
+        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == product.ProductId);
+        if (foundProduct == null) 
             return NotFound(); 
-        var found_Shop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id== product.ShopId);
-        if (found_Shop == null)
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id== product.ShopId);
+        if (foundShop == null)
             return NotFound();
 
         var newid = _shopRepository.ProductQuantities
@@ -89,11 +89,11 @@ public class ProductQuantityController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductQuantityPostDto productToPut)
     {
-        var found_Product = _shopRepository.Products.FirstOrDefault(f_product => f_product.Id == productToPut.ProductId);
-        if (found_Product == null)
+        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == productToPut.ProductId);
+        if (foundProduct == null)
             return NotFound();
-        var found_Shop = _shopRepository.Shops.FirstOrDefault(f_shop => f_shop.Id == productToPut.ShopId);
-        if (found_Shop == null)
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == productToPut.ShopId);
+        if (foundShop == null)
             return NotFound();
 
         var product = _shopRepository.ProductQuantities.FirstOrDefault(product => product.Id == id);
@@ -110,10 +110,10 @@ public class ProductQuantityController : ControllerBase
         }
     }
     /// <summary>
-    /// Delete record of product quanity in shop by id
+    /// Delete record of product quantity in shop by id
     /// </summary>
-    /// <param name="id">record of product quanity id</param>
-    /// <returns>Ok (delete record of product quanity  by id) or NotFound</returns>
+    /// <param name="id">record of product quantity id</param>
+    /// <returns>Ok (delete record of product quantity  by id) or NotFound</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

@@ -62,7 +62,6 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] CustomerPostDto customer)
     {
-
         var newid = _shopRepository.Customers
             .Select(customer => customer.Id)
             .DefaultIfEmpty()

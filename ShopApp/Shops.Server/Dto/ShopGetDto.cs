@@ -15,5 +15,5 @@ public class ShopGetDto
     /// <summary>
     /// Shop address
     /// </summary>
-    public string Adress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 }

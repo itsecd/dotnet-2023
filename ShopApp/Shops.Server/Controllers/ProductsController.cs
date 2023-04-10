@@ -100,10 +100,10 @@ public class ProductsController : ControllerBase
     /// Update storage limit date product
     /// </summary>
     /// <param name="id">Product id</param>
-    /// <param name="newDateLimite">New storage limit date</param>
+    /// <param name="newDateLimit">New storage limit date</param>
     /// <returns>Ok (update  limit date product by id) or NotFound</returns>
     [HttpPut("{id}, update-limite-date")]
-    public IActionResult PutDate(int id, [FromBody] DateTime newDateLimite)
+    public IActionResult PutDate(int id, [FromBody] DateTime newDateLimit)
     {
         var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
@@ -114,7 +114,7 @@ public class ProductsController : ControllerBase
         else
         {
             _logger.LogInformation($"Update storage limit date product with id = {id}");
-            product.StorageLimitDate = newDateLimite;
+            product.StorageLimitDate = newDateLimit;
             return Ok();
         }
     }

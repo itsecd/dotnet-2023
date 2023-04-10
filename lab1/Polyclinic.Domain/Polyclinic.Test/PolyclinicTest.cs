@@ -23,11 +23,11 @@ public class PolyclinicTest
     {
         return new List<Patient>()
         {
-            new Patient(11111111,"Margaret Schultz",new DateOnly(1990,1,1),"408 Eddie Fords Port Arthurburgh",1),
-            new Patient(22222222, "Sandra Allen", new DateOnly(1980,2,2),"21183 Ian Corner North Kendrick",2),
-            new Patient(33333333, "Jamie Brown", new DateOnly(1976,3,3),"72634 Thiel Island Bodefort",3),
-            new Patient(44444444,"Carlos Weaver", new DateOnly(1987,4,4), "4310 Hauck Gateway Heaneyview", 4),
-            new Patient(55555555, "Frances Cooper", new DateOnly(1965,5,5), "1418 Graham Plain East Chet", 5)
+            new Patient(11111111,"Margaret Schultz",new DateTime(1990,1,1),"408 Eddie Fords Port Arthurburgh",1),
+            new Patient(22222222, "Sandra Allen", new DateTime(1980,2,2),"21183 Ian Corner North Kendrick",2),
+            new Patient(33333333, "Jamie Brown", new DateTime(1976,3,3),"72634 Thiel Island Bodefort",3),
+            new Patient(44444444,"Carlos Weaver", new DateTime(1987,4,4), "4310 Hauck Gateway Heaneyview", 4),
+            new Patient(55555555, "Frances Cooper", new DateTime(1965,5,5), "1418 Graham Plain East Chet", 5)
         };
     }
 
@@ -39,11 +39,11 @@ public class PolyclinicTest
     {
         return new List<Doctor>()
         {
-            new Doctor(66666666,"Melissa Sparks", new DateOnly(1970,6,6), 1, 15, 1),
-            new Doctor(77777777,"John Garcia", new DateOnly(1988,7,7), 2, 10,2),
-            new Doctor(88888888, "Brian Sullivan", new DateOnly(1979,8,8), 3, 8, 3),
-            new Doctor(99999999,"Laura Harris", new DateOnly(1967,9,9), 4, 25, 4),
-            new Doctor(10101010, "Francis Reynolds", new DateOnly(1980,10,10),5, 6, 5)
+            new Doctor(66666666,"Melissa Sparks", new DateTime(1970,6,6), 1, 15, 1),
+            new Doctor(77777777,"John Garcia", new DateTime(1988,7,7), 2, 10,2),
+            new Doctor(88888888, "Brian Sullivan", new DateTime(1979,8,8), 3, 8, 3),
+            new Doctor(99999999,"Laura Harris", new DateTime(1967,9,9), 4, 25, 4),
+            new Doctor(10101010, "Francis Reynolds", new DateTime(1980,10,10),5, 6, 5)
         };
     }
 

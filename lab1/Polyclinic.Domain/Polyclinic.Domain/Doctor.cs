@@ -15,7 +15,7 @@ public class Doctor
     /// <summary>
     /// doctor's date of birth
     /// </summary>
-    public DateOnly DateBirth { get; set; } = new DateOnly();
+    public DateTime DateBirth { get; set; } = new DateTime();
     /// <summary>
     /// doctor's specialization id
     /// </summary>
@@ -36,7 +36,7 @@ public class Doctor
     /// list of conclusions made by this doctor
     /// </summary>
     public List<int> CompletionsList { get; set; }
-    public Doctor(int passportNumber, string fullName, DateOnly dateBirth, int specialization, int workExperience, int id)
+    public Doctor(int passportNumber, string fullName, DateTime dateBirth, int specialization, int workExperience, int id)
     {
         PassportNumber = passportNumber;
         FullName = fullName;
@@ -47,6 +47,11 @@ public class Doctor
         RegistrationsList = new List<int>();
         CompletionsList = new List<int>();
     }
+
+    public Doctor()
+    {
+    }
+
     /// <summary>
     /// method for adding an appointment to the doctor's list of appointments
     /// </summary>

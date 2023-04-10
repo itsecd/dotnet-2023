@@ -28,4 +28,8 @@ public class Registration
         IdDoctor = idDoctor;
         TimeAdmission = timeAdmission;
     }
+
+    public Registration()
+    {
+    }
 }

@@ -1,12 +1,28 @@
-var builder = WebApplication.CreateBuilder(args);
+using System.Reflection;
+using Polyclinic.Server.Repository;
+using AutoMapper;
+using Polyclinic.Server;
 
+var builder = WebApplication.CreateBuilder(args);
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+
+var mapper = mapperConfig.CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddSingleton<IPolyclinicRepository, PolyclinicRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddEndpointsApiExplorer();
+/*builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});*/
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

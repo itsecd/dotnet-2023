@@ -15,7 +15,7 @@ public class Patient
     /// <summary>
     /// patient's date of birth
     /// </summary>
-    public DateOnly DateBirth { get; set; } = new DateOnly();
+    public DateTime DateBirth { get; set; } = new DateTime();
     /// <summary>
     /// patient's address
     /// </summary>
@@ -32,7 +32,7 @@ public class Patient
     /// list of doctor's conclusions issued to the patient
     /// </summary>
     public List<int> CompletionList { get; set; }
-    public Patient(int passportNumber, string fullName, DateOnly dateBirth, string address, int id)
+    public Patient(int passportNumber, string fullName, DateTime dateBirth, string address, int id)
     {
         PassportNumber = passportNumber;
         FullName = fullName;
@@ -42,6 +42,11 @@ public class Patient
         RegistrationsList = new List<int>();
         CompletionList = new List<int>();
     }
+
+    public Patient()
+    {
+    }
+
     /// <summary>
     /// method for adding appointments for a patient to list
     /// </summary>
@@ -56,4 +61,5 @@ public class Patient
     {
         CompletionList.Add(id);
     }
+
 }

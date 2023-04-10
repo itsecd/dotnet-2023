@@ -1,13 +1,7 @@
-﻿namespace Polyclinic.Domain;
-/// <summary>
-/// class describing the conclusion of the doctor on the admission of the patient
-/// </summary>
-public class Completion
+﻿namespace Polyclinic.Server.Dto;
+
+public class CompletionPostDto
 {
-    /// <summary>
-    /// conclusion number
-    /// </summary>
-    public int Id { get; set; } = 0;
     /// <summary>
     /// conclusion - patient's diagnosis
     /// </summary>
@@ -24,19 +18,4 @@ public class Completion
     /// patient status (0 - on treatment, 1 - healthy)
     /// </summary>
     public int Status { get; set; } = 0;
-
-    
-
-    public Completion(int id, int idPatient, int idDoctor, int status, string conclusion)
-    {
-        Id = id;
-        Conclusion = conclusion;
-        IdDoctor = idDoctor;
-        IdPatient = idPatient;
-        Status = status;
-    }
-
-    public Completion()
-    {
-    }
 }

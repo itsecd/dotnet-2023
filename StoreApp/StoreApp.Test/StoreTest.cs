@@ -87,17 +87,15 @@ public class StoreTest
     /// </returns>
     private List<Sale> CreateDefaultSales()
     {
-        var customers = CreateDefaulCustomer();
-        var stores = CreateDefaultStore();
         var saleList = new List<Sale>
         {
-            new Sale(1, "03.03.2023", customers[0], stores[0], CreateDefaulProduct()),
-            new Sale(2, "03.01.2023", customers[0], stores[1], CreateDefaulProduct()),
-            new Sale(3, "15.02.2023", customers[1], stores[0], CreateDefaulProduct()),
-            new Sale(4, "18.02.2023", customers[2], stores[2], CreateDefaulProduct()),
-            new Sale(5, "16.02.2023", customers[3], stores[3], CreateDefaulProduct()),
-            new Sale(6, "28.02.2023", customers[4], stores[1], CreateDefaulProduct()),
-            new Sale(7, "01.03.2023", customers[4], stores[0], CreateDefaulProduct()),
+            new Sale(1, "03.03.2023", 1, 0, new List<int> {0, 1, 2}, 357.0),
+            new Sale(2, "03.01.2023", 0, 1, new List<int> {3, 4, 0}, 221.0),
+            new Sale(3, "15.02.2023", 1, 0, new List<int> {1, 2, 3}, 364.0),
+            new Sale(4, "18.02.2023", 2, 2, new List<int> {4, 0, 1}, 284.0),
+            new Sale(5, "16.02.2023", 3, 3, new List<int> {2, 3, 4}, 241.0),
+            new Sale(6, "28.02.2023", 4, 1, new List<int> {1, 2, 3}, 364.0),
+            new Sale(7, "01.03.2023", 4, 0, new List<int> {4, 0, 3}, 284.0),
         };
         return saleList;
     }
@@ -237,7 +235,7 @@ public class StoreTest
 
         Assert.NotNull(result);
         Assert.InRange(result.Count(), 0, 5);
-        Assert.Equal(489.0, result[0].Sum);
+        Assert.Equal(364.0, result[0].Sum);
     }
 
 
@@ -289,7 +287,7 @@ public class StoreTest
         var productStores = CreateDefaultProductStore();
         var sales = CreateDefaultSales();
 
-        DateTime startDate = DateTime.Now.AddMonths(-1);
+        DateTime startDate = DateTime.Now.AddMonths(-2);
         var minSalesAmount = 900.0;
         var result = from sale in sales
                      where sale.DateSale >= startDate
@@ -307,7 +305,7 @@ public class StoreTest
 
 
         Assert.Single(result);
-        Assert.Contains(result, x => x.StoreId == 0 && x.TotalSales == 1467.0);
-        Assert.DoesNotContain(result, x => x.StoreId == 1 && x.TotalSales == 978.0);
+        Assert.Contains(result, x => x.StoreId == 0 && x.TotalSales == 1005.0);
+        Assert.DoesNotContain(result, x => x.StoreId == 1 && x.TotalSales == 364.0);
     }
 }

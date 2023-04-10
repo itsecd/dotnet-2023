@@ -27,28 +27,21 @@ public class Sale
     /// <summary>
     /// List of products purchased by the customer 
     /// </summary>
-    public List<Product> Products { get; set; }
+    public List<int> Products { get; set; }
 
     /// <summary>
     /// Purchase amount
     /// </summary>
     public double Sum { get; set; } = 0.0;
 
-    public Sale(int saleId, string dateSale, Customer customer, Store store, List<Product> products)
+    public Sale(int saleId, string dateSale, int customerId, int storeId, List<int> products, double sum)
     {
         SaleId = saleId;
         DateSale = DateTime.Parse(dateSale);
-        CustomerId = customer.CustomerId;
-        StoreId = store.StoreId;
+        CustomerId = customerId;
+        StoreId = storeId;
         Products = products;
-
-        foreach (Product product in products)
-        {
-            Sum += product.ProductPrice;
-            product.AddToSalesList(saleId);
-        }
-        customer.AddToSalesList(saleId);
-        store.AddToSalesList(saleId);
+        Sum = sum;
     }
 }
 

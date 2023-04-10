@@ -20,4 +20,3 @@ jobs:
         dotnet add PONRF package Swashbuckle.AspNetCore --version 6.2.3
     - name: Build with dotnet
       run: dotnet build
-    - name: Test with dotnet

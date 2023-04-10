@@ -69,12 +69,12 @@ public class StoreTest
     {
         var productStoreList = new List<ProductStore>
         {
-            new ProductStore { ProductId = 0, StoreId = 1, Quantity = 10 },
-            new ProductStore { ProductId = 1, StoreId = 1, Quantity = 2 },
-            new ProductStore { ProductId = 2, StoreId = 1, Quantity = 5 },
-            new ProductStore { ProductId = 2, StoreId = 2, Quantity = 15 },
-            new ProductStore { ProductId = 3, StoreId = 1, Quantity = 0 },
-            new ProductStore { ProductId = 3, StoreId = 2, Quantity = 20 }
+            new ProductStore(1, 0, 1, 10),
+            new ProductStore(2, 1, 1, 2),
+            new ProductStore(3, 2, 1, 5),
+            new ProductStore(4, 2, 2, 15),
+            new ProductStore(5, 3, 1, 0),
+            new ProductStore(6, 3, 2, 20)
         };
         return productStoreList;
     }

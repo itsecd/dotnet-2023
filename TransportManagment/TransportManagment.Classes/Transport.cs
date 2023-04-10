@@ -1,4 +1,7 @@
 ﻿namespace TransportManagment.Classes;
+/// <summary>
+/// Class of transports
+/// </summary>
 public class Transport
 {
     /// <summary>
@@ -16,13 +19,13 @@ public class Transport
     /// <summary>
     /// Date when make transport
     /// </summary>
-    public DateOnly DateMake { get; set; } = new DateOnly();
+    public DateTime DateMake { get; set; } = new DateTime();
     /// <summary>
     /// List of routes for this transport
     /// </summary>
     public List<int> Routes { get; set; } = new List<int>();
     public Transport() { }
-    public Transport(int transportId, string type, string model, DateOnly dateMake, List<int> routes)
+    public Transport(int transportId, string type, string model, DateTime dateMake, List<int> routes)
     {
         DateMake = dateMake;
         Type = type;

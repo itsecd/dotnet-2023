@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportManagment.Classes"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportManagment.Tests", "TransportManagment.Tests\TransportManagment.Tests.csproj", "{71757C8F-6030-4DF4-A5D0-9F243CA8A6E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportManagment.Server", "TransportManagment.Server\TransportManagment.Server.csproj", "{9AB34FDB-E3AB-49A1-9EB1-1E4ADE0FCF21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{71757C8F-6030-4DF4-A5D0-9F243CA8A6E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71757C8F-6030-4DF4-A5D0-9F243CA8A6E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71757C8F-6030-4DF4-A5D0-9F243CA8A6E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB34FDB-E3AB-49A1-9EB1-1E4ADE0FCF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB34FDB-E3AB-49A1-9EB1-1E4ADE0FCF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB34FDB-E3AB-49A1-9EB1-1E4ADE0FCF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB34FDB-E3AB-49A1-9EB1-1E4ADE0FCF21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

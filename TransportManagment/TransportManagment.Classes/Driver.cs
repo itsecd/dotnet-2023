@@ -1,4 +1,7 @@
 ﻿namespace TransportManagment.Classes;
+/// <summary>
+/// Class of drivers
+/// </summary>
 public class Driver
 {
     /// <summary>

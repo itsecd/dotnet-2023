@@ -10,12 +10,12 @@ public class TransManagmentTests
     {
         return new List<Transport>()
         {
-            new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23), new List<int> {100}),
-            new Transport(2, "bus", "Audi", new DateOnly(1992, 04, 18), new List<int> {111, 112}),
-            new Transport(3, "trolleybus", "VAZ", new DateOnly(1985, 10, 23), new List<int> {123}),
-            new Transport(4, "trolleybus", "VAZ", new DateOnly(2010, 11, 01), new List < int > {133}),
-            new Transport(5, "tram", "Samtram", new DateOnly(1990, 10, 13), new List < int > {144}),
-            new Transport(6, "tram", "Mostram", new DateOnly(1989, 08, 02), new List < int > {155}),
+            new Transport(1, "bus", "Mercedes", new DateTime(1990, 10, 23), new List<int> {100}),
+            new Transport(2, "bus", "Audi", new DateTime(1992, 04, 18), new List<int> {111, 112}),
+            new Transport(3, "trolleybus", "VAZ", new DateTime(1985, 10, 23), new List<int> {123}),
+            new Transport(4, "trolleybus", "VAZ", new DateTime(2010, 11, 01), new List < int > {133}),
+            new Transport(5, "tram", "Samtram", new DateTime(1990, 10, 13), new List < int > {144}),
+            new Transport(6, "tram", "Mostram", new DateTime(1989, 08, 02), new List < int > {155}),
         };
     }
     /// <summary>
@@ -42,13 +42,13 @@ public class TransManagmentTests
         List<Transport> tempt = DefaultTransports();
         return new List<Route>()
         {
-            new Route(100, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 08, 00, 00), new DateTime(2022, 02, 11, 17, 30, 00), tempt[0], tempd[0]),
-            new Route(111, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 09, 00, 00), new DateTime(2022, 02, 11, 16, 00, 00), tempt[1], tempd[1]),
-            new Route(112, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 16, 30, 00), new DateTime(2022, 02, 11, 22, 30, 00), tempt[1], tempd[2]),
-            new Route(123, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 07, 30, 00), new DateTime(2022, 02, 11, 14, 30, 00), tempt[2], tempd[3]),
-            new Route(133, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 15, 00, 00), new DateTime(2022, 02, 11, 23, 00, 00), tempt[3], tempd[3]),
-            new Route(144, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 06, 00, 00), new DateTime(2022, 02, 11, 18, 00, 00), tempt[4], tempd[4]),
-            new Route(155, new DateOnly(2022, 02, 12), new DateTime(2022, 02, 12, 06, 30, 00), new DateTime(2022, 02, 11, 18, 00, 00), tempt[5], tempd[5]),
+            new Route(100, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 08, 00, 00), new DateTime(2022, 02, 11, 17, 30, 00), tempt[0], tempd[0], 1, 11),
+            new Route(111, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 09, 00, 00), new DateTime(2022, 02, 11, 16, 00, 00), tempt[1], tempd[1], 2, 12),
+            new Route(112, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 16, 30, 00), new DateTime(2022, 02, 11, 22, 30, 00), tempt[1], tempd[2], 2, 13),
+            new Route(123, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 07, 30, 00), new DateTime(2022, 02, 11, 14, 30, 00), tempt[2], tempd[3], 3, 14),
+            new Route(133, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 15, 00, 00), new DateTime(2022, 02, 11, 23, 00, 00), tempt[3], tempd[3], 4, 14),
+            new Route(144, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 06, 00, 00), new DateTime(2022, 02, 11, 18, 00, 00), tempt[4], tempd[4], 5, 15),
+            new Route(155, new DateTime(2022, 02, 12), new DateTime(2022, 02, 12, 06, 30, 00), new DateTime(2022, 02, 11, 18, 00, 00), tempt[5], tempd[5], 6, 16),
         };
     }
     /// <summary>
@@ -57,11 +57,11 @@ public class TransManagmentTests
     [Fact]
     public void TransportTest()
     {
-        var transport = new Transport(1, "bus", "Mercedes", new DateOnly(1990, 10, 23), new List<int> { 100 });
+        var transport = new Transport(1, "bus", "Mercedes", new DateTime(1990, 10, 23), new List<int> { 100 });
         Assert.Equal(1, transport.TransportId);
         Assert.Equal("bus", transport.Type);
         Assert.Equal("Mercedes", transport.Model);
-        Assert.Equal(new DateOnly(1990, 10, 23), transport.DateMake);
+        Assert.Equal(new DateTime(1990, 10, 23), transport.DateMake);
         Assert.Equal(new List<int> {100}, transport.Routes);
     }
     /// <summary>
@@ -88,9 +88,9 @@ public class TransManagmentTests
     {
         List<Driver> tempd = DefaultDrivers();
         List<Transport> tempt = DefaultTransports();
-        var route = new Route(100, new DateOnly(2022, 02, 11), new DateTime(2022, 02, 11, 08, 00, 00), new DateTime(2022, 02, 11, 17, 30, 00), tempt[0], tempd[0]);
+        var route = new Route(100, new DateTime(2022, 02, 11), new DateTime(2022, 02, 11, 08, 00, 00), new DateTime(2022, 02, 11, 17, 30, 00), tempt[0], tempd[0], 1, 11);
         Assert.Equal(100, route.RouteId);
-        Assert.Equal(new DateOnly(2022, 02, 11), route.Date);
+        Assert.Equal(new DateTime(2022, 02, 11), route.Date);
         Assert.Equal(new DateTime(2022, 02, 11, 08, 00, 00), route.TimeTo);
         Assert.Equal(new DateTime(2022, 02, 11, 17, 30, 00), route.TimeFrom);
         Assert.Equal(tempt[0], route.Transport);
@@ -121,7 +121,7 @@ public class TransManagmentTests
         var result = (from driver in drivers
                       join route in routes on driver.DriverId equals route.Driver.DriverId
                       orderby driver.LastName
-                      where route.Date < new DateOnly(2022, 02, 12) && route.Date > new DateOnly(2022, 02, 10)
+                      where route.Date < new DateTime(2022, 02, 12) && route.Date > new DateTime(2022, 02, 10)
                       select driver).ToList();
         Assert.Equal(6, result.Count());
         Assert.Contains(result, driver => driver.DriverId == 11);
@@ -203,7 +203,7 @@ public class TransManagmentTests
                       join route in routes on transport.TransportId equals route.Transport.TransportId
                       group route by route.Transport.TransportId into res
                       orderby res.Count()
-                      where res.First().Date < new DateOnly(2022, 02, 12) && res.First().Date > new DateOnly(2022, 02, 10) && res.Count() == 2
+                      where res.First().Date < new DateTime(2022, 02, 12) && res.First().Date > new DateTime(2022, 02, 10) && res.Count() == 2
                       select res);
         Assert.Equal(2, result.First().Count());
         Assert.Contains(result.First(), driver => driver.Driver.DriverId == 12);

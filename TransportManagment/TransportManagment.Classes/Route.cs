@@ -1,4 +1,7 @@
 ﻿namespace TransportManagment.Classes;
+/// <summary>
+/// Class of routes
+/// </summary>
 public class Route
 {
     /// <summary>
@@ -8,7 +11,7 @@ public class Route
     /// <summary>
     /// Date of route
     /// </summary>
-    public DateOnly Date { get; set; } = new DateOnly();
+    public DateTime Date { get; set; } = new DateTime();
     /// <summary>
     /// Time when transport drive out of route
     /// </summary>
@@ -25,8 +28,16 @@ public class Route
     /// Driver - driver
     /// </summary>
     public Driver Driver { get; set; } = new Driver();
+    /// <summary>
+    /// TransportId - Unique key of transport
+    /// </summary>
+    public int TransportId { get; set; } = 0;
+    /// <summary>
+    /// Driver - Unique key of driver
+    /// </summary>
+    public int DriverId { get; set; } = 0;
     public Route() { }
-    public Route(int routeId, DateOnly date, DateTime timeTo, DateTime timeFrom, Transport transport, Driver driver)
+    public Route(int routeId, DateTime date, DateTime timeTo, DateTime timeFrom, Transport transport, Driver driver, int transpotrId, int driverId)
     {
         RouteId = routeId;
         Date = date;
@@ -34,5 +45,7 @@ public class Route
         TimeFrom = timeFrom;
         Transport = transport;
         Driver = driver;
+        TransportId = transpotrId;
+        DriverId = driverId;
     }
 }

@@ -22,7 +22,12 @@ public class StoreController : ControllerBase
         _mapper = mapper;
     }
 
-
+    /// <summary>
+    /// GET all stores
+    /// </summary>
+    /// <returns>
+    /// JSON stores
+    /// </returns>
     [HttpGet]
     public IEnumerable<StoreGetDto> Get()
     {
@@ -30,23 +35,41 @@ public class StoreController : ControllerBase
         return _storeAppRepository.Stores.Select(store => _mapper.Map<StoreGetDto>(store));
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<StoreGetDto> Get(int id)
+    /// <summary>
+    /// GET store by ID
+    /// </summary>
+    /// <param name="storeId">
+    /// ID
+    /// </param>
+    /// <returns>
+    /// JSON store
+    /// </returns>
+    [HttpGet("{storeId}")]
+    public ActionResult<StoreGetDto> Get(int storeId)
     {
-        var getStore = _storeAppRepository.Stores.FirstOrDefault(store => store.StoreId == id);
+        var getStore = _storeAppRepository.Stores.FirstOrDefault(store => store.StoreId == storeId);
         if (getStore == null)
         {
-            _logger.LogInformation($"Not found store with ID: {id}.");
+            _logger.LogInformation($"Not found store with ID: {storeId}.");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET store with ID: {id}.");
+            _logger.LogInformation($"GET store with ID: {storeId}.");
             return Ok(_mapper.Map<StoreGetDto>(getStore));
         }
 
     }
 
+    /// <summary>
+    /// POST store
+    /// </summary>
+    /// <param name="storeToPost">
+    /// Store
+    /// </param>
+    /// <returns>
+    /// Code-200
+    /// </returns>
     [HttpPost]
     public ActionResult Post([FromBody] StorePostDto storeToPost)
     {
@@ -55,39 +78,58 @@ public class StoreController : ControllerBase
         return Ok();
     }
 
-    [HttpPut]
-    public ActionResult Put(int id, [FromBody] StorePostDto cusomerToPut)
+    /// <summary>
+    /// PUT store
+    /// </summary>
+    /// <param name="storeId">
+    /// ID
+    /// </param>
+    /// <param name="storeToPut">
+    /// Store
+    /// </param>
+    /// <returns>
+    /// Code-200 or Code-404
+    /// </returns>
+    [HttpPut("{storeId}")]
+    public ActionResult Put(int storeId, [FromBody] StorePostDto storeToPut)
     {
-        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == id);
+        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == storeId);
         if (store == null)
         {
-            _logger.LogInformation($"Not found store with ID: {id}");
+            _logger.LogInformation($"Not found store with ID: {storeId}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"PUT store with ID: {id} ({store.StoreName}->{cusomerToPut.StoreName}, {store.StoreAddress}->{cusomerToPut.StoreAddress})");
-            _mapper.Map(cusomerToPut, store);
+            _logger.LogInformation($"PUT store with ID: {storeId} ({store.StoreName}->{storeToPut.StoreName}, {store.StoreAddress}->{storeToPut.StoreAddress})");
+            _mapper.Map(storeToPut, store);
             return Ok();
         }
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <summary>
+    /// DELETE store
+    /// </summary>
+    /// <param name="storeId">
+    /// ID
+    /// </param>
+    /// <returns>
+    /// Code-200 or Code-404
+    /// </returns>
+    [HttpDelete("{storeId}")]
+    public IActionResult Delete(int storeId)
     {
-        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == id);
+        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == storeId);
         if (store == null)
         {
-            _logger.LogInformation($"Not found store with ID: {id}");
+            _logger.LogInformation($"Not found store with ID: {storeId}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"DELETE store with ID: {id}");
+            _logger.LogInformation($"DELETE store with ID: {storeId}");
             _storeAppRepository.Stores.Remove(store);
             return Ok();
         }
     }
-
-
 }

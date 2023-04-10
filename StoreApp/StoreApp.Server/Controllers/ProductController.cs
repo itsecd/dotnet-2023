@@ -22,69 +22,112 @@ public class ProductController : ControllerBase
         _mapper = mapper;
     }
 
-
+    /// <summary>
+    /// GET all products
+    /// </summary>
+    /// <returns>
+    /// JSON products
+    /// </returns>
     [HttpGet]
     public IEnumerable<ProductGetDto> Get()
     {
-        _logger.LogInformation("Get products");
+        _logger.LogInformation("GET products");
         return _storeAppRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<ProductGetDto> Get(int id)
+    /// <summary>
+    /// GET product by ID
+    /// </summary>
+    /// <param name="productId">
+    /// ID
+    /// </param>
+    /// <returns>
+    /// JSON product
+    /// </returns>
+    [HttpGet("{productId}")]
+    public ActionResult<ProductGetDto> Get(int productId)
     {
-        var getProduct = _storeAppRepository.Products.FirstOrDefault(product => product.ProductId == id);
+        var getProduct = _storeAppRepository.Products.FirstOrDefault(product => product.ProductId == productId);
         if (getProduct == null)
         {
-            _logger.LogInformation($"Not found product with ID: {id}.");
+            _logger.LogInformation($"Not found product with ID: {productId}.");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET product with ID: {id}.");
+            _logger.LogInformation($"GET product with ID: {productId}.");
             return Ok(_mapper.Map<ProductGetDto>(getProduct));
         }
 
     }
 
+    /// <summary>
+    /// POST product
+    /// </summary>
+    /// <param name="productToPost">
+    /// Product
+    /// </param>
+    /// <returns>
+    /// Code-200
+    /// </returns>
     [HttpPost]
     public ActionResult Post([FromBody] ProductPostDto productToPost)
     {
-        _logger.LogInformation($"POST product ({productToPost.ProductGroup}, {productToPost.ProductName}, {productToPost.ProductWeight}, {productToPost.ProductType}, {productToPost.ProductPrice}, {productToPost.DateStorage})");
         _storeAppRepository.Products.Add(_mapper.Map<Product>(productToPost));
         _logger.LogInformation($"POST product ({productToPost.ProductGroup}, {productToPost.ProductName}, {productToPost.ProductWeight}, {productToPost.ProductType}, {productToPost.ProductPrice}, {productToPost.DateStorage})");
         return Ok();
     }
 
-    [HttpPut]
-    public ActionResult Put(int id, [FromBody] ProductPostDto productToPut)
+    /// <summary>
+    /// PUT product
+    /// </summary>
+    /// <param name="productId">
+    /// ID
+    /// </param>
+    /// <param name="productToPut">
+    /// Product to put
+    /// </param>
+    /// <returns>
+    /// Code-200 or Code-404
+    /// </returns>
+    [HttpPut("{productId}")]
+    public ActionResult Put(int productId, [FromBody] ProductPostDto productToPut)
     {
-        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == id);
+        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == productId);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with ID: {id}");
+            _logger.LogInformation($"Not found product with ID: {productId}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"PUT product with ID: {id} ({product.ProductName}->{productToPut.ProductName}, {product.ProductPrice}->{productToPut.ProductPrice})");
+            _logger.LogInformation($"PUT product with ID: {productId} ({product.ProductName}->{productToPut.ProductName}, {product.ProductPrice}->{productToPut.ProductPrice})");
             _mapper.Map(productToPut, product);
             return Ok();
         }
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <summary>
+    /// DELETE product
+    /// </summary>
+    /// <param name="productId">
+    /// ID
+    /// </param>
+    /// <returns>
+    /// Code-200 or Code-404
+    /// </returns>
+    [HttpDelete("{productId}")]
+    public IActionResult Delete(int productId)
     {
-        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == id);
+        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == productId);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with ID: {id}");
+            _logger.LogInformation($"Not found product with ID: {productId}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"DELETE product with ID: {id}");
+            _logger.LogInformation($"DELETE product with ID: {productId}");
             _storeAppRepository.Products.Remove(product);
             return Ok();
         }

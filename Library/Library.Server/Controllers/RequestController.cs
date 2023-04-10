@@ -151,7 +151,7 @@ public class RequestController : ControllerBase
                             group card by reader.FullName into g
                             select new
                             {
-                                Name = g.Key,
+                                name = g.Key,
                                 count = g.Count()
                             }).ToList();
         var request = (from reader in numOfReaders

@@ -62,14 +62,14 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] CustomerPostDto customer)
     {
-        var newid = _shopRepository.Customers
+        var newId = _shopRepository.Customers
             .Select(customer => customer.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newCustomer = _mapper.Map<Customer>(customer);
-        newCustomer.Id = newid;
+        newCustomer.Id = newId;
         _shopRepository.Customers.Add(newCustomer);
-        _logger.LogInformation($"Post customer, id = {newid}");
+        _logger.LogInformation($"Post customer, id = {newId}");
         return Ok();
     }
     /// <summary>

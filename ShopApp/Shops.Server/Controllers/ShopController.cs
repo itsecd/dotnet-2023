@@ -62,14 +62,14 @@ public class ShopController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] ShopPostDto shop)
     {
-        var newid = _shopRepository.Shops
+        var newId = _shopRepository.Shops
            .Select(shop => shop.Id)
            .DefaultIfEmpty()
            .Max() + 1;
         var newShop = _mapper.Map<Shop>(shop);
-        newShop.Id = newid;
+        newShop.Id = newId;
         _shopRepository.Shops.Add(newShop);
-        _logger.LogInformation($"Post shop, id = {newid}");
+        _logger.LogInformation($"Post shop, id = {newId}");
         return Ok();
     }
     /// <summary>

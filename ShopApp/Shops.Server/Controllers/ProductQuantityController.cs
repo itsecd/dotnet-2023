@@ -70,14 +70,14 @@ public class ProductQuantityController : ControllerBase
         if (foundShop == null)
             return NotFound();
 
-        var newid = _shopRepository.ProductQuantities
+        var newId = _shopRepository.ProductQuantities
             .Select(product => product.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newProduct = _mapper.Map<ProductQuantity>(product);
-        newProduct.Id = newid;
+        newProduct.Id = newId;
         _shopRepository.ProductQuantities.Add(newProduct);
-        _logger.LogInformation($"Post new record of product quantity, id = {newid}");
+        _logger.LogInformation($"Post new record of product quantity, id = {newId}");
         return Ok();
     }
     /// <summary>

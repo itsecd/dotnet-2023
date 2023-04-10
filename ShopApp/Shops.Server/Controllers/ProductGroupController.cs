@@ -63,14 +63,14 @@ public class ProductGroupController : ControllerBase
     public IActionResult Post([FromBody] ProductGroupPostDto productGroup)
     {
 
-        var newid = _shopRepository.ProductGroups
+        var newId = _shopRepository.ProductGroups
             .Select(productGroup => productGroup.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newProductGroup = _mapper.Map<ProductGroup>(productGroup);
-        newProductGroup.Id = newid;
+        newProductGroup.Id = newId;
         _shopRepository.ProductGroups.Add(newProductGroup);
-        _logger.LogInformation($"Post product group, id = {newid}");
+        _logger.LogInformation($"Post product group, id = {newId}");
         return Ok();
     }
     /// <summary>

@@ -72,15 +72,15 @@ public class PurchaseRecordController : ControllerBase
         var foundCustomer = _shopRepository.Customers.FirstOrDefault(fCustomer => fCustomer.Id == record.CustomerId);
         if (foundCustomer == null)
             return NotFound();
-        var newid = _shopRepository.PurchaseRecords
+        var newId = _shopRepository.PurchaseRecords
             .Select(product => product.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newRecord = _mapper.Map<PurchaseRecord>(record);
-        newRecord.Id = newid;
+        newRecord.Id = newId;
         newRecord.Sum = record.Quantity * foundProduct.Price;
         _shopRepository.PurchaseRecords.Add(newRecord);
-        _logger.LogInformation($"Post new purchase record, id = {newid}");
+        _logger.LogInformation($"Post new purchase record, id = {newId}");
         return Ok();
     }
     /// <summary>

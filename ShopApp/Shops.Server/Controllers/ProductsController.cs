@@ -64,14 +64,14 @@ public class ProductsController : ControllerBase
     public IActionResult Post([FromBody] ProductPostDto product)
     {
 
-        var newid = _shopRepository.Products
+        var newId = _shopRepository.Products
             .Select(product => product.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newProduct = _mapper.Map<Product>(product);
-        newProduct.Id = newid;
+        newProduct.Id = newId;
         _shopRepository.Products.Add(newProduct);
-        _logger.LogInformation($"Post product, id = {newid}");
+        _logger.LogInformation($"Post product, id = {newId}");
         return Ok();
     }
     /// <summary>

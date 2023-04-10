@@ -34,43 +34,97 @@ public class ResultController : ControllerBase
     }
 
     /// <summary>
-    /// Get Result by id
+    /// Get Results by id
     /// </summary>
-    /// <param name="idResult">id Result</param>
-    /// <returns>collection Result with http code</returns>
-    [HttpGet("GetResultById")]
-    public ActionResult<List<Result>> Get(int idResult)
+    /// <param name="idResults">id Results</param>
+    /// <returns>collection Results with http code</returns>
+    [HttpGet("GetResultsById")]
+    public ActionResult<List<Result>> Get(int idResults)
     {
-        var result = _admissionCommitteeRepository.GetResults.Where(result => result.All(res => res.IdResult == idResult));
-        if (!result.Any())
+        var results = _admissionCommitteeRepository.GetResults.Where(result => result.All(res => res.IdResult == idResults));
+        if (!results.Any())
         {
-            _logger.LogInformation("Not found Result : {idResult}", idResult);
-            return NotFound($"The Result does't exist by this idResult {idResult}");
+            _logger.LogInformation("Not found Results : {idResults}", idResults);
+            return NotFound($"The Results does't exist by this idResults {idResults}");
         }
         else
         {
-            _logger.LogInformation("Get Result by id {idResult}", idResult);
-            return Ok(result);
+            _logger.LogInformation("Get Results by id {idResults}", idResults);
+            return Ok(results);
         }
     }
 
-
-    [HttpPost("CreateResult")]
-    public void Post([FromBody] List<ResultPostDto> res)
+    /// <summary>
+    /// Create new Results
+    /// </summary>
+    /// <param name="results">list results</param>
+    /// <returns>Ok or BadRequest</returns>
+    [HttpPost("CreateResults")]
+    public IActionResult Post(List<ResultPostDto> results)
     {
-        _logger.LogInformation("Create new Results");
-        _admissionCommitteeRepository.GetResults.Add(_mapper.Map<List<Result>>(res));
+        if (results.Count() == 3)
+        {
+            _logger.LogInformation("Create new Results");
+            _admissionCommitteeRepository.GetResults.Add(_mapper.Map<List<Result>>(results));
+            return Ok();
+        }
+        else
+        {
+            _logger.LogInformation("Incorrect data entry, count of Results no equal to 3");
+            return BadRequest("Count of Results must be 3!");
+        }
     }
 
-
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    /// <summary>
+    /// Update information about Results
+    /// </summary>
+    /// <param name="idResults">id Results</param>
+    /// <param name="resultsToPut">Results that is updated</param>
+    /// <returns></returns>
+    [HttpPut("UpdateResultsById")]
+    public IActionResult Put(int idResults, List<ResultPostDto> resultsToPut)
     {
+        if (resultsToPut.Count() == 3)
+        {
+            var results = _admissionCommitteeRepository.GetResults.Where(result => result.All(res => res.IdResult == idResults)).ElementAtOrDefault(0);
+            if (results == null)
+            {
+                _logger.LogInformation("Not found Results : {idResults}", idResults);
+                return NotFound($"The Results does't exist by this id {idResults}");
+            }
+            else
+            {
+                _logger.LogInformation("Update Results by id {idResults}", idResults);
+                _mapper.Map(resultsToPut, results);
+                return Ok();
+            }
+        }
+        else
+        {
+            _logger.LogInformation("Incorrect data update, count of Results no equal to 3");
+            return BadRequest("Count of Results must be 3!");
+        }
     }
 
-
-    [HttpDelete("{id}")]
-    public void Delete(int id)
+    /// <summary>
+    /// Delete by id Results
+    /// </summary>
+    /// <param name="idResults">id Results for delete</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpDelete("DeleteResultsById")]
+    public IActionResult Delete(int idResults)
     {
+        var results = _admissionCommitteeRepository.GetResults.Where(result => result.All(res => res.IdResult == idResults)).ElementAtOrDefault(0);
+        if (results == null)
+        {
+            _logger.LogInformation("Not found Results : {idResults}", idResults);
+            return NotFound($"The Results does't exist by this id {idResults}");
+        }
+        else
+        {
+            _logger.LogInformation("Delete Results by id {idResults}", idResults);
+            _admissionCommitteeRepository.GetResults.Remove(results);
+            return Ok();
+        }
     }
 }

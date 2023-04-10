@@ -1,4 +1,5 @@
-﻿using AdmissionCommittee.Server.Repository;
+﻿using AdmissionCommittee.Server.Dto;
+using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,10 +26,10 @@ public class StatementController : ControllerBase
     /// </summary>
     /// <returns>IEnumerable type Statement</returns>
     [HttpGet("GetAllStatements")]
-    public IEnumerable<Statement> Get()
+    public IEnumerable<StatementGetDto> Get()
     {
-        _logger.LogInformation("Get all Statetments");
-        return _admissionCommitteeRepository.GetStatements;
+        _logger.LogInformation("Get all Statements");
+        return _admissionCommitteeRepository.GetStatements.Select(statement => _mapper.Map<StatementGetDto>(statement));
     }
 
     // GET api/<StatementController>/5

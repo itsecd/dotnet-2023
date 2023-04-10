@@ -1,8 +1,8 @@
-﻿namespace AdmissionCommittee;
+﻿namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about the speciality
 /// </summary>
-public class Speciality
+public class Specialty
 {
     /// <summary>
     /// IdSpeciality - int value for storing the id speciality
@@ -11,23 +11,20 @@ public class Speciality
     /// <summary>
     /// Cypher - string value for storing a speciality cypher
     /// </summary>
-    public string Cypher { get; set; }
+    public string Cypher { get; set; } = string.Empty;
+
     /// <summary>
     /// NameSpeciality - string value for storing the name speciality
     /// </summary>
-    public string NameSpeciality { get; set; }
+    public string NameSpeciality { get; set; } = string.Empty;
+
     /// <summary>
     /// Faculty - string value for storing the name faculty
     /// </summary>
-    public string Faculty { get; set; }
+    public string Faculty { get; set; } = string.Empty;
 
-    public Speciality() { }
-
-    public Speciality(int idSpeciality, string cypher, string nameSpeciality, string faculty)
-    {
-        IdSpeciality = idSpeciality;
-        Cypher = cypher;
-        NameSpeciality = nameSpeciality;
-        Faculty = faculty;
-    }
+    /// <summary>
+    /// StatementSpecialties - list storing relatioship between Statement and Specialty
+    /// </summary>
+    public List<StatementSpecialty> StatementSpecialties = new();
 }

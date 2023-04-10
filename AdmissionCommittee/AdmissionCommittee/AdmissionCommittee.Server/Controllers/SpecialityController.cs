@@ -27,7 +27,7 @@ public class SpecialityController : ControllerBase
     /// </summary>
     /// <returns> IEnumerable type Speciality </returns>
     [HttpGet("GetAllSpecialities")]
-    public IEnumerable<Speciality> Get()
+    public IEnumerable<Specialty> Get()
     {
         _logger.LogInformation("Get all Specialities");
         return _admissionCommitteeRepository.GetSpecialities;
@@ -39,7 +39,7 @@ public class SpecialityController : ControllerBase
     /// <param name="idSpeciality">id entrant</param>
     /// <returns>Speciality with http code</returns>
     [HttpGet("GetSpecialityById")]
-    public ActionResult<Speciality> Get(int idSpeciality)
+    public ActionResult<Specialty> Get(int idSpeciality)
     {
         var speciality = _admissionCommitteeRepository.GetSpecialities.FirstOrDefault(speciality => speciality.IdSpeciality == idSpeciality);
         if (speciality == null)
@@ -62,7 +62,7 @@ public class SpecialityController : ControllerBase
     public void Post([FromBody] SpecialityPostDto speciality)
     {
         _logger.LogInformation("Create new Speciality");
-        _admissionCommitteeRepository.GetSpecialities.Add(_mapper.Map<Speciality>(speciality));
+        _admissionCommitteeRepository.GetSpecialities.Add(_mapper.Map<Specialty>(speciality));
     }
 
     /// <summary>

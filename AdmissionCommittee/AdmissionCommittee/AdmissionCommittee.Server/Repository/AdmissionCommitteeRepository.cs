@@ -10,7 +10,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
     /// <summary>
     /// _specialities - list for storing specialities
     /// </summary>
-    private readonly List<Speciality> _specialities = new();
+    private readonly List<Specialty> _specialities = new();
 
     /// <summary>
     /// _entrants - list for storing information about entrants
@@ -81,13 +81,13 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
     /// </summary>
     private void CreateSpecialities()
     {
-        _specialities.Add(new Speciality(1, "100503D", "Information security of automated systems", "Computer science and Cybernetics"));
-        _specialities.Add(new Speciality(2, "010302D", "Applied Mathematics and Computer science", "Computer science and Cybernetics"));
-        _specialities.Add(new Speciality(3, "390301D", "Sociology", "Sociological"));
-        _specialities.Add(new Speciality(4, "410305D", "International relations", "Historical"));
-        _specialities.Add(new Speciality(5, "020302D", "Computer security", "Computer science and Cybernetics"));
-        _specialities.Add(new Speciality(6, "020302D", "International relations and foreign policy", "Historical"));
-        _specialities.Add(new Speciality(7, "040401D", "Chemistry", "Natural Science"));
+        _specialities.Add(new Specialty(1, "100503D", "Information security of automated systems", "Computer science and Cybernetics"));
+        _specialities.Add(new Specialty(2, "010302D", "Applied Mathematics and Computer science", "Computer science and Cybernetics"));
+        _specialities.Add(new Specialty(3, "390301D", "Sociology", "Sociological"));
+        _specialities.Add(new Specialty(4, "410305D", "International relations", "Historical"));
+        _specialities.Add(new Specialty(5, "020302D", "Computer security", "Computer science and Cybernetics"));
+        _specialities.Add(new Specialty(6, "020302D", "International relations and foreign policy", "Historical"));
+        _specialities.Add(new Specialty(7, "040401D", "Chemistry", "Natural Science"));
     }
 
     /// <summary>
@@ -95,16 +95,35 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
     /// </summary>
     private void CreateStatements()
     {
-        _statements.Add(new Statement(1, new Dictionary<Speciality, int> { { _specialities[0], 1 }, { _specialities[1], 2 }, { _specialities[4], 3 } }));
-        _statements.Add(new Statement(2, new Dictionary<Speciality, int> { { _specialities[1], 1 }, { _specialities[0], 2 } }));
-        _statements.Add(new Statement(3, new Dictionary<Speciality, int> { { _specialities[0], 1 }, { _specialities[4], 2 }, { _specialities[1], 3 } }));
-        _statements.Add(new Statement(4, new Dictionary<Speciality, int> { { _specialities[2], 1 }, { _specialities[3], 2 } }));
-        _statements.Add(new Statement(5, new Dictionary<Speciality, int> { { _specialities[3], 1 }, { _specialities[2], 2 } }));
-        _statements.Add(new Statement(6, new Dictionary<Speciality, int> { { _specialities[2], 1 }, { _specialities[5], 2 } }));
-        _statements.Add(new Statement(7, new Dictionary<Speciality, int> { { _specialities[6], 1 } }));
-        _statements.Add(new Statement(8, new Dictionary<Speciality, int> { { _specialities[3], 1 }, { _specialities[5], 2 } }));
-        _statements.Add(new Statement(9, new Dictionary<Speciality, int> { { _specialities[3], 1 }, { _specialities[5], 2 } }));
-        _statements.Add(new Statement(10, new Dictionary<Speciality, int> { { _specialities[6], 1 } }));
+        _statements.Add(new Statement(1, new Dictionary<Specialty, int> { { _specialities[0], 1 }, { _specialities[1], 2 }, { _specialities[4], 3 } },
+                                         new Dictionary<int, int> { { 1, 1 }, { 2, 2 }, { 5, 3 } }));
+
+        _statements.Add(new Statement(2, new Dictionary<Specialty, int> { { _specialities[1], 1 }, { _specialities[0], 2 } },
+                                         new Dictionary<int, int> { { 2, 1 }, { 1, 2 } }));
+
+        _statements.Add(new Statement(3, new Dictionary<Specialty, int> { { _specialities[0], 1 }, { _specialities[4], 2 }, { _specialities[1], 3 } },
+                                         new Dictionary<int, int> { { 1, 1 }, { 5, 2 }, { 2, 3 } }));
+
+        _statements.Add(new Statement(4, new Dictionary<Specialty, int> { { _specialities[2], 1 }, { _specialities[3], 2 } },
+                                         new Dictionary<int, int> { { 3, 1 }, { 4, 2 } }));
+
+        _statements.Add(new Statement(5, new Dictionary<Specialty, int> { { _specialities[3], 1 }, { _specialities[2], 2 } },
+                                         new Dictionary<int, int> { { 4, 1 }, { 3, 2 } }));
+
+        _statements.Add(new Statement(6, new Dictionary<Specialty, int> { { _specialities[2], 1 }, { _specialities[5], 2 } },
+                                         new Dictionary<int, int> { { 3, 1 }, { 6, 2 } }));
+
+        _statements.Add(new Statement(7, new Dictionary<Specialty, int> { { _specialities[6], 1 } },
+                                         new Dictionary<int, int> { { 7, 1 } }));
+
+        _statements.Add(new Statement(8, new Dictionary<Specialty, int> { { _specialities[3], 1 }, { _specialities[5], 2 } },
+                                         new Dictionary<int, int> { { 4, 1 }, { 6, 2 } }));
+
+        _statements.Add(new Statement(9, new Dictionary<Specialty, int> { { _specialities[3], 1 }, { _specialities[5], 2 } },
+                                         new Dictionary<int, int> { { 4, 1 }, { 6, 2 } }));
+
+        _statements.Add(new Statement(10, new Dictionary<Specialty, int> { { _specialities[6], 1 } },
+                                          new Dictionary<int, int> { { 7, 1 } }));
     }
 
     /// <summary>
@@ -132,7 +151,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
 
     public List<List<Result>> GetResults => _results;
 
-    public List<Speciality> GetSpecialities => _specialities;
+    public List<Specialty> GetSpecialities => _specialities;
 
     public List<Entrant> GetEntrants => _entrants;
 

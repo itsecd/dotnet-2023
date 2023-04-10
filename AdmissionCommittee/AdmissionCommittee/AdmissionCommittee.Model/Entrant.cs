@@ -1,4 +1,4 @@
-﻿namespace AdmissionCommittee;
+﻿namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about entrants
 /// </summary>
@@ -12,7 +12,7 @@ public class Entrant
     /// <summary>
     /// FullName - string value for storing the entrant's full name
     /// </summary>
-    public string? FullName { get; set; }
+    public string FullName { get; set; } = string.Empty;
 
     /// <summary>
     /// DateBirth - DateTime value for storing the entrant's date of birth
@@ -29,30 +29,18 @@ public class Entrant
     /// </summary>
     public string? City { get; set; }
 
-    public Statement? Statement { get; set; }
-
     /// <summary>
     /// StatementId - int value for storing the id statement of entrant
     /// </summary>
     public int StatementId { get; set; }
 
-    public List<Result> Results = new();
+    /// <summary>
+    /// Statement - link to statements's entrant
+    /// </summary>
+    public Statement? Statement { get; set; }
 
-    public Entrant() { }
-
-    public Entrant(int idEntrant, string? fullName, DateTime dateBirth, string? country, string? city, Statement? statement, int statementId)
-    {
-        IdEntrant = idEntrant;
-        FullName = fullName;
-        DateBirth = dateBirth;
-        Country = country;
-        City = city;
-        Statement = statement;
-        StatementId = statementId;
-    }
-
-    public Entrant(int idEntrant, string? fullName, DateTime dateBirth, string? country, string? city, Statement? statement, int statementId, List<Result> results) : this(idEntrant, fullName, dateBirth, country, city, statement, statementId)
-    {
-        Results = results;
-    }
+    /// <summary>
+    /// EntrantResults - list storing relatioship between Entrant and Result
+    /// </summary>
+    public List<EntrantResult> EntrantResults = new();
 }

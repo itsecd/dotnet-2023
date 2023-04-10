@@ -1,4 +1,4 @@
-﻿namespace AdmissionCommittee;
+﻿namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about the entrant's statement
 /// </summary>
@@ -10,13 +10,12 @@ public class Statement
     public int IdStatement { get; set; }
 
     /// <summary>
-    /// PrioritySpecialities - dictionary value for storing specialities and their priority
+    /// Entrant - link to entrant
     /// </summary>
-    public Dictionary<Speciality, int> PrioritySpecialities = new();
+    public Entrant? Entrant { get; set; }
 
-    public Statement(int idStatement, Dictionary<Speciality, int> prioritySpecialities)
-    {
-        IdStatement = idStatement;
-        PrioritySpecialities = prioritySpecialities;
-    }
+    /// <summary>
+    /// StatementSpecialties - list storing relatioship between Statement and Specialty
+    /// </summary>
+    public List<StatementSpecialty> StatementSpecialties = new();
 }

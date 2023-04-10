@@ -17,9 +17,9 @@ public class Doctor
     /// </summary>
     public DateOnly DateBirth { get; set; } = new DateOnly();
     /// <summary>
-    /// doctor's specialization     
+    /// doctor's specialization id
     /// </summary>
-    public string Specialization { get; set; } = string.Empty;
+    public int IdSpecialization { get; set; } = 0;
     /// <summary>
     /// doctor's work experience
     /// </summary>
@@ -36,12 +36,12 @@ public class Doctor
     /// list of conclusions made by this doctor
     /// </summary>
     public List<int> CompletionsList { get; set; }
-    public Doctor(int passportNumber, string fullName, DateOnly dateBirth, string specialization, int workExperience, int id)
+    public Doctor(int passportNumber, string fullName, DateOnly dateBirth, int specialization, int workExperience, int id)
     {
         PassportNumber = passportNumber;
         FullName = fullName;
         DateBirth = dateBirth;
-        Specialization = specialization;
+        IdSpecialization = specialization;
         WorkExperience = workExperience;
         Id = id;
         RegistrationsList = new List<int>();

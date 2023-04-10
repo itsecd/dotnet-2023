@@ -3,6 +3,18 @@ namespace Polyclinic.Test;
 
 public class PolyclinicTest
 {
+    [Fact]
+    private List<Specializations> CreateSpecializationList()
+    {
+        return new List<Specializations>()
+        {
+            new Specializations(1, "Surgeon"),
+            new Specializations(2,"Neurologist"),
+            new Specializations(3,"Gynecologist"),
+            new Specializations(4, "Therapist"),
+            new Specializations(5,"Psychiatrist")
+        };
+    }
     /// <summary>
     /// creating a list of patients
     /// </summary>
@@ -27,11 +39,11 @@ public class PolyclinicTest
     {
         return new List<Doctor>()
         {
-            new Doctor(66666666,"Melissa Sparks", new DateOnly(1970,6,6), "Surgeon",15,1),
-            new Doctor(77777777,"John Garcia", new DateOnly(1988,7,7), "Neurologist", 10,2),
-            new Doctor(88888888, "Brian Sullivan", new DateOnly(1979,8,8), "Gynecologist", 8, 3),
-            new Doctor(99999999,"Laura Harris", new DateOnly(1967,9,9), "Therapist", 25, 4),
-            new Doctor(10101010, "Francis Reynolds", new DateOnly(1980,10,10),"Psychiatrist", 6, 5)
+            new Doctor(66666666,"Melissa Sparks", new DateOnly(1970,6,6), 1, 15, 1),
+            new Doctor(77777777,"John Garcia", new DateOnly(1988,7,7), 2, 10,2),
+            new Doctor(88888888, "Brian Sullivan", new DateOnly(1979,8,8), 3, 8, 3),
+            new Doctor(99999999,"Laura Harris", new DateOnly(1967,9,9), 4, 25, 4),
+            new Doctor(10101010, "Francis Reynolds", new DateOnly(1980,10,10),5, 6, 5)
         };
     }
 

@@ -82,7 +82,7 @@ public class RequestsController : ControllerBase
                            Marks = g.Average(s => s.Mark)
                        }).OrderByDescending(s => s.Marks).ThenBy(s => s.Student.FirstName).Take(5).ToList();
 
-        var students = topFive.Select(x => x.Student).ToList();
+        var students = topFive.Select(x => x.Student);
 
         return _mapper.Map<IEnumerable<StudentGetDto>>(students);
     }
@@ -113,7 +113,7 @@ public class RequestsController : ControllerBase
             return NotFound();
 
         var maxMark = averageMarks.Max(x => x.Marks);
-        var students = averageMarks.Where(x => x.Marks.Equals(maxMark)).Select(s => s.Student).ToList();
+        var students = averageMarks.Where(x => x.Marks.Equals(maxMark)).Select(s => s.Student);
 
         return Ok(_mapper.Map<IEnumerable<StudentGetDto>>(students));
     }
@@ -129,6 +129,7 @@ public class RequestsController : ControllerBase
                 group grade by grade.Subject into g
                 select new
                 {
+                    Id = g.Select(x => x.Subject.Id).FirstOrDefault(),
                     Min = g.Min(s => s.Mark),
                     Max = g.Max(s => s.Mark),
                     Average = g.Average(s => s.Mark)

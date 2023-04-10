@@ -14,5 +14,11 @@ public class MappingProfile : Profile
 
         CreateMap<Subject, SubjectGetDto>();
         CreateMap<SubjectGetDto, Subject>();
+
+        CreateMap<Student, StudentGetDto>();
+        CreateMap<StudentGetDto, Student>();
+
+        CreateMap<GradeGetDto, Grade>();
+        CreateMap<Grade, GradeGetDto>();
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Polyclinic.Server.Dto;
-
+/// <summary>
+/// class describing the patient
+/// </summary>
 public class PatientPostDto
 {
     /// <summary>

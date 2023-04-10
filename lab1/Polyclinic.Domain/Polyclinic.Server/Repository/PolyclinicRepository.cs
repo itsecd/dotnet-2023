@@ -10,7 +10,7 @@ public class PolyclinicRepository : IPolyclinicRepository
     private readonly List<Registration> _registration;
     private readonly List<Completion> _completion;
 
-    public PolyclinicRepository() 
+    public PolyclinicRepository()
     {
         _specializations = new List<Specializations>()
         {

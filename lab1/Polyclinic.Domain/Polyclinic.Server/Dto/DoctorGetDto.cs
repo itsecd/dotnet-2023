@@ -1,5 +1,7 @@
 ﻿namespace Polyclinic.Server.Dto;
-
+/// <summary>
+/// class describing doctor
+/// </summary>
 public class DoctorGetDto
 {
     /// <summary>

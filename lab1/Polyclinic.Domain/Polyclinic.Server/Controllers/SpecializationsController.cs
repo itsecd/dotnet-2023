@@ -3,6 +3,10 @@ using Polyclinic.Domain;
 using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
+
+/// <summary>
+/// Book specializations controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SpecializationsController : ControllerBase
@@ -16,7 +20,10 @@ public class SpecializationsController : ControllerBase
         _polyclinicRepository = polyclinicRepository;
     }
 
-    // GET: api/<SpecializationsController>
+    /// <summary>
+    /// Get specializations
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<Specializations> Get()
     {
@@ -24,7 +31,11 @@ public class SpecializationsController : ControllerBase
         return _polyclinicRepository.Specializations;
     }
 
-    // GET api/<SpecializationsController>/5
+    /// <summary>
+    /// Get specialization by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Specializations> Get(int id)
     {

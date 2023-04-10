@@ -5,6 +5,10 @@ using Polyclinic.Server.Dto;
 using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
+
+/// <summary>
+/// Doctors controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class DoctorsController : ControllerBase
@@ -19,7 +23,10 @@ public class DoctorsController : ControllerBase
         _mapper = mapper;
     }
 
-    // GET: api/<DoctorsController>
+    /// <summary>
+    /// Get doctors
+    /// </summary>
+    /// <returns>doctors</returns>
     [HttpGet]
     public IEnumerable<DoctorGetDto> Get()
     {
@@ -28,7 +35,11 @@ public class DoctorsController : ControllerBase
 
     }
 
-    // GET api/<DoctorsController>/5
+    /// <summary>
+    /// Get doctor by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>doctor</returns>
     [HttpGet("{id}")]
     public ActionResult<DoctorGetDto> Get(int id)
     {
@@ -45,7 +56,10 @@ public class DoctorsController : ControllerBase
         }
     }
 
-    // POST api/<DoctorsController>
+    /// <summary>
+    /// Post doctor
+    /// </summary>
+    /// <param name="doctor"></param>
     [HttpPost]
     public void Post([FromBody] DoctorPostDto doctor)
     {
@@ -53,7 +67,12 @@ public class DoctorsController : ControllerBase
 
     }
 
-    // PUT api/<DoctorsController>/5
+    /// <summary>
+    /// Put doctor by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="doctorToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] DoctorPostDto doctorToPut)
     {
@@ -71,7 +90,11 @@ public class DoctorsController : ControllerBase
         }
     }
 
-    // DELETE api/<DoctorsController>/5
+    /// <summary>
+    /// Delete doctor by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

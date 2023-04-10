@@ -5,6 +5,10 @@ using Polyclinic.Server.Dto;
 using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
+
+/// <summary>
+/// Patient controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PatientController : ControllerBase
@@ -19,7 +23,10 @@ public class PatientController : ControllerBase
         _mapper = mapper;
     }
 
-    // GET: api/<PatientController>
+    /// <summary>
+    /// Get patients
+    /// </summary>
+    /// <returns>patients</returns>
     [HttpGet]
     public IEnumerable<PatientGetDto> Get()
     {
@@ -27,7 +34,11 @@ public class PatientController : ControllerBase
         return _polyclinicRepository.Patients.Select(patient => _mapper.Map<PatientGetDto>(patient));
     }
 
-    // GET api/<PatientController>/5
+    /// <summary>
+    /// Get patient by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>patient</returns>
     [HttpGet("{id}")]
     public ActionResult Get(int id)
     {
@@ -44,14 +55,22 @@ public class PatientController : ControllerBase
         }
     }
 
-    // POST api/<PatientController>
+    /// <summary>
+    /// Post patient
+    /// </summary>
+    /// <param name="patient"></param>
     [HttpPost]
     public void Post([FromBody] PatientPostDto patient)
     {
         _polyclinicRepository.Patients.Add(_mapper.Map<Patient>(patient));
     }
 
-    // PUT api/<PatientController>/5
+    /// <summary>
+    /// Put patient by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="patientToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PatientPostDto patientToPut)
     {
@@ -69,7 +88,11 @@ public class PatientController : ControllerBase
         }
     }
 
-    // DELETE api/<PatientController>/5
+    /// <summary>
+    /// Delete patient by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

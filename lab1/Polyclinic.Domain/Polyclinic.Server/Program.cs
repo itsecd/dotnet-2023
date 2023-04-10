@@ -1,7 +1,6 @@
-using System.Reflection;
-using Polyclinic.Server.Repository;
 using AutoMapper;
 using Polyclinic.Server;
+using Polyclinic.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));

@@ -5,6 +5,10 @@ using Polyclinic.Server.Dto;
 using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
+
+/// <summary>
+/// Completion controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class CompletionController : ControllerBase
@@ -18,7 +22,11 @@ public class CompletionController : ControllerBase
         _polyclinicRepository = polyclinicRepository;
         _mapper = mapper;
     }
-    // GET: api/<CompletionController>
+
+    /// <summary>
+    /// Get completions
+    /// </summary>
+    /// <returns>completions</returns>
     [HttpGet]
     public IEnumerable<Completion> Get()
     {
@@ -26,7 +34,11 @@ public class CompletionController : ControllerBase
         return _polyclinicRepository.Completions;
     }
 
-    // GET api/<CompletionController>/5
+    /// <summary>
+    /// Get completion by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>completion</returns>
     [HttpGet("{id}")]
     public ActionResult Get(int id)
     {
@@ -44,14 +56,22 @@ public class CompletionController : ControllerBase
     }
 
 
-    // POST api/<CompletionController>
+    /// <summary>
+    /// Post completion
+    /// </summary>
+    /// <param name="completion"></param>
     [HttpPost]
     public void Post([FromBody] CompletionPostDto completion)
     {
         _polyclinicRepository.Completions.Add(_mapper.Map<Completion>(completion));
     }
 
-    // PUT api/<CompletionController>/5
+    /// <summary>
+    /// Put copletion by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="completionToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] CompletionPostDto completionToPut)
     {
@@ -69,7 +89,11 @@ public class CompletionController : ControllerBase
         }
     }
 
-    // DELETE api/<CompletionController>/5
+    /// <summary>
+    /// Delete completion by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

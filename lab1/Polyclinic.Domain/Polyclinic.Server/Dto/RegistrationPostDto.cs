@@ -1,5 +1,7 @@
 ﻿namespace Polyclinic.Server.Dto;
-
+/// <summary>
+/// a class describing a patient's appointment with a doctor
+/// </summary>
 public class RegistrationPostDto
 {
     /// <summary>

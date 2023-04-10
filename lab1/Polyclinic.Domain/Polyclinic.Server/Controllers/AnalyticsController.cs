@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Polyclinic.Server.Dto;
 using Polyclinic.Server.Repository;
-using AutoMapper;
-using Polyclinic.Domain;
 
 namespace Polyclinic.Server.Controllers;
 [Route("api/[controller]")]

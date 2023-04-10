@@ -25,7 +25,7 @@ public class Completion
     /// </summary>
     public int Status { get; set; } = 0;
 
-    
+
 
     public Completion(int id, int idPatient, int idDoctor, int status, string conclusion)
     {

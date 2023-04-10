@@ -1,5 +1,7 @@
 ﻿namespace Polyclinic.Server.Dto;
-
+/// <summary>
+/// class describing the conclusion of the doctor on the admission of the patient
+/// </summary>
 public class CompletionPostDto
 {
     /// <summary>

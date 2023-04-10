@@ -110,7 +110,7 @@ public class PurchaseRecordController : ControllerBase
         }
         else
         {
-            
+
             _logger.LogInformation($"Update information purchase record with id = {id}");
             _mapper.Map<PurchaseRecordPostDto, PurchaseRecord>(recordToPut, record);
             record.Sum = record.Quantity * foundProduct.Price;

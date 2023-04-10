@@ -64,9 +64,9 @@ public class ProductQuantityController : ControllerBase
     public IActionResult Post([FromBody] ProductQuantityPostDto product)
     {
         var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == product.ProductId);
-        if (foundProduct == null) 
-            return NotFound(); 
-        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id== product.ShopId);
+        if (foundProduct == null)
+            return NotFound();
+        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == product.ShopId);
         if (foundShop == null)
             return NotFound();
 

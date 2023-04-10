@@ -32,7 +32,7 @@ public class ShopController : ControllerBase
     public ActionResult<IEnumerable<ShopGetDto>> Get()
     {
         _logger.LogInformation($"Get list of shop");
-        return Ok(_shopRepository.Shops.Select(shop=> _mapper.Map<ShopGetDto>(shop)));
+        return Ok(_shopRepository.Shops.Select(shop => _mapper.Map<ShopGetDto>(shop)));
     }
     /// <summary>
     /// Return shop by id

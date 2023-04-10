@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Shops.Domain;
 using Shops.Server.Dto;
 using Shops.Server.Repository;
-using Shops.Domain;
 
 /// <summary>
 /// Analytics controller
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class AnalyticsController: ControllerBase
+public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
     private readonly IShopRepository _shopRepository;
@@ -44,7 +44,7 @@ public class AnalyticsController: ControllerBase
         {
             return NotFound();
         }
-        else 
+        else
         {
             var result = _mapper.Map<IEnumerable<ProductQuantity>, IEnumerable<ProductQuantityGetDto>>(query);
             return Ok(result);

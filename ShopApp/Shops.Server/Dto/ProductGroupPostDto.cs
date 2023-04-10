@@ -3,7 +3,7 @@
 /// Class ProductGroupPostDto is used to make HTTP POST request.
 /// </summary>
 public class ProductGroupPostDto
-{    
+{
     /// <summary>
     /// Name product group
     /// </summary>

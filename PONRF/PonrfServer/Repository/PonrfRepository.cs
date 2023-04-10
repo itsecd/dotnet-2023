@@ -1,14 +1,18 @@
 ﻿using PonrfDomain;
 
 namespace PonrfServer.Repository;
-
+/// <summary>
+/// PonrfRepository contains all data
+/// </summary>
 public class PonrfRepository : IPonrfRepository
 {
     private readonly List<Customer> _customers;
     private readonly List<Building> _buildings;
     private readonly List<Auction> _auctions;
     private readonly List<PrivatizedBuilding> _privatizedBuildings;
-
+    /// <summary>
+    /// Constructor for PonrfRepository
+    /// </summary>
     public PonrfRepository()
     {
         _customers = new List<Customer>()
@@ -65,10 +69,21 @@ public class PonrfRepository : IPonrfRepository
         _buildings[4].PrivatizedBuilding?.Add(_privatizedBuildings[4]);
         _buildings[5].PrivatizedBuilding?.Add(_privatizedBuildings[3]);
     }
-
+    /// <summary>
+    /// List of all customers with data
+    /// </summary>
     public List<Customer> Customers => _customers;
+    /// <summary>
+    /// List of all buildings with data
+    /// </summary>
     public List<Building> Buildings => _buildings;
+    /// <summary>
+    /// List of all auctions with data
+    /// </summary>
     public List<Auction> Auctions => _auctions;
+    /// <summary>
+    /// List of all privatized buildings with data
+    /// </summary>
     public List<PrivatizedBuilding> PrivatizedBuildings => _privatizedBuildings;
 
 }

@@ -21,8 +21,17 @@ public class Customer
     /// Address contains information about home address of customer
     /// </summary>
     public string Address { get; set; } = string.Empty;
-
+    /// <summary>
+    /// Constructor for Customer
+    /// </summary>
     public Customer() { }
+    /// <summary>
+    /// Constructor for Customer with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="passport"></param>
+    /// <param name="fio"></param>
+    /// <param name="address"></param>
     public Customer(int id, string passport, string fio, string address)
     {
         Id = id;

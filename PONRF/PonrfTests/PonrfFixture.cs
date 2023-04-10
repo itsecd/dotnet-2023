@@ -77,21 +77,21 @@ public class PonrfFixture
                 new PrivatizedBuilding(6, DateTime.Parse("2023-09-11"), 303000, 708000, customers[3], auctions[1], buildings[5]),
                 new PrivatizedBuilding(7, DateTime.Parse("2023-09-11"), 3100000, 6700000, customers[5], auctions[1], buildings[4]),
             };
-            auctions[0].PrivatizedBuilding.Add(privatizedBuildings[0]);
-            auctions[0].PrivatizedBuilding.Add(privatizedBuildings[1]);
-            auctions[0].PrivatizedBuilding.Add(privatizedBuildings[2]);
-            auctions[1].PrivatizedBuilding.Add(privatizedBuildings[3]);
-            auctions[1].PrivatizedBuilding.Add(privatizedBuildings[4]);
-            auctions[2].PrivatizedBuilding.Add(privatizedBuildings[5]);
-            auctions[2].PrivatizedBuilding.Add(privatizedBuildings[6]);
+            auctions[0].PrivatizedBuilding?.Add(privatizedBuildings[0]);
+            auctions[0].PrivatizedBuilding?.Add(privatizedBuildings[1]);
+            auctions[0].PrivatizedBuilding?.Add(privatizedBuildings[2]);
+            auctions[1].PrivatizedBuilding?.Add(privatizedBuildings[3]);
+            auctions[1].PrivatizedBuilding?.Add(privatizedBuildings[4]);
+            auctions[2].PrivatizedBuilding?.Add(privatizedBuildings[5]);
+            auctions[2].PrivatizedBuilding?.Add(privatizedBuildings[6]);
 
-            buildings[0].PrivatizedBuilding.Add(privatizedBuildings[0]);
-            buildings[2].PrivatizedBuilding.Add(privatizedBuildings[1]);
-            buildings[1].PrivatizedBuilding.Add(privatizedBuildings[2]);
-            buildings[2].PrivatizedBuilding.Add(privatizedBuildings[5]);
-            buildings[3].PrivatizedBuilding.Add(privatizedBuildings[6]);
-            buildings[4].PrivatizedBuilding.Add(privatizedBuildings[4]);
-            buildings[5].PrivatizedBuilding.Add(privatizedBuildings[3]);
+            buildings[0].PrivatizedBuilding?.Add(privatizedBuildings[0]);
+            buildings[2].PrivatizedBuilding?.Add(privatizedBuildings[1]);
+            buildings[1].PrivatizedBuilding?.Add(privatizedBuildings[2]);
+            buildings[2].PrivatizedBuilding?.Add(privatizedBuildings[5]);
+            buildings[3].PrivatizedBuilding?.Add(privatizedBuildings[6]);
+            buildings[4].PrivatizedBuilding?.Add(privatizedBuildings[4]);
+            buildings[5].PrivatizedBuilding?.Add(privatizedBuildings[3]);
 
             return privatizedBuildings;
         }

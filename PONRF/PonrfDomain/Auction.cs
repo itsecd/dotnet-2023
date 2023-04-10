@@ -16,9 +16,21 @@ public class Auction
     /// Organizer is a auction company 
     /// </summary>
     public string Organizer { get; set; } = string.Empty;
+    /// <summary>
+    /// List of all privatized buildings (lots)
+    /// </summary>
     public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
-
+    /// <summary>
+    /// Constructor for Auction
+    /// </summary>
     public Auction() { }
+    /// <summary>
+    /// Constructor for Auction with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="date"></param>
+    /// <param name="organizer"></param>
+    /// <param name="privatizedBuilding"></param>
     public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
     {
         Id = id;

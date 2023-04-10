@@ -8,7 +8,7 @@ public class Sale
     /// <summary>
     /// Sale ID
     /// </summary>
-    public int SaleId { get; set; }
+    public int SaleId { get; set; } = -1;
     /// <summary>
     /// Date and time of sale
     /// </summary>
@@ -17,22 +17,24 @@ public class Sale
     /// <summary>
     /// Customer
     /// </summary>
-    public int CustomerId { get; set; }
+    public int CustomerId { get; set; } = -1;
 
     /// <summary>
     /// Store
     /// </summary>
-    public int StoreId { get; set; }
+    public int StoreId { get; set; } = -1;
 
     /// <summary>
     /// List of products purchased by the customer 
     /// </summary>
-    public List<int> Products { get; set; }
+    public List<int> Products { get; set; } = new List<int>();
 
     /// <summary>
     /// Purchase amount
     /// </summary>
     public double Sum { get; set; } = 0.0;
+
+    public Sale() { }
 
     public Sale(int saleId, string dateSale, int customerId, int storeId, List<int> products, double sum)
     {

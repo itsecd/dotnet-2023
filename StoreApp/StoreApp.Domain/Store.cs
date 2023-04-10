@@ -26,23 +26,13 @@ public class Store
     public List<int> SalesId { get; set; } = new List<int>();
 
     public Store() { }
+
     public Store(int storeId, string storeName, string storeAddress)
     {
         StoreId = storeId;
         StoreName = storeName;
         StoreAddress = storeAddress;
         SalesId = new List<int>();
-    }
-
-    /// <summary>
-    /// Method for adding sales id to the collection
-    /// </summary>
-    /// <param name="idsale">
-    /// ID sale
-    /// </param>
-    public void AddToSalesList(int idsale)
-    {
-        SalesId.Add(idsale);
     }
 }
 

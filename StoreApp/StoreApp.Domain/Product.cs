@@ -46,6 +46,7 @@ public class Product
     public List<int> SalesId { get; set; } = new List<int>();
 
     public Product() { }
+
     public Product(int productId, int productGroup, string productName, double productWeight, bool productType, double productPrice, string dateStorage)
     {
         ProductId = productId;
@@ -56,36 +57,6 @@ public class Product
         ProductPrice = productPrice;
         DateStorage = DateTime.Parse(dateStorage);
         SalesId = new List<int>();
-    }
-
-    /// <summary>
-    /// Method for adding sales id to the collection
-    /// </summary>
-    /// <param name="idsale">
-    /// ID sale
-    /// </param>
-    public void AddToSalesList(int idSale)
-    {
-        SalesId.Add(idSale);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is not Product param)
-            return false;
-
-        return ProductId == param.ProductId &&
-               ProductGroup == param.ProductGroup &&
-               ProductName == param.ProductName &&
-               ProductWeight == param.ProductWeight &&
-               ProductType == param.ProductType &&
-               ProductPrice == param.ProductPrice &&
-               DateStorage == param.DateStorage;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(ProductId, ProductGroup, ProductName, ProductWeight, ProductType, ProductPrice, DateStorage);
     }
 }
 

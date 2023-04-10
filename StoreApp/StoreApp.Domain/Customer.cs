@@ -25,37 +25,13 @@ public class Customer
     public List<int> SalesId { get; set; } = new List<int>();
 
     public Customer() { }
+
     public Customer(int customerId, string customerName, int customerCardNumber)
     {
         CustomerId = customerId;
         CustomerName = customerName;
         CustomerCardNumber = customerCardNumber;
         SalesId = new List<int>();
-    }
-
-    /// <summary>
-    /// Method for adding sales id to the collection
-    /// </summary>
-    /// <param name="idsale">
-    /// ID sale
-    /// </param>
-    public void AddToSalesList(int idSale)
-    {
-        SalesId.Add(idSale);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is not Customer param)
-            return false;
-
-        return CustomerName == param.CustomerName &&
-               CustomerCardNumber == param.CustomerCardNumber;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(CustomerName, CustomerCardNumber);
     }
 }
 

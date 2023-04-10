@@ -31,7 +31,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/InformationAboutDoctorsExp")]
     public IEnumerable<DoctorGetDto> GetInformationAboutDoctors()
     {
-        _logger.LogInformation("Get information about doctors work exp");
+        _logger.LogInformation("Get information about doctors work experience");
 
         var result = from d in _polyclinicRepository.Doctors
                      where d.WorkExperience >= 10
@@ -46,7 +46,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/InformationAboutRegistrationsPatients")]
     public IEnumerable<PatientGetDto> GetInformationAboutPatients()
     {
-        _logger.LogInformation("Get information about reg patients");
+        _logger.LogInformation("Get information about registrations patients");
 
         var result = from reg in _polyclinicRepository.Registrations
                      join p in _polyclinicRepository.Patients on reg.IdPatient equals p.Id
@@ -84,8 +84,6 @@ public class AnalyticsController : ControllerBase
     public IActionResult GetInformationAboutAppointmentsPatients(DateTime lastMonth1, DateTime lastMonth2)
     {
         _logger.LogInformation("Get information about count patients of visits to doctors for last month");
-        /*var lastMonth1 = new DateTime(2023, 4, 1);
-        var lastMonth2 = new DateTime(2023, 4, 30);*/
 
         var result = from r in _polyclinicRepository.Registrations
                      join p in _polyclinicRepository.Patients on r.IdPatient equals p.Id

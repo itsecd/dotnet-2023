@@ -56,12 +56,12 @@ public class SellerController : ControllerBase
         var sellerById = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
         if (sellerById == null)
         {
-            _logger.LogInformation($"Not found specialty with id: {0}", id);
+            _logger.LogInformation($"Not found specialty with id: {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get specialty with id {0}", id);
+            _logger.LogInformation($"Get specialty with id {id}");
             return Ok(_mapper.Map<SellerGetDto>(sellerById));
         }
     }
@@ -74,7 +74,7 @@ public class SellerController : ControllerBase
     [HttpPost]
     public void Post([FromBody] SellerPostDto seller)
     {
-        _logger.LogInformation($"Add new seller");
+        _logger.LogInformation("Add new seller");
         _sellersRepository.Sellers.Add(_mapper.Map<Seller>(seller));
     }
 
@@ -90,7 +90,7 @@ public class SellerController : ControllerBase
         var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation($"Not found seller with id = {id}");
+            _logger.LogInformation($"Not found seller with id {id}");
             return NotFound();
         }
         else
@@ -118,7 +118,7 @@ public class SellerController : ControllerBase
         else
         {
             _sellersRepository.Sellers.Remove(seller);
-            _logger.LogInformation("Delete seller with id: {0}", id);
+            _logger.LogInformation($"Delete seller with id: {id}");
             return Ok();
         }
     }

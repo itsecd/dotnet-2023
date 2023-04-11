@@ -71,7 +71,7 @@ public class PurchaseController : ControllerBase
     [HttpPost]
     public void Post([FromBody] PurchasePostDto purchase)
     {
-        _logger.LogInformation($"Add new purchase");
+        _logger.LogInformation("Add new purchase");
         _purchasesRepository.Purchases.Add(_mapper.Map<Purchase>(purchase));
     }
 

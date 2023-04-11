@@ -1,7 +1,9 @@
 ﻿using TransportMgmt.Domain;
 
 namespace TransportMgmtServer.Repository;
-
+/// <summary>
+/// A class for storing and modifying table data
+/// </summary>
 public class TransportMgmtRepository : ITransportMgmtRepository
 {
     private readonly List<TransportType> _transportType;
@@ -10,7 +12,9 @@ public class TransportMgmtRepository : ITransportMgmtRepository
     private readonly List<Driver> _drivers;
     private readonly List<Transport> _transport;
     private readonly List<Trip> _trips;
-
+    /// <summary>
+    /// A constructor that adds some default values for tables
+    /// </summary>
     public TransportMgmtRepository()
     {
         _transportType = new List<TransportType>()
@@ -84,11 +88,29 @@ public class TransportMgmtRepository : ITransportMgmtRepository
                 new Trip(10, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), _routes[0], _transport[1], _drivers[0])
             };
     }
+    /// <summary>
+    /// A list of transport types that will change by methods
+    /// </summary>
     public List<TransportType> TransportType => _transportType;
+    /// <summary>
+    /// A list of models that will change by methods
+    /// </summary>
     public List<Model> Models => _models;
+    /// <summary>
+    /// A list of routes that will change by methods
+    /// </summary>
     public List<Routes> Routes => _routes;
+    /// <summary>
+    /// A list of drivers that will change by methods
+    /// </summary>
     public List<Driver> Drivers => _drivers;
+    /// <summary>
+    /// A list of transport that will change by methods
+    /// </summary>
     public List<Transport> Transports => _transport;
+    /// <summary>
+    /// A list of trips that will change by methods
+    /// </summary>
     public List<Trip> Trips => _trips;
 
 }

@@ -1,9 +1,13 @@
-﻿namespace AdmissionCommittee.Server.Repository;
+﻿using AdmissionCommittee.Model;
 
+namespace AdmissionCommittee.Server.Repository;
 public interface IAdmissionCommitteeRepository
 {
-    List<Entrant> GetEntrants { get; }
-    List<List<Result>> GetResults { get; }
-    List<Specialty> GetSpecialities { get; }
-    List<Statement> GetStatements { get; }
+    List<EntrantResult> EntrantResultsWithResult { get; }
+    List<Entrant> EntrantsWithEntrantResult { get; }
+    List<Entrant> EntrantsWithStatement { get; }
+    List<Result> Results { get; }
+    List<Specialty> Specialties { get; }
+    List<Statement> Statements { get; }
+    List<StatementSpecialty> StatementSpecialtiesWithSpecialty { get; }
 }

@@ -1,9 +1,8 @@
 ﻿namespace AdmissionCommittee.Server.Dto;
-
 /// <summary>
 /// Information about the speciality
 /// </summary>
-public class SpecialityPostDto
+public class SpecialtyPostDto
 {
     /// <summary>
     /// Cypher - string value for storing a speciality cypher

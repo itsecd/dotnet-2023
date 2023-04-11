@@ -12,7 +12,7 @@ public class EntrantGetDto
     /// <summary>
     /// FullName - string value for storing the entrant's full name
     /// </summary>
-    public string? FullName { get; set; }
+    public string FullName { get; set; } = string.Empty;
 
     /// <summary>
     /// DateBirth - DateTime value for storing the entrant's date of birth

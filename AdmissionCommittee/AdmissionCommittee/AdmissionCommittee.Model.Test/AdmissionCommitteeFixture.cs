@@ -1,6 +1,9 @@
 ﻿namespace AdmissionCommittee.Model.Test;
 public class AdmissionCommitteeFixture
 {
+    /// <summary>
+    /// List of Specialty with empty StatementSpecialties
+    /// </summary>
     public List<Specialty> SpecialityFixture
     {
         get
@@ -73,6 +76,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of StatementSpecialty with Speciality and empty Statement
+    /// </summary>
     public List<StatementSpecialty> StatementSpecialtyWithSpecialtyFixture
     {
         get
@@ -166,6 +172,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of Statement with StatementSpecialty and empty Entrant
+    /// </summary>
     public List<Statement> StatementFixture
     {
         get
@@ -251,6 +260,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of Result with empty EntrantResult
+    /// </summary>
     public List<Result> ResultFixture
     {
         get
@@ -300,6 +312,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of EntrantResult with Result and empty Entrant
+    /// </summary>
     public List<EntrantResult> EntrantResultWithResultFixture
     {
         get
@@ -394,6 +409,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of Entrant with Statement and empty EntrantResult
+    /// </summary>
     public List<Entrant> EntrantWithStatementFixture
     {
         get
@@ -518,6 +536,9 @@ public class AdmissionCommitteeFixture
         }
     }
 
+    /// <summary>
+    /// List of Entrant with EntrantResult
+    /// </summary>
     public List<Entrant> EntrantWithEntrantResultFixture
     {
         get

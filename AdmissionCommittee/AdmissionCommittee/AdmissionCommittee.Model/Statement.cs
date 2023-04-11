@@ -10,6 +10,11 @@ public class Statement
     public int IdStatement { get; set; }
 
     /// <summary>
+    /// EntrantId - int value for storing the id entrant
+    /// </summary>
+    public int EntrantId { get; set; }
+
+    /// <summary>
     /// Entrant - link to entrant
     /// </summary>
     public Entrant? Entrant { get; set; }

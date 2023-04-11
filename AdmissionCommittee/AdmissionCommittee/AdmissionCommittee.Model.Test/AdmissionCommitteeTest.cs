@@ -153,7 +153,7 @@ public class AdmissionCommitteeTest : IClassFixture<AdmissionCommitteeFixture>
     /// Output information about the entrant (and their priority specialities) who scored the maxmum mark in each of the subkect
     /// </summary>
     [Fact]
-    public void TestEntrantMaxMarkMathematics()
+    public void TestEntrantWithMaxMarkEachSubject()
     {
         var subjectList = GetAllSubject();
         var selectedEntrants = new List<List<EntrantWithMaxMarkGet>>();

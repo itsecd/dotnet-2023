@@ -1,4 +1,5 @@
-﻿using AdmissionCommittee.Server.Dto;
+﻿using AdmissionCommittee.Model;
+using AdmissionCommittee.Server.Dto;
 using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -25,26 +26,26 @@ public class EntrantController : ControllerBase
     /// Get all Entrants
     /// </summary>
     /// <returns> IEnumerable type EntrantGetDto </returns>
-    [HttpGet("GetAllEntrants")]
+    [HttpGet]
     public IEnumerable<EntrantGetDto> Get()
     {
         _logger.LogInformation("Get all Entrants");
-        return _admissionCommitteeRepository.GetEntrants.Select(entrant => _mapper.Map<EntrantGetDto>(entrant));
+        return _admissionCommitteeRepository.EntrantsWithStatement.Select(entrant => _mapper.Map<EntrantGetDto>(entrant));
     }
 
     /// <summary>
     /// Get Entrant by id
     /// </summary>
     /// <param name="idEntrant">id entrant</param>
-    /// <returns>EntrantGetDto with http code</returns>
-    [HttpGet("GetEntrantById")]
+    /// <returns>Ok with EntrantGetDto or NotFound</returns>
+    [HttpGet("{idEntrant}")]
     public ActionResult<EntrantGetDto> Get(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
-            return NotFound($"The Entrant does't exist by this idEntrant {idEntrant}");
+            return NotFound($"The Entrant does't exist by this id {idEntrant}");
         }
         else
         {
@@ -57,11 +58,11 @@ public class EntrantController : ControllerBase
     /// Create new Entrant
     /// </summary>
     /// <param name="entrant">new Entrant</param>
-    [HttpPost("CreateEntrant")]
+    [HttpPost]
     public void Post([FromBody] EntrantPostDto entrant)
     {
         _logger.LogInformation("Create new Entrant");
-        _admissionCommitteeRepository.GetEntrants.Add(_mapper.Map<Entrant>(entrant));
+        _admissionCommitteeRepository.EntrantsWithStatement.Add(_mapper.Map<Entrant>(entrant));
     }
 
     /// <summary>
@@ -69,11 +70,11 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <param name="idEntrant">id Entrant</param>
     /// <param name="entrantToPut">Entrant that is updated</param>
-    /// <returns></returns>
-    [HttpPut("UpdateEntrantById")]
+    /// <returns>Ok or NotFound</returns>
+    [HttpPut("{idEntrant}")]
     public IActionResult Put(int idEntrant, [FromBody] EntrantPostDto entrantToPut)
     {
-        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
@@ -92,10 +93,10 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <param name="idEntrant">id Entrant for delete</param>
     /// <returns>Ok or NotFound</returns>
-    [HttpDelete("DeleteEntrantById")]
+    [HttpDelete("{idEntrant}")]
     public IActionResult Delete(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.GetEntrants.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation($"Not found Entrant : {idEntrant}");
@@ -104,7 +105,7 @@ public class EntrantController : ControllerBase
         else
         {
             _logger.LogInformation("Delete Entrant by id {idEntrant}", idEntrant);
-            _admissionCommitteeRepository.GetEntrants.Remove(entrant);
+            _admissionCommitteeRepository.EntrantsWithStatement.Remove(entrant);
             return Ok();
         }
     }

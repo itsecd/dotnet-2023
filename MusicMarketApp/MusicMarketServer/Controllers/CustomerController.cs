@@ -42,7 +42,7 @@ public class CustomerController : ControllerBase
     [HttpGet]
     public IEnumerable<CustomerGetDto> Get()
     {
-        _logger.LogInformation($"Get list of customers");
+        _logger.LogInformation("Get list of customers");
         return _customersRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
     }
 
@@ -75,7 +75,7 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public void Post([FromBody] CustomerPostDto customer)
     {
-        _logger.LogInformation($"Add new customer");
+        _logger.LogInformation("Add new customer");
         _customersRepository.Customers.Add(_mapper.Map<Customer>(customer));
     }
 
@@ -108,7 +108,7 @@ public class CustomerController : ControllerBase
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>// DELETE
+    /// <returns>DELETE element</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
@@ -121,7 +121,7 @@ public class CustomerController : ControllerBase
         else
         {
             _customersRepository.Customers.Remove(customer);
-            _logger.LogInformation("Delete customer with id: {0}", id);
+            _logger.LogInformation($"Delete customer with id: {id}"); 
             return Ok();
         }
     }

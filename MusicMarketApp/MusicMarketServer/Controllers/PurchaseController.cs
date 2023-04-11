@@ -36,6 +36,7 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
+    /// <returns>list of purchases</returns>
     [HttpGet]
     public IEnumerable<PurchaseGetDto> Get()
     {
@@ -47,19 +48,19 @@ public class PurchaseController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Ok(found purchase with input id)</returns>
     [HttpGet("{id}")]
     public ActionResult<PurchaseGetDto> Get(int id)
     {
         var purchaseById = _purchasesRepository.Purchases.FirstOrDefault(purchaseById => purchaseById.Id == id);
         if (purchaseById == null)
         {
-            _logger.LogInformation($"Not found purchase with id =", id);
+            _logger.LogInformation($"Not found purchase with id :{id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get product with id", id);
+            _logger.LogInformation($"Get purchase with id :{id}");
             return Ok(_mapper.Map<ProductGetDto>(purchaseById));
         }
     }

@@ -48,19 +48,19 @@ public class ProductController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Product with input id</returns>
     [HttpGet("{id}")]
     public ActionResult<ProductGetDto> Get(int id)
     {
         var productById = _productsRepository.Products.FirstOrDefault(product => product.Id == id);
         if (productById == null)
         {
-            _logger.LogInformation($"Not found product with id {id}");
+            _logger.LogInformation($"Not found product with id: {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get product with idc{id}");
+            _logger.LogInformation($"Get product with id: {id}");
             return Ok(_mapper.Map<ProductGetDto>(productById));
         }
     }
@@ -72,7 +72,7 @@ public class ProductController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ProductPostDto product)
     {
-        _logger.LogInformation($"Add new product");
+        _logger.LogInformation("Add new product");
         _productsRepository.Products.Add(_mapper.Map<Product>(product));
     }
 
@@ -81,7 +81,7 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <param name="productToPut"></param>
-    /// <returns></returns>
+    /// <returns>Ok()</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
     {
@@ -103,7 +103,7 @@ public class ProductController : ControllerBase
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Ok()</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
@@ -116,7 +116,7 @@ public class ProductController : ControllerBase
         else
         {
             _productsRepository.Products.Remove(product);
-            _logger.LogInformation($"Delete product with id: {0}", id);
+            _logger.LogInformation($"Delete product with id: : {id}");
             return Ok();
         }
     }

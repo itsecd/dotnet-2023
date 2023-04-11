@@ -36,7 +36,7 @@ public class SellerController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of sellers</returns>
     [HttpGet]
     public IEnumerable<SellerGetDto> Get()
     {
@@ -49,19 +49,19 @@ public class SellerController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>seller by id</returns>
     [HttpGet("{id}")]
     public ActionResult<SellerGetDto> Get(int id)
     {
         var sellerById = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
         if (sellerById == null)
         {
-            _logger.LogInformation($"Not found specialty with id: {id}");
+            _logger.LogInformation($"Not found seller with id: {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get specialty with id {id}");
+            _logger.LogInformation($"Get seller with id {id}");
             return Ok(_mapper.Map<SellerGetDto>(sellerById));
         }
     }
@@ -83,7 +83,7 @@ public class SellerController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <param name="sellerToPut"></param>
-    /// <returns></returns>
+    /// <returns>Ok()</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SellerPostDto sellerToPut)
     {
@@ -105,7 +105,7 @@ public class SellerController : ControllerBase
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Ok()</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

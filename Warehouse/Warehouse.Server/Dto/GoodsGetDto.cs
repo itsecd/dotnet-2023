@@ -1,5 +1,5 @@
 ﻿namespace Warehouse.Server.Dto;
 
-public class GoodsGetDtocs
+public class GoodsGetDto
 {
 }

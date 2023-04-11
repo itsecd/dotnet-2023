@@ -1,8 +1,8 @@
-﻿using Warehouse.Domain;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Warehouse.Domain;
 using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Warehouse.Server.Controllers;
 /// <summary>
@@ -31,7 +31,7 @@ public class GoodsController : ControllerBase
     public IEnumerable<GoodsGetDto> Get()
     {
         _logger.LogInformation("Get goods");
-        return _warehouseRepository.Goods.Select(airplane => _mapper.Map<GoodsGetDto>(airplane));
+        return _warehouseRepository.Goods.Select(product => _mapper.Map<GoodsGetDto>(product));
     }
     /// <summary>
     /// Get by id method for goods table
@@ -98,7 +98,7 @@ public class GoodsController : ControllerBase
         var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found airplane with id ({id})");
+            _logger.LogInformation($"Not found product with id ({id})");
             return NotFound();
         }
         else

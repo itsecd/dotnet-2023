@@ -1,109 +1,109 @@
-﻿using AirplaneBookingSystem.Domain;
-using AirplaneBookingSystem.Server.Dto;
-using AirplaneBookingSystem.Server.Repository;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Domain;
+using Warehouse.Server.Dto;
+using Warehouse.Server.Repository;
 
-namespace Airlines.Server.Controllers;
+namespace Warehouse.Server.Controllers;
 /// <summary>
-/// Controller for client table
+/// Controller for warehouse cells table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class ClientController : ControllerBase
+public class WarehouseCellsController : ControllerBase
 {
-    private readonly ILogger<ClientController> _logger;
-    private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
+    private readonly ILogger<WarehouseCellsController> _logger;
+    private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
-    public ClientController(ILogger<ClientController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    public WarehouseCellsController(ILogger<WarehouseCellsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
-        _airplaneBookingSystemRepository = airplaneBookingSystemRepository;
+        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method for client table
+    /// Get method for warehouse cells table
     /// </summary>
     /// <returns>
-    /// Return all clients
+    /// Return all warehouse cells
     /// </returns>
     [HttpGet]
-    public IEnumerable<ClientGetDto> Get()
+    public IEnumerable<WarehouseCellsGetDto> Get()
     {
-        _logger.LogInformation("Get clients");
-        return _airplaneBookingSystemRepository.Client.Select(client => _mapper.Map<ClientGetDto>(client));
+        _logger.LogInformation("Get cells");
+        return _warehouseRepository.WarehouseCells.Select(cell => _mapper.Map<WarehouseCellsGetDto>(cell));
     }
     /// <summary>
-    /// Get by id method for client table
+    /// Get by id method for warehouse cells table
     /// </summary>
     /// <returns>
-    /// Return client with specified id
+    /// Return cells with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<ClientGetDto> Get(int id)
+    public ActionResult<WarehouseCellsGetDto> Get(int id)
     {
-        _logger.LogInformation($"Get client with id ({id})");
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
-        if (client == null)
+        _logger.LogInformation($"Get cells with id {id}");
+        var cell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        if (cell == null)
         {
-            _logger.LogInformation($"Not found client with id ({id})");
+            _logger.LogInformation($"Not found cell with id {id}");
             return NotFound();
         }
         else
         {
-            return Ok(_mapper.Map<ClientGetDto>(client));
+            return Ok(_mapper.Map<WarehouseCellsGetDto>(cell));
         }
     }
     /// <summary>
-    /// Post method for client table
+    /// Post method for warehouse cells table
     /// </summary>
-    /// <param name="client"> Client class instance to insert to table</param>
+    /// <param name="cell"> Warehouse cell class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] ClientPostDto client)
+    public void Post([FromBody] WarehouseCellsPostDto cell)
     {
-        _logger.LogInformation("Post");
-        _airplaneBookingSystemRepository.Client.Add(_mapper.Map<Client>(client));
+        _logger.LogInformation("Post cell");
+        _warehouseRepository.WarehouseCells.Add(_mapper.Map<WarehouseCells>(cell));
     }
     /// <summary>
-    /// Put method for client table
+    /// Put method for warehouse cells table
     /// </summary>
-    /// <param name="id">An id of client which would be changed </param>
-    /// <param name="clientToPut">Client class instance to insert to table</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of cell          nged </param>
+    /// <param name="productToPut">Goods class instance to insert to table</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ClientPostDto clientToPut)
+    public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
     {
-        _logger.LogInformation("Put client with id {0}", id);
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
-        if (client == null)
+        _logger.LogInformation("Put product with id {0}", id);
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation("Not found client with id {0}", id);
+            _logger.LogInformation("Not found product with id {0}", id);
             return NotFound();
         }
         else
         {
-            _mapper.Map(clientToPut, client);
+            _mapper.Map(productToPut, product);
             return Ok();
         }
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of client which would be deleted</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of product which would be deleted</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($"Put client with id ({id})");
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
-        if (client == null)
+        _logger.LogInformation($"Put product with id ({id})");
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation($"Not found client with id ({id})");
+            _logger.LogInformation($"Not found product with id ({id})");
             return NotFound();
         }
         else
         {
-            _airplaneBookingSystemRepository.Client.Remove(client);
+            _warehouseRepository.Goods.Remove(product);
             return Ok();
         }
     }

@@ -1,7 +1,4 @@
-﻿using System.Net.Sockets;
-using Warehouse.Domain;
-using Warehouse.Server.Dto;
-using AutoMapper;
+﻿using AutoMapper;
 
 namespace Warehouse.Server;
 /// <summary>

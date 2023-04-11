@@ -1,108 +1,115 @@
-﻿using AirplaneBookingSystem.Domain;
-using AirplaneBookingSystem.Server.Dto;
-using AirplaneBookingSystem.Server.Repository;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Domain;
+using Warehouse.Server.Dto;
+using Warehouse.Server.Repository;
 
-namespace AirplaneBookingSystem.Server.Controllers;
+namespace Warehouse.Server.Controllers;
 /// <summary>
-/// Controller for flight table
+/// Controller for supply table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class FlightController : ControllerBase
+public class SupplyController : ControllerBase
 {
-    private readonly ILogger<AirplaneController> _logger;
-    private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
+    private readonly ILogger<SupplyController> _logger;
+    private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
-    public FlightController(ILogger<AirplaneController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    public SupplyController(ILogger<SupplyController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
-        _airplaneBookingSystemRepository = airplaneBookingSystemRepository;
+        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method for flight table
+    /// Get method for supply table
     /// </summary>
     /// <returns>
-    /// Return all flights
+    /// Return all supplies
     /// </returns>
     [HttpGet]
-    public IEnumerable<FlightGetDto> Get()
+    public IEnumerable<SupplyGetDto> Get()
     {
-        _logger.LogInformation("Get flight");
-        return _airplaneBookingSystemRepository.Flights.Select(flight => _mapper.Map<FlightGetDto>(flight));
+        _logger.LogInformation("Get supplies");
+        return _warehouseRepository.Supply.Select(supply => _mapper.Map<SupplyGetDto>(supply));
     }
     /// <summary>
-    /// Get by id method for flight table
+    /// Get by id method for supply table
     /// </summary>
     /// <returns>
-    /// Return flight with specified id
+    /// Return supplies with specified product id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<FlightGetDto> Get(int id)
+    public ActionResult<SupplyGetDto> Get(int id)
     {
-        _logger.LogInformation("Get flight with id {id}", id);
-        var flight = _airplaneBookingSystemRepository.Flights.FirstOrDefault(flight => flight.Id == id);
-        if (flight == null)
+        _logger.LogInformation($"Get supplies with product id {id}");
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation("Not found flight with id {id}", id);
+            _logger.LogInformation($"Not found product with id {id}");
             return NotFound();
         }
         else
         {
-            return Ok(_mapper.Map<FlightGetDto>(flight));
+            return (from goods in _warehouseRepository.Goods
+                    where goods.Id == id
+                    from supply in goods.Supply
+                    select supply).ToList();
         }
     }
     /// <summary>
-    /// Post method for flight table
+    /// Post method for supply table
     /// </summary>
-    /// <param name="flight"> Flight class instance to insert to table</param>
+    /// <param name="supply"> Supply class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] FlightPostDto flight)
+    public void Post([FromBody] SupplyPostDto supply)
     {
-        _airplaneBookingSystemRepository.Flights.Add(_mapper.Map<Flight>(flight));
+        _logger.LogInformation("Post supply");
+        _warehouseRepository.Supply.Add(_mapper.Map<Goods>(supply));
     }
     /// <summary>
-    /// Put method for flight table
+    /// Put method for supply table
     /// </summary>
-    /// <param name="id">An id of flight which would be changed </param>
-    /// <param name="flightToPut">Flight class instance to insert to table</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of product of supply which would be changed </param>
+    /// <param name="supplyToPut">Supply class instance to insert to table</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpPut("{id}")]
-    public ActionResult Put(int id, [FromBody] FlightPostDto flightToPut)
+    public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
-        _logger.LogInformation("Put flight with id {id}", id);
-        var flight = _airplaneBookingSystemRepository.Flights.FirstOrDefault(flight => flight.Id == id);
-        if (flight == null)
+        _logger.LogInformation("Put product with id {0}", id);
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation("Not found flight with id {id}", id);
+            _logger.LogInformation("Not found product with id {0}", id);
             return NotFound();
         }
         else
         {
-            _mapper.Map(flightToPut, flight);
+            _mapper.Map(supplyToPut.Goods, product);
             return Ok();
         }
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of flight which would be deleted</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of product of supply which would be deleted</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public IActionResult Delete(int id)
     {
-        _logger.LogInformation("Delete flight with id {id}", id);
-        var flight = _airplaneBookingSystemRepository.Flights.FirstOrDefault(flight => flight.Id == id);
-        if (flight == null)
+        _logger.LogInformation($"Put product with id ({id})");
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation("Not found flight with id {id}", id);
+            _logger.LogInformation($"Not found product with id ({id})");
             return NotFound();
         }
         else
         {
-            _airplaneBookingSystemRepository.Flights.Remove(flight);
+            _warehouseRepository.Supply.Remove(from goods in _warehouseRepository.Goods
+                                                from supply in goods.Supply
+                                                where supply.Goods == product
+                                                select supply);
             return Ok();
         }
     }

@@ -1,7 +1,7 @@
+using System.Reflection;
+using AutoMapper;
 using Warehouse.Server;
 using Warehouse.Server.Repository;
-using AutoMapper;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));

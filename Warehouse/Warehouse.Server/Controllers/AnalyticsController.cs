@@ -1,9 +1,7 @@
-﻿using Warehouse.Server.Dto;
-using Warehouse.Server.Repository;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper.Execution;
-using Warehouse.Domain;
+using Warehouse.Server.Dto;
+using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
 
@@ -61,7 +59,7 @@ public class AnalyticsController : ControllerBase
         var request = (from goods in _warehouseRepository.Goods
                        from cell in goods.WarehouseCells
                        orderby cell.CellNumber
-                       select _mapper.Map<WarehouseCellsGetDto>(new{ number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }));
+                       select _mapper.Map<WarehouseCellsGetDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }));
         return request;
     }
     /// <summary>
@@ -110,22 +108,22 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Quantity of delivered goods");
         var request = (from goods in _warehouseRepository.Goods
-                                        from supply in goods.Supply
-                                        group supply by new
-                                        {
-                                            supply.CompanyName,
-                                            supply.CompanyAddress,
-                                            goods.Id,
-                                            goods.Name
-                                        } into grp
-                                        select _mapper.Map<GoodsGetDto>(new
-                                        {
-                                            grp.Key.CompanyName,
-                                            grp.Key.CompanyAddress,
-                                            grp.Key.Id,
-                                            grp.Key.Name,
-                                            quntity = grp.Sum(x => x.SupplyCount)
-                                        }));
+                       from supply in goods.Supply
+                       group supply by new
+                       {
+                           supply.CompanyName,
+                           supply.CompanyAddress,
+                           goods.Id,
+                           goods.Name
+                       } into grp
+                       select _mapper.Map<GoodsGetDto>(new
+                       {
+                           grp.Key.CompanyName,
+                           grp.Key.CompanyAddress,
+                           grp.Key.Id,
+                           grp.Key.Name,
+                           quntity = grp.Sum(x => x.SupplyCount)
+                       }));
         return request;
     }
 }

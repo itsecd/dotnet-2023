@@ -14,6 +14,12 @@ public class RequestsController : ControllerBase
     private readonly ILogger<RequestsController> _logger;
     private readonly ITransportManagmentRepository _requestsRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="requestsRepository"></param>
+    /// <param name="mapper"></param>
     public RequestsController(ILogger<RequestsController> logger, ITransportManagmentRepository requestsRepository, IMapper mapper)
     {
         _logger = logger;

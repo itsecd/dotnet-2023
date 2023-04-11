@@ -37,73 +37,73 @@ public class GoodsController : ControllerBase
     /// Get by id method for goods table
     /// </summary>
     /// <returns>
-    /// Return airplane withspecified id
+    /// Return goods with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<AirplaneGetDto> Get(int id)
+    public ActionResult<GoodsGetDto> Get(int id)
     {
-        _logger.LogInformation($"Get airplane with id {id}");
-        var airplane = _airplaneBookingSystemRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
-        if (airplane == null)
+        _logger.LogInformation($"Get goods with id {id}");
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation($"Not found airplane with id {id}");
+            _logger.LogInformation($"Not found product with id {id}");
             return NotFound();
         }
         else
         {
-            return Ok(_mapper.Map<AirplaneGetDto>(airplane));
+            return Ok(_mapper.Map<GoodsGetDto>(product));
         }
     }
     /// <summary>
-    /// Post method for airplane table
+    /// Post method for goods table
     /// </summary>
-    /// <param name="airplane"> Airplane class instance to insert to table</param>
+    /// <param name="product"> Goods class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] AirplanePostDto airplane)
+    public void Post([FromBody] GoodsPostDto product)
     {
-        _logger.LogInformation("Post airplane");
-        _airplaneBookingSystemRepository.Airplanes.Add(_mapper.Map<Airplane>(airplane));
+        _logger.LogInformation("Post product");
+        _warehouseRepository.Goods.Add(_mapper.Map<Goods>(product));
     }
     /// <summary>
-    /// Put method for airplane table
+    /// Put method for goods table
     /// </summary>
-    /// <param name="id">An id of airplane which would be changed </param>
-    /// <param name="airplaneToPut">Airplane class instance to insert to table</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of product which would be changed </param>
+    /// <param name="productToPut">Goods class instance to insert to table</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AirplanePostDto airplaneToPut)
+    public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
     {
-        _logger.LogInformation("Put airplane with id {0}", id);
-        var airplane = _airplaneBookingSystemRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
-        if (airplane == null)
+        _logger.LogInformation("Put product with id {0}", id);
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
-            _logger.LogInformation("Not found airplane with id {0}", id);
+            _logger.LogInformation("Not found product with id {0}", id);
             return NotFound();
         }
         else
         {
-            _mapper.Map(airplaneToPut, airplane);
+            _mapper.Map(productToPut, product);
             return Ok();
         }
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of airplane which would be deleted</param>
-    /// <returns>Signalization of success of error</returns>
+    /// <param name="id">An id of product which would be deleted</param>
+    /// <returns>Signalization of success or error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($"Put airplane with id ({id})");
-        var airplane = _airplaneBookingSystemRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
-        if (airplane == null)
+        _logger.LogInformation($"Put product with id ({id})");
+        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        if (product == null)
         {
             _logger.LogInformation($"Not found airplane with id ({id})");
             return NotFound();
         }
         else
         {
-            _airplaneBookingSystemRepository.Airplanes.Remove(airplane);
+            _warehouseRepository.Goods.Remove(product);
             return Ok();
         }
     }

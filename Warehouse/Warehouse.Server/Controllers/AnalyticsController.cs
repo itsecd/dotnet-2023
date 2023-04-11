@@ -1,111 +1,131 @@
-﻿using AirplaneBookingSystem.Server.Dto;
-using AirplaneBookingSystem.Server.Repository;
+﻿using Warehouse.Server.Dto;
+using Warehouse.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper.Execution;
+using Warehouse.Domain;
 
-namespace AirplaneBookingSystem.Server.Controllers;
+namespace Warehouse.Server.Controllers;
 
 /// <summary>
-/// Controller for get methods which returns a specified data from Airplane Booking System data base
+/// Controller for get methods which returns a specified data from Warehouse data base
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
+    private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
-        _airplaneBookingSystemRepository = airplaneBookingSystemRepository;
+        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method which return all flight
+    /// Get method which return information about the company's products, sorted by product name
     /// </summary>
-    /// <returns>All flight</returns>
-    [HttpGet("all-flight")]
-    public IEnumerable<FlightGetDto> GetAllFlight()
+    /// <returns>All goods</returns>
+    [HttpGet("all-goods")]
+    public IEnumerable<GoodsGetDto> GetAllGoods()
     {
-        _logger.LogInformation("Get all flight");
-        var request = (from flight in _airplaneBookingSystemRepository.Flights
-                       select _mapper.Map<FlightGetDto>(flight));
+        _logger.LogInformation("Get all goods");
+        var request = (from good in _warehouseRepository.Goods
+                       select _mapper.Map<GoodsGetDto>(good));
         return request;
     }
     /// <summary>
-    /// Get method which return clients with specific flight
+    /// Get method which return information about the company's products received on the specified day by the recipient of products
     /// </summary>
-    /// <returns>Clients with specific flight</returns>
-    [HttpGet("clients-with-specific-flight")]
-    public IEnumerable<ClientGetDto> ClientsWithSpecificFlight()
+    /// <returns>Supply with specific date</returns>
+    [HttpGet("goods-with-specific-date")]
+    public IEnumerable<SupplyGetDto> SupplyWithSpecificDate()
     {
-        _logger.LogInformation("Get clients with specific flight");
-        var request = (from client in _airplaneBookingSystemRepository.Client
-                       from ticket in client.Tickets
-                       where ticket.Flight.NumberOfFlight == 2
-                       orderby client.Name
-                       select _mapper.Map<ClientGetDto>(client));
+        _logger.LogInformation("Get supply with specific date");
+        var request = (from goods in _warehouseRepository.Goods
+                       from supply in supply.Goods
+                       where supply.SupplyDate == new DateTime(2023, 02, 11)
+                       orderby supply.Goods
+                       select _mapper.Map<SupplyGetDto>(supply));
         return request;
     }
     /// <summary>
-    /// Get method which return flight with specific departure city and data
+    /// Get method which return the state of the warehouse at the moment with the numbers of cells of the warehouse and their contents
     /// </summary>
-    /// <returns>Flight with specific departure city and data</returns>
-    [HttpGet("flight-with-specific-departure-city-and-data")]
-    public IEnumerable<FlightGetDto> FlightWithSpecificDepartureCityAndData()
+    /// <returns>Warehouse cells and their content</returns>
+    [HttpGet("warehouse-cells-and-their-content")]
+    public IEnumerable<WarehouseCellsGetDto> WarehouseCellsAndTheirContent()
     {
-        _logger.LogInformation("Flight with specific departure city and data");
-        var specifiedDate = new DateTime(2023, 8, 28);
-        var request = (from flight in _airplaneBookingSystemRepository.Flights
-                       where (flight.DepartureCity == "Kurumoch") && (flight.DepartureDate == specifiedDate)
-                       select _mapper.Map<FlightGetDto>(flight));
+        _logger.LogInformation("Warehouse cells and their content");
+        var request = (from goods in _warehouseRepository.Goods
+                       from cell in goods.WarehouseCells
+                       orderby cell.CellNumber
+                       select _mapper.Map<WarehouseCellsGetDto>(new{ number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }));
         return request;
     }
     /// <summary>
-    /// Get method which return top five flight 
+    /// Get method which return information about the organizations that received the maximum volume products for a given period 
     /// </summary>
-    /// <returns>Top five flight</returns>
-    [HttpGet("top-five-flight")]
-    public IEnumerable<FlightGetDto> TopFiveFlight()
+    /// <returns>Supply by period</returns>
+    [HttpGet("supply-by-period")]
+    public IEnumerable<SupplyGetDto> SupplyByPeriod()
     {
-        _logger.LogInformation("Top five flight");
-        var specifiedDate = new DateTime(2023, 8, 28);
-        var request = (from flight in _airplaneBookingSystemRepository.Flights
-                       orderby flight.Tickets.Count descending
-                       select _mapper.Map<FlightGetDto>(flight)).Take(5);
+        _logger.LogInformation("Supply by period");
+        var request = (from goods in _warehouseRepository.Goods
+                       from supply in goods.Supply
+                       where supply.SupplyDate > new DateTime(2023, 02, 1) && supply.SupplyDate < new DateTime(2023, 03, 15)
+                       group supply by new
+                       {
+                           supply.CompanyName,
+                           supply.CompanyAddress
+                       } into grp
+                       select _mapper.Map<SupplyGetDto>(new
+                       {
+                           grp.Key.CompanyName,
+                           grp.Key.CompanyAddress,
+                           goodsCount = grp.Sum(x => x.SupplyCount)
+                       }));
         return request;
     }
     /// <summary>
-    /// Get method which return flight with max amount of clients
+    /// Get method which return the top 5 products by stock availability
     /// </summary>
-    /// <returns>Flight with max amount of clients</returns>
-    [HttpGet("flight-with-max-amount-of-clients")]
-    public IEnumerable<FlightGetDto> FlightsWithMaxCountOfClient()
+    /// <returns>Top 5 products</returns>
+    [HttpGet("top-five-products")]
+    public IEnumerable<GoodsGetDto> TopFiveProducts()
     {
-        _logger.LogInformation("Flight with max amount of clients");
-        var max = (from flight in _airplaneBookingSystemRepository.Flights
-                   select flight.Tickets.Count).Max();
-        var request = (from flight in _airplaneBookingSystemRepository.Flights
-                       where flight.Tickets.Count == max
-                       select _mapper.Map<FlightGetDto>(flight));
+        _logger.LogInformation("Top 5 products");
+        var request = (from goods in _warehouseRepository.Goods
+                       orderby goods.ProductCount descending
+                       select _mapper.Map<GoodsGetDto>(goods)).Take(5);
         return request;
     }
     /// <summary>
-    /// Get method which return flight with max, min, avg amount of clients and with specific departure city
+    /// Get method which return information about the quantity of delivered goods for each goods and each organization
     /// </summary>
-    /// <returns>Flight with max, min, avg amount of clients and with specific departure city</returns>
-    [HttpGet("flight-with-max-min-avg-amount-of-clients-and-specific-departure-city")]
-    public IEnumerable<double> MaxAndMinAndAvgClientsAmountFromSpecifiedDepartureCity()
+    /// <returns>Quantity of delivered goods</returns>
+    [HttpGet("quantity-of-delivery-goods")]
+    public IEnumerable<SupplyGetDto> QuantityOfDeliverdGoods()
     {
-        _logger.LogInformation("Flight with max, min, avg amount of clients and with specific departure city");
-        var flightWithCountOfTickets = (from flight in _airplaneBookingSystemRepository.Flights
-                                        where flight.DepartureCity == "Kurumoch"
-                                        select flight.Tickets.Count);
-        var max = flightWithCountOfTickets.Max();
-        var min = flightWithCountOfTickets.Min();
-        var avg = flightWithCountOfTickets.Average();
-        var request = new List<double>() { max, min, avg };
+        _logger.LogInformation("Quantity of delivered goods");
+        var request = (from goods in _warehouseRepository.Goods
+                                        from supply in goods.Supply
+                                        group supply by new
+                                        {
+                                            supply.CompanyName,
+                                            supply.CompanyAddress,
+                                            goods.Id,
+                                            goods.Name
+                                        } into grp
+                                        select _mapper.Map<GoodsGetDto>(new
+                                        {
+                                            grp.Key.CompanyName,
+                                            grp.Key.CompanyAddress,
+                                            grp.Key.Id,
+                                            grp.Key.Name,
+                                            quntity = grp.Sum(x => x.SupplyCount)
+                                        }));
         return request;
     }
 }

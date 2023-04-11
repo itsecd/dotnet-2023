@@ -1,4 +1,4 @@
-﻿namespace Warehouse;
+﻿namespace Warehouse.Domain;
 /// <summary>
 ///     Warehouse - a class that describes the company supply with goods
 /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace WarehouseTest;
+﻿namespace Warehouse.Test;
 using System.Linq;
 
 public class WarehouseTestsClass : IClassFixture<WarehouseFixture>

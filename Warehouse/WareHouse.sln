@@ -1,12 +1,13 @@
 ﻿
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse", "WareHouse\Warehouse.csproj", "{5F581CAE-E3EB-41C0-830C-70112C892995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Domain", "Warehouse.Domain\Warehouse.Domain.csproj", "{5F581CAE-E3EB-41C0-830C-70112C892995}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseTests", "WarehouseTests\WarehouseTests.csproj", "{7633598C-6365-468E-9698-DC939830A8BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Tests", "Warehouse.Tests\Warehouse.Tests.csproj", "{7633598C-6365-468E-9698-DC939830A8BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Server", "Warehouse.Server\Warehouse.Server.csproj", "{FD3401D4-3172-4047-AEA0-31EAAC180FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +23,10 @@ Global
 		{7633598C-6365-468E-9698-DC939830A8BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7633598C-6365-468E-9698-DC939830A8BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7633598C-6365-468E-9698-DC939830A8BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

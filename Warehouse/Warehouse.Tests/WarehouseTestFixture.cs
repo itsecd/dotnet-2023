@@ -1,5 +1,5 @@
-﻿namespace WarehouseTest;
-using Warehouse;
+﻿namespace Warehouse.Test;
+using Warehouse.Domain;
 
 public class WarehouseFixture
 {

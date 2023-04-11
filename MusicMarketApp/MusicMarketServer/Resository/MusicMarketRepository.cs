@@ -110,6 +110,15 @@ public class MusicMarketRepository : IMusicMarketRepository
         _products[6].Seller = new Seller(6, "StopRobot", "USA", 680);
         _products[7].Seller = new Seller(7, "StopRobot", "USA", 680);
 
+        _products[0].SellerId = 0;
+        _products[1].SellerId = 0;
+        _products[2].SellerId = 0;
+        _products[3].SellerId = 0;
+        _products[4].SellerId = 1;
+        _products[5].SellerId = 2;
+        _products[6].SellerId = 2;
+        _products[7].SellerId = 2;
+
 
         _sellers = new List<Seller>();
 

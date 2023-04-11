@@ -29,12 +29,9 @@ public class Trip
     /// </summary>
     public Transport Transport { get; set; } = new Transport();
     /// <summary>
-    /// 
-    /// </summary>
-    public Driver Driver { get; set; } = new Driver();
-    /// <summary>
     /// Driver for a trip
     /// </summary>
+    public Driver Driver { get; set; } = new Driver();
     public Trip() { }
     public Trip(int tripId, DateTime date, DateTime timeOn, DateTime timeOff, Routes route, Transport transport, Driver driver)
     {

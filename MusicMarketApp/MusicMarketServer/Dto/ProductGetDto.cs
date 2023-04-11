@@ -1,9 +1,10 @@
-﻿namespace MusicMarket;
+﻿using MusicMarket;
 
+namespace MusicMarketServer.Dto;
 /// <summary>
-/// Товар.
+/// Информация о товаре
 /// </summary>
-public class Product
+public class ProductGetDto
 {
     /// <summary>
     /// ID Товара.
@@ -59,29 +60,4 @@ public class Product
     /// ID Продавца.
     /// </summary>
     public int SellerId { get; set; }
-
-    /// <summary>
-    /// Продавец
-    /// </summary>
-    public Seller? Seller { get; set; }
-
-
-    public Product() { }
-
-    public Product(int id, string typeOfCarrier, string publicationType, string creator, string name, string madeIn,
-        string mediaStatus, string packagingCondition, double price, string status, Seller seller)
-    {
-        Id = id;
-        TypeOfCarrier = typeOfCarrier;
-        PublicationType = publicationType;
-        Creator = creator;
-        Name = name;
-        MadeIn = madeIn;
-        MediaStatus = mediaStatus;
-        PackagingCondition = packagingCondition;
-        Price = price;
-        Status = status;
-        Seller = seller;
-    }
 }
-

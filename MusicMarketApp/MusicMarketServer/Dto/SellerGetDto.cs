@@ -1,9 +1,10 @@
-﻿namespace MusicMarket;
+﻿using MusicMarket;
 
+namespace MusicMarketServer.Dto;
 /// <summary>
-/// Продавец.
+/// Информация о продавце
 /// </summary>
-public class Seller
+public class SellerGetDto
 {
     /// <summary>
     /// ID Продавца.
@@ -24,19 +25,4 @@ public class Seller
     /// Стоимость доставки за 1 товар.
     /// </summary>
     public double Price { get; set; }
-
-    /// <summary>
-    /// Список товаров.
-    /// </summary>
-    public List<Product> Products = new();
-
-    public Seller() { }
-    public Seller(int id, string name, string country, double price)
-    {
-        Id = id;
-        ShopName = name;
-        CountryOfDelivery = country;
-        Price = price;
-    }
-
 }

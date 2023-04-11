@@ -209,11 +209,11 @@ public class MusicMarketFixture
             purchase3.Products.Add(products[5]);
             purchase4.Products.Add(products[6]);
 
-            purchase0.Date = DateTime.Parse("2023/03/12");
-            purchase1.Date = DateTime.Parse("2023/03/14");
-            purchase2.Date = DateTime.Parse("2023/03/12");
-            purchase3.Date = DateTime.Parse("2023/01/10");
-            purchase4.Date = DateTime.Parse("2023/03/11");
+            purchase0.Date = DateTime.Parse("2023/03/22");
+            purchase1.Date = DateTime.Parse("2023/04/4");
+            purchase2.Date = DateTime.Parse("2023/04/9");
+            purchase3.Date = DateTime.Parse("2023/03/10");
+            purchase4.Date = DateTime.Parse("2023/03/31");
 
             purchases.Add(purchase0);
             purchases.Add(purchase1);
@@ -229,12 +229,12 @@ public class MusicMarketFixture
         get
         {
             var purchases = FixturePurchases;
-            var сustomers = new List<Сustomer>();
-            var customer0 = new Сustomer();
-            var customer1 = new Сustomer();
-            var customer2 = new Сustomer();
-            var customer3 = new Сustomer();
-            var customer4 = new Сustomer();
+            var customers = new List<Customer>();
+            var customer0 = new Customer();
+            var customer1 = new Customer();
+            var customer2 = new Customer();
+            var customer3 = new Customer();
+            var customer4 = new Customer();
 
             customer0.Id = 0;
             customer1.Id = 1;

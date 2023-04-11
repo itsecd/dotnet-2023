@@ -1,9 +1,8 @@
-﻿namespace MusicMarket;
-
+﻿namespace MusicMarketServer.Dto;
 /// <summary>
-/// Покупатель.
+/// Информация о покупателе
 /// </summary>
-public class Customer
+public class CustomerGetDto
 {
     /// <summary>
     /// ID Покупателя.
@@ -24,20 +23,4 @@ public class Customer
     /// Адрес.
     /// </summary>
     public string Adress { get; set; } = string.Empty;
-
-    /// <summary>
-    /// История заказов. 
-    /// </summary>
-    public List<Purchase> Purchases = new();
-
-    public Customer() { }
-
-    public Customer(int id, string name, string country, string adress, List<Purchase> purchases)
-    {
-        Id = id;
-        Name = name;
-        Country = country;
-        Adress = adress;
-        Purchases = purchases;
-    }
-}   
+}

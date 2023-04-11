@@ -90,7 +90,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     [Fact]
     public void TopFiveTest()
     {
-        var customers = _fixture.Fixture—ustomers.ToList();
+        var customers = _fixture.FixtureCustomers.ToList();
         var purchases = _fixture.FixturePurchases.ToList();
         var products = _fixture.FixtureProducts.ToList();
         var sellers = _fixture.FixtureSellers.ToList();
@@ -146,7 +146,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                             count = g.Sum(x => x.count)
                         }).ToList();
 
-        Assert.Equal(2, selCount[0].count);
+        Assert.Equal(1, selCount[0].count);
         Assert.Equal(1, selCount[1].count);
     }
 

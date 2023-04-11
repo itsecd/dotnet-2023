@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using School.Classes;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
-//using DotnetDiary.DiaryDomain;
-using School.Classes;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+
 namespace SchoolServer.Controllers;
 
 /// <summary>
@@ -33,8 +32,6 @@ public class StudentController : ControllerBase
     /// <summary>
     /// Метод Get для студента
     /// </summary>
-    /// <returns></returns>
-    // GET: api/<StudentController>
     [HttpGet]
     public IEnumerable<StudentGetDto> Get()
     {
@@ -44,9 +41,6 @@ public class StudentController : ControllerBase
     /// <summary>
     /// Метод Get для контроллера
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    // GET api/<StudentController>/5
     [HttpGet("{id}")]
     public ActionResult<StudentGetDto> Get(int id)
     {
@@ -65,8 +59,6 @@ public class StudentController : ControllerBase
     /// <summary>
     /// Метод Post для контроллера
     /// </summary>
-    /// <param name="student"></param>
-    // POST api/<StudentController>
     [HttpPost]
     public void Post([FromBody] StudentGetDto student)
     {
@@ -76,8 +68,6 @@ public class StudentController : ControllerBase
     /// <summary>
     /// метод Put для коетроллера
     /// </summary>
-
-    // PUT api/<StudentController>/5
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] StudentGetDto student)
     {
@@ -97,7 +87,6 @@ public class StudentController : ControllerBase
     /// <summary>
     /// Метод удаления студента
     /// </summary>
-    // DELETE api/<StudentController>/5
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using School.Classes;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
-//using DotnetDiary.DiaryDomain;
-using School.Classes;
-using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SchoolServer.Controllers;
 
@@ -35,7 +32,6 @@ public class SubjectController : ControllerBase
     /// <summary>
     /// Метод получения "предмета"
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     public IEnumerable<SubjectGetDto> Get()
     {
@@ -45,9 +41,6 @@ public class SubjectController : ControllerBase
     /// <summary>
     /// Метод получения "предмета" по id
     /// </summary>
-
-
-    // GET api/<SubjectController>/5
     [HttpGet("{id}")]
     public ActionResult<SubjectGetDto> Get(int id)
     {
@@ -66,8 +59,6 @@ public class SubjectController : ControllerBase
     /// <summary>
     /// Post метод для добавления "предмета"
     /// </summary>
-    
-    // POST api/<SubjectController>
     [HttpPost]
     public void Post([FromBody] SubjectGetDto subject)
     {
@@ -78,8 +69,6 @@ public class SubjectController : ControllerBase
     /// <summary>
     /// Метод удаления из класса
     /// </summary>
-    
-    // DELETE api/<SubjectController>/5
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

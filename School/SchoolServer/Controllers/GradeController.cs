@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using SchoolServer.Dto;
-using SchoolServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using School.Classes;
+using SchoolServer.Dto;
+using SchoolServer.Repository;
 
 namespace SchoolServer.Controllers;
 
@@ -20,7 +20,7 @@ public class GradeController : ControllerBase
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор коетроллера
+    /// Конструктор контроллера
     /// </summary>
     public GradeController(ILogger<GradeController> logger, ISchoolRepository diaryRepository, IMapper mapper)
     {
@@ -32,8 +32,6 @@ public class GradeController : ControllerBase
     /// <summary>
     /// Метод получения
     /// </summary>
-    /// <returns></returns>
-    // GET: api/<GradeController>
     [HttpGet]
     public IEnumerable<GradeGetDto> Get()
     {
@@ -43,7 +41,6 @@ public class GradeController : ControllerBase
     /// <summary>
     /// Метод получения по id
     /// </summary>
-    // GET api/<GradeController>/5
     [HttpGet("{id}")]
     public ActionResult<GradeGetDto> Get(int id)
     {
@@ -62,8 +59,6 @@ public class GradeController : ControllerBase
     /// <summary>
     /// Метод Post 
     /// </summary>
-    /// <param name="grade"></param>
-    // POST api/<GradeController>
     [HttpPost]
     public void Post([FromBody] GradeGetDto grade)
     {
@@ -73,7 +68,6 @@ public class GradeController : ControllerBase
     /// <summary>
     /// Метод получения по id
     /// </summary>
-    // PUT api/<GradeController>/5
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GradeGetDto grade)
     {
@@ -93,7 +87,6 @@ public class GradeController : ControllerBase
     /// <summary>
     /// Метод удаления по id
     /// </summary>
-    // DELETE api/<GradeController>/5
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

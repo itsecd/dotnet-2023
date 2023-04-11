@@ -32,7 +32,6 @@ public class ClassController : ControllerBase
     /// <summary>
     /// Получение всех классов
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     public IEnumerable<ClassGetDto> Get()
     { 
@@ -42,8 +41,6 @@ public class ClassController : ControllerBase
     /// <summary>
     /// Метод получения по id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Class> Get(int id)
     {

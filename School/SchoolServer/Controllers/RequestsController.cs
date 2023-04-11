@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
-
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Security.Claims;
-
 
 namespace SchoolServer.Controllers;
 
@@ -16,8 +12,6 @@ namespace SchoolServer.Controllers;
 [ApiController]
 public class RequestsController : ControllerBase
 {
-    private readonly ILogger<GradeController> _logger;
-
     private readonly ISchoolRepository _diaryRepository;
 
     private readonly IMapper _mapper;
@@ -25,18 +19,15 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Конструктор контроллера
     /// </summary>
-    public RequestsController(ILogger<GradeController> logger, ISchoolRepository diaryRepository, IMapper mapper)
+    public RequestsController(ISchoolRepository diaryRepository, IMapper mapper)
     {
-        _logger = logger;
         _diaryRepository = diaryRepository;
         _mapper = mapper;
     }
 
-
     /// <summary>
     /// Output information about all items. Checking for the number of items
     /// </summary>
-    /// <returns></returns>
     [HttpGet("GetAllSubject")]
     public IEnumerable<GradeGetDto> GetAllSubject()
     {
@@ -47,7 +38,6 @@ public class RequestsController : ControllerBase
     /// Display information about all students in the specified class, sort by name.
     /// </summary>
     /// <param name="ClassId">Class id</param>
-    /// <returns></returns>
     [HttpGet("GetAllStudentByClassId/{ClassId}")]
     public IEnumerable<StudentGetDto> GetAllStudentByClassId(int ClassId)
     {
@@ -62,7 +52,6 @@ public class RequestsController : ControllerBase
     /// Output information about all students who received grades on the specified day.
     /// </summary>
     /// <param name="date">Day of receiving grade</param>
-    /// <returns></returns>
     [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
     public IEnumerable<StudentGetDto> StudentsGetsGradesByDay(DateTime date)
     {
@@ -125,7 +114,6 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Output information about the minimum, average and maximum score for each subject
     /// </summary>
-    /// <returns></returns>
     [HttpGet("StatisticSubjects")]
     public dynamic MinMaxAvrGradeBySubject()
     {

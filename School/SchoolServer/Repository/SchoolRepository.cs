@@ -1,4 +1,5 @@
 ﻿using School.Classes;
+
 namespace SchoolServer.Repository;
 
 /// <summary>

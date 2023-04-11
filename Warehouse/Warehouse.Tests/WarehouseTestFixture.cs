@@ -7,10 +7,10 @@ public class WarehouseFixture
     {
         get
         {
-            var firstRoute = new Supply("СамараПласт", "г. Самара, ул. Луцкая, 16.", new DateTime(2023, 02, 20), 10);
-            var secondRoute = new Supply("Самара Строй Комплект", "г. Самара, ул. Олимпийская, 73а.", new DateTime(2023, 03, 01), 5);
-            var thirdRoute = new Supply("Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
-            var fourthRoute = new Supply("Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
+            var firstRoute = new Supply(1, "СамараПласт", "г. Самара, ул. Луцкая, 16.", new DateTime(2023, 02, 20), 10);
+            var secondRoute = new Supply(2, "Самара Строй Комплект", "г. Самара, ул. Олимпийская, 73а.", new DateTime(2023, 03, 01), 5);
+            var thirdRoute = new Supply(3, "Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
+            var fourthRoute = new Supply(4, "Fix Price", "г. Самара, ул. Спортивная, 20.", new DateTime(2023, 02, 11), 10);
 
             var firstProduction = new Goods(103722, "Контейнер 640мл с крышкой", 100);
             var secondProduction = new Goods(164302, "Картонная коробка 60*40*50", 50);

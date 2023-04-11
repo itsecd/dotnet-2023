@@ -67,43 +67,43 @@ public class WarehouseCellsController : ControllerBase
     /// <summary>
     /// Put method for warehouse cells table
     /// </summary>
-    /// <param name="id">An id of cell          nged </param>
-    /// <param name="productToPut">Goods class instance to insert to table</param>
+    /// <param name="id">A number of cell which would be changed</param>
+    /// <param name="cellToPut">Warehouse cells class instance to insert to table</param>
     /// <returns>Signalization of success or error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
+    public IActionResult Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
     {
-        _logger.LogInformation("Put product with id {0}", id);
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
-        if (product == null)
+        _logger.LogInformation("Put cell with id {0}", id);
+        var warehouseCell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        if (warehouseCell == null)
         {
             _logger.LogInformation("Not found product with id {0}", id);
             return NotFound();
         }
         else
         {
-            _mapper.Map(productToPut, product);
+            _mapper.Map(cellToPut, warehouseCell);
             return Ok();
         }
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of product which would be deleted</param>
+    /// <param name="id">A number of cell which would be deleted</param>
     /// <returns>Signalization of success or error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($"Put product with id ({id})");
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
-        if (product == null)
+        _logger.LogInformation($"Put cell with id ({id})");
+        var warehouseCell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        if (warehouseCell == null)
         {
-            _logger.LogInformation($"Not found product with id ({id})");
+            _logger.LogInformation($"Not found cell with id ({id})");
             return NotFound();
         }
         else
         {
-            _warehouseRepository.Goods.Remove(product);
+            _warehouseRepository.WarehouseCells.Remove(warehouseCell);
             return Ok();
         }
     }

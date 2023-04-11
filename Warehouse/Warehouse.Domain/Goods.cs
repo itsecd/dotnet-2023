@@ -9,7 +9,7 @@ public class Goods
     /// </summary>  
     public int ProductCount { set; get; }
     /// <summary>  
-    ///     Id - shows the product's id
+    ///     Id - shows the product id
     /// </summary>  
     public int Id { set; get; }
     /// <summary>

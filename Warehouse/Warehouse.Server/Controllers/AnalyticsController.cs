@@ -42,7 +42,7 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get supply with specific date");
         var request = (from goods in _warehouseRepository.Goods
-                       from supply in supply.Goods
+                       from supply in goods.Supply
                        where supply.SupplyDate == new DateTime(2023, 02, 11)
                        orderby supply.Goods
                        select _mapper.Map<SupplyGetDto>(supply));
@@ -57,7 +57,7 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Warehouse cells and their content");
         var request = (from goods in _warehouseRepository.Goods
-                       from cell in goods.WarehouseCells
+                       from cell in goods.WarehouseCell
                        orderby cell.CellNumber
                        select _mapper.Map<WarehouseCellsGetDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }));
         return request;
@@ -116,7 +116,7 @@ public class AnalyticsController : ControllerBase
                            goods.Id,
                            goods.Name
                        } into grp
-                       select _mapper.Map<GoodsGetDto>(new
+                       select _mapper.Map<SupplyGetDto>(new
                        {
                            grp.Key.CompanyName,
                            grp.Key.CompanyAddress,

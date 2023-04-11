@@ -4,6 +4,10 @@
 /// </summary>
 public class Supply
 {
+    /// <summary>  
+    ///     Id - shows the supply id
+    /// </summary>  
+    public int Id { set; get; }
     /// <summary>
     ///     SupplyCount - shows amount of product
     /// </summary>  
@@ -21,8 +25,9 @@ public class Supply
     /// </summary>
     public DateTime SupplyDate { get; set; } = DateTime.MinValue;
     public List<Goods> Goods { set; get; } = new List<Goods>();
-    public Supply(string companyName, string companyAdress, DateTime supplyDate, int supplyCount)
+    public Supply(int id, string companyName, string companyAdress, DateTime supplyDate, int supplyCount)
     {
+        Id = id;
         CompanyName = companyName;
         CompanyAddress = companyAdress;
         SupplyDate = supplyDate;

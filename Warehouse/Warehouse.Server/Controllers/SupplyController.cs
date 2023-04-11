@@ -51,10 +51,10 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            return (from goods in _warehouseRepository.Goods
-                    where goods.Id == id
-                    from supply in goods.Supply
-                    select supply).ToList();
+            return Ok((from goods in _warehouseRepository.Goods
+                       where goods.Id == id
+                       from supply in goods.Supply
+                       select _mapper.Map<Supply>(supply)).ToList());
         }
     }
     /// <summary>
@@ -65,7 +65,7 @@ public class SupplyController : ControllerBase
     public void Post([FromBody] SupplyPostDto supply)
     {
         _logger.LogInformation("Post supply");
-        _warehouseRepository.Supply.Add(_mapper.Map<Goods>(supply));
+        _warehouseRepository.Supply.Add(_mapper.Map<Supply>(supply));
     }
     /// <summary>
     /// Put method for supply table
@@ -85,6 +85,10 @@ public class SupplyController : ControllerBase
         }
         else
         {
+            _warehouseRepository.Supply.Remove(from goods in _warehouseRepository.Goods
+                                               from supply in goods.Supply
+                                               where supply.Goods = product
+                                               select supply));
             _mapper.Map(supplyToPut.Goods, product);
             return Ok();
         }
@@ -107,9 +111,9 @@ public class SupplyController : ControllerBase
         else
         {
             _warehouseRepository.Supply.Remove(from goods in _warehouseRepository.Goods
-                                                from supply in goods.Supply
-                                                where supply.Goods == product
-                                                select supply);
+                                               from supply in goods.Supply
+                                               where supply.Goods = product
+                                               select supply);
             return Ok();
         }
     }

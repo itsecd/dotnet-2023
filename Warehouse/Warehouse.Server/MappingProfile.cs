@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Warehouse.Domain;
+using Warehouse.Server.Dto;
 
 namespace Warehouse.Server;
 /// <summary>
@@ -8,20 +10,16 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Flight, FlightGetDto>();
-        CreateMap<Flight, FlightPostDto>();
-        CreateMap<FlightPostDto, Flight>();
+        CreateMap<WarehouseCells, WarehouseCellsGetDto>();
+        CreateMap<WarehouseCells, WarehouseCellsPostDto>();
+        CreateMap<WarehouseCellsPostDto, WarehouseCells>();
 
-        CreateMap<Client, ClientGetDto>();
-        CreateMap<Client, ClientPostDto>();
-        CreateMap<ClientPostDto, Client>();
+        CreateMap<Supply, SupplyGetDto>();
+        CreateMap<Supply, SupplyPostDto>();
+        CreateMap<SupplyPostDto, Supply>();
 
-        CreateMap<Ticket, TicketPostDto>();
-        CreateMap<Ticket, TicketGetDto>();
-        CreateMap<TicketPostDto, Ticket>();
-
-        CreateMap<Airplane, AirplaneGetDto>();
-        CreateMap<Airplane, AirplanePostDto>();
-        CreateMap<AirplanePostDto, Airplane>();
+        CreateMap<Goods, GoodsPostDto>();
+        CreateMap<Goods, GoodsGetDto>();
+        CreateMap<GoodsPostDto, Goods>();
     }
 }

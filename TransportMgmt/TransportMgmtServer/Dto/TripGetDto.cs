@@ -1,6 +1,4 @@
-﻿using TransportMgmt.Domain;
-
-namespace TransportMgmtServer.Dto;
+﻿namespace TransportMgmtServer.Dto;
 
 public class TripGetDto
 {

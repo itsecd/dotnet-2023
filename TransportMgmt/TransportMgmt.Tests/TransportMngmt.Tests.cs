@@ -135,7 +135,7 @@ public class TransportTests : IClassFixture<TransportFixture>
         var fixtureTransport = _fixture.Transports.ToList();
         var numOfTrips = (from trip in fixtureTrip
                           group trip by trip.Transport.Id into res
-                          where res.First().Date < new DateTime(2023, 03, 20) && res.First().Date < new DateTime(2023, 03, 20)
+                          where res.First().Date > new DateTime(2023, 03, 18) && res.First().Date < new DateTime(2023, 03, 20)
                           select new
                           {
                               tansportId = res.First().Transport.Id,

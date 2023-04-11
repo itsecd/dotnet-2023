@@ -85,7 +85,7 @@ public class TransportMgmtRepository : ITransportMgmtRepository
                 new Trip(8, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 19, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[3], _transport[2], _drivers[0]),
                 new Trip(4, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[4], _transport[1], _drivers[3]),
                 new Trip(9, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[2], _transport[6], _drivers[2]),
-                new Trip(10, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), _routes[0], _transport[1], _drivers[0])
+                new Trip(10, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), _routes[0], _transport[5], _drivers[0])
             };
     }
     /// <summary>

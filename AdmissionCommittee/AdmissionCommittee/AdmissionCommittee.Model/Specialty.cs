@@ -7,7 +7,8 @@ public class Specialty
     /// <summary>
     /// IdSpeciality - int value for storing the id speciality
     /// </summary>
-    public int IdSpeciality { get; set; }
+    public int IdSpecialty { get; set; }
+
     /// <summary>
     /// Cypher - string value for storing a speciality cypher
     /// </summary>
@@ -16,7 +17,7 @@ public class Specialty
     /// <summary>
     /// NameSpeciality - string value for storing the name speciality
     /// </summary>
-    public string NameSpeciality { get; set; } = string.Empty;
+    public string NameSpecialty { get; set; } = string.Empty;
 
     /// <summary>
     /// Faculty - string value for storing the name faculty

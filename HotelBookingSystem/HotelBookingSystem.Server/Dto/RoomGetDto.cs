@@ -1,5 +1,6 @@
-﻿namespace HotelBookingSystem.Classes;
-public class Room
+﻿namespace HotelBookingSystem.Server.Dto;
+
+public class RoomGetDto
 {
     public int Id { get; set; }
 
@@ -9,9 +10,5 @@ public class Room
 
     public int Cost { get; set; }
 
-    public Hotel Placement { get; set; } = null!;
-
     public int PlacementId { get; set; }
-
-    public List<BookedRooms> Brooms { get; set; } = null!;
 }

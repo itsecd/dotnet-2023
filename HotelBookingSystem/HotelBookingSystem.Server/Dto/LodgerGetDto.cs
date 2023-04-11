@@ -1,5 +1,6 @@
-﻿namespace HotelBookingSystem.Classes;
-public class Lodger
+﻿namespace HotelBookingSystem.Server.Dto;
+
+public class LodgerGetDto
 {
     public int Id { get; set; }
 
@@ -8,6 +9,4 @@ public class Lodger
     public string Name { get; set; } = string.Empty;
 
     public DateTime Birthdate { get; set; }
-
-    public List<BookedRooms> Brooms { get; set; } = null!;
 }

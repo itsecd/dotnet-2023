@@ -1,13 +1,8 @@
-﻿namespace HotelBookingSystem.Classes;
-public class BookedRooms
+﻿namespace HotelBookingSystem.Server.Dto;
+
+public class BookedRoomsPostDto
 {
-    public int Id { get; set; }
-
-    public Lodger Client { get; set; } = null!;
-
     public int ClientId { get; set; }
-
-    public Room BookedRoom { get; set; } = null!;
 
     public int BookedRoomId { get; set; }
 

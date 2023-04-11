@@ -1,13 +1,10 @@
-﻿namespace HotelBookingSystem.Classes;
-public class Hotel
+﻿namespace HotelBookingSystem.Server.Dto;
+
+public class HotelPostDto
 {
-    public int Id { get; set; }
-    
     public string Name { get; set; } = string.Empty;
 
     public string City { get; set; } = string.Empty;
 
     public string Adress { get; set; } = string.Empty;
-
-    public List<Room> RoomList { get; set; } = null!;
 }

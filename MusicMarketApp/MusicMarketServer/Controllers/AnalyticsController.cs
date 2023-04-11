@@ -38,7 +38,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Ok(information about all sold vinyl records)</returns>
     [HttpGet("information_about_vinyl_records")]
     public ActionResult<ProductGetDto> GetSoldVinylRecords()
     {
@@ -63,11 +63,11 @@ public class AnalyticsController : ControllerBase
     /// Запрос 2 - Вывести информацию о всех товарах указанного продавца, упорядочить по цене.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Ok(information about products by seller  with id)</returns>
     [HttpGet("All_products_by_seller_id")]
     public ActionResult<ProductGetDto> ProductsBySeller(int id)
     {
-        _logger.LogInformation("Get information about products with id", id);
+        _logger.LogInformation($"Get information about products with seller id {id}");
         var products = (from product in _musicMarketRepository.Products
                         where product.Seller != null && product.SellerId == id
                         orderby product.Price
@@ -89,7 +89,7 @@ public class AnalyticsController : ControllerBase
     /// альбомов указанного исполнителя, состояние аудионосителя и упаковки 
     /// которых не хуже "хорошее".
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Ok(Information about sale good and better disks)</returns>
     [HttpGet("Good_disks_by_singer")]
     public ActionResult<ProductGetDto> GoodDisksInfo(string name)
     {
@@ -115,7 +115,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 4 - Вывести информацию о количестве проданных на торговой площадке товаров каждого типа аудионосителя.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Ok(Count of sold audio carriers each type)</returns>
     [HttpGet("Sold_audio_carriers")]
     public ActionResult SoldAudioCarriers()
     {
@@ -135,7 +135,7 @@ public class AnalyticsController : ControllerBase
     /// Запрос 5 - Вывести информацию о топ 5 покупателях 
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Top 5 customers</returns>
     [HttpGet("Top_5_customers")]
     public IActionResult TopFiveСustomer()
     {
@@ -178,7 +178,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 6 - Вывести информацию о количестве проданных товаров каждым продавцом за последние две недели.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> Information about sold products in two weeks</returns>
     [HttpGet("sold_products")]
     public IActionResult SoldProductsInTwoWeeks()
     {

@@ -61,7 +61,7 @@ public class SellerController : ControllerBase
         }
         else
         {
-            _logger.LogInformation($"Get seller with id {id}");
+            _logger.LogInformation($"Get seller with id: {id}");
             return Ok(_mapper.Map<SellerGetDto>(sellerById));
         }
     }

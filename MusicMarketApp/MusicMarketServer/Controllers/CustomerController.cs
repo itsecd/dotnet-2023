@@ -121,7 +121,7 @@ public class CustomerController : ControllerBase
         else
         {
             _customersRepository.Customers.Remove(customer);
-            _logger.LogInformation($"Delete customer with id: {id}"); 
+            _logger.LogInformation($"Delete customer with id: {id}");
             return Ok();
         }
     }

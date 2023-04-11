@@ -22,5 +22,10 @@ public class MappingProfile : Profile
         CreateMap<Driver, DriverPostDto>();
 
         CreateMap<DriverPostDto, Driver>();
+
+        CreateMap<Transport, TransportGetDto>();
+        CreateMap<Transport, TransportPostDto>();
+
+        CreateMap<TransportPostDto, Transport>();
     }
 }

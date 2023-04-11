@@ -33,10 +33,10 @@ public class PurchaseController : ControllerBase
         _mapper = mapper;
     }
 
-    //// <summary>
+    /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <param name="id"></param>
     [HttpGet]
     public IEnumerable<PurchaseGetDto> Get()
     {

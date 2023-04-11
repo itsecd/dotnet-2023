@@ -38,7 +38,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.
     /// </summary>
-    /// <param name>product</param>
+    /// <param name></param>
     /// <returns></returns>
     [HttpGet("information_aboout_vinyl_records")]
     public ActionResult<ProductGetDto> GetSoldVinylRecords()
@@ -75,7 +75,7 @@ public class AnalyticsController : ControllerBase
                         select _mapper.Map<Product, ProductGetDto>(product)).ToList();
         if (products.Count == 0)
         {
-            _logger.LogInformation($"Not found product with seller id: {0}", id);
+            _logger.LogInformation($"Not found product with seller id: {id}");
             return NotFound();
         }
         else

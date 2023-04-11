@@ -14,6 +14,12 @@ public class TransportControlller : ControllerBase
     private readonly ILogger<TransportControlller> _logger;
     private readonly ITransportManagmentRepository _transportRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="transportRepository"></param>
+    /// <param name="mapper"></param>
     public TransportControlller(ILogger<TransportControlller> logger, ITransportManagmentRepository transportRepository, IMapper mapper)
     {
         _logger = logger;
@@ -101,6 +107,5 @@ public class TransportControlller : ControllerBase
             _transportRepository.Transports.Remove(res);
             return Ok();
         }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using TransportManagment.Classes;
-
 namespace TransportManagment.Server.Repository;
 public class TransportManagmentRepository : ITransportManagmentRepository
 {

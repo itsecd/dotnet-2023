@@ -14,6 +14,12 @@ public class RouteController : ControllerBase
     private readonly ILogger<RouteController> _logger;
     private readonly ITransportManagmentRepository _routeRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="routeRepository"></param>
+    /// <param name="mapper"></param>
     public RouteController(ILogger<RouteController> logger, ITransportManagmentRepository routeRepository, IMapper mapper)
     {
         _logger = logger;
@@ -101,6 +107,5 @@ public class RouteController : ControllerBase
             _routeRepository.Routes.Remove(res);
             return Ok();
         }
-
     }
 }

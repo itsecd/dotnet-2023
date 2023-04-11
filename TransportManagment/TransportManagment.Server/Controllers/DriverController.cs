@@ -14,6 +14,12 @@ public class DriverControlller : ControllerBase
     private readonly ILogger<DriverControlller> _logger;
     private readonly ITransportManagmentRepository _driverRepository;
     private readonly IMapper _mapper;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="driverRepository"></param>
+    /// <param name="mapper"></param>
     public DriverControlller(ILogger<DriverControlller> logger, ITransportManagmentRepository driverRepository, IMapper mapper)
     {
         _logger = logger;

@@ -1,6 +1,8 @@
 ﻿using TransportManagment.Classes;
-
 namespace TransportManagment.Server.Repository;
+/// <summary>
+/// Interface of TransportManagmentRepository
+/// </summary>
 public interface ITransportManagmentRepository
 {
     List<Driver> Drivers { get; }

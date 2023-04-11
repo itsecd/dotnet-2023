@@ -37,12 +37,12 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Display information about all students in the specified class, sort by name.
     /// </summary>
-    /// <param name="ClassId">Class id</param>
-    [HttpGet("GetAllStudentByClassId/{ClassId}")]
-    public IEnumerable<StudentGetDto> GetAllStudentByClassId(int ClassId)
+    /// <param name="Id">Class id</param>
+    [HttpGet("GetAllStudentByClassId/{Id}")]
+    public IEnumerable<StudentGetDto> GetAllStudentByClassId(int Id)
     {
         var needStudents = (from student in _diaryRepository.Students
-                            where student.Class != null && student.Class.Id.Equals(ClassId)
+                            where student.Class != null && student.Class.Id.Equals(Id)
                             orderby student.LastName, student.FirstName, student.Patronymic
                             select student).ToList();
         return _mapper.Map<IEnumerable<StudentGetDto>>(needStudents);

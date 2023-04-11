@@ -27,7 +27,7 @@ public class SpecializationController : ControllerBase
     /// <summary>
     /// Get specialization info
     /// </summary>
-    /// <returns></returns>
+    /// <returns>List of all specializations</returns>
     [HttpGet]
     public IEnumerable<Specialization> Get()
     {
@@ -39,7 +39,7 @@ public class SpecializationController : ControllerBase
     /// Get specialization info by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Specialization with given id</returns>
     [HttpGet("{id}")]
     public ActionResult<Specialization> Get(int id)
     {

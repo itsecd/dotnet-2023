@@ -31,7 +31,7 @@ public class Specialization
     /// Redefined comparison function
     /// </summary>
     /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <returns>Bool value representing are objects equal or not</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not Specialization param)
@@ -41,7 +41,7 @@ public class Specialization
     /// <summary>
     /// Redefined hash function
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Hash code of Id</returns>
     public override int GetHashCode()
     {
         return HashCode.Combine(Id);

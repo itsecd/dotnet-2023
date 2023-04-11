@@ -61,19 +61,20 @@ public class Patient
     /// Redefined comparison function
     /// </summary>
     /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <returns>Bool value representing are objects equal or not</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not Patient param)
             return false;
-        return Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && Address == param.Address && Receptions == param.Receptions && ReceptionId == param.ReceptionId;
+        return Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && 
+            Address == param.Address && Receptions == param.Receptions && ReceptionId == param.ReceptionId;
     }
     /// <summary>
     /// Redefined hash function
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Hash code of Id</returns>
     public override int GetHashCode()
     {
-        return HashCode.Combine(Passport);
+        return HashCode.Combine(Id);
     }
 }

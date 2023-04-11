@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class PoliclinicTestFixture
 {
+    /// <summary>
+    /// Create list of specializations
+    /// </summary>
     public List<Specialization> CreateDefaultSpecializations
     {
         get
@@ -16,7 +19,9 @@ public class PoliclinicTestFixture
             };
         }
     }
-
+    /// <summary>
+    /// Create list of doctors
+    /// </summary>
     public List<Doctor> CreateDefaultDoctors
     {
         get
@@ -34,7 +39,9 @@ public class PoliclinicTestFixture
                 };
         }
     }
-
+    /// <summary>
+    /// Create list of patients
+    /// </summary>
     public List<Patient> CreateDefaultPatients
     {
         get
@@ -53,6 +60,9 @@ public class PoliclinicTestFixture
                 };
         }
     }
+    /// <summary>
+    /// Create list of receptions
+    /// </summary>
     public List<Reception> CreateDefaultReceptions
     {
         get

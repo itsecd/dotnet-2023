@@ -33,7 +33,7 @@ public class ReceptionController : ControllerBase
     /// <summary>
     /// Get reception info
     /// </summary>
-    /// <returns></returns>
+    /// <returns>List of all receptions</returns>
     [HttpGet]
     public IEnumerable<ReceptionDto> Get()
     {
@@ -44,7 +44,7 @@ public class ReceptionController : ControllerBase
     /// Get reception info by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Reception with given id</returns>
     [HttpGet("{id}")]
     public ActionResult<ReceptionDto> Get(int id)
     {
@@ -76,7 +76,7 @@ public class ReceptionController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <param name="receptionToPut"></param>
-    /// <returns></returns>
+    /// <returns>Code of operation</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ReceptionDto receptionToPut)
     {
@@ -97,7 +97,7 @@ public class ReceptionController : ControllerBase
     /// Delete reception by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Code of operation</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

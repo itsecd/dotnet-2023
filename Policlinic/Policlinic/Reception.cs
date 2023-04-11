@@ -54,18 +54,17 @@ public class Reception
     /// Redefined comparison function
     /// </summary>
     /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <returns>Bool value representing are objects equal or not</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not Reception param)
             return false;
-        return //Doctor.Equals(param.Doctor) && Patient.Equals(param.Patient) &&
-             DateAndTime == param.DateAndTime && Status == param.Status;
+        return DateAndTime == param.DateAndTime && Status == param.Status;
     }
     /// <summary>
     /// Redefined hash function
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Hash code of Id</returns>
     public override int GetHashCode()
     {
         return HashCode.Combine(Id);

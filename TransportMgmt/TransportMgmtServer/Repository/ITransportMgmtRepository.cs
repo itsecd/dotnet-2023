@@ -1,6 +1,7 @@
 ﻿using TransportMgmt.Domain;
 
-namespace TransportMgmtServer;
+namespace TransportMgmtServer.Repository;
+
 public interface ITransportMgmtRepository
 {
     List<Driver> Drivers { get; }

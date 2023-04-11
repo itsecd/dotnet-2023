@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportMgmt.Domain;
+using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class TransprotTypeController : ControllerBase
 {
-    private readonly ILogger<TransportMgmtRepository> _logger;
+    private readonly ILogger<TransprotTypeController> _logger;
 
-    private readonly TransportMgmtRepository _transportRepository;
+    private readonly ITransportMgmtRepository _transportRepository;
 
-    public TransprotTypeController(ILogger<TransportMgmtRepository> logger, TransportMgmtRepository transportRepository)
+    public TransprotTypeController(ILogger<TransprotTypeController> logger, ITransportMgmtRepository transportRepository)
     {
         _logger = logger;
         _transportRepository = transportRepository;
@@ -20,14 +21,12 @@ public class TransprotTypeController : ControllerBase
 
     public IEnumerable<TransportType> Get()
     {
-        //_logger.LogInformation("Get transport types");
         return _transportRepository.TransportType;
     }
 
     [HttpGet("{id}")]
     public ActionResult<TransportType> Get(int id)
     {
-        //_logger.LogInformation($"Get transport type with id {id}");
         var transportType = _transportRepository.TransportType.FirstOrDefault(transport => transport.Id == id);
         if (transportType == null)
         {

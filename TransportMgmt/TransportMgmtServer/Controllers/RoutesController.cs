@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportMgmt.Domain;
+using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class RoutesController : Controller
 {
-    private readonly ILogger<TransportMgmtRepository> _logger;
+    private readonly ILogger<RoutesController> _logger;
 
-    private readonly TransportMgmtRepository _transportRepository;
+    private readonly ITransportMgmtRepository _transportRepository;
 
-    public RoutesController(ILogger<TransportMgmtRepository> logger, TransportMgmtRepository transportRepository)
+    public RoutesController(ILogger<RoutesController> logger, ITransportMgmtRepository transportRepository)
     {
         _logger = logger;
         _transportRepository = transportRepository;

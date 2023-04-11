@@ -1,8 +1,6 @@
-﻿namespace TransportMgmt.Domain;
-/// <summary>
-/// Class Model is used to store information about transport models
-/// </summary>
-public class Model
+﻿namespace TransportMgmtServer.Dto;
+
+public class ModelGetDto
 {
     /// <summary>
     /// Unique key of model
@@ -20,14 +18,4 @@ public class Model
     /// Maximum capacity of transport model
     /// </summary>
     public int MaxCapacity { get; set; } = 0;
-
-    public Model() { }
-
-    public Model(int modelId, string modelName, string floorLevel, int maxCapacity)
-    {
-        Id = modelId;
-        ModelName = modelName;
-        FloorLevel = floorLevel;
-        MaxCapacity = maxCapacity;
-    }
 }

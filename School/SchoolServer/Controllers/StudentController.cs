@@ -30,8 +30,9 @@ public class StudentController : ControllerBase
     }
 
     /// <summary>
-    /// Метод Get для студента
+    ///  Метод получения данных всей коллекции для студентов
     /// </summary>
+    /// <returns>Коллекция студентов</returns>
     [HttpGet]
     public IEnumerable<StudentGetDto> Get()
     {
@@ -39,8 +40,10 @@ public class StudentController : ControllerBase
     }
 
     /// <summary>
-    /// Метод Get для контроллера
+    /// Метод получения студента по id
     /// </summary>
+    /// <param name="id">id студента</param>
+    /// <returns>Студент по id</returns>
     [HttpGet("{id}")]
     public ActionResult<StudentGetDto> Get(int id)
     {
@@ -57,8 +60,9 @@ public class StudentController : ControllerBase
     }
 
     /// <summary>
-    /// Метод Post для контроллера
+    /// Метод добавления студента с помощью json
     /// </summary>
+    /// <param name="student">параметр добавления</param>
     [HttpPost]
     public void Post([FromBody] StudentGetDto student)
     {
@@ -66,8 +70,11 @@ public class StudentController : ControllerBase
     }
 
     /// <summary>
-    /// метод Put для коетроллера
+    /// Метод обновления студента по id 
     /// </summary>
+    /// <param name="id">id студента</param>
+    /// <param name="student">Объект класса Student</param>
+    /// <returns>Обновленное значение по id</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] StudentGetDto student)
     {
@@ -85,8 +92,10 @@ public class StudentController : ControllerBase
     }
 
     /// <summary>
-    /// Метод удаления студента
+    /// Метод удаления студента по id
     /// </summary>
+    /// <param name="id">id студента</param>
+    /// <returns>Успех или ошибка удаления</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

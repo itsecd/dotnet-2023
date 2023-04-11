@@ -30,8 +30,9 @@ public class ClassController : ControllerBase
     }
 
     /// <summary>
-    /// Получение всех классов
+    /// Метод получения данных всей коллекции для классов
     /// </summary>
+    /// <returns>Коллекция классов</returns>
     [HttpGet]
     public IEnumerable<ClassGetDto> Get()
     { 
@@ -39,8 +40,10 @@ public class ClassController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения по id
+    /// Метод получения класса по id 
     /// </summary>
+    /// <param name="id">id класса</param>
+    /// <returns>Найденный класс по id</returns>
     [HttpGet("{id}")]
     public ActionResult<Class> Get(int id)
     {
@@ -57,9 +60,9 @@ public class ClassController : ControllerBase
     }
 
     /// <summary>
-    /// Метод Post
+    /// Метод добавления элементов в коллекцию с помощью json
     /// </summary>
-    /// <param name="class"></param>
+    /// <param name="class">объект класса ClassGetDto</param>
     [HttpPost]
     public void Post([FromBody] ClassGetDto @class)
     {
@@ -67,8 +70,11 @@ public class ClassController : ControllerBase
     }
     
     /// <summary>
-    /// Метод получения по  id
+    /// Метод обновления данных по id
     /// </summary>
+    /// <param name="id">id объекта</param>
+    /// <param name="class">Объект, данные которого будут изменены</param>
+    /// <returns>Обновленный по id элемент</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ClassPostDto @class)
     {
@@ -86,8 +92,10 @@ public class ClassController : ControllerBase
     }
     
     /// <summary>
-    /// Метод удаления по id
+    /// Метод удаления элемента по id
     /// </summary>
+    /// <param name="id">id объекта</param>
+    /// <returns>Успех или ошибка удаления</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

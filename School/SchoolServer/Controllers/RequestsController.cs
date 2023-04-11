@@ -26,7 +26,7 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Output information about all items. Checking for the number of items
+    ///  Вывести информацию обо всех предметах
     /// </summary>
     [HttpGet("GetAllSubject")]
     public IEnumerable<GradeGetDto> GetAllSubject()
@@ -35,9 +35,9 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Display information about all students in the specified class, sort by name.
+    /// Вывести информацию обо всех учениках в указанном классе, упорядочить по ФИО
     /// </summary>
-    /// <param name="Id">Class id</param>
+    /// <param name="Id">id класса</param>
     [HttpGet("GetAllStudentByClassId/{Id}")]
     public IEnumerable<StudentGetDto> GetAllStudentByClassId(int Id)
     {
@@ -48,11 +48,11 @@ public class RequestsController : ControllerBase
         return _mapper.Map<IEnumerable<StudentGetDto>>(needStudents);
     }
 
-    /// <summary>
-    /// Output information about all students who received grades on the specified day.
-    /// </summary>
-    /// <param name="date">Day of receiving grade</param>
-    [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
+     /// <summary>
+     ///  Вывести информацию обо всех учениках, получивших оценки в указанный день
+     /// </summary>
+     /// <param name="date">День выставления оценки</param>
+     [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
     public IEnumerable<StudentGetDto> StudentsGetsGradesByDay(DateTime date)
     {
         var infoStudent = (from grade in _diaryRepository.Grades
@@ -62,7 +62,7 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Bring out the top 5 students by average score
+    /// Вывести топ 5 учеников по среднему баллу
     /// </summary>
     [HttpGet("Top5StudentsAvrMark")]
     public IEnumerable<StudentGetDto> Top5StudentsAvrMark()
@@ -81,9 +81,8 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Output students with the maximum average score for the specified period
+    /// Вывести учеников с максимальным средним баллом за указанный период
     /// </summary>
-    /// <returns></returns>
     [HttpGet("MaxAvrGradeStudentsByPeriod")]
     public ActionResult<IEnumerable<StudentGetDto>> MaxAvrGradeStudentsByPeriod(DateTime first, DateTime second)
     {
@@ -112,7 +111,7 @@ public class RequestsController : ControllerBase
     }
 
     /// <summary>
-    /// Output information about the minimum, average and maximum score for each subject
+    /// Вывести информацию о минимальном, среднем и максимальном балле по каждому предмету.
     /// </summary>
     [HttpGet("StatisticSubjects")]
     public dynamic MinMaxAvrGradeBySubject()

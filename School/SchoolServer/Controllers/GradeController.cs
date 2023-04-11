@@ -30,8 +30,9 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения
+    /// Метод получения данных всей коллекции для оценок
     /// </summary>
+    /// <returns>Коллекция оценок учеников</returns>
     [HttpGet]
     public IEnumerable<GradeGetDto> Get()
     {
@@ -39,8 +40,10 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения по id
+    /// Метод получения оценок по id
     /// </summary>
+    /// <param name="id">id объекта(оценки)</param>
+    /// <returns>Оценку и параметры согласно id</returns>
     [HttpGet("{id}")]
     public ActionResult<GradeGetDto> Get(int id)
     {
@@ -57,8 +60,9 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Метод Post 
+    /// Метод добавления элементов в коллекцию с помощью json
     /// </summary>
+    /// <param name="grade">Параметр добавления</param>
     [HttpPost]
     public void Post([FromBody] GradeGetDto grade)
     {
@@ -66,8 +70,11 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения по id
+    /// Метод обновления данных по id
     /// </summary>
+    /// <param name="id">Параметр по которому происходит изменение</param>
+    /// <param name="grade">Параметр изменения</param>
+    /// <returns>Обновленные данные по id</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GradeGetDto grade)
     {
@@ -85,8 +92,9 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Метод удаления по id
+    /// Метод удаления данных по id
     /// </summary>
+    /// <returns>Успех или ошибка удаления</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

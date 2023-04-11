@@ -30,8 +30,9 @@ public class SubjectController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения "предмета"
+    /// Метод получения данных всей коллекции для предметов
     /// </summary>
+    /// <returns>Коллекция предметов</returns>
     [HttpGet]
     public IEnumerable<SubjectGetDto> Get()
     {
@@ -39,8 +40,10 @@ public class SubjectController : ControllerBase
     }
 
     /// <summary>
-    /// Метод получения "предмета" по id
+    ///  Метод получения предметов по id
     /// </summary>
+    /// <param name="id">id предмета</param>
+    /// <returns>Предмет согласно id</returns>
     [HttpGet("{id}")]
     public ActionResult<SubjectGetDto> Get(int id)
     {
@@ -57,8 +60,9 @@ public class SubjectController : ControllerBase
     }
 
     /// <summary>
-    /// Post метод для добавления "предмета"
+    /// Метод добавления предмета с помощью json
     /// </summary>
+    /// <param name="subject">Параметр добавления элемента</param>
     [HttpPost]
     public void Post([FromBody] SubjectGetDto subject)
     {
@@ -67,8 +71,10 @@ public class SubjectController : ControllerBase
 
 
     /// <summary>
-    /// Метод удаления из класса
+    /// Метод удаления предмета по id
     /// </summary>
+    /// <param name="id">id для удаления предмета</param>
+    /// <returns>Успех или ошибка удаления</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

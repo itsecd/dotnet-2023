@@ -1,6 +1,6 @@
 ﻿using MusicMarket;
 
-namespace MusicMarketServer.Resository;
+namespace MusicMarketServer.Repository;
 
 public class MusicMarketRepository : IMusicMarketRepository
 {
@@ -189,11 +189,11 @@ public class MusicMarketRepository : IMusicMarketRepository
         _customers[3].Country = "France";
         _customers[4].Country = "Russia";
 
-        _customers[0].Adress = "Aubonnestr. 18c 2672 Sembrancher";
-        _customers[1].Adress = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94";
-        _customers[2].Adress = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851";
-        _customers[3].Adress = "8, avenue de Coste 24798 Costa";
-        _customers[4].Adress = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23";
+        _customers[0].Address = "Aubonnestr. 18c 2672 Sembrancher";
+        _customers[1].Address = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94";
+        _customers[2].Address = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851";
+        _customers[3].Address = "8, avenue de Coste 24798 Costa";
+        _customers[4].Address = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23";
 
         _customers[0].Purchases.Add(_purchases[0]);
         _customers[1].Purchases.Add(_purchases[1]);

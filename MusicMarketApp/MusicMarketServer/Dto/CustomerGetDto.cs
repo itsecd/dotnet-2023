@@ -22,5 +22,5 @@ public class CustomerGetDto
     /// <summary>
     /// Адрес.
     /// </summary>
-    public string Adress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 }

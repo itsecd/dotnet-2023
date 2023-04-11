@@ -5,11 +5,6 @@
 public class ProductPostDto
 {
     /// <summary>
-    /// ID Товара.
-    /// </summary>
-    public int Id;
-
-    /// <summary>
     /// Тип аудионосителя: диск|кассета|виниловая пластинка.
     /// </summary>
     public string TypeOfCarrier { get; set; } = string.Empty;

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Resository;
+using MusicMarketServer.Repository;
 
 namespace MusicMarketServer.Controllers;
 
@@ -55,12 +55,12 @@ public class ProductController : ControllerBase
         var productById = _productsRepository.Products.FirstOrDefault(product => product.Id == id);
         if (productById == null)
         {
-            _logger.LogInformation($"Not found product with id =", id);
+            _logger.LogInformation($"Not found product with id {id}");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get product with id", id);
+            _logger.LogInformation($"Get product with idc{id}");
             return Ok(_mapper.Map<ProductGetDto>(productById));
         }
     }

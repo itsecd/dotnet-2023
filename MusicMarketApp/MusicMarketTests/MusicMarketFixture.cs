@@ -255,11 +255,11 @@ public class MusicMarketFixture
             customer3.Country = "France";
             customer4.Country = "Russia";
 
-            customer0.Adress = "Aubonnestr. 18c 2672 Sembrancher";
-            customer1.Adress = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94";
-            customer2.Adress = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851";
-            customer3.Adress = "8, avenue de Coste 24798 Costa";
-            customer4.Adress = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23";
+            customer0.Address = "Aubonnestr. 18c 2672 Sembrancher";
+            customer1.Address = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94";
+            customer2.Address = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851";
+            customer3.Address = "8, avenue de Coste 24798 Costa";
+            customer4.Address = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23";
 
             customer0.Purchases.Add(purchases[0]);
             customer1.Purchases.Add(purchases[1]);

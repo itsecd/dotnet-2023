@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Resository;
+using MusicMarketServer.Repository;
 
 namespace MusicMarketServer.Controllers;
 
@@ -36,7 +36,6 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <param name="id"></param>
     [HttpGet]
     public IEnumerable<PurchaseGetDto> Get()
     {
@@ -116,7 +115,7 @@ public class PurchaseController : ControllerBase
         else
         {
             _purchasesRepository.Purchases.Remove(purchase);
-            _logger.LogInformation("Delete purchase with id: {0}", id);
+            _logger.LogInformation($"Delete purchase with id: {id}");
             return Ok();
         }
     }

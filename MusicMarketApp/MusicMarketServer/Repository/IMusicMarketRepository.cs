@@ -1,6 +1,6 @@
 ﻿using MusicMarket;
 
-namespace MusicMarketServer.Resository;
+namespace MusicMarketServer.Repository;
 public interface IMusicMarketRepository
 {
     List<Customer> Customers { get; }

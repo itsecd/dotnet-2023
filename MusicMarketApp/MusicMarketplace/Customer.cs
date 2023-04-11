@@ -23,21 +23,26 @@ public class Customer
     /// <summary>
     /// Адрес.
     /// </summary>
-    public string Adress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 
     /// <summary>
     /// История заказов. 
     /// </summary>
     public List<Purchase> Purchases = new();
 
+    /// <summary>
+    /// Конструктор по умолчанию. 
+    /// </summary>
     public Customer() { }
-
-    public Customer(int id, string name, string country, string adress, List<Purchase> purchases)
+    /// <summary>
+    /// Конструктор с параметрами. 
+    /// </summary>
+    public Customer(int id, string name, string country, string address, List<Purchase> purchases)
     {
         Id = id;
         Name = name;
         Country = country;
-        Adress = adress;
+        Address = address;
         Purchases = purchases;
     }
 }   

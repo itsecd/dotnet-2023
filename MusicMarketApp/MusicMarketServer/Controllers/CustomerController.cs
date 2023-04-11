@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Resository;
+using MusicMarketServer.Repository;
 
 namespace MusicMarketServer.Controllers;
 

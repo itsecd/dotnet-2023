@@ -30,7 +30,13 @@ public class Seller
     /// </summary>
     public List<Product> Products = new();
 
+    /// <summary>
+    /// Конструктор по умолчанию. 
+    /// </summary>
     public Seller() { }
+    /// <summary>
+    /// Конструктор с параметрами. 
+    /// </summary>
     public Seller(int id, string name, string country, double price)
     {
         Id = id;

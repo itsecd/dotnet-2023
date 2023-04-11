@@ -1,6 +1,6 @@
 using AutoMapper;
 using MusicMarketServer;
-using MusicMarketServer.Resository;
+using MusicMarketServer.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

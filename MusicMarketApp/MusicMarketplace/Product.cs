@@ -65,9 +65,14 @@ public class Product
     /// </summary>
     public Seller? Seller { get; set; }
 
-
+    /// <summary>
+    /// Конструктор по умолчанию. 
+    /// </summary>
     public Product() { }
 
+    /// <summary>
+    /// Конструктор с параметрами. 
+    /// </summary>
     public Product(int id, string typeOfCarrier, string publicationType, string creator, string name, string madeIn,
         string mediaStatus, string packagingCondition, double price, string status, Seller seller)
     {

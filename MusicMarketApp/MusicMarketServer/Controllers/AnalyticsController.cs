@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Resository;
+using MusicMarketServer.Repository;
 
 namespace MusicMarketServer.Controllers;
 
@@ -39,17 +39,17 @@ public class AnalyticsController : ControllerBase
     /// Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.
     /// </summary>
     /// <returns></returns>
-    [HttpGet("information_aboout_vinyl_records")]
+    [HttpGet("information_about_vinyl_records")]
     public ActionResult<ProductGetDto> GetSoldVinylRecords()
     {
-        _logger.LogInformation($"Get information aboout all sold vinyl records");
+        _logger.LogInformation("Get information about all sold vinyl records");
 
         var result = (from product in _musicMarketRepository.Products
                       where product.TypeOfCarrier == "vinyl record" && product.Status == "sold"
                       select _mapper.Map<Product, ProductGetDto>(product)).ToList();
         if (result.Count == 0)
         {
-            _logger.LogInformation($"Not found sold vinyl records");
+            _logger.LogInformation("Not found sold vinyl records");
             return NotFound();
         }
         else
@@ -64,7 +64,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("All_seller's_products_by_id{id}")]
+    [HttpGet("All_products_by_seller_id")]
     public ActionResult<ProductGetDto> ProductsBySeller(int id)
     {
         _logger.LogInformation("Get information about products with id", id);
@@ -74,12 +74,12 @@ public class AnalyticsController : ControllerBase
                         select _mapper.Map<Product, ProductGetDto>(product)).ToList();
         if (products.Count == 0)
         {
-            _logger.LogInformation($"Not found product with seller id: {id}");
+            _logger.LogInformation("Not found product");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get information about structure of university");
+            _logger.LogInformation("Get information about products");
             return Ok(products);
         }
     }
@@ -90,10 +90,10 @@ public class AnalyticsController : ControllerBase
     /// которых не хуже "хорошее".
     /// </summary>
     /// <returns></returns>
-    [HttpGet("Good+_disks_by_singer{name}")]
+    [HttpGet("Good_disks_by_singer")]
     public ActionResult<ProductGetDto> GoodDisksInfo(string name)
     {
-        _logger.LogInformation("Get good+ disks");
+        _logger.LogInformation("Get good disks");
         var products = (from product in _musicMarketRepository.Products
                         where product.Creator != null && product.Creator == name && product.TypeOfCarrier == "disc" && product.Status == "sale"
                         && product.PublicationType == "album"
@@ -102,12 +102,12 @@ public class AnalyticsController : ControllerBase
                         select _mapper.Map<Product, ProductGetDto>(product)).ToList();
         if (products.Count == 0)
         {
-            _logger.LogInformation($"Not found disks with creator ", name);
+            _logger.LogInformation($"Not found disks with creator {name} ");
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get information about found disks");
+            _logger.LogInformation("Get information about found disks");
             return Ok(products);
         }
     }
@@ -116,10 +116,10 @@ public class AnalyticsController : ControllerBase
     /// Запрос 4 - Вывести информацию о количестве проданных на торговой площадке товаров каждого типа аудионосителя.
     /// </summary>
     /// <returns></returns>
-    [HttpGet("Sold_aidio_carriers")]
-    public ActionResult SoldAidioCarriers()
+    [HttpGet("Sold_audio_carriers")]
+    public ActionResult SoldAudioCarriers()
     {
-        _logger.LogInformation("Get count of sold aidio carriers each type");
+        _logger.LogInformation("Get count of sold audio carriers each type");
         var result = (from product in _musicMarketRepository.Products
                       where (product.Status == "sold")
                       group product by product.TypeOfCarrier into carrierGroup
@@ -180,9 +180,9 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("sold_products")]
-    public IActionResult SoldProducsInTwoWeeks()
+    public IActionResult SoldProductsInTwoWeeks()
     {
-        _logger.LogInformation("Get information about sold producs in two weeks");
+        _logger.LogInformation("Get information about sold products in two weeks");
         var now = DateTime.Now;
 
 

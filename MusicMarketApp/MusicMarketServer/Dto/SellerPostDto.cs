@@ -5,11 +5,6 @@
 public class SellerPostDto
 {
     /// <summary>
-    /// ID Продавца.
-    /// </summary>
-    public int Id;
-
-    /// <summary>
     /// Название магазина.
     /// </summary>
     public string ShopName { get; set; } = string.Empty;

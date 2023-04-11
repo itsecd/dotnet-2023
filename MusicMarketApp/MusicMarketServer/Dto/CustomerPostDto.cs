@@ -5,11 +5,6 @@
 public class CustomerPostDto
 {
     /// <summary>
-    /// ID Покупателя.
-    /// </summary>
-    public int Id;
-
-    /// <summary>
     /// Ф.И.О.
     /// </summary>
     public string Name { get; set; } = string.Empty;
@@ -22,5 +17,5 @@ public class CustomerPostDto
     /// <summary>
     /// Адрес.
     /// </summary>
-    public string Adress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 }

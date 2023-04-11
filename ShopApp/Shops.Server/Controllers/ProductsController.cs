@@ -25,9 +25,9 @@ public class ProductsController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Return list of propduct
+    /// Return list of product
     /// </summary>
-    /// <returns>Ok(List of propduct)</returns>
+    /// <returns>Ok(List of product)</returns>
     [HttpGet]
     public ActionResult<IEnumerable<ProductGetDto>> Get()
     {
@@ -102,7 +102,7 @@ public class ProductsController : ControllerBase
     /// <param name="id">Product id</param>
     /// <param name="newDateLimit">New storage limit date</param>
     /// <returns>Ok (update  limit date product by id) or NotFound</returns>
-    [HttpPut("{id}, update-limite-date")]
+    [HttpPut("{id}, update-limit-date")]
     public IActionResult PutDate(int id, [FromBody] DateTime newDateLimit)
     {
         var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);

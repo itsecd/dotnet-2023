@@ -54,7 +54,7 @@ public class AnalyticsController : ControllerBase
         }
         else
         {
-            _logger.LogInformation($"Get information about sold vinyl records:", result.Count);
+            _logger.LogInformation("Get information about sold vinyl records:", result.Count);
             return Ok(result);
         }
     }

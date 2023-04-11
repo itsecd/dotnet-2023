@@ -163,11 +163,11 @@ public class MusicMarketRepository : IMusicMarketRepository
         _purchases[3].Products.Add(_products[5]);
         _purchases[4].Products.Add(_products[6]);
 
-        _purchases[0].Date = DateTime.Parse("2023/03/22");
+        _purchases[0].Date = DateTime.Parse("2023/04/11");
         _purchases[1].Date = DateTime.Parse("2023/04/4");
         _purchases[2].Date = DateTime.Parse("2023/04/9");
-        _purchases[3].Date = DateTime.Parse("2023/03/10");
-        _purchases[4].Date = DateTime.Parse("2023/03/31");
+        _purchases[3].Date = DateTime.Parse("2023/04/10");
+        _purchases[4].Date = DateTime.Parse("2023/04/11");
 
         _customers = new List<Customer>();
         for (var i = 0; i < 5; ++i)

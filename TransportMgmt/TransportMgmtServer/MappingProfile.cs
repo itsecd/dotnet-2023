@@ -17,5 +17,8 @@ public class MappingProfile : Profile
         CreateMap<Model, ModelPostDto>();
 
         CreateMap<ModelPostDto, Model>();
+
+        CreateMap<Driver, DriverGetDto>();
+        //CreateMap<Driver, DriverPostDto>();
     }
 }

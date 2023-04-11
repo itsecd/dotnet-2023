@@ -11,10 +11,14 @@ namespace TransportMgmtServer.Controllers;
 [ApiController]
 public class TransprotTypeController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<TransprotTypeController> _logger;
-
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly ITransportMgmtRepository _transportRepository;
-
     /// <summary>
     /// Controller constructor
     /// </summary>
@@ -31,6 +35,7 @@ public class TransprotTypeController : ControllerBase
     [HttpGet]
     public IEnumerable<TransportType> Get()
     {
+        _logger.LogInformation("Get transport types");
         return _transportRepository.TransportType;
     }
 
@@ -42,10 +47,11 @@ public class TransprotTypeController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<TransportType> Get(int id)
     {
+        _logger.LogInformation("Get transport type with id= {id}", id);
         var transportType = _transportRepository.TransportType.FirstOrDefault(transport => transport.Id == id);
         if (transportType == null)
         {
-            _logger.LogInformation("Not found transport type: {id}", id);
+            _logger.LogInformation("Not found transport type with id= {id}", id);
             return NotFound();
         }
         else return Ok(transportType);

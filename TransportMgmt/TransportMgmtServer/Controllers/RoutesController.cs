@@ -11,10 +11,14 @@ namespace TransportMgmtServer.Controllers;
 [ApiController]
 public class RoutesController : Controller
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<RoutesController> _logger;
-
+    /// <summary>
+    /// Used to store repository
+    /// </summary>
     private readonly ITransportMgmtRepository _transportRepository;
-
     /// <summary>
     /// Controller constructor
     /// </summary>
@@ -32,6 +36,7 @@ public class RoutesController : Controller
 
     public IEnumerable<Routes> Get()
     {
+        _logger.LogInformation("Get routes");
         return _transportRepository.Routes;
     }
 
@@ -44,10 +49,11 @@ public class RoutesController : Controller
 
     public ActionResult<Routes> Get(int id)
     {
+        _logger.LogInformation("Get route with id= {id}", id);
         var route = _transportRepository.Routes.FirstOrDefault(route => route.Id == id);
         if (route == null)
         {
-            _logger.LogInformation("Not found route: {id}", id);
+            _logger.LogInformation("Not found route with id= {id}", id);
             return NotFound();
         }
         else return Ok(route);

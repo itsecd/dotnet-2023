@@ -35,9 +35,9 @@ public class ReceptionController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<ReceptionGetDto> Get()
+    public IEnumerable<ReceptionDto> Get()
     {
-        return _policlinicRepository.Receptions.Select(reception => _mapper.Map<ReceptionGetDto>(reception));
+        return _policlinicRepository.Receptions.Select(reception => _mapper.Map<ReceptionDto>(reception));
     }
 
     /// <summary>
@@ -46,9 +46,9 @@ public class ReceptionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<ReceptionGetDto> Get(int id)
+    public ActionResult<ReceptionDto> Get(int id)
     {
-        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.IdReception == id);
+        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.Id == id);
         if (reception == null)
         {
             _logger.LogInformation("Not found reception with id {0}", id);
@@ -57,7 +57,7 @@ public class ReceptionController : ControllerBase
         else
         {
             _logger.LogInformation("Get reception with id {0}", id);
-            return Ok(_mapper.Map<ReceptionGetDto>(reception));
+            return Ok(_mapper.Map<ReceptionDto>(reception));
         }
     }
 
@@ -66,7 +66,7 @@ public class ReceptionController : ControllerBase
     /// </summary>
     /// <param name="reception"></param>
     [HttpPost]
-    public void Post([FromBody] ReceptionPostDto reception)
+    public void Post([FromBody] ReceptionDto reception)
     {
         _policlinicRepository.Receptions.Add(_mapper.Map<Reception>(reception));
     }
@@ -78,9 +78,9 @@ public class ReceptionController : ControllerBase
     /// <param name="receptionToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ReceptionPostDto receptionToPut)
+    public IActionResult Put(int id, [FromBody] ReceptionDto receptionToPut)
     {
-        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.IdReception == id);
+        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.Id == id);
         if (reception == null)
         {
             _logger.LogInformation("Not found reception with id {0}", id);
@@ -101,7 +101,7 @@ public class ReceptionController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.IdReception == id);
+        var reception = _policlinicRepository.Receptions.FirstOrDefault(reception => reception.Id == id);
         if (reception == null)
         {
             _logger.LogInformation("Not found reception with id {0}", id);

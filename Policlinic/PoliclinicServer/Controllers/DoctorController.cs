@@ -48,7 +48,7 @@ public class DoctorController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<DoctorGetDto> Get(int id)
     {
-        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.IdDoctor == id);
+        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.Id == id);
         if (doctor == null)
         {
             _logger.LogInformation("Not found doctor with id {0}", id);
@@ -80,7 +80,7 @@ public class DoctorController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] DoctorPostDto doctorToPut)
     {
-        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.IdDoctor == id);
+        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.Id == id);
         if (doctor == null)
         {
             _logger.LogInformation("Not found doctor with id {0}", id);
@@ -101,7 +101,7 @@ public class DoctorController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.IdDoctor == id);
+        var doctor = _policlinicRepository.Doctors.FirstOrDefault(doctor => doctor.Id == id);
         if (doctor == null)
         {
             _logger.LogInformation("Not found doctor with id {0}", id);

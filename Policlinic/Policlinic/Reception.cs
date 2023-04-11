@@ -5,9 +5,9 @@
 public class Reception
 {
     /// <summary>
-    /// IdReception is an int typed value of the reception's id
+    /// Id is an int typed value of the reception's id
     /// </summary>
-    public int IdReception { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// DateAndTime is a datetime value of the reception's date and time
     /// </summary>
@@ -35,15 +35,15 @@ public class Reception
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="idReception"></param>
+    /// <param name="id"></param>
     /// <param name="dateAndTime"></param>
     /// <param name="status"></param>
     /// <param name="doctorId"></param>
     /// <param name="patientId"></param>
     /// <param name="conclution"></param>
-    public Reception(int idReception, DateTime dateAndTime, string status, int doctorId, int patientId, string conclution)
+    public Reception(int id, DateTime dateAndTime, string status, int doctorId, int patientId, string conclution)
     {
-        IdReception = idReception;
+        Id = id;
         DateAndTime = dateAndTime;
         Status = status;
         DoctorId = doctorId;
@@ -68,6 +68,6 @@ public class Reception
     /// <returns></returns>
     public override int GetHashCode()
     {
-        return HashCode.Combine(IdReception);
+        return HashCode.Combine(Id);
     }
 }

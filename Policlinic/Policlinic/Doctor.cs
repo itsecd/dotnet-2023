@@ -5,9 +5,9 @@
 public class Doctor
 {
     /// <summary>
-    /// IdDoctor is an int typed value of the doctor's id
+    /// Id is an int typed value of the doctor's id
     /// </summary>
-    public int IdDoctor { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Fio is a string typed value for storing the name, surname and patronymic of the doctor
     /// </summary>
@@ -47,7 +47,7 @@ public class Doctor
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="idDoctor"></param>
+    /// <param name="id"></param>
     /// <param name="fio"></param>
     /// <param name="birthDate"></param>
     /// <param name="workExperience"></param>
@@ -56,9 +56,9 @@ public class Doctor
     /// <param name="passport"></param>
     /// <param name="specializations"></param>
     /// <param name="receptions"></param>
-    public Doctor(int idDoctor, string fio, DateTime birthDate, int workExperience, int specializationId, int receptionId, long passport, Specialization specializations, List<Reception> receptions)
+    public Doctor(int id, string fio, DateTime birthDate, int workExperience, int specializationId, int receptionId, long passport, Specialization specializations, List<Reception> receptions)
     {
-        IdDoctor = idDoctor;
+        Id = id;
         Fio = fio;
         BirthDate = birthDate;
         WorkExperience = workExperience;
@@ -77,7 +77,7 @@ public class Doctor
     {
         if (obj is not Doctor param)
             return false;
-        return IdDoctor == param.IdDoctor && Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && WorkExperience == param.WorkExperience && Specializations == param.Specializations && SpecializationId == param.SpecializationId && Receptions == param.Receptions && ReceptionId == param.ReceptionId;
+        return Id == param.Id && Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && WorkExperience == param.WorkExperience && Specializations == param.Specializations && SpecializationId == param.SpecializationId && Receptions == param.Receptions && ReceptionId == param.ReceptionId;
     }
     /// <summary>
     /// Redefined hash function

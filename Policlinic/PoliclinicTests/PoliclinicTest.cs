@@ -30,8 +30,8 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
         var doctorList = _fixture.CreateDefaultDoctors;
         var receptionList = _fixture.CreateDefaultReceptions;
         var requestPatientList = (from patient in patientList
-                                  join reception in receptionList on patient.IdPatient equals reception.PatientId
-                                  join doctor in doctorList on reception.DoctorId equals doctor.IdDoctor
+                                  join reception in receptionList on patient.Id equals reception.PatientId
+                                  join doctor in doctorList on reception.DoctorId equals doctor.Id
                                   where reception.DoctorId == 10
                                   orderby patient.Fio
                                   select patient).ToList();
@@ -46,7 +46,7 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
         var receptionList = _fixture.CreateDefaultReceptions;
         var patientList = _fixture.CreateDefaultPatients;
         var requestHealthyPatientList = (from patient in patientList
-                                         join reception in receptionList on patient.IdPatient equals reception.PatientId
+                                         join reception in receptionList on patient.Id equals reception.PatientId
                                          where reception.Status == "Healthy"
                                          select patient).Distinct().ToList();
         Assert.Equal(patientList[1], requestHealthyPatientList[0]);
@@ -61,7 +61,7 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
         var receptionList = _fixture.CreateDefaultReceptions;
         var doctorList = _fixture.CreateDefaultDoctors;
         var requestCountReceptionsInOneMonth = (from doctor in doctorList
-                                                join reception in receptionList on doctor.IdDoctor equals reception.DoctorId
+                                                join reception in receptionList on doctor.Id equals reception.DoctorId
                                                 where reception.DateAndTime > new DateTime(2023, 1, 31) && reception.DateAndTime < new DateTime(2023, 3, 1)
                                                 orderby doctor.Receptions.Count descending
                                                 select new
@@ -94,7 +94,7 @@ public class PoliclinicTest : IClassFixture<PoliclinicTestFixture>
         var patientList = _fixture.CreateDefaultPatients;
         var receptionList = _fixture.CreateDefaultReceptions;
         var requestPatientsAndSeveralDoctors = (from patient in patientList
-                                                join reception in receptionList on patient.IdPatient equals reception.PatientId
+                                                join reception in receptionList on patient.Id equals reception.PatientId
                                                 where patient.Receptions.Count > 1
                                                 select new
                                                 {

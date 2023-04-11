@@ -1,8 +1,8 @@
 ﻿namespace PoliclinicServer.Dto;
 /// <summary>
-/// ReceptionGetDto is for HTTP GET request
+/// ReceptionDto is for HTTP GET and POST requests
 /// </summary>
-public class ReceptionGetDto
+public class ReceptionDto
 {
     /// <summary>
     /// DateAndTime is a datetime value of the reception's date and time

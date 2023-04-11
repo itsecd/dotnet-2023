@@ -6,9 +6,9 @@
 public class Patient
 {
     /// <summary>
-    /// IdDoctor is an int typed value of the doctor's id
+    /// Id is an int typed value of the patient's id
     /// </summary>
-    public int IdPatient { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Passport is a long int typed value of the passport series and number
     /// </summary>
@@ -40,16 +40,16 @@ public class Patient
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="idPatient"></param>
+    /// <param name="id"></param>
     /// <param name="passport"></param>
     /// <param name="fio"></param>
     /// <param name="birthDate"></param>
     /// <param name="address"></param>
     /// <param name="receptions"></param>
     /// <param name="receptionId"></param>
-    public Patient(int idPatient, long passport, string fio, DateTime birthDate, string address, List<Reception> receptions, int receptionId)
+    public Patient(int id, long passport, string fio, DateTime birthDate, string address, List<Reception> receptions, int receptionId)
     {
-        IdPatient = idPatient;
+        Id = id;
         Passport = passport;
         Fio = fio;
         BirthDate = birthDate;

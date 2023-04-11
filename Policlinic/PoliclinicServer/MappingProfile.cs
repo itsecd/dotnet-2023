@@ -17,8 +17,7 @@ public class MappingProfile : Profile
         CreateMap<Patient, PatientGetDto>();
         CreateMap<Patient, PatientPostDto>();
         CreateMap<PatientPostDto, Patient>();
-        CreateMap<Reception, ReceptionGetDto>();
-        CreateMap<Reception, ReceptionPostDto>();
-        CreateMap<ReceptionPostDto, Reception>();
+        CreateMap<Reception, ReceptionDto>();
+        CreateMap<ReceptionDto, Reception>();
     }
 }

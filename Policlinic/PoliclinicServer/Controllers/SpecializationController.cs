@@ -46,7 +46,7 @@ public class SpecializationController : ControllerBase
         var specialization = _policlinicRepository.Specializations.FirstOrDefault(specialization => specialization.Id == id);
         if (specialization == null)
         {
-            _logger.LogInformation($"Not found specializaion with id = {id}");
+            _logger.LogInformation($"Not found specialization with id = {id}");
             return NotFound();
         }
         else

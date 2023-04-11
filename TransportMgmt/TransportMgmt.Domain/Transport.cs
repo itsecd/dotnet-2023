@@ -9,6 +9,10 @@ public class Transport
     /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
+    /// Transport state number
+    /// </summary>
+    public string StateNumber { get; set; } = string.Empty;
+    /// <summary>
     /// Transport type
     /// </summary>
     public TransportType Type { get; set; } = null!;
@@ -19,11 +23,12 @@ public class Transport
     /// <summary>
     /// Transport production date
     /// </summary>
-    public DateOnly DateMake { get; set; } = new DateOnly();
+    public DateTime DateMake { get; set; } = new DateTime();
     public Transport() { }
-    public Transport(int transportId, TransportType type, Model model, DateOnly dateMake)
+    public Transport(int transportId, string stateNumber, TransportType type, Model model, DateTime dateMake)
     {
         Id = transportId;
+        StateNumber = stateNumber;
         Type = type;
         Model = model;
         DateMake = dateMake;

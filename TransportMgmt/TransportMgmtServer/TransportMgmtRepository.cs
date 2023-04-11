@@ -1,8 +1,9 @@
 ﻿using TransportMgmt.Domain;
+using Routes = TransportMgmt.Domain.Routes;
 
-namespace TransportMgmt.Tests;
+namespace TransportMgmtServer;
 
-public class TransportFixture
+public class TransportMgmtRepository : ITransportMgmtRepository
 {
     /// <summary>
     /// List of transport type
@@ -126,4 +127,3 @@ public class TransportFixture
         }
     }
 }
-

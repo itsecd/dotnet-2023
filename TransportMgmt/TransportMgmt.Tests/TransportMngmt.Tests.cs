@@ -31,7 +31,7 @@ public class TransportTests : IClassFixture<TransportFixture>
     {
         var fixtureTrip = _fixture.Trips.ToList();
         var query = (from trip in fixtureTrip
-                     where trip.Date == new DateOnly(2023, 03, 19) && trip.TimeOn == new DateTime(2023, 03, 19, 08, 00, 00)
+                     where trip.Date == new DateTime(2023, 03, 19) && trip.TimeOn == new DateTime(2023, 03, 19, 08, 00, 00)
                      && trip.TimeOff == new DateTime(2023, 03, 19, 17, 30, 00)
                      group trip by trip.Driver.Id into res
                      orderby res.First().Driver.LastName, res.First().Driver.FirstName, res.First().Driver.MiddleName
@@ -135,7 +135,7 @@ public class TransportTests : IClassFixture<TransportFixture>
         var fixtureTransport = _fixture.Transports.ToList();
         var numOfTrips = (from trip in fixtureTrip
                           group trip by trip.Transport.Id into res
-                          where res.First().Date < new DateOnly(2023, 03, 20) && res.First().Date < new DateOnly(2023, 03, 20)
+                          where res.First().Date < new DateTime(2023, 03, 20) && res.First().Date < new DateTime(2023, 03, 20)
                           select new
                           {
                               tansportId = res.First().Transport.Id,

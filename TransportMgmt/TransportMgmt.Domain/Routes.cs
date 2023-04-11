@@ -2,7 +2,7 @@
 /// <summary>
 /// Class Route is used to store information about routes
 /// </summary>
-public class Route
+public class Routes
 {
     /// <summary>
     /// Unique key of route

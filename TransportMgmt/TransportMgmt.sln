@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportMgmt.Domain", "TransportMgmt.Domain\TransportMgmt.Domain.csproj", "{4ACB6A79-BB2B-42A3-B698-B98CE522726F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportMgmt.Domain", "TransportMgmt.Domain\TransportMgmt.Domain.csproj", "{4ACB6A79-BB2B-42A3-B698-B98CE522726F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportMgmt.Tests", "TransportMgmt.Tests\TransportMgmt.Tests.csproj", "{BB98F033-4148-42AB-ADD5-8A3BBE793474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportMgmt.Tests", "TransportMgmt.Tests\TransportMgmt.Tests.csproj", "{BB98F033-4148-42AB-ADD5-8A3BBE793474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportMgmtServer", "TransportMgmtServer\TransportMgmtServer.csproj", "{61E29687-73D9-46A9-BACC-A52D2F18510D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BB98F033-4148-42AB-ADD5-8A3BBE793474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB98F033-4148-42AB-ADD5-8A3BBE793474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB98F033-4148-42AB-ADD5-8A3BBE793474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,8 +10,8 @@ public class Trip
     public int Id { get; set; } = 0;
     /// <summary>
     /// Trip date
-    /// </summary> 
-    public DateOnly Date { get; set; } = new DateOnly();
+    /// </summary>  
+    public DateTime Date { get; set; } = new DateTime();
     /// <summary>
     /// Trip start time
     /// </summary>
@@ -23,7 +23,7 @@ public class Trip
     /// <summary>
     /// Trip route
     /// </summary>
-    public Route Route { get; set; } = null!;
+    public Routes Route { get; set; } = null!;
     /// <summary>
     /// Transport for the trip
     /// </summary>
@@ -36,7 +36,7 @@ public class Trip
     /// Driver for a trip
     /// </summary>
     public Trip() { }
-    public Trip(int tripId, DateOnly date, DateTime timeOn, DateTime timeOff, Route route, Transport transport, Driver driver)
+    public Trip(int tripId, DateTime date, DateTime timeOn, DateTime timeOff, Routes route, Transport transport, Driver driver)
     {
         Id = tripId;
         Date = date;

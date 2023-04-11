@@ -38,7 +38,6 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.
     /// </summary>
-    /// <param name></param>
     /// <returns></returns>
     [HttpGet("information_aboout_vinyl_records")]
     public ActionResult<ProductGetDto> GetSoldVinylRecords()
@@ -136,7 +135,6 @@ public class AnalyticsController : ControllerBase
     /// Запрос 5 - Вывести информацию о топ 5 покупателях 
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
-    /// <param name></param>
     /// <returns></returns>
     [HttpGet("Top_5_customers")]
     public IActionResult TopFiveСustomer()

@@ -1,10 +1,13 @@
+using SelectionCommittee.Server.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddSingleton<ISelectionCommitteeRepository, SelectionCommitteeRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 

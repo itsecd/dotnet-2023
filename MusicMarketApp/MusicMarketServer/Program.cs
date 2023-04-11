@@ -9,7 +9,7 @@ var mapperConfig = new MapperConfiguration(config => config.AddProfile(new Mappi
 var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
-builder.Services.AddSingleton <IMusicMarketRepository, MusicMarketRepository>();
+builder.Services.AddSingleton<IMusicMarketRepository, MusicMarketRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) 
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

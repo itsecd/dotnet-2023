@@ -48,16 +48,16 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     {
         var fixtureProduct = _fixture.FixtureProducts.ToList();
         var request = (from product in fixtureProduct
-                       where (product.TypeOfCarrier == "disc") && (product.Status == "sale") && (product.PublicationType == "album") 
+                       where (product.TypeOfCarrier == "disc") && (product.Status == "sale") && (product.PublicationType == "album")
                        && (product.Creator == "Monetochka") && (product.MediaStatus == "new" || product.MediaStatus == "excellent" || product.MediaStatus == "good")
                        select product).Count();
-       
+
 
         Assert.Equal(1, request);
     }
 
     /// <summary>
-     /// Четветый запрос: Вывести информацию о количестве проданных на торговой площадке
+    /// Четветый запрос: Вывести информацию о количестве проданных на торговой площадке
     /// товаров каждого типа аудионосителя.
     /// </summary>
 
@@ -95,7 +95,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
         var products = _fixture.FixtureProducts.ToList();
         var sellers = _fixture.FixtureSellers.ToList();
 
-        var customerPurchases = 
+        var customerPurchases =
             from customer in customers
             from purchase in customer.Purchases
             from product in purchase.Products
@@ -114,7 +114,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
             };
         var top5 = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5);
         var max = top5.Max(a => a.AvgCost);
-        Assert.Equal(7240,max);
+        Assert.Equal(7240, max);
     }
 
     /// <summary>

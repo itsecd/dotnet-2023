@@ -7,9 +7,10 @@ namespace MusicMarketServer;
 /// <summary>
 /// Class for mapping types
 /// </summary>
-public class MappingProfile:Profile 
+public class MappingProfile : Profile
 {
-    public MappingProfile() {
+    public MappingProfile()
+    {
         CreateMap<Customer, CustomerPostDto>();
         CreateMap<Customer, CustomerGetDto>();
         CreateMap<Product, ProductPostDto>();
@@ -24,8 +25,8 @@ public class MappingProfile:Profile
         CreateMap<PurchaseGetDto, Purchase>();
         CreateMap<SellerGetDto, Seller>();
 
-        CreateMap<CustomerPostDto,Customer>();
-        CreateMap<ProductPostDto,Product>();
+        CreateMap<CustomerPostDto, Customer>();
+        CreateMap<ProductPostDto, Product>();
         CreateMap<PurchasePostDto, Purchase>();
         CreateMap<SellerPostDto, Seller>();
     }

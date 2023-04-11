@@ -1,6 +1,4 @@
-﻿using MusicMarket;
-
-namespace MusicMarketServer.Dto;
+﻿namespace MusicMarketServer.Dto;
 /// <summary>
 /// Информация о покупке
 /// </summary>

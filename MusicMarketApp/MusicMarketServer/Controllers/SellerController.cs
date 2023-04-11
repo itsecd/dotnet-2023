@@ -65,7 +65,7 @@ public class SellerController : ControllerBase
             return Ok(_mapper.Map<SellerGetDto>(sellerById));
         }
     }
-  
+
 
     /// <summary>
     /// POST-запрос на добавление нового элемента в коллекцию
@@ -87,26 +87,26 @@ public class SellerController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SellerPostDto sellerToPut)
     {
-    var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
-    if (seller == null)
-    {
-        _logger.LogInformation($"Not found seller with id = {id}");
-        return NotFound();
-    }
-    else
-    {
-        _logger.LogInformation($"Update information seller with id = {id}");
-        _mapper.Map<SellerPostDto, Seller>(sellerToPut, seller);
-        return Ok();
-    }
+        var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
+        if (seller == null)
+        {
+            _logger.LogInformation($"Not found seller with id = {id}");
+            return NotFound();
+        }
+        else
+        {
+            _logger.LogInformation($"Update information seller with id = {id}");
+            _mapper.Map<SellerPostDto, Seller>(sellerToPut, seller);
+            return Ok();
+        }
     }
 
-/// <summary>
-/// DELETE-запрос на удаление элемента из коллекции
-/// </summary>
-/// <param name="id"></param>
-/// <returns></returns>
-[HttpDelete("{id}")]
+    /// <summary>
+    /// DELETE-запрос на удаление элемента из коллекции
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
@@ -123,4 +123,4 @@ public class SellerController : ControllerBase
         }
     }
 }
- 
+

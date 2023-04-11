@@ -122,13 +122,13 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get count of sold aidio carriers each type");
         var result = (from product in _musicMarketRepository.Products
-                where (product.Status == "sold")
-                group product by product.TypeOfCarrier into carrierGroup
-                select new
-                {
-                    carrier = carrierGroup.Key,
-                    number = carrierGroup.Count()
-                }).ToList();
+                      where (product.Status == "sold")
+                      group product by product.TypeOfCarrier into carrierGroup
+                      select new
+                      {
+                          carrier = carrierGroup.Key,
+                          number = carrierGroup.Count()
+                      }).ToList();
         return Ok(result);
     }
 
@@ -139,8 +139,8 @@ public class AnalyticsController : ControllerBase
     /// <param name></param>
     /// <returns></returns>
     [HttpGet("Top_5_customers")]
-        public IActionResult TopFiveСustomer()
-        {
+    public IActionResult TopFiveСustomer()
+    {
         _logger.LogInformation("Get top 5 customers");
         var customers = _musicMarketRepository.Customers;
         var purchases = _musicMarketRepository.Purchases;
@@ -165,7 +165,7 @@ public class AnalyticsController : ControllerBase
                 AvgCost = customer.Average(cust => cust.PurchaseCost)
             };
         var result = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5).Reverse().ToList();
-        
+
         if (result.Count == 0)
         {
             _logger.LogInformation("No information found");

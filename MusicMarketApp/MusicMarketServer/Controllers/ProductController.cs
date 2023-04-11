@@ -25,7 +25,7 @@ public class ProductController : ControllerBase
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public ProductController(ILogger<ProductController> logger,IMusicMarketRepository productsRepository, IMapper mapper)
+    public ProductController(ILogger<ProductController> logger, IMusicMarketRepository productsRepository, IMapper mapper)
     {
         _logger = logger;
         _productsRepository = productsRepository;

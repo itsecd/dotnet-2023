@@ -78,9 +78,8 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Get flights at specified period");
         var first_date = start;
         var second_date = finish;
-        var plane = new Airplane(1, airplaneType, 400, 70, 235);
         var request = (from flight in _airlineRepository.Flights
-                       where (flight.Airplane.Equals(plane)) &&
+                       where (flight.Airplane.Model.Equals(airplaneType)) &&
                        (flight.DepartureDate >= first_date) &&
                        (flight.DepartureDate <= second_date)
                        select _mapper.Map<FlightGetDto>(flight));
@@ -110,7 +109,7 @@ public class AnalyticsController : ControllerBase
     /// <param name="source">Departure place</param>
     /// <returns>Max and average baggage amount from specified source</returns>
     [HttpGet("max-and-avg-baggage-amount-from-specified-source")]
-    public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource(string source)
+    public IEnumerable<string> GetMaxAndAvgBaggageAmountFromSpecifiedSource(string source)
     {
         _logger.LogInformation("Get max and average baggage amount from specified source");
         var tickets = (from flight in _airlineRepository.Flights
@@ -119,7 +118,8 @@ public class AnalyticsController : ControllerBase
                        select ticket.BaggageWeight).ToList();
         var max = tickets.Max();
         var avg = tickets.Average();
-        var request = new List<double>() { max, avg };
+
+        var request = new List<string>() { $"max: {max}", $"avg: {avg}"};
         return request;
     }
 

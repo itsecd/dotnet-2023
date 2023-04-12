@@ -13,8 +13,8 @@ namespace OrganizationServer.Controllers;
 public class DepartmentController : Controller
 {
     private readonly ILogger<DepartmentController> _logger;
-    private OrganizationRepository _organizationRepository;
-    private IMapper _mapper;
+    private readonly OrganizationRepository _organizationRepository;
+    private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the DepartmentController
     /// </summary>

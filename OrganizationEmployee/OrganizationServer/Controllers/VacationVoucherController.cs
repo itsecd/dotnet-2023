@@ -13,8 +13,8 @@ namespace OrganizationServer.Controllers;
 public class VacationVoucherController : Controller
 {
     private readonly ILogger<VacationVoucherController> _logger;
-    private OrganizationRepository _organizationRepository;
-    private IMapper _mapper;
+    private readonly OrganizationRepository _organizationRepository;
+    private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the VacationVoucherController
     /// </summary>

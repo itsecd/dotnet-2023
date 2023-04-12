@@ -13,8 +13,8 @@ namespace OrganizationServer.Controllers;
 public class VoucherTypeController : Controller
 {
     private readonly ILogger<VoucherTypeController> _logger;
-    private OrganizationRepository _organizationRepository;
-    private IMapper _mapper;
+    private readonly OrganizationRepository _organizationRepository;
+    private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the VoucherTypeController
     /// </summary>

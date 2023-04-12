@@ -15,7 +15,7 @@ public class ExamResultDtoPostOrPut
     /// <summary>
     /// Название предмета.
     /// </summary>
-    public string SubjectName { get; set; } = string.Empty;
+    public string SubjectName { get; set; }
 
     /// <summary>
     /// Количество баллов.

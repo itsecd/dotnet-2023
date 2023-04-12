@@ -15,17 +15,17 @@ public class EnrolleeDtoGet
     /// <summary>
     /// Имя.
     /// </summary>
-    public string FirstName { get; set; } = string.Empty;
+    public string FirstName { get; set; }
 
     /// <summary>
     /// Фамилия.
     /// </summary>
-    public string LastName { get; set; } = string.Empty;
+    public string LastName { get; set; }
 
     /// <summary>
     /// Отчество.
     /// </summary>
-    public string Patronymic { get; set; } = string.Empty;
+    public string Patronymic { get; set; }
 
     /// <summary>
     /// Возраст.
@@ -40,12 +40,12 @@ public class EnrolleeDtoGet
     /// <summary>
     /// Страна.
     /// </summary>
-    public string Country { get; set; } = string.Empty;
+    public string Country { get; set; }
 
     /// <summary>
     /// Город.
     /// </summary>
-    public string City { get; set; } = string.Empty;
+    public string City { get; set; }
 
     /// <summary>
     /// Результаты экзаменов.

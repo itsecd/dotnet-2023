@@ -7,7 +7,7 @@ namespace SelectionCommittee.Server.Repository;
 /// </summary>
 public interface ISelectionCommitteeRepository
 {
-    List<Enrollee> Enrollee { get; }
+    List<Enrollee> Enrollees { get; } 
 
     List<ExamResult> ExamResults { get; }
 

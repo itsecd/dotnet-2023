@@ -24,18 +24,19 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Get method which return a passengers without baggage
+    /// Get method which return a passengers without baggage from specific flight
     /// </summary>
+    /// <param name="chipher"> Chipher specific flight</param>
     /// <returns>Passengers without baggage</returns>
     [HttpGet("passengers-without-baggage")]
-    public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage()
+    public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage(string chipher)
     {
         _logger.LogInformation("Get passengers without baggage");
         var request = (from flight in _airlineRepository.Flights
                        from ticket in _airlineRepository.Tickets
                        from passenger in _airlineRepository.Passengers
                        from t in passenger.Tickets
-                       where (flight.Cipher == "CH-0510") && (ticket.BaggageWeight == 0) && (t.Number == ticket.Number)
+                       where (flight.Cipher == chipher) && (ticket.BaggageWeight == 0) && (t.Number == ticket.Number)
                        select _mapper.Map<PassengerGetDto>(passenger));
         return request;
 
@@ -45,13 +46,15 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get method which return a flights with specified source and destination
     /// </summary>
+    /// <param name="source">Departure place</param>
+    /// <param name="destination">Destination</param>
     /// <returns>Flights with specified source and destination</returns>
     [HttpGet("flights-with-specified-source-and-destination")]
-    public IEnumerable<FlightGetDto> GetFlightsWithSpecifiedSourceAndDestination()
+    public IEnumerable<FlightGetDto> GetFlightsWithSpecifiedSourceAndDestination(string source, string destination)
     {
         _logger.LogInformation("Get flights with specified source and destination");
         var request = (from flight in _airlineRepository.Flights
-                       where (flight.DeparturePlace == "Moscow") && (flight.Destination == "Budapest")
+                       where (flight.DeparturePlace == source) && (flight.Destination == destination)
                        select _mapper.Map<FlightGetDto>(flight));
         return request;
 
@@ -61,13 +64,21 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a flights at specified period
     /// </summary>
     /// <returns>Flights at specified period</returns>
+
+    /// <summary>
+    /// Get method which return a flights at specified period
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="finish"></param>
+    /// <param name="airplaneType"></param>
+    /// <returns>Flights at specified period</returns>
     [HttpGet("flights-at-specified-period")]
-    public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod()
+    public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod(DateTime start, DateTime finish, string airplaneType)
     {
         _logger.LogInformation("Get flights at specified period");
-        var first_date = new DateTime(2019, 5, 10, 00, 00, 00);
-        var second_date = new DateTime(2024, 5, 11, 10, 00, 00);
-        var plane = new Airplane(1, "Boeing-777", 400, 70, 235);
+        var first_date = start;
+        var second_date = finish;
+        var plane = new Airplane(1, airplaneType, 400, 70, 235);
         var request = (from flight in _airlineRepository.Flights
                        where (flight.Airplane.Equals(plane)) &&
                        (flight.DepartureDate >= first_date) &&
@@ -87,6 +98,7 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Get flights with max count of passengers");
         var request = (from flight in _airlineRepository.Flights
                        where flight != null
+                       orderby flight.Tickets.Count descending
                        select flight.Tickets.Count).Take(5);
         return request;
 
@@ -95,14 +107,15 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get method which return max and average baggage amount from specified source
     /// </summary>
+    /// <param name="source">Departure place</param>
     /// <returns>Max and average baggage amount from specified source</returns>
     [HttpGet("max-and-avg-baggage-amount-from-specified-source")]
-    public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
+    public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource(string source)
     {
         _logger.LogInformation("Get max and average baggage amount from specified source");
         var tickets = (from flight in _airlineRepository.Flights
                        from ticket in flight.Tickets
-                       where flight.DeparturePlace == "Moscow"
+                       where flight.DeparturePlace == source
                        select ticket.BaggageWeight).ToList();
         var max = tickets.Max();
         var avg = tickets.Average();

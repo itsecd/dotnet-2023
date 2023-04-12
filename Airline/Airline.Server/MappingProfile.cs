@@ -12,15 +12,15 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Passenger, PassengerGetDto>();
-        CreateMap<Passenger, PassengerPostDto>();
         CreateMap<PassengerPostDto, Passenger>();
+
         CreateMap<Flight, FlightGetDto>();
-        CreateMap<Flight, FlightPostDto>();
         CreateMap<FlightPostDto, Flight>();
-        CreateMap<Ticket, TicketPostDto>();
+
+        CreateMap<Ticket, TicketGetDto>();
         CreateMap<TicketPostDto, Ticket>();
+
         CreateMap<Airplane, AirplaneGetDto>();
-        CreateMap<Airplane, AirplanePostDto>();
         CreateMap<AirplanePostDto, Airplane>();
     }
 }

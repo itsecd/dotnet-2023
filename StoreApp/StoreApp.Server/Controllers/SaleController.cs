@@ -111,7 +111,7 @@ public class SaleController : ControllerBase
     /// <summary>
     /// DELETE sale
     /// </summary>
-    /// <param name="id">
+    /// <param name="saleId">
     /// ID
     /// </param>
     /// <returns>

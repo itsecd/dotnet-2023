@@ -11,23 +11,14 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Customer, CustomerPostDto>();
         CreateMap<Customer, CustomerGetDto>();
-        CreateMap<Product, ProductPostDto>();
         CreateMap<Product, ProductGetDto>();
-        CreateMap<Purchase, PurchasePostDto>();
         CreateMap<Purchase, PurchaseGetDto>();
-        CreateMap<Seller, SellerPostDto>();
         CreateMap<Seller, SellerGetDto>();
 
-        CreateMap<CustomerGetDto, Customer>();
-        CreateMap<ProductGetDto, Product>();
-        CreateMap<PurchaseGetDto, Purchase>();
-        CreateMap<SellerGetDto, Seller>();
-
-        CreateMap<CustomerPostDto, Customer>();
-        CreateMap<ProductPostDto, Product>();
-        CreateMap<PurchasePostDto, Purchase>();
-        CreateMap<SellerPostDto, Seller>();
+        CreateMap<CustomerPostDto, Customer>().ReverseMap();
+        CreateMap<ProductPostDto, Product>().ReverseMap();
+        CreateMap<PurchasePostDto, Purchase>().ReverseMap();
+        CreateMap<SellerPostDto, Seller>().ReverseMap();
     }
 }

@@ -36,11 +36,11 @@ public class ProductController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех товаров коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of products</returns>
     [HttpGet]
     public IEnumerable<ProductGetDto> Get()
     {
-        _logger.LogInformation("Get list of product");
+        _logger.LogInformation("Get list of products");
         return _productsRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
     }
 

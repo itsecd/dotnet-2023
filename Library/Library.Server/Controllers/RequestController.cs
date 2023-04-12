@@ -42,7 +42,7 @@ public class RequestController : ControllerBase
     /// <param name="cipher"> Book's cipher </param>
     /// <returns> Info about book with this cipher </returns>
     [HttpGet("info_about_book")]
-    public IActionResult Get(string cipher)
+    public ActionResult<BookGetDto> Get(string cipher)
     {
         _logger.LogInformation("Get info about book");
         var request = (from book in _librariesRepository.Books
@@ -63,7 +63,7 @@ public class RequestController : ControllerBase
     /// </summary>
     /// <returns> List of issued books </returns>
     [HttpGet("issued_books")]
-    public IActionResult Get()
+    public ActionResult<BookGetDto> Get()
     {
         _logger.LogInformation("Get info about issued books");
         var request = (from book in _librariesRepository.Books
@@ -86,7 +86,7 @@ public class RequestController : ControllerBase
     /// <param name="id"> Book's id </param>
     /// <returns> List of departments where selected book is available with it's count </returns>
     [HttpGet("availability_book")]
-    public IActionResult Get(int id)
+    public ActionResult<DepartmentGetDto> Get(int id)
     {
         _logger.LogInformation("Get info about availability of the selected book");
         var request = (from dep in _librariesRepository.Departments
@@ -108,7 +108,7 @@ public class RequestController : ControllerBase
     /// </summary>
     /// <returns> List of types edition with count of books in all departments </returns>
     [HttpGet("count_types_book")]
-    public IActionResult GetCount()
+    public ActionResult<DepartmentGetDto> GetCount()
     {
         _logger.LogInformation("Get info about count of books for all types edition");
         var request = (from mass in
@@ -142,7 +142,7 @@ public class RequestController : ControllerBase
     /// <param name="date"> Period before that date </param>
     /// <returns> Top five readers with count of books they have read in a given period </returns>
     [HttpGet("top_readers")]
-    public IActionResult GetTopReaders(DateTime date)
+    public ActionResult<ReaderGetDto> GetTopReaders(DateTime date)
     {
         _logger.LogInformation("Get top five readers");
         var numOfReaders = (from card in _librariesRepository.Cards
@@ -172,7 +172,7 @@ public class RequestController : ControllerBase
     /// </summary>
     /// <returns> List of readers who have delayed books for the longest period of time </returns>
     [HttpGet("delay_readers")]
-    public IActionResult GetDelayReaders()
+    public ActionResult<ReaderGetDto> GetDelayReaders()
     {
         _logger.LogInformation("Get info about readers who have delayed books for the longest period of time");
         var maxDelay = (from card in _librariesRepository.Cards

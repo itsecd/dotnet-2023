@@ -63,7 +63,7 @@ public class RoomController : ControllerBase
         if (tmp != null)
         {
             _logger.LogInformation("Success");
-            _mapper.Map<RoomPostDto, Room>(room, tmp);
+            _mapper.Map(room, tmp);
             return Ok();
         }
         else

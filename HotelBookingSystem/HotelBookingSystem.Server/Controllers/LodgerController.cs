@@ -64,7 +64,7 @@ public class LodgerController : ControllerBase
         if (tmp != null)
         {
             _logger.LogInformation("Success");
-            _mapper.Map<LodgerPostDto, Lodger>(lodger, tmp);
+            _mapper.Map(lodger, tmp);
             return Ok();
         }
         else

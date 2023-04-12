@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace HotelBookingSystem.Server.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class TestsController : ControllerBase
+public class AnalyticsController : ControllerBase
 {
-    private readonly ILogger<TestsController> _logger;
+    private readonly ILogger<AnalyticsController> _logger;
 
     private readonly IHotelBookingSystemRepository _repos;
 
     private readonly IMapper _mapper;
 
-    public TestsController(ILogger<TestsController> logger, IHotelBookingSystemRepository repos, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IHotelBookingSystemRepository repos, IMapper mapper)
     {
         _logger = logger;
         _repos = repos;
@@ -26,7 +26,7 @@ public class TestsController : ControllerBase
     /// <summary>
     /// Task 1 - Display information about all hotels.
     /// </summary>
-    [HttpGet("Task 1")]
+    [HttpGet("InfoHotels")]
     public IEnumerable<HotelGetDto> InfoHotels()
     {
         _logger.LogInformation("Test 1");
@@ -37,13 +37,13 @@ public class TestsController : ControllerBase
     /// Task 2 - Display information about all clients 
     /// staying at the specified hotel, arrange by full name.
     /// </summary>
-    [HttpGet("Task 2")]
-    public IEnumerable<LodgerGetDto> InfoClientsInHotels()
+    [HttpGet("InfoClientsInHotels")]
+    public IEnumerable<LodgerGetDto> InfoClientsInHotels(string name)
     {
         _logger.LogInformation("Test 2");
         var brooms = _repos.ListOfBookedRooms;
         var result = (from broom in brooms
-                      where broom.BookedRoom.Placement.Name == "Worst Hotel"
+                      where broom.BookedRoom.Placement.Name == name
                       select broom.Client).Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToList();
         return result;
     }
@@ -52,7 +52,7 @@ public class TestsController : ControllerBase
     /// Task 3 - Display information about the top 5 
     /// hotels with the largest number of bookings.
     /// </summary>
-    [HttpGet("Task 3")]
+    [HttpGet("Top5MostBooked")]
     public IEnumerable<HotelGetDto> Top5MostBooked()
     {
         _logger.LogInformation("Test 3");
@@ -70,15 +70,15 @@ public class TestsController : ControllerBase
     /// Task 4 - Display information about available 
     /// rooms in all hotels of the selected city.
     /// </summary>
-    [HttpGet("Task 4")]
-    public IEnumerable<RoomGetDto> AvailableRooms()
+    [HttpGet("AvailableRooms")]
+    public IEnumerable<RoomGetDto> AvailableRooms(string city)
     {
         var rooms = _repos.ListOfRooms;
         var brooms = _repos.ListOfBookedRooms;
         var tmp = (from broom in brooms
                    select broom.BookedRoom).ToList();
         var result = (from room in rooms
-                      where !tmp.Contains(room)
+                      where !tmp.Contains(room) && room.Placement.City == city
                       select room)
                       .Select(room => _mapper.Map<RoomGetDto>(room))
                       .ToList();
@@ -89,7 +89,7 @@ public class TestsController : ControllerBase
     /// Task 5 - Display information about customers 
     /// who have rented rooms for the largest number of days.
     /// </summary>
-    [HttpGet("Task 5")]
+    [HttpGet("ClientsWithMostDays")]
     public IEnumerable<LodgerGetDto> ClientsWithMostDays()
     {
         var brooms = _repos.ListOfBookedRooms;
@@ -104,7 +104,7 @@ public class TestsController : ControllerBase
     /// Task 6 - Display information about the minimum 
     /// and maximum room cost in each hotel.
     /// </summary>
-    [HttpGet("Task 6")]
+    [HttpGet("MinMaxCost")]
     public IActionResult MinMaxCost()
     {
         var brooms = _repos.ListOfBookedRooms;

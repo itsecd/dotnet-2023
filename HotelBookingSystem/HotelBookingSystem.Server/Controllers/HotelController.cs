@@ -63,7 +63,7 @@ public class HotelController : ControllerBase
         if (tmp != null)
         {
             _logger.LogInformation("Success");
-            _mapper.Map<HotelPostDto, Hotel>(hotel, tmp);
+            _mapper.Map(hotel, tmp);
             return Ok();
         }
         else

@@ -63,7 +63,7 @@ public class BookedRoomsController : ControllerBase
         if (tmp != null)
         {
             _logger.LogInformation("Success");
-            _mapper.Map<BookedRoomsPostDto, BookedRooms>(broom, tmp);
+            _mapper.Map(broom, tmp);
             return Ok();
         }
         else

@@ -37,24 +37,21 @@ public class SupplyController : ControllerBase
     /// Get by id method for supply table
     /// </summary>
     /// <returns>
-    /// Return supplies with specified product id
+    /// Return supplies with specified id
     /// </returns>
     [HttpGet("{id}")]
     public ActionResult<SupplyGetDto> Get(int id)
     {
-        _logger.LogInformation($"Get supplies with product id {id}");
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
-        if (product == null)
+        _logger.LogInformation($"Get supplies with id {id}");
+        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        if (supply == null)
         {
-            _logger.LogInformation($"Not found product with id {id}");
+            _logger.LogInformation($"Not found supplies with id {id}");
             return NotFound();
         }
         else
         {
-            return Ok((from goods in _warehouseRepository.Goods
-                       where goods.Id == id
-                       from supply in goods.Supply
-                       select _mapper.Map<Supply>(supply)).ToList());
+            return Ok(supply);
         }
     }
     /// <summary>
@@ -70,50 +67,43 @@ public class SupplyController : ControllerBase
     /// <summary>
     /// Put method for supply table
     /// </summary>
-    /// <param name="id">An id of product of supply which would be changed </param>
+    /// <param name="id">An id of supply which would be changed </param>
     /// <param name="supplyToPut">Supply class instance to insert to table</param>
     /// <returns>Signalization of success or error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
-        _logger.LogInformation("Put product with id {0}", id);
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
-        if (product == null)
+        _logger.LogInformation("Put supply with id {0}", id);
+        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        if (supply == null)
         {
-            _logger.LogInformation("Not found product with id {0}", id);
+            _logger.LogInformation("Not found supply with id {0}", id);
             return NotFound();
         }
         else
         {
-            _warehouseRepository.Supply.Remove(from goods in _warehouseRepository.Goods
-                                               from supply in goods.Supply
-                                               where supply.Goods = product
-                                               select supply));
-            _mapper.Map(supplyToPut.Goods, product);
+            _mapper.Map(supplyToPut, supply);
             return Ok();
         }
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of product of supply which would be deleted</param>
+    /// <param name="id">An id of supply which would be deleted</param>
     /// <returns>Signalization of success or error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _logger.LogInformation($"Put product with id ({id})");
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
-        if (product == null)
+        _logger.LogInformation($"Put supply with id ({id})");
+        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        if (supply == null)
         {
-            _logger.LogInformation($"Not found product with id ({id})");
+            _logger.LogInformation($"Not found supply with id ({id})");
             return NotFound();
         }
         else
         {
-            _warehouseRepository.Supply.Remove(from goods in _warehouseRepository.Goods
-                                               from supply in goods.Supply
-                                               where supply.Goods = product
-                                               select supply);
+            _warehouseRepository.Supply.Remove(supply);
             return Ok();
         }
     }

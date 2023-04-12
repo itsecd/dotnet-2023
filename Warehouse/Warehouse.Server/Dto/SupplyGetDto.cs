@@ -1,6 +1,10 @@
 ﻿namespace Warehouse.Server.Dto;
 public class SupplyGetDto
 {
+    /// <summary>  
+    ///     Id - shows the supply id
+    /// </summary>  
+    public int Id { set; get; }
     /// <summary>
     ///     SupplyCount - shows amount of product
     /// </summary>  

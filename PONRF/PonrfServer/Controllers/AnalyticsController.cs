@@ -34,37 +34,27 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get infomation about all customers
     /// </summary>
-    /// <returns></returns>
+    /// <returns>CustomerGetDto</returns>
     [HttpGet("view_all_customers")]
-    public IActionResult ViewAllCustomers()
+    public ActionResult<CustomerGetDto> ViewAllCustomers()
     {
         var request = (from customer in _ponrfRepository.Customers
                        select _mapper.Map<CustomerGetDto>(customer)).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not found customers");
-            return NotFound();
-        }
         return Ok(request);
     }
 
     /// <summary>
     /// Get infomation about auctions without full sales
     /// </summary>
-    /// <returns></returns>
+    /// <returns>AuctionGetDto</returns>
     [HttpGet("auctions_without_full_sales")]
-    public IActionResult AuctionsWithoutFullSales()
+    public ActionResult<AuctionGetDto> AuctionsWithoutFullSales()
     {
         var request = (from auction in _ponrfRepository.Auctions
                        join privatizedBuilding in _ponrfRepository.PrivatizedBuildings on auction.Id equals privatizedBuilding.Auction?.Id
                        join building in _ponrfRepository.Buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
                        where privatizedBuilding.Customer?.Passport == null
                        select _mapper.Map<AuctionGetDto>(auction)).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not found auctions");
-            return NotFound();
-        }
         return Ok(request);
     }
 
@@ -87,11 +77,6 @@ public class AnalyticsController : ControllerBase
                            where building.District == "Кировский"
                            select privatizedBuilding.SecondCost).Sum();
         var result = new { customers, totalAmount };
-        if ((customers.Count == 0) && (totalAmount == 0))
-        {
-            _logger.LogInformation("Not found customers");
-            return NotFound();
-        }
         return Ok(result);
     }
 
@@ -108,11 +93,6 @@ public class AnalyticsController : ControllerBase
                        join auction in _ponrfRepository.Auctions on privatizedBuilding.Auction?.Id equals auction.Id
                        where auction.Date == date
                        select customer.Address).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not found addresses of auction participants");
-            return NotFound();
-        }
         return Ok(request);
     }
 
@@ -129,13 +109,8 @@ public class AnalyticsController : ControllerBase
                        select new
                        {
                            privBuild.Key.Fio,
-                           Total = privBuild.Sum(s => s.SecondCost)
-                       }).OrderByDescending(t => t.Total).Take(5).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not found customers");
-            return NotFound();
-        }
+                           Total = privBuild.Sum(lot => lot.SecondCost)
+                       }).OrderByDescending(lot => lot.Total).Take(5).ToList();
         return Ok(request);
     }
 
@@ -153,13 +128,8 @@ public class AnalyticsController : ControllerBase
                        select new
                        {
                            privBuild.Key.Organizer,
-                           Profit = privBuild.Sum(s => s.SecondCost - s.FirstCost)
-                       }).OrderByDescending(p => p.Profit).Take(2).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not found auctions");
-            return NotFound();
-        }
+                           Profit = privBuild.Sum(lot => lot.SecondCost - lot.FirstCost)
+                       }).OrderByDescending(lot => lot.Profit).Take(2).ToList();
         return Ok(request);
     }
 }

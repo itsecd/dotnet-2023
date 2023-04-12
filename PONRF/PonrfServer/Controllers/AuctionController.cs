@@ -54,7 +54,7 @@ public class AuctionController : ControllerBase
         var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
-            _logger.LogInformation($"Not found auction with {id}", id);
+            _logger.LogInformation("Not found auction with {id}", id);
             return NotFound();
         }
         else
@@ -87,7 +87,7 @@ public class AuctionController : ControllerBase
         var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
-            _logger.LogInformation($"Not found auction with {id}", id);
+            _logger.LogInformation("Not found auction with {id}", id);
             return NotFound();
         }
         else
@@ -109,7 +109,7 @@ public class AuctionController : ControllerBase
         var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
-            _logger.LogInformation($"Not found auction with {id}", id);
+            _logger.LogInformation("Not found auction with {id}", id);
             return NotFound();
         }
         else

@@ -54,7 +54,7 @@ public class PrivatizedBuildingController : ControllerBase
         var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
-            _logger.LogInformation($"Not found privatized building with {id}", id);
+            _logger.LogInformation("Not found privatized building with {id}", id);
             return NotFound();
         }
         else
@@ -87,7 +87,7 @@ public class PrivatizedBuildingController : ControllerBase
         var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
-            _logger.LogInformation($"Not found privatized building with {id}", id);
+            _logger.LogInformation("Not found privatized building with {id}", id);
             return NotFound();
         }
         else
@@ -109,7 +109,7 @@ public class PrivatizedBuildingController : ControllerBase
         var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
-            _logger.LogInformation($"Not found privatized building with {id}", id);
+            _logger.LogInformation("Not found privatized building with {id}", id);
             return NotFound();
         }
         else

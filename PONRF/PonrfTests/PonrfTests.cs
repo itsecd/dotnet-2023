@@ -77,8 +77,8 @@ public class UnitTest : IClassFixture<PonrfFixture>
                        select new
                        {
                            privBuild.Key.Fio,
-                           Total = privBuild.Sum(s => s.SecondCost)
-                       }).OrderByDescending(t => t.Total).Take(5).ToList();
+                           Total = privBuild.Sum(lot => lot.SecondCost)
+                       }).OrderByDescending(lot => lot.Total).Take(5).ToList();
         Assert.Equal("Турец И. П.", request[0].Fio);
         Assert.Equal("Раскольникова С. М.", request[4].Fio);
     }
@@ -95,8 +95,8 @@ public class UnitTest : IClassFixture<PonrfFixture>
                        select new
                        {
                            privBuild.Key.Organizer,
-                           Profit = privBuild.Sum(s => s.SecondCost - s.FirstCost)
-                       }).OrderByDescending(p => p.Profit).Take(2).ToList();
+                           Profit = privBuild.Sum(lot => lot.SecondCost - lot.FirstCost)
+                       }).OrderByDescending(lot => lot.Profit).Take(2).ToList();
         Assert.Equal("Сириус", request[0].Organizer);
         Assert.Equal("Аргентум", request[1].Organizer);
     }

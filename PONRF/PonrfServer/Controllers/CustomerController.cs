@@ -53,7 +53,7 @@ public class CustomerController : ControllerBase
         var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with {id}", id);
+            _logger.LogInformation("Not found customer with {id}", id);
             return NotFound();
         }
         else
@@ -86,7 +86,7 @@ public class CustomerController : ControllerBase
         var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with {id}", id);
+            _logger.LogInformation("Not found customer with {id}", id);
             return NotFound();
         }
         else
@@ -108,7 +108,7 @@ public class CustomerController : ControllerBase
         var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with {id}", id);
+            _logger.LogInformation("Not found customer with {id}", id);
             return NotFound();
         }
         else

@@ -52,7 +52,7 @@ public class BuildingController : ControllerBase
         var building = _ponrfRepository.Buildings.FirstOrDefault(building => building.Id == id);
         if (building == null)
         {
-            _logger.LogInformation($"Not found building with {id}", id);
+            _logger.LogInformation("Not found building with {id}", id);
             return NotFound();
         }
         else
@@ -85,7 +85,7 @@ public class BuildingController : ControllerBase
         var building = _ponrfRepository.Buildings.FirstOrDefault(building => building.Id == id);
         if (building == null)
         {
-            _logger.LogInformation($"Not found building with {id}", id);
+            _logger.LogInformation("Not found building with {id}", id);
             return NotFound();
         }
         else
@@ -107,7 +107,7 @@ public class BuildingController : ControllerBase
         var building = _ponrfRepository.Buildings.FirstOrDefault(building => building.Id == id);
         if (building == null)
         {
-            _logger.LogInformation($"Not found building with {id}", id);
+            _logger.LogInformation("Not found building with {id}", id);
             return NotFound();
         }
         else

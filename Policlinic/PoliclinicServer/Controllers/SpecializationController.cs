@@ -38,7 +38,7 @@ public class SpecializationController : ControllerBase
     /// <summary>
     /// Get specialization info by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Specialization's id</param>
     /// <returns>Specialization with given id</returns>
     [HttpGet("{id}")]
     public ActionResult<Specialization> Get(int id)

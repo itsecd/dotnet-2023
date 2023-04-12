@@ -30,6 +30,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about all doctors whose work experience is at least 10 years
     /// </summary>
+    /// <returns>List of doctors</returns>
     [HttpGet("Doctors_10_years")]
     public List<DoctorGetDto> GetDoctors()
     {
@@ -42,6 +43,8 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about all patients who have made an appointment with the specified doctor, arrange by name
     /// </summary>
+    /// <param name="id">Doctor's id</param>
+    /// <returns>Code of operation</returns>
     [HttpGet("Patients_with_the_specified_doctor")]
     public IActionResult GetPatients(int id)
     {
@@ -58,6 +61,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about currently healthy patients
     /// </summary>
+    /// <returns>Code of operation</returns>
     [HttpGet("Currently_healthy_patients")]
     public IActionResult GetHealthyPatients()
     {
@@ -72,6 +76,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about the number of patient appointments by doctors for the last month
     /// </summary>
+    /// <returns>Code of operation</returns>
     [HttpGet("The_number_of_patient_for_the_last_month")]
     public IActionResult GetCountByDoctors()
     {
@@ -91,6 +96,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about the top 5 most common diseases among patients
     /// </summary>
+    /// <returns>Code of operation</returns>
     [HttpGet("Top_5_most_diseases")]
     public IActionResult GetTopFiveDisease()
     {
@@ -105,6 +111,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Display information about patients over the age of 30 who have an appointment with several doctors, arrange by date of birth
     /// </summary>
+    /// <returns>Code of operation</returns>
     [HttpGet("Patients_over_30")]
     public IActionResult GetPatientsOverThirty()
     {

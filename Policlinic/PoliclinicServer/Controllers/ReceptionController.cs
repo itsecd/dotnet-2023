@@ -43,7 +43,7 @@ public class ReceptionController : ControllerBase
     /// <summary>
     /// Get reception info by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Reception's id</param>
     /// <returns>Reception with given id</returns>
     [HttpGet("{id}")]
     public ActionResult<ReceptionDto> Get(int id)
@@ -64,7 +64,7 @@ public class ReceptionController : ControllerBase
     /// <summary>
     /// Post a new reception
     /// </summary>
-    /// <param name="reception"></param>
+    /// <param name="reception">ReceptionDto's typed reception</param>
     [HttpPost]
     public void Post([FromBody] ReceptionDto reception)
     {
@@ -74,8 +74,8 @@ public class ReceptionController : ControllerBase
     /// <summary>
     /// Put reception
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="receptionToPut"></param>
+    /// <param name="id">Reception's id</param>
+    /// <param name="receptionToPut">ReceptionDto's typed reception</param>
     /// <returns>Code of operation</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ReceptionDto receptionToPut)
@@ -96,7 +96,7 @@ public class ReceptionController : ControllerBase
     /// <summary>
     /// Delete reception by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Reception's id</param>
     /// <returns>Code of operation</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

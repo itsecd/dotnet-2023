@@ -42,7 +42,7 @@ public class PatientController : ControllerBase
     /// <summary>
     /// Get patient info by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Patient's id</param>
     /// <returns>Patient with given id</returns>
     [HttpGet("{id}")]
     public ActionResult<PatientGetDto> Get(int id)
@@ -63,7 +63,7 @@ public class PatientController : ControllerBase
     /// <summary>
     /// Post a new patient
     /// </summary>
-    /// <param name="patient"></param>
+    /// <param name="patient">PatientPostDto's typed patient</param>
     [HttpPost]
     public void Post([FromBody] PatientPostDto patient)
     {
@@ -73,8 +73,8 @@ public class PatientController : ControllerBase
     /// <summary>
     /// Put patient
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="patientToPut"></param>
+    /// <param name="id">Patient's id </param>
+    /// <param name="patientToPut">PatientPostDto's typed patient</param>
     /// <returns>Code of operation</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PatientPostDto patientToPut)
@@ -95,7 +95,7 @@ public class PatientController : ControllerBase
     /// <summary>
     /// Delete patient by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Patient's id</param>
     /// <returns>Code of operation</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

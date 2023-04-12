@@ -20,12 +20,12 @@ public class Specialization
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="specialization"></param>
-    public Specialization(int id, string specialization)
+    /// <param name="id">Specialization's id</param>
+    /// <param name="nameSpecialization">Specialization's name</param>
+    public Specialization(int id, string nameSpecialization)
     {
         Id = id;
-        NameSpecialization = specialization;
+        NameSpecialization = nameSpecialization;
     }
     /// <summary>
     /// Redefined comparison function

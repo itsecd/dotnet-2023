@@ -35,20 +35,20 @@ public class Reception
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="dateAndTime"></param>
-    /// <param name="status"></param>
-    /// <param name="doctorId"></param>
-    /// <param name="patientId"></param>
-    /// <param name="conclution"></param>
-    public Reception(int id, DateTime dateAndTime, string status, int doctorId, int patientId, string conclution)
+    /// <param name="id">Reception's id</param>
+    /// <param name="dateAndTime">Reception's date and time</param>
+    /// <param name="status">Reception's status</param>
+    /// <param name="doctorId">Doctor's id</param>
+    /// <param name="patientId">Patient's id</param>
+    /// <param name="conclusion">Reception's conclusion</param>
+    public Reception(int id, DateTime dateAndTime, string status, int doctorId, int patientId, string conclusion)
     {
         Id = id;
         DateAndTime = dateAndTime;
         Status = status;
         DoctorId = doctorId;
         PatientId = patientId;
-        Conclusion = conclution;
+        Conclusion = conclusion;
     }
     /// <summary>
     /// Redefined comparison function

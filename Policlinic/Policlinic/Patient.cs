@@ -40,13 +40,13 @@ public class Patient
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="passport"></param>
-    /// <param name="fio"></param>
-    /// <param name="birthDate"></param>
-    /// <param name="address"></param>
-    /// <param name="receptions"></param>
-    /// <param name="receptionId"></param>
+    /// <param name="id">Patient's id</param>
+    /// <param name="passport">Patient's number of passport</param>
+    /// <param name="fio">Patient's FIO</param>
+    /// <param name="birthDate">Patient's birth date</param>
+    /// <param name="address">Patient's address</param>
+    /// <param name="receptions">Receptions</param>
+    /// <param name="receptionId">Reception's id</param>
     public Patient(int id, long passport, string fio, DateTime birthDate, string address, List<Reception> receptions, int receptionId)
     {
         Id = id;

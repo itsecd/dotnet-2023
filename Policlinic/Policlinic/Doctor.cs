@@ -47,15 +47,15 @@ public class Doctor
     /// <summary>
     /// Constructor with parameters
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="fio"></param>
-    /// <param name="birthDate"></param>
-    /// <param name="workExperience"></param>
-    /// <param name="specializationId"></param>
-    /// <param name="receptionId"></param>
-    /// <param name="passport"></param>
-    /// <param name="specializations"></param>
-    /// <param name="receptions"></param>
+    /// <param name="id">Doctor's id </param>
+    /// <param name="fio">Doctor's FIO</param>
+    /// <param name="birthDate">Doctor's birth date</param>
+    /// <param name="workExperience">Doctor's work experience</param>
+    /// <param name="specializationId">Specialization's id</param>
+    /// <param name="receptionId">Reception's id</param>
+    /// <param name="passport">Doctor's number of passport</param>
+    /// <param name="specializations">Specialization</param>
+    /// <param name="receptions">Receptions</param>
     public Doctor(int id, string fio, DateTime birthDate, int workExperience, int specializationId, int receptionId, long passport, Specialization specializations, List<Reception> receptions)
     {
         Id = id;

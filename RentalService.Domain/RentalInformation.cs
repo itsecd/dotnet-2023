@@ -14,6 +14,9 @@ public class RentalInformation
     ///     RentalPointId - identifier of the rental point
     /// </summary>
     public ulong RentalPointId { get; set; }
+    
+    public RentalPoint RentalPoint { get; set; }
+
 
     /// <summary>
     ///     RentalDate - when the car was rented

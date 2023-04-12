@@ -14,19 +14,25 @@ public class IssuedCar
     ///     VehicleId - identifier of the rented car
     /// </summary>
     public ulong VehicleId { get; set; }
+    
+    public Vehicle Vehicles{ get; set; }
 
     /// <summary>
     ///     ClientId - identifier  of the client
     /// </summary>
     public ulong ClientId { get; set; }
+    
+    public Client Client{ get; set; }
 
     /// <summary>
     ///     RentalInformationId - identifier of the rental information
     /// </summary>
     public ulong RentalInformationId { get; set; }
+    
 
     /// <summary>
     ///     RefundInformationId - identifier of the refund information
     /// </summary>
     public ulong? RefundInformationId { get; set; }
+    
 }

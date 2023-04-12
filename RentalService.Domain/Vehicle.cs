@@ -19,6 +19,9 @@ public class Vehicle
     ///     Model - contains the identifier of the car model
     /// </summary>
     public ulong ModelId { get; set; }
+    
+    public VehicleModel VehicleModel { get; set; }
+
 
     /// <summary>
     ///     Colour - car colour

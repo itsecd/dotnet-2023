@@ -14,6 +14,8 @@ public class RefundInformation
     ///     RefundPointId - identifier of the rental point
     /// </summary>
     public ulong RentalPointId { get; set; }
+    
+    public RentalPoint RentalPoint { get; set; }
 
     /// <summary>
     ///     RefundDate - when the car was rented

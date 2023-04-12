@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SelectionCommittee.Server.Controllers.ExamResults.Dto;
 using SelectionCommittee.Server.Controllers.Faculties.Dto;
 using SelectionCommittee.Server.Repository;
 

@@ -1,6 +1,4 @@
-﻿using SelectionCommittee.Domain;
-
-namespace SelectionCommittee.Server.Controllers.Faculties.Dto;
+﻿namespace SelectionCommittee.Server.Controllers.Faculties.Dto;
 
 /// <summary>
 /// Dto для Post и Put операций сущности факультета.

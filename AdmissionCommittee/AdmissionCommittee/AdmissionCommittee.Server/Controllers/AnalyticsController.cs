@@ -3,21 +3,19 @@ using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class AnaliticController : ControllerBase
+public class AnalyticsController : ControllerBase
 {
 
-    private readonly ILogger<AnaliticController> _logger;
+    private readonly ILogger<AnalyticsController> _logger;
 
     private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
 
     private readonly IMapper _mapper;
 
-    public AnaliticController(ILogger<AnaliticController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
     {
         _logger = logger;
         _admissionCommitteeRepository = admissionCommitteeRepository;
@@ -141,12 +139,13 @@ public class AnaliticController : ControllerBase
     }
 
     /// <summary>
-    /// Output information about the entrant (and their priority specialities) who scored the maxmum mark in each of the subkect
+    /// Output information about the entrants (and their priority specialities) who scored the maxmum mark in each of the subject
     /// </summary>
     /// <returns>list of list entrants with max mark in each of the subject</returns>
     [HttpGet("EntrantsMaxMarkEachSubject")]
     public List<List<EntrantWithMaxMarkGet>> GetEntrantsMaxMarkEachSubject()
     {
+        _logger.LogInformation("Get information about the entrants who scored the maxmum mark in each of the subject");
         var subjectList = GetAllSubject();
         var selectedEntrants = new List<List<EntrantWithMaxMarkGet>>();
         foreach (var subject in subjectList)

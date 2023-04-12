@@ -34,26 +34,22 @@ public class DriverController : ControllerBase
         _transportRepository = transportRepository;
         _mapper = mapper;
     }
-
     /// <summary>
     /// Returns a list of all drivers
     /// </summary>
     /// <returns> Returns a list of all drivers </returns>
     [HttpGet]
-
     public IEnumerable<DriverGetDto> Get()
     {
         _logger.LogInformation("Get drivers");
         return _transportRepository.Drivers.Select(driver => _mapper.Map<DriverGetDto>(driver));
     }
-
     /// <summary>
     /// Get method that returns driver with a specific id
     /// </summary>
     /// <param name="id"> Driver id </param>
     /// <returns> Driver with required id </returns>
     [HttpGet("{id}")]
-
     public ActionResult<DriverGetDto> Get(int id)
     {
         _logger.LogInformation("Get driver with id= {id}", id);
@@ -65,27 +61,22 @@ public class DriverController : ControllerBase
         }
         else return Ok(_mapper.Map<DriverGetDto>(driver));
     }
-
     /// <summary>
     /// Post method that adding a new driver
     /// </summary>
-    /// <param name="driver"></param>
+    /// <param name="driver"> Added driver </param>
     [HttpPost]
-
     public void Post([FromBody] DriverPostDto driver)
     {
         _transportRepository.Drivers.Add(_mapper.Map<Driver>(driver));
         _logger.LogInformation("Successfully added");
     }
-
     /// <summary>
     /// Put method which allows change the data of driver with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="driverToPut"></param>
-    /// <returns></returns>
+    /// <param name="id"> Driver id whose data will change </param>
+    /// <param name="driverToPut"> New driver data </param>
     [HttpPut("{id}")]
-
     public IActionResult Put(int id, [FromBody] DriverPostDto driverToPut)
     {
         var driver = _transportRepository.Drivers.FirstOrDefault(driver => driver.Id == id);
@@ -101,14 +92,11 @@ public class DriverController : ControllerBase
             return Ok();
         }
     }
-
     /// <summary>
     /// Delete method which allows delete a driver with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Driver id </param>
     [HttpDelete("{id}")]
-
     public IActionResult Delete(int id)
     {
         var driver = _transportRepository.Drivers.FirstOrDefault(driver => driver.Id == id);

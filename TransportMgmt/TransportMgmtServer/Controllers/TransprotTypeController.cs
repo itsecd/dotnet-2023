@@ -27,7 +27,6 @@ public class TransprotTypeController : ControllerBase
         _logger = logger;
         _transportRepository = transportRepository;
     }
-
     /// <summary>
     /// Returns a list of all transprot types
     /// </summary>
@@ -38,7 +37,6 @@ public class TransprotTypeController : ControllerBase
         _logger.LogInformation("Get transport types");
         return _transportRepository.TransportType;
     }
-
     /// <summary>
     /// Get method that returns transprot types with a specific id
     /// </summary>

@@ -34,10 +34,10 @@ public class RequestController : ControllerBase
         _transportRepository = transportRepository;
         _mapper = mapper;
     }
-
     /// <summary>
     /// First request - display all information about a specific transport
     /// </summary>
+    /// <returns> List of all information about a specific transport </returns>
     [HttpGet("info_about_transport")]
     public IActionResult Get(string modelName)
     {
@@ -55,7 +55,6 @@ public class RequestController : ControllerBase
             return Ok(request);
         }
     }
-
     /// <summary>
     /// Second request - display all drivers who have made trips for a given period, sort by full name
     /// </summary>
@@ -79,10 +78,10 @@ public class RequestController : ControllerBase
             return Ok(request);
         }
     }
-
     /// <summary>
     /// Third request - display the total travel time for each transport type and model.
     /// </summary>
+    /// <returns> List of total travel time for each transport type and model </returns>
     [HttpGet("TotalTravelTimeAllTransport")]
     public IEnumerable<TransportTotalTravelTimeDto> TotalTravelTimeAllTransport()
     {
@@ -102,10 +101,10 @@ public class RequestController : ControllerBase
              ).ToList();
         return _mapper.Map<IEnumerable<TransportTotalTravelTimeDto>>(request);
     }
-
     /// <summary>
     /// Fourth request - Display the top 5 drivers by the number of trips completed.
     /// </summary>
+    /// <returns> List of top 5 drivers by the number of trips completed </returns>
     [HttpGet("DriversTopFive")]
     public IEnumerable<DriverGetDto> DriversTopFive()
     {
@@ -119,8 +118,9 @@ public class RequestController : ControllerBase
     /// <summary>
     /// Fifth request - Display information about the number of trips, average time and maximum travel time for each driver.
     /// </summary>
-    [HttpGet("GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravel")]
-    public IEnumerable<DriverPropertiesRouteDto> GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravel()
+    /// <returns> List of information about the number of trips, average time and maximum travel time for each driver </returns>
+    [HttpGet("GetInfoAboutDriverTrips")]
+    public IEnumerable<DriverPropertiesRouteDto> GetInfoAboutDriverTrips()
     {
         var result = (from trip in _transportRepository.Trips
                       join driver in _transportRepository.Drivers on trip.Driver.Id equals driver.Id
@@ -139,6 +139,7 @@ public class RequestController : ControllerBase
     /// <summary>
     /// Sixth request - Display information about the transports that made the maximum number of trips for the specified period.
     /// </summary>
+    /// <returns> List of information about the transports that made the maximum number of trips for the specified period </returns>
     [HttpGet("TransportInfoWithMaxCountForSpecificDate")]
     public IActionResult TransportInfoWithMaxCountForSpecificDate(DateTime firstDateTime, DateTime secondDateTime)
     {
@@ -152,7 +153,7 @@ public class RequestController : ControllerBase
                           }).ToList();
         var request = (from trip in numOfTrips
                        join transport in _transportRepository.Transports on trip.tansportId equals transport.Id
-                       where (trip.tripsAmount == numOfTrips.Max(x => x.tripsAmount))
+                       where (trip.tripsAmount == numOfTrips.Max(trip => trip.tripsAmount))
                        select _mapper.Map<TransportGetDto>(transport)).ToList();
         if (request.Count == 0)
         {

@@ -34,26 +34,22 @@ public class TripController : ControllerBase
         _transportRepository = transportRepository;
         _mapper = mapper;
     }
-
     /// <summary>
     /// Returns a list of all trips
     /// </summary>
-    /// <returns> Returns a list of all transports </returns>
+    /// <returns> Returns a list of all trips </returns>
     [HttpGet]
-
     public IEnumerable<TripGetDto> Get()
     {
         _logger.LogInformation("Get trips");
         return _transportRepository.Trips.Select(trip => _mapper.Map<TripGetDto>(trip));
     }
-
     /// <summary>
     /// Get method that returns trip with a specific id
     /// </summary>
-    /// <param name="id"> Transports id </param>
+    /// <param name="id"> Trip id </param>
     /// <returns> Transports with required id </returns>
     [HttpGet("{id}")]
-
     public ActionResult<TripGetDto> Get(int id)
     {
         _logger.LogInformation("Get trip with id= {id}", id);
@@ -65,27 +61,22 @@ public class TripController : ControllerBase
         }
         else return Ok(_mapper.Map<TripGetDto>(trip));
     }
-
     /// <summary>
     /// Post method that adding a new trip
     /// </summary>
-    /// <param name="trip"></param>
+    /// <param name="trip"> Added trip </param>
     [HttpPost]
-
     public void Post([FromBody] TripPostDto trip)
     {
         _transportRepository.Trips.Add(_mapper.Map<Trip>(trip));
         _logger.LogInformation("Successfully added");
     }
-
     /// <summary>
     /// Put method which allows change the data of trip with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="tripToPut"></param>
-    /// <returns></returns>
+    /// <param name="id"> Trip id whose data will change </param>
+    /// <param name="tripToPut"> New trip data </param>
     [HttpPut("{id}")]
-
     public IActionResult Put(int id, [FromBody] TripPostDto tripToPut)
     {
         var trip = _transportRepository.Trips.FirstOrDefault(trip => trip.Id == id);
@@ -101,14 +92,11 @@ public class TripController : ControllerBase
             return Ok();
         }
     }
-
     /// <summary>
     /// Delete method which allows delete a trip with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Trip id </param>
     [HttpDelete("{id}")]
-
     public IActionResult Delete(int id)
     {
         var trip = _transportRepository.Trips.FirstOrDefault(trip => trip.Id == id);

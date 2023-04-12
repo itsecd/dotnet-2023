@@ -34,26 +34,22 @@ public class TransportController : ControllerBase
         _transportRepository = transportRepository;
         _mapper = mapper;
     }
-
     /// <summary>
     /// Returns a list of all transports
     /// </summary>
     /// <returns> Returns a list of all transports </returns>
     [HttpGet]
-
     public IEnumerable<TransportGetDto> Get()
     {
         _logger.LogInformation("Get transports");
         return _transportRepository.Transports.Select(transport => _mapper.Map<TransportGetDto>(transport));
     }
-
     /// <summary>
     /// Get method that returns transport with a specific id
     /// </summary>
     /// <param name="id"> Transports id </param>
     /// <returns> Transports with required id </returns>
     [HttpGet("{id}")]
-
     public ActionResult<TransportGetDto> Get(int id)
     {
         _logger.LogInformation("Get transport with id= {id}", id);
@@ -65,27 +61,22 @@ public class TransportController : ControllerBase
         }
         else return Ok(_mapper.Map<TransportGetDto>(transport));
     }
-
     /// <summary>
     /// Post method that adding a new transport
     /// </summary>
-    /// <param name="transport"></param>
+    /// <param name="transport"> Added transport </param>
     [HttpPost]
-
     public void Post([FromBody] TransportPostDto transport)
     {
         _transportRepository.Transports.Add(_mapper.Map<Transport>(transport));
         _logger.LogInformation("Successfully added");
     }
-
     /// <summary>
     /// Put method which allows change the data of transport with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="transportToPut"></param>
-    /// <returns></returns>
+    /// <param name="id"> Transport id whose data will change </param>
+    /// <param name="transportToPut"> New transport data </param>
     [HttpPut("{id}")]
-
     public IActionResult Put(int id, [FromBody] TransportPostDto transportToPut)
     {
         var transport = _transportRepository.Transports.FirstOrDefault(transport => transport.Id == id);
@@ -101,14 +92,11 @@ public class TransportController : ControllerBase
             return Ok();
         }
     }
-
     /// <summary>
     /// Delete method which allows delete a transport with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Transport id </param>
     [HttpDelete("{id}")]
-
     public IActionResult Delete(int id)
     {
         var transport = _transportRepository.Transports.FirstOrDefault(transport => transport.Id == id);

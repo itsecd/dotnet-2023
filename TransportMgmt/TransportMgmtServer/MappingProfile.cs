@@ -32,7 +32,5 @@ public class MappingProfile : Profile
         CreateMap<Trip, TripPostDto>();
 
         CreateMap<TripPostDto, Trip>();
-
-
     }
 }

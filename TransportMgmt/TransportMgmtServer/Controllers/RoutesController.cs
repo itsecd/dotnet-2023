@@ -27,26 +27,22 @@ public class RoutesController : Controller
         _logger = logger;
         _transportRepository = transportRepository;
     }
-
     /// <summary>
     /// Returns a list of all routes
     /// </summary>
     /// <returns> Returns a list of all routes </returns>
     [HttpGet]
-
     public IEnumerable<Routes> Get()
     {
         _logger.LogInformation("Get routes");
         return _transportRepository.Routes;
     }
-
     /// <summary>
     /// Get method that returns route with a specific id
     /// </summary>
     /// <param name="id"> Route id </param>
     /// <returns> Route with required id </returns>
     [HttpGet("{id}")]
-
     public ActionResult<Routes> Get(int id)
     {
         _logger.LogInformation("Get route with id= {id}", id);

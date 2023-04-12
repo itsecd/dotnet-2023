@@ -1,5 +1,4 @@
-﻿using TransportManagment.Classes;
-namespace TransportManagment.Server.Dto;
+﻿namespace TransportManagment.Server.Dto;
 /// <summary>
 /// Class of routes for method Get
 /// </summary>

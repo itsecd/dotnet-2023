@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 namespace AirLine.Domain;
 public class Ticket
 {
+    public int Id { get; set; } = 0;
     public int Number { get; set; } = 0;
     public string SeatNumber { get; set; } = string.Empty;
     public double BaggageWeight { get; set; } = 0;
     public Ticket() { }
 
-    public Ticket(int number = 0, string seatNumber = "", double baggageWeight = 0)
+    public Ticket(int id, int number = 0, string seatNumber = "", double baggageWeight = 0)
     {
+        Id = id;
         Number = number;
         SeatNumber = seatNumber;
         BaggageWeight = baggageWeight;

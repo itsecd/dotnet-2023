@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AirLine.Domain;
 public class Passenger
 {
+    public int Id { get; set; }
     /// <summary>
     /// Passenger passport ID
     /// </summary>
@@ -27,17 +28,19 @@ public class Passenger
     /// <summary>
     /// Create passenger object by name and passport ID
     /// </summary>
-    public Passenger(int passport_number, string name)
+    public Passenger(int id, int passport_number, string name)
     {
-        PassportNumber = passport_number;
+        this.Id = id;
+        this.PassportNumber = passport_number;
         this.Name = name;
     }
     /// <summary>
     /// Create passenger object by name, passport ID, ticket number, seat number and baggage weight
     /// for registered on flight passengers
     /// </summary>
-    public Passenger(int passport_number, string name, List<Ticket> tickets)
+    public Passenger(int id, int passport_number, string name, List<Ticket> tickets)
     {
+        this.Id = id;
         PassportNumber = passport_number;
         this.Name = name;
         Tickets = tickets;

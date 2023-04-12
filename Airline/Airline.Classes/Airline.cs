@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AirLine.Domain;
 public class Airline
 {
+    public int Id { get; set; }
     /// <summary>
     /// List airplanes in airline
     /// </summary>
@@ -21,8 +22,9 @@ public class Airline
     public List<Passenger> Passengers { get; set; } = new List<Passenger>();
 
     public Airline() {}
-    public Airline(List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers)
+    public Airline(int id, List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers)
     {
+        Id = id;
         Airplanes = airplanes;
         Flights = flights;
         Passengers = passengers;

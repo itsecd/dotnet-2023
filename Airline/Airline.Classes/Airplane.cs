@@ -1,6 +1,7 @@
 ﻿namespace AirLine.Domain;
 public class Airplane
 {
+    public int Id { get; set; }
     /// <summary>
     /// Airplane model
     /// </summary>
@@ -20,8 +21,9 @@ public class Airplane
 
     public Airplane() { }
 
-    public Airplane(string model, int capacity, int perfomance, int passengers)
+    public Airplane(int id, string model, int capacity, int perfomance, int passengers)
     {
+        Id = id;
         Model = model;
         LoadCapacity = capacity;
         Perfomance = perfomance;

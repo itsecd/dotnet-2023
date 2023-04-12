@@ -8,6 +8,7 @@ namespace AirLine.Domain;
 
 public class Flight
 {
+    public int Id { get; set; }
     /// <summary>
     /// Cipher of flight
     /// </summary>
@@ -41,8 +42,9 @@ public class Flight
     /// </summary>
     public List<Ticket>? Tickets { get; set; }
     public Flight() {}
-    public Flight(string cipher, string departurePlace, string destination, DateTime? departureDate, DateTime arrivalDate, Airplane airplane, List<Ticket> tickets)
+    public Flight(int id, string cipher, string departurePlace, string destination, DateTime? departureDate, DateTime arrivalDate, Airplane airplane, List<Ticket> tickets)
     {
+        Id = id;
         Cipher = cipher;
         DeparturePlace = departurePlace;
         Destination = destination;

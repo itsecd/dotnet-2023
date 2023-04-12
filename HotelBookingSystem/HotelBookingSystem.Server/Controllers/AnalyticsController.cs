@@ -107,17 +107,16 @@ public class AnalyticsController : ControllerBase
     [HttpGet("MinMaxCost")]
     public IActionResult MinMaxCost()
     {
-        var brooms = _repos.ListOfBookedRooms;
-        var min = (from broom in brooms
-                   orderby broom.BookedRoom.Cost
-                   group broom by broom.BookedRoom.Placement into minres
-                   select minres.First().BookedRoom.Cost).ToList();
+        var rooms = _repos.ListOfRooms;
+        var min = (from room in rooms
+                   group room by room.Placement into minres
+                   select minres.Min(x => x.Cost)).ToList();
 
-        var max = (from broom in brooms
-                   orderby broom.BookedRoom.Cost descending
-                   group broom by broom.BookedRoom.Placement into maxres
-                   select maxres.First().BookedRoom.Cost).ToList();
-        return Ok(new {min, max});
+        var max = (from room in rooms
+                   group room by room.Placement into maxres
+                   select maxres.Max(x => x.Cost)).ToList();
+
+        return Ok(new { Name = _repos.ListOfHotels.Select(hotel => hotel.Name), Min = min, Max = max });
     }
 }
 

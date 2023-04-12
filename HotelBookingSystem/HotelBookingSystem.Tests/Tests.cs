@@ -1,3 +1,5 @@
+using HotelBookingSystem.Classes;
+
 namespace HotelBookingSystem.Tests;
 
 public class Tests
@@ -157,17 +159,17 @@ public class Tests
     public void MinMaxCost()
     {
         List<BookedRooms> brooms = ListOfBookedRooms();
-        var min = (from broom in brooms
-                   orderby broom.BookedRoom.Cost
-                   group broom by broom.BookedRoom.Placement into minres
-                   select minres.First().BookedRoom.Cost).ToList();
+        var rooms = ListOfRooms();
 
-        var max = (from broom in brooms
-                   orderby broom.BookedRoom.Cost descending
-                   group broom by broom.BookedRoom.Placement into maxres
-                   select maxres.First().BookedRoom.Cost).ToList();
+        var min = (from room in rooms
+                   group room by room.Placement into minres
+                   select minres.Min(x => x.Cost)).ToList();
 
-        Assert.Equal(1100, min[0]);
-        Assert.Equal(3100, max[0]);
+        var max = (from room in rooms
+                   group room by room.Placement into minres
+                   select minres.Max(x => x.Cost)).ToList();
+
+        Assert.Equal(1000, min[0]);
+        Assert.Equal(2300, max[0]);
     }
 }

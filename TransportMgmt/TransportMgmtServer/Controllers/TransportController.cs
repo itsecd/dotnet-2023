@@ -17,7 +17,7 @@ public class TransportController : ControllerBase
     /// Used to store logger
     /// </summary>
     private readonly ILogger<TransportController> _logger;
-    /// <summary>
+    /// <summary> 
     /// Used to store repository
     /// </summary>
     private readonly ITransportMgmtRepository _transportRepository;

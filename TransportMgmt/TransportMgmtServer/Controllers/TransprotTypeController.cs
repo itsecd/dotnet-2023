@@ -5,16 +5,16 @@ using TransportMgmtServer.Repository;
 namespace TransportMgmtServer.Controllers;
 
 /// <summary>
-/// Controller for transprot types
+/// Controller for transport types
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TransprotTypeController : ControllerBase
+public class TransportTypeController : ControllerBase
 {
     /// <summary>
     /// Used to store logger
     /// </summary>
-    private readonly ILogger<TransprotTypeController> _logger;
+    private readonly ILogger<TransportTypeController> _logger;
     /// <summary>
     /// Used to store repository
     /// </summary>
@@ -22,15 +22,15 @@ public class TransprotTypeController : ControllerBase
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public TransprotTypeController(ILogger<TransprotTypeController> logger, ITransportMgmtRepository transportRepository)
+    public TransportTypeController(ILogger<TransportTypeController> logger, ITransportMgmtRepository transportRepository)
     {
         _logger = logger;
         _transportRepository = transportRepository;
     }
     /// <summary>
-    /// Returns a list of all transprot types
+    /// Returns a list of all transport types
     /// </summary>
-    /// <returns> Returns a list of all transprot types </returns>
+    /// <returns> Returns a list of all transport types </returns>
     [HttpGet]
     public IEnumerable<TransportType> Get()
     {
@@ -38,10 +38,10 @@ public class TransprotTypeController : ControllerBase
         return _transportRepository.TransportType;
     }
     /// <summary>
-    /// Get method that returns transprot types with a specific id
+    /// Get method that returns transport types with a specific id
     /// </summary>
-    /// <param name="id"> Transprot type id </param>
-    /// <returns> Transprot type with required id </returns>
+    /// <param name="id"> Transport type id </param>
+    /// <returns> Transport type with required id </returns>
     [HttpGet("{id}")]
     public ActionResult<TransportType> Get(int id)
     {

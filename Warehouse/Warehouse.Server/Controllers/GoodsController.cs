@@ -31,7 +31,7 @@ public class GoodsController : ControllerBase
     public IEnumerable<GoodsGetDto> Get()
     {
         _logger.LogInformation("Get goods");
-        return _warehouseRepository.Goods.Select(product => _mapper.Map<GoodsGetDto>(product));
+        return _warehouseRepository.Products.Select(product => _mapper.Map<GoodsGetDto>(product));
     }
     /// <summary>
     /// Get by id method for goods table
@@ -43,7 +43,7 @@ public class GoodsController : ControllerBase
     public ActionResult<GoodsGetDto> Get(int id)
     {
         _logger.LogInformation($"Get goods with id {id}");
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id {id}");
@@ -62,7 +62,7 @@ public class GoodsController : ControllerBase
     public void Post([FromBody] GoodsPostDto product)
     {
         _logger.LogInformation("Post product");
-        _warehouseRepository.Goods.Add(_mapper.Map<Goods>(product));
+        _warehouseRepository.Products.Add(_mapper.Map<Goods>(product));
     }
     /// <summary>
     /// Put method for goods table
@@ -74,7 +74,7 @@ public class GoodsController : ControllerBase
     public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
     {
         _logger.LogInformation("Put product with id {0}", id);
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation("Not found product with id {0}", id);
@@ -95,7 +95,7 @@ public class GoodsController : ControllerBase
     public IActionResult Delete(int id)
     {
         _logger.LogInformation($"Put product with id ({id})");
-        var product = _warehouseRepository.Goods.FirstOrDefault(product => product.Id == id);
+        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id ({id})");
@@ -103,7 +103,7 @@ public class GoodsController : ControllerBase
         }
         else
         {
-            _warehouseRepository.Goods.Remove(product);
+            _warehouseRepository.Products.Remove(product);
             return Ok();
         }
     }

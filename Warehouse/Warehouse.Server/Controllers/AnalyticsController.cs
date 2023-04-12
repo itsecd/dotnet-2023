@@ -15,6 +15,13 @@ public class AnalyticsController : ControllerBase
     private readonly ILogger<AnalyticsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Constructor for AnalyticsController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="warehouseRepository"></param>
+    /// <param name="mapper"></param>
     public AnalyticsController(ILogger<AnalyticsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
@@ -26,12 +33,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>All goods</returns>
     [HttpGet("all-goods")]
-    public IEnumerable<GoodsGetDto> GetAllGoods()
+    public IActionResult GetAllGoods()
     {
         _logger.LogInformation("Get all goods");
-        var request = (from good in _warehouseRepository.Goods
-                       select _mapper.Map<GoodsGetDto>(good));
-        return request;
+        var request = (from good in _warehouseRepository.Products
+                       select _mapper.Map<GoodsGetDto>(good)).ToList();
+        if (request.Count == 0)
+        {
+            _logger.LogInformation("Not foung products");
+            return NotFound();
+        }
+        return Ok(request);
     }
     /// <summary>
     /// Get method which return information about the company's products received on the specified day by the recipient of products
@@ -41,7 +53,7 @@ public class AnalyticsController : ControllerBase
     public IEnumerable<SupplyGetDto> SupplyWithSpecificDate()
     {
         _logger.LogInformation("Get supply with specific date");
-        var request = (from goods in _warehouseRepository.Goods
+        var request = (from goods in _warehouseRepository.Products
                        from supply in goods.Supply
                        where supply.SupplyDate == new DateTime(2023, 02, 11)
                        orderby supply.Goods
@@ -56,7 +68,7 @@ public class AnalyticsController : ControllerBase
     public IEnumerable<WarehouseCellsGetDto> WarehouseCellsAndTheirContent()
     {
         _logger.LogInformation("Warehouse cells and their content");
-        var request = (from goods in _warehouseRepository.Goods
+        var request = (from goods in _warehouseRepository.Products
                        from cell in goods.WarehouseCell
                        orderby cell.CellNumber
                        select _mapper.Map<WarehouseCellsGetDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount }));
@@ -70,7 +82,7 @@ public class AnalyticsController : ControllerBase
     public IEnumerable<SupplyGetDto> SupplyByPeriod()
     {
         _logger.LogInformation("Supply by period");
-        var request = (from goods in _warehouseRepository.Goods
+        var request = (from goods in _warehouseRepository.Products
                        from supply in goods.Supply
                        where supply.SupplyDate > new DateTime(2023, 02, 1) && supply.SupplyDate < new DateTime(2023, 03, 15)
                        group supply by new
@@ -94,7 +106,7 @@ public class AnalyticsController : ControllerBase
     public IEnumerable<GoodsGetDto> TopFiveProducts()
     {
         _logger.LogInformation("Top 5 products");
-        var request = (from goods in _warehouseRepository.Goods
+        var request = (from goods in _warehouseRepository.Products
                        orderby goods.ProductCount descending
                        select _mapper.Map<GoodsGetDto>(goods)).Take(5);
         return request;
@@ -107,7 +119,7 @@ public class AnalyticsController : ControllerBase
     public IEnumerable<SupplyGetDto> QuantityOfDeliverdGoods()
     {
         _logger.LogInformation("Quantity of delivered goods");
-        var request = (from goods in _warehouseRepository.Goods
+        var request = (from goods in _warehouseRepository.Products
                        from supply in goods.Supply
                        group supply by new
                        {

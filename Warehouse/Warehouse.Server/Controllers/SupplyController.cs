@@ -31,7 +31,7 @@ public class SupplyController : ControllerBase
     public IEnumerable<SupplyGetDto> Get()
     {
         _logger.LogInformation("Get supplies");
-        return _warehouseRepository.Supply.Select(supply => _mapper.Map<SupplyGetDto>(supply));
+        return _warehouseRepository.Supplies.Select(supply => _mapper.Map<SupplyGetDto>(supply));
     }
     /// <summary>
     /// Get by id method for supply table
@@ -43,7 +43,7 @@ public class SupplyController : ControllerBase
     public ActionResult<SupplyGetDto> Get(int id)
     {
         _logger.LogInformation($"Get supplies with id {id}");
-        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supplies with id {id}");
@@ -62,7 +62,7 @@ public class SupplyController : ControllerBase
     public void Post([FromBody] SupplyPostDto supply)
     {
         _logger.LogInformation("Post supply");
-        _warehouseRepository.Supply.Add(_mapper.Map<Supply>(supply));
+        _warehouseRepository.Supplies.Add(_mapper.Map<Supply>(supply));
     }
     /// <summary>
     /// Put method for supply table
@@ -74,7 +74,7 @@ public class SupplyController : ControllerBase
     public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
         _logger.LogInformation("Put supply with id {0}", id);
-        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation("Not found supply with id {0}", id);
@@ -95,7 +95,7 @@ public class SupplyController : ControllerBase
     public IActionResult Delete(int id)
     {
         _logger.LogInformation($"Put supply with id ({id})");
-        var supply = _warehouseRepository.Supply.FirstOrDefault(supply => supply.Id == id);
+        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supply with id ({id})");
@@ -103,7 +103,7 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            _warehouseRepository.Supply.Remove(supply);
+            _warehouseRepository.Supplies.Remove(supply);
             return Ok();
         }
     }

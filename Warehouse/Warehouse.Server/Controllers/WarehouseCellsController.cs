@@ -31,7 +31,7 @@ public class WarehouseCellsController : ControllerBase
     public IEnumerable<WarehouseCellsGetDto> Get()
     {
         _logger.LogInformation("Get cells");
-        return _warehouseRepository.WarehouseCells.Select(cell => _mapper.Map<WarehouseCellsGetDto>(cell));
+        return _warehouseRepository.Cells.Select(cell => _mapper.Map<WarehouseCellsGetDto>(cell));
     }
     /// <summary>
     /// Get by id method for warehouse cells table
@@ -43,7 +43,7 @@ public class WarehouseCellsController : ControllerBase
     public ActionResult<WarehouseCellsGetDto> Get(int id)
     {
         _logger.LogInformation($"Get cells with id {id}");
-        var cell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        var cell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (cell == null)
         {
             _logger.LogInformation($"Not found cell with id {id}");
@@ -62,7 +62,7 @@ public class WarehouseCellsController : ControllerBase
     public void Post([FromBody] WarehouseCellsPostDto cell)
     {
         _logger.LogInformation("Post cell");
-        _warehouseRepository.WarehouseCells.Add(_mapper.Map<WarehouseCells>(cell));
+        _warehouseRepository.Cells.Add(_mapper.Map<WarehouseCells>(cell));
     }
     /// <summary>
     /// Put method for warehouse cells table
@@ -74,7 +74,7 @@ public class WarehouseCellsController : ControllerBase
     public IActionResult Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
     {
         _logger.LogInformation("Put cell with id {0}", id);
-        var warehouseCell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        var warehouseCell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
             _logger.LogInformation("Not found product with id {0}", id);
@@ -95,7 +95,7 @@ public class WarehouseCellsController : ControllerBase
     public IActionResult Delete(int id)
     {
         _logger.LogInformation($"Put cell with id ({id})");
-        var warehouseCell = _warehouseRepository.WarehouseCells.FirstOrDefault(cell => cell.CellNumber == id);
+        var warehouseCell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
             _logger.LogInformation($"Not found cell with id ({id})");
@@ -103,7 +103,7 @@ public class WarehouseCellsController : ControllerBase
         }
         else
         {
-            _warehouseRepository.WarehouseCells.Remove(warehouseCell);
+            _warehouseRepository.Cells.Remove(warehouseCell);
             return Ok();
         }
     }

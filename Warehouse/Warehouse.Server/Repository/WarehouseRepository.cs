@@ -23,17 +23,29 @@ public class WarehouseRepository : IWarehouseRepository
         var seventhProduction = new Goods(161708, "Ваза из стекла 4л", 10);
         var eighthProduction = new Goods(103410, "Ваза из стекла 3л", 15);
 
-        firstProduction.WarehouseCell.Add(new WarehouseCells(1, firstProduction));
-        secondProduction.WarehouseCell.Add(new WarehouseCells(2, secondProduction));
-        thirdProduction.WarehouseCell.Add(new WarehouseCells(3, thirdProduction));
-        fourthProduction.WarehouseCell.Add(new WarehouseCells(4, fourthProduction));
-        fourthProduction.WarehouseCell.Add(new WarehouseCells(10, fourthProduction));
-        fourthProduction.WarehouseCell.Add(new WarehouseCells(11, fourthProduction));
-        fifthProduction.WarehouseCell.Add(new WarehouseCells(5, fifthProduction));
-        sixthProduction.WarehouseCell.Add(new WarehouseCells(6, sixthProduction));
-        seventhProduction.WarehouseCell.Add(new WarehouseCells(7, seventhProduction));
-        eighthProduction.WarehouseCell.Add(new WarehouseCells(8, eighthProduction));
-        eighthProduction.WarehouseCell.Add(new WarehouseCells(9, eighthProduction));
+        var firstCell = new WarehouseCells(1, firstProduction);
+        var secondCell = new WarehouseCells(2, secondProduction);
+        var thirdCell = new WarehouseCells(3, thirdProduction);
+        var fourthCell = new WarehouseCells(4, fourthProduction);
+        var fifthCell = new WarehouseCells(5, fifthProduction);
+        var sixthCell = new WarehouseCells(6, sixthProduction);
+        var seventhCell = new WarehouseCells(7, seventhProduction);
+        var eighthCell = new WarehouseCells(8, eighthProduction);
+        var ninthCell = new WarehouseCells(9, eighthProduction);
+        var tenthCell = new WarehouseCells(10, fourthProduction);
+        var eleventhCell = new WarehouseCells(11, fourthProduction);
+
+        firstProduction.WarehouseCell.Add(firstCell);
+        secondProduction.WarehouseCell.Add(secondCell);
+        thirdProduction.WarehouseCell.Add(thirdCell);
+        fourthProduction.WarehouseCell.Add(fourthCell);
+        fourthProduction.WarehouseCell.Add(tenthCell);
+        fourthProduction.WarehouseCell.Add(eleventhCell);
+        fifthProduction.WarehouseCell.Add(fifthCell);
+        sixthProduction.WarehouseCell.Add(sixthCell);
+        seventhProduction.WarehouseCell.Add(seventhCell);
+        eighthProduction.WarehouseCell.Add(eighthCell);
+        eighthProduction.WarehouseCell.Add(ninthCell);
 
         firstProduction.Supply.Add(firstRoute);
         thirdProduction.Supply.Add(fourthRoute);
@@ -56,8 +68,32 @@ public class WarehouseRepository : IWarehouseRepository
                 seventhProduction,
                 eighthProduction
             };
+        var routes = new List<Supply>
+            {
+                firstRoute,
+                secondRoute,
+                thirdRoute,
+                fourthRoute
+            };
+        var cells = new List<WarehouseCells>
+            {
+                firstCell,
+                secondCell,
+                thirdCell,
+                fourthCell,
+                fifthCell,
+                sixthCell,
+                seventhCell,
+                eighthCell,
+                ninthCell,
+                tenthCell,
+                eleventhCell
+        };
+        _goods = goods;
+        _cells = cells;
+        _supply = routes;
     }
-    public List<Goods> Goods => _goods;
-    public List<WarehouseCells> WarehouseCells => _cells;
-    public List<Supply> Supply => _supply;
+    public List<Goods> Products => _goods;
+    public List<WarehouseCells> Cells => _cells;
+    public List<Supply> Supplies => _supply;
 }

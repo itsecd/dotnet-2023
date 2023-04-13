@@ -1,7 +1,14 @@
 namespace TaxiDepo.Domain;
 
+/// <summary>
+/// Class car
+/// </summary>
 public class Car
 {
+    /// <summary>
+    /// Car id 
+    /// </summary>
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Car government number
     /// </summary>
@@ -9,7 +16,7 @@ public class Car
     /// <summary>
     /// Car model
     /// </summary>
-    public string CarModel { get; } = string.Empty;
+    public string CarModel { get; set; } = string.Empty;
     /// <summary>
     /// Car color
     /// </summary>
@@ -30,14 +37,17 @@ public class Car
     /// Constructor without parameters to instantiate the class Car
     /// </summary>
     public Car() {}
+
     /// <summary>
     /// Constructor with parameters to instantiate the class Car
     /// </summary>
+    /// <param name="id">Car id</param>
     /// <param name="number">Car goverment number</param>
     /// <param name="model">Car model</param>
     /// <param name="color">Car color</param>
-    public Car(string number, string model, string color)
+    public Car(int id, string number, string model, string color)
     {
+        Id = id;
         CarNumber = number;
         CarModel = model;
         CarColor = color;

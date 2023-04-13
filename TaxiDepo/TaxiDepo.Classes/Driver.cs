@@ -1,7 +1,14 @@
 namespace TaxiDepo.Domain;
 
+/// <summary>
+/// Driver class
+/// </summary>
 public class Driver
 {
+    /// <summary>
+    /// Driver id
+    /// </summary>
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Driver surname
     /// </summary>
@@ -33,7 +40,7 @@ public class Driver
     /// <summary>
     /// Assigned car info
     /// </summary>
-    public Car AssignedCar { get; set; }
+    public Car? AssignedCar { get; set; }
     /// <summary>
     /// Constructor without parameters to instantiate the class Driver
     /// </summary>
@@ -41,14 +48,16 @@ public class Driver
     /// <summary>
     /// Constructor with parameters to instantiate the class Driver
     /// </summary>
+    /// <param name="id">Driver id</param>
     /// <param name="surname">Driver surname</param>
     /// <param name="name">Driver name</param>
     /// <param name="patronymic">Driver patronymic</param>
     /// <param name="passportId">Driver passport ID</param>
     /// <param name="address">Driver address</param>
     /// <param name="phoneNumber">Driver phone number</param>
-    public Driver(string surname, string name, string patronymic, int passportId, string address, string phoneNumber)
+    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber)
     {
+        Id = id; 
         DriverSurname = surname;
         DriverName = name;
         DriverPatronymic = patronymic;

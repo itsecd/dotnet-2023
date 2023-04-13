@@ -1,7 +1,14 @@
 namespace TaxiDepo.Domain;
 
+/// <summary>
+/// Ride class
+/// </summary>
 public class Ride
 {
+    /// <summary>
+    /// Ride id
+    /// </summary>
+    public int Id { get; set; } = 0; 
     /// <summary>
     /// Departure place 
     /// </summary>
@@ -37,15 +44,17 @@ public class Ride
     /// <summary>
     /// Constructor with parameters to instantiate the class Ride
     /// </summary>
+    /// <param name="id">Ride</param>
     /// <param name="departurePlace">Departure place of trip</param>
     /// <param name="destinationPlace">Destination place of trip</param>
     /// <param name="date">Date trip</param>
     /// <param name="time">Trip time</param>
     /// <param name="price">Trip price</param>
     /// <param name="auto">Trip assigned auto</param>
-    public Ride(string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price, Car auto,
+    public Ride(int id, string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price, Car auto,
         User user)
     {
+        Id = id;
         TripDeparturePlace = departurePlace;
         TripDestinationPlace = destinationPlace;
         TripDate = date;

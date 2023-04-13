@@ -1,7 +1,14 @@
 namespace TaxiDepo.Domain;
 
+/// <summary>
+/// User class
+/// </summary>
 public class User
 {
+    /// <summary>
+    /// User id
+    /// </summary>
+    public int Id { get; set; } = 0;
     /// <summary>
     /// User surname
     /// </summary>
@@ -29,12 +36,14 @@ public class User
     /// <summary>
     /// Constructor with parameters to instantiate the class User
     /// </summary>
+    /// <param name="id">User id</param>
     /// <param name="surname">User surname</param>
     /// <param name="name">User name</param>
     /// <param name="patronymic">User patronymic</param>
     /// <param name="phoneNumber">User phone number</param>
-    public User(string surname, string name, string patronymic, string phoneNumber)
+    public User(int id, string surname, string name, string patronymic, string phoneNumber)
     {
+        Id = id;
         UserSurname = surname;
         UserName = name;
         UserPatronymic = patronymic;

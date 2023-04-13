@@ -2,7 +2,7 @@ using Xunit;
 using TaxiDepo.Domain;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System; 
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using Xunit.Abstractions;
@@ -19,21 +19,21 @@ public class TaxiDepotTest
     {
         return new List<Driver>()
         {
-            new Driver("Antonov", "Viktor", "Pavlovich",
+            new Driver(0, "Antonov", "Viktor", "Pavlovich",
                 14557586, "Samara Lenina 25, 4", "89791113223"),
-            new Driver("Antipov", "Anton", "Viktorovich", 
+            new Driver(1, "Antipov", "Anton", "Viktorovich", 
                 21534496, "Samara Stalina 115, 43", "89343322223"),
-            new Driver("Pavlov", "Sergey", "Sergeevich", 
+            new Driver(2, "Pavlov", "Sergey", "Sergeevich", 
                 37927348, "Samara Nikonova 205, 49", "87983839938"),
-            new Driver("Tolov", "Dmitriy", "Stanislavovich", 
+            new Driver(3, "Tolov", "Dmitriy", "Stanislavovich", 
                 93894829, "Samara Pavlova 99, 99", "89111199993"),
-            new Driver("Sipov", "Pavel", "Antonovich", 
+            new Driver(4, "Sipov", "Pavel", "Antonovich", 
                 34943834, "Samara Vokzalnaya 32, 533", "89787293792"),
-            new Driver("Markin", "Anatoliy", "Nikitovich", 
+            new Driver(5, "Markin", "Anatoliy", "Nikitovich", 
                 34892743, "Samara Chainaya 23, 122", "82932992019"),
-            new Driver("Vitin", "Vladimir", "Pavlovich", 
+            new Driver(6, "Vitin", "Vladimir", "Pavlovich", 
                 00293944, "Samara Lisova 323, 11", "83747378283"),
-            new Driver("Votin", "Vladimir", "Sergeevich", 
+            new Driver(7, "Votin", "Vladimir", "Sergeevich", 
                 00244944, "Samara Losova 123, 11", "89997378283")
         };
     }
@@ -45,13 +45,13 @@ public class TaxiDepotTest
     {
         return new List<Car>()
         {
-            new Car("A279TT163", "BMW E34", "Purple"),
-            new Car("M777MM763", "Mercedes E63", "Black"),
-            new Car("B281BB777", "Toyota corolla", "White"),
-            new Car("A909BA102", "Toyota LC200", "Yellow"),
-            new Car("M763MM763", "Lada Vesta", "White"),
-            new Car("E700EA77", "Lada Priora", "Orange"),
-            new Car("M808AM63", "Geely Emgrand", "Blue"),
+            new Car(0, "A279TT163", "BMW E34", "Purple"),
+            new Car(1, "M777MM763", "Mercedes E63", "Black"),
+            new Car(2, "B281BB777", "Toyota corolla", "White"),
+            new Car(3, "A909BA102", "Toyota LC200", "Yellow"),
+            new Car(4, "M763MM763", "Lada Vesta", "White"),
+            new Car(5, "E700EA77", "Lada Priora", "Orange"),
+            new Car(6, "M808AM63", "Geely Emgrand", "Blue"),
         };
     }
     /// <summary>
@@ -62,11 +62,11 @@ public class TaxiDepotTest
     {
         return new List<User>()
         {
-            new User("Vitov", "Viktor", "Vladimirovich", "89193829222"),
-            new User("Kotov", "Stanislav", "Pavlovich", "89290334434"),
-            new User("Topov", "Andrey", "Dmitrievich", "89889230233"),
-            new User("Losev", "Pavel", "Yanovich", "89230039402"),
-            new User("Lisov", "Vladimir", "Artmovich", "89177373403")
+            new User(0, "Vitov", "Viktor", "Vladimirovich", "89193829222"),
+            new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434"),
+            new User(2, "Topov", "Andrey", "Dmitrievich", "89889230233"),
+            new User(3, "Losev", "Pavel", "Yanovich", "89230039402"),
+            new User(4, "Lisov", "Vladimir", "Artmovich", "89177373403")
         };
     }
     /// <summary>
@@ -77,41 +77,41 @@ public class TaxiDepotTest
     {
         return new List<Ride>()
         {
-            new Ride("Samara Lisova 15", "Samara Lisova 113", 
+            new Ride(0, "Samara Lisova 15", "Samara Lisova 113", 
                 new DateTime(2020, 05, 14,22, 43, 42), 
                 new TimeSpan(2, 3, 4), 
-                341.23, new Car("A279TT163", "BMW E34", "Purple"),
-                new User("Lisov", "Vladimir", "Artmovich", "89177373403")),
+                341.23, new Car(0, "A279TT163", "BMW E34", "Purple"),
+                new User(4, "Lisov", "Vladimir", "Artmovich", "89177373403")),
             
-            new Ride("Samara Antonova 25", "Samara Vitova 122", 
+            new Ride(1, "Samara Antonova 25", "Samara Vitova 122", 
                 new DateTime(2020, 06, 22, 15,53, 54), 
                 new TimeSpan(1, 32, 4), 
-                129.22, new Car("M777MM763", "Mercedes E63", "Black"),
-                new User("Lisov", "Vladimir", "Artmovich", "89177373403")),
+                129.22, new Car(1, "M777MM763", "Mercedes E63", "Black"),
+                new User(4, "Lisov", "Vladimir", "Artmovich", "89177373403")),
             
-            new Ride("Samara Vlasova 77", "Samara Motova 222", 
+            new Ride(2, "Samara Vlasova 77", "Samara Motova 222", 
                 new DateTime(2021, 11,29, 19, 20, 22), 
                 new TimeSpan(1, 19, 4), 
-                472.41, new Car("X354XA99", "Kia Rio", "Green"), 
-                new User("Kotov", "Stanislav", "Pavlovich", "89290334434")),
+                472.41, new Car(2, "X354XA99", "Kia Rio", "Green"), 
+                new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434")),
             
-            new Ride("Samara Tolova 9", "Samara Stakova 91", 
+            new Ride(3, "Samara Tolova 9", "Samara Stakova 91", 
                 new DateTime(2022,01, 19, 18, 30, 20), 
                 new TimeSpan(1, 13, 42),  
-                99.11, new Car("T821TT20", "Geely Atlas", "Black"), 
-                new User("Kotov", "Stanislav", "Pavlovich", "89290334434")),
+                99.11, new Car(3, "T821TT20", "Geely Atlas", "Black"), 
+                new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434")),
             
-            new Ride("Samara Olova 9", "Samara Stakova 91", 
+            new Ride(4 , "Samara Olova 9", "Samara Stakova 91", 
                 new DateTime(2022,01, 19, 18, 30, 20), 
                 new TimeSpan(1, 13, 42),  
-                99.11, new Car("T821TT20", "Geely Atlas", "Black"),
-                new User("Kotov", "Stanislav", "Pavlovich", "89290334434")),
+                99.11, new Car(3, "T821TT20", "Geely Atlas", "Black"),
+                new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434")),
             
-            new Ride("Samara Rolova 9", "Samara Stakova 91", 
+            new Ride(5, "Samara Rolova 9", "Samara Stakova 91", 
                 new DateTime(2022,01, 19, 18, 30, 20), 
                 new TimeSpan(1, 13, 42),  
-                99.11, new Car("T821TT20", "Geely Atlas", "Black"),
-                new User("Losev", "Pavel", "Yanovich", "89230039402"))
+                99.11, new Car(3, "T821TT20", "Geely Atlas", "Black"),
+                new User(4, "Losev", "Pavel", "Yanovich", "89230039402"))
         };
     }
     /// <summary>
@@ -172,7 +172,7 @@ public class TaxiDepotTest
     [Fact]
     public void DriverConstructorTest()
     {
-        var driver = new Driver("Antonov", "Viktor", "Pavlovich",
+        var driver = new Driver(0, "Antonov", "Viktor", "Pavlovich",
             14557586, "Samara Lenina 25, 4", "89791113223");
         Assert.Equal("Antonov", driver.DriverSurname);
         Assert.Equal("Viktor", driver.DriverName);
@@ -187,7 +187,7 @@ public class TaxiDepotTest
     [Fact]
     public void CarConstructorTest()
     {
-        var car = new Car("A222TT163", "BMW", "Black");
+        var car = new Car(0, "A222TT163", "BMW", "Black");
         Assert.Equal("A222TT163", car.CarNumber);
         Assert.Equal("BMW", car.CarModel);
         Assert.Equal("Black", car.CarColor);
@@ -198,7 +198,7 @@ public class TaxiDepotTest
     [Fact]
     public void UserConstructorTest()
     {
-        var user = new User("Antonov", "Viktor", "Pavlovich", "89228881212");
+        var user = new User(6,"Antonov", "Viktor", "Pavlovich", "89228881212");
         Assert.Equal("Antonov", user.UserSurname);
         Assert.Equal("Viktor", user.UserName);
         Assert.Equal("Pavlovich", user.UserPatronymic);
@@ -210,18 +210,18 @@ public class TaxiDepotTest
     [Fact]
     public void RideConstructorTest()
     {
-        var ride = new Ride("Samara Antonova 25", "Samara Vitova 122",
+        var ride = new Ride(0, "Samara Antonova 25", "Samara Vitova 122",
             new DateTime(2020, 06, 22, 15, 53, 54),
             new TimeSpan(1, 9, 23), 
-            129.22, new Car("M777MM763", "Mercedes E63", "Black"), 
-            new User("Antonov", "Viktor", "Pavlovich", "89228881212"));
+            129.22, new Car(1, "M777MM763", "Mercedes E63", "Black"), 
+            new User(6, "Antonov", "Viktor", "Pavlovich", "89228881212"));
         Assert.Equal("Samara Antonova 25", ride.TripDeparturePlace);
         Assert.Equal("Samara Vitova 122", ride.TripDestinationPlace);
         Assert.Equal(new DateTime(2020, 06, 22, 15, 53, 54), ride.TripDate);
         Assert.Equal(new TimeSpan(1, 9, 23), ride.TripTime);
         Assert.Equal(129.22, ride.TripPrice);
-        Assert.Equal(new Car("M777MM763", "Mercedes E63", "Black"), ride.TripCar);
-        Assert.Equal(new User("Antonov", "Viktor", "Pavlovich", "89228881212"), ride.UserInfo);
+        Assert.Equal(new Car(1, "M777MM763", "Mercedes E63", "Black"), ride.TripCar);
+        Assert.Equal(new User(6, "Antonov", "Viktor", "Pavlovich", "89228881212"), ride.UserInfo);
     }
     /// <summary>
     /// Test with place condition to search amount of posts - class Ride
@@ -280,7 +280,7 @@ public class TaxiDepotTest
     {
         TaxiDepot company = new TaxiDepot(DriversList(), CarsList(), UsersList(), RidesList());
         var countRide = (from obj in company.Rides 
-            where (obj.TripCar == new Car("M777MM763", "Mercedes E63", "Black")) 
+            where (obj.TripCar == new Car(1, "M777MM763", "Mercedes E63", "Black")) 
             select obj).Count();
         Assert.Equal(1, countRide);
     }
@@ -294,7 +294,7 @@ public class TaxiDepotTest
         var driver = (from obj in company.Drivers 
             where (obj.DriverSurname == "Antonov") 
             select obj).ToList();
-        Assert.Equal(new Car("A279TT163", "BMW E34", "Purple"), driver[0].AssignedCar);
+        Assert.Equal(new Car(0, "A279TT163", "BMW E34", "Purple"), driver[0].AssignedCar);
         Assert.Single(driver);
     }
 
@@ -322,7 +322,7 @@ public class TaxiDepotTest
         var company = new TaxiDepot(DriversList(), CarsList(), UsersList(), RidesList());
 
         var user = (from obj in company.Rides
-            where (obj.UserInfo == new User("Kotov", "Stanislav", "Pavlovich", "89290334434"))
+            where (obj.UserInfo == new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434"))
             select obj.UserInfo).Count();
         Assert.Equal(3, user);
     }
@@ -348,7 +348,7 @@ public class TaxiDepotTest
         var company = new TaxiDepot(DriversList(), CarsList(), UsersList(), RidesList());
 
         var time = (from obj in company.Rides
-            where (obj.TripCar == new Car("A279TT163", "BMW E34", "Purple"))
+            where (obj.TripCar == new Car(0, "A279TT163", "BMW E34", "Purple"))
             select obj.TripTime).ToList();
         var minTime = time.Min();
         Assert.Equal(new TimeSpan(2,3, 4), minTime);
@@ -362,7 +362,7 @@ public class TaxiDepotTest
         var company = new TaxiDepot(DriversList(), CarsList(), UsersList(), RidesList());
         var user = (from obj in company.Rides
             where (obj.TripDate < new DateTime(2022, 12, 12, 12, 12, 12) && 
-                   obj.UserInfo == new User("Kotov", "Stanislav", "Pavlovich", "89290334434"))
+                   obj.UserInfo == new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434"))
             select obj.UserInfo).Count();
         Assert.Equal(3, user);
     }

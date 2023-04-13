@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepo.Classes", "TaxiDep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepoTests", "TaxiDepo\TaxiDepo.Tests\TaxiDepoTests.csproj", "{81FFC2C5-B61F-48BD-9440-0B1EF4EB0AAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepo.Server", "TaxiDepo.Server\TaxiDepo.Server.csproj", "{6632216E-2DBD-483F-8CEB-5D623A2B625D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{81FFC2C5-B61F-48BD-9440-0B1EF4EB0AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81FFC2C5-B61F-48BD-9440-0B1EF4EB0AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81FFC2C5-B61F-48BD-9440-0B1EF4EB0AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6632216E-2DBD-483F-8CEB-5D623A2B625D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6632216E-2DBD-483F-8CEB-5D623A2B625D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6632216E-2DBD-483F-8CEB-5D623A2B625D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6632216E-2DBD-483F-8CEB-5D623A2B625D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

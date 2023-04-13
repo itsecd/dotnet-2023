@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxiDepo.Classes</name>
+    </assembly>
+    <members>
+        <member name="T:TaxiDepo.Domain.Car">
+            <summary>
+            Class car
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.Id">
+            <summary>
+            Car id 
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.CarNumber">
+            <summary>
+            Car government number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.CarModel">
+            <summary>
+            Car model
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.CarColor">
+            <summary>
+            Car color
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.CarIsAssigned">
+            <summary>
+            Indicator that the driver is assigned to the car
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.AssignedDriver">
+            <summary>
+            Assigned driver info
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Car.CarRides">
+            <summary>
+            Rides collection
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.#ctor">
+            <summary>
+            Constructor without parameters to instantiate the class Car
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Constructor with parameters to instantiate the class Car
+            </summary>
+            <param name="id">Car id</param>
+            <param name="number">Car goverment number</param>
+            <param name="model">Car model</param>
+            <param name="color">Car color</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.TrySignDriver(TaxiDepo.Domain.Driver)">
+            <summary>
+            Try to sign a driver
+            </summary>
+            <param name="driverInfo"></param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.TryAddRideToCollection(TaxiDepo.Domain.Ride)">
+            <summary>
+            Try to add ride to car collection
+            </summary>
+            <param name="rideInfo"></param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.Equals(System.Object)">
+            <summary>
+            Overload Equals
+            </summary>
+            <param name="carObj">Car class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.op_Equality(TaxiDepo.Domain.Car,TaxiDepo.Domain.Car)">
+            <summary>
+            Overload == through Equals
+            </summary>
+            <param name="carObj1">Car class object</param>
+            <param name="carObj2">Car class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.op_Inequality(TaxiDepo.Domain.Car,TaxiDepo.Domain.Car)">
+            <summary>
+            Overload != through Equals
+            </summary>
+            <param name="carObj1">Car class object</param>
+            <param name="carObj2">Car class object</param>
+            <returns>True - not equal or false - equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.PrintCarData(TaxiDepo.Domain.Car)">
+            <summary>
+            Print function
+            </summary>
+            <param name="obj">Car class object</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.GetHashCode">
+            <summary>
+            Get hash code func
+            </summary>
+            <returns>Integer hash code</returns>
+        </member>
+        <member name="T:TaxiDepo.Domain.Driver">
+            <summary>
+            Driver class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.Id">
+            <summary>
+            Driver id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverSurname">
+            <summary>
+            Driver surname
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverName">
+            <summary>
+            Driver name
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverPatronymic">
+            <summary>
+            Driver patronymic
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverPassportId">
+            <summary>
+            Driver passport ID
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverAddress">
+            <summary>
+            Driver address
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverPhoneNumber">
+            <summary>
+            Driver phone number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.DriverIsAssigned">
+            <summary>
+            Indicator that the driver is assigned to the car
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Driver.AssignedCar">
+            <summary>
+            Assigned car info
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.#ctor">
+            <summary>
+            Constructor without parameters to instantiate the class Driver
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Constructor with parameters to instantiate the class Driver
+            </summary>
+            <param name="id">Driver id</param>
+            <param name="surname">Driver surname</param>
+            <param name="name">Driver name</param>
+            <param name="patronymic">Driver patronymic</param>
+            <param name="passportId">Driver passport ID</param>
+            <param name="address">Driver address</param>
+            <param name="phoneNumber">Driver phone number</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.TrySignCar(TaxiDepo.Domain.Car)">
+            <summary>
+            Try to sign driver to car
+            </summary>
+            <param name="carInfo"></param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.Equals(System.Object)">
+            <summary>
+            Overload Equals
+            </summary>
+            <param name="driverObj">Driver class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.op_Equality(TaxiDepo.Domain.Driver,TaxiDepo.Domain.Driver)">
+            <summary>
+            Overload == through Equals
+            </summary>
+            <param name="driverObj1">Driver class object</param>
+            <param name="driverObj2">Driver class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.op_Inequality(TaxiDepo.Domain.Driver,TaxiDepo.Domain.Driver)">
+            <summary>
+            Overload != through Equals
+            </summary>
+            <param name="driverObj1">Driver class object</param>
+            <param name="driverObj2">Driver class object</param>
+            <returns>True - not equal or false - equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.PrintDriverData(TaxiDepo.Domain.Driver)">
+            <summary>
+            Print function
+            </summary>
+            <param name="obj">Driver class object</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Driver.GetHashCode">
+            <summary>
+            Get hash code func
+            </summary>
+            <returns>Integer hash code</returns>
+        </member>
+        <member name="T:TaxiDepo.Domain.Ride">
+            <summary>
+            Ride class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.Id">
+            <summary>
+            Ride id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripDeparturePlace">
+            <summary>
+            Departure place 
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripDestinationPlace">
+            <summary>
+            Destination place
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripDate">
+            <summary>
+            Trip date
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripTime">
+            <summary>
+            Trip time
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripPrice">
+            <summary>
+            Trip price
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.TripCar">
+            <summary>
+            Assigned car
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.UserInfo">
+            <summary>
+            Information about the user who made this trip
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.#ctor">
+            <summary>
+            Constructor without parameters to instantiate the class Ride
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.#ctor(System.Int32,System.String,System.String,System.DateTime,System.TimeSpan,System.Double,TaxiDepo.Domain.Car,TaxiDepo.Domain.User)">
+            <summary>
+            Constructor with parameters to instantiate the class Ride
+            </summary>
+            <param name="id">Ride</param>
+            <param name="departurePlace">Departure place of trip</param>
+            <param name="destinationPlace">Destination place of trip</param>
+            <param name="date">Date trip</param>
+            <param name="time">Trip time</param>
+            <param name="price">Trip price</param>
+            <param name="auto">Trip assigned auto</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.Equals(System.Object)">
+            <summary>
+            Overload Equals
+            </summary>
+            <param name="rideObj">Ride class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.op_Equality(TaxiDepo.Domain.Ride,TaxiDepo.Domain.Ride)">
+            <summary>
+            Overload == through Equals
+            </summary>
+            <param name="rideObj1">Ride class object</param>
+            <param name="rideObj2">Ride class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.op_Inequality(TaxiDepo.Domain.Ride,TaxiDepo.Domain.Ride)">
+            <summary>
+            Overload != through Equals
+            </summary>
+            <param name="rideObj1">Ride class object</param>
+            <param name="rideObj2">Ride class object</param>
+            <returns>True - not equal or false - equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.PrintCarData(TaxiDepo.Domain.Ride)">
+            <summary>
+            Print function
+            </summary>
+            <param name="obj">Ride class object</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Ride.GetHashCode">
+            <summary>
+            Get hash code function
+            </summary>
+            <returns>Integer hash code</returns>
+        </member>
+        <member name="T:TaxiDepo.Domain.TaxiDepot">
+            <summary>
+            TaxiDepo class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepot.Drivers">
+            <summary>
+            Drivers who are registered in the taxi company
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepot.Cars">
+            <summary>
+            Cars who are registered in the taxi company
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepot.Users">
+            <summary>
+            Peoples that are used the taxi company
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepot.Rides">
+            <summary>
+            Taxi company's trip info
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.TaxiDepot.#ctor">
+            <summary>
+            Constructor without parameters to instantiate the class TaxiDepot
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.TaxiDepot.#ctor(System.Collections.Generic.List{TaxiDepo.Domain.Driver},System.Collections.Generic.List{TaxiDepo.Domain.Car},System.Collections.Generic.List{TaxiDepo.Domain.User},System.Collections.Generic.List{TaxiDepo.Domain.Ride})">
+            <summary>
+            Constructor with parameters to instantiate the class TaxiDepot
+            </summary>
+            <param name="driverObj">List of drivers(Driver class object)</param>
+            <param name="carObj">List of cars(Car class object)</param>
+            <param name="userObj">List of users(User class object)</param>
+            <param name="rideObj">List of rides(Ride class object)</param>
+        </member>
+        <member name="T:TaxiDepo.Domain.User">
+            <summary>
+            User class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.Id">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserSurname">
+            <summary>
+            User surname
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserPatronymic">
+            <summary>
+            User patronymic
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserPhoneNumber">
+            <summary>
+            User phone number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserRides">
+            <summary>/
+            Rides collection
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.#ctor">
+            <summary>
+            Constructor without parameters to instantiate the class User
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.#ctor(System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructor with parameters to instantiate the class User
+            </summary>
+            <param name="id">User id</param>
+            <param name="surname">User surname</param>
+            <param name="name">User name</param>
+            <param name="patronymic">User patronymic</param>
+            <param name="phoneNumber">User phone number</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.TryAddRideToCollection(TaxiDepo.Domain.Ride)">
+            <summary>
+            Try to add ride to user collection
+            </summary>
+            <param name="rideInfo">Ride info</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.Equals(System.Object)">
+            <summary>
+            Overload Equals
+            </summary>
+            <param name="userObj">User class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.op_Equality(TaxiDepo.Domain.User,TaxiDepo.Domain.User)">
+            <summary>
+            Overload == through Equals
+            </summary>
+            <param name="userObj1">User class object</param>
+            <param name="userObj2">User class object</param>
+            <returns>True - equal or false - not equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.op_Inequality(TaxiDepo.Domain.User,TaxiDepo.Domain.User)">
+            <summary>
+            Overload != through Equals
+            </summary>
+            <param name="userObj1">User class object</param>
+            <param name="userObj2">User class object</param>
+            <returns>True - not equal or false - equal</returns>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.PrintCarData(TaxiDepo.Domain.User)">
+            <summary>
+            Print function
+            </summary>
+            <param name="obj">User class object</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.GetHashCode">
+            <summary>
+            Get hash code func
+            </summary>
+            <returns>Integer hash code</returns>
+        </member>
+    </members>
+</doc>

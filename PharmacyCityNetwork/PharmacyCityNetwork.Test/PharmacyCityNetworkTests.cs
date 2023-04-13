@@ -20,15 +20,5 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
         Assert.Equal("Paracetamol", request[1]);
         Assert.Equal("Aka", request[0]);
     }
-    [Fact]
-    public void ProductsFromPharmacy()
-    {
-        var request = (from pharmacy in _fixture.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacy
-                       where pharmacy.PharmacyName == "Vita"
-                       orderby productPharmacy.Product.ProductName
-                       select productPharmacy.Product.ProductName).ToList();
-        Assert.Equal("Paracetamol", request[1]);
-        Assert.Equal("Aka", request[0]);
-    }
+
 }

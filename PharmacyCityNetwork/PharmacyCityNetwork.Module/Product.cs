@@ -16,18 +16,23 @@
         /// <summary>
         /// Product Group
         /// </summary>
-        public Group Group { get; set; } = new();
+        public Group Group { get; set; }
         /// <summary>
         /// Product Manufacturer
         /// </summary>
-        public Manufacturer Manufacturer { get; set; } = new();
+        public Manufacturer Manufacturer { get; set; }
         /// <summary>
         /// Pharma Group
         /// </summary>
-        public List<PharmaGroup> PharmaGroups { get; set; } = new();   
+        public List<ProductPharmacy> ProductPharmacy { get; set; } = new List<ProductPharmacy>();
+         public List<ProductPharmaGroup> ProductPharmaGroup { get; set; } = new List<ProductPharmaGroup>();
+         public List<Sale> Sales { get; set; } = new List<Sale>();
         public Product() { }
-        public Product(string ProductName)
+        public Product(string productName, int productId, Group group, Manufacturer manufacturer)
         {
-            this.ProductName = ProductName;
+            ProductName = productName;
+            ProductId = productId;
+            Group = group;
+            Manufacturer = manufacturer;
         }
     }

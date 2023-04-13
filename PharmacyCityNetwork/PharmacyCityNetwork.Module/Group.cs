@@ -1,5 +1,5 @@
-namespace PharmacyCityNetwork
-{
+namespace PharmacyCityNetwork;
+
 	/// <summary>
 	/// Сlass describing an group
 	/// </summary>
@@ -13,10 +13,12 @@ namespace PharmacyCityNetwork
 		/// Group Name
 		/// </summary>
 		public string GroupName { get; set; } = string.Empty;
-		public Group() { }
-		public Group(string GroupName)
+    public List<Product> Product{ get; set; } = new List<Product>();
+    public Group() { }
+
+		public Group(string groupName, int groupId)
 		{
-			this.GroupName = GroupName;
+			GroupName = groupName;
+			GroupId = groupId;
 		}
 	}
-}

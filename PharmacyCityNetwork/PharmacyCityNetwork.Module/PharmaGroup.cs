@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
+﻿namespace PharmacyCityNetwork;
 
-namespace PharmacyCityNetwork
-{
     /// <summary>
     /// Сlass describing an pharma group
     /// </summary>
@@ -18,12 +16,12 @@ namespace PharmacyCityNetwork
         /// <summary>
         /// List Products
         /// </summary>
-        //public List<Product> Products = new();
+        public List<ProductPharmaGroup> ProductPharmaGroup = new();
 
         public PharmaGroup() { }
-        public PharmaGroup(string PharmaGroupName)
+        public PharmaGroup(string pharmaGroupName, int pharmaGroupId)
         {
-            this.PharmaGroupName = PharmaGroupName;
+            PharmaGroupName = pharmaGroupName;
+            PharmaGroupId = pharmaGroupId;
         }
     }
-}

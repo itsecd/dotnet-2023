@@ -1,5 +1,5 @@
-﻿namespace PharmacyCityNetwork
-{
+﻿namespace PharmacyCityNetwork;
+
     /// <summary>
     /// Сlass describing an Manufacturer
     /// </summary>
@@ -13,11 +13,11 @@
         /// Manufacturer Name
         /// </summary>
         public string ManufacturerName { get; set; } = string.Empty;
-
+        public List<Product> Product = new();
         public Manufacturer() { }
-        public Manufacturer(string ManufacturerName)
+        public Manufacturer(string manufacturerName, int manufacturerId)
         {
-            this.ManufacturerName = ManufacturerName;
+            ManufacturerName = manufacturerName;
+            ManufacturerId = manufacturerId;
         }
     }
-}

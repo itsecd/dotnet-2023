@@ -1,5 +1,7 @@
-﻿namespace PharmacyCityNetwork
-{
+﻿using System.Collections.Generic;
+
+namespace PharmacyCityNetwork;
+
     /// <summary>
     /// Сlass describing an Pharmancy
     /// </summary>
@@ -25,14 +27,15 @@
         /// Pharmacy Director
         /// </summary>
         public string PharmacyDirector { get; set; } = string.Empty;
+        //public ProductPharmacy ProductPharmacy { get; set; } = new();
+        public List<ProductPharmacy> ProductPharmacy { get; set; } = new List<ProductPharmacy>();
         public Pharmacy() { }
-        public Pharmacy(string PharmancyName, string PharmancyPhone, string PharmancyAddress, string PharmancyDirector)
+        public Pharmacy(string pharmancyName, string pharmancyPhone, string pharmancyAddress, string pharmancyDirector)
         {
-            this.PharmacyPhone = PharmancyPhone;
-            this.PharmacyName = PharmancyName;
-            this.PharmacyAddress = PharmancyAddress;
-            this.PharmacyDirector = PharmancyDirector;
+            PharmacyName = pharmancyName;
+            PharmacyPhone = pharmancyPhone;
+            PharmacyAddress = pharmancyAddress;
+            PharmacyDirector = pharmancyName;
         }
 
     }
-}

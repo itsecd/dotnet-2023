@@ -30,7 +30,7 @@ public class QueryController : ControllerBase
 	[HttpGet("GetUsersByGroupName/{groupName}")]
 	public async Task<List<User>> GetUsersByGroupName(string groupName)
 	{
-		if (groupName == null || groupName.Length == 0)
+		if (string.IsNullOrEmpty(groupName))
 		{
 			throw new ValidationException("Некорректное значение названия группы!");
 		}
@@ -51,7 +51,7 @@ public class QueryController : ControllerBase
 	[HttpGet("GetNotesByGroupName/{groupName}")]
 	public async Task<List<Note>> GetNotesByGroupName(string groupName)
 	{
-		if (groupName == null || groupName.Length == 0)
+		if (string.IsNullOrEmpty(groupName))
 		{
 			throw new ValidationException("Некорректное значение названия группы!");
 		}

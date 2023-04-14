@@ -1,12 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using SocialNetwork.Data.Models;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialNetwork.Data;
 
@@ -15,26 +8,34 @@ namespace SocialNetwork.Data;
 /// </summary>
 public class SocialNetworkContext : DbContext
 {
+	/// <summary>
+	/// Список групп.
+	/// </summary>
 	public DbSet<GroupDBModel> Groups { get; set; }
 
+	/// <summary>
+	/// Список записей.
+	/// </summary>
 	public DbSet<NoteDBModel> Notes { get; set; }	
 
+	/// <summary>
+	/// Список ролей.
+	/// </summary>
 	public DbSet<RoleDBModel> Roles { get; set; }
 
+	/// <summary>
+	/// Список пользователей.
+	/// </summary>
 	public DbSet<UserDBModel> Users { get; set; }
-	
+
+	/// <summary>
+	/// Список связей пользователей, групп и ролей.
+	/// </summary>
+	public DbSet<UserGroupRoleDBModel> UsersGroupsRoles { get; set; }
+
 	public SocialNetworkContext(DbContextOptions options) 
 		: base(options)
 	{
+		Database.EnsureCreated();
 	}
-
-	//public class Factory : IDesignTimeDbContextFactory<SocialNetworkContext>
-	//{
-	//	public SocialNetworkContext CreateDbContext(string[] args)
-	//	{
-	//		var options = new DbContextOptionsBuilder();
-	
-	//		return new SocialNetworkContext(options);
-	//	}
-	//}
 }

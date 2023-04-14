@@ -3,16 +3,16 @@
 namespace SocialNetwork.Web.Middlewares;
 
 /// <summary>
-/// Обработчик запроса с исключением типа Exception.
+/// Обработчик запроса с исключением типа NotFoundException.
 /// </summary>
-public class ValidationExceptionMiddleware
+public class NotFoundExceptionMiddleware
 {
 	/// <summary>
 	/// Следующий обработчик.
 	/// </summary>
 	public readonly RequestDelegate next;
 
-	public ValidationExceptionMiddleware(RequestDelegate next) 
+	public NotFoundExceptionMiddleware(RequestDelegate next) 
 	{
 		this.next = next;
 	}
@@ -27,14 +27,9 @@ public class ValidationExceptionMiddleware
 		{
 			await next(httpContext);
 		}
-		catch (ValidationException ex)
+		catch (NotFoundException ex)
 		{
-			httpContext.Response.StatusCode = 400;
-			await httpContext.Response.WriteAsJsonAsync(ex.Message);
-		}
-		catch (FluentValidation.ValidationException ex) 
-		{
-			httpContext.Response.StatusCode = 400;
+			httpContext.Response.StatusCode = 404;
 			await httpContext.Response.WriteAsJsonAsync(ex.Message);
 		}
 	}

@@ -54,21 +54,6 @@ public class User
     /// </summary>
     public List<Role>? Roles { get; set; }
 
-	/// <summary>
-	/// Создает пользователя с помощью указанных параметров.
-	/// </summary>
-	/// <param name="userId">Идентификатор пользователя.</param>
-	/// <param name="firstName">Имя.</param>
-	/// <param name="lastName">Фамилия.</param>
-	/// <param name="patronymic">Отчество.</param>
-	/// <param name="gender">Пол.</param>
-	/// <param name="birthDate">Дата рождения.</param>
-	/// <param name="registrationDate">Дата регистрации.</param>
-	/// <param name="notes">Записи пользователя.</param>
-	/// <param name="groups">Группы, в которых состоит пользователь.</param>
-	/// <param name="roles">Роли пользователя.</param>
-	/// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
-	/// <exception cref="ArgumentNullException">Объект равен null.</exception>
 	public User(int userId, string firstName, string lastName, string patronymic, string gender,
 		DateTime? birthDate, DateTime? registrationDate, List<Note>? notes, List<Group>? groups,
 		List<Role>? roles)
@@ -85,9 +70,6 @@ public class User
 		Roles = roles;
 	}
 
-	/// <summary>
-	/// Создает пользователя без параметров.
-	/// </summary>
 	public User()
 	{
 	}

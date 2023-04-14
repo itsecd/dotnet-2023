@@ -1,5 +1,8 @@
-﻿using SocialNetwork.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Core;
+using SocialNetwork.Data.Models;
 using SocialNetwork.Domain;
+using System.Data;
 
 namespace SocialNetwork.Data;
 
@@ -9,58 +12,98 @@ namespace SocialNetwork.Data;
 public class SocialNetworkRepository : ISocialNetworkRepository
 {
 	/// <summary>
-	/// Содержит данные о группах.
+	/// Контекст социальной сети.
 	/// </summary>
-	private readonly List<Group> _groups;
+	private readonly SocialNetworkContext _context;
 
-	/// <summary>
-	/// Содержит данные о записях.
-	/// </summary>
-	private readonly List<Note> _notes;
-
-	/// <summary>
-	/// Содержит данные о ролях.
-	/// </summary>
-	private readonly List<Role> _roles;
-
-	/// <summary>
-	/// Содержит данные о пользователях.
-	/// </summary>
-	private readonly List<User> _users;
-
-	/// <summary>
-	/// Создает репозиторий.
-	/// </summary>
-	public SocialNetworkRepository()
+	public SocialNetworkRepository(SocialNetworkContext context)
 	{
-		_groups = new List<Group>();
-		_notes = new List<Note>();
-		_roles = new List<Role>();
-		_users = new List<User>();
+		_context = context;
 	}
 
 	/// <summary>
 	/// Получение всех групп социальной сети.
 	/// </summary>
 	/// <returns>Последовательность групп.</returns>
-	public IEnumerable<Group> GetAllGroups() => _groups;
+	public async Task<IEnumerable<Group>> GetAllGroups()
+	{
+		var groups = await _context.Groups.ToListAsync();
+		var result = new List<Group>();
+
+		foreach (var group in groups)
+		{
+			result.Add(new Group
+			{
+				Id = group.Id,
+				Name = group.Name,
+				Description = group.Description,
+				CreationDate = group.CreationDate,
+				User = await GetUser(group.UserId),
+			});
+		}
+
+		return result;
+	}
 
 	/// <summary>
 	/// Получение группы по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор группы, которую необходимо получить.</param>
 	/// <returns>Группу.</returns>
-	public Group GetGroup(int id) => _groups.FirstOrDefault(group => group.Id == id);
+	public async Task<Group?> GetGroup(int id)
+	{
+		var group = await _context.Groups.FirstOrDefaultAsync(group => group.Id == id);
 
+		return group == null 
+			? null 
+			: new Group
+			{
+				Id = group.Id,
+				Name = group.Name,
+				Description = group.Description,
+				CreationDate = group.CreationDate,
+				User = await GetUser(group.UserId),
+			};
+	}
+		
 	/// <summary>
 	/// Создание группы.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
-	public void CreateGroup(Group model)
+	public async Task CreateGroup(Group model)
 	{
-		model.Notes = new List<Note>();
+		await _context.Groups.AddAsync(new GroupDBModel
+		{
+			Name = model.Name,
+			Description = model.Description,
+			CreationDate = model.CreationDate,
+			UserId = model.UserId,
+		});
 
-		_groups.Add(model);
+		var adminRole = await _context.Roles.FirstOrDefaultAsync(role =>  
+			role.Name == "Админ");
+
+		if (adminRole == null) 
+		{
+			await CreateRole(new Role
+			{
+				Name = "Админ"
+			});
+
+			adminRole = await _context.Roles.FirstOrDefaultAsync(role =>
+				role.Name == "Админ");
+		}
+
+		await _context.SaveChangesAsync();
+
+		await _context.UsersGroupsRoles.AddAsync(new UserGroupRoleDBModel
+		{
+			UserId = model.UserId,
+			GroupId = model.Id,
+			RoleId = adminRole.Id
+		});
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -68,47 +111,95 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// </summary>
 	/// <param name="id">Идентификатор группы, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой группе.</param>
-	public void UpdateGroup(int id, Group model)
+	public async Task UpdateGroup(int id, Group model)
 	{
-		var entity = _groups.First(group => group.Id == id);
+		var entity = await _context.Groups.FirstAsync(group => group.Id == id);
 
 		entity.Name = model.Name;
 		entity.Description = model.Description;
 		entity.CreationDate = model.CreationDate;
 		entity.UserId = model.UserId;
-		entity.User = model.User;
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Удаление группы по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор группы, которую необходимо удалить.</param>
-	public void DeleteGroup(int id)
+	public async Task DeleteGroup(int id)
 	{
-		_groups.Remove(_groups.First(group => group.Id == id));
+		_context.Groups.Remove(await _context.Groups.FirstAsync(group => group.Id == id));
+
+		_context.UsersGroupsRoles.RemoveRange((await _context
+			.UsersGroupsRoles.ToListAsync()).Where(userRoleGroup => userRoleGroup.GroupId == id));
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Получение всех записей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность записей.</returns>
-	public IEnumerable<Note> GetAllNotes() => _notes;
+	public async Task<IEnumerable<Note>> GetAllNotes()
+	{
+		var notes = await _context.Notes.ToListAsync(); 
+		var result = new List<Note>();
+
+		foreach (var note in notes)
+		{
+			result.Add(new Note
+			{
+				Id = note.Id,
+				Name = note.Name,
+				Description = note.Description,
+				CreationDate = note.CreationDate,
+				User = await GetUser(note.UserId),
+				Group = await GetGroup(note.GroupId),
+			});
+		}
+
+		return result;
+	}
 
 	/// <summary>
 	/// Получение записи по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо получить.</param>
 	/// <returns>Запись.</returns>
-	public Note GetNote(int id) => _notes.First(note => note.Id == id);
-	
+	public async Task<Note?> GetNote(int id)
+	{
+		var note = await _context.Notes.FirstOrDefaultAsync(note => note.Id == id);
 
+		return note == null
+			? null
+			: new Note
+			{
+				Id = note.Id,
+				Name = note.Name,
+				Description = note.Description,
+				CreationDate = note.CreationDate,
+				User = await GetUser(note.UserId),
+				Group = await GetGroup(note.GroupId)
+			};
+	}
+	
 	/// <summary>
 	/// Создание записи.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
-	public void CreateNote(Note model)
+	public async Task CreateNote(Note model)
 	{
-		_notes.Add(model);
+		await _context.Notes.AddAsync(new NoteDBModel
+		{
+			Name = model.Name,
+			Description = model.Description,
+			CreationDate = model.CreationDate,
+			UserId = model.UserId,
+			GroupId = model.GroupId
+		});
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -116,48 +207,82 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// </summary>
 	/// <param name="id">Идентификатор записи, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой записи.</param>
-	public void UpdateNote(int id, Note model)
+	public async Task UpdateNote(int id, Note model)
 	{
-		var entity = _notes.First(note => note.Id == id);
+		var entity = await _context.Notes.FirstAsync(note => note.Id == id);
 
 		entity.Name = model.Name;
 		entity.Description = model.Description;
 		entity.CreationDate = model.CreationDate;
 		entity.UserId = model.UserId;
-		entity.User = model.User;
 		entity.GroupId = model.GroupId;
-		entity.Group = model.Group;
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Удаление записи по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо удалить.</param>
-	public void DeleteNote(int id)
+	public async Task DeleteNote(int id)
 	{
-		_notes.Remove(_notes.First(note => note.Id == id));
+		_context.Notes.Remove(await _context.Notes.FirstAsync(note => note.Id == id));
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Получение всех ролей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность ролей.</returns>
-	public IEnumerable<Role> GetAllRoles() => _roles;
+	public async Task<IEnumerable<Role>> GetAllRoles()
+	{
+		var roles = await _context.Roles.ToListAsync();
+		var result = new List<Role>();
+
+		foreach (var role in roles)
+		{
+			result.Add(new Role
+			{
+				Id = role.Id,
+				Name = role.Name,
+			});
+		}
+
+		return result;
+	}
 
 	/// <summary>
 	/// Получение роли по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор роли, которую необходимо получить.</param>
 	/// <returns>Роль.</returns>
-	public Role GetRole(int id) => _roles.FirstOrDefault(role => role.Id == id);
+	public async Task<Role?> GetRole(int id)
+	{
+		var role = await _context.Roles.FirstOrDefaultAsync(role => role.Id == id);
+		var usersGroupsRoles = await _context.UsersGroupsRoles.ToListAsync();
+
+		return role == null
+			? null
+			: new Role
+			{
+				Id = role.Id,
+				Name = role.Name,
+			};
+	}
 
 	/// <summary>
 	/// Создание роли.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
-	public void CreateRole(Role model)
+	public async Task CreateRole(Role model)
 	{
-		_roles.Add(model);
+		await _context.Roles.AddAsync(new RoleDBModel
+		{
+			Name = model.Name
+		});
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -165,43 +290,96 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// </summary>
 	/// <param name="id">Идентификатор роли, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой роли.</param>
-	public void UpdateRole(int id, Role model)
+	public async Task UpdateRole(int id, Role model)
 	{
-		var entity = _roles.First(role => role.Id == id);
+		var entity = await _context.Roles.FirstAsync(role => role.Id == id);
 
 		entity.Name = model.Name;
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Удаление роли по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор роли, которую необходимо удалить.</param>
-	public void DeleteRole(int id)
+	public async Task DeleteRole(int id)
 	{
-		_roles.Remove(_roles.First(role => role.Id == id));
-	}
+		_context.Roles.Remove(await _context.Roles.FirstAsync(role => role.Id == id));
 
+		_context.UsersGroupsRoles.RemoveRange((await _context
+			.UsersGroupsRoles.ToListAsync()).Where(userRoleGroup => userRoleGroup.RoleId == id));
+
+		await _context.SaveChangesAsync();
+	}
 
 	/// <summary>
 	/// Получение всех пользователей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность пользователей.</returns>
-	public IEnumerable<User> GetAllUsers() => _users;
+	public async Task<IEnumerable<User>> GetAllUsers()
+	{
+		var users = await _context.Users.ToListAsync(); 
+		var result = new List<User>();
+
+		foreach (var user in users)
+		{
+			result.Add(new User
+			{
+				Id = user.Id,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Patronymic = user.Patronymic,
+				Gender = user.Gender,
+				BirthDate = user.BirthDate,
+				RegistrationDate = user.RegistrationDate,
+			});
+		}
+
+		return result;
+	}
 
 	/// <summary>
 	/// Получение пользователя по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которого необходимо получить.</param>
 	/// <returns>Пользователя.</returns>
-	public User GetUser(int id) => _users.FirstOrDefault(user => user.Id == id);
+	public async Task<User?> GetUser(int id)
+	{
+		var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+		var usersGroupsRoles = await _context.UsersGroupsRoles.ToListAsync();
+
+		return user == null
+			? null
+			: new User
+			{
+				Id = user.Id,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Patronymic = user.Patronymic,
+				Gender = user.Gender,
+				BirthDate = user.BirthDate,
+				RegistrationDate = user.RegistrationDate,
+			};
+	}
 
 	/// <summary>
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	public void CreateUser(User model)
+	public async Task CreateUser(User model)
 	{
-		_users.Add(model);
+		await _context.Users.AddAsync(new UserDBModel
+		{
+			FirstName = model.FirstName,
+			LastName = model.LastName,
+			Patronymic = model.Patronymic,
+			Gender = model.Gender,
+			BirthDate = model.BirthDate,
+			RegistrationDate = model.RegistrationDate
+		});
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -209,9 +387,9 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, данные которого необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимому пользователю.</param>
-	public void UpdateUser(int id, User model)
+	public async Task UpdateUser(int id, User model)
 	{
-		var entity = _users.First(user => user.Id == id);
+		var entity = await _context.Users.FirstAsync(user => user.Id == id);
 
 		entity.FirstName = model.FirstName;
 		entity.LastName = model.LastName;
@@ -219,14 +397,21 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 		entity.Gender = model.Gender;
 		entity.BirthDate = model.BirthDate;
 		entity.RegistrationDate = model.RegistrationDate;
+
+		await _context.SaveChangesAsync();
 	}
 
 	/// <summary>
 	/// Удаление пользователя по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которого необходимо удалить.</param>
-	public void DeleteUser(int id)
+	public async Task DeleteUser(int id)
 	{
-		_users.Remove(_users.First(user => user.Id == id));	
+		_context.Users.Remove(await _context.Users.FirstAsync(user => user.Id == id));
+
+		_context.UsersGroupsRoles.RemoveRange((await _context
+			.UsersGroupsRoles.ToListAsync()).Where(userRoleGroup => userRoleGroup.UserId == id));
+
+		await _context.SaveChangesAsync();
 	}
 }

@@ -31,9 +31,4 @@ public class GroupDtoGet
 	/// Создатель.
 	/// </summary>
 	public User? User { get; set; }
-
-	/// <summary>
-	/// Записи группы.
-	/// </summary>
-	public List<Note>? Notes { get; set; }
 }

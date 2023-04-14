@@ -1,6 +1,4 @@
-﻿using SocialNetwork.Domain;
-
-namespace SocialNetwork.Web.Controllers.Users.Dto;
+﻿namespace SocialNetwork.Web.Controllers.Users.Dto;
 
 /// <summary>
 /// Dto пользователя для GET операций.
@@ -40,19 +38,4 @@ public class UserDtoGet
 	/// Дата регистрации.	
 	/// </summary>	
 	public DateTime? RegistrationDate { get; set; }
-
-	/// <summary>
-	/// Записи пользователя.
-	/// </summary>
-	public List<Note>? Notes { get; set; }
-
-	/// <summary>
-	/// Группы пользователя.
-	/// </summary>
-	public List<Group>? Groups { get; set; }
-
-	/// <summary>
-	/// Роли пользователя.
-	/// </summary>
-	public List<Role>? Roles { get; set; }
 }

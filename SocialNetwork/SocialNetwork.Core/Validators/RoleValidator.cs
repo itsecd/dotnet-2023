@@ -8,9 +8,6 @@ namespace SocialNetwork.Core.Validators;
 /// </summary>
 public class RoleValidator : AbstractValidator<Role>
 {
-	/// <summary>
-	/// Валидация объекта роли.
-	/// </summary>
 	public RoleValidator()
 	{
 		RuleFor(role => role.Name).NotEmpty().WithMessage("Название роли не должно быть пустым.");

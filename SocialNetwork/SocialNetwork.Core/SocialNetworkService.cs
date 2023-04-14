@@ -34,10 +34,6 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	private readonly IValidator<User> _userValidator;
 
-	/// <summary>
-	/// Создание сервиса с помощью указанных данных.
-	/// </summary>
-	/// <param name="socialNetworkRepository">Репозиторий.</param>
 	public SocialNetworkService(ISocialNetworkRepository socialNetworkRepository)
 	{
 		_socialNetworkRepository = socialNetworkRepository;
@@ -51,24 +47,24 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Получение всех групп социальной сети.
 	/// </summary>
 	/// <returns>Последовательность групп.</returns>
-	public IEnumerable<Group> GetAllGroups() => _socialNetworkRepository.GetAllGroups();
+	public async Task<IEnumerable<Group>> GetAllGroups() => await _socialNetworkRepository.GetAllGroups();
 
 	/// <summary>
 	/// Получение группы по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор группы, которую необходимо получить.</param>
 	/// <returns>Группу.</returns>
-	/// <exception cref="ValidationException">Группа с указанным идентификатором не найдена.</exception>
-	public Group GetGroup(int id)
+	/// <exception cref="NotFoundException">Группа с указанным идентификатором не найдена.</exception>
+	public async Task<Group> GetGroup(int id)
 	{
-		var entity = _socialNetworkRepository.GetGroup(id);
+		var group = await _socialNetworkRepository.GetGroup(id);
 
-		if (entity == null)
+		if (group == null)
 		{
-			throw new ValidationException("Группа с указанным идентификатором не найден!");
+			throw new NotFoundException("Группа с указанным идентификатором не найдена!");
 		}
 
-		return entity; 
+		return group;
 	}
 
 	/// <summary>
@@ -76,15 +72,16 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
 	/// <exception cref="ValidationException">Невалидный объект.</exception>
-	public void CreateGroup(Group model)
+	public async Task CreateGroup(Group model)
 	{
 		_groupValidator.Validate(model);
 
-		var user = GetUser(model.UserId);
-		user.Groups!.Add(model);
-		model.User = user;
+		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
+		{
+			throw new ValidationException("Попытка присвоить группе несуществующий идентификатор создателя!");
+		}
 
-		_socialNetworkRepository.CreateGroup(model);
+		await _socialNetworkRepository.CreateGroup(model);
 	}
 
 	/// <summary>
@@ -92,33 +89,43 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="id">Идентификатор группы, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой группе.</param>
-	/// <exception cref="ValidationException">Группа с указанным идентификатором не найдена.</exception>
-	public void UpdateGroup(int id, Group model)
+	/// <exception cref="NotFoundException">Группа с указанным идентификатором не найдена.</exception>
+	/// <exception cref="ValidationException">Попытка присвоить группе несуществующий идентификатор создателя!</exception>
+	public async Task UpdateGroup(int id, Group model)
 	{
 		_groupValidator.Validate(model);
-		GetGroup(id);
 
-		var user = GetUser(model.UserId);
-		user.Groups!.Add(model);
-		model.User = user;
+		if (await _socialNetworkRepository.GetGroup(id) == null)
+		{
+			throw new NotFoundException("Группа с указанным идентификатором не найдена!");
+		}
 
-		_socialNetworkRepository.UpdateGroup(id, model);
+		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
+		{
+			throw new ValidationException("Попытка присвоить группе несуществующий идентификатор создателя!");
+		}
+
+		await _socialNetworkRepository.UpdateGroup(id, model);
 	}
 
 	/// <summary>
 	/// Удаление группы по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор группы, которую необходимо удалить.</param>
-	/// <exception cref="ValidationException">Группа с указанным идентификатором не найдена.</exception>
-	public void DeleteGroup(int id)
+	/// <exception cref="NotFoundException">Группа с указанным идентификатором не найдена.</exception>
+	public async Task DeleteGroup(int id)
 	{
-		GetGroup(id);
-
-		_socialNetworkRepository.DeleteGroup(id);
-
-		foreach (var element in _socialNetworkRepository.GetAllNotes().Where(note => note.GroupId == id))
+		if (await _socialNetworkRepository.GetGroup(id) == null)
 		{
-			_socialNetworkRepository.DeleteNote(element.Id);
+			throw new NotFoundException("Группа с указанным идентификатором не найдена!");
+		}
+
+		await _socialNetworkRepository.DeleteGroup(id);
+
+		foreach (var note in (await _socialNetworkRepository.GetAllNotes()).
+			Where(note => note.GroupId == id))
+		{
+			await _socialNetworkRepository.DeleteNote(note.Id);
 		}
 	}
 
@@ -126,44 +133,47 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Получение всех записей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность записей.</returns>
-	public IEnumerable<Note> GetAllNotes() => _socialNetworkRepository.GetAllNotes();
+	public async Task<IEnumerable<Note>> GetAllNotes() => await _socialNetworkRepository.GetAllNotes();
 
 	/// <summary>
 	/// Получение записи по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо получить.</param>
 	/// <returns>Запись.</returns>
-	/// <exception cref="ValidationException">Запись с указанным идентификатором не найдена.</exception>
-	public Note GetNote(int id)
+	/// <exception cref="NotFoundException">Запись с указанным идентификатором не найдена.</exception>
+	public async Task<Note> GetNote(int id)
 	{
-		var entity = _socialNetworkRepository.GetNote(id);
+		var note = await _socialNetworkRepository.GetNote(id);
 
-		if (entity == null)
+		if (note == null)
 		{
-			throw new ValidationException("Запись с указанным идентификатором не найдена!");
+			throw new NotFoundException("Запись с указанным идентификатором не найдена!");
 		}
 
-		return entity;
+		return note;
 	}
 
 	/// <summary>
 	/// Создание записи.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
-	public void CreateNote(Note model)
+	/// <exception cref="ValidationException">Попытка создать запись с несуществующим идентификатором автора
+	/// или несуществующим идентификатором группы!</exception>
+	public async Task CreateNote(Note model)
 	{
 		_noteValidator.Validate(model);
 
-		var group = GetGroup(model.GroupId);
-		var user = GetUser(model.UserId);
+		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
+		{
+			throw new ValidationException("Попытка создать запись с несуществующим идентификатором автора!");
+		}
 
-		group.Notes!.Add(model);
-		user.Notes!.Add(model);
+		if (await _socialNetworkRepository.GetGroup(model.GroupId) == null)
+		{
+			throw new ValidationException("Попытка создать запись с несуществующим идентификатором группы!");
+		}
 
-		model.Group = group;
-		model.User = user;
-
-		_socialNetworkRepository.CreateNote(model);
+		await _socialNetworkRepository.CreateNote(model);
 	}
 
 	/// <summary>
@@ -171,54 +181,65 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="id">Идентификатор записи, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой записи.</param>
-	/// <exception cref="ValidationException">Запись с указанным идентификатором не найдена.</exception>
-	public void UpdateNote(int id, Note model)
+	/// <exception cref="NotFoundException">Запись с указанным идентификатором не найдена.</exception>
+	/// <exception cref="ValidationException">Попытка создать запись с несуществующим идентификатором автора
+	/// или несуществующим идентификатором группы!</exception>
+	public async Task UpdateNote(int id, Note model)
 	{
 		_noteValidator.Validate(model);
 
-		var group = GetGroup(model.GroupId);
-		var user = GetUser(model.UserId);
+		if (await _socialNetworkRepository.GetNote(id) == null)
+		{
+			throw new NotFoundException("Запись с указанным идентификатором не найдена!");
+		}
 
-		group.Notes!.Add(model);
-		user.Notes!.Add(model);
+		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
+		{
+			throw new ValidationException("Попытка создать запись с несуществующим идентификатором автора!");
+		}
 
-		model.Group = group;
-		model.User = user;
+		if (await _socialNetworkRepository.GetGroup(model.GroupId) == null)
+		{
+			throw new ValidationException("Попытка создать запись с несуществующим идентификатором группы!");
+		}
 
-		_socialNetworkRepository.UpdateNote(id, model);
+		await _socialNetworkRepository.UpdateNote(id, model);
 	}
 
 	/// <summary>
 	/// Удаление записи по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо удалить.</param>
-	/// <exception cref="ValidationException">Запись с указанным идентификатором не найдена.</exception>
-	public void DeleteNote(int id)
+	/// <exception cref="NotFoundException">Запись с указанным идентификатором не найдена.</exception>
+	public async Task DeleteNote(int id)
 	{
-		GetNote(id);
+		if (await _socialNetworkRepository.GetNote(id) == null)
+		{
+			throw new NotFoundException("Запись с указанным идентификатором не найдена!");
+		}
 
-		_socialNetworkRepository.DeleteNote(id);
+		await _socialNetworkRepository.DeleteNote(id);
 	}
 
 	/// <summary>
 	/// Получение всех ролей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность ролей.</returns>
-	public IEnumerable<Role> GetAllRoles() => _socialNetworkRepository.GetAllRoles();
+	public async Task<IEnumerable<Role>> GetAllRoles() => await _socialNetworkRepository.GetAllRoles();
 
 	/// <summary>
 	/// Получение роли по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор роли, которую необходимо получить.</param>
 	/// <returns>Роль.</returns>
-	/// <exception cref="ValidationException">Роль с указанным идентификатором не найдена.</exception>
-	public Role GetRole(int id)
+	/// <exception cref="NotFoundException">Роль с указанным идентификатором не найдена.</exception>
+	public async Task<Role> GetRole(int id)
 	{
-		var entity = _socialNetworkRepository.GetRole(id);
+		var entity = await _socialNetworkRepository.GetRole(id);
 
 		if (entity == null)
 		{
-			throw new ValidationException("Роль с указанным идентификатором не найдена!");
+			throw new NotFoundException("Роль с указанным идентификатором не найдена!");
 		}
 
 		return entity;
@@ -228,11 +249,18 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Создание роли.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
-	public void CreateRole(Role model)
+	/// <exception cref="ValidationException">Роль с указанным названием уже присутствует!</exception>
+	public async Task CreateRole(Role model)
 	{
 		_roleValidator.Validate(model);
 
-		_socialNetworkRepository.CreateRole(model);
+		if ((await _socialNetworkRepository.GetAllRoles())
+			.Where(role => role.Name == model.Name).ToList().Count != 0)
+		{
+			throw new ValidationException("Роль с указанным названием уже присутствует!");
+		}
+
+		await _socialNetworkRepository.CreateRole(model);
 	}
 
 	/// <summary>
@@ -240,25 +268,32 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="id">Идентификатор роли, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой роли.</param>
-	/// <exception cref="ValidationException">Роль с указанным идентификатором не найдена.</exception>
-	public void UpdateRole(int id, Role model)
+	/// <exception cref="NotFoundException">Роль с указанным идентификатором не найдена.</exception>
+	public async Task UpdateRole(int id, Role model)
 	{
-		GetRole(id);
 		_roleValidator.Validate(model);
 
-		_socialNetworkRepository.UpdateRole(id, model);
+		if (_socialNetworkRepository.GetRole(id) == null)
+		{
+			throw new NotFoundException("Роль с указанным идентификатором не найдена!");
+		}
+
+		await _socialNetworkRepository.UpdateRole(id, model);
 	}
 
 	/// <summary>
 	/// Удаление роли по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор роли, которую необходимо удалить.</param>
-	/// <exception cref="ValidationException">Роль с указанным идентификатором не найдена.</exception>
-	public void DeleteRole(int id)
+	/// <exception cref="NotFoundException">Роль с указанным идентификатором не найдена.</exception>
+	public async Task DeleteRole(int id)
 	{
-		GetRole(id);
+		if (await _socialNetworkRepository.GetRole(id) == null)
+		{
+			throw new NotFoundException("Роль с указанным идентификатором не найдена!");
+		}
 
-		_socialNetworkRepository.DeleteRole(id);
+		await _socialNetworkRepository.DeleteRole(id);
 	}
 
 
@@ -266,21 +301,21 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Получение всех пользователей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность пользователей.</returns>
-	public IEnumerable<User> GetAllUsers() => _socialNetworkRepository.GetAllUsers();
+	public async Task<IEnumerable<User>> GetAllUsers() => await _socialNetworkRepository.GetAllUsers();
 
 	/// <summary>
 	/// Получение пользователя по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которого необходимо получить.</param>
 	/// <returns>Пользователя.</returns>
-	/// <exception cref="ValidationException">Пользователь с указанным идентификатором не найден.</exception>
-	public User GetUser(int id)
+	/// <exception cref="NotFoundException">Пользователь с указанным идентификатором не найден.</exception>
+	public async Task<User> GetUser(int id)
 	{
-		var entity = _socialNetworkRepository.GetUser(id);
+		var entity = await _socialNetworkRepository.GetUser(id);
 
 		if (entity == null)
 		{
-			throw new ValidationException("Пользователь с указанным идентификатором не найден!");
+			throw new NotFoundException("Пользователь с указанным идентификатором не найден!");
 		}
 
 		return entity;
@@ -290,11 +325,11 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	public void CreateUser(User model)
+	public async Task CreateUser(User model)
 	{
 		_userValidator.Validate(model); 
 
-		_socialNetworkRepository.CreateUser(model);
+		await _socialNetworkRepository.CreateUser(model);
 	}
 
 	/// <summary>
@@ -302,34 +337,43 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, данные которого необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимому пользователю.</param>
-	/// <exception cref="ValidationException">Пользователь с указанным идентификатором не найден.</exception>
-	public void UpdateUser(int id, User model)
+	/// <exception cref="NotFoundException">Пользователь с указанным идентификатором не найден.</exception>
+	public async Task UpdateUser(int id, User model)
 	{
-		GetUser(id);
 		_userValidator.Validate(model);
 
-		_socialNetworkRepository.UpdateUser(id, model);
+		if (await _socialNetworkRepository.GetUser(id) == null)
+		{
+			throw new NotFoundException("Пользователь с указанным идентификатором не найден!");
+		}
+
+		await _socialNetworkRepository.UpdateUser(id, model);
 	}
 
 	/// <summary>
 	/// Удаление пользователя по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которого необходимо удалить.</param>
-	/// <exception cref="ValidationException">Пользователь с указанным идентификатором не найден.</exception>
-	public void DeleteUser(int id)
+	/// <exception cref="NotFoundException">Пользователь с указанным идентификатором не найден.</exception>
+	public async Task DeleteUser(int id)
 	{
-		GetUser(id);
-
-		_socialNetworkRepository.DeleteUser(id);
-
-		foreach (var element in _socialNetworkRepository.GetAllGroups().Where(group => group.UserId == id))
+		if (await _socialNetworkRepository.GetUser(id) == null)
 		{
-			_socialNetworkRepository.DeleteGroup(element.Id);
+			throw new NotFoundException("Пользователь с указанным идентификатором не найден!");
 		}
 
-		foreach (var element in _socialNetworkRepository.GetAllNotes().Where(note => note.UserId == id))
+		await _socialNetworkRepository.DeleteUser(id);
+
+		foreach (var group in (await _socialNetworkRepository.GetAllGroups())
+			.Where(group => group.UserId == id))
 		{
-			_socialNetworkRepository.DeleteNote(element.Id);
+			await _socialNetworkRepository.DeleteGroup(group.Id);
+		}
+
+		foreach (var note in (await _socialNetworkRepository.GetAllNotes())
+			.Where(note => note.UserId == id))
+		{
+			await _socialNetworkRepository.DeleteNote(note.Id);
 		}
 	}
 }

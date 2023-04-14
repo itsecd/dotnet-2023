@@ -17,10 +17,6 @@ public class RoleController : ControllerBase
 	/// </summary>
 	private readonly ISocialNetworkService _socialNetworkService;
 
-	/// <summary>
-	/// Создает контроллер с помощью указанных данных.
-	/// </summary>
-	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public RoleController(ISocialNetworkService socialNetworkService) 
 	{
 		_socialNetworkService = socialNetworkService;
@@ -31,14 +27,12 @@ public class RoleController : ControllerBase
 	/// </summary>
 	/// <returns>Последовательность ролей.</returns>
 	[HttpGet]
-	public IEnumerable<RoleDtoGet> GetAllRoles() => 
-		_socialNetworkService.GetAllRoles().Select(role =>
+	public async Task<IEnumerable<RoleDtoGet>> GetAllRoles() => 
+		(await _socialNetworkService.GetAllRoles()).Select(role =>
 			new RoleDtoGet
 			{
 				Id = role.Id,
-				Name = role.Name,
-				Groups = role.Groups,
-				Users = role.Users
+				Name = role.Name
 			});
 
 	/// <summary>
@@ -47,16 +41,14 @@ public class RoleController : ControllerBase
 	/// <param name="id">Идентификатор роли, которую необходимо получить.</param>
 	/// <returns>Роль.</returns>
 	[HttpGet("{id}")]
-	public RoleDtoGet GetRole(int id) 
+	public async Task<RoleDtoGet> GetRole(int id) 
 	{
-		var entity = _socialNetworkService.GetRole(id);
+		var entity = await _socialNetworkService.GetRole(id);
 
 		return new RoleDtoGet
 		{
 			Id = entity.Id,
-			Name = entity.Name,
-			Users = entity.Users,
-			Groups = entity.Groups
+			Name = entity.Name
 		};
 	}
 
@@ -65,9 +57,9 @@ public class RoleController : ControllerBase
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
 	[HttpPost]
-	public void CreateRole([FromBody] RoleDtoPostOrPut model)
+	public async Task CreateRole([FromBody] RoleDtoPostOrPut model)
 	{
-		_socialNetworkService.CreateRole(new Role
+		await _socialNetworkService.CreateRole(new Role
 		{
 			Name = model.Name
 		});
@@ -79,9 +71,9 @@ public class RoleController : ControllerBase
 	/// <param name="id">Идентификатор роли, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой роли.</param>
 	[HttpPut("{id}")]
-	public void UpdateRole(int id, [FromBody] RoleDtoPostOrPut model)
+	public async Task UpdateRole(int id, [FromBody] RoleDtoPostOrPut model)
 	{
-		_socialNetworkService.UpdateRole(id, new Role
+		await _socialNetworkService.UpdateRole(id, new Role
 		{
 			Name = model.Name
 		});
@@ -92,8 +84,8 @@ public class RoleController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор роли, которую необходимо удалить.</param>
 	[HttpDelete("{id}")]
-	public void DeleteRole(int id) 
+	public async Task DeleteRole(int id) 
 	{
-		_socialNetworkService.DeleteRole(id);
+		await _socialNetworkService.DeleteRole(id);
 	}
 }

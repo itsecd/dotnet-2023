@@ -45,19 +45,6 @@ public class Note
     /// </summary>
     public Group? Group { get; set; }
 
-	/// <summary>
-	/// Создает запись с помощью указанных данных.
-	/// </summary>
-	/// <param name="id">Идентификатор записи.</param>
-	/// <param name="name">Название записи.</param>
-	/// <param name="description">Описание записи.</param>
-	/// <param name="creationDate">Дата создания записи.</param>
-	/// <param name="userId">Идентификатор создателя записи.</param>
-	/// <param name="user">Создатель записи.</param>
-	/// <param name="groupId">Идентификатор группы.</param>
-	/// <param name="group">Группа.</param>
-	/// <exception cref="ArgumentOutOfRangeException">Числовое значение вышло за границы!</exception>
-	/// <exception cref="ArgumentNullException">Объект равен null!</exception>
 	public Note(int id, string name, string description, DateTime? creationDate, int userId,
 		User? user, int groupId, Group? group)
 	{
@@ -71,9 +58,6 @@ public class Note
 		Group = group;
 	}
 
-	/// <summary>
-	/// Создает запись без параметров.
-	/// </summary>
 	public Note()
 	{
 	}

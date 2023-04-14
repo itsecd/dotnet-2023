@@ -10,10 +10,6 @@ public class ExceptionMiddleware
 	/// </summary>
 	public readonly RequestDelegate next;
 
-	/// <summary>
-	/// Создает обработчик запроса с помощью указанных данных.
-	/// </summary>
-	/// <param name="next">Следующий обработчик</param>
 	public ExceptionMiddleware(RequestDelegate next)
 	{
 		this.next = next;

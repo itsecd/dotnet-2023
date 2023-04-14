@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialNetwork.Data.Models;
 
@@ -47,11 +42,11 @@ public class UserDBModel
 	/// Дата рождения.	
 	/// </summary>	
 	[Column("birth_date")]
-	public DateTime BirthDate { get; set; }
+	public DateTime? BirthDate { get; set; }
 
 	/// <summary>	
 	/// Дата регистрации.	
 	/// </summary>	
 	[Column("registration_date")]
-	public DateTime RegistrationDate { get; set; }
+	public DateTime? RegistrationDate { get; set; }
 }

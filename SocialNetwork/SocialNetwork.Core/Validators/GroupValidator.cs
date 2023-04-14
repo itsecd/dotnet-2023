@@ -8,9 +8,6 @@ namespace SocialNetwork.Core.Validators;
 /// </summary>
 public class GroupValidator : AbstractValidator<Group>
 {
-	/// <summary>
-	/// Валидация объекта группы.
-	/// </summary>
 	public GroupValidator()
 	{
 		RuleFor(group => group.Name).NotEmpty().WithMessage("Название группы не должно быть пустым.");

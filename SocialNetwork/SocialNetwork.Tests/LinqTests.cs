@@ -106,11 +106,11 @@ public class LinqTests
 				: userFirst, 1, group));
 		}
 
-		var result = notes.GroupBy(element => new { element.User })
-			.Select(newElement => new
+		var result = notes.GroupBy(note => new { note.User })
+			.Select(newUser => new
 			{
-				newElement.Key.User,
-				Count = newElement.Count(el => el.User == newElement.Key.User)
+				newUser.Key.User,
+				Count = newUser.Count(el => el.User == newUser.Key.User)
 			})
 			.OrderByDescending(item => item.Count)
 			.Take(5).ToList();

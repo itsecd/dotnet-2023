@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialNetwork.Data.Models;
 
@@ -35,7 +30,7 @@ public class GroupDBModel
 	/// Дата создания.
 	/// </summary>
 	[Column("creation_date")]
-	public DateTime CreationDate { get; set; }
+	public DateTime? CreationDate { get; set; }
 
 	/// <summary>
 	/// Идентификатор создателя.

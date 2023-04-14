@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Core;
+using SocialNetwork.Domain;
 using SocialNetwork.Web.Controllers.Groups.Dto;
 
 namespace SocialNetwork.Web.Controllers.Groups; 
@@ -16,10 +17,6 @@ public class GroupController : ControllerBase
     /// </summary>
     private readonly ISocialNetworkService _socialNetworkService; 
 
-	/// <summary>
-	/// Создает контроллер с помощью указанных данных.
-	/// </summary>
-	/// <param name="socialNetworkService">Сервис социальной сети.</param>
 	public GroupController(ISocialNetworkService socialNetworkService)
     {
         _socialNetworkService = socialNetworkService;
@@ -30,8 +27,8 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <returns>Последовательность групп.</returns>
     [HttpGet]
-    public IEnumerable<GroupDtoGet> GetAllGroups() =>
-        _socialNetworkService.GetAllGroups().Select(group =>
+    public async Task<IEnumerable<GroupDtoGet>> GetAllGroups() =>
+        (await _socialNetworkService.GetAllGroups()).Select(group =>
             new GroupDtoGet
             {
                 Id = group.Id,
@@ -39,18 +36,17 @@ public class GroupController : ControllerBase
                 Description = group.Description,
                 CreationDate = group.CreationDate,
                 User = group.User,
-                Notes = group.Notes
             });
-    
+
     /// <summary>
     /// Получение группы по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор группы, которую необходимо получить.</param>
     /// <returns>Группу.</returns>
     [HttpGet("{id}")]
-    public GroupDtoGet GetGroup(int id)
+    public async Task<GroupDtoGet> GetGroup(int id)
     {
-        var model = _socialNetworkService.GetGroup(id);
+        var model = await _socialNetworkService.GetGroup(id);
 
         return new GroupDtoGet
 		{
@@ -59,7 +55,6 @@ public class GroupController : ControllerBase
 			Description = model.Description,
 			CreationDate = model.CreationDate,
 			User = model.User,
-			Notes = model.Notes
 		};
 	}
 
@@ -68,15 +63,15 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
     [HttpPost]
-    public void CreateGroup([FromBody] GroupDtoPostOrPut model)
+    public async Task CreateGroup([FromBody] GroupDtoPostOrPut model)
     {
-        _socialNetworkService.CreateGroup(new Domain.Group
+        await _socialNetworkService.CreateGroup(new Group
         {
-			Name = model.Name,
-			Description = model.Description,
-			CreationDate = model.CreationDate,
-			UserId = model.UserId
-		});
+            Name = model.Name,
+            Description = model.Description,
+            CreationDate = model.CreationDate,
+            UserId = model.UserId
+        });
     }
 
     /// <summary>
@@ -85,9 +80,9 @@ public class GroupController : ControllerBase
     /// <param name="id">Идентификатор группы, данные которой необходимо изменить.</param>
     /// <param name="model">Содержит данные, которые будут присвоены необходимой группе.</param>
     [HttpPut("{id}")]
-    public void UpdateGroup(int id, [FromBody] GroupDtoPostOrPut model)
+    public async Task UpdateGroup(int id, [FromBody] GroupDtoPostOrPut model)
     {
-		_socialNetworkService.UpdateGroup(id, new Domain.Group
+		await _socialNetworkService.UpdateGroup(id, new Group
 		{
 			Name = model.Name,
 			Description = model.Description,
@@ -101,8 +96,8 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор группы, которую необходимо удалить.</param>
     [HttpDelete("{id}")]
-    public void DeleteGroup(int id)
+    public async Task DeleteGroup(int id)
     {
-        _socialNetworkService.DeleteGroup(id);
+        await _socialNetworkService.DeleteGroup(id);
     }
 }

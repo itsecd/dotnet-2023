@@ -33,17 +33,12 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>All goods</returns>
     [HttpGet("all-goods")]
-    public IActionResult GetAllGoods()
+    public IEnumerable<GoodsGetDto> GetAllGoods()
     {
         _logger.LogInformation("Get all goods");
         var request = (from good in _warehouseRepository.Products
                        select _mapper.Map<GoodsGetDto>(good)).ToList();
-        if (request.Count == 0)
-        {
-            _logger.LogInformation("Not foung products");
-            return NotFound();
-        }
-        return Ok(request);
+        return request;
     }
     /// <summary>
     /// Get method which return information about the company's products received on the specified day by the recipient of products

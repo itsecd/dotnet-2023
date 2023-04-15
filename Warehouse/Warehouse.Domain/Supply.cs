@@ -1,6 +1,7 @@
 ﻿namespace Warehouse.Domain;
+
 /// <summary>
-///     Warehouse - a class that describes the company supply with goods
+///     Class Supple is used to store info about the supplies
 /// </summary>
 public class Supply
 {
@@ -24,6 +25,9 @@ public class Supply
     ///     SupplyDate - shipment date
     /// </summary>
     public DateTime SupplyDate { get; set; } = DateTime.MinValue;
+    /// <summary>
+    ///     Goods - list of products, what shipment contains 
+    /// </summary>
     public List<Goods> Goods { set; get; } = new List<Goods>();
     public Supply(int id, string companyName, string companyAdress, DateTime supplyDate, int supplyCount)
     {

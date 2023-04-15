@@ -5,8 +5,9 @@ using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
+
 /// <summary>
-/// Controller for warehouse cells table
+///     Controller for warehouse cells table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -15,6 +16,13 @@ public class WarehouseCellsController : ControllerBase
     private readonly ILogger<WarehouseCellsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
+
+    /// <summary>
+    ///     Constructor for WarehouseCellsController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="warehouseRepository"></param>
+    /// <param name="mapper"></param>
     public WarehouseCellsController(ILogger<WarehouseCellsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
@@ -22,10 +30,10 @@ public class WarehouseCellsController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method for warehouse cells table
+    ///     Get method for warehouse cells table
     /// </summary>
     /// <returns>
-    /// Return all warehouse cells
+    ///     Return all warehouse cells
     /// </returns>
     [HttpGet]
     public IEnumerable<WarehouseCellsGetDto> Get()
@@ -34,10 +42,10 @@ public class WarehouseCellsController : ControllerBase
         return _warehouseRepository.Cells.Select(cell => _mapper.Map<WarehouseCellsGetDto>(cell));
     }
     /// <summary>
-    /// Get by id method for warehouse cells table
+    ///     Get by id method for warehouse cells table
     /// </summary>
     /// <returns>
-    /// Return cells with specified id
+    ///     Return cells with specified id
     /// </returns>
     [HttpGet("{id}")]
     public ActionResult<WarehouseCellsGetDto> Get(int id)
@@ -55,9 +63,9 @@ public class WarehouseCellsController : ControllerBase
         }
     }
     /// <summary>
-    /// Post method for warehouse cells table
+    ///     Post method for warehouse cells table
     /// </summary>
-    /// <param name="cell"> Warehouse cell class instance to insert to table</param>
+    /// <param name="cell"> Warehouse cell class instance to insert to table </param>
     [HttpPost]
     public void Post([FromBody] WarehouseCellsPostDto cell)
     {
@@ -65,11 +73,13 @@ public class WarehouseCellsController : ControllerBase
         _warehouseRepository.Cells.Add(_mapper.Map<WarehouseCells>(cell));
     }
     /// <summary>
-    /// Put method for warehouse cells table
+    ///     Put method for warehouse cells table
     /// </summary>
-    /// <param name="id">A number of cell which would be changed</param>
-    /// <param name="cellToPut">Warehouse cells class instance to insert to table</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> A number of cell which would be changed </param>
+    /// <param name="cellToPut"> Warehouse cells class instance to insert to table </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
     {
@@ -87,10 +97,12 @@ public class WarehouseCellsController : ControllerBase
         }
     }
     /// <summary>
-    /// Delete method 
+    ///     Delete method 
     /// </summary>
-    /// <param name="id">A number of cell which would be deleted</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> A number of cell which would be deleted </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

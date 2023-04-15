@@ -18,6 +18,7 @@ public class WarehouseTestsClass : IClassFixture<WarehouseFixture>
         var goods = (from product in allGoods
                      orderby product.Name
                      select product).ToList();
+
         Assert.Equal(8, goods.Count);
         Assert.Equal("Ваза из стекла 3л", goods[0].Name);
         Assert.Equal("Ваза из стекла 4л", goods[1].Name);

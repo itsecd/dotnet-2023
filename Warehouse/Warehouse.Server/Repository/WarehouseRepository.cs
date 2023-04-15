@@ -1,5 +1,5 @@
-﻿using System.Net.Sockets;
-using Warehouse.Domain;
+﻿using Warehouse.Domain;
+
 namespace Warehouse.Server.Repository;
 
 public class WarehouseRepository : IWarehouseRepository
@@ -7,6 +7,7 @@ public class WarehouseRepository : IWarehouseRepository
     private readonly List<Goods> _goods;
     private readonly List<Supply> _supply;
     private readonly List<WarehouseCells> _cells;
+
     public WarehouseRepository()
     {
         var firstRoute = new Supply(1, "СамараПласт", "г. Самара, ул. Луцкая, 16.", new DateTime(2023, 02, 20), 10);
@@ -57,7 +58,7 @@ public class WarehouseRepository : IWarehouseRepository
         thirdRoute.Goods.Add(fifthProduction);
         fourthRoute.Goods.Add(thirdProduction);
 
-        var goods = new List<Goods>
+        _goods = new List<Goods>
             {
                 firstProduction,
                 secondProduction,
@@ -68,14 +69,16 @@ public class WarehouseRepository : IWarehouseRepository
                 seventhProduction,
                 eighthProduction
             };
-        var routes = new List<Supply>
+
+        _supply = new List<Supply>
             {
                 firstRoute,
                 secondRoute,
                 thirdRoute,
                 fourthRoute
             };
-        var cells = new List<WarehouseCells>
+
+        _cells = new List<WarehouseCells>
             {
                 firstCell,
                 secondCell,
@@ -89,10 +92,8 @@ public class WarehouseRepository : IWarehouseRepository
                 tenthCell,
                 eleventhCell
         };
-        _goods = goods;
-        _cells = cells;
-        _supply = routes;
     }
+
     public List<Goods> Products => _goods;
     public List<WarehouseCells> Cells => _cells;
     public List<Supply> Supplies => _supply;

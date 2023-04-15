@@ -1,4 +1,8 @@
 ﻿namespace Warehouse.Server.Dto;
+
+/// <summary>
+///     Class SupplyPostDto is used to store info about the supplies
+/// </summary>
 public class SupplyPostDto
 {
     /// <summary>

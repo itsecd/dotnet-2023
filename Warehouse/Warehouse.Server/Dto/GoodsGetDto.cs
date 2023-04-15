@@ -1,4 +1,8 @@
 ﻿namespace Warehouse.Server.Dto;
+
+/// <summary>
+///     Class GoodsGetDto is used to store info about the products
+/// </summary>
 public class GoodsGetDto
 {
     /// <summary>  

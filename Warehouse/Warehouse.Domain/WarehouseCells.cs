@@ -1,6 +1,7 @@
 ﻿namespace Warehouse.Domain;
+
 /// <summary>
-///     Warehouse - a class that describes the company supply with goods
+///     Class WarehouseCells is used to store info about the warehouse cells
 /// </summary>
 public class WarehouseCells
 {
@@ -8,6 +9,9 @@ public class WarehouseCells
     ///     CellNumber - cell number 
     /// </summary>  
     public int CellNumber { set; get; }
+    /// <summary>
+    ///     Goods - product, what contain in cell 
+    /// </summary>
     public Goods Goods { set; get; }
     public WarehouseCells(int cell, Goods goods)
     {

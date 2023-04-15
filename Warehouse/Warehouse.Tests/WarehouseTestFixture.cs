@@ -1,5 +1,6 @@
-﻿namespace Warehouse.Test;
-using Warehouse.Domain;
+﻿using Warehouse.Domain;
+
+namespace Warehouse.Test;
 
 public class WarehouseFixture
 {
@@ -54,6 +55,7 @@ public class WarehouseFixture
                 seventhProduction,
                 eighthProduction
             };
+
             return goods;
         }
     }

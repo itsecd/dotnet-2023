@@ -1,6 +1,7 @@
 ﻿namespace Warehouse.Domain;
+
 /// <summary>
-///     Warehouse - a class that describes the company supply with goods
+///     Class Goods is used to store info about the products
 /// </summary>
 public class Goods
 {
@@ -16,7 +17,13 @@ public class Goods
     ///     Name - a string that stores product name 
     /// </summary>
     public string Name { set; get; } = string.Empty;
+    /// <summary>
+    ///     Supply - list of supply routes with product 
+    /// </summary>
     public List<Supply> Supply { set; get; } = new List<Supply>();
+    /// <summary>
+    ///     WarehouseCell - list of cells with product 
+    /// </summary>
     public List<WarehouseCells> WarehouseCell { set; get; } = new List<WarehouseCells>();
     public Goods(int id, string name, int count)
     {

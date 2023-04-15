@@ -5,8 +5,9 @@ using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
+
 /// <summary>
-/// Controller for goods table
+///     Controller for goods table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -15,6 +16,13 @@ public class GoodsController : ControllerBase
     private readonly ILogger<GoodsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
+
+    /// <summary>
+    ///     Constructor for GoodsController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="warehouseRepository"></param>
+    /// <param name="mapper"></param>
     public GoodsController(ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
@@ -22,10 +30,10 @@ public class GoodsController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method for goods table
+    ///     Get method for goods table
     /// </summary>
     /// <returns>
-    /// Return all goods
+    ///     Return all goods
     /// </returns>
     [HttpGet]
     public IEnumerable<GoodsGetDto> Get()
@@ -34,10 +42,10 @@ public class GoodsController : ControllerBase
         return _warehouseRepository.Products.Select(product => _mapper.Map<GoodsGetDto>(product));
     }
     /// <summary>
-    /// Get by id method for goods table
+    ///     Get by id method for goods table
     /// </summary>
     /// <returns>
-    /// Return goods with specified id
+    ///     Return goods with specified id
     /// </returns>
     [HttpGet("{id}")]
     public ActionResult<GoodsGetDto> Get(int id)
@@ -55,9 +63,9 @@ public class GoodsController : ControllerBase
         }
     }
     /// <summary>
-    /// Post method for goods table
+    ///     Post method for goods table
     /// </summary>
-    /// <param name="product"> Goods class instance to insert to table</param>
+    /// <param name="product"> Goods class instance to insert to table </param>
     [HttpPost]
     public void Post([FromBody] GoodsPostDto product)
     {
@@ -65,11 +73,13 @@ public class GoodsController : ControllerBase
         _warehouseRepository.Products.Add(_mapper.Map<Goods>(product));
     }
     /// <summary>
-    /// Put method for goods table
+    ///     Put method for goods table
     /// </summary>
-    /// <param name="id">An id of product which would be changed </param>
-    /// <param name="productToPut">Goods class instance to insert to table</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> An id of product which would be changed </param>
+    /// <param name="productToPut"> Goods class instance to insert to table </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
     {
@@ -87,10 +97,12 @@ public class GoodsController : ControllerBase
         }
     }
     /// <summary>
-    /// Delete method 
+    ///     Delete method 
     /// </summary>
-    /// <param name="id">An id of product which would be deleted</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> An id of product which would be deleted </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

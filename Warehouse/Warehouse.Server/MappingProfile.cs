@@ -3,8 +3,9 @@ using Warehouse.Domain;
 using Warehouse.Server.Dto;
 
 namespace Warehouse.Server;
+
 /// <summary>
-/// Class to mapping types
+///     Class to mapping types
 /// </summary>
 public class MappingProfile : Profile
 {

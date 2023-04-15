@@ -6,7 +6,7 @@ using Warehouse.Server.Repository;
 namespace Warehouse.Server.Controllers;
 
 /// <summary>
-/// Controller for get methods which returns a specified data from Warehouse data base
+///     Controller for get methods which returns a specified data from Warehouse data base
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -17,7 +17,7 @@ public class AnalyticsController : ControllerBase
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Constructor for AnalyticsController
+    ///     Constructor for AnalyticsController
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
@@ -29,9 +29,11 @@ public class AnalyticsController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method which return information about the company's products, sorted by product name
+    ///     Get method which return information about the company's products, sorted by product name
     /// </summary>
-    /// <returns>All goods</returns>
+    /// <returns>
+    ///     All goods
+    /// </returns>
     [HttpGet("all-goods")]
     public IEnumerable<GoodsGetDto> GetAllGoods()
     {
@@ -41,9 +43,11 @@ public class AnalyticsController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Get method which return information about the company's products received on the specified day by the recipient of products
+    ///     Get method which return information about the company's products received on the specified day by the recipient of products
     /// </summary>
-    /// <returns>Supply with specific date</returns>
+    /// <returns>
+    ///     Supply with specific date
+    /// </returns>
     [HttpGet("goods-with-specific-date")]
     public IEnumerable<SupplyGetDto> SupplyWithSpecificDate()
     {
@@ -56,9 +60,11 @@ public class AnalyticsController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Get method which return the state of the warehouse at the moment with the numbers of cells of the warehouse and their contents
+    ///     Get method which return the state of the warehouse at the moment with the numbers of cells of the warehouse and their contents
     /// </summary>
-    /// <returns>Warehouse cells and their content</returns>
+    /// <returns>
+    ///     Warehouse cells and their content
+    /// </returns>
     [HttpGet("warehouse-cells-and-their-content")]
     public IEnumerable<WarehouseCellsGetDto> WarehouseCellsAndTheirContent()
     {
@@ -70,13 +76,15 @@ public class AnalyticsController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Get method which return information about the organizations that received the maximum volume products for a given period 
+    ///     Get method which return information about the organizations that received the maximum volume products for a given period 
     /// </summary>
-    /// <returns>Supply by period</returns>
-    [HttpGet("supply-by-period")]
+    /// <returns>
+    ///     Supplies by specific period
+    /// </returns>
+    [HttpGet("supply-by-specific-period")]
     public IEnumerable<SupplyGetDto> SupplyByPeriod()
     {
-        _logger.LogInformation("Supply by period");
+        _logger.LogInformation("Supply by specific period");
         var request = (from goods in _warehouseRepository.Products
                        from supply in goods.Supply
                        where supply.SupplyDate > new DateTime(2023, 02, 1) && supply.SupplyDate < new DateTime(2023, 03, 15)
@@ -94,9 +102,11 @@ public class AnalyticsController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Get method which return the top 5 products by stock availability
+    ///     Get method which return the top 5 products by stock availability
     /// </summary>
-    /// <returns>Top 5 products</returns>
+    /// <returns>
+    ///     Top 5 products
+    /// </returns>
     [HttpGet("top-five-products")]
     public IEnumerable<GoodsGetDto> TopFiveProducts()
     {
@@ -107,9 +117,11 @@ public class AnalyticsController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Get method which return information about the quantity of delivered goods for each goods and each organization
+    ///     Get method which return information about the quantity of delivered goods for each goods and each organization
     /// </summary>
-    /// <returns>Quantity of delivered goods</returns>
+    /// <returns>
+    ///     Quantity of delivered goods
+    /// </returns>
     [HttpGet("quantity-of-delivery-goods")]
     public IEnumerable<SupplyGetDto> QuantityOfDeliverdGoods()
     {

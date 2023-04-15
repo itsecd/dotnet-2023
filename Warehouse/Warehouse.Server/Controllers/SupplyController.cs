@@ -5,8 +5,9 @@ using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
+
 /// <summary>
-/// Controller for supply table
+///     Controller for supply table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -15,6 +16,13 @@ public class SupplyController : ControllerBase
     private readonly ILogger<SupplyController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
     private readonly IMapper _mapper;
+
+    /// <summary>
+    ///     Constructor for SupplyController
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="warehouseRepository"></param>
+    /// <param name="mapper"></param>
     public SupplyController(ILogger<SupplyController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _logger = logger;
@@ -22,10 +30,10 @@ public class SupplyController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Get method for supply table
+    ///     Get method for supply table
     /// </summary>
     /// <returns>
-    /// Return all supplies
+    ///     Return all supplies
     /// </returns>
     [HttpGet]
     public IEnumerable<SupplyGetDto> Get()
@@ -34,10 +42,10 @@ public class SupplyController : ControllerBase
         return _warehouseRepository.Supplies.Select(supply => _mapper.Map<SupplyGetDto>(supply));
     }
     /// <summary>
-    /// Get by id method for supply table
+    ///     Get by id method for supply table
     /// </summary>
     /// <returns>
-    /// Return supplies with specified id
+    ///     Return supplies with specified id
     /// </returns>
     [HttpGet("{id}")]
     public ActionResult<SupplyGetDto> Get(int id)
@@ -55,9 +63,9 @@ public class SupplyController : ControllerBase
         }
     }
     /// <summary>
-    /// Post method for supply table
+    ///     Post method for supply table
     /// </summary>
-    /// <param name="supply"> Supply class instance to insert to table</param>
+    /// <param name="supply"> Supply class instance to insert to table </param>
     [HttpPost]
     public void Post([FromBody] SupplyPostDto supply)
     {
@@ -65,11 +73,13 @@ public class SupplyController : ControllerBase
         _warehouseRepository.Supplies.Add(_mapper.Map<Supply>(supply));
     }
     /// <summary>
-    /// Put method for supply table
+    ///     Put method for supply table
     /// </summary>
-    /// <param name="id">An id of supply which would be changed </param>
-    /// <param name="supplyToPut">Supply class instance to insert to table</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> An id of supply which would be changed </param>
+    /// <param name="supplyToPut"> Supply class instance to insert to table </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
@@ -87,10 +97,12 @@ public class SupplyController : ControllerBase
         }
     }
     /// <summary>
-    /// Delete method 
+    ///     Delete method 
     /// </summary>
-    /// <param name="id">An id of supply which would be deleted</param>
-    /// <returns>Signalization of success or error</returns>
+    /// <param name="id"> An id of supply which would be deleted </param>
+    /// <returns>
+    ///     Signalization of success or error
+    /// </returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

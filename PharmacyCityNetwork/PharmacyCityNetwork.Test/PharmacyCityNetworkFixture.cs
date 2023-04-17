@@ -32,7 +32,7 @@ public class PharmacyCityNetworkFixture
             var secondPharmacy = new Pharmacy("Plus", "8844606", "Turgeneva, 8", "Pomelov");
             var thridPharmacy = new Pharmacy("Alia", "4499606", "Tolstogo, 8", "Slivin");
             var fourthPharmacy = new Pharmacy("Apteka63", "4558602", "Polevay, 23", "Chikarev");
-            var fifthPharmacy = new Pharmacy("Vita", "9229303", "Gagarina, 67", "Parshin");
+            var fifthPharmacy = new Pharmacy("Tabls", "9229303", "Gagarina, 67", "Parshin");
 
         ///1 продукт 
             var firstProduct = new Product("Paracetamol", 1, firstGroup, firstManufacturer);
@@ -62,7 +62,7 @@ public class PharmacyCityNetworkFixture
 
             var secondProductPharmaGroup = new ProductPharmaGroup(1, secondPharmaGroup, secondProduct);
             secondProduct.ProductPharmaGroup.Add(secondProductPharmaGroup);
-            firstPharmaGroup.ProductPharmaGroup.Add(secondProductPharmaGroup);
+            secondPharmaGroup.ProductPharmaGroup.Add(secondProductPharmaGroup);
 
             secondGroup.Product.Add(secondProduct);
 
@@ -115,7 +115,7 @@ public class PharmacyCityNetworkFixture
 
         ///5 продукт
             var fifthProduct = new Product("Nekst", 1, firstGroup, firstManufacturer);
-            var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fourthPharmacy);
+            var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy);
             fifthProduct.ProductPharmacy.Add(fifthProductPharmacy);
             fifthPharmacy.ProductPharmacy.Add(fifthProductPharmacy);
 
@@ -132,14 +132,14 @@ public class PharmacyCityNetworkFixture
             var fifthSale = new Sale("Online", new DateTime(2022, 5, 23), fifthProduct);
             fifthProduct.Sales.Add(fifthSale);
 
-        var groups = new List<Group> { firstGroup };
-        var manufacturers = new List<Manufacturer> { firstManufacturer };
-        var pharmacys = new List<Pharmacy> { firstPharmacy };
-        var pharmaGroups = new List<PharmaGroup> { firstPharmaGroup };
-        var products = new List<Product> { firstProduct };
-        var productPharmacys = new List<ProductPharmacy> { firstProductPharmacy };
-        var productPharmaGroups = new List<ProductPharmaGroup> { firstProductPharmaGroup };
-        var sales = new List <Sale> { firstSale };
+        var groups = new List<Group> { firstGroup, secondGroup, thridGroup };
+        var manufacturers = new List<Manufacturer> { firstManufacturer, secondManufacturer };
+        var pharmacys = new List<Pharmacy> { firstPharmacy, secondPharmacy, thridPharmacy, fourthPharmacy, fifthPharmacy};
+        var pharmaGroups = new List<PharmaGroup> { firstPharmaGroup, secondPharmaGroup, thridPharmaGroup, fourthPharmaGroup };
+        var products = new List<Product> { firstProduct, secondProduct, thridProduct, fourthProduct, fifthProduct };
+        var productPharmacys = new List<ProductPharmacy> { firstProductPharmacy, secondProductPharmacy, thridProductPharmacy, fourthProductPharmacy, fifthProductPharmacy, sixthProductPharmacy };
+        var productPharmaGroups = new List<ProductPharmaGroup> { firstProductPharmaGroup, secondProductPharmaGroup,thridProductPharmaGroup, fourthProductPharmaGroup, fifthProductPharmaGroup };
+        var sales = new List <Sale> { firstSale, secondSale, thridSale, fourthSale, fifthSale, sixthSale };
 
         _groups = groups;
         _manufacturers = manufacturers;

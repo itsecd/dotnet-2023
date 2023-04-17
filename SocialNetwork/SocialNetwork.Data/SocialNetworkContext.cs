@@ -11,31 +11,86 @@ public class SocialNetworkContext : DbContext
 	/// <summary>
 	/// Список групп.
 	/// </summary>
-	public DbSet<GroupDBModel> Groups { get; set; }
+	public DbSet<GroupDbModel> Groups { get; set; }
 
 	/// <summary>
 	/// Список записей.
 	/// </summary>
-	public DbSet<NoteDBModel> Notes { get; set; }	
+	public DbSet<NoteDbModel> Notes { get; set; }	
 
 	/// <summary>
 	/// Список ролей.
 	/// </summary>
-	public DbSet<RoleDBModel> Roles { get; set; }
+	public DbSet<RoleDbModel> Roles { get; set; }
 
 	/// <summary>
 	/// Список пользователей.
 	/// </summary>
-	public DbSet<UserDBModel> Users { get; set; }
+	public DbSet<UserDbModel> Users { get; set; }
 
 	/// <summary>
 	/// Список связей пользователей, групп и ролей.
 	/// </summary>
-	public DbSet<UserGroupRoleDBModel> UsersGroupsRoles { get; set; }
+	public DbSet<UserGroupRoleDbModel> UsersGroupsRoles { get; set; }
 
 	public SocialNetworkContext(DbContextOptions options) 
 		: base(options)
 	{
 		Database.EnsureCreated();
+	}
+
+	/// <summary>
+	/// Заполняет таблицы данных.
+	/// </summary>
+	/// <param name="modelBuilder">Построитель моделей.</param>
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		for (var i = 1; i < 10; i++)
+		{
+			modelBuilder.Entity<UserDbModel>().HasData(new UserDbModel
+			{
+				Id = i,
+				FirstName = $"FirstName {i}",
+				LastName = $"LastName {i}",
+				Patronymic = $"Patronymic {i}",
+				Gender = "Мужской",
+				BirthDate = DateTime.Now,
+				RegistrationDate = DateTime.Now
+			});
+		}
+
+		modelBuilder.Entity<RoleDbModel>().HasData(new RoleDbModel
+		{
+			Id = 1,
+			Name = "Админ"
+		});
+
+
+		modelBuilder.Entity<GroupDbModel>().HasData(new GroupDbModel
+		{
+			Id = 1,
+			Name = "Название1",
+			Description = "Описание1",
+			CreationDate = DateTime.Now,
+			UserId = 1
+		});
+
+		modelBuilder.Entity<NoteDbModel>().HasData(new NoteDbModel
+		{
+			Id = 1,
+			Name = "Название1",
+			Description = "Описание1",
+			CreationDate = DateTime.Now,
+			UserId = 1,
+			GroupId = 1
+		});
+
+		modelBuilder.Entity<UserGroupRoleDbModel>().HasData(new UserGroupRoleDbModel
+		{
+			Id = 1,
+			UserId = 1,
+			GroupId = 1,
+			RoleId = 1,
+		});
 	}
 }

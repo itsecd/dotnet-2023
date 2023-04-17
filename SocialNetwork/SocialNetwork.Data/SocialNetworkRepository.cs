@@ -2,7 +2,6 @@
 using SocialNetwork.Core;
 using SocialNetwork.Data.Models;
 using SocialNetwork.Domain;
-using System.Data;
 
 namespace SocialNetwork.Data;
 
@@ -38,7 +37,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = group.Name,
 				Description = group.Description,
 				CreationDate = group.CreationDate,
-				User = await GetUser(group.UserId),
+				UserId = (await GetUser(group.UserId))!.Id,
 			});
 		}
 
@@ -62,7 +61,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = group.Name,
 				Description = group.Description,
 				CreationDate = group.CreationDate,
-				User = await GetUser(group.UserId),
+				UserId = (await GetUser(group.UserId))!.Id,
 			};
 	}
 		
@@ -72,13 +71,15 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
 	public async Task CreateGroup(Group model)
 	{
-		await _context.Groups.AddAsync(new GroupDBModel
+		var groupDbModel = new GroupDbModel
 		{
 			Name = model.Name,
 			Description = model.Description,
 			CreationDate = model.CreationDate,
 			UserId = model.UserId,
-		});
+		};
+
+		await _context.Groups.AddAsync(groupDbModel);
 
 		var adminRole = await _context.Roles.FirstOrDefaultAsync(role =>  
 			role.Name == "Админ");
@@ -92,14 +93,19 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 
 			adminRole = await _context.Roles.FirstOrDefaultAsync(role =>
 				role.Name == "Админ");
+
+			if (adminRole == null) 
+			{
+				throw new Exception("Внутренняя ошибка сервера!");
+			}
 		}
 
 		await _context.SaveChangesAsync();
 
-		await _context.UsersGroupsRoles.AddAsync(new UserGroupRoleDBModel
+		await _context.UsersGroupsRoles.AddAsync(new UserGroupRoleDbModel
 		{
 			UserId = model.UserId,
-			GroupId = model.Id,
+			GroupId = groupDbModel.Id,
 			RoleId = adminRole.Id
 		});
 
@@ -154,8 +160,8 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = note.Name,
 				Description = note.Description,
 				CreationDate = note.CreationDate,
-				User = await GetUser(note.UserId),
-				Group = await GetGroup(note.GroupId),
+				UserId = (await GetUser(note.UserId))!.Id,
+				GroupId = (await GetGroup(note.GroupId))!.Id,
 			});
 		}
 
@@ -179,8 +185,8 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = note.Name,
 				Description = note.Description,
 				CreationDate = note.CreationDate,
-				User = await GetUser(note.UserId),
-				Group = await GetGroup(note.GroupId)
+				UserId = (await GetUser(note.UserId))!.Id,
+				GroupId = (await GetGroup(note.GroupId))!.Id
 			};
 	}
 	
@@ -190,7 +196,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
 	public async Task CreateNote(Note model)
 	{
-		await _context.Notes.AddAsync(new NoteDBModel
+		await _context.Notes.AddAsync(new NoteDbModel
 		{
 			Name = model.Name,
 			Description = model.Description,
@@ -260,7 +266,6 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	public async Task<Role?> GetRole(int id)
 	{
 		var role = await _context.Roles.FirstOrDefaultAsync(role => role.Id == id);
-		var usersGroupsRoles = await _context.UsersGroupsRoles.ToListAsync();
 
 		return role == null
 			? null
@@ -277,7 +282,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
 	public async Task CreateRole(Role model)
 	{
-		await _context.Roles.AddAsync(new RoleDBModel
+		await _context.Roles.AddAsync(new RoleDbModel
 		{
 			Name = model.Name
 		});
@@ -347,7 +352,6 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	public async Task<User?> GetUser(int id)
 	{
 		var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
-		var usersGroupsRoles = await _context.UsersGroupsRoles.ToListAsync();
 
 		return user == null
 			? null
@@ -369,7 +373,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
 	public async Task CreateUser(User model)
 	{
-		await _context.Users.AddAsync(new UserDBModel
+		await _context.Users.AddAsync(new UserDbModel
 		{
 			FirstName = model.FirstName,
 			LastName = model.LastName,

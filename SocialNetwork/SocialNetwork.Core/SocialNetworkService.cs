@@ -74,7 +74,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Невалидный объект.</exception>
 	public async Task CreateGroup(Group model)
 	{
-		_groupValidator.Validate(model);
+		await _groupValidator.ValidateAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
 		{
@@ -93,7 +93,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Попытка присвоить группе несуществующий идентификатор создателя!</exception>
 	public async Task UpdateGroup(int id, Group model)
 	{
-		_groupValidator.Validate(model);
+		await _groupValidator.ValidateAsync(model);
 
 		if (await _socialNetworkRepository.GetGroup(id) == null)
 		{
@@ -120,13 +120,13 @@ public class SocialNetworkService : ISocialNetworkService
 			throw new NotFoundException("Группа с указанным идентификатором не найдена!");
 		}
 
-		await _socialNetworkRepository.DeleteGroup(id);
-
 		foreach (var note in (await _socialNetworkRepository.GetAllNotes()).
-			Where(note => note.GroupId == id))
+			Where(note => note.GroupId == id).ToList())
 		{
 			await _socialNetworkRepository.DeleteNote(note.Id);
 		}
+
+		await _socialNetworkRepository.DeleteGroup(id);
 	}
 
 	/// <summary>
@@ -161,7 +161,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// или несуществующим идентификатором группы!</exception>
 	public async Task CreateNote(Note model)
 	{
-		_noteValidator.Validate(model);
+		await _noteValidator.ValidateAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
 		{
@@ -186,7 +186,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// или несуществующим идентификатором группы!</exception>
 	public async Task UpdateNote(int id, Note model)
 	{
-		_noteValidator.Validate(model);
+		await _noteValidator.ValidateAsync(model);
 
 		if (await _socialNetworkRepository.GetNote(id) == null)
 		{
@@ -252,7 +252,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Роль с указанным названием уже присутствует!</exception>
 	public async Task CreateRole(Role model)
 	{
-		_roleValidator.Validate(model);
+		await _roleValidator.ValidateAsync(model);
 
 		if ((await _socialNetworkRepository.GetAllRoles())
 			.Where(role => role.Name == model.Name).ToList().Count != 0)
@@ -271,9 +271,9 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="NotFoundException">Роль с указанным идентификатором не найдена.</exception>
 	public async Task UpdateRole(int id, Role model)
 	{
-		_roleValidator.Validate(model);
+		await _roleValidator.ValidateAsync(model);
 
-		if (_socialNetworkRepository.GetRole(id) == null)
+		if (await _socialNetworkRepository.GetRole(id) == null)
 		{
 			throw new NotFoundException("Роль с указанным идентификатором не найдена!");
 		}
@@ -327,7 +327,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
 	public async Task CreateUser(User model)
 	{
-		_userValidator.Validate(model); 
+		await _userValidator.ValidateAsync(model); 
 
 		await _socialNetworkRepository.CreateUser(model);
 	}
@@ -340,7 +340,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="NotFoundException">Пользователь с указанным идентификатором не найден.</exception>
 	public async Task UpdateUser(int id, User model)
 	{
-		_userValidator.Validate(model);
+		await _userValidator.ValidateAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(id) == null)
 		{
@@ -362,18 +362,18 @@ public class SocialNetworkService : ISocialNetworkService
 			throw new NotFoundException("Пользователь с указанным идентификатором не найден!");
 		}
 
-		await _socialNetworkRepository.DeleteUser(id);
+		foreach (var note in (await _socialNetworkRepository.GetAllNotes())
+			.Where(note => note.UserId == id).ToList())
+		{
+			await _socialNetworkRepository.DeleteNote(note.Id);
+		}
 
 		foreach (var group in (await _socialNetworkRepository.GetAllGroups())
-			.Where(group => group.UserId == id))
+			.Where(group => group.UserId == id).ToList())
 		{
 			await _socialNetworkRepository.DeleteGroup(group.Id);
 		}
 
-		foreach (var note in (await _socialNetworkRepository.GetAllNotes())
-			.Where(note => note.UserId == id))
-		{
-			await _socialNetworkRepository.DeleteNote(note.Id);
-		}
+		await _socialNetworkRepository.DeleteUser(id);
 	}
 }

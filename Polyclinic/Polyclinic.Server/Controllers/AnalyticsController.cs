@@ -44,14 +44,14 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutRegistrationsPatients")]
-    public IEnumerable<PatientGetDto> GetInformationAboutPatients()
+    public IEnumerable<PatientGetDto> GetInformationAboutPatients(string name)
     {
         _logger.LogInformation("Get information about registrations patients");
 
         var result = from reg in _polyclinicRepository.Registrations
                      join p in _polyclinicRepository.Patients on reg.IdPatient equals p.Id
                      join d in _polyclinicRepository.Doctors on reg.IdDoctor equals d.Id
-                     where d.FullName == "Brian Sullivan"
+                     where d.FullName == name
                      orderby p.FullName
                      select _mapper.Map<PatientGetDto>(p);
 

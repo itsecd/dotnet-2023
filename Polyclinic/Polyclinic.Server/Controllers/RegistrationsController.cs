@@ -62,6 +62,7 @@ public class RegistrationsController : ControllerBase
     [HttpPost]
     public void Post([FromBody] RegistrationPostDto registration)
     {
+        _logger.LogInformation("Post registration");
         _polyclinicRepository.Registrations.Add(_mapper.Map<Registration>(registration));
     }
 

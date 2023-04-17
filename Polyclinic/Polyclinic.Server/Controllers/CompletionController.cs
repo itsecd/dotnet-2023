@@ -63,6 +63,7 @@ public class CompletionController : ControllerBase
     [HttpPost]
     public void Post([FromBody] CompletionPostDto completion)
     {
+        _logger.LogInformation("Post completion");
         _polyclinicRepository.Completions.Add(_mapper.Map<Completion>(completion));
     }
 

@@ -62,6 +62,7 @@ public class PatientController : ControllerBase
     [HttpPost]
     public void Post([FromBody] PatientPostDto patient)
     {
+        _logger.LogInformation("Post patient");
         _polyclinicRepository.Patients.Add(_mapper.Map<Patient>(patient));
     }
 

@@ -25,8 +25,8 @@
         /// Pharma Group
         /// </summary>
         public List<ProductPharmacy> ProductPharmacy { get; set; } = new List<ProductPharmacy>();
-         public List<ProductPharmaGroup> ProductPharmaGroup { get; set; } = new List<ProductPharmaGroup>();
-         public List<Sale> Sales { get; set; } = new List<Sale>();
+        public List<ProductPharmaGroup> ProductPharmaGroup { get; set; } = new List<ProductPharmaGroup>();
+        public List<Sale> Sales { get; set; } = new List<Sale>();
         public Product() { }
         public Product(string productName, int productId, Group group, Manufacturer manufacturer)
         {

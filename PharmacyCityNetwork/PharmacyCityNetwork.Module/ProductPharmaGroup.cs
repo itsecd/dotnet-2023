@@ -1,25 +1,27 @@
 ﻿namespace PharmacyCityNetwork;
 
+/// <summary>
+/// Сlass describing a pharma group
+/// </summary>
+public class ProductPharmaGroup
+{
     /// <summary>
-    /// Сlass describing an pharma group
-    /// </summary>
-    public class ProductPharmaGroup
-    {
-    /// <summary>
-    /// Unique Id of Product Pharma Group
+    /// Unique id of product pharma group
     /// </summary>
     public int ProductPharmaGroupId { get; set; } = 0;
-    public PharmaGroup PharmaGroup { get; set; } 
     /// <summary>
-    /// List Products
+    /// Pharma group
+    /// </summary>
+    public PharmaGroup PharmaGroup { get; set; }
+    /// <summary>
+    /// Product of pharma group
     /// </summary>
     public Product Product { get; set; }
-
     public ProductPharmaGroup() { }
-        public ProductPharmaGroup(int productPharmaGroupId, PharmaGroup pharmaGroup, Product product)
-        {
-            ProductPharmaGroupId = productPharmaGroupId;
-            PharmaGroup = pharmaGroup;
-            Product = product;
-        }
+    public ProductPharmaGroup(int productPharmaGroupId, PharmaGroup pharmaGroup, Product product)
+    {
+        ProductPharmaGroupId = productPharmaGroupId;
+        PharmaGroup = pharmaGroup;
+        Product = product;
     }
+}

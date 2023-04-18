@@ -1,23 +1,26 @@
 ﻿namespace PharmacyCityNetwork;
 
+/// <summary>
+/// Сlass describing a manufacturer
+/// </summary>
+public class Manufacturer
+{
     /// <summary>
-    /// Сlass describing an Manufacturer
+    /// Unique id of manufacturer
     /// </summary>
-    public class Manufacturer
+    public int ManufacturerId { get; set; } = 0;
+    /// <summary>
+    /// Manufacturer name
+    /// </summary>
+    public string ManufacturerName { get; set; } = string.Empty;
+    /// <summary>
+    /// Products of manufacturer
+    /// </summary>
+    public List<Product> Product = new();
+    public Manufacturer() { }
+    public Manufacturer(string manufacturerName, int manufacturerId)
     {
-        /// <summary>
-        /// Unique Id of Manufacturer
-        /// </summary>
-        public int ManufacturerId { get; set; } = 0;
-        /// <summary>
-        /// Manufacturer Name
-        /// </summary>
-        public string ManufacturerName { get; set; } = string.Empty;
-        public List<Product> Product = new();
-        public Manufacturer() { }
-        public Manufacturer(string manufacturerName, int manufacturerId)
-        {
-            ManufacturerName = manufacturerName;
-            ManufacturerId = manufacturerId;
-        }
+        ManufacturerName = manufacturerName;
+        ManufacturerId = manufacturerId;
     }
+}

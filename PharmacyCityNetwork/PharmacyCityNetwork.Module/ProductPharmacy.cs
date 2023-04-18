@@ -1,7 +1,7 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a product pharmacy
+/// Class describing a product pharmacy
 /// </summary>
 public class ProductPharmacy
 {
@@ -18,7 +18,7 @@ public class ProductPharmacy
     /// </summary>
     public Product Product { get; set; }
     /// <summary>
-    /// Pharmacys of product pharmacy
+    /// Pharmacy of product pharmacy
     /// </summary>
     public Pharmacy Pharmacy { get; set; }
     public ProductPharmacy() { }

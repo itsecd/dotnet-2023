@@ -1,5 +1,4 @@
-﻿using PharmacyCityNetwork.Tests;
-namespace PharmacyCityNetwork.Module;
+﻿namespace PharmacyCityNetwork.Tests;
 
 public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
 {
@@ -12,7 +11,7 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
     public void AllProductsFromPharmacy()
     {
         var request = (from pharmacy in _fixture.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacy
+                       from productPharmacy in pharmacy.ProductPharmacys
                        where pharmacy.PharmacyName == "Vita"
                        orderby productPharmacy.Product.ProductName
                        select productPharmacy.Product.ProductName).ToList();
@@ -23,12 +22,12 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
     public void ProductsFromPharmacy()
     {
         var requestPharmacy = (from pharmacy in _fixture.Pharmacys
-                               from productPharmacy in pharmacy.ProductPharmacy
+                               from productPharmacy in pharmacy.ProductPharmacys
                                where productPharmacy.Product.ProductName == "Noshpa"
                                orderby productPharmacy.Product.ProductName descending
                                select pharmacy).ToList();
         var requestCountProduct = (from pharmacy in _fixture.Pharmacys
-                                   from productPharmacy in pharmacy.ProductPharmacy
+                                   from productPharmacy in pharmacy.ProductPharmacys
                                    where productPharmacy.Product.ProductName == "Noshpa"
                                    orderby productPharmacy.Product.ProductName descending
                                    select productPharmacy).ToList();
@@ -41,8 +40,8 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
     public void FarmGroup()
     {
         var request = (from pharmaGroup in _fixture.PharmaGroups
-                       from productPharmaGroup in pharmaGroup.ProductPharmaGroup
-                       from productPharmacy in productPharmaGroup.Product.ProductPharmacy
+                       from productPharmaGroup in pharmaGroup.ProductPharmaGroups
+                       from productPharmacy in productPharmaGroup.Product.ProductPharmacys
                        group productPharmacy by new
                         {
                             productPharmaGroup.PharmaGroup.PharmaGroupId,
@@ -71,7 +70,7 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
         var dateOne = new DateTime(2023, 1, 1);
         var dateTwo = new DateTime(2024, 1, 1);
         var request = (from pharmacy in _fixture.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacy
+                       from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
                        where sale.PaymentDate < dateTwo && sale.PaymentDate > dateOne
                        orderby productPharmacy.Product.Sales.Count
@@ -81,28 +80,29 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
         Assert.Equal("Alia", request[2]);
     }
     [Fact]
-    public void PharmacyFromAdress()
+    public void PharmacyFromAddress()
     {
         var request = (from pharmacy in _fixture.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacy
+                       from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
                        where productPharmacy.Product.ProductName == "Noshpa"
                        && productPharmacy.ProductCount > 2
-                       && (String.Compare(pharmacy.PharmacyAddress, "S")) > 0
+                       && (pharmacy.PharmacyAddress.Contains("T"))
                        orderby pharmacy.PharmacyName
                        select pharmacy.PharmacyName).Distinct().ToList();
         Assert.Equal("Alia", request[0]);
         Assert.Equal("Plus", request[1]);
     }
+    
     [Fact]
     public void PharmacyMinCost()
     {
         var minCost = (from product in _fixture.Products
-                       from productPharmacy in product.ProductPharmacy
+                       from productPharmacy in product.ProductPharmacys
                        where product.ProductName == "Noshpa"
                        select productPharmacy.ProductCost).Min();
         var request = (from pharmacy in _fixture.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacy
+                       from productPharmacy in pharmacy.ProductPharmacys
                        where productPharmacy.Product.ProductName == "Noshpa"
                        && productPharmacy.ProductCost == minCost
                        select pharmacy.PharmacyName).ToList();

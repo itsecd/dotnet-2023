@@ -1,12 +1,12 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a pharma group
+/// Class describing a pharma group
 /// </summary>
 public class ProductPharmaGroup
 {
     /// <summary>
-    /// Unique id of product pharma group
+    /// Id of product pharma group
     /// </summary>
     public int ProductPharmaGroupId { get; set; } = 0;
     /// <summary>

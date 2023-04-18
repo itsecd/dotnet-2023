@@ -1,12 +1,12 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a pharmancy
+/// Class describing a pharmancy
 /// </summary>
 public class Pharmacy
 {
     /// <summary>
-    /// Unique id of pharmacy
+    /// Id of pharmacy
     /// </summary>
     public int PharmacyId { get; set; } = 0;
     /// <summary>
@@ -28,13 +28,13 @@ public class Pharmacy
     /// <summary>
     /// ProductPharmacys of pharmacy
     /// </summary>
-    public List<ProductPharmacy> ProductPharmacy { get; set; } = new List<ProductPharmacy>();
+    public List<ProductPharmacy> ProductPharmacys { get; set; } = new List<ProductPharmacy>();
     public Pharmacy() { }
-    public Pharmacy(string pharmancyName, string pharmancyPhone, string pharmancyAddress, string pharmancyDirector)
+    public Pharmacy(string pharmacyName, string pharmacyPhone, string pharmacyAddress, string pharmacyDirector)
     {
-        PharmacyName = pharmancyName;
-        PharmacyPhone = pharmancyPhone;
-        PharmacyAddress = pharmancyAddress;
-        PharmacyDirector = pharmancyName;
+        PharmacyName = pharmacyName;
+        PharmacyPhone = pharmacyPhone;
+        PharmacyAddress = pharmacyAddress;
+        PharmacyDirector = pharmacyDirector;
     }
 }

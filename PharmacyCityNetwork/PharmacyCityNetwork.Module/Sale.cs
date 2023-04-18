@@ -1,12 +1,12 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a sale
+/// Class describing a sale
 /// </summary>
 public class Sale
 {
     /// <summary>
-    /// Unique id of sale
+    /// Id of sale
     /// </summary>
     public int SaleId { get; set; } = 0;
     /// <summary>

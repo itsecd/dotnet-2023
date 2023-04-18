@@ -1,12 +1,12 @@
 namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a group
+/// Class describing a group
 /// </summary>
 public class Group
 {
     /// <summary>
-    /// Unique id of group
+    /// Id of group
     /// </summary>
     public int GroupId { get; set; } = 0;
     /// <summary>
@@ -16,7 +16,7 @@ public class Group
     /// <summary>
     /// Products of group
     /// </summary>
-    public List<Product> Product { get; set; } = new List<Product>();
+    public List<Product> Products { get; set; } = new List<Product>();
     public Group() { }
     public Group(string groupName, int groupId)
     {

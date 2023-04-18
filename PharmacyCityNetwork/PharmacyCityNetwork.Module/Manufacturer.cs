@@ -1,12 +1,12 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a manufacturer
+/// Class describing a manufacturer
 /// </summary>
 public class Manufacturer
 {
     /// <summary>
-    /// Unique id of manufacturer
+    /// Id of manufacturer
     /// </summary>
     public int ManufacturerId { get; set; } = 0;
     /// <summary>
@@ -16,7 +16,7 @@ public class Manufacturer
     /// <summary>
     /// Products of manufacturer
     /// </summary>
-    public List<Product> Product = new();
+    public List<Product> Products = new();
     public Manufacturer() { }
     public Manufacturer(string manufacturerName, int manufacturerId)
     {

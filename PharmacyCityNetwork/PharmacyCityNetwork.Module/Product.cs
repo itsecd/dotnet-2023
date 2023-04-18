@@ -1,12 +1,12 @@
 ﻿namespace PharmacyCityNetwork;
 
 /// <summary>
-/// Сlass describing a product
+/// Class describing a product
 /// </summary>
 public class Product
 {
     /// <summary>
-    /// Unique id of product
+    /// Id of product
     /// </summary>
     public int ProductId { get; set; } = 0;
     /// <summary>
@@ -24,11 +24,11 @@ public class Product
     /// <summary>
     /// ProductPharmacys of product
     /// </summary>
-    public List<ProductPharmacy> ProductPharmacy { get; set; } = new List<ProductPharmacy>();
+    public List<ProductPharmacy> ProductPharmacys { get; set; } = new List<ProductPharmacy>();
     /// <summary>
     /// ProductPharmaGroups of product
     /// </summary>
-    public List<ProductPharmaGroup> ProductPharmaGroup { get; set; } = new List<ProductPharmaGroup>();
+    public List<ProductPharmaGroup> ProductPharmaGroups { get; set; } = new List<ProductPharmaGroup>();
     /// <summary>
     /// Sales of product
     /// </summary>

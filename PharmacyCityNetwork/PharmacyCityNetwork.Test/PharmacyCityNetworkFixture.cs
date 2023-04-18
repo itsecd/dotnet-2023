@@ -1,5 +1,7 @@
 ﻿namespace PharmacyCityNetwork.Tests;
 
+using PharmacyCityNetwork;
+
 public class PharmacyCityNetworkFixture
 {
     private readonly List<Group> _groups;
@@ -33,52 +35,52 @@ public class PharmacyCityNetworkFixture
 
         var firstProduct = new Product("Paracetamol", 1, firstGroup, firstManufacturer);
         var firstProductPharmacy = new ProductPharmacy(1, 300, firstProduct, firstPharmacy);
-        firstProduct.ProductPharmacy.Add(firstProductPharmacy);
-        firstPharmacy.ProductPharmacy.Add(firstProductPharmacy);
+        firstProduct.ProductPharmacys.Add(firstProductPharmacy);
+        firstPharmacy.ProductPharmacys.Add(firstProductPharmacy);
 
         var firstProductPharmaGroup = new ProductPharmaGroup(1, firstPharmaGroup, firstProduct);
-        firstProduct.ProductPharmaGroup.Add(firstProductPharmaGroup);
-        firstPharmaGroup.ProductPharmaGroup.Add(firstProductPharmaGroup);
+        firstProduct.ProductPharmaGroups.Add(firstProductPharmaGroup);
+        firstPharmaGroup.ProductPharmaGroups.Add(firstProductPharmaGroup);
 
-        firstGroup.Product.Add(firstProduct);
+        firstGroup.Products.Add(firstProduct);
 
-        firstManufacturer.Product.Add(firstProduct);
+        firstManufacturer.Products.Add(firstProduct);
 
         var firstSale = new Sale("Online", new DateTime(2023, 1, 28), firstProduct);
         firstProduct.Sales.Add(firstSale);
 
         var secondProduct = new Product("Espumizan", 2, secondGroup, secondManufacturer);
         var secondProductPharmacy = new ProductPharmacy(2, 250, secondProduct, firstPharmacy);
-        secondProduct.ProductPharmacy.Add(secondProductPharmacy);
-        firstPharmacy.ProductPharmacy.Add(secondProductPharmacy);
+        secondProduct.ProductPharmacys.Add(secondProductPharmacy);
+        firstPharmacy.ProductPharmacys.Add(secondProductPharmacy);
 
         var secondProductPharmaGroup = new ProductPharmaGroup(1, secondPharmaGroup, secondProduct);
-        secondProduct.ProductPharmaGroup.Add(secondProductPharmaGroup);
-        secondPharmaGroup.ProductPharmaGroup.Add(secondProductPharmaGroup);
+        secondProduct.ProductPharmaGroups.Add(secondProductPharmaGroup);
+        secondPharmaGroup.ProductPharmaGroups.Add(secondProductPharmaGroup);
 
-        secondGroup.Product.Add(secondProduct);
+        secondGroup.Products.Add(secondProduct);
 
-        secondManufacturer.Product.Add(secondProduct);
+        secondManufacturer.Products.Add(secondProduct);
 
         var secondSale = new Sale("Cash", new DateTime(2023, 4, 14), secondProduct);
         secondProduct.Sales.Add(secondSale);
 
         var thridProduct = new Product("Noshpa", 3, thridGroup, secondManufacturer);
         var thridProductPharmacy = new ProductPharmacy(3, 200, thridProduct, thridPharmacy);
-        thridProduct.ProductPharmacy.Add(thridProductPharmacy);
-        thridPharmacy.ProductPharmacy.Add(thridProductPharmacy);
+        thridProduct.ProductPharmacys.Add(thridProductPharmacy);
+        thridPharmacy.ProductPharmacys.Add(thridProductPharmacy);
 
         var sixthProductPharmacy = new ProductPharmacy(4, 180, thridProduct, secondPharmacy);
-        thridProduct.ProductPharmacy.Add(sixthProductPharmacy);
-        secondPharmacy.ProductPharmacy.Add(sixthProductPharmacy);
+        thridProduct.ProductPharmacys.Add(sixthProductPharmacy);
+        secondPharmacy.ProductPharmacys.Add(sixthProductPharmacy);
 
         var thridProductPharmaGroup = new ProductPharmaGroup(1, thridPharmaGroup, thridProduct);
-        thridProduct.ProductPharmaGroup.Add(thridProductPharmaGroup);
-        thridPharmaGroup.ProductPharmaGroup.Add(thridProductPharmaGroup);
+        thridProduct.ProductPharmaGroups.Add(thridProductPharmaGroup);
+        thridPharmaGroup.ProductPharmaGroups.Add(thridProductPharmaGroup);
 
-        thridGroup.Product.Add(thridProduct);
+        thridGroup.Products.Add(thridProduct);
 
-        secondManufacturer.Product.Add(thridProduct);
+        secondManufacturer.Products.Add(thridProduct);
 
         var thridSale = new Sale("Online", new DateTime(2023, 3, 20), thridProduct);
         thridProduct.Sales.Add(thridSale);
@@ -88,32 +90,32 @@ public class PharmacyCityNetworkFixture
 
         var fourthProduct = new Product("Analgin", 3, thridGroup, firstManufacturer);
         var fourthProductPharmacy = new ProductPharmacy(4, 135, fourthProduct, secondPharmacy);
-        fourthProduct.ProductPharmacy.Add(fourthProductPharmacy);
-        fourthProduct.ProductPharmacy.Add(fourthProductPharmacy);
+        fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
+        fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
 
         var fourthProductPharmaGroup = new ProductPharmaGroup(1, fourthPharmaGroup, fourthProduct);
-        fourthProduct.ProductPharmaGroup.Add(fourthProductPharmaGroup);
-        fourthPharmaGroup.ProductPharmaGroup.Add(fourthProductPharmaGroup);
+        fourthProduct.ProductPharmaGroups.Add(fourthProductPharmaGroup);
+        fourthPharmaGroup.ProductPharmaGroups.Add(fourthProductPharmaGroup);
 
-        thridGroup.Product.Add(fourthProduct);
+        thridGroup.Products.Add(fourthProduct);
 
-        firstManufacturer.Product.Add(fourthProduct);
+        firstManufacturer.Products.Add(fourthProduct);
 
         var fourthSale = new Sale("Online", new DateTime(2022, 11, 18), fourthProduct);
         fourthProduct.Sales.Add(fourthSale);
 
         var fifthProduct = new Product("Nekst", 1, firstGroup, firstManufacturer);
         var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy);
-        fifthProduct.ProductPharmacy.Add(fifthProductPharmacy);
-        fifthPharmacy.ProductPharmacy.Add(fifthProductPharmacy);
+        fifthProduct.ProductPharmacys.Add(fifthProductPharmacy);
+        fifthPharmacy.ProductPharmacys.Add(fifthProductPharmacy);
 
         var fifthProductPharmaGroup = new ProductPharmaGroup(1, firstPharmaGroup, fifthProduct);
-        fifthProduct.ProductPharmaGroup.Add(fifthProductPharmaGroup);
-        firstPharmaGroup.ProductPharmaGroup.Add(fifthProductPharmaGroup);
+        fifthProduct.ProductPharmaGroups.Add(fifthProductPharmaGroup);
+        firstPharmaGroup.ProductPharmaGroups.Add(fifthProductPharmaGroup);
 
-        firstGroup.Product.Add(fifthProduct);
+        firstGroup.Products.Add(fifthProduct);
 
-        firstManufacturer.Product.Add(fifthProduct);
+        firstManufacturer.Products.Add(fifthProduct);
 
         var fifthSale = new Sale("Online", new DateTime(2022, 5, 23), fifthProduct);
         fifthProduct.Sales.Add(fifthSale);

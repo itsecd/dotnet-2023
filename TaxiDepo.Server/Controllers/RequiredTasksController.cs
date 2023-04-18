@@ -1,4 +1,6 @@
+using System.Text.RegularExpressions;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TaxiDepo.Domain;
 using TaxiDepo.Server.Dto;
@@ -118,9 +120,9 @@ public class RequiredTasksController : ControllerBase
     {
         _logger.LogInformation("Get driver and his car");
         var user = (from obj in _taxiRepository.Rides
-            where (obj.TripDate < date) &&
-                  obj.UserInfo == new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434")
-            select _mapper.Map<UserDto>(obj.UserInfo));
+            where (obj.TripDate < date)
+            orderby obj.UserInfo.UserRides.Count descending 
+            select _mapper.Map<UserDto>(obj.UserInfo)).Take(1);
         return user;
     }
 }

@@ -1,7 +1,7 @@
 namespace TaxiDepo.Server.Dto;
 
 /// <summary>
-/// Dro ride class
+/// Dto ride class
 /// </summary>
 public class RideDto
 {

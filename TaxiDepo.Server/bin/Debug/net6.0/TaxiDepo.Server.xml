@@ -393,7 +393,7 @@
         </member>
         <member name="T:TaxiDepo.Server.Dto.RideDto">
             <summary>
-            Dro ride class
+            Dto ride class
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Dto.RideDto.Id">

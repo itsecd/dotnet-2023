@@ -37,7 +37,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = group.Name,
 				Description = group.Description,
 				CreationDate = group.CreationDate,
-				UserId = (await GetUser(group.UserId))!.Id,
+				UserId = group.UserId,
 			});
 		}
 
@@ -61,7 +61,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = group.Name,
 				Description = group.Description,
 				CreationDate = group.CreationDate,
-				UserId = (await GetUser(group.UserId))!.Id,
+				UserId = group.UserId,
 			};
 	}
 		
@@ -160,8 +160,8 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = note.Name,
 				Description = note.Description,
 				CreationDate = note.CreationDate,
-				UserId = (await GetUser(note.UserId))!.Id,
-				GroupId = (await GetGroup(note.GroupId))!.Id,
+				UserId = note.UserId,
+				GroupId = note.GroupId,
 			});
 		}
 
@@ -185,8 +185,8 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 				Name = note.Name,
 				Description = note.Description,
 				CreationDate = note.CreationDate,
-				UserId = (await GetUser(note.UserId))!.Id,
-				GroupId = (await GetGroup(note.GroupId))!.Id
+				UserId = note.UserId,
+				GroupId = note.GroupId
 			};
 	}
 	

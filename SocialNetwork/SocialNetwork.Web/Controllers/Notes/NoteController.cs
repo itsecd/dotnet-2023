@@ -35,8 +35,8 @@ public class NoteController : ControllerBase
 				Name = note.Name,
 				Description = note.Description,
 				CreationDate = note.CreationDate,
-				User = note.User,
-				Group = note.Group
+				UserId = note.UserId,
+				GroupId = note.GroupId
 			});
 
 	/// <summary>
@@ -55,8 +55,8 @@ public class NoteController : ControllerBase
 			Name = entity.Name,
 			Description = entity.Description,
 			CreationDate = entity.CreationDate,
-			User = entity.User,
-			Group = entity.Group
+			UserId = entity.UserId,
+			GroupId = entity.GroupId
 		};
 	}
 

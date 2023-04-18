@@ -28,12 +28,12 @@ public class NoteDtoGet
 	public DateTime? CreationDate { get; set; }
 
 	/// <summary>
-	/// Автор.
+	/// Идентификатор автора.
 	/// </summary>
-	public User? User { get; set; }
+	public int UserId { get; set; }
 
 	/// <summary>
-	/// Группа.
+	/// Идентификатор группы.
 	/// </summary>
-	public Group? Group { get; set; }
+	public int GroupId { get; set; }
 }

@@ -35,7 +35,7 @@ public class GroupController : ControllerBase
                 Name = group.Name,
                 Description = group.Description,
                 CreationDate = group.CreationDate,
-                User = group.User,
+                UserId = group.UserId,
             });
 
     /// <summary>
@@ -54,7 +54,7 @@ public class GroupController : ControllerBase
 			Name = model.Name,
 			Description = model.Description,
 			CreationDate = model.CreationDate,
-			User = model.User,
+			UserId = model.UserId,
 		};
 	}
 

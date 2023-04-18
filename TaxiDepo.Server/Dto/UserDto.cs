@@ -1,7 +1,7 @@
 namespace TaxiDepo.Server.Dto;
 
 /// <summary>
-/// 
+/// Dto user class
 /// </summary>
 public class UserDto
 {

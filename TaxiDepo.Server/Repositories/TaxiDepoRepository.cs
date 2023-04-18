@@ -3,34 +3,34 @@ using TaxiDepo.Domain;
 namespace TaxiDepo.Server.Repositories;
 
 /// <summary>
-/// 
+/// Interface TaxiDepoRepository
 /// </summary>
 public interface ITaxiDepoRepository
 {
     /// <summary>
-    /// 
+    /// List if Driver class object
     /// </summary>
     List<Driver> Drivers { get; }
     /// <summary>
-    /// 
+    /// List if Car class object
     /// </summary>
     List<Car> Cars { get; }
     /// <summary>
-    /// 
+    /// List if User class object
     /// </summary>
     List<User> Users { get; }
     /// <summary>
-    /// 
+    /// List if Rides class object
     /// </summary>
     List<Ride> Rides { get; }
 }
 /// <summary>
-/// 
+/// TaxiDepoRepository class
 /// </summary>
 public class TaxiDepoRepository : ITaxiDepoRepository
 {
     /// <summary>
-    /// 
+    /// Constructor without params
     /// </summary>
     public TaxiDepoRepository()
     {
@@ -114,22 +114,22 @@ public class TaxiDepoRepository : ITaxiDepoRepository
         };
     }
     /// <summary>
-    /// 
+    /// Implement list of Drivers
     /// </summary>
     public List<Driver> Drivers { get; }
 
     /// <summary>
-    /// 
+    /// Implement list of Cars
     /// </summary>
     public List<Car> Cars { get; }
 
     /// <summary>
-    /// 
+    /// Implement list of Users
     /// </summary>
     public List<User> Users { get; }
 
     /// <summary>
-    /// 
+    /// Implement list of Rides
     /// </summary>
     public List<Ride> Rides { get; }
 }

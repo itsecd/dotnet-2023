@@ -5,22 +5,18 @@ using TaxiDepo.Server.Dto;
 namespace TaxiDepo.Server;
 
 /// <summary>
-/// 
+/// MappingProfile class
 /// </summary>
 public class MappingProfile: Profile
 {
     /// <summary>
-    /// 
+    /// Constructor without params
     /// </summary>
     public MappingProfile()
     {
-        CreateMap<Car, CarDto>();
-        CreateMap<CarDto, Car>();
-        CreateMap<Driver, DriverDto>();
-        CreateMap<DriverDto, Driver>();
-        CreateMap<Ride, RideDto>();
-        CreateMap<RideDto, Ride>();
-        CreateMap<User, UserDto>();
-        CreateMap<UserDto, User>();
+        CreateMap<Car, CarDto>().ReverseMap();
+        CreateMap<Driver, DriverDto>().ReverseMap();
+        CreateMap<Ride, RideDto>().ReverseMap();
+        CreateMap<User, UserDto>().ReverseMap();
     }
 } 

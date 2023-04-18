@@ -162,7 +162,7 @@
             </summary>
             <returns>Driver object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDate">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDate(System.DateTime,System.DateTime)">
             <summary>
             Task 2 - Print info about user who driven in date range sort by surname
             </summary>
@@ -174,7 +174,7 @@
             </summary>
             <returns>Users object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetTopFiveDrivers">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetTopFiveDriversByRides">
             <summary>
             Task 4 - Print top five drivers with max amount rides
             </summary>
@@ -186,7 +186,7 @@
             </summary>
             <returns>String</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetTopFiveDrivfreres">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDateRange(System.DateTime)">
             <summary>
             Task 6 - Print info about users, who made max amount of rides
             </summary>
@@ -393,7 +393,7 @@
         </member>
         <member name="T:TaxiDepo.Server.Dto.RideDto">
             <summary>
-            
+            Dro ride class
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Dto.RideDto.Id">
@@ -418,7 +418,7 @@
         </member>
         <member name="T:TaxiDepo.Server.Dto.UserDto">
             <summary>
-            
+            Dto user class
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Dto.UserDto.Id">
@@ -448,67 +448,67 @@
         </member>
         <member name="T:TaxiDepo.Server.MappingProfile">
             <summary>
-            
+            MappingProfile class
             </summary>
         </member>
         <member name="M:TaxiDepo.Server.MappingProfile.#ctor">
             <summary>
-            
+            Constructor without params
             </summary>
         </member>
         <member name="T:TaxiDepo.Server.Repositories.ITaxiDepoRepository">
             <summary>
-            
+            Interface TaxiDepoRepository
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.ITaxiDepoRepository.Drivers">
             <summary>
-            
+            List if Driver class object
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.ITaxiDepoRepository.Cars">
             <summary>
-            
+            List if Car class object
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.ITaxiDepoRepository.Users">
             <summary>
-            
+            List if User class object
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.ITaxiDepoRepository.Rides">
             <summary>
-            
+            List if Rides class object
             </summary>
         </member>
         <member name="T:TaxiDepo.Server.Repositories.TaxiDepoRepository">
             <summary>
-            
+            TaxiDepoRepository class
             </summary>
         </member>
         <member name="M:TaxiDepo.Server.Repositories.TaxiDepoRepository.#ctor">
             <summary>
-            
+            Constructor without params
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.TaxiDepoRepository.Drivers">
             <summary>
-            
+            Implement list of Drivers
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.TaxiDepoRepository.Cars">
             <summary>
-            
+            Implement list of Cars
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.TaxiDepoRepository.Users">
             <summary>
-            
+            Implement list of Users
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Repositories.TaxiDepoRepository.Rides">
             <summary>
-            
+            Implement list of Rides
             </summary>
         </member>
     </members>

@@ -41,7 +41,7 @@ public class RequiredTasksController : ControllerBase
     /// Task 1 - Print info about driver, his car
     /// </summary>
     /// <returns>Driver object</returns>
-    [HttpGet("Get-car-and-his-driver")]
+    [HttpGet("getCarDriver")]
     public IEnumerable<DriverDto> GetCarAndDriver()
     {
         _logger.LogInformation("Get driver and his car");
@@ -54,13 +54,13 @@ public class RequiredTasksController : ControllerBase
     /// Task 2 - Print info about user who driven in date range sort by surname
     /// </summary>
     /// <returns>User object</returns>
-    [HttpGet("Get-user-in-date-range")]
-    public IEnumerable<UserDto> GetUserByDate()
+    [HttpGet("getUserByDate")]
+    public IEnumerable<UserDto> GetUserByDate(DateTime dateBefore, DateTime dateAfter)
     {
         _logger.LogInformation("Get driver and his car");
         var user = (from obj in _taxiRepository.Rides
-            where (obj.TripDate > new DateTime(2020, 12, 12, 12, 12, 12) &&
-                   obj.TripDate < new DateTime(2022, 12, 12, 12, 12, 12))
+            where (obj.TripDate > dateBefore &&
+                   obj.TripDate < dateAfter)
             orderby obj.UserInfo.UserSurname descending 
             select _mapper.Map<UserDto>(obj.UserInfo));
         return user;
@@ -69,7 +69,7 @@ public class RequiredTasksController : ControllerBase
     /// Task 3 - Print user rides amount
     /// </summary>
     /// <returns>Users object</returns>
-    [HttpGet("User-rides-amount")]
+    [HttpGet("userRidesAmount")]
     public IEnumerable<UserDto> GetUserRides()
     {
         _logger.LogInformation("Get driver and his car");
@@ -82,8 +82,8 @@ public class RequiredTasksController : ControllerBase
     /// Task 4 - Print top five drivers with max amount rides
     /// </summary>
     /// <returns>Drivers object</returns>
-    [HttpGet("Top-five-drivers-rides")]
-    public IEnumerable<DriverDto> GetTopFiveDrivers()
+    [HttpGet("topDriversRides")]
+    public IEnumerable<DriverDto> GetTopFiveDriversByRides()
     {
         _logger.LogInformation("Get driver and his car");
         var driver = (from obj in _taxiRepository.Rides
@@ -96,7 +96,7 @@ public class RequiredTasksController : ControllerBase
     /// Task 5 - Print info about min trip time
     /// </summary>
     /// <returns>String</returns>
-    [HttpGet("Min-trip-time-of-drivers")]
+    [HttpGet("minDriversTripTime")]
     public IEnumerable<string> GetMinTime()
     {
         _logger.LogInformation("Get driver and his car");
@@ -113,12 +113,12 @@ public class RequiredTasksController : ControllerBase
     /// Task 6 - Print info about users, who made max amount of rides
     /// </summary>
     /// <returns>User object</returns>
-    [HttpGet("Users-with-max-amount-rides-with-date-range")]
-    public IEnumerable<UserDto> GetTopFiveDrivfreres()
+    [HttpGet("usersWithAmountRidesByDateRange")]
+    public IEnumerable<UserDto> GetUserByDateRange(DateTime date)
     {
         _logger.LogInformation("Get driver and his car");
         var user = (from obj in _taxiRepository.Rides
-            where (obj.TripDate < new DateTime(2022, 12, 12, 12, 12, 12)) &&
+            where (obj.TripDate < date) &&
                   obj.UserInfo == new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434")
             select _mapper.Map<UserDto>(obj.UserInfo));
         return user;

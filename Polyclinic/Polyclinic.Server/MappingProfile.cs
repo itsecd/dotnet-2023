@@ -8,18 +8,16 @@ public class MappingProfile : Profile
 
     public MappingProfile()
     {
-        //CreateMap<Registration, RegistrationPostDto>();
+        CreateMap<Registration, RegistrationGetDto>();
         CreateMap<RegistrationPostDto, Registration>();
 
         CreateMap<Doctor, DoctorGetDto>();
-        //CreateMap<Doctor, DoctorPostDto>();
         CreateMap<DoctorPostDto, Doctor>();
 
-        //CreateMap<Completion, CompletionPostDto>();
+        CreateMap<Completion, CompletionGetDto>();
         CreateMap<CompletionPostDto, Completion>();
 
         CreateMap<Patient, PatientGetDto>();
-        //CreateMap<Patient, PatientPostDto>();
         CreateMap<PatientPostDto, Patient>();
     }
 }

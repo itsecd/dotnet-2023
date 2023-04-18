@@ -59,7 +59,7 @@ public class RequiredTasksController : ControllerBase
     [HttpGet("getUserByDate")]
     public IEnumerable<UserDto> GetUserByDate(DateTime dateBefore, DateTime dateAfter)
     {
-        _logger.LogInformation("Get driver and his car");
+        _logger.LogInformation("Get user by date");
         var user = (from obj in _taxiRepository.Rides
             where (obj.TripDate > dateBefore &&
                    obj.TripDate < dateAfter)
@@ -74,7 +74,7 @@ public class RequiredTasksController : ControllerBase
     [HttpGet("userRidesAmount")]
     public IEnumerable<UserDto> GetUserRides()
     {
-        _logger.LogInformation("Get driver and his car");
+        _logger.LogInformation("Get user rides amount");
         var user = (from obj in _taxiRepository.Rides
             where (obj.UserInfo == new User(1, "Kotov", "Stanislav", "Pavlovich", "89290334434"))
             select _mapper.Map<UserDto>(obj.UserInfo));
@@ -87,7 +87,7 @@ public class RequiredTasksController : ControllerBase
     [HttpGet("topDriversRides")]
     public IEnumerable<DriverDto> GetTopFiveDriversByRides()
     {
-        _logger.LogInformation("Get driver and his car");
+        _logger.LogInformation("Get drivers ride");
         var driver = (from obj in _taxiRepository.Rides
             where (obj.TripCar != null)
             select _mapper.Map<DriverDto>(obj.TripCar.AssignedDriver)).Take(5);
@@ -101,7 +101,7 @@ public class RequiredTasksController : ControllerBase
     [HttpGet("minDriversTripTime")]
     public IEnumerable<string> GetMinTime()
     {
-        _logger.LogInformation("Get driver and his car");
+        _logger.LogInformation("Get min drivers trip time");
 
         var time = (from obj in _taxiRepository.Rides
             where (obj.TripCar == new Car(0, "A279TT163", "BMW E34", "Purple"))
@@ -118,7 +118,7 @@ public class RequiredTasksController : ControllerBase
     [HttpGet("usersWithAmountRidesByDateRange")]
     public IEnumerable<UserDto> GetUserByDateRange(DateTime date)
     {
-        _logger.LogInformation("Get driver and his car");
+        _logger.LogInformation("Get user and with max amount of rides");
         var user = (from obj in _taxiRepository.Rides
             where (obj.TripDate < date)
             orderby obj.UserInfo.UserRides.Count descending 

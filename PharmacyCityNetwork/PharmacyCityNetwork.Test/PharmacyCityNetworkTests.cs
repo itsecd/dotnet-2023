@@ -37,24 +37,34 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
         Assert.Equal(4, requestCountProduct[0].ProductCount);
         Assert.Equal(3, requestCountProduct[1].ProductCount);
     }
-    //Вывести информацию о средней стоимости препаратов 
-    //каждой фармацевтической группе для каждой аптеки.
-    //[Fact]
-    //public void FarmGroup() 
-    //{
-    //    var request = (from pharmaGroup in _fixture.PharmaGroups
-    //                   from productPharmaGroup in pharmaGroup.ProductPharmaGroup
-    //                   from productPharmacy in productPharmaGroup.Product.ProductPharmacy
-    //                   group productPharmacy.ProductCost by productPharmaGroup.PharmaGroup into g
-    //                   select new
-    //                   {
-    //                       PharmaGroup = g.Key,
-    //                       ProductCost = g.Average(s => s.ProductCost)
-    //                   }).ToList();
-    //                  select g.Key.ProductCost).ToList();
-    //    Assert.Equal(10, request.Average());
-    //    Assert.Equal(12, request[0]);
-    //}
+    [Fact]
+    public void FarmGroup()
+    {
+        var request = (from pharmaGroup in _fixture.PharmaGroups
+                       from productPharmaGroup in pharmaGroup.ProductPharmaGroup
+                       from productPharmacy in productPharmaGroup.Product.ProductPharmacy
+                       group productPharmacy by new
+                        {
+                            productPharmaGroup.PharmaGroup.PharmaGroupId,
+                            productPharmacy.Pharmacy.PharmacyName
+                        } into pharmacyGroups
+                        select new
+                        {
+                            PharmaGroup = pharmacyGroups.Key.PharmaGroupId,
+                            Pharmacy = pharmacyGroups.Key.PharmacyName,
+                            ProductCost = pharmacyGroups.Average(s => s.ProductCost)
+                        }
+               ).ToList();
+        Assert.Equal(300, request[0].ProductCost);
+        Assert.Equal(1, request[0].PharmaGroup);
+        Assert.Equal("Vita", request[0].Pharmacy);
+        Assert.Equal(350, request[1].ProductCost);
+        Assert.Equal(1, request[1].PharmaGroup);
+        Assert.Equal("Tabls", request[1].Pharmacy);
+        Assert.Equal(250, request[2].ProductCost);
+        Assert.Equal(2, request[2].PharmaGroup);
+        Assert.Equal("Vita", request[2].Pharmacy);
+    }
     [Fact]
     public void TopFivePharmacy()
     {
@@ -97,21 +107,5 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
                        && productPharmacy.ProductCost == minCost
                        select pharmacy.PharmacyName).ToList();
         Assert.Equal("Plus", request[0]);
-    }
-    [Fact]
-    public void Test()
-    {
-        var request = (from pharmaGroup in _fixture.PharmaGroups
-                       from t in pharmaGroup.ProductPharmaGroup
-                       from y in t.Product.ProductPharmacy
-                       select y.ProductCost).ToList();
-        //Assert.Equal(7, request.Count);
-        Assert.Equal(request[0], 300);
-        Assert.Equal(request[1], 350);
-        Assert.Equal(request[2], 250);
-        Assert.Equal(request[3], 200);
-        Assert.Equal(request[4], 180);
-        Assert.Equal(request[5], 135);
-        Assert.Equal(request[6], 135);
     }
 }

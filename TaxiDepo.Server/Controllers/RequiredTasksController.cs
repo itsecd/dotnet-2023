@@ -112,7 +112,7 @@ public class RequiredTasksController : ControllerBase
         return request;
     }
     /// <summary>
-    /// Task 6 - Print info about users, who made max amount of rides
+    /// Task 6 - Print info about users, with max amount of rides
     /// </summary>
     /// <returns>User object</returns>
     [HttpGet("usersWithAmountRidesByDateRange")]

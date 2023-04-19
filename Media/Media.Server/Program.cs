@@ -1,6 +1,7 @@
 using AutoMapper;
 using Media.Server;
-using Media.Server.Repository;
+using Media.Domain;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,12 @@ var mapperConfig = new MapperConfiguration(config => config.AddProfile(new Mappi
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<IMediaRepository, MediaRepository>();
+builder.Services.AddDbContextFactory<MediaContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(Media));
+    optionsBuilder.UseMySQL(connectionString);
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

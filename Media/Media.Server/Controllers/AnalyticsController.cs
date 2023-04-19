@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Media.Domain;
 using Media.Server.Dto;
-using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Media.Server.Controllers;
 
@@ -14,11 +14,6 @@ namespace Media.Server.Controllers;
 public class AnalyticsController : ControllerBase
 {
     /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly IMediaRepository _repository;
-
-    /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
@@ -28,11 +23,16 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     private readonly ILogger<AnalyticsController> _logger;
 
-    public AnalyticsController(IMediaRepository repository, IMapper mapper, ILogger<AnalyticsController> logger)
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
+    private readonly IDbContextFactory<MediaContext> _contextFactory;
+
+    public AnalyticsController(IMapper mapper, ILogger<AnalyticsController> logger, IDbContextFactory<MediaContext> contextFactory)
     {
-        _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -42,8 +42,9 @@ public class AnalyticsController : ControllerBase
     [HttpGet("artist-information")]
     public IEnumerable<ArtistGetDto> GetArtistInfo()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get artist information");
-        return (from artist in _repository.Artists
+        return (from artist in context.Artists
                 select _mapper.Map<Artist, ArtistGetDto>(artist)).ToList();
     }
 
@@ -55,7 +56,8 @@ public class AnalyticsController : ControllerBase
     [HttpGet("tracks-in-album/{albumName}")]
     public IActionResult GetTracksInfo(string albumName)
     {
-        var resultList = (from album in _repository.Albums
+        using var context = _contextFactory.CreateDbContext();
+        var resultList = (from album in context.Albums.Include(album => album.Tracks)
                           where album.Name == albumName
                           from track in album.Tracks
                           orderby track.Number
@@ -77,7 +79,8 @@ public class AnalyticsController : ControllerBase
     [HttpGet("albums-by-year/{year:int}")]
     public IActionResult GetAlbumsInfo(int year)
     {
-        var resultList = (from album in _repository.Albums
+        using var context = _contextFactory.CreateDbContext();
+        var resultList = (from album in context.Albums.Include(album => album.Tracks)
                           where album.Year == year
                           select new Tuple<AlbumGetDto, int>(_mapper.Map<Album, AlbumGetDto>(album), album.Tracks.Count)).ToList();
         if (resultList.Count == 0)
@@ -96,8 +99,9 @@ public class AnalyticsController : ControllerBase
     [HttpGet("top-5-albums")]
     public IEnumerable<AlbumGetDto> GetTopAlbums()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation($"Get top-5 longest album");
-        return (from album in _repository.Albums
+        return (from album in context.Albums.Include(album => album.Tracks)
                 orderby album.Tracks.Sum(track => track.Duration) descending
                 select _mapper.Map<Album, AlbumGetDto>(album)).Take(5).ToList();
     }
@@ -108,9 +112,10 @@ public class AnalyticsController : ControllerBase
     [HttpGet("max-album-artists")]
     public IEnumerable<ArtistGetDto> GetMaxAlbumArtistTest()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation($"Get the artists with the most albums");
-        return (from artist in _repository.Artists
-                where artist.Albums.Count == _repository.Artists.Max(artist => artist.Albums.Count)
+        return (from artist in context.Artists.Include(artist => artist.Albums)
+                where artist.Albums.Count == context.Artists.Max(artist => artist.Albums.Count)
                 select _mapper.Map<Artist, ArtistGetDto>(artist)).ToList();
     }
 
@@ -121,7 +126,8 @@ public class AnalyticsController : ControllerBase
     [HttpGet("information-of-duration")]
     public IEnumerable<double> GetAlbumDurationsInfo()
     {
-        var durationAlbumList = (from album in _repository.Albums
+        using var context = _contextFactory.CreateDbContext();
+        var durationAlbumList = (from album in context.Albums.Include(album => album.Tracks)
                                  select new { Album = album, Duration = album.Tracks.Sum(track => track.Duration) });
         var min = durationAlbumList.Min(album => album.Duration);
         var max = durationAlbumList.Max(album => album.Duration);

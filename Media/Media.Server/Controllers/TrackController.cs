@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Media.Domain;
 using Media.Server.Dto;
-using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Media.Server.Controllers;
 
@@ -14,11 +14,6 @@ namespace Media.Server.Controllers;
 public class TrackController : ControllerBase
 {
     /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly IMediaRepository _repository;
-
-    /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
@@ -28,11 +23,16 @@ public class TrackController : ControllerBase
     /// </summary>
     private readonly ILogger<TrackController> _logger;
 
-    public TrackController(IMediaRepository repository, IMapper mapper, ILogger<TrackController> logger)
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
+    private readonly IDbContextFactory<MediaContext> _contextFactory;
+
+    public TrackController(IMapper mapper, ILogger<TrackController> logger, IDbContextFactory<MediaContext> contextFactory)
     {
-        _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -42,8 +42,9 @@ public class TrackController : ControllerBase
     [HttpGet]
     public IEnumerable<Track> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("GET: Get list of track");
-        return _repository.Tracks;
+        return context.Tracks.ToList();
     }
 
     /// <summary>
@@ -54,7 +55,8 @@ public class TrackController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Track> Get(int id)
     {
-        var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
         if (track == null)
         {
             _logger.LogInformation($"GET(id): Track with id = {id} not found");
@@ -74,8 +76,10 @@ public class TrackController : ControllerBase
     [HttpPost]
     public void Post([FromBody] TrackPostDto track)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post new track");
-        _repository.Tracks.Add(_mapper.Map<TrackPostDto, Track>(track));
+        context.Tracks.Add(_mapper.Map<TrackPostDto, Track>(track));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -87,7 +91,8 @@ public class TrackController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
     {
-        var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
         if (track == null)
         {
             _logger.LogInformation($"PUT: Track with id = {id} not found");
@@ -100,6 +105,7 @@ public class TrackController : ControllerBase
             track.AlbumId = putTrack.AlbumId;
             track.Duration = putTrack.Duration;
             _logger.LogInformation($"PUT: Put track with id = {id}");
+            context.SaveChanges();
             return Ok(new { track.Id });
         }
     }
@@ -111,10 +117,13 @@ public class TrackController : ControllerBase
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        var track = _repository.Tracks.FirstOrDefault(track => track.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
         if (track != null)
         {
-            if (_repository.Tracks.Remove(track)) _logger.LogInformation($"DELETE: Delete track with id = {id}");
+            context.Tracks.Remove(track);
+            _logger.LogInformation($"DELETE: Delete track with id = {id}");
+            context.SaveChanges();
         }
     }
 }

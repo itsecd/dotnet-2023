@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Media.Domain;
 using Media.Server.Dto;
-using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Media.Server.Controllers;
 
@@ -14,11 +14,6 @@ namespace Media.Server.Controllers;
 public class GenreController : ControllerBase
 {
     /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly IMediaRepository _repository;
-
-    /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
@@ -28,11 +23,16 @@ public class GenreController : ControllerBase
     /// </summary>
     private readonly ILogger<GenreController> _logger;
 
-    public GenreController(IMediaRepository repository, IMapper mapper, ILogger<GenreController> logger)
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
+    private readonly IDbContextFactory<MediaContext> _contextFactory;
+
+    public GenreController(IMapper mapper, ILogger<GenreController> logger, IDbContextFactory<MediaContext> contextFactory)
     {
-        _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -42,8 +42,9 @@ public class GenreController : ControllerBase
     [HttpGet]
     public IEnumerable<Genre> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("GET: Get list of genre");
-        return _repository.Genres;
+        return context.Genres.ToList();
     }
 
     /// <summary>
@@ -54,7 +55,8 @@ public class GenreController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Genre> Get(int id)
     {
-        var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
         if (genre == null)
         {
             _logger.LogInformation($"GET(id): Genre with id = {id} not found");
@@ -74,8 +76,10 @@ public class GenreController : ControllerBase
     [HttpPost]
     public void Post([FromBody] GenrePostDto genre)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post new genre");
-        _repository.Genres.Add(_mapper.Map<GenrePostDto, Genre>(genre));
+        context.Genres.Add(_mapper.Map<GenrePostDto, Genre>(genre));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -87,7 +91,8 @@ public class GenreController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GenrePostDto putGenre)
     {
-        var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
         if (genre == null)
         {
             _logger.LogInformation($"PUT: Genre with id = {id} not found");
@@ -97,6 +102,7 @@ public class GenreController : ControllerBase
         {
             genre.Name = putGenre.Name;
             _logger.LogInformation($"PUT: Put genre with id = {id}");
+            context.SaveChanges();
             return Ok(new { genre.Id });
         }
     }
@@ -108,10 +114,13 @@ public class GenreController : ControllerBase
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        var genre = _repository.Genres.FirstOrDefault(genre => genre.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
         if (genre != null)
         {
-            if (_repository.Genres.Remove(genre)) _logger.LogInformation($"DELETE: Delete genre with id = {id}");
+            context.Genres.Remove(genre);
+            _logger.LogInformation($"DELETE: Delete genre with id = {id}");
+            context.SaveChanges();
         }
     }
 }

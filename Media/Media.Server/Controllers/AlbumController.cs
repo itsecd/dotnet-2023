@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Media.Domain;
 using Media.Server.Dto;
-using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Media.Server.Controllers;
 
@@ -14,11 +14,6 @@ namespace Media.Server.Controllers;
 public class AlbumController : ControllerBase
 {
     /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly IMediaRepository _repository;
-
-    /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
@@ -28,11 +23,16 @@ public class AlbumController : ControllerBase
     /// </summary>
     private readonly ILogger<AlbumController> _logger;
 
-    public AlbumController(IMediaRepository repository, IMapper mapper, ILogger<AlbumController> logger)
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
+    private readonly IDbContextFactory<MediaContext> _contextFactory;
+
+    public AlbumController(IMapper mapper, ILogger<AlbumController> logger, IDbContextFactory<MediaContext> contextFactory)
     {
-        _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -42,8 +42,9 @@ public class AlbumController : ControllerBase
     [HttpGet]
     public IEnumerable<AlbumGetDto> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("GET: Get list of album");
-        return _repository.Albums.Select(album => _mapper.Map<Album, AlbumGetDto>(album));
+        return _mapper.Map<IEnumerable<AlbumGetDto>>(context.Albums);
     }
 
     /// <summary>
@@ -54,7 +55,8 @@ public class AlbumController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<AlbumGetDto> Get(int id)
     {
-        var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var album = context.Albums.FirstOrDefault(album => album.Id == id);
         if (album == null)
         {
             _logger.LogInformation($"GET(id): Album with id = {id} not found");
@@ -74,8 +76,10 @@ public class AlbumController : ControllerBase
     [HttpPost]
     public void Post([FromBody] AlbumPostDto album)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post new album");
-        _repository.Albums.Add(_mapper.Map<AlbumPostDto, Album>(album));
+        context.Albums.Add(_mapper.Map<AlbumPostDto, Album>(album) );
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -87,7 +91,8 @@ public class AlbumController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] AlbumPostDto putAlbum)
     {
-        var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var album = context.Albums.FirstOrDefault(album => album.Id == id);
         if (album == null)
         {
             _logger.LogInformation($"PUT: Album with id = {id} not found");
@@ -100,6 +105,7 @@ public class AlbumController : ControllerBase
             album.GenreId = putAlbum.GenreId;
             album.Year = putAlbum.Year;
             _logger.LogInformation($"PUT: Put album with id = {id}");
+            context.SaveChanges();
             return Ok(new { album.Id });
         }
     }
@@ -111,10 +117,13 @@ public class AlbumController : ControllerBase
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        var album = _repository.Albums.FirstOrDefault(album => album.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var album = context.Albums.FirstOrDefault(album => album.Id == id);
         if (album != null)
         {
-            if (_repository.Albums.Remove(album)) _logger.LogInformation($"DELETE: Delete album with id = {id}");
+            context.Albums.Remove(album);
+            context.SaveChanges();
+            _logger.LogInformation($"DELETE: Delete album with id = {id}");
         }
     }
 }

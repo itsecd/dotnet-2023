@@ -3,6 +3,7 @@ using Media.Domain;
 using Media.Server.Dto;
 using Media.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Media.Server.Controllers;
 
@@ -14,11 +15,6 @@ namespace Media.Server.Controllers;
 public class ArtistController : ControllerBase
 {
     /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly IMediaRepository _repository;
-
-    /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
@@ -28,11 +24,16 @@ public class ArtistController : ControllerBase
     /// </summary>
     private readonly ILogger<ArtistController> _logger;
 
-    public ArtistController(IMediaRepository repository, IMapper mapper, ILogger<ArtistController> logger)
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
+    private readonly IDbContextFactory<MediaContext> _contextFactory;
+
+    public ArtistController(IMapper mapper, ILogger<ArtistController> logger, IDbContextFactory<MediaContext> contextFactory)
     {
-        _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -42,8 +43,9 @@ public class ArtistController : ControllerBase
     [HttpGet]
     public IEnumerable<ArtistGetDto> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("GET: Get list of artist");
-        return _repository.Artists.Select(artist => _mapper.Map<Artist, ArtistGetDto>(artist));
+        return _mapper.Map<IEnumerable<ArtistGetDto>>(context.Artists);
     }
 
     /// <summary>
@@ -54,7 +56,8 @@ public class ArtistController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<ArtistGetDto> Get(int id)
     {
-        var artist = _repository.Artists.FirstOrDefault(artist => artist.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var artist = context.Artists.FirstOrDefault(artist => artist.Id == id);
         if (artist == null)
         {
             _logger.LogInformation($"GET(id): Artist with id = {id} not found");
@@ -74,8 +77,10 @@ public class ArtistController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ArtistPostDto artist)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("POST: Post new artist");
-        _repository.Artists.Add(_mapper.Map<ArtistPostDto, Artist>(artist));
+        context.Artists.Add(_mapper.Map<ArtistPostDto, Artist>(artist));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -87,7 +92,8 @@ public class ArtistController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ArtistPostDto putArtist)
     {
-        var artist = _repository.Artists.FirstOrDefault(artist => artist.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var artist = context.Artists.FirstOrDefault(artist => artist.Id == id);
         if (artist == null)
         {
             _logger.LogInformation($"PUT: Artist with id = {id} not found");
@@ -98,6 +104,7 @@ public class ArtistController : ControllerBase
             artist.Name = putArtist.Name;
             artist.Description = putArtist.Description;
             _logger.LogInformation("PUT: Put artist with id = {id}", id);
+            context.SaveChanges();
             return Ok(new { artist.Id });
         }
     }
@@ -109,10 +116,13 @@ public class ArtistController : ControllerBase
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        var artist = _repository.Artists.FirstOrDefault(artist => artist.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var artist = context.Artists.FirstOrDefault(artist => artist.Id == id);
         if (artist != null)
         {
-            if (_repository.Artists.Remove(artist)) _logger.LogInformation($"DELETE: Delete artist with id = {id}");
+            context.Artists.Remove(artist); 
+            _logger.LogInformation($"DELETE: Delete artist with id = {id}");
+            context.SaveChanges();
         }
     }
 }

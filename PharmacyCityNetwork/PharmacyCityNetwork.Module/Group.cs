@@ -8,7 +8,7 @@ public class Group
     /// <summary>
     /// Id of group
     /// </summary>
-    public int GroupId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Group name
     /// </summary>
@@ -18,9 +18,9 @@ public class Group
     /// </summary>
     public List<Product> Products { get; set; } = new List<Product>();
     public Group() { }
-    public Group(string groupName, int groupId)
+    public Group(string groupName, int id)
     {
         GroupName = groupName;
-        GroupId = groupId;
+        Id = id;
     }
 }

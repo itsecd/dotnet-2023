@@ -8,7 +8,7 @@ public class PharmaGroup
     /// <summary>
     /// Id of pharma group
     /// </summary>
-    public int PharmaGroupId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Pharma group name
     /// </summary>
@@ -18,9 +18,9 @@ public class PharmaGroup
     /// </summary>
     public List<ProductPharmaGroup> ProductPharmaGroups = new();
     public PharmaGroup() { }
-    public PharmaGroup(string pharmaGroupName, int pharmaGroupId)
+    public PharmaGroup(string pharmaGroupName, int id)
     {
         PharmaGroupName = pharmaGroupName;
-        PharmaGroupId = pharmaGroupId;
+        Id = id;
     }
 }

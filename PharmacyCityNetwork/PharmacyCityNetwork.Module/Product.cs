@@ -8,7 +8,7 @@ public class Product
     /// <summary>
     /// Id of product
     /// </summary>
-    public int ProductId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Product name
     /// </summary>
@@ -34,10 +34,10 @@ public class Product
     /// </summary>
     public List<Sale> Sales { get; set; } = new List<Sale>();
     public Product() { }
-    public Product(string productName, int productId, Group group, Manufacturer manufacturer)
+    public Product(string productName, int id, Group group, Manufacturer manufacturer)
     {
         ProductName = productName;
-        ProductId = productId;
+        Id = id;
         Group = group;
         Manufacturer = manufacturer;
     }

@@ -8,7 +8,7 @@ public class Manufacturer
     /// <summary>
     /// Id of manufacturer
     /// </summary>
-    public int ManufacturerId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Manufacturer name
     /// </summary>
@@ -18,9 +18,9 @@ public class Manufacturer
     /// </summary>
     public List<Product> Products = new();
     public Manufacturer() { }
-    public Manufacturer(string manufacturerName, int manufacturerId)
+    public Manufacturer(string manufacturerName, int id)
     {
         ManufacturerName = manufacturerName;
-        ManufacturerId = manufacturerId;
+        Id = id;
     }
 }

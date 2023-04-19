@@ -1,4 +1,4 @@
-﻿namespace PharmacyCityNetwork.Tests;
+﻿namespace PharmacyCityNetwork.Test;
 
 public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
 {
@@ -44,12 +44,12 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
                        from productPharmacy in productPharmaGroup.Product.ProductPharmacys
                        group productPharmacy by new
                         {
-                            productPharmaGroup.PharmaGroup.PharmaGroupId,
+                            productPharmaGroup.PharmaGroup.Id,
                             productPharmacy.Pharmacy.PharmacyName
                         } into pharmacyGroups
                         select new
                         {
-                            PharmaGroup = pharmacyGroups.Key.PharmaGroupId,
+                            PharmaGroup = pharmacyGroups.Key.Id,
                             Pharmacy = pharmacyGroups.Key.PharmacyName,
                             ProductCost = pharmacyGroups.Average(s => s.ProductCost)
                         }

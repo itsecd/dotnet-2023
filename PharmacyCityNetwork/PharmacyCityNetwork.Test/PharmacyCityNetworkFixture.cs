@@ -1,4 +1,4 @@
-﻿namespace PharmacyCityNetwork.Tests;
+﻿namespace PharmacyCityNetwork.Test;
 
 using PharmacyCityNetwork;
 

@@ -8,7 +8,7 @@ public class Pharmacy
     /// <summary>
     /// Id of pharmacy
     /// </summary>
-    public int PharmacyId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Pharmacy name
     /// </summary>

@@ -8,7 +8,7 @@ public class Sale
     /// <summary>
     /// Id of sale
     /// </summary>
-    public int SaleId { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// Payment choice
     /// </summary>

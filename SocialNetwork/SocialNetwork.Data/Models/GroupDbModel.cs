@@ -43,4 +43,9 @@ public class GroupDbModel
 	[Column("user_id")]
 	[Required]
 	public int UserId { get; set; }
+
+	/// <summary>
+	/// Создатель.
+	/// </summary>
+	public UserDbModel User { get; set; }
 }

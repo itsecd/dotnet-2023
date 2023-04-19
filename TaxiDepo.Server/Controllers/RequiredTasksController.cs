@@ -115,7 +115,7 @@ public class RequiredTasksController : ControllerBase
     /// Task 6 - Print info about users, with max amount of rides
     /// </summary>
     /// <returns>User object</returns>
-    [HttpGet("UsersWithAmountRidesByDateRange")]
+    [HttpGet("UsersWithAmountRidesByDate")]
     public ActionResult<UserDto> GetUserByDateRange(DateTime date)
     {
         _logger.LogInformation("Get user and with max amount of rides");

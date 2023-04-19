@@ -1,31 +1,34 @@
 ﻿using AutoMapper;
 using LibrarySchool;
+using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>
-/// Controler for class Mark. Defined methods: Post, Put, Get, Delete
+/// Controler for class Marks. Defined methods: Post, Put, Get, Delete
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class MarkController : Controller
 {
     private readonly ILogger<ClassTypeController> _logger;
-    private readonly ILibrarySchoolRepository _librarySchoolRepository;
+    private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Constructor class StudentController
+    /// Constructor for class MakrController
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="librarySchoolRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public MarkController(ILogger<ClassTypeController> logger, ILibrarySchoolRepository librarySchoolRepository, IMapper mapper)
+    public MarkController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
         _mapper = mapper;
-        _librarySchoolRepository = librarySchoolRepository;
+        _contextFactory = contextFactory;
     }
     /// <summary>
     /// Get list mark
@@ -34,10 +37,11 @@ public class MarkController : Controller
     /// Return: list mark
     /// </returns>
     [HttpGet]
-    public IEnumerable<Mark> Get()
+    public async Task<IEnumerable<MarkGetDto>> Get()
     {
         _logger.LogInformation("Get list marks");
-        return _librarySchoolRepository.Marks;
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<MarkGetDto>>(ctx.Marks);
     }
     /// <summary>
     /// Get mark with certain id
@@ -47,15 +51,16 @@ public class MarkController : Controller
     /// Return: Ation result Ok if mark exist, NotFound if not exist
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<Mark> Get(int id)
+    public async Task<ActionResult<MarkGetDto>> Get(int id)
     {
-        var foundMark = _librarySchoolRepository.Marks.FirstOrDefault(mark => mark.MarkId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundMark = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
         if (foundMark == null)
         {
-            _logger.LogInformation("Not found mark {id}", id);
+            _logger.LogInformation("Not found mark id: {id}", id);
             return NotFound();
         }
-        return Ok(foundMark);
+        return Ok(_mapper.Map<MarkGetDto>(foundMark));
     }
 
     /// <summary>
@@ -63,9 +68,18 @@ public class MarkController : Controller
     /// </summary>
     /// <param name="markToPost"></param>
     [HttpPost]
-    public void Post([FromBody] MarkPostDto markToPost)
+    public async Task<IActionResult> Post([FromBody] MarkPostDto markToPost)
     {
-        _librarySchoolRepository.AddMark(_mapper.Map<Mark>(markToPost));
+        var ctx = await _contextFactory.CreateDbContextAsync();  
+        var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == markToPost.StudentId);
+        if (foundStudent == null)
+            return StatusCode(500, $"Not found student id: {markToPost.StudentId}");
+        var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == markToPost.SubjectId);
+        if (foundSubject == null)
+            return StatusCode(500, $"Not found subject id: {markToPost.SubjectId}");
+        await ctx.Marks.AddAsync(_mapper.Map<Mark>(markToPost));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -77,15 +91,18 @@ public class MarkController : Controller
     /// Return: IActionResult NotFound if not exist or Ok if exist
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] MarkPostDto fixedMark)
+    public async Task<IActionResult> Put(int id, [FromBody] MarkPostDto fixedMark)
     {
-        var markToFix = _librarySchoolRepository.Marks.FirstOrDefault(mark => mark.MarkId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var markToFix = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
         if (fixedMark == null)
         {
             _logger.LogInformation("Not found mark {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.ChangeMark(id, _mapper.Map<Mark>(fixedMark));
+        _mapper.Map(markToFix, fixedMark);
+        ctx.Update(_mapper.Map<Mark>(markToFix));
+        await ctx.SaveChangesAsync();   
         return Ok();
     }
 
@@ -98,15 +115,17 @@ public class MarkController : Controller
     /// </returns>
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var markToDelete = _librarySchoolRepository.Marks.FirstOrDefault(mark => mark.MarkId == id);
-        if (markToDelete == null)
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundMark = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
+        if (foundMark == null)
         {
-            _logger.LogInformation("Not found mark {id}", id);
+            _logger.LogInformation("Not found mark id: {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.DeleteMark(id);
+        ctx.Remove(foundMark);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

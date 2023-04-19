@@ -1,6 +1,9 @@
-﻿namespace LibrarySchool;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LibrarySchool;
 /// <summary>
-/// Student type in university
+/// Students type in university
 /// </summary>
 
 public class Student
@@ -8,6 +11,7 @@ public class Student
     ///<summary>
     /// StudentId - guid typed value for storing Id of the student
     ///</summary>
+    [Key]
     public int StudentId { get; set; }
 
     /// <summary>
@@ -28,12 +32,18 @@ public class Student
     /// <summary>
     /// ClassId - Id of the class where student studing
     /// </summary>
+    [ForeignKey("ClassType")]
     public int ClassId { get; set; }
+
+    /// <summary>
+    /// ClassTypes
+    /// </summary>
+    public ClassType ClassType { get; set; } = null!;
 
     /// <summary>
     /// Marks - list mark that student received
     /// </summary>
-    public List<Mark> Marks { get; set; } = new List<Mark>();
+    public List<Mark> Marks { get; set; } = null!;
 
     public Student() { }
 

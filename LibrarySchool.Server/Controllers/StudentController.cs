@@ -1,33 +1,35 @@
 ﻿using AutoMapper;
 using LibrarySchool;
+using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>
-/// Controler for class Student. Defined methods: Post, Put, Get, Delete
+/// Controler for class Students. Defined methods: Post, Put, Get, Delete
 /// </summary>
 
 [Route("api/[controller]")]
 [ApiController]
-public class StudentController : Controller
+public class StudentController : ControllerBase
 {
     private readonly ILogger<ClassTypeController> _logger;
-    private readonly ILibrarySchoolRepository _librarySchoolRepository;
+    private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    /// <summary>
-    /// Constructor class StudentController
-    /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librarySchoolRepository"></param>
-    /// <param name="mapper"></param>
-    public StudentController(ILogger<ClassTypeController> logger, ILibrarySchoolRepository librarySchoolRepository, IMapper mapper)
-    {
+   /// <summary>
+   /// Constructor of controller Students
+   /// </summary>
+   /// <param name="logger"></param>
+   /// <param name="contextFactory"></param>
+   /// <param name="mapper"></param>
+   public StudentController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
+   {
         _logger = logger;
         _mapper = mapper;
-        _librarySchoolRepository = librarySchoolRepository;
-    }
+        _contextFactory = contextFactory;
+   }
     /// <summary>
     /// Get list student
     /// </summary>
@@ -35,83 +37,92 @@ public class StudentController : Controller
     /// Return: list student type StudentGetDto
     /// </returns>
     [HttpGet]
-    public IEnumerable<StudentGetDto> Get()
+    public async Task<IEnumerable<StudentGetDto>> Get()
     {
+        var ctx =  await _contextFactory.CreateDbContextAsync();
+        var users = await ctx.Students.ToArrayAsync();
         _logger.LogInformation("Get list students");
-        return _librarySchoolRepository.Students.Select(student => _mapper.Map<StudentGetDto>(student));
+        return _mapper.Map<IEnumerable<StudentGetDto>>(users);
     }
 
-
-
     /// <summary>
-    /// Get student with certain id
+    /// Get Students by Id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>
-    /// Return: Ation result Ok if student exist, NotFound() if not exist
-    /// </returns>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<StudentGetDto> Get(int id)
+    public async Task<ActionResult<StudentGetDto>> Get(int id)
     {
-        var foundStudent = _librarySchoolRepository.Students.FirstOrDefault(student => student.StudentId == id);
-        if (foundStudent == null)
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get student by id");
+        var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == id);
+        if (foundStudent == null) 
         {
-            _logger.LogInformation("Not found student {id}", id);
+            _logger.LogInformation("Not found student id: {id}", id);
             return NotFound();
         }
         return Ok(_mapper.Map<StudentGetDto>(foundStudent));
     }
 
     /// <summary>
-    /// Add new student to respository
+    /// Add new student
     /// </summary>
-    /// <param name="studentDtoToPost"></param>
+    /// <param name="studentPostDto"></param>
+    /// <returns></returns>
     [HttpPost]
-    public void Post([FromBody] StudentPostDto studentDtoToPost)
+    public async Task<IActionResult> Post([FromBody] StudentPostDto studentPostDto)
     {
-        _librarySchoolRepository.AddStudent(_mapper.Map<Student>(studentDtoToPost));
-    }
-
-    /// <summary>
-    /// Change information of student with certain Id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="fixedStudent"></param>
-    /// <returns>
-    /// Return: IActionResult NotFound if not exist or Ok if exist
-    /// </returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] StudentPostDto fixedStudent)
-    {
-        var studentToFix = _librarySchoolRepository.Students.FirstOrDefault(student => student.StudentId == id);
-        if (studentToFix == null)
-        {
-            _logger.LogInformation("Not found student {id}", id);
-            return NotFound();
-        }
-        _librarySchoolRepository.ChangeStudent(id, _mapper.Map<Student>(fixedStudent));
-       // _mapper.Map(fixedStudent, studentToFix);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
+        if (founClassType == null)
+            return StatusCode(500, $"Not found class id: {studentPostDto.ClassId}");
+        await ctx.Students.AddAsync(_mapper.Map<Student>(studentPostDto));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
     /// <summary>
-    /// Delete a student with certain Id 
+    /// Delete student by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>
-    /// Return: IActionResult NotFound if not exist or Ok if student deleted
-    /// </returns>
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <returns></returns>
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
     {
-        var studentToDelete = _librarySchoolRepository.Students.FirstOrDefault(student => student.StudentId == id);
-        if (studentToDelete == null)
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundStudent = await ctx.Students.Include(student => student.Marks)
+                                             .Include(student => student.ClassType)
+                                             .FirstOrDefaultAsync(student => student.StudentId == id);
+        if (foundStudent == null)
         {
-            _logger.LogInformation("Not found student {id}", id);
+            _logger.LogInformation("Not found student id: {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.DeleteStudent(id);
+        ctx.Students.Remove(foundStudent);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
+
+    /// <summary>
+    /// Change information student by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="studentPostDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    public async Task<IActionResult> Put(int id, [FromBody] StudentPostDto studentPostDto)
+    {
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == id);
+        if (foundStudent == null)
+        {
+            _logger.LogInformation("Not found student id: {id}", id);
+            return NotFound();
+        }
+        _mapper.Map(studentPostDto, foundStudent);
+        ctx.Students.Update(_mapper.Map<Student>(foundStudent));
+        await ctx.SaveChangesAsync();
+        return Ok();    
+    }
+
 }

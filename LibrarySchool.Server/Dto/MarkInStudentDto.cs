@@ -1,7 +1,7 @@
 ﻿namespace LibrarySchoolServer.Dto;
 
 /// <summary>
-/// Dto type of class Mark
+/// Dto type of class Marks
 /// </summary>
 public class MarkInStudentDto
 {

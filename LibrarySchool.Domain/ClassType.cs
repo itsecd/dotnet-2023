@@ -1,13 +1,16 @@
-﻿namespace LibrarySchool;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LibrarySchool;
 
 ///<summary>
-/// ClassType - Class type group, where student studying 
+/// ClassTypes - Class type group, where student studying 
 ///</summary>
 public class ClassType
 {
     ///<summary>
     /// ClassId - Id class 
     ///</summary>
+    [Key]
     public int ClassId { get; set; }
 
     ///<summary>
@@ -23,7 +26,7 @@ public class ClassType
     ///<summary>
     /// Students - List student in class
     ///</summary>
-    public List<Student> Students { get; set; } = new List<Student>();
+    public List<Student> Students { get; set; } = null!;
 
     public ClassType(int classId, int number, string letter, List<Student> students)
     {

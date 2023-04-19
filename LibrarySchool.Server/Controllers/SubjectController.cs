@@ -1,29 +1,32 @@
 ﻿using AutoMapper;
 using LibrarySchool;
+using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>
-/// Controler for class Subject. Defined methods: Get
+/// Controler for class Subjects. Defined methods: Get
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SubjectController : ControllerBase
 {
     private readonly ILogger<SubjectController> _logger;
-    private readonly ILibrarySchoolRepository _librarySchoolRepository;
+    private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
+    
     /// <summary>
-    /// Constructor controller subject
+    /// Contructor controller
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="librarySchoolRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public SubjectController(ILogger<SubjectController> logger, ILibrarySchoolRepository librarySchoolRepository, IMapper mapper)
+    public SubjectController(ILogger<SubjectController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _librarySchoolRepository = librarySchoolRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -34,10 +37,11 @@ public class SubjectController : ControllerBase
     /// Return list subject
     /// </returns>
     [HttpGet]
-    public IEnumerable<Subject> Get()
+    public async Task<IEnumerable<SubjectGetDto>> Get()
     {
         _logger.LogInformation("Get list subjects");
-        return _librarySchoolRepository.Subjects;
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<SubjectGetDto>>(ctx.Subjects);
     }
 
     /// <summary>
@@ -45,46 +49,53 @@ public class SubjectController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns>
-    /// Return: Subject with certain Id
+    /// Return: Subjects with certain Id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<Subject> Get(int id)
+    public async Task<ActionResult<SubjectGetDto>> Get(int id)
     {
-        var foundSubject = _librarySchoolRepository.Subjects.FirstOrDefault(subject => subject.SubjectId == id);
+        _logger.LogInformation("Get subject by id");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == id); 
         if (foundSubject == null)
         {
             _logger.LogInformation("Not found subject {id}", id);
             return NotFound();
         }
-        return Ok(foundSubject);
+        return Ok(_mapper.Map<SubjectGetDto>(foundSubject));
     }
 
     /// <summary>
-    /// Create new Subject
+    /// Create new Subjects
     /// </summary>
     /// <param name="subjectPostDto"></param>
     [HttpPost]
-    public void Post([FromBody] SubjectPostDto subjectPostDto)
+    public async Task Post([FromBody] SubjectPostDto subjectPostDto)
     {
-        _librarySchoolRepository.Subjects.Add(_mapper.Map<Subject>(subjectPostDto));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Subjects.AddAsync(_mapper.Map<Subject>(subjectPostDto));
+        await ctx.SaveChangesAsync();
     }
 
     /// <summary>
-    /// Change information of a Subject by Id
+    /// Change information of a Subjects by Id
     /// </summary>
     /// <param name="id"></param>
     /// <param name="subjectPostDto"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SubjectPostDto subjectPostDto)
+    public async Task<IActionResult> Put(int id, [FromBody] SubjectPostDto subjectPostDto)
     {
-        var foundSubject = _librarySchoolRepository.Subjects.FirstOrDefault(subject => subject.SubjectId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == id); 
         if (foundSubject == null)
         {
-            _logger.LogInformation("Not found subject {id}", id);
+            _logger.LogInformation("Not found subject id: {id}", id);
             return NotFound();
         }
         _mapper.Map(subjectPostDto, foundSubject);
+        ctx.Subjects.Update(foundSubject);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -94,15 +105,18 @@ public class SubjectController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var foundSubject = _librarySchoolRepository.Subjects.FirstOrDefault(subject => subject.SubjectId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundSubject = await ctx.Subjects.Include(subject => subject.Marks)
+                                             .FirstOrDefaultAsync(subject => subject.SubjectId == id);
         if (foundSubject == null)
         {
-            _logger.LogInformation("Not found subject {id}", id);
+            _logger.LogInformation("Not found subject id: {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.Subjects.Remove(foundSubject);
+        ctx.Subjects.Remove(foundSubject);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

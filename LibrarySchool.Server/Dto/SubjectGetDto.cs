@@ -1,37 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibrarySchool;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace LibrarySchool;
+namespace LibrarySchoolServer.Dto;
+
 /// <summary>
 /// Subjects - Class type the subject 
 /// </summary>
 
-public class Subject
+public class SubjectGetDto
 {
     /// <summary>
     /// SubjectId - Id of subject 
     /// </summary>
-    [Key]
     public int SubjectId { get; set; }
-
     /// <summary>
     /// SubjectName - Name of the subject
     /// </summary>
     public string SubjectName { get; set; } = "";
-
-    public List<Mark> Marks { get; set; } = null!;
-
     /// <summary>
     /// YearStudy - the year when start study subject
     /// </summary>
     public int YearStudy { get; set; }
-
-    public Subject() { }
-
-    public Subject(int subjectId, string subjectName, int yearStudy, List<Mark> marks)
-    {
-        SubjectId = subjectId;
-        SubjectName = subjectName;
-        YearStudy = yearStudy;
-        Marks = marks;
-    }
 }

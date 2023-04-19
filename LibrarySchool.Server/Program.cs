@@ -1,10 +1,12 @@
 using AutoMapper;
+using LibrarySchool.Domain;
 using LibrarySchoolServer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSingleton<ILibrarySchoolRepository, LibrarySchoolRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -13,6 +15,12 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 
+});
+
+builder.Services.AddDbContextFactory<LibrarySchoolContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(LibrarySchool));
+    optionsBuilder.UseMySQL(connectionString!);
 });
 
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));

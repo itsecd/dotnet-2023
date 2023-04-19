@@ -134,7 +134,7 @@ public class LibrarySchoolTest
 
     [Fact]
     ///Test for student and their class using LINQ
-    ///Student Pham Ngoc Hung in class with ClassId is 1 and Class number is 6312
+    ///Students Pham Ngoc Hung in class with ClassId is 1 and Class number is 6312
     public void TestStudentInClass()
     {
         ClassType classToFindWithId = _classes.Where(anyClass => anyClass.ClassId == 1)
@@ -152,7 +152,7 @@ public class LibrarySchoolTest
 
     [Fact]
     ///Test for certain student reiceved all mark using LINQ
-    /// Student Pham Ngoc Hung received 4, 5, 5, 4 
+    /// Students Pham Ngoc Hung received 4, 5, 5, 4 
     public void TestStudentReceiveMark()
     {
         var indexStudent = _students.Find(student => student.StudentName == "Pham Ngoc Hung")!.StudentId;
@@ -165,7 +165,7 @@ public class LibrarySchoolTest
 
     [Fact]
     /// Test for certain student reiceved mark in certain subject uisng LINQ
-    /// Student Pham Ngoc Hung received 4 in subject Industrial programming
+    /// Students Pham Ngoc Hung received 4 in subject Industrial programming
     public void TestStudentReceiveMarkInSubject()
     {
         var indexStudent = _students.Find(student => student.StudentName == "Pham Ngoc Hung")!.StudentId;

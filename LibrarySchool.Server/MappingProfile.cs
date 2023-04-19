@@ -13,18 +13,21 @@ public class MappingProfile : Profile
     /// </summary>
     public MappingProfile()
     {
-        CreateMap<ClassTypeGetDto, ClassType>();
         CreateMap<ClassType, ClassTypeGetDto>();
         CreateMap<ClassType, ClassTypePostDto>();
         CreateMap<ClassTypePostDto, ClassType>();
-        CreateMap<Mark, MarkInStudentDto>();
+
         CreateMap<Mark, MarkPostDto>();
-        CreateMap<MarkInStudentDto, Mark>();
+        CreateMap<MarkPostDto, Mark>();
+        CreateMap<Mark, MarkInStudentDto>();
+        CreateMap<Mark, MarkGetDto>();
+
         CreateMap<Student, StudentGetDto>();
         CreateMap<StudentPostDto, Student>();
         CreateMap<Student, StudentPostDto>();
-        CreateMap<MarkPostDto, Mark>();
+
         CreateMap<SubjectPostDto, Subject>();
-        CreateMap<Student, StudentGetAverageDto>();
+        CreateMap<Subject, SubjectGetDto>();
+        CreateMap<SubjectPostDto, Subject>();
     }
 }

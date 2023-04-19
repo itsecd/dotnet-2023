@@ -1,7 +1,7 @@
 ﻿namespace LibrarySchoolServer.Dto;
 
 /// <summary>
-/// GetDto type of class ClassType
+/// GetDto type of class ClassTypes
 /// </summary>
 public class ClassTypeGetDto
 {

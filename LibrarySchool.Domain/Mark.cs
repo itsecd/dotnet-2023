@@ -1,19 +1,26 @@
-﻿namespace LibrarySchool;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LibrarySchool;
 
 ///<summary>
-/// Mark - Class type mark, connection between sudent-mark value-subject
+/// Marks - Class type mark, connection between sudent-mark value-subject
 ///</summary>
 public class Mark
 {
     ///<summary>
     /// MarkId - Id mark 
     ///</summary>
+    [Key]
     public int MarkId { get; set; }
 
     ///<summary>
     /// StudentId - Id student
     ///</summary>
+    [ForeignKey("Student")]
     public int StudentId { get; set; }
+
+    public Student Student { get; set; } = null!;
 
     ///<summary>
     /// MarkValue - value of mark student received
@@ -23,7 +30,13 @@ public class Mark
     ///<summary>
     /// SubjectId - Id subject
     ///</summary>
+    [ForeignKey("Subject")]
     public int SubjectId { get; set; }
+
+    /// <summary>
+    /// Subject with id = SubjectId
+    /// </summary>
+    public Subject Subject { get; set; } = null!;
 
     ///<summary>
     /// TimeReceive - time when student receive mark

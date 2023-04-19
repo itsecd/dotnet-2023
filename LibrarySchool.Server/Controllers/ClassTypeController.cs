@@ -1,32 +1,34 @@
 ﻿using AutoMapper;
 using LibrarySchool;
+using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySchoolServer.Controllers;
 
 /// <summary>
-/// Controller for class ClassType. Define method: Get
+/// Controller for class ClassTypes. Define method: Get
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClassTypeController : Controller
 {
     private readonly ILogger<ClassTypeController> _logger;
-    private readonly ILibrarySchoolRepository _librarySchoolRepository;
+    private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Constructor controller ClassTypeController
+    /// Contructor for controller
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="librarySchoolRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public ClassTypeController(ILogger<ClassTypeController> logger, ILibrarySchoolRepository librarySchoolRepository, IMapper mapper)
+    public ClassTypeController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
         _mapper = mapper;
-        _librarySchoolRepository = librarySchoolRepository;
+        _contextFactory = contextFactory;
     }
 
     /// <summary>
@@ -36,10 +38,11 @@ public class ClassTypeController : Controller
     /// Return: list class type ClassTypeGetDto
     /// </returns>
     [HttpGet]
-    public IEnumerable<ClassTypeGetDto> Get()
+    public async Task<IEnumerable<ClassTypeGetDto>> Get()
     {
         _logger.LogInformation("Get list classes");
-        return _librarySchoolRepository.ClassTypes.Select(classType => _mapper.Map<ClassTypeGetDto>(classType));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<ClassTypeGetDto>>(ctx.ClassTypes);
     }
 
     /// <summary>
@@ -50,9 +53,11 @@ public class ClassTypeController : Controller
     /// Class with certain Id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<ClassTypeGetDto> Get(int id)
+    public async Task<ActionResult<ClassTypeGetDto>> Get(int id)
     {
-        var foundClassType = _librarySchoolRepository.ClassTypes.FirstOrDefault(classType => classType.ClassId == id);
+        _logger.LogInformation("Get class by id");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId== id);
         if (foundClassType == null)
         {
             _logger.LogInformation("Not found class-type {id}", id);
@@ -69,27 +74,35 @@ public class ClassTypeController : Controller
     /// Class with certain Id
     /// </returns>
     [HttpPost]
-    public void Post(ClassTypePostDto classTypeToPost)
+    public async Task Post(ClassTypePostDto classTypeToPost)
     {
-        _librarySchoolRepository.AddClass(_mapper.Map<ClassType>(classTypeToPost));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.ClassTypes.AddAsync(_mapper.Map<ClassType>(classTypeToPost));
+        await ctx.SaveChangesAsync();
     }
 
     /// <summary>
     ///  Change information of class by Id
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="fixedClass"></param>
+    /// <param name="fixedClassType"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ClassTypePostDto fixedClass)
+    public async Task<IActionResult> Put(int id, [FromBody] ClassTypePostDto fixedClassType)
     {
-        var foundClassType = _librarySchoolRepository.ClassTypes.FirstOrDefault(classType => classType.ClassId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == id);
         if (foundClassType == null)
         {
-            _logger.LogInformation("Not found class-type {id}", id);
+            _logger.LogInformation("Not found class-type id: {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.ChangeClass(id, _mapper.Map<ClassType>(fixedClass));
+        _mapper.Map(fixedClassType, foundClassType);
+        ctx.Update(_mapper.Map<ClassType>(foundClassType));
+
+        await Task.Run(() => ctx.Update(_mapper.Map<ClassType>(foundClassType)));
+
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -99,15 +112,19 @@ public class ClassTypeController : Controller
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var foundClassType = _librarySchoolRepository.ClassTypes.FirstOrDefault(classType => classType.ClassId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundClassType = await ctx.ClassTypes.Include(classType => classType.Students)
+                                                 .FirstOrDefaultAsync(classType => classType.ClassId == id);
+                                                 
         if (foundClassType == null)
         {
-            _logger.LogInformation("Not found class-type {id}", id);
+            _logger.LogInformation("Not found class-type id: {id}", id);
             return NotFound();
         }
-        _librarySchoolRepository.DeleteClass(id);
+        ctx.ClassTypes.Remove(foundClassType);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

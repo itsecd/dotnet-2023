@@ -43,6 +43,12 @@ public interface ILibrarySchoolRepository
     /// <param name="student"></param>
     /// <returns></returns>
     void AddStudent(Student student);
+
+    /// <summary>
+    /// Get Average mark of student
+    /// </summary>
+    /// <param name="student"></param>
+    /// <returns></returns>
     double AverageMark(Student student);
 
     /// <summary>

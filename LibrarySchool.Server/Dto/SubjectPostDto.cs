@@ -1,6 +1,6 @@
 ﻿namespace LibrarySchoolServer.Dto;
 /// <summary>
-/// DtoPostType of class Subject
+/// DtoPostType of class Subjects
 /// </summary>
 public class SubjectPostDto
 {

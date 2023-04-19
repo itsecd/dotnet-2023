@@ -1,9 +1,16 @@
-﻿namespace LibrarySchoolServer.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LibrarySchoolServer.Dto;
 /// <summary>
 /// PostDto type of class Marks
 /// </summary>
-public class MarkPostDto
+public class MarkGetDto
 {
+    ///<summary>
+    /// MarkId - Id mark 
+    ///</summary>
+    public int MarkId { get; set; }
+
     ///<summary>
     /// StudentId - Id student
     ///</summary>
@@ -18,5 +25,4 @@ public class MarkPostDto
     /// SubjectId - Id subject
     ///</summary>
     public int SubjectId { get; set; }
-
 }

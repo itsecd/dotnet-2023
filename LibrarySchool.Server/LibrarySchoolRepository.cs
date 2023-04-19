@@ -112,12 +112,13 @@ public class LibrarySchoolRepository : ILibrarySchoolRepository
     /// </returns>
     private List<Subject> CreateListSubject()
     {
+        var listMark = CreateListMark();
         return new List<Subject>()
         {
-            new Subject(0, "Industrial programming", 2023),
-            new Subject(1, "Database", 2023),
-            new Subject(2, "Computer algebra", 2023),
-            new Subject(3, "Information theory", 2023),
+            new Subject(0, "Industrial programming", 2023, listMark.Where(mark => mark.SubjectId == 0).ToList()),
+            new Subject(1, "Database", 2023, listMark.Where(mark => mark.SubjectId == 1).ToList()),
+            new Subject(2, "Computer algebra", 2023, listMark.Where(mark => mark.SubjectId == 2).ToList()),
+            new Subject(3, "Information theory", 2023, listMark.Where(mark => mark.SubjectId == 3).ToList()),
         };
     }
 
@@ -261,7 +262,7 @@ public class LibrarySchoolRepository : ILibrarySchoolRepository
     }
 
     /// <summary>
-    /// Change Mark information
+    /// Change Marks information
     /// </summary>
     /// <param name="markId"></param>
     /// <param name="newMark"></param>

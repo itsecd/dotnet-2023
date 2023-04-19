@@ -188,7 +188,7 @@
         </member>
         <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDateRange(System.DateTime)">
             <summary>
-            Task 6 - Print info about users, who made max amount of rides
+            Task 6 - Print info about users, with max amount of rides
             </summary>
             <returns>User object</returns>
         </member>

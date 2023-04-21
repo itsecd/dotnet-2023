@@ -1,4 +1,6 @@
-﻿namespace StoreApp.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StoreApp.Domain;
 
 /// <summary>
 /// Customer - Class describing the buyer
@@ -8,7 +10,8 @@ public class Customer
     /// <summary>
     /// ID of customer
     /// </summary>
-    public int CustomerId { get; set; } = -1;
+    [ForeignKey("Sale")]
+    public int CustomerId { get; set; }
     /// <summary>
     /// Full name of customer
     /// </summary>
@@ -20,9 +23,9 @@ public class Customer
     public int CustomerCardNumber { get; set; } = -1;
 
     /// <summary>
-    /// Customer purchase ID collection
+    /// Customer sales collection
     /// </summary>
-    public List<int> SalesId { get; set; } = new List<int>();
+    public List<Sale> Sales { get; set; } = null!;
 
     public Customer() { }
 
@@ -31,7 +34,7 @@ public class Customer
         CustomerId = customerId;
         CustomerName = customerName;
         CustomerCardNumber = customerCardNumber;
-        SalesId = new List<int>();
+        Sales = new List<Sale>();
     }
 }
 

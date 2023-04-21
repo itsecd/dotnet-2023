@@ -1,6 +1,6 @@
 ﻿namespace StoreApp.Server.Dto;
 
-public class ProductStoreGetDto
+public class ProductSaleGetDto
 {
     /// <summary>
     /// CustomerId
@@ -12,9 +12,9 @@ public class ProductStoreGetDto
     public int ProductId { get; set; } = -1;
 
     /// <summary>
-    /// Store ID
+    /// Sale ID
     /// </summary>
-    public int StoreId { get; set; } = -1;
+    public int SaleId { get; set; } = -1;
 
     /// <summary>
     /// Product quantity

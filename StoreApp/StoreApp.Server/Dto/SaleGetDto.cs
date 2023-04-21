@@ -21,10 +21,6 @@ public class SaleGetDto
     /// </summary>
     public int StoreId { get; set; } = -1;
 
-    /// <summary>
-    /// List of products purchased by the customer 
-    /// </summary>
-    public List<int> Products { get; set; } = new List<int>();
 
     /// <summary>
     /// Purchase amount

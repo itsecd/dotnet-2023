@@ -3,9 +3,9 @@
 namespace StoreApp.Domain;
 
 /// <summary>
-/// Relationship between a product, a store, and the quantity of that product
+/// Relationship between a product, a sale, and the quantity of that product
 /// </summary>
-public class ProductStore
+public class ProductSale
 {
     /// <summary>
     /// CustomerId
@@ -18,23 +18,23 @@ public class ProductStore
     public int ProductId { get; set; } = -1;
 
     /// <summary>
-    /// Store ID
+    /// Sale ID
     /// </summary>
-    [ForeignKey("StoreId")]
-    public int StoreId { get; set; } = -1;
+    [ForeignKey("SaleId")]
+    public int SaleId { get; set; } = -1;
 
     /// <summary>
     /// Product quantity
     /// </summary>
     public int Quantity { get; set; } = 0;
 
-    public ProductStore() { }
+    public ProductSale() { }
 
-    public ProductStore(int id, int productId, int storeId, int quantity)
+    public ProductSale(int id, int productId, int saleId, int quantity)
     {
         Id = id;
         ProductId = productId;
-        StoreId = storeId;
+        SaleId = saleId;
         Quantity = quantity;
     }
 }

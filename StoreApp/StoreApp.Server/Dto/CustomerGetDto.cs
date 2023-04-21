@@ -5,7 +5,7 @@ public class CustomerGetDto
     /// <summary>
     /// ID of customer
     /// </summary>
-    public int CustomerId { get; set; } = -1;
+    public int CustomerId { get; set; }
     /// <summary>
     /// Full name of customer
     /// </summary>
@@ -14,5 +14,5 @@ public class CustomerGetDto
     /// <summary>
     /// Customer card number
     /// </summary>
-    public int CustomerCardNumber { get; set; } = -1;
+    public int CustomerCardNumber { get; set; }
 }

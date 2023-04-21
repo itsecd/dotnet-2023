@@ -8,6 +8,7 @@ public class StoreAppRepository : IStoreAppRepository
     private readonly List<Customer> _customers;
     private readonly List<Store> _stores;
     private readonly List<ProductStore> _productStores;
+    private readonly List<ProductSale> _productSales;
     private readonly List<Sale> _sales;
 
     public StoreAppRepository()
@@ -36,6 +37,30 @@ public class StoreAppRepository : IStoreAppRepository
             new Store(3, "Magnit", "Moskovskoye shosse 666"),
             new Store(4, "Perekrestok", "Revolyutsionnaya 1917")
         };
+        _productSales = new List<ProductSale>()
+        {
+            new ProductSale(1, 1, 0, 1),
+            new ProductSale(2, 1, 1, 1),
+            new ProductSale(3, 1, 2, 1),
+            new ProductSale(4, 2, 3, 1),
+            new ProductSale(5, 2, 4, 1),
+            new ProductSale(6, 2, 0, 1),
+            new ProductSale(7, 3, 1, 1),
+            new ProductSale(8, 3, 2, 1),
+            new ProductSale(9, 3, 3, 1),
+            new ProductSale(10, 4, 4, 1),
+            new ProductSale(11, 4, 0, 1),
+            new ProductSale(12, 4, 1, 1),
+            new ProductSale(13, 5, 2, 1),
+            new ProductSale(14, 5, 3, 1),
+            new ProductSale(15, 5, 4, 1),
+            new ProductSale(16, 6, 1, 1),
+            new ProductSale(17, 6, 2, 1),
+            new ProductSale(18, 6, 3, 1),
+            new ProductSale(19, 7, 4, 1),
+            new ProductSale(20, 7, 0, 1),
+            new ProductSale(21, 7, 3, 1)
+        };
         _productStores = new List<ProductStore>()
         {
             new ProductStore(1, 0, 1, 10),
@@ -47,13 +72,13 @@ public class StoreAppRepository : IStoreAppRepository
         };
         _sales = new List<Sale>()
         {
-            new Sale(1, "03.03.2023", 1, 0, new List<int> {0, 1, 2}, 357.0),
-            new Sale(2, "03.01.2023", 0, 1, new List<int> {3, 4, 0}, 221.0),
-            new Sale(3, "15.02.2023", 1, 0, new List<int> {1, 2, 3}, 364.0),
-            new Sale(4, "18.02.2023", 2, 2, new List<int> {4, 0, 1}, 284.0),
-            new Sale(5, "16.02.2023", 3, 3, new List<int> {2, 3, 4}, 241.0),
-            new Sale(6, "28.02.2023", 4, 1, new List<int> {1, 2, 3}, 364.0),
-            new Sale(7, "01.03.2023", 4, 0, new List<int> {4, 0, 3}, 284.0),
+            new Sale(1, "03.03.2023", 1, 0, 357.0),
+            new Sale(2, "03.01.2023", 0, 1, 221.0),
+            new Sale(3, "15.02.2023", 1, 0, 364.0),
+            new Sale(4, "18.02.2023", 2, 2, 284.0),
+            new Sale(5, "16.02.2023", 3, 3, 241.0),
+            new Sale(6, "28.02.2023", 4, 1, 364.0),
+            new Sale(7, "01.03.2023", 4, 0, 284.0),
         };
 
     }
@@ -62,5 +87,7 @@ public class StoreAppRepository : IStoreAppRepository
     public List<Customer> Customers => _customers;
     public List<Store> Stores => _stores;
     public List<ProductStore> ProductStores => _productStores;
+    public List<ProductSale> ProductSales => _productSales;
     public List<Sale> Sales => _sales;
+
 }

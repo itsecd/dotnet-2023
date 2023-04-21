@@ -1,4 +1,6 @@
-﻿namespace StoreApp.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StoreApp.Domain;
 
 /// <summary>
 /// Product - Class describing the product
@@ -41,9 +43,14 @@ public class Product
     public DateTime DateStorage { get; set; } = new DateTime(1970, 1, 1);
 
     /// <summary>
-    /// Collection of product sale IDs
+    /// Collection ProductSale
     /// </summary>
-    public List<int> SalesId { get; set; } = new List<int>();
+    public List<ProductSale> ProductSales { get; set; } = null!;
+
+    /// <summary>
+    /// Collection ProductStore
+    /// </summary>
+    public List<ProductStore> ProductStores { get; set; } = null!;
 
     public Product() { }
 
@@ -56,7 +63,8 @@ public class Product
         ProductType = productType;
         ProductPrice = productPrice;
         DateStorage = DateTime.Parse(dateStorage);
-        SalesId = new List<int>();
+        ProductSales = new List<ProductSale>();
+        ProductStores = new List<ProductStore>();
     }
 }
 

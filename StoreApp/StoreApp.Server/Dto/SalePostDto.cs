@@ -18,11 +18,6 @@ public class SalePostDto
     public int StoreId { get; set; } = -1;
 
     /// <summary>
-    /// List of products purchased by the customer 
-    /// </summary>
-    public List<int> Products { get; set; } = new List<int>();
-
-    /// <summary>
     /// Purchase amount
     /// </summary>
     public double Sum { get; set; } = 0.0;

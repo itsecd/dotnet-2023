@@ -1,4 +1,6 @@
-﻿namespace StoreApp.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StoreApp.Domain;
 
 /// <summary>
 /// Class describing the store
@@ -21,9 +23,14 @@ public class Store
     public string StoreAddress { get; set; } = string.Empty;
 
     /// <summary>
-    /// Store sales ID collection
+    /// Store sales collection
     /// </summary>
-    public List<int> SalesId { get; set; } = new List<int>();
+    public List<Sale> Sales { get; set; } = null!;
+
+    /// <summary>
+    /// Collection ProductStore
+    /// </summary>
+    public List<ProductStore> ProductStores { get; set; } = null!;
 
     public Store() { }
 
@@ -32,7 +39,8 @@ public class Store
         StoreId = storeId;
         StoreName = storeName;
         StoreAddress = storeAddress;
-        SalesId = new List<int>();
+        Sales = new List<Sale>();
+        ProductStores = new List<ProductStore>();
     }
 }
 

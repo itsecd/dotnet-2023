@@ -24,7 +24,7 @@ public class AnalyticsController : Controller
     /// Display information about all products in a given store
     /// </summary>
     /// <param name="storeId">
-    /// Id store
+    /// CustomerId store
     /// </param>
     /// <returns>
     /// JSON products
@@ -57,7 +57,7 @@ public class AnalyticsController : Controller
     /// For a given product, display a list of stores where it is located in availability
     /// </summary>
     /// <param name="productId">
-    /// Id product
+    /// CustomerId product
     /// </param>
     /// <returns>
     /// JSON stores

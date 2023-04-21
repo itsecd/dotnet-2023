@@ -1,4 +1,6 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using StoreApp.Domain;
 using StoreApp.Server;
 using StoreApp.Server.Repository;
 using System.Reflection;
@@ -16,6 +18,12 @@ builder.Services.AddSwaggerGen(options =>
 {
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});
+
+builder.Services.AddDbContextFactory<StoreAppContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(StoreApp));
+    optionsBuilder.UseMySQL(connectionString);
 });
 
 var app = builder.Build();

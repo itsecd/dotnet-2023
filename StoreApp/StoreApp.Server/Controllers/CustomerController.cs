@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
-using StoreApp.Server.Repository;
 
 namespace StoreApp.Server.Controllers;
 
@@ -12,13 +12,13 @@ public class CustomerController : ControllerBase
 {
 
     private readonly ILogger<CustomerController> _logger;
-    private readonly IStoreAppRepository _storeAppRepository;
     private readonly IMapper _mapper;
+    private readonly IDbContextFactory<StoreAppContext> _contextFactory;
 
-    public CustomerController(ILogger<CustomerController> logger, IStoreAppRepository storeAppRepository, IMapper mapper)
+    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory<StoreAppContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _storeAppRepository = storeAppRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -29,10 +29,13 @@ public class CustomerController : ControllerBase
     /// JSON customers
     /// </returns>
     [HttpGet]
-    public IEnumerable<CustomerGetDto> Get()
+    public async Task<IEnumerable<CustomerGetDto>> Get()
     {
         _logger.LogInformation("GET customers");
-        return _storeAppRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
+        //return _storeAppRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var customers = await ctx.Customers.ToArrayAsync();
+        return _mapper.Map<IEnumerable<CustomerGetDto>>(customers);
     }
 
     /// <summary>
@@ -45,9 +48,10 @@ public class CustomerController : ControllerBase
     /// JSON customer
     /// </returns>
     [HttpGet("{customerId}")]
-    public ActionResult<CustomerGetDto> Get(int customerId)
+    public async Task<ActionResult<CustomerGetDto>> Get(int customerId)
     {
-        var getCustomer = _storeAppRepository.Customers.FirstOrDefault(customer => customer.CustomerId == customerId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var getCustomer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.CustomerId == customerId);
         if (getCustomer == null)
         {
             _logger.LogInformation($"Not found customer with ID: {customerId}.");
@@ -71,9 +75,11 @@ public class CustomerController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
-    public ActionResult Post([FromBody] CustomerPostDto customerToPost)
+    public async Task<ActionResult> Post([FromBody] CustomerPostDto customerToPost)
     {
-        _storeAppRepository.Customers.Add(_mapper.Map<Customer>(customerToPost));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Customers.AddAsync(_mapper.Map<Customer>(customerToPost));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"POST customer ({customerToPost.CustomerName}, {customerToPost.CustomerCardNumber})");
         return Ok();
     }
@@ -91,9 +97,10 @@ public class CustomerController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{customerId}")]
-    public ActionResult Put(int customerId, [FromBody] CustomerPostDto customerToPut)
+    public async Task<ActionResult> Put(int customerId, [FromBody] CustomerPostDto customerToPut)
     {
-        var customer = _storeAppRepository.Customers.FirstOrDefault(x => x.CustomerId == customerId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var customer = await ctx.Customers.FirstOrDefaultAsync(x => x.CustomerId == customerId);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with ID: {customerId}");
@@ -103,6 +110,7 @@ public class CustomerController : ControllerBase
         {
             _logger.LogInformation($"PUT customer with ID: {customerId} ({customer.CustomerName}->{customerToPut.CustomerName}, {customer.CustomerCardNumber}->{customerToPut.CustomerCardNumber})");
             _mapper.Map(customerToPut, customer);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -117,9 +125,10 @@ public class CustomerController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{customerId}")]
-    public IActionResult Delete(int customerId)
+    public async Task<IActionResult> Delete(int customerId)
     {
-        var customer = _storeAppRepository.Customers.FirstOrDefault(x => x.CustomerId == customerId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var customer = await ctx.Customers.FirstOrDefaultAsync(x => x.CustomerId == customerId);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with ID: {customerId}");
@@ -128,7 +137,8 @@ public class CustomerController : ControllerBase
         else
         {
             _logger.LogInformation($"DELETE customer with ID: {customerId}");
-            _storeAppRepository.Customers.Remove(customer);
+            ctx.Customers.Remove(customer);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

@@ -74,7 +74,7 @@ public class SaleController : ControllerBase
     public ActionResult Post([FromBody] SalePostDto saleToPost)
     {
         _storeAppRepository.Sales.Add(_mapper.Map<Sale>(saleToPost));
-        _logger.LogInformation($"POST sale ({saleToPost.DateSale}, {saleToPost.CustomerId}, {saleToPost.StoreId}, {saleToPost.Products}, {saleToPost.Sum})");
+        _logger.LogInformation($"POST sale ({saleToPost.DateSale}, {saleToPost.CustomerId}, {saleToPost.StoreId}, {saleToPost.Sum})");
         return Ok();
     }
 
@@ -102,7 +102,7 @@ public class SaleController : ControllerBase
         else
         {
             _logger.LogInformation($"PUT sale with id {saleId} ({saleToPut.DateSale}->{saleToPut.DateSale}, {saleToPut.CustomerId}->{saleToPut.CustomerId}, " +
-                $"{saleToPut.StoreId}->{saleToPut.StoreId}, {saleToPut.Products}->{saleToPut.Products}, {saleToPut.Sum}->{saleToPut.Sum})");
+                $"{saleToPut.StoreId}->{saleToPut.StoreId}, {saleToPut.Sum}->{saleToPut.Sum})");
             _mapper.Map(saleToPut, sale);
             return Ok();
         }

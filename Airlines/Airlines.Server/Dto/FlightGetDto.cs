@@ -10,6 +10,10 @@ public class FlightGetDto
     /// </summary>
     public int Id { get; set; }
     /// <summary>
+    /// Represent a unique Id of airplane
+    /// </summary>
+    public int AirplaneId { get; set; }
+    /// <summary>
     /// Represent a number of flight
     /// </summary>
     public string? FlightCode { get; set; }

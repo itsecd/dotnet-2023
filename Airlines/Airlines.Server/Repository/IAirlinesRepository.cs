@@ -3,8 +3,8 @@
 namespace Airlines.Server.Repository;
 public interface IAirlinesRepository
 {
-    List<FlightCLass> Flights { get; }
-    List<PassengerClass> Passengers { get; }
-    List<TicketClass> Tickets { get; }
-    List<AirplaneClass> Airplanes { get; }
+    List<Flight> Flights { get; }
+    List<Passenger> Passengers { get; }
+    List<Ticket> Tickets { get; }
+    List<Airplane> Airplanes { get; }
 }

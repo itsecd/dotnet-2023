@@ -3,6 +3,7 @@ using Airlines.Server.Dto;
 using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Server.Controllers;
 
@@ -15,10 +16,12 @@ public class PassengerController : ControllerBase
 {
     private readonly ILogger<PassengerController> _logger;
     private readonly IAirlinesRepository _airlinesRepository;
+    private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public PassengerController(ILogger<PassengerController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public PassengerController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<PassengerController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;
@@ -31,10 +34,11 @@ public class PassengerController : ControllerBase
     /// Return all passengers
     /// </returns>
     [HttpGet]
-    public IEnumerable<PassengerGetDto> Get()
+    public async Task<IEnumerable<PassengerGetDto>> Get()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get passengers");
-        return _airlinesRepository.Passengers.Select(passenger => _mapper.Map<PassengerGetDto>(passenger));
+        return _mapper.Map<IEnumerable<PassengerGetDto>>(ctx.Passengers);
     }
 
     /// <summary>
@@ -44,10 +48,11 @@ public class PassengerController : ControllerBase
     /// Return passenger with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<PassengerGetDto> Get(int id)
+    public async Task<ActionResult<PassengerGetDto>> Get(int id)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get passenger with id ({id})");
-        var passenger = _airlinesRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
             _logger.LogInformation($"Not found passenger with id ({id})");
@@ -65,10 +70,13 @@ public class PassengerController : ControllerBase
     /// </summary>
     /// <param name="passenger"> Passenger class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] PassengerPostDto passenger)
+    public async Task<IActionResult> Post([FromBody] PassengerPostDto passenger)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post");
-        _airlinesRepository.Passengers.Add(_mapper.Map<PassengerClass>(passenger));
+        ctx.Passengers.Add(_mapper.Map<Passenger>(passenger));
+        ctx.SaveChanges();
+        return Ok();
     }
 
     /// <summary>
@@ -78,10 +86,11 @@ public class PassengerController : ControllerBase
     /// <param name="passengerToPut">Passenger class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PassengerPostDto passengerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] PassengerPostDto passengerToPut)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put passenger with id {0}", id);
-        var passenger = _airlinesRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id {0}", id);
@@ -90,6 +99,7 @@ public class PassengerController : ControllerBase
         else
         {
             _mapper.Map(passengerToPut, passenger);
+            ctx.SaveChanges();
             return Ok();
         }
     }
@@ -100,10 +110,11 @@ public class PassengerController : ControllerBase
     /// <param name="id">An id of passenger which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put passenger with id ({id})");
-        var passenger = _airlinesRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
             _logger.LogInformation($"Not found passenger with id ({id})");
@@ -111,7 +122,8 @@ public class PassengerController : ControllerBase
         }
         else
         {
-            _airlinesRepository.Passengers.Remove(passenger);
+            ctx.Passengers.Remove(passenger);
+            ctx.SaveChanges();
             return Ok();
         }
     }

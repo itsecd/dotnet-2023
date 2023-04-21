@@ -3,6 +3,10 @@ using Airlines.Server.Dto;
 using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Org.BouncyCastle.Crypto.Signers;
+using System.Collections.Generic;
 
 namespace Airlines.Server.Controllers;
 
@@ -15,12 +19,14 @@ public class TicketController : ControllerBase
 {
     private readonly ILogger<TicketController> _logger;
     private readonly IAirlinesRepository _airlinesRepository;
+    private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public TicketController(ILogger<TicketController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public TicketController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<TicketController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
     {
         _logger = logger;
         _airlinesRepository = airlinesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -31,10 +37,11 @@ public class TicketController : ControllerBase
     /// Return all tickets
     /// </returns>
     [HttpGet]
-    public IEnumerable<TicketClass> Get()
+    public async Task<IEnumerable<Ticket>> Get()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get tickets");
-        return _airlinesRepository.Tickets.Select(flight => flight);
+        return ctx.Tickets.ToList();
     }
 
     /// <summary>
@@ -44,10 +51,11 @@ public class TicketController : ControllerBase
     /// Return ticket with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<TicketClass> Get(int id)
+    public async Task<ActionResult<Ticket>> Get(int id)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get ticket with id ({id})");
-        var ticket = _airlinesRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
             _logger.LogInformation($"Not found ticket with id ({id})");
@@ -64,10 +72,13 @@ public class TicketController : ControllerBase
     /// </summary>
     /// <param name="ticket"> Ticket class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] TicketPostDto ticket)
+    public async Task<IActionResult> Post([FromBody] TicketPostDto ticket)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post(ticket)");
-        _airlinesRepository.Tickets.Add(_mapper.Map<TicketClass>(ticket));
+        ctx.Tickets.Add(_mapper.Map<Ticket>(ticket));
+        ctx.SaveChanges();
+        return Ok();
     }
 
     /// <summary>
@@ -77,10 +88,11 @@ public class TicketController : ControllerBase
     /// <param name="ticketToPut">Ticket class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TicketPostDto ticketToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] TicketPostDto ticketToPut)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put ticket with id {0}", id);
-        var ticket = _airlinesRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
             _logger.LogInformation("Not found ticket with id {0}", id);
@@ -89,6 +101,7 @@ public class TicketController : ControllerBase
         else
         {
             _mapper.Map(ticketToPut, ticket);
+            ctx.SaveChanges();
             return Ok();
         }
     }
@@ -99,10 +112,11 @@ public class TicketController : ControllerBase
     /// <param name="id">An id of ticket which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put ticket with id ({id})");
-        var ticket = _airlinesRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
             _logger.LogInformation($"Not found ticket with id ({id})");
@@ -110,7 +124,8 @@ public class TicketController : ControllerBase
         }
         else
         {
-            _airlinesRepository.Tickets.Remove(ticket);
+            ctx.Tickets.Remove(ticket);
+            ctx.SaveChanges();
             return Ok();
         }
     }

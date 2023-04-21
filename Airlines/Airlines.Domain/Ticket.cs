@@ -3,12 +3,20 @@
 /// <summary>
 /// Class describing a ticket
 /// </summary>
-public class TicketClass
+public class Ticket
 {
     /// <summary>
     /// Represent a unique Id of ticket
     /// </summary>
     public int Id { get; set; }
+    /// <summary>
+    /// Represent a unique Id of passenger
+    /// </summary>
+    public int PassengerId { get; set; }
+    /// <summary>
+    /// Represent a unique Id of flight
+    /// </summary>
+    public int FlightId { get; set; }
     /// <summary>
     /// Represent a number of ticket
     /// </summary>
@@ -21,8 +29,8 @@ public class TicketClass
     /// Represent a baggage weight, which passanger can move
     /// </summary>
     public int BaggageWeight { get; set; } = 0;
-    public TicketClass() { }
-    public TicketClass(int ticketNumber, string seatNumber, int baggageWeight)
+    public Ticket() { }
+    public Ticket(int ticketNumber, string seatNumber, int baggageWeight)
     {
         TicketNumber = ticketNumber;
         SeatNumber = seatNumber;

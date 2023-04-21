@@ -3,7 +3,7 @@
 /// <summary>
 /// Сlass describing an airplane
 /// </summary>
-public class AirplaneClass
+public class Airplane
 {
     /// <summary>
     /// Represent an unique Id of Airplane 
@@ -28,6 +28,6 @@ public class AirplaneClass
     /// <summary>
     /// Represent a flights   
     /// </summary>
-    public List<FlightCLass> Flights { get; set; } = new List<FlightCLass>();
-    public AirplaneClass() { }
+    public List<Flight> Flights { get; set; } = new List<Flight>();
+    public Airplane() { }
 }

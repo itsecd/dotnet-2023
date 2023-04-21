@@ -1,7 +1,10 @@
-﻿using Airlines.Server.Dto;
+﻿using Airlines.Domain;
+using Airlines.Server.Dto;
 using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Airlines.Server.Controllers;
 
@@ -13,12 +16,14 @@ namespace Airlines.Server.Controllers;
 public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
+    private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IAirlinesRepository _airlinesRepository;
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AnalyticsController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
     {
         _logger = logger;
         _airlinesRepository = airlinesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -26,20 +31,23 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a passengers without baggage
     /// </summary>
     /// <returns>Passengers without baggage</returns>
-    [HttpGet("passengers-without-baggage")]
-    public IEnumerable<PassengerGetDto> GetPassengersWithoutBaggage()
+    /*[HttpGet("passengers-without-baggage")]
+    public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengersWithoutBaggage()
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get passengers without baggage");
-        var request = (from flight in _airlinesRepository.Flights
-                       from ticket in _airlinesRepository.Tickets
-                       from passenger in _airlinesRepository.Passengers
-                       from t in passenger.Tickets
+        var flights = ctx.Flights;
+        var passengers = ctx.Passengers;
+        var tickets = passengers.Include(x => x.Tickets);
+        var request = from flight in flights
+                      // .Include(flight => flight.Tickets)
+                       from passeger in passengers
+                       from ticket in tickets
                        where (flight.Id == 1) && (ticket.BaggageWeight == 0) && (t.TicketNumber == ticket.TicketNumber)
                        select _mapper.Map<PassengerGetDto>(passenger));
-        return request;
+        return Ok(request);
 
-
-    }
+    }*/
 
     /// <summary>
     /// Get method which return a flights with specified source and destination
@@ -53,7 +61,6 @@ public class AnalyticsController : ControllerBase
                        where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
                        select _mapper.Map<FlightGetDto>(flight));
         return request;
-
     }
 
     /// <summary>

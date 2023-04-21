@@ -6,6 +6,14 @@
 public class TicketPostDto
 {
     /// <summary>
+    /// Represent a unique Id of passenger
+    /// </summary>
+    public int PassengerId { get; set; }
+    /// <summary>
+    /// Represent a unique Id of flight
+    /// </summary>
+    public int FlightId { get; set; }
+    /// <summary>
     /// Represent a number of ticket
     /// </summary>
     public int? TicketNumber { get; set; }

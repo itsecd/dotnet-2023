@@ -3,12 +3,16 @@
 /// <summary>
 /// Сlass describing the flight of an airplane
 /// </summary>
-public class FlightCLass
+public class Flight
 {
     /// <summary>
     /// Represent a unique Id of flight
     /// </summary>
     public int Id { get; set; }
+    /// <summary>
+    /// Represent a unique Id of airplane
+    /// </summary>
+    public int AirplaneId { get; set; }
     /// <summary>
     /// Represent a number of flight
     /// </summary>
@@ -40,9 +44,10 @@ public class FlightCLass
     /// <summary>
     /// Represent a list of tickets on this flight
     /// </summary>
-    public List<TicketClass> Tickets { get; set; } = new List<TicketClass> { };
-    public FlightCLass() { }
-    public FlightCLass(int id, string flightCode, string source,
+    
+    public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
+    public Flight() { }
+    public Flight(int id, string flightCode, string source,
         string destination, DateTime departureDate,
         DateTime arrivalDate, double flightDuration, string airplaneType)
     {
@@ -54,6 +59,6 @@ public class FlightCLass
         ArrivalDate = arrivalDate;
         FlightDuration = flightDuration;
         AirplaneType = airplaneType;
-        Tickets = new List<TicketClass>();
+        Tickets = new List<Ticket>();
     }
 }

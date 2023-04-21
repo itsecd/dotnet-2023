@@ -3,7 +3,7 @@
 /// <summary>
 /// Сlass describing the passenger
 /// </summary>
-public class PassengerClass
+public class Passenger
 {
     /// <summary>
     /// Represent a unique Id of passanger
@@ -20,9 +20,9 @@ public class PassengerClass
     /// <summary>
     /// Represent a tickets 
     /// </summary>
-    public List<TicketClass> Tickets { get; set; } = new List<TicketClass>();
-    public PassengerClass() { }
-    public PassengerClass(string passportNumber, string name)
+    public List<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public Passenger() { }
+    public Passenger(string passportNumber, string name)
     {
         PassportNumber = passportNumber;
         Name = name;

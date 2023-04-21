@@ -40,11 +40,11 @@ public class GenreController : ControllerBase
     /// </summary>
     /// <returns>List of genre</returns>
     [HttpGet]
-    public IEnumerable<Genre> Get()
+    public async Task<IEnumerable<Genre>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("GET: Get list of genre");
-        return context.Genres.ToList();
+        return await context.Genres.ToListAsync();
     }
 
     /// <summary>
@@ -53,10 +53,10 @@ public class GenreController : ControllerBase
     /// <param name="id">Genre Id</param>
     /// <returns>Genre</returns>
     [HttpGet("{id}")]
-    public ActionResult<Genre> Get(int id)
+    public async Task<ActionResult<Genre>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var genre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
         if (genre == null)
         {
             _logger.LogInformation($"GET(id): Genre with id = {id} not found");
@@ -74,12 +74,13 @@ public class GenreController : ControllerBase
     /// </summary>
     /// <param name="genre">Genre name</param>
     [HttpPost]
-    public void Post([FromBody] GenrePostDto genre)
-    {
-        using var context = _contextFactory.CreateDbContext();
+    public async Task<IActionResult> Post([FromBody] GenrePostDto genre)
+    { 
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post new genre");
-        context.Genres.Add(_mapper.Map<GenrePostDto, Genre>(genre));
-        context.SaveChanges();
+        await context.Genres.AddAsync(_mapper.Map<GenrePostDto, Genre>(genre));
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -89,10 +90,10 @@ public class GenreController : ControllerBase
     /// <param name="putGenre">Genre to putting</param>
     /// <returns>Id of put-genre</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] GenrePostDto putGenre)
+    public async Task<IActionResult> Put(int id, [FromBody] GenrePostDto putGenre)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var genre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
         if (genre == null)
         {
             _logger.LogInformation($"PUT: Genre with id = {id} not found");
@@ -102,7 +103,7 @@ public class GenreController : ControllerBase
         {
             genre.Name = putGenre.Name;
             _logger.LogInformation($"PUT: Put genre with id = {id}");
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok(new { genre.Id });
         }
     }
@@ -112,15 +113,17 @@ public class GenreController : ControllerBase
     /// </summary>
     /// <param name="id">Genre Id</param>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var genre = context.Genres.FirstOrDefault(genre => genre.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var genre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
         if (genre != null)
         {
             context.Genres.Remove(genre);
             _logger.LogInformation($"DELETE: Delete genre with id = {id}");
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            return Ok();
         }
+        return NotFound();
     }
 }

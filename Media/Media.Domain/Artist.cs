@@ -1,4 +1,6 @@
-﻿namespace Media.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Media.Domain;
 
 /// <summary>
 /// Class Artist is used to store information of the artist
@@ -8,6 +10,7 @@ public class Artist
     /// <summary>
     /// Id is used to store a unique identifier 
     /// </summary>
+    [Key]
     public int Id { get; set; }
 
     /// <summary>

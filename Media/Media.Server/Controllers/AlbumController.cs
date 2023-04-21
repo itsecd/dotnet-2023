@@ -40,9 +40,9 @@ public class AlbumController : ControllerBase
     /// </summary>
     /// <returns>List of album</returns>
     [HttpGet]
-    public IEnumerable<AlbumGetDto> Get()
+    public async Task<IEnumerable<AlbumGetDto>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("GET: Get list of album");
         return _mapper.Map<IEnumerable<AlbumGetDto>>(context.Albums);
     }
@@ -53,10 +53,10 @@ public class AlbumController : ControllerBase
     /// <param name="id">Album Id</param>
     /// <returns>Album</returns>
     [HttpGet("{id}")]
-    public ActionResult<AlbumGetDto> Get(int id)
+    public async Task<ActionResult<AlbumGetDto>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var album = context.Albums.FirstOrDefault(album => album.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var album = await context.Albums.FirstOrDefaultAsync(album => album.Id == id);
         if (album == null)
         {
             _logger.LogInformation($"GET(id): Album with id = {id} not found");
@@ -74,12 +74,19 @@ public class AlbumController : ControllerBase
     /// </summary>
     /// <param name="album">Album name</param>
     [HttpPost]
-    public void Post([FromBody] AlbumPostDto album)
+    public async Task<ActionResult> Post([FromBody] AlbumPostDto album)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var albumGenre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == album.GenreId);
+        if(albumGenre == null)
+            return StatusCode(422, $"Not found genre with Id = {album.GenreId}");
+        var albumArtist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == album.ArtistId);
+        if (albumArtist == null)
+            return StatusCode(422, $"Not found artist with Id = {album.ArtistId}");
+        await context.Albums.AddAsync(_mapper.Map<AlbumPostDto, Album>(album) );
+        await context.SaveChangesAsync();
         _logger.LogInformation("Post new album");
-        context.Albums.Add(_mapper.Map<AlbumPostDto, Album>(album) );
-        context.SaveChanges();
+        return Ok();
     }
 
     /// <summary>
@@ -89,10 +96,10 @@ public class AlbumController : ControllerBase
     /// <param name="putAlbum">Album for putting</param>
     /// <returns>Id of put-album</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AlbumPostDto putAlbum)
+    public async Task<IActionResult> Put(int id, [FromBody] AlbumPostDto putAlbum)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var album = context.Albums.FirstOrDefault(album => album.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var album = await context.Albums.FirstOrDefaultAsync(album => album.Id == id);
         if (album == null)
         {
             _logger.LogInformation($"PUT: Album with id = {id} not found");
@@ -100,13 +107,19 @@ public class AlbumController : ControllerBase
         }
         else
         {
+            var albumGenre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == album.GenreId);
+            if (albumGenre == null)
+                return StatusCode(422, $"Not found genre with Id = {album.GenreId}");
+            var albumArtist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == album.ArtistId);
+            if (albumArtist == null)
+                return StatusCode(422, $"Not found artist with Id = {album.GenreId}");
             album.Name = putAlbum.Name;
             album.ArtistId = putAlbum.ArtistId;
             album.GenreId = putAlbum.GenreId;
             album.Year = putAlbum.Year;
             _logger.LogInformation($"PUT: Put album with id = {id}");
-            context.SaveChanges();
-            return Ok(new { album.Id });
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 
@@ -115,15 +128,17 @@ public class AlbumController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var album = context.Albums.FirstOrDefault(album => album.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var album = await context.Albums.FirstOrDefaultAsync(album => album.Id == id);
         if (album != null)
         {
             context.Albums.Remove(album);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation($"DELETE: Delete album with id = {id}");
+            return Ok();
         }
+        return NotFound();
     }
 }

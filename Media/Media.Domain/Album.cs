@@ -1,4 +1,7 @@
-﻿namespace Media.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Media.Domain;
 
 /// <summary>
 /// Class Album is used to store information of the Album
@@ -8,12 +11,13 @@ public class Album
     /// <summary>
     /// Id is used to store a unique identifier
     /// </summary>
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
     /// Name is used to store a name of Album
     /// </summary>
-    public string Name { get; set; }
+    public string Name{ get; set; }
 
     /// <summary>
     /// Year is used to store the year the Album was created
@@ -33,10 +37,12 @@ public class Album
     /// <summary>
     /// GenreId is used to store identifier of genre
     /// </summary>
+    [ForeignKey("Genre")]
     public int GenreId { get; set; }
 
     /// <summary>
     /// ArtistId is used to store identifier of artist
     /// </summary>
+    [ForeignKey("Artist")]
     public int ArtistId { get; set; }
 }

@@ -40,11 +40,11 @@ public class TrackController : ControllerBase
     /// </summary>
     /// <returns>List of track</returns>
     [HttpGet]
-    public IEnumerable<Track> Get()
+    public async Task<IEnumerable<Track>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("GET: Get list of track");
-        return context.Tracks.ToList();
+        return await context.Tracks.ToListAsync();
     }
 
     /// <summary>
@@ -53,10 +53,10 @@ public class TrackController : ControllerBase
     /// <param name="id">Track Id</param>
     /// <returns>Track</returns>
     [HttpGet("{id}")]
-    public ActionResult<Track> Get(int id)
+    public async Task<ActionResult<Track>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var track = await context.Tracks.FirstOrDefaultAsync(track => track.Id == id);
         if (track == null)
         {
             _logger.LogInformation($"GET(id): Track with id = {id} not found");
@@ -72,14 +72,18 @@ public class TrackController : ControllerBase
     /// <summary>
     /// Post new track
     /// </summary>
-    /// <param name="track">Track name</param>
+    /// <param name="postTrack">Track name</param>
     [HttpPost]
-    public void Post([FromBody] TrackPostDto track)
+    public async Task<IActionResult> Post([FromBody] TrackPostDto postTrack)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var trackAlbum = await context.Albums.FirstOrDefaultAsync(album => album.Id == postTrack.AlbumId);
+        if(trackAlbum == null)
+            return StatusCode(422, $"Not found album with Id = {postTrack.AlbumId}");
         _logger.LogInformation("Post new track");
-        context.Tracks.Add(_mapper.Map<TrackPostDto, Track>(track));
-        context.SaveChanges();
+        await context.Tracks.AddAsync(_mapper.Map<TrackPostDto, Track>(postTrack));
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -89,10 +93,10 @@ public class TrackController : ControllerBase
     /// <param name="putTrack">Track fo putting</param>
     /// <returns>Id of put-track</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TrackPostDto putTrack)
+    public async Task<IActionResult> Put(int id, [FromBody] TrackPostDto putTrack)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var track = await context.Tracks.FirstOrDefaultAsync(track => track.Id == id);
         if (track == null)
         {
             _logger.LogInformation($"PUT: Track with id = {id} not found");
@@ -100,13 +104,16 @@ public class TrackController : ControllerBase
         }
         else
         {
+            var trackAlbum = await context.Albums.FirstOrDefaultAsync(album => album.Id == putTrack.AlbumId);
+            if (trackAlbum == null)
+                return StatusCode(422, $"Not found album with Id = {putTrack.AlbumId}");
             track.Name = putTrack.Name;
             track.Number = putTrack.Number;
             track.AlbumId = putTrack.AlbumId;
             track.Duration = putTrack.Duration;
             _logger.LogInformation($"PUT: Put track with id = {id}");
-            context.SaveChanges();
-            return Ok(new { track.Id });
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 
@@ -115,15 +122,17 @@ public class TrackController : ControllerBase
     /// </summary>
     /// <param name="id">Track name</param>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var track = context.Tracks.FirstOrDefault(track => track.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var track = await context.Tracks.FirstOrDefaultAsync(track => track.Id == id);
         if (track != null)
         {
             context.Tracks.Remove(track);
             _logger.LogInformation($"DELETE: Delete track with id = {id}");
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            return Ok();
         }
+        return NotFound();
     }
 }

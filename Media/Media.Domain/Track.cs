@@ -1,4 +1,7 @@
-﻿namespace Media.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Media.Domain;
 
 /// <summary>
 /// Class Track is used to store information of the track
@@ -8,6 +11,7 @@ public class Track
     /// <summary>
     /// Id is used to store a unique identifier
     /// </summary>
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
@@ -23,6 +27,7 @@ public class Track
     /// <summary>
     /// AlbumId is used to store the id of the album this track is in
     /// </summary>
+    [ForeignKey("Album")]
     public int AlbumId { get; set; }
 
     /// <summary>

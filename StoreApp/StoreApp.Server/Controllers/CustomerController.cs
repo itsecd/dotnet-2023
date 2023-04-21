@@ -10,15 +10,14 @@ namespace StoreApp.Server.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-
-    private readonly ILogger<CustomerController> _logger;
-    private readonly IMapper _mapper;
     private readonly IDbContextFactory<StoreAppContext> _contextFactory;
+    private readonly ILogger<CustomerController> _logger;
+    private readonly IMapper _mapper;  
 
-    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory<StoreAppContext> contextFactory, IMapper mapper)
+    public CustomerController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<CustomerController> logger, IMapper mapper)
     {
-        _logger = logger;
         _contextFactory = contextFactory;
+        _logger = logger;
         _mapper = mapper;
     }
 
@@ -32,7 +31,6 @@ public class CustomerController : ControllerBase
     public async Task<IEnumerable<CustomerGetDto>> Get()
     {
         _logger.LogInformation("GET customers");
-        //return _storeAppRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
         using var ctx = await _contextFactory.CreateDbContextAsync();
         var customers = await ctx.Customers.ToArrayAsync();
         return _mapper.Map<IEnumerable<CustomerGetDto>>(customers);

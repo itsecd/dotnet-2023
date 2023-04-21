@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
 using StoreApp.Server.Repository;
@@ -10,15 +11,14 @@ namespace StoreApp.Server.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-
+    private readonly IDbContextFactory<StoreAppContext> _contextFactory;
     private readonly ILogger<ProductController> _logger;
-    private readonly IStoreAppRepository _storeAppRepository;
     private readonly IMapper _mapper;
 
-    public ProductController(ILogger<ProductController> logger, IStoreAppRepository storeAppRepository, IMapper mapper)
+    public ProductController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<ProductController> logger, IMapper mapper)
     {
-        _logger = logger;
-        _storeAppRepository = storeAppRepository;
+        _contextFactory = contextFactory;
+        _logger = logger;  
         _mapper = mapper;
     }
 
@@ -29,10 +29,12 @@ public class ProductController : ControllerBase
     /// JSON products
     /// </returns>
     [HttpGet]
-    public IEnumerable<ProductGetDto> Get()
+    public async Task<IEnumerable<ProductGetDto>> Get()
     {
         _logger.LogInformation("GET products");
-        return _storeAppRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var products = await ctx.Products.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ProductGetDto>>(products);
     }
 
     /// <summary>
@@ -45,9 +47,10 @@ public class ProductController : ControllerBase
     /// JSON product
     /// </returns>
     [HttpGet("{productId}")]
-    public ActionResult<ProductGetDto> Get(int productId)
+    public async Task<ActionResult<ProductGetDto>> Get(int productId)
     {
-        var getProduct = _storeAppRepository.Products.FirstOrDefault(product => product.ProductId == productId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var getProduct = await ctx.Products.FirstOrDefaultAsync(product => product.ProductId == productId);
         if (getProduct == null)
         {
             _logger.LogInformation($"Not found product with ID: {productId}.");
@@ -71,9 +74,11 @@ public class ProductController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
-    public ActionResult Post([FromBody] ProductPostDto productToPost)
+    public async Task<ActionResult> Post([FromBody] ProductPostDto productToPost)
     {
-        _storeAppRepository.Products.Add(_mapper.Map<Product>(productToPost));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Products.AddAsync(_mapper.Map<Product>(productToPost));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"POST product ({productToPost.ProductGroup}, {productToPost.ProductName}, {productToPost.ProductWeight}, {productToPost.ProductType}, {productToPost.ProductPrice}, {productToPost.DateStorage})");
         return Ok();
     }
@@ -91,9 +96,10 @@ public class ProductController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{productId}")]
-    public ActionResult Put(int productId, [FromBody] ProductPostDto productToPut)
+    public async Task<ActionResult> Put(int productId, [FromBody] ProductPostDto productToPut)
     {
-        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == productId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(productId => productId.ProductId == productId);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with ID: {productId}");
@@ -103,6 +109,7 @@ public class ProductController : ControllerBase
         {
             _logger.LogInformation($"PUT product with ID: {productId} ({product.ProductName}->{productToPut.ProductName}, {product.ProductPrice}->{productToPut.ProductPrice})");
             _mapper.Map(productToPut, product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -117,9 +124,10 @@ public class ProductController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{productId}")]
-    public IActionResult Delete(int productId)
+    public async Task<IActionResult> Delete(int productId)
     {
-        var product = _storeAppRepository.Products.FirstOrDefault(x => x.ProductId == productId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(productId => productId.ProductId == productId);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with ID: {productId}");
@@ -128,7 +136,8 @@ public class ProductController : ControllerBase
         else
         {
             _logger.LogInformation($"DELETE product with ID: {productId}");
-            _storeAppRepository.Products.Remove(product);
+            ctx.Products.Remove(product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

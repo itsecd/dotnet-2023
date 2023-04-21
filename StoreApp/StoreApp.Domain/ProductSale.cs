@@ -8,7 +8,7 @@ namespace StoreApp.Domain;
 public class ProductSale
 {
     /// <summary>
-    /// CustomerId
+    /// Id
     /// </summary>
     public int Id { get; set; } = -1;
     /// <summary>

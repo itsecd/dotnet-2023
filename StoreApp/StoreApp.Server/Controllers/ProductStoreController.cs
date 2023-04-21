@@ -103,7 +103,7 @@ public class ProductStoreController : ControllerBase
     public async Task<ActionResult<ProductStoreGetDto>> GetByStore(int storeId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var getProductStore = await ctx.ProductStores.FirstOrDefault(productStore => productStore.StoreId == storeId);
+        var getProductStore = await ctx.ProductStores.FirstOrDefaultAsync(productStore => productStore.StoreId == storeId);
         if (getProductStore == null)
         {
             _logger.LogInformation($"Not found productStore with ID: {storeId}.");

@@ -99,7 +99,7 @@ public class ProductController : ControllerBase
     public async Task<ActionResult> Put(int productId, [FromBody] ProductPostDto productToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var product = await ctx.Products.FirstOrDefaultAsync(productId => productId.ProductId == productId);
+        var product = await ctx.Products.FirstOrDefaultAsync(productToDelete => productToDelete.ProductId == productId);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with ID: {productId}");
@@ -127,7 +127,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> Delete(int productId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var product = await ctx.Products.FirstOrDefaultAsync(productId => productId.ProductId == productId);
+        var product = await ctx.Products.FirstOrDefaultAsync(productToDelete => productToDelete.ProductId == productId);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with ID: {productId}");

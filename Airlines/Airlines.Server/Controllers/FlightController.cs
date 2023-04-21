@@ -4,7 +4,6 @@ using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Airlines.Server.Controllers;
 
@@ -20,7 +19,7 @@ public class FlightController : ControllerBase
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public FlightController(IDbContextFactory<AirlinesContext> contextFactory,ILogger<FlightController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public FlightController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<FlightController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
@@ -70,12 +69,12 @@ public class FlightController : ControllerBase
     /// </summary>
     /// <param name="flight"> Flight class instance to insert to table</param>
     [HttpPost]
-    public async Task<IActionResult> Task<Post>([FromBody] FlightPostDto flight)
+    public async Task<IActionResult> Post([FromBody] FlightPostDto flight)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post");
-        var airpline = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flight.AirplaneId);
-        if (airpline == null)
+        var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flight.AirplaneId);
+        if (airplane == null)
         {
             return StatusCode(422, $"Not found airplane id: {flight.AirplaneId}");
         }
@@ -95,8 +94,8 @@ public class FlightController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put flight with id {0}", id);
-        var airpline= ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flightToPut.AirplaneId);
-        if (airpline == null)
+        var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flightToPut.AirplaneId);
+        if (airplane == null)
         {
             return StatusCode(422, $"Not found airplane id: {flightToPut.AirplaneId}");
         }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Domain;
-public sealed class AirlinesContext: DbContext
+/// <summary>
+/// Class represented a DbContext of Airlines
+/// </summary>
+public sealed class AirlinesContext : DbContext
 {
     public DbSet<Airplane> Airplanes { get; set; } = null!;
     public DbSet<Flight> Flights { get; set; } = null!;

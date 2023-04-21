@@ -4,7 +4,7 @@ using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+using System.Collections.Immutable;
 
 namespace Airlines.Server.Controllers;
 
@@ -34,17 +34,20 @@ public class AnalyticsController : ControllerBase
     [HttpGet("passengers-without-baggage")]
     public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengersWithoutBaggage()
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get passengers without baggage");
-        var flights = ctx.Flights;
-        var passengers = ctx.Passengers;
-        var tickets = flights.Include(x => x.Tickets);
-        var request = from flight in flights
-                       //.Include(flight => flight.Tickets)
-                       where (flight.Id == 1) && (ticket.BaggageWeight == 0) && (t.TicketNumber == ticket.TicketNumber)
-                       select _mapper.Map<PassengerGetDto>(passenger));
-        return Ok(request);
-
+        var specifiedFlightTickets = (from flight in ctx.Flights
+                                      where flight.Id == 1
+                                      select flight.Tickets);
+        var ticketsWithoutBaggage = (from ticketlist in specifiedFlightTickets
+                                     from ticket in ticketlist
+                                     where ticket.BaggageWeight == 0
+                                     select ticket);
+        var passengersIdWithoutBaggage = (from ticket in ticketsWithoutBaggage select ticket.PassengerId);
+        var passengersWithoutBaggage = await (from passenger in ctx.Passengers
+                                            where passengersIdWithoutBaggage.Contains(passenger.Id)
+                                            select _mapper.Map<PassengerGetDto>(passenger)).ToListAsync();
+        return Ok(passengersWithoutBaggage);
     }
 
     /// <summary>
@@ -52,13 +55,14 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Flights with specified source and destination</returns>
     [HttpGet("flights-with-specified-source-and-destination")]
-    public IEnumerable<FlightGetDto> GetFlightsWithSpecifiedSourceAndDestination()
+    public async Task<IEnumerable<FlightGetDto>> GetFlightsWithSpecifiedSourceAndDestination()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with specified source and destination");
-        var request = (from flight in _airlinesRepository.Flights
-                       where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
-                       select _mapper.Map<FlightGetDto>(flight));
-        return request;
+        var flightsWithSpecifiedSourceAndDestination = await (from flight in ctx.Flights
+                             where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
+                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+        return flightsWithSpecifiedSourceAndDestination;
     }
 
     /// <summary>
@@ -66,17 +70,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Flights at specified period</returns>
     [HttpGet("flights-at-specified-period")]
-    public IEnumerable<FlightGetDto> GetFlightsAtSpecifiedPeriod()
+    public async Task<IEnumerable<FlightGetDto>> GetFlightsAtSpecifiedPeriod()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights at specified period");
         var firstCompDate = new DateTime(2023, 3, 2);
         var secondCompDate = new DateTime(2023, 4, 2);
-        var request = (from flight in _airlinesRepository.Flights
-                       where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
-                       (flight.DepartureDate.CompareTo(secondCompDate) < 0)
-                       select _mapper.Map<FlightGetDto>(flight));
-        return request;
-
+        var flightsAtSpecifiedPeriod = await (from flight in ctx.Flights
+                             where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
+                             (flight.DepartureDate.CompareTo(secondCompDate) < 0)
+                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+        return flightsAtSpecifiedPeriod;
     }
 
     /// <summary>
@@ -84,14 +88,14 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Flights with max count of passengers</returns>
     [HttpGet("flights-with-max-count-of-passengers")]
-    public IEnumerable<int> GetFlightsWithMaxCountOfPassengers()
+    public async Task<IEnumerable<int>> GetFlightsWithMaxCountOfPassengers()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with max count of passengers");
-        var request = (from flight in _airlinesRepository.Flights
-                       where flight != null
-                       select flight.Tickets.Count).Take(5);
-        return request;
-
+        var flightsWithMaxCountOfPassengers = await (from flight in ctx.Flights
+                             where flight != null
+                             select flight.Tickets.Count).Take(5).ToListAsync();
+        return flightsWithMaxCountOfPassengers;
     }
 
     /// <summary>
@@ -99,17 +103,21 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Max and average baggage amount from specified source</returns>
     [HttpGet("max-and-avg-baggage-amount-from-specified-source")]
-    public IEnumerable<double> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
+    public async Task<IEnumerable<double>> GetMaxAndAvgBaggageAmountFromSpecifiedSource()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get max and average baggage amount from specified source");
-        var tickets = (from flight in _airlinesRepository.Flights
-                       from ticket in flight.Tickets
-                       where flight.Source == "Moscow"
-                       select ticket.BaggageWeight).ToList();
-        var max = tickets.Max();
-        var avg = tickets.Average();
-        var request = new List<double>() { max, avg };
-        return request;
+        var ticketsWithSpecifiedSource = (from flight in ctx.Flights
+                       .Include(flight => flight.Tickets)
+                                          where flight.Source == "Moscow"
+                                          select flight.Tickets);
+        var tickets = (from ticketList in ticketsWithSpecifiedSource
+                       from ticket in ticketList
+                       select ticket.BaggageWeight);
+        var max = await tickets.MaxAsync();
+        var avg = await tickets.AverageAsync();
+        var maxAndAvgBaggageAmountFromSpecifiedSource = new List<double>() { max, avg };
+        return maxAndAvgBaggageAmountFromSpecifiedSource;
     }
 
     /// <summary>
@@ -117,15 +125,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Flights with minimal flight duration</returns>
     [HttpGet("flights-with-min-flight-duration")]
-    public IEnumerable<FlightGetDto> GetFlightsWithMinFlightDuration()
+    public async Task<IEnumerable<FlightGetDto>> GetFlightsWithMinFlightDuration()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with minimal flight duration");
-        var minDuration = (from flight in _airlinesRepository.Flights
-                           orderby flight.FlightDuration
-                           select flight.FlightDuration).Min();
-        var request = (from flight in _airlinesRepository.Flights
-                       where flight.FlightDuration.CompareTo(minDuration) == 0
-                       select _mapper.Map<FlightGetDto>(flight));
-        return request;
+        var durations = (from flight in ctx.Flights
+                         orderby flight.FlightDuration
+                         select flight.FlightDuration);
+        var minDuration = await durations.MinAsync();
+        var flightsWithMinFlightDuration = await (from flight in ctx.Flights
+                             where flight.FlightDuration.CompareTo(minDuration) == 0
+                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+        return flightsWithMinFlightDuration;
     }
 }

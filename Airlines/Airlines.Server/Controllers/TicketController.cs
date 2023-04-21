@@ -4,9 +4,6 @@ using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Org.BouncyCastle.Crypto.Signers;
-using System.Collections.Generic;
 
 namespace Airlines.Server.Controllers;
 
@@ -76,6 +73,16 @@ public class TicketController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post(ticket)");
+        var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == ticket.PassengerId);
+        if (passenger == null)
+        {
+            return StatusCode(422, $"Not found passenger with id: {ticket.PassengerId}");
+        }
+        var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == ticket.FlightId);
+        if (flight == null)
+        {
+            return StatusCode(422, $"Not found flight with id: {ticket.FlightId}");
+        }
         await ctx.Tickets.AddAsync(_mapper.Map<Ticket>(ticket));
         await ctx.SaveChangesAsync();
         return Ok();

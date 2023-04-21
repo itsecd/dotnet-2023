@@ -44,7 +44,7 @@ public class Flight
     /// <summary>
     /// Represent a list of tickets on this flight
     /// </summary>
-    
+
     public List<Ticket> Tickets { get; set; } = new List<Ticket> { };
     public Flight() { }
     public Flight(int id, string flightCode, string source,

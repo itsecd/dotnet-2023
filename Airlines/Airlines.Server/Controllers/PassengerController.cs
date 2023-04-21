@@ -64,7 +64,6 @@ public class PassengerController : ControllerBase
         }
     }
 
-
     /// <summary>
     /// Post method for passenger table
     /// </summary>

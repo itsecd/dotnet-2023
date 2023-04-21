@@ -19,9 +19,9 @@ public class AirplaneController : ControllerBase
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public AirplaneController(IDbContextFactory<AirlinesContext> contextFactory,ILogger<AirplaneController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public AirplaneController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AirplaneController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
     {
-        _contextFactory= contextFactory;
+        _contextFactory = contextFactory;
         _logger = logger;
         _airlinesRepository = airlinesRepository;
         _mapper = mapper;

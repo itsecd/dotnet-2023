@@ -1,6 +1,6 @@
-﻿namespace PharmacyCityNetwork.Server;
+﻿namespace PharmacyCityNetwork.Server.Repository;
 
-public class PharmacyCityNetworkRepository
+public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 {
     private readonly List<Group> _groups;
     private readonly List<Manufacturer> _manufacturers;

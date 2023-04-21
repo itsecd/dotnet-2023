@@ -24,7 +24,7 @@ public class Ride
     /// <summary>
     /// Trip time
     /// </summary>
-    public TimeSpan? TripTime { get; set; }
+    public TimeSpan TripTime { get; set; }
     /// <summary>
     /// Trip price
     /// </summary>
@@ -51,6 +51,7 @@ public class Ride
     /// <param name="time">Trip time</param>
     /// <param name="price">Trip price</param>
     /// <param name="auto">Trip assigned auto</param>
+    /// <param name="user">User data</param>
     public Ride(int id, string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price, Car auto,
         User user)
     {
@@ -64,6 +65,8 @@ public class Ride
         UserInfo = user;
         user.TryAddRideToCollection(this);
         auto.TryAddRideToCollection(this);
+        user.IncrementAmountRides();
+        auto.IncrementAmountRides();
     }
     /// <summary>
     /// Overload Equals

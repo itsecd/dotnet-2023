@@ -20,21 +20,21 @@ public class TaxiDepotTest
         return new List<Driver>()
         {
             new Driver(0, "Antonov", "Viktor", "Pavlovich",
-                14557586, "Samara Lenina 25, 4", "89791113223"),
+                14557586, "Samara Lenina 25, 4", "89791113223", null),
             new Driver(1, "Antipov", "Anton", "Viktorovich", 
-                21534496, "Samara Stalina 115, 43", "89343322223"),
+                21534496, "Samara Stalina 115, 43", "89343322223", null),
             new Driver(2, "Pavlov", "Sergey", "Sergeevich", 
-                37927348, "Samara Nikonova 205, 49", "87983839938"),
+                37927348, "Samara Nikonova 205, 49", "87983839938", null),
             new Driver(3, "Tolov", "Dmitriy", "Stanislavovich", 
-                93894829, "Samara Pavlova 99, 99", "89111199993"),
+                93894829, "Samara Pavlova 99, 99", "89111199993", null),
             new Driver(4, "Sipov", "Pavel", "Antonovich", 
-                34943834, "Samara Vokzalnaya 32, 533", "89787293792"),
+                34943834, "Samara Vokzalnaya 32, 533", "89787293792", null),
             new Driver(5, "Markin", "Anatoliy", "Nikitovich", 
-                34892743, "Samara Chainaya 23, 122", "82932992019"),
+                34892743, "Samara Chainaya 23, 122", "82932992019", null),
             new Driver(6, "Vitin", "Vladimir", "Pavlovich", 
-                00293944, "Samara Lisova 323, 11", "83747378283"),
+                00293944, "Samara Lisova 323, 11", "83747378283", null),
             new Driver(7, "Votin", "Vladimir", "Sergeevich", 
-                00244944, "Samara Losova 123, 11", "89997378283")
+                00244944, "Samara Losova 123, 11", "89997378283", null)
         };
     }
     /// <summary>
@@ -173,7 +173,7 @@ public class TaxiDepotTest
     public void DriverConstructorTest()
     {
         var driver = new Driver(0, "Antonov", "Viktor", "Pavlovich",
-            14557586, "Samara Lenina 25, 4", "89791113223");
+            14557586, "Samara Lenina 25, 4", "89791113223", null);
         Assert.Equal("Antonov", driver.DriverSurname);
         Assert.Equal("Viktor", driver.DriverName);
         Assert.Equal("Pavlovich", driver.DriverPatronymic);

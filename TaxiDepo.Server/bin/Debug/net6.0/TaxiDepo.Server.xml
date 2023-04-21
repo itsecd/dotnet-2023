@@ -156,7 +156,7 @@
             <param name="taxiRepository">Taxi repository</param>
             <param name="mapper">Mapper</param>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetCarAndDriver">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetCarAndDriver(System.Int32)">
             <summary>
             Task 1 - Print info about driver, his car
             </summary>
@@ -180,13 +180,13 @@
             </summary>
             <returns>Drivers object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetMinTime">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetMaxTime">
             <summary>
-            Task 5 - Print info about min trip time
+            Task 5 - Print info about max trip time
             </summary>
             <returns>String</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDateRange(System.DateTime)">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredTasksController.GetUserByDateRange(System.DateTime,System.DateTime)">
             <summary>
             Task 6 - Print info about users, with max amount of rides
             </summary>
@@ -346,6 +346,11 @@
             Indicator that the driver is assigned to the car
             </summary>
         </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.AmountRides">
+            <summary>
+            Car amount rides
+            </summary>
+        </member>
         <member name="T:TaxiDepo.Server.Dto.DriverDto">
             <summary>
             Dto driver class
@@ -389,6 +394,11 @@
         <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverIsAssigned">
             <summary>
             Indicator that the driver is assigned to the car
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.AssignedCar">
+            <summary>
+            Assigned car
             </summary>
         </member>
         <member name="T:TaxiDepo.Server.Dto.RideDto">
@@ -444,6 +454,11 @@
         <member name="P:TaxiDepo.Server.Dto.UserDto.UserPhoneNumber">
             <summary>
             User phone number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.AmountRides">
+            <summary>
+            User rides amount
             </summary>
         </member>
         <member name="T:TaxiDepo.Server.MappingProfile">

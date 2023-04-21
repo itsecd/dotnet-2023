@@ -28,7 +28,11 @@ public class User
     /// <summary>/
     /// Rides collection
     /// </summary>
-    public List<Ride> UserRides { get; set; } = new List<Ride>();
+    public List<Ride>? UserRides { get; set; } = new List<Ride>();
+    /// <summary>
+    /// User rides amount
+    /// </summary>
+    public int AmountRides { get; set; } = 0;
     /// <summary>
     /// Constructor without parameters to instantiate the class User
     /// </summary>
@@ -57,13 +61,20 @@ public class User
     {
         try
         {
-            UserRides.Add(rideInfo);
+            UserRides?.Add(rideInfo);
         }
         catch (Exception)
         {
             Console.WriteLine("Ride is assigned");
             throw;
         }
+    }
+    /// <summary>
+    /// Increment rides
+    /// </summary>
+    public void IncrementAmountRides()
+    {
+        AmountRides += 1;
     }
     /// <summary>
     /// Overload Equals

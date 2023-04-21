@@ -55,7 +55,8 @@ public class Driver
     /// <param name="passportId">Driver passport ID</param>
     /// <param name="address">Driver address</param>
     /// <param name="phoneNumber">Driver phone number</param>
-    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber)
+    /// <param name="car">Driver assigned car</param>
+    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber, Car? car)
     {
         Id = id; 
         DriverSurname = surname;
@@ -64,15 +65,7 @@ public class Driver
         DriverPassportId = passportId;
         DriverAddress = address;
         DriverPhoneNumber = phoneNumber;
-    }
-    /// <summary>
-    /// Try to sign driver to car
-    /// </summary>
-    /// <param name="carInfo"></param>
-    public void TrySignCar(Car carInfo)
-    {
-        AssignedCar = carInfo;
-        DriverIsAssigned = true;
+        AssignedCar = car;
     }
     /// <summary>
     /// Overload Equals

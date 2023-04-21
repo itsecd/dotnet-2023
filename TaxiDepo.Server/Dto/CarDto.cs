@@ -25,4 +25,8 @@ public class CarDto
     /// Indicator that the driver is assigned to the car
     /// </summary>
     public bool CarIsAssigned { get; set; } = false;
+    /// <summary>
+    /// Car amount rides
+    /// </summary>
+    public int AmountRides { get; set; } = 0;
 }

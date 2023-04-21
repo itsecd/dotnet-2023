@@ -32,12 +32,15 @@ public class Car
     /// <summary>
     /// Rides collection
     /// </summary>
-    public List<Ride> CarRides { get; set; } = new List<Ride>();
+    public List<Ride>? CarRides { get; set; } = new List<Ride>();
+    /// <summary>
+    /// Car amount rides
+    /// </summary>
+    public int AmountRides { get; set; } = 0;
     /// <summary>
     /// Constructor without parameters to instantiate the class Car
     /// </summary>
     public Car() {}
-
     /// <summary>
     /// Constructor with parameters to instantiate the class Car
     /// </summary>
@@ -58,9 +61,16 @@ public class Car
     /// <param name="driverInfo"></param>
     public void TrySignDriver(Driver driverInfo)
     {
-        AssignedDriver = driverInfo;
-        CarIsAssigned = true;
-        driverInfo.TrySignCar(this);
+        try
+        {
+            AssignedDriver = driverInfo;
+            CarIsAssigned = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     /// <summary>
     /// Try to add ride to car collection
@@ -70,13 +80,20 @@ public class Car
     {
         try
         {
-            CarRides.Add(rideInfo);
+            CarRides?.Add(rideInfo);
         }
         catch (ArgumentException)
         {
             Console.WriteLine("Error");
             throw;
         }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void IncrementAmountRides()
+    {
+        AmountRides += 1;
     }
     /// <summary>
     /// Overload Equals

@@ -44,6 +44,11 @@
             Rides collection
             </summary>
         </member>
+        <member name="P:TaxiDepo.Domain.Car.AmountRides">
+            <summary>
+            Car amount rides
+            </summary>
+        </member>
         <member name="M:TaxiDepo.Domain.Car.#ctor">
             <summary>
             Constructor without parameters to instantiate the class Car
@@ -69,6 +74,11 @@
             Try to add ride to car collection
             </summary>
             <param name="rideInfo"></param>
+        </member>
+        <member name="M:TaxiDepo.Domain.Car.IncrementAmountRides">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:TaxiDepo.Domain.Car.Equals(System.Object)">
             <summary>
@@ -160,7 +170,7 @@
             Constructor without parameters to instantiate the class Driver
             </summary>
         </member>
-        <member name="M:TaxiDepo.Domain.Driver.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String)">
+        <member name="M:TaxiDepo.Domain.Driver.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String,TaxiDepo.Domain.Car)">
             <summary>
             Constructor with parameters to instantiate the class Driver
             </summary>
@@ -171,6 +181,7 @@
             <param name="passportId">Driver passport ID</param>
             <param name="address">Driver address</param>
             <param name="phoneNumber">Driver phone number</param>
+            <param name="car">Driver assigned car</param>
         </member>
         <member name="M:TaxiDepo.Domain.Driver.TrySignCar(TaxiDepo.Domain.Car)">
             <summary>
@@ -274,6 +285,7 @@
             <param name="time">Trip time</param>
             <param name="price">Trip price</param>
             <param name="auto">Trip assigned auto</param>
+            <param name="user">User data</param>
         </member>
         <member name="M:TaxiDepo.Domain.Ride.Equals(System.Object)">
             <summary>
@@ -384,6 +396,11 @@
             Rides collection
             </summary>
         </member>
+        <member name="P:TaxiDepo.Domain.User.AmountRides">
+            <summary>
+            User rides amount
+            </summary>
+        </member>
         <member name="M:TaxiDepo.Domain.User.#ctor">
             <summary>
             Constructor without parameters to instantiate the class User
@@ -404,6 +421,11 @@
             Try to add ride to user collection
             </summary>
             <param name="rideInfo">Ride info</param>
+        </member>
+        <member name="M:TaxiDepo.Domain.User.IncrementAmountRides">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:TaxiDepo.Domain.User.Equals(System.Object)">
             <summary>

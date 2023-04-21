@@ -37,9 +37,9 @@ public class FlightController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<FlightGetDto>> Get()
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights");
-        return _mapper.Map<IEnumerable<FlightGetDto>>(ctx.Flights);
+        return _mapper.Map<IEnumerable<FlightGetDto>>(await ctx.Flights.ToListAsync());
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class FlightController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<FlightGetDto>> Get(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get flight with id ({id})");
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
@@ -72,10 +72,15 @@ public class FlightController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Task<Post>([FromBody] FlightPostDto flight)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post");
-        ctx.Flights.Add(_mapper.Map<Flight>(flight));
-        ctx.SaveChanges();
+        var airpline = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flight.AirplaneId);
+        if (airpline == null)
+        {
+            return StatusCode(422, $"Not found airplane id: {flight.AirplaneId}");
+        }
+        await ctx.Flights.AddAsync(_mapper.Map<Flight>(flight));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -88,18 +93,23 @@ public class FlightController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] FlightPostDto flightToPut)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put flight with id {0}", id);
+        var airpline= ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flightToPut.AirplaneId);
+        if (airpline == null)
+        {
+            return StatusCode(422, $"Not found airplane id: {flightToPut.AirplaneId}");
+        }
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
         {
-            _logger.LogInformation("Not found flight with id {0}", id);
+            _logger.LogInformation($"Not found flight with id {id}");
             return NotFound();
         }
         else
         {
-            _mapper.Map(flightToPut, flight);
-            ctx.SaveChanges();
+            ctx.Update(_mapper.Map(flightToPut, flight));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -112,7 +122,7 @@ public class FlightController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put flight with id ({id})");
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
@@ -123,7 +133,7 @@ public class FlightController : ControllerBase
         else
         {
             ctx.Flights.Remove(flight);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

@@ -31,23 +31,21 @@ public class AnalyticsController : ControllerBase
     /// Get method which return a passengers without baggage
     /// </summary>
     /// <returns>Passengers without baggage</returns>
-    /*[HttpGet("passengers-without-baggage")]
+    [HttpGet("passengers-without-baggage")]
     public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengersWithoutBaggage()
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get passengers without baggage");
         var flights = ctx.Flights;
         var passengers = ctx.Passengers;
-        var tickets = passengers.Include(x => x.Tickets);
+        var tickets = flights.Include(x => x.Tickets);
         var request = from flight in flights
-                      // .Include(flight => flight.Tickets)
-                       from passeger in passengers
-                       from ticket in tickets
+                       //.Include(flight => flight.Tickets)
                        where (flight.Id == 1) && (ticket.BaggageWeight == 0) && (t.TicketNumber == ticket.TicketNumber)
                        select _mapper.Map<PassengerGetDto>(passenger));
         return Ok(request);
 
-    }*/
+    }
 
     /// <summary>
     /// Get method which return a flights with specified source and destination

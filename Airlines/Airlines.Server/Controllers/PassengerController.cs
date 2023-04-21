@@ -36,9 +36,9 @@ public class PassengerController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<PassengerGetDto>> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get passengers");
-        return _mapper.Map<IEnumerable<PassengerGetDto>>(ctx.Passengers);
+        return _mapper.Map<IEnumerable<PassengerGetDto>>(await ctx.Passengers.ToListAsync());
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class PassengerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<PassengerGetDto>> Get(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get passenger with id ({id})");
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
@@ -72,10 +72,10 @@ public class PassengerController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PassengerPostDto passenger)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post");
-        ctx.Passengers.Add(_mapper.Map<Passenger>(passenger));
-        ctx.SaveChanges();
+        await ctx.Passengers.AddAsync(_mapper.Map<Passenger>(passenger));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -88,7 +88,7 @@ public class PassengerController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] PassengerPostDto passengerToPut)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put passenger with id {0}", id);
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
@@ -98,8 +98,8 @@ public class PassengerController : ControllerBase
         }
         else
         {
-            _mapper.Map(passengerToPut, passenger);
-            ctx.SaveChanges();
+            ctx.Update(_mapper.Map(passengerToPut, passenger));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -112,7 +112,7 @@ public class PassengerController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put passenger with id ({id})");
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
@@ -123,7 +123,7 @@ public class PassengerController : ControllerBase
         else
         {
             ctx.Passengers.Remove(passenger);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

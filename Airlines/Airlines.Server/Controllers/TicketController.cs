@@ -39,9 +39,9 @@ public class TicketController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<Ticket>> Get()
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get tickets");
-        return ctx.Tickets.ToList();
+        return await ctx.Tickets.ToListAsync();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class TicketController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Ticket>> Get(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get ticket with id ({id})");
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
@@ -74,10 +74,10 @@ public class TicketController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] TicketPostDto ticket)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post(ticket)");
-        ctx.Tickets.Add(_mapper.Map<Ticket>(ticket));
-        ctx.SaveChanges();
+        await ctx.Tickets.AddAsync(_mapper.Map<Ticket>(ticket));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -90,8 +90,18 @@ public class TicketController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] TicketPostDto ticketToPut)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put ticket with id {0}", id);
+        var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == ticketToPut.PassengerId);
+        if (passenger == null)
+        {
+            return StatusCode(422, $"Not found passenger with id: {ticketToPut.PassengerId}");
+        }
+        var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == ticketToPut.FlightId);
+        if (flight == null)
+        {
+            return StatusCode(422, $"Not found flight with id: {ticketToPut.FlightId}");
+        }
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
@@ -100,8 +110,8 @@ public class TicketController : ControllerBase
         }
         else
         {
-            _mapper.Map(ticketToPut, ticket);
-            ctx.SaveChanges();
+            ctx.Update(_mapper.Map(ticketToPut, ticket));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -114,7 +124,7 @@ public class TicketController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put ticket with id ({id})");
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
@@ -125,7 +135,7 @@ public class TicketController : ControllerBase
         else
         {
             ctx.Tickets.Remove(ticket);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

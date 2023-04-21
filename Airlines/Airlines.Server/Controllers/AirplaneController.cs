@@ -36,9 +36,9 @@ public class AirplaneController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<AirplaneGetDto>> Get()
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get airplaes");
-        return _mapper.Map<IEnumerable<AirplaneGetDto>>(ctx.Airplanes);
+        return _mapper.Map<IEnumerable<AirplaneGetDto>>(await ctx.Airplanes.ToListAsync());
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class AirplaneController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<AirplaneGetDto>> Get(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get airplane with id ({id})");
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
@@ -71,10 +71,10 @@ public class AirplaneController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] AirplanePostDto airplane)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post airplane");
-        ctx.Airplanes.Add(_mapper.Map<Airplane>(airplane));
-        ctx.SaveChanges();
+        await ctx.Airplanes.AddAsync(_mapper.Map<Airplane>(airplane));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 
@@ -87,7 +87,7 @@ public class AirplaneController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] AirplanePostDto airplaneToPut)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put airplane with id {0}", id);
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
@@ -97,8 +97,8 @@ public class AirplaneController : ControllerBase
         }
         else
         {
-            _mapper.Map(airplaneToPut, airplane);
-            ctx.SaveChanges();
+            ctx.Update(_mapper.Map(airplaneToPut, airplane));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -111,7 +111,7 @@ public class AirplaneController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put airplane with id ({id})");
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
@@ -122,7 +122,7 @@ public class AirplaneController : ControllerBase
         else
         {
             ctx.Airplanes.Remove(airplane);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

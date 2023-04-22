@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
@@ -13,18 +14,21 @@ namespace Warehouse.Server.Controllers;
 [ApiController]
 public class WarehouseCellsController : ControllerBase
 {
-    private readonly ILogger<WarehouseCellsController> _logger;
+    private readonly ILogger<GoodsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
+    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
-    ///     Constructor for WarehouseCellsController
+    ///     Constructor for GoodsController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public WarehouseCellsController(ILogger<WarehouseCellsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public WarehouseCellsController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _warehouseRepository = warehouseRepository;
         _mapper = mapper;
@@ -36,10 +40,11 @@ public class WarehouseCellsController : ControllerBase
     ///     Return all warehouse cells
     /// </returns>
     [HttpGet]
-    public IEnumerable<WarehouseCellsGetDto> Get()
+    public async Task<IEnumerable<WarehouseCellsGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get cells");
-        return _warehouseRepository.Cells.Select(cell => _mapper.Map<WarehouseCellsGetDto>(cell));
+        return _mapper.Map<IEnumerable<WarehouseCellsGetDto>>(await ctx.Cells.ToListAsync());
     }
     /// <summary>
     ///     Get by id method for warehouse cells table
@@ -48,10 +53,11 @@ public class WarehouseCellsController : ControllerBase
     ///     Return cells with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<WarehouseCellsGetDto> Get(int id)
+    public async Task<ActionResult<WarehouseCellsGetDto>> Get(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get cells with id {id}");
-        var cell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var cell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (cell == null)
         {
             _logger.LogInformation($"Not found cell with id {id}");
@@ -67,10 +73,13 @@ public class WarehouseCellsController : ControllerBase
     /// </summary>
     /// <param name="cell"> Warehouse cell class instance to insert to table </param>
     [HttpPost]
-    public void Post([FromBody] WarehouseCellsPostDto cell)
+    public async Task<IActionResult> Post([FromBody] WarehouseCellsPostDto cell)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post cell");
-        _warehouseRepository.Cells.Add(_mapper.Map<WarehouseCells>(cell));
+        await ctx.Cells.AddAsync(_mapper.Map<WarehouseCells>(cell));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     ///     Put method for warehouse cells table
@@ -81,10 +90,11 @@ public class WarehouseCellsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put cell with id {0}", id);
-        var warehouseCell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var warehouseCell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
             _logger.LogInformation("Not found product with id {0}", id);
@@ -92,7 +102,8 @@ public class WarehouseCellsController : ControllerBase
         }
         else
         {
-            _mapper.Map(cellToPut, warehouseCell);
+            ctx.Update(_mapper.Map(cellToPut, warehouseCell));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -104,10 +115,11 @@ public class WarehouseCellsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put cell with id ({id})");
-        var warehouseCell = _warehouseRepository.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var warehouseCell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
             _logger.LogInformation($"Not found cell with id ({id})");
@@ -115,7 +127,8 @@ public class WarehouseCellsController : ControllerBase
         }
         else
         {
-            _warehouseRepository.Cells.Remove(warehouseCell);
+            ctx.Cells.Remove(warehouseCell);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Domain", "Warehou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Tests", "Warehouse.Tests\Warehouse.Tests.csproj", "{7633598C-6365-468E-9698-DC939830A8BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Server", "Warehouse.Server\Warehouse.Server.csproj", "{FD3401D4-3172-4047-AEA0-31EAAC180FB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Server", "Warehouse.Server\Warehouse.Server.csproj", "{FD3401D4-3172-4047-AEA0-31EAAC180FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

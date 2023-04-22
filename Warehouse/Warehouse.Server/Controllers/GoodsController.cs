@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
@@ -15,16 +16,19 @@ public class GoodsController : ControllerBase
 {
     private readonly ILogger<GoodsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
+    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
     ///     Constructor for GoodsController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public GoodsController(ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public GoodsController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _warehouseRepository = warehouseRepository;
         _mapper = mapper;
@@ -36,10 +40,11 @@ public class GoodsController : ControllerBase
     ///     Return all goods
     /// </returns>
     [HttpGet]
-    public IEnumerable<GoodsGetDto> Get()
+    public async Task<IEnumerable<GoodsGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get goods");
-        return _warehouseRepository.Products.Select(product => _mapper.Map<GoodsGetDto>(product));
+        return _mapper.Map<IEnumerable<GoodsGetDto>>(await ctx.Products.ToListAsync());
     }
     /// <summary>
     ///     Get by id method for goods table
@@ -48,10 +53,11 @@ public class GoodsController : ControllerBase
     ///     Return goods with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<GoodsGetDto> Get(int id)
+    public async Task<ActionResult<GoodsGetDto>> Get(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get goods with id {id}");
-        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id {id}");
@@ -67,10 +73,13 @@ public class GoodsController : ControllerBase
     /// </summary>
     /// <param name="product"> Goods class instance to insert to table </param>
     [HttpPost]
-    public void Post([FromBody] GoodsPostDto product)
+    public async Task<IActionResult> Post([FromBody] GoodsPostDto product)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post product");
-        _warehouseRepository.Products.Add(_mapper.Map<Goods>(product));
+        await ctx.Products.AddAsync(_mapper.Map<Goods>(product));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     ///     Put method for goods table
@@ -81,10 +90,11 @@ public class GoodsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] GoodsPostDto productToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] GoodsPostDto productToPut)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put product with id {0}", id);
-        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation("Not found product with id {0}", id);
@@ -92,7 +102,8 @@ public class GoodsController : ControllerBase
         }
         else
         {
-            _mapper.Map(productToPut, product);
+            ctx.Update(_mapper.Map(productToPut, product));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -104,10 +115,11 @@ public class GoodsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put product with id ({id})");
-        var product = _warehouseRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id ({id})");
@@ -115,7 +127,8 @@ public class GoodsController : ControllerBase
         }
         else
         {
-            _warehouseRepository.Products.Remove(product);
+            ctx.Products.Remove(product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

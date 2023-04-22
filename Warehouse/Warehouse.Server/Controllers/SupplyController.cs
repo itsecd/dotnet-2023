@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
 using Warehouse.Server.Repository;
@@ -15,16 +16,19 @@ public class SupplyController : ControllerBase
 {
     private readonly ILogger<SupplyController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
+    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
     ///     Constructor for SupplyController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public SupplyController(ILogger<SupplyController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public SupplyController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<SupplyController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _warehouseRepository = warehouseRepository;
         _mapper = mapper;
@@ -36,10 +40,11 @@ public class SupplyController : ControllerBase
     ///     Return all supplies
     /// </returns>
     [HttpGet]
-    public IEnumerable<SupplyGetDto> Get()
+    public async Task<IEnumerable<SupplyGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get supplies");
-        return _warehouseRepository.Supplies.Select(supply => _mapper.Map<SupplyGetDto>(supply));
+        return _mapper.Map<IEnumerable<SupplyGetDto>>(await ctx.Supplies.ToListAsync());
     }
     /// <summary>
     ///     Get by id method for supply table
@@ -48,10 +53,11 @@ public class SupplyController : ControllerBase
     ///     Return supplies with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<SupplyGetDto> Get(int id)
+    public async Task<ActionResult<SupplyGetDto>> Get(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get supplies with id {id}");
-        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supplies with id {id}");
@@ -59,7 +65,7 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            return Ok(supply);
+            return Ok(_mapper.Map<SupplyGetDto>(supply));
         }
     }
     /// <summary>
@@ -67,10 +73,13 @@ public class SupplyController : ControllerBase
     /// </summary>
     /// <param name="supply"> Supply class instance to insert to table </param>
     [HttpPost]
-    public void Post([FromBody] SupplyPostDto supply)
+    public async Task<IActionResult> Post([FromBody] SupplyPostDto supply)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post supply");
-        _warehouseRepository.Supplies.Add(_mapper.Map<Supply>(supply));
+        await ctx.Supplies.AddAsync(_mapper.Map<Supply>(supply));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     ///     Put method for supply table
@@ -81,10 +90,11 @@ public class SupplyController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put supply with id {0}", id);
-        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation("Not found supply with id {0}", id);
@@ -92,7 +102,8 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            _mapper.Map(supplyToPut, supply);
+            ctx.Update(_mapper.Map(supplyToPut, supply));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -104,10 +115,11 @@ public class SupplyController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put supply with id ({id})");
-        var supply = _warehouseRepository.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supply with id ({id})");
@@ -115,7 +127,8 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            _warehouseRepository.Supplies.Remove(supply);
+            ctx.Supplies.Remove(supply);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

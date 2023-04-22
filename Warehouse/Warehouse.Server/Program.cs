@@ -1,5 +1,7 @@
 using System.Reflection;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Warehouse.Domain;
 using Warehouse.Server;
 using Warehouse.Server.Repository;
 
@@ -8,6 +10,11 @@ var mapperConfig = new MapperConfiguration(config => config.AddProfile(new Mappi
 var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
+builder.Services.AddDbContextFactory<WarehouseContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(Warehouse));
+    optionsBuilder.UseMySQL(connectionString);
+});
 builder.Services.AddSingleton<IWarehouseRepository, WarehouseRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -31,7 +31,7 @@ public class GroupController : ControllerBase
         var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
-            _logger.LogInformation($"Not found manufacturer: {id}");
+            _logger.LogInformation($"Not found group: {id}");
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class GroupController : ControllerBase
         var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
-            _logger.LogInformation("Not found manufacturer: {id}", id);
+            _logger.LogInformation("Not found group: {id}", id);
             return NotFound();
         }
         else
@@ -68,7 +68,7 @@ public class GroupController : ControllerBase
         var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
-            _logger.LogInformation($"Not found manufacturer: {id}");
+            _logger.LogInformation($"Not found group: {id}");
             return NotFound();
         }
         else

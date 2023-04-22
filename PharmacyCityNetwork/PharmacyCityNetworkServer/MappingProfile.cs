@@ -14,5 +14,13 @@ public class MappingProfile : Profile
         CreateMap<Group, GroupGetDto>();
         CreateMap<Group, GroupPostDto>();
         CreateMap<GroupPostDto, Group>();
+
+        CreateMap<Pharmacy, PharmacyGetDto>();
+        CreateMap<Pharmacy, PharmacyPostDto>();
+        CreateMap<PharmacyPostDto, Pharmacy>();
+
+        CreateMap<PharmaGroup, PharmaGroupGetDto>();
+        CreateMap<PharmaGroup, PharmaGroupPostDto>();
+        CreateMap<PharmaGroupPostDto, PharmaGroup>();
     }
 }

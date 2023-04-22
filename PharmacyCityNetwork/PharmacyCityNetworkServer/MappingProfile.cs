@@ -9,7 +9,10 @@ public class MappingProfile : Profile
     {
         CreateMap<Manufacturer, ManufacturerGetDto>();
         CreateMap<Manufacturer, ManufacturerPostDto>();
-
         CreateMap<ManufacturerPostDto, Manufacturer>();
+
+        CreateMap<Group, GroupGetDto>();
+        CreateMap<Group, GroupPostDto>();
+        CreateMap<GroupPostDto, Group>();
     }
 }

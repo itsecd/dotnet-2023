@@ -6,5 +6,4 @@ public class ManufacturerPostDto
     /// Manufacturer name
     /// </summary>
     public string ManufacturerName { get; set; } = string.Empty;
-
 }

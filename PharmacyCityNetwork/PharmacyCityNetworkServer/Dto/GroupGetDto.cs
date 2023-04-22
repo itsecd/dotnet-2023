@@ -1,13 +1,13 @@
 ﻿namespace PharmacyCityNetwork.Server.Dto;
 
-public class ManufacturerGetDto
+public class GroupGetDto
 {
     /// <summary>
-    /// Id of manufacturer
+    /// Id of group
     /// </summary>
     public int Id { get; set; } = 0;
     /// <summary>
-    /// Manufacturer name
+    /// Group name
     /// </summary>
-    public string ManufacturerName { get; set; } = string.Empty;
+    public string GroupName { get; set; } = string.Empty;
 }

@@ -26,7 +26,7 @@ public class GroupController : ControllerBase
     /// Получение всех групп социальной сети.
     /// </summary>
     /// <returns>Последовательность групп.</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetAllGroups")]
     public async Task<IEnumerable<GroupDtoGet>> GetAllGroups() =>
         (await _socialNetworkService.GetAllGroups()).Select(group =>
             new GroupDtoGet
@@ -43,7 +43,7 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор группы, которую необходимо получить.</param>
     /// <returns>Группу.</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetGroup")]
     public async Task<GroupDtoGet> GetGroup(int id)
     {
         var model = await _socialNetworkService.GetGroup(id);
@@ -62,7 +62,7 @@ public class GroupController : ControllerBase
     /// Создание группы.
     /// </summary>
     /// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
-    [HttpPost]
+    [HttpPost(Name = "CreateGroup")]
     public async Task CreateGroup([FromBody] GroupDtoPostOrPut model)
     {
         await _socialNetworkService.CreateGroup(new Group
@@ -79,7 +79,7 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор группы, данные которой необходимо изменить.</param>
     /// <param name="model">Содержит данные, которые будут присвоены необходимой группе.</param>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "UpdateGroup")]
     public async Task UpdateGroup(int id, [FromBody] GroupDtoPostOrPut model)
     {
 		await _socialNetworkService.UpdateGroup(id, new Group
@@ -95,7 +95,7 @@ public class GroupController : ControllerBase
     /// Удаление группы по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор группы, которую необходимо удалить.</param>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteGroup")]
     public async Task DeleteGroup(int id)
     {
         await _socialNetworkService.DeleteGroup(id);

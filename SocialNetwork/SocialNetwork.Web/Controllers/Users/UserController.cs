@@ -26,7 +26,7 @@ public class UserController : ControllerBase
 	/// Получение всех пользователей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность пользователей.</returns>
-	[HttpGet]
+	[HttpGet(Name = "GetAllUsers")]
 	public async Task<IEnumerable<UserDtoGet>> GetAllUsers() => 
 		(await _socialNetworkService.GetAllUsers()).Select(user => 
 			new UserDtoGet
@@ -45,7 +45,7 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которую необходимо получить.</param>
 	/// <returns>Пользователя.</returns>
-	[HttpGet("{id}")]
+	[HttpGet("{id}", Name = "GetUser")]
 	public async Task<UserDtoGet> GetUser(int id)
 	{
 		var entity = await _socialNetworkService.GetUser(id);
@@ -66,7 +66,7 @@ public class UserController : ControllerBase
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	[HttpPost]
+	[HttpPost(Name = "CreateUser")]
 	public async Task CreateUser([FromBody] UserDtoPostOrPut model)
 	{
 		await _socialNetworkService.CreateUser(new User
@@ -85,7 +85,7 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, данные которого необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимому пользователю.</param>
-	[HttpPut("{id}")]
+	[HttpPut("{id}", Name = "UpdateUser")]
 	public async Task UpdateUser(int id, [FromBody] UserDtoPostOrPut model) 
 	{
 		await _socialNetworkService.UpdateUser(id, new User
@@ -103,7 +103,7 @@ public class UserController : ControllerBase
 	/// Удаление пользователя по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор пользователя, которого необходимо удалить.</param>
-	[HttpDelete("{id}")]
+	[HttpDelete("{id}", Name = "DeleteUser")]
 	public async Task DeleteUser(int id) 
 	{
 		await _socialNetworkService.DeleteUser(id);

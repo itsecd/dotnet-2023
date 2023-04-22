@@ -26,7 +26,7 @@ public class NoteController : ControllerBase
 	/// Получение всех записей социальной сети.
 	/// </summary>
 	/// <returns>Последовательность записей.</returns>
-	[HttpGet]
+	[HttpGet(Name = "GetAllNotes")]
 	public async Task<IEnumerable<NoteDtoGet>> GetAllNotes() =>
 		(await _socialNetworkService.GetAllNotes()).Select(note => 
 			new NoteDtoGet
@@ -44,7 +44,7 @@ public class NoteController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо получить.</param>
 	/// <returns>Запись.</returns>
-	[HttpGet("{id}")]
+	[HttpGet("{id}", Name = "GetNote")]
 	public async Task<NoteDtoGet> GetNote(int id)
 	{
 		var entity = await _socialNetworkService.GetNote(id);
@@ -64,7 +64,7 @@ public class NoteController : ControllerBase
 	/// Создание записи.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
-	[HttpPost]
+	[HttpPost(Name = "CreateNote")]
 	public async Task CreateNote([FromBody] NoteDtoPostOrPut model)
 	{
 		await _socialNetworkService.CreateNote(new Note
@@ -82,7 +82,7 @@ public class NoteController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор записи, данные которой необходимо изменить.</param>
 	/// <param name="model">Содержит данные, которые будут присвоены необходимой записи.</param>
-	[HttpPut("{id}")]
+	[HttpPut("{id}", Name = "UpdateNote")]
 	public async Task UpdateNote(int id, [FromBody] NoteDtoPostOrPut model) 
 	{
 		await _socialNetworkService.UpdateNote(id, new Note
@@ -99,7 +99,7 @@ public class NoteController : ControllerBase
 	/// Удаление записи по идентификатору.
 	/// </summary>
 	/// <param name="id">Идентификатор записи, которую необходимо удалить.</param>
-	[HttpDelete("{id}")]
+	[HttpDelete("{id}", Name = "DeleteNote")]
 	public async Task DeleteNote(int id) 
 	{
 		await _socialNetworkService.DeleteNote(id);

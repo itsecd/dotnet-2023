@@ -1,0 +1,1224 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SocialNetwork.Web",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Group": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Получение всех групп социальной сети.",
+        "operationId": "GetAllGroups",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Создание группы.",
+        "operationId": "CreateGroup",
+        "requestBody": {
+          "description": "Модель, в которой содержатся данные для создания группы.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Group/{id}": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Получение группы по идентификатору.",
+        "operationId": "GetGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор группы, которую необходимо получить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDtoGet"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDtoGet"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDtoGet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Изменение данных группы.",
+        "operationId": "UpdateGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор группы, данные которой необходимо изменить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Содержит данные, которые будут присвоены необходимой группе.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Удаление группы по идентификатору.",
+        "operationId": "DeleteGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор группы, которую необходимо удалить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Note": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Получение всех записей социальной сети.",
+        "operationId": "GetAllNotes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Создание записи.",
+        "operationId": "CreateNote",
+        "requestBody": {
+          "description": "Модель, в которой содержатся данные для создания записи.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Note/{id}": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Получение записи по идентификатору.",
+        "operationId": "GetNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор записи, которую необходимо получить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDtoGet"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDtoGet"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDtoGet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Изменение данных записи.",
+        "operationId": "UpdateNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор записи, данные которой необходимо изменить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Содержит данные, которые будут присвоены необходимой записи.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Удаление записи по идентификатору.",
+        "operationId": "DeleteNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор записи, которую необходимо удалить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Query/GetUsersByGroupName/{groupName}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Получение всех пользователей указанной группы, упорядочить по ФИО.",
+        "operationId": "GetUsersByGroupName",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "path",
+            "description": "Название группы.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/GetNotesByGroupName/{groupName}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Получение всех записей указанной группы.",
+        "operationId": "GetNotesByGroupName",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "path",
+            "description": "Название группы.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/GetNotesCountInGroup": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Расчитать суммарное число записей в каждой группе.",
+        "operationId": "GetNotesCountInGroup",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/GetUsersByCreatedNotes/{usersCount}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Получить пользователей в порядке убывания по созданным записям.",
+        "operationId": "GetUsersByCreatedNotes",
+        "parameters": [
+          {
+            "name": "usersCount",
+            "in": "path",
+            "description": "Количество пользователей, которое необходимо получить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/GetGroupsWithMaxNotesCount": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Получение групп с максимальный количеством записей.",
+        "operationId": "GetGroupsWithMaxNotesCount",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Role": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Получение всех ролей социальной сети.",
+        "operationId": "GetAllRoles",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Создание роли.",
+        "operationId": "CreateRole",
+        "requestBody": {
+          "description": "Модель, в которой содержатся данные для создания роли.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Role/{id}": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Получение роли по идентификатору.",
+        "operationId": "GetRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор роли, которую необходимо получить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoGet"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoGet"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoGet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Изменение данных роли.",
+        "operationId": "UpdateRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор роли, данные которой необходимо изменить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Содержит данные, которые будут присвоены необходимой роли.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Удаление роли по идентификатору.",
+        "operationId": "DeleteRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор роли, которую необходимо удалить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/User": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Получение всех пользователей социальной сети.",
+        "operationId": "GetAllUsers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDtoGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Создание пользователя.",
+        "operationId": "CreateUser",
+        "requestBody": {
+          "description": "Модель, в которой содержатся данные для создания пользователя.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/User/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Получение пользователя по идентификатору.",
+        "operationId": "GetUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор пользователя, которую необходимо получить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoGet"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoGet"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoGet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Изменение данных пользователя.",
+        "operationId": "UpdateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор пользователя, данные которого необходимо изменить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Содержит данные, которые будут присвоены необходимому пользователю.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDtoPostOrPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Удаление пользователя по идентификатору.",
+        "operationId": "DeleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор пользователя, которого необходимо удалить.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GroupDtoGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание.",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Дата создания.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "description": "Идентификатор создателя.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto группы для GET операций."
+      },
+      "GroupDtoPostOrPut": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание.",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Дата создания.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "description": "Идентификатор создателя.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto группы для POST и PUT операций."
+      },
+      "NoteDtoGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание.",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Дата создания.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "description": "Идентификатор автора.",
+            "format": "int32"
+          },
+          "groupId": {
+            "type": "integer",
+            "description": "Идентификатор группы.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto записи для GET операций."
+      },
+      "NoteDtoPostOrPut": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание.",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Дата создания.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "description": "Идентификатор создателя.",
+            "format": "int32"
+          },
+          "groupId": {
+            "type": "integer",
+            "description": "Идентификатор группы.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto записи для POST и PUT операций."
+      },
+      "RoleDtoGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto роли для GET операций."
+      },
+      "RoleDtoPostOrPut": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto роли для POST и PUT операций."
+      },
+      "UserDtoGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор.",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Имя.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия.",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Отчество.",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "description": "Пол.",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "description": "Дата регистрации.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto пользователя для GET операций."
+      },
+      "UserDtoPostOrPut": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Имя.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия.",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Отчество.",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "description": "Пол.",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения.",
+            "format": "date-time"
+          },
+          "registrationDate": {
+            "type": "string",
+            "description": "Дата регистрации.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto пользователя для POST и PUT операций."
+      }
+    }
+  }
+}

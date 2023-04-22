@@ -29,7 +29,7 @@ public class QueryController : ControllerBase
 	/// <param name="groupName">Название группы.</param>
 	/// <returns>Результат запроса.</returns>
 	/// <exception cref="ValidationException">Некорректное значение названия группы!</exception>
-	[HttpGet("GetUsersByGroupName/{groupName}")]
+	[HttpGet("GetUsersByGroupName/{groupName}", Name = "GetUsersByGroupName")]
 	public async Task<List<UserDtoGet>> GetUsersByGroupName(string groupName)
 	{
 		if (string.IsNullOrEmpty(groupName))
@@ -72,7 +72,7 @@ public class QueryController : ControllerBase
 	/// <param name="groupName">Название группы.</param>
 	/// <returns>Результат запроса.</returns>
 	/// <exception cref="ValidationException">Некорректное значение названия группы!</exception>
-	[HttpGet("GetNotesByGroupName/{groupName}")]
+	[HttpGet("GetNotesByGroupName/{groupName}", Name = "GetNotesByGroupName")]
 	public async Task<List<NoteDtoGet>> GetNotesByGroupName(string groupName)
 	{
 		if (string.IsNullOrEmpty(groupName))
@@ -106,7 +106,7 @@ public class QueryController : ControllerBase
 	/// Расчитать суммарное число записей в каждой группе.
 	/// </summary>
 	/// <returns>Результат запроса.</returns>
-	[HttpGet("GetNotesCountInGroup")]
+	[HttpGet("GetNotesCountInGroup", Name = "GetNotesCountInGroup")]
 	public async Task<List<int>> GetNotesCountInGroup()
 	{
 		var notes = await _socialNetworkService.GetAllNotes();
@@ -127,7 +127,7 @@ public class QueryController : ControllerBase
 	/// <param name="usersCount">Количество пользователей, которое необходимо получить.</param>
 	/// <returns>Результат запроса.</returns>
 	/// <exception cref="ValidationException">Количество пользователей должно быть положительным числом!</exception>
-	[HttpGet("GetUsersByCreatedNotes/{usersCount}")]
+	[HttpGet("GetUsersByCreatedNotes/{usersCount}", Name = "GetUsersByCreatedNotes")]
 	public async Task<List<UserDtoGet>> GetUsersByCreatedNotes(int usersCount)
 	{
 		if (usersCount <= 0)
@@ -162,7 +162,7 @@ public class QueryController : ControllerBase
 	/// Получение групп с максимальный количеством записей.
 	/// </summary>
 	/// <returns>Результат запроса.</returns>
-	[HttpGet("GetGroupsWithMaxNotesCount")]
+	[HttpGet("GetGroupsWithMaxNotesCount", Name = "GetGroupsWithMaxNotesCount")]
 	public async Task<List<GroupDtoGet>> GetGroupsWithMaxNotesCount()
 	{
 		var notes = await _socialNetworkService.GetAllNotes();

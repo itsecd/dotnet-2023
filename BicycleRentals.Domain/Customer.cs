@@ -1,4 +1,6 @@
-﻿namespace BicycleRentals.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BicycleRentals.Domain;
 /// <summary>
 /// Customer - a class describing the customer
 /// </summary> 
@@ -7,6 +9,7 @@ public class Customer
     /// <summary>
     /// Id - shows the customer's id
     /// </summary> 
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// FullName - shows the customer's name

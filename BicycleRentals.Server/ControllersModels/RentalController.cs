@@ -3,86 +3,115 @@ using BicycleRentals.Domain;
 using BicycleRentals.Server.Dto;
 using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BicycleRentals.Server.ControllersModels;
 [Route("api/[controller]")]
 [ApiController]
 public class RentalController : ControllerBase
 {
-    private readonly ILogger<BicycleTypeController> _logger;
+    private readonly ILogger<RentalController> _logger;
 
-    private readonly IBicycleRentalRespostory _bicycleRespostory;
+    private readonly IDbContextFactory<BicycleRentalContext> _contextFactory;
 
     private readonly IMapper _mapper;
-    public RentalController(ILogger<BicycleTypeController> logger, IBicycleRentalRespostory respostory, IMapper mapper)
+    public RentalController(ILogger<RentalController> logger, IDbContextFactory<BicycleRentalContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _bicycleRespostory = respostory;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
+
+    /// <summary> 
+    /// Returns a list of all rentals. 
+    /// </summary> 
+    /// <returns>The list of all rentals.</returns>
     [HttpGet]
-    public IEnumerable<RentalGetDto> Get()
+    public async Task<IEnumerable<RentalGetDto>> Get()
     {
-        return _bicycleRespostory.FixRentals.Select(r => _mapper.Map<RentalGetDto>(r));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("GET: Get list of customer");
+        return _mapper.Map<IEnumerable<RentalGetDto>>(context.BicycleRentals);
     }
 
+    /// <summary> 
+    /// Returns a rental by id. 
+    /// </summary> 
+    /// <param name="id">The rental id.</param> 
+    /// <returns>OK (the rental found by the specified id) or NotFound. </returns>
     [HttpGet("{id}")]
-    public ActionResult<RentalGetDto> Get(int id)
+    public async Task<ActionResult<RentalGetDto>> Get(int id)
     {
-        var rental = _bicycleRespostory.FixRentals.FirstOrDefault(r => r.RentalId == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found rental with id {id}");
+            _logger.LogInformation($"Not found customer with id {id}");
             return NotFound();
         }
         else
             return Ok(_mapper.Map<RentalGetDto>(rental));
     }
 
+    /// <summary> 
+    /// Create a new rental. 
+    /// </summary> 
+    /// <param name="RentalPostDto">New rental. </param> 
+    /// <returns>New rental id.</returns>
     [HttpPost]
-    public void Post([FromBody] RentalPostDto r)
+    public async Task<IActionResult> Post([FromBody] RentalPostDto r)
     {
-        _bicycleRespostory.FixRentals.Add(_mapper.Map<BicycleRental>(r));
-        _bicycleRespostory.FixBicycles[r.SerialNumber - 1].Rentals.Add(_mapper.Map<BicycleRental>(r));
-        _bicycleRespostory.FixCustomers[r.CustomerId - 1].Rentals.Add(_mapper.Map<BicycleRental>(r));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.BicycleRentals.AddAsync(_mapper.Map<BicycleRental>(r));
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
+    /// <summary> 
+    /// Updates the existing rental data. 
+    /// </summary> 
+    /// <param name="RentalPostDto">New rental data. </param>
+    /// <returns>OK or NotFound.</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] RentalPostDto r)
+    public async Task<IActionResult> Put(int id, [FromBody] RentalPostDto r)
     {
-        var rental = _bicycleRespostory.FixRentals.FirstOrDefault(r => r.RentalId == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found rental with id {id}");
+            _logger.LogInformation($"Not found bicycle with id {id}");
             return NotFound();
         }
         else
         {
-            _mapper.Map(r, rental); //assign r to rental
+            _mapper.Map(r, rental);
+            context.BicycleRentals.Update(_mapper.Map<BicycleRental>(rental));
+            await context.SaveChangesAsync();
             return Ok();
         }
 
     }
 
+    ///<summary> 
+    ///Deletes a rental by id. 101 Ace Mapping. 
+    /// </summary> 
+    /// <param name="id">The rental id.</param> 
+    /// <returns>OK or NotFound.</returns> 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var rental = _bicycleRespostory.FixRentals.FirstOrDefault(r => r.RentalId == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found rental with id {id}");
+            _logger.LogInformation($"Not found bicycle with id {id}");
             return NotFound();
         }
         else
         {
-            _bicycleRespostory.FixRentals.Remove(rental);
-            var rentalDelete1 = _bicycleRespostory.FixBicycles[rental.SerialNumber - 1].Rentals.FirstOrDefault(r => r.RentalId == rental.RentalId);
-            if (rentalDelete1 != null)
-                _bicycleRespostory.FixBicycles[rental.SerialNumber - 1].Rentals.Remove(rentalDelete1);
-            var rentalDelete2 = _bicycleRespostory.FixCustomers[rental.CustomerId - 1].Rentals.FirstOrDefault(r => r.RentalId == rental.RentalId);
-            if (rentalDelete2 != null)
-                _bicycleRespostory.FixBicycles[rental.CustomerId - 1].Rentals.Remove(rentalDelete2);
+            context.BicycleRentals.Remove(rental);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

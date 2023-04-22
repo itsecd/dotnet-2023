@@ -1,6 +1,8 @@
 ﻿using BicycleRentals.Domain;
 using BicycleRentals.Server.Respostory;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BicycleRentals.Server.ControllersModels;
 [Route("api/[controller]")]
@@ -9,23 +11,35 @@ public class BicycleTypeController : ControllerBase
 {
     private readonly ILogger<BicycleTypeController> _logger;
 
-    private readonly IBicycleRentalRespostory _bicycleRespostory;
-    public BicycleTypeController(ILogger<BicycleTypeController> logger, IBicycleRentalRespostory respostory)
+    private readonly IDbContextFactory<BicycleRentalContext> _contextFactory;
+    public BicycleTypeController(ILogger<BicycleTypeController> logger, IDbContextFactory<BicycleRentalContext> contextFactory)
     {
         _logger = logger;
-        _bicycleRespostory = respostory;
+        _contextFactory = contextFactory;
     }
 
+    /// <summary> 
+    /// Returns a list of all types. 
+    /// </summary> 
+    /// <returns>The list of all types.</returns>
     [HttpGet]
-    public IEnumerable<BicycleType> Get()
+    public async Task<IEnumerable<BicycleType>> Get()
     {
-        return _bicycleRespostory.FixTypes;
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("GET: Get list of type");
+        return await context.BicycleTypes.ToListAsync();
     }
 
+    /// <summary> 
+    /// Returns a type by id. 
+    /// </summary> 
+    /// <param name="id">The type id.</param> 
+    /// <returns>OK (the type found by the specified id) or NotFound. </returns>
     [HttpGet("{id}")]
-    public ActionResult<BicycleType> Get(int id)
+    public async Task<ActionResult<BicycleType>> Get(int id)
     {
-        var bicycleType = _bicycleRespostory.FixTypes.FirstOrDefault(bt => bt.TypeId == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var bicycleType = await context.BicycleTypes.FirstOrDefaultAsync(bt => bt.TypeId == id);
         if (bicycleType == null)
         {
             _logger.LogInformation($"Not found type with id {id}");

@@ -1,4 +1,6 @@
-﻿namespace BicycleRentals.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BicycleRentals.Domain;
 /// <summary>
 /// BicycleType - a class describing the type of bicycle
 /// </summary> 
@@ -7,6 +9,7 @@ public class BicycleType
     /// <summary>
     /// TypeId - shows the type's id
     /// </summary> 
+    [Key]
     public int TypeId { get; set; }
     /// <summary>
     /// TypeName - the string responsible for the type's name of bicycle

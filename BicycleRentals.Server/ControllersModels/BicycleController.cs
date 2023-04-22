@@ -4,34 +4,47 @@ using BicycleRentals.Server.ControllersModels;
 using BicycleRentals.Server.Dto;
 using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BicycleRentals.Server.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class BicycleController : ControllerBase
 {
-    private readonly ILogger<BicycleTypeController> _logger;
+    private readonly ILogger<BicycleController> _logger;
 
-    private readonly IBicycleRentalRespostory _bicycleRespostory;
+    private readonly IDbContextFactory<BicycleRentalContext> _contextFactory;
 
     private readonly IMapper _mapper;
-    public BicycleController(ILogger<BicycleTypeController> logger, IBicycleRentalRespostory respostory, IMapper mapper)
+    public BicycleController(ILogger<BicycleController> logger, IDbContextFactory<BicycleRentalContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _bicycleRespostory = respostory;
+        _contextFactory = contextFactory; 
         _mapper = mapper;
     }
 
+    /// <summary> 
+    /// Returns a list of all bicycles. 
+    /// </summary> 
+    /// <returns>The list of all bicycles.</returns>
     [HttpGet]
-    public IEnumerable<BicycleGetDto> Get()
+    public async Task<IEnumerable<BicycleGetDto>> Get()
     {
-        return _bicycleRespostory.FixBicycles.Select(b => _mapper.Map<BicycleGetDto>(b));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("GET: Get list of bicycle");       
+        return _mapper.Map<IEnumerable<BicycleGetDto>>(context.Bicycles);
     }
 
+    /// <summary> 
+    /// Returns a bicycle by id. 
+    /// </summary> 
+    /// <param name="id">The bicycle id.</param> 
+    /// <returns>OK (the bicycle found by the specified id) or NotFound. </returns>
     [HttpGet("{id}")]
-    public ActionResult<BicycleGetDto> Get(int id)
+    public async Task<ActionResult<BicycleGetDto>> Get(int id)
     {
-        var bicycle = _bicycleRespostory.FixBicycles.FirstOrDefault(b => b.SerialNumber == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var bicycle = await context.Bicycles.FirstOrDefaultAsync(b => b.SerialNumber == id);
         if (bicycle == null)
         {
             _logger.LogInformation($"Not found bicycle with id {id}");
@@ -41,17 +54,30 @@ public class BicycleController : ControllerBase
             return Ok(_mapper.Map<BicycleGetDto>(bicycle));
     }
 
+    /// <summary> 
+    /// Create a new bicycle. 
+    /// </summary> 
+    /// <param name="BicyclePostDto">New bicycle. </param> 
+    /// <returns>New bicycle id.</returns>
     [HttpPost]
-    public void Post([FromBody] BicyclePostDto b)
+    public async Task<IActionResult> Post([FromBody] BicyclePostDto b)
     {
-        _bicycleRespostory.FixBicycles.Add(_mapper.Map<Bicycle>(b));
-        _bicycleRespostory.FixTypes[b.TypeId - 1].Bicycles.Add(_mapper.Map<Bicycle>(b));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Bicycles.AddAsync(_mapper.Map<Bicycle>(b));
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
+    /// <summary> 
+    /// Updates the existing bicycle data. 
+    /// </summary> 
+    /// <param name="BicyclePostDto">New bicycle data. </param>
+    /// <returns>OK or NotFound.</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BicyclePostDto b)
+    public async Task<IActionResult> Put(int id, [FromBody] BicyclePostDto b)
     {
-        var bicycle = _bicycleRespostory.FixBicycles.FirstOrDefault(b => b.SerialNumber == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var bicycle = await context.Bicycles.FirstOrDefaultAsync(b => b.SerialNumber == id);
         if (bicycle == null)
         {
             _logger.LogInformation($"Not found bicycle with id {id}");
@@ -60,15 +86,23 @@ public class BicycleController : ControllerBase
         else
         {
             _mapper.Map(b, bicycle); //assign b to bicycle
+            context.Bicycles.Update(_mapper.Map<Bicycle>(bicycle));
+            await context.SaveChangesAsync();
             return Ok();
         }
 
     }
 
+    ///<summary> 
+    ///Deletes a bicycle by id. 101 Ace Mapping. 
+    /// </summary> 
+    /// <param name="id">The bicycle id.</param> 
+    /// <returns>OK or NotFound.</returns> 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var bicycle = _bicycleRespostory.FixBicycles.FirstOrDefault(b => b.SerialNumber == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var bicycle = await context.Bicycles.FirstOrDefaultAsync(b => b.SerialNumber == id);
         if (bicycle == null)
         {
             _logger.LogInformation($"Not found bicycle with id {id}");
@@ -76,10 +110,8 @@ public class BicycleController : ControllerBase
         }
         else
         {
-            _bicycleRespostory.FixBicycles.Remove(bicycle);
-            var bicycleDelete = _bicycleRespostory.FixTypes[bicycle.TypeId - 1].Bicycles.FirstOrDefault(b => b.SerialNumber == bicycle.SerialNumber);
-            if (bicycleDelete != null)
-                _bicycleRespostory.FixTypes[bicycle.TypeId - 1].Bicycles.Remove(bicycleDelete);
+            context.Bicycles.Remove(bicycle);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

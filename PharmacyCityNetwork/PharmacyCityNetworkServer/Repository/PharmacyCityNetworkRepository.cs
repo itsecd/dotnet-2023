@@ -25,18 +25,18 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
         var fourthPharmaGroup = new PharmaGroup("Interviewers", 4);
 
 
-        var firstPharmacy = new Pharmacy("Vita", "8899606", "Pushkina, 7", "Yablokov");
-        var secondPharmacy = new Pharmacy("Plus", "8844606", "Turgeneva, 8", "Pomelov");
-        var thridPharmacy = new Pharmacy("Alia", "4499606", "Tolstogo, 8", "Slivin");
-        var fourthPharmacy = new Pharmacy("Apteka63", "4558602", "Polevay, 23", "Chikarev");
-        var fifthPharmacy = new Pharmacy("Tabls", "9229303", "Gagarina, 67", "Parshin");
+        var firstPharmacy = new Pharmacy(1, "Vita", "8899606", "Pushkina, 7", "Yablokov");
+        var secondPharmacy = new Pharmacy(2, "Plus", "8844606", "Turgeneva, 8", "Pomelov");
+        var thridPharmacy = new Pharmacy(3, "Alia", "4499606", "Tolstogo, 8", "Slivin");
+        var fourthPharmacy = new Pharmacy(4, "Apteka63", "4558602", "Polevay, 23", "Chikarev");
+        var fifthPharmacy = new Pharmacy(5, "Tabls", "9229303", "Gagarina, 67", "Parshin");
 
-        var firstProduct = new Product("Paracetamol", 1, firstGroup, firstManufacturer);
-        var firstProductPharmacy = new ProductPharmacy(1, 300, firstProduct, firstPharmacy);
+        var firstProduct = new Product("Paracetamol", 1, firstGroup, firstManufacturer, 1, 1);
+        var firstProductPharmacy = new ProductPharmacy(1, 300, firstProduct, firstPharmacy, 1, 1);
         firstProduct.ProductPharmacys.Add(firstProductPharmacy);
         firstPharmacy.ProductPharmacys.Add(firstProductPharmacy);
 
-        var firstProductPharmaGroup = new ProductPharmaGroup(1, firstPharmaGroup, firstProduct);
+        var firstProductPharmaGroup = new ProductPharmaGroup(1, firstPharmaGroup, firstProduct, 1, 1);
         firstProduct.ProductPharmaGroups.Add(firstProductPharmaGroup);
         firstPharmaGroup.ProductPharmaGroups.Add(firstProductPharmaGroup);
 
@@ -44,15 +44,15 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 
         firstManufacturer.Products.Add(firstProduct);
 
-        var firstSale = new Sale("Online", new DateTime(2023, 1, 28), firstProduct);
+        var firstSale = new Sale("Online", new DateTime(2023, 1, 28), firstProduct, 1, 1);
         firstProduct.Sales.Add(firstSale);
 
-        var secondProduct = new Product("Espumizan", 2, secondGroup, secondManufacturer);
-        var secondProductPharmacy = new ProductPharmacy(2, 250, secondProduct, firstPharmacy);
+        var secondProduct = new Product("Espumizan", 2, secondGroup, secondManufacturer, 2, 2);
+        var secondProductPharmacy = new ProductPharmacy(2, 250, secondProduct, firstPharmacy, 2, 1);
         secondProduct.ProductPharmacys.Add(secondProductPharmacy);
         firstPharmacy.ProductPharmacys.Add(secondProductPharmacy);
 
-        var secondProductPharmaGroup = new ProductPharmaGroup(1, secondPharmaGroup, secondProduct);
+        var secondProductPharmaGroup = new ProductPharmaGroup(2, secondPharmaGroup, secondProduct, 2, 2);
         secondProduct.ProductPharmaGroups.Add(secondProductPharmaGroup);
         secondPharmaGroup.ProductPharmaGroups.Add(secondProductPharmaGroup);
 
@@ -60,19 +60,19 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 
         secondManufacturer.Products.Add(secondProduct);
 
-        var secondSale = new Sale("Cash", new DateTime(2023, 4, 14), secondProduct);
+        var secondSale = new Sale("Cash", new DateTime(2023, 4, 14), secondProduct, 2, 2);
         secondProduct.Sales.Add(secondSale);
 
-        var thridProduct = new Product("Noshpa", 3, thridGroup, secondManufacturer);
-        var thridProductPharmacy = new ProductPharmacy(3, 200, thridProduct, thridPharmacy);
+        var thridProduct = new Product("Noshpa", 3, thridGroup, secondManufacturer, 3, 2);
+        var thridProductPharmacy = new ProductPharmacy(3, 200, thridProduct, thridPharmacy, 3, 3);
         thridProduct.ProductPharmacys.Add(thridProductPharmacy);
         thridPharmacy.ProductPharmacys.Add(thridProductPharmacy);
 
-        var sixthProductPharmacy = new ProductPharmacy(4, 180, thridProduct, secondPharmacy);
+        var sixthProductPharmacy = new ProductPharmacy(4, 180, thridProduct, secondPharmacy, 3, 2);
         thridProduct.ProductPharmacys.Add(sixthProductPharmacy);
         secondPharmacy.ProductPharmacys.Add(sixthProductPharmacy);
 
-        var thridProductPharmaGroup = new ProductPharmaGroup(1, thridPharmaGroup, thridProduct);
+        var thridProductPharmaGroup = new ProductPharmaGroup(3, thridPharmaGroup, thridProduct, 3, 3);
         thridProduct.ProductPharmaGroups.Add(thridProductPharmaGroup);
         thridPharmaGroup.ProductPharmaGroups.Add(thridProductPharmaGroup);
 
@@ -80,18 +80,18 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 
         secondManufacturer.Products.Add(thridProduct);
 
-        var thridSale = new Sale("Online", new DateTime(2023, 3, 20), thridProduct);
+        var thridSale = new Sale("Online", new DateTime(2023, 3, 20), thridProduct, 3, 3);
         thridProduct.Sales.Add(thridSale);
 
-        var sixthSale = new Sale("Online", new DateTime(2023, 3, 20), thridProduct);
+        var sixthSale = new Sale("Online", new DateTime(2023, 3, 20), thridProduct, 3, 6);
         thridProduct.Sales.Add(sixthSale);
 
-        var fourthProduct = new Product("Analgin", 3, thridGroup, firstManufacturer);
-        var fourthProductPharmacy = new ProductPharmacy(4, 135, fourthProduct, secondPharmacy);
+        var fourthProduct = new Product("Analgin", 4, thridGroup, firstManufacturer, 3, 1);
+        var fourthProductPharmacy = new ProductPharmacy(4, 135, fourthProduct, secondPharmacy, 4, 2);
         fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
         fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
 
-        var fourthProductPharmaGroup = new ProductPharmaGroup(1, fourthPharmaGroup, fourthProduct);
+        var fourthProductPharmaGroup = new ProductPharmaGroup(4, fourthPharmaGroup, fourthProduct, 4, 4);
         fourthProduct.ProductPharmaGroups.Add(fourthProductPharmaGroup);
         fourthPharmaGroup.ProductPharmaGroups.Add(fourthProductPharmaGroup);
 
@@ -99,15 +99,15 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 
         firstManufacturer.Products.Add(fourthProduct);
 
-        var fourthSale = new Sale("Online", new DateTime(2022, 11, 18), fourthProduct);
+        var fourthSale = new Sale("Online", new DateTime(2022, 11, 18), fourthProduct, 4, 4);
         fourthProduct.Sales.Add(fourthSale);
 
-        var fifthProduct = new Product("Nekst", 1, firstGroup, firstManufacturer);
-        var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy);
+        var fifthProduct = new Product("Nekst", 5, firstGroup, firstManufacturer, 1, 1);
+        var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy, 5, 5);
         fifthProduct.ProductPharmacys.Add(fifthProductPharmacy);
         fifthPharmacy.ProductPharmacys.Add(fifthProductPharmacy);
 
-        var fifthProductPharmaGroup = new ProductPharmaGroup(1, firstPharmaGroup, fifthProduct);
+        var fifthProductPharmaGroup = new ProductPharmaGroup(5, firstPharmaGroup, fifthProduct, 1, 5);
         fifthProduct.ProductPharmaGroups.Add(fifthProductPharmaGroup);
         firstPharmaGroup.ProductPharmaGroups.Add(fifthProductPharmaGroup);
 
@@ -115,7 +115,7 @@ public class PharmacyCityNetworkRepository : IPharmacyCityNetworkRepository
 
         firstManufacturer.Products.Add(fifthProduct);
 
-        var fifthSale = new Sale("Online", new DateTime(2022, 5, 23), fifthProduct);
+        var fifthSale = new Sale("Online", new DateTime(2022, 5, 23), fifthProduct, 5, 5);
         fifthProduct.Sales.Add(fifthSale);
 
         var groups = new List<Group> { firstGroup, secondGroup, thridGroup };

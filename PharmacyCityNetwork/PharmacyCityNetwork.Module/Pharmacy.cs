@@ -30,8 +30,9 @@ public class Pharmacy
     /// </summary>
     public List<ProductPharmacy> ProductPharmacys { get; set; } = new List<ProductPharmacy>();
     public Pharmacy() { }
-    public Pharmacy(string pharmacyName, string pharmacyPhone, string pharmacyAddress, string pharmacyDirector)
+    public Pharmacy(int id, string pharmacyName, string pharmacyPhone, string pharmacyAddress, string pharmacyDirector)
     {
+        Id = id;
         PharmacyName = pharmacyName;
         PharmacyPhone = pharmacyPhone;
         PharmacyAddress = pharmacyAddress;

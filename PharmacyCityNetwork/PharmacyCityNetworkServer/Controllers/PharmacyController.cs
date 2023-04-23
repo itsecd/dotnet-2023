@@ -65,7 +65,7 @@ public class PharmacyController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var pharmacy = _pharmacysRepository.Groups.FirstOrDefault(pharmacy => pharmacy.Id == id);
+        var pharmacy = _pharmacysRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
         if (pharmacy == null)
         {
             _logger.LogInformation($"Not found pharmacy: {id}");
@@ -73,7 +73,7 @@ public class PharmacyController : ControllerBase
         }
         else
         {
-            _pharmacysRepository.Groups.Remove(pharmacy);
+            _pharmacysRepository.Pharmacys.Remove(pharmacy);
             return Ok();
         }
     }

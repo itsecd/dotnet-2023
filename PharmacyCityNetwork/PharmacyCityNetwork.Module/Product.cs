@@ -16,10 +16,12 @@ public class Product
     /// <summary>
     /// Product group
     /// </summary>
+    public int GroupId { get; set; }
     public Group Group { get; set; }
     /// <summary>
     /// Product manufacturer
     /// </summary>
+    public int ManufacturerId { get; set; }
     public Manufacturer Manufacturer { get; set; }
     /// <summary>
     /// ProductPharmacys of product
@@ -34,11 +36,13 @@ public class Product
     /// </summary>
     public List<Sale> Sales { get; set; } = new List<Sale>();
     public Product() { }
-    public Product(string productName, int id, Group group, Manufacturer manufacturer)
+    public Product(string productName, int id, Group group, Manufacturer manufacturer, int groupId, int manufacturerId)
     {
         ProductName = productName;
         Id = id;
         Group = group;
         Manufacturer = manufacturer;
+        GroupId = groupId;
+        ManufacturerId = manufacturerId;
     }
 }

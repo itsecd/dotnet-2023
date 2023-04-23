@@ -12,16 +12,20 @@ public class ProductPharmaGroup
     /// <summary>
     /// Pharma group
     /// </summary>
+    public int PharmaGroupId { get; set; }
     public PharmaGroup PharmaGroup { get; set; }
     /// <summary>
     /// Product of pharma group
     /// </summary>
+    public int ProductId { get; set; }
     public Product Product { get; set; }
     public ProductPharmaGroup() { }
-    public ProductPharmaGroup(int id, PharmaGroup pharmaGroup, Product product)
+    public ProductPharmaGroup(int id, PharmaGroup pharmaGroup, Product product, int pharmaGroupId, int productId)
     {
         Id = id;
         PharmaGroup = pharmaGroup;
         Product = product;
+        PharmaGroupId = pharmaGroupId;
+        ProductId = productId;
     }
 }

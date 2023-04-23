@@ -20,12 +20,15 @@ public class Sale
     /// <summary>
     /// Product
     /// </summary>
+    public int ProductId { get; set; }
     public Product Product { get; set; }
     public Sale() { }
-    public Sale(string paymentChoice, DateTime paymentDate, Product product)
+    public Sale(string paymentChoice, DateTime paymentDate, Product product, int productId, int id)
     {
         PaymentChoice = paymentChoice;
         PaymentDate = paymentDate;
         Product = product;
+        ProductId = productId;
+        Id = id;
     }
 }

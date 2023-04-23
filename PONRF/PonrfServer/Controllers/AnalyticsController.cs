@@ -61,7 +61,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get information about customers and total amount of privatized buildings in district
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Customers and total amount of privatized buildings in district</returns>
     [HttpGet("customers_and_total_amount_in_district")]
     public IActionResult CustomersAndTotalAmountInDistrict()
     {
@@ -83,7 +83,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get addresses of auction participants
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Addresses of auction participants</returns>
     [HttpGet("addresses_of_auction_participants")]
     public IActionResult AddressesOfAuctionParticipants()
     {
@@ -99,7 +99,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get top 5 customers who spent the most amount of money
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Top-5 customers</returns>
     [HttpGet("top_five_customers")]
     public IActionResult TopFiveCustomers()
     {
@@ -117,7 +117,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get infomation about most profitable auctions
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Auction</returns>
     [HttpGet("most_profitable_auctions")]
     public IActionResult MostProfitableAuctions()
     {

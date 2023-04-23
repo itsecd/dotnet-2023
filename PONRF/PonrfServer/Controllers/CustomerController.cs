@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PonrfDomain;
 using PonrfServer.Dto;
-using PonrfServer.Repository;
 
 namespace PonrfServer.Controllers;
+
 /// <summary>
 /// Customer controller
 /// </summary>
@@ -14,7 +15,7 @@ public class CustomerController : ControllerBase
 {
     private readonly ILogger<CustomerController> _logger;
 
-    private readonly IPonrfRepository _ponrfRepository;
+    private readonly IDbContextFactory<PonrfContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
@@ -22,12 +23,12 @@ public class CustomerController : ControllerBase
     /// Constructor for CustomerController
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="ponrfRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public CustomerController(ILogger<CustomerController> logger, IPonrfRepository ponrfRepository, IMapper mapper)
+    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory<PonrfContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _ponrfRepository = ponrfRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -38,8 +39,9 @@ public class CustomerController : ControllerBase
     [HttpGet]
     public IEnumerable<CustomerGetDto> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get information about all customers");
-        return _mapper.Map<IEnumerable<CustomerGetDto>>(_ponrfRepository.Customers);
+        return _mapper.Map<IEnumerable<CustomerGetDto>>(context.Customers);
     }
 
     /// <summary>
@@ -50,7 +52,8 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<CustomerGetDto?> Get(int id)
     {
-        var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -70,8 +73,10 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public void Post([FromBody] CustomerPostDto customer)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post a new customer");
-        _ponrfRepository.Customers.Add(_mapper.Map<Customer>(customer));
+        context.Customers.Add(_mapper.Map<Customer>(customer));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -83,7 +88,8 @@ public class CustomerController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] CustomerPostDto customerToPut)
     {
-        var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -92,6 +98,7 @@ public class CustomerController : ControllerBase
         else
         {
             _mapper.Map(customerToPut, customer);
+            context.SaveChanges();
             _logger.LogInformation("Put a customer");
             return Ok();
         }
@@ -105,7 +112,8 @@ public class CustomerController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var customer = _ponrfRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -113,8 +121,9 @@ public class CustomerController : ControllerBase
         }
         else
         {
+            context.Customers.Remove(customer);
+            context.SaveChanges();
             _logger.LogInformation("Delete an customer");
-            _ponrfRepository.Customers.Remove(customer);
             return Ok();
         }
     }

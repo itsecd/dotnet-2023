@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
 using PonrfDomain;
 using PonrfServer.Dto;
 using PonrfServer.Repository;
@@ -15,7 +17,7 @@ public class PrivatizedBuildingController : ControllerBase
 {
     private readonly ILogger<PrivatizedBuildingController> _logger;
 
-    private readonly IPonrfRepository _ponrfRepository;
+    private readonly IDbContextFactory<PonrfContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
@@ -23,12 +25,12 @@ public class PrivatizedBuildingController : ControllerBase
     /// Constructor for PrivatizedBuildingController
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="ponrfRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public PrivatizedBuildingController(ILogger<PrivatizedBuildingController> logger, IPonrfRepository ponrfRepository, IMapper mapper)
+    public PrivatizedBuildingController(ILogger<PrivatizedBuildingController> logger, IDbContextFactory<PonrfContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _ponrfRepository = ponrfRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -39,8 +41,9 @@ public class PrivatizedBuildingController : ControllerBase
     [HttpGet]
     public IEnumerable<PrivatizedBuildingGetDto> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get information about all privatized buildings");
-        return _mapper.Map<IEnumerable<PrivatizedBuildingGetDto>>(_ponrfRepository.PrivatizedBuildings);
+        return _mapper.Map<IEnumerable<PrivatizedBuildingGetDto>>(context.PrivatizedBuildings);
     }
 
     /// <summary>
@@ -51,7 +54,8 @@ public class PrivatizedBuildingController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<PrivatizedBuildingGetDto?> Get(int id)
     {
-        var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -71,8 +75,10 @@ public class PrivatizedBuildingController : ControllerBase
     [HttpPost]
     public void Post([FromBody] PrivatizedBuildingPostDto privatizedBuilding)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post a new privatized building");
-        _ponrfRepository.PrivatizedBuildings.Add(_mapper.Map<PrivatizedBuilding>(privatizedBuilding));
+        context.PrivatizedBuildings.Add(_mapper.Map<PrivatizedBuilding>(privatizedBuilding));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -84,7 +90,8 @@ public class PrivatizedBuildingController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PrivatizedBuildingPostDto privatizedBuildingToPut)
     {
-        var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -93,6 +100,7 @@ public class PrivatizedBuildingController : ControllerBase
         else
         {
             _mapper.Map(privatizedBuildingToPut, privatizedBuilding);
+            context.SaveChanges();
             _logger.LogInformation("Put a privatized building");
             return Ok();
         }
@@ -106,7 +114,8 @@ public class PrivatizedBuildingController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var privatizedBuilding = _ponrfRepository.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -115,7 +124,8 @@ public class PrivatizedBuildingController : ControllerBase
         else
         {
             _logger.LogInformation("Delete a privatized building");
-            _ponrfRepository.PrivatizedBuildings.Remove(privatizedBuilding);
+            context.PrivatizedBuildings.Remove(privatizedBuilding);
+            context.SaveChanges();
             return Ok();
         }
     }

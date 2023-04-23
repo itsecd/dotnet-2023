@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PonrfDomain;
 using PonrfServer.Dto;
-using PonrfServer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace PonrfServer.Controllers;
 
@@ -15,7 +15,7 @@ public class AuctionController : ControllerBase
 {
     private readonly ILogger<AuctionController> _logger;
 
-    private readonly IPonrfRepository _ponrfRepository;
+    private readonly IDbContextFactory<PonrfContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
@@ -23,12 +23,12 @@ public class AuctionController : ControllerBase
     /// Constructor for AuctionController
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="ponrfRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public AuctionController(ILogger<AuctionController> logger, IPonrfRepository ponrfRepository, IMapper mapper)
+    public AuctionController(ILogger<AuctionController> logger, IDbContextFactory<PonrfContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _ponrfRepository = ponrfRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -39,19 +39,21 @@ public class AuctionController : ControllerBase
     [HttpGet]
     public IEnumerable<AuctionGetDto> Get()
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get information about all auctions");
-        return _mapper.Map<IEnumerable<AuctionGetDto>>(_ponrfRepository.Auctions);
+        return _mapper.Map<IEnumerable<AuctionGetDto>>(context.Auctions);
     }
 
     /// <summary>
     /// Get an auction by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>Auction</returns>
+    /// <returns>AuctionGetDto</returns>
     [HttpGet("{id}")]
     public ActionResult<AuctionGetDto?> Get(int id)
     {
-        var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -71,8 +73,10 @@ public class AuctionController : ControllerBase
     [HttpPost]
     public void Post([FromBody] AuctionPostDto auction)
     {
+        using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Post a new auction");
-        _ponrfRepository.Auctions.Add(_mapper.Map<Auction>(auction));
+        context.Auctions.Add(_mapper.Map<Auction>(auction));
+        context.SaveChanges();
     }
 
     /// <summary>
@@ -84,7 +88,8 @@ public class AuctionController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] AuctionPostDto auctionToPut)
     {
-        var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -93,6 +98,7 @@ public class AuctionController : ControllerBase
         else
         {
             _mapper.Map(auctionToPut, auction);
+            context.SaveChanges();
             _logger.LogInformation("Put an auction");
             return Ok();
         }
@@ -106,7 +112,8 @@ public class AuctionController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var auction = _ponrfRepository.Auctions.FirstOrDefault(auction => auction.Id == id);
+        using var context = _contextFactory.CreateDbContext();
+        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -114,8 +121,9 @@ public class AuctionController : ControllerBase
         }
         else
         {
+            context.Auctions.Remove(auction);
+            context.SaveChanges();
             _logger.LogInformation("Delete an auction");
-            _ponrfRepository.Auctions.Remove(auction);
             return Ok();
         }
     }

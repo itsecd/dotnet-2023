@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Domain;
+
 /// <summary>
 /// Class represented a DbContext of Warehouse
 /// </summary>

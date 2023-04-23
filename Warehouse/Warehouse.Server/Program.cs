@@ -12,7 +12,7 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddDbContextFactory<WarehouseContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString(nameof(Warehouse));
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     optionsBuilder.UseMySQL(connectionString);
 });
 builder.Services.AddSingleton<IWarehouseRepository, WarehouseRepository>();

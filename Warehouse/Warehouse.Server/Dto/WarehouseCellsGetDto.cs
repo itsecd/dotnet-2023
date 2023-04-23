@@ -8,5 +8,5 @@ public class WarehouseCellsGetDto
     /// <summary>
     ///     CellNumber - cell number 
     /// </summary>  
-    public int CellNumber { set; get; }
+    public int CellNumber { set; get; } = 0;
 }

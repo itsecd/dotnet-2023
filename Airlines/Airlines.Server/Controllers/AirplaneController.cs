@@ -1,6 +1,5 @@
 ﻿using Airlines.Domain;
 using Airlines.Server.Dto;
-using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +14,13 @@ namespace Airlines.Server.Controllers;
 public class AirplaneController : ControllerBase
 {
     private readonly ILogger<AirplaneController> _logger;
-    private readonly IAirlinesRepository _airlinesRepository;
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public AirplaneController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AirplaneController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public AirplaneController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AirplaneController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
 
@@ -37,7 +34,7 @@ public class AirplaneController : ControllerBase
     public async Task<IEnumerable<AirplaneGetDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get airplaes");
+        _logger.LogInformation("Get airplanes");
         return _mapper.Map<IEnumerable<AirplaneGetDto>>(await ctx.Airplanes.ToListAsync());
     }
 
@@ -51,11 +48,11 @@ public class AirplaneController : ControllerBase
     public async Task<ActionResult<AirplaneGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get airplane with id ({id})");
+        _logger.LogInformation("Get airplane with id ({id})", id);
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation($"Not found airplane with id ({id})");
+            _logger.LogInformation("Not found airplane with id ({id})", id);
             return NotFound();
         }
         else
@@ -88,11 +85,11 @@ public class AirplaneController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] AirplanePostDto airplaneToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put airplane with id {0}", id);
+        _logger.LogInformation("Put airplane with id {id}", id);
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation("Not found airplane with id {0}", id);
+            _logger.LogInformation("Not found airplane with id {id}", id);
             return NotFound();
         }
         else
@@ -112,11 +109,11 @@ public class AirplaneController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put airplane with id ({id})");
+        _logger.LogInformation("Put airplane with id ({id})", id);
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
-            _logger.LogInformation($"Not found airplane with id ({id})");
+            _logger.LogInformation("Not found airplane with id ({id})", id);
             return NotFound();
         }
         else

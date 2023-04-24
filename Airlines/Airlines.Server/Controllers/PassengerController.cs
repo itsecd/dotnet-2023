@@ -1,6 +1,5 @@
 ﻿using Airlines.Domain;
 using Airlines.Server.Dto;
-using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +14,13 @@ namespace Airlines.Server.Controllers;
 public class PassengerController : ControllerBase
 {
     private readonly ILogger<PassengerController> _logger;
-    private readonly IAirlinesRepository _airlinesRepository;
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public PassengerController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<PassengerController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public PassengerController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<PassengerController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
 
@@ -51,11 +48,11 @@ public class PassengerController : ControllerBase
     public async Task<ActionResult<PassengerGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get passenger with id ({id})");
+        _logger.LogInformation("Get passenger with id ({id})", id);
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
-            _logger.LogInformation($"Not found passenger with id ({id})");
+            _logger.LogInformation("Not found passenger with id ({id})", id);
             return NotFound();
         }
         else
@@ -72,7 +69,7 @@ public class PassengerController : ControllerBase
     public async Task<IActionResult> Post([FromBody] PassengerPostDto passenger)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post");
+        _logger.LogInformation("Post passenger");
         await ctx.Passengers.AddAsync(_mapper.Map<Passenger>(passenger));
         await ctx.SaveChangesAsync();
         return Ok();
@@ -88,11 +85,11 @@ public class PassengerController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] PassengerPostDto passengerToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put passenger with id {0}", id);
+        _logger.LogInformation("Put passenger with id {id}", id);
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
-            _logger.LogInformation("Not found passenger with id {0}", id);
+            _logger.LogInformation("Not found passenger with id {id}", id);
             return NotFound();
         }
         else
@@ -112,11 +109,11 @@ public class PassengerController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put passenger with id ({id})");
+        _logger.LogInformation("Put passenger with id ({id})", id);
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == id);
         if (passenger == null)
         {
-            _logger.LogInformation($"Not found passenger with id ({id})");
+            _logger.LogInformation("Not found passenger with id ({id})", id);
             return NotFound();
         }
         else

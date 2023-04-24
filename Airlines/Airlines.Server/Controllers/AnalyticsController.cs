@@ -1,10 +1,8 @@
 ﻿using Airlines.Domain;
 using Airlines.Server.Dto;
-using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Immutable;
 
 namespace Airlines.Server.Controllers;
 
@@ -17,12 +15,10 @@ public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
-    private readonly IAirlinesRepository _airlinesRepository;
     private readonly IMapper _mapper;
-    public AnalyticsController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AnalyticsController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<AnalyticsController> logger, IMapper mapper)
     {
         _logger = logger;
-        _airlinesRepository = airlinesRepository;
         _contextFactory = contextFactory;
         _mapper = mapper;
     }
@@ -45,8 +41,8 @@ public class AnalyticsController : ControllerBase
                                      select ticket);
         var passengersIdWithoutBaggage = (from ticket in ticketsWithoutBaggage select ticket.PassengerId);
         var passengersWithoutBaggage = await (from passenger in ctx.Passengers
-                                            where passengersIdWithoutBaggage.Contains(passenger.Id)
-                                            select _mapper.Map<PassengerGetDto>(passenger)).ToListAsync();
+                                              where passengersIdWithoutBaggage.Contains(passenger.Id)
+                                              select _mapper.Map<PassengerGetDto>(passenger)).ToListAsync();
         return Ok(passengersWithoutBaggage);
     }
 
@@ -60,8 +56,8 @@ public class AnalyticsController : ControllerBase
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with specified source and destination");
         var flightsWithSpecifiedSourceAndDestination = await (from flight in ctx.Flights
-                             where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
-                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+                                                              where (flight.Source == "Moscow") && (flight.Destination == "Kazan")
+                                                              select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
         return flightsWithSpecifiedSourceAndDestination;
     }
 
@@ -74,12 +70,12 @@ public class AnalyticsController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights at specified period");
-        var firstCompDate = new DateTime(2023, 3, 2);
-        var secondCompDate = new DateTime(2023, 4, 2);
+        var firstCompDate = new DateTime(2023, 2, 15);
+        var secondCompDate = new DateTime(2023, 3, 20);
         var flightsAtSpecifiedPeriod = await (from flight in ctx.Flights
-                             where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
-                             (flight.DepartureDate.CompareTo(secondCompDate) < 0)
-                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+                                              where (flight.AirplaneType == "Cargo") && (flight.DepartureDate.CompareTo(firstCompDate) > 0) &&
+                                              (flight.DepartureDate.CompareTo(secondCompDate) < 0)
+                                              select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
         return flightsAtSpecifiedPeriod;
     }
 
@@ -93,8 +89,8 @@ public class AnalyticsController : ControllerBase
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with max count of passengers");
         var flightsWithMaxCountOfPassengers = await (from flight in ctx.Flights
-                             where flight != null
-                             select flight.Tickets.Count).Take(5).ToListAsync();
+                                                     where flight != null
+                                                     select flight.Tickets.Count).Take(5).ToListAsync();
         return flightsWithMaxCountOfPassengers;
     }
 
@@ -134,8 +130,8 @@ public class AnalyticsController : ControllerBase
                          select flight.FlightDuration);
         var minDuration = await durations.MinAsync();
         var flightsWithMinFlightDuration = await (from flight in ctx.Flights
-                             where flight.FlightDuration.CompareTo(minDuration) == 0
-                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
+                                                  where flight.FlightDuration.CompareTo(minDuration) == 0
+                                                  select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
         return flightsWithMinFlightDuration;
     }
 }

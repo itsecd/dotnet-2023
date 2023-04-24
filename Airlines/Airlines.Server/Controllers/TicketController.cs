@@ -1,6 +1,5 @@
 ﻿using Airlines.Domain;
 using Airlines.Server.Dto;
-using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +14,12 @@ namespace Airlines.Server.Controllers;
 public class TicketController : ControllerBase
 {
     private readonly ILogger<TicketController> _logger;
-    private readonly IAirlinesRepository _airlinesRepository;
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public TicketController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<TicketController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public TicketController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<TicketController> logger, IMapper mapper)
     {
         _logger = logger;
-        _airlinesRepository = airlinesRepository;
         _contextFactory = contextFactory;
         _mapper = mapper;
     }
@@ -51,11 +48,11 @@ public class TicketController : ControllerBase
     public async Task<ActionResult<Ticket>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get ticket with id ({id})");
+        _logger.LogInformation("Get ticket with id ({id})", id);
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
-            _logger.LogInformation($"Not found ticket with id ({id})");
+            _logger.LogInformation("Not found ticket with id ({id})", id);
             return NotFound();
         }
         else
@@ -72,7 +69,7 @@ public class TicketController : ControllerBase
     public async Task<IActionResult> Post([FromBody] TicketPostDto ticket)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post(ticket)");
+        _logger.LogInformation("Post ticket");
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == ticket.PassengerId);
         if (passenger == null)
         {
@@ -98,7 +95,7 @@ public class TicketController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] TicketPostDto ticketToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put ticket with id {0}", id);
+        _logger.LogInformation("Put ticket with id {id}", id);
         var passenger = ctx.Passengers.FirstOrDefault(passenger => passenger.Id == ticketToPut.PassengerId);
         if (passenger == null)
         {
@@ -112,7 +109,7 @@ public class TicketController : ControllerBase
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
-            _logger.LogInformation("Not found ticket with id {0}", id);
+            _logger.LogInformation("Not found ticket with id {id}", id);
             return NotFound();
         }
         else
@@ -132,11 +129,11 @@ public class TicketController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put ticket with id ({id})");
+        _logger.LogInformation("Put ticket with id ({id})", id);
         var ticket = ctx.Tickets.FirstOrDefault(ticket => ticket.Id == id);
         if (ticket == null)
         {
-            _logger.LogInformation($"Not found ticket with id ({id})");
+            _logger.LogInformation("Not found ticket with id ({id})", id);
             return NotFound();
         }
         else

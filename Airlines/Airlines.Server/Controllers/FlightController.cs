@@ -1,6 +1,5 @@
 ﻿using Airlines.Domain;
 using Airlines.Server.Dto;
-using Airlines.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +14,13 @@ namespace Airlines.Server.Controllers;
 public class FlightController : ControllerBase
 {
     private readonly ILogger<FlightController> _logger;
-    private readonly IAirlinesRepository _airlinesRepository;
     private readonly IDbContextFactory<AirlinesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public FlightController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<FlightController> logger, IAirlinesRepository airlinesRepository, IMapper mapper)
+    public FlightController(IDbContextFactory<AirlinesContext> contextFactory, ILogger<FlightController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _airlinesRepository = airlinesRepository;
         _mapper = mapper;
     }
 
@@ -51,11 +48,11 @@ public class FlightController : ControllerBase
     public async Task<ActionResult<FlightGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get flight with id ({id})");
+        _logger.LogInformation("Get flight with id ({id})", id);
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
         {
-            _logger.LogInformation($"Not found flight with id ({id})");
+            _logger.LogInformation("Not found flight with id ({id})", id);
             return NotFound();
         }
         else
@@ -72,7 +69,7 @@ public class FlightController : ControllerBase
     public async Task<IActionResult> Post([FromBody] FlightPostDto flight)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post");
+        _logger.LogInformation("Post flight");
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flight.AirplaneId);
         if (airplane == null)
         {
@@ -93,7 +90,7 @@ public class FlightController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] FlightPostDto flightToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put flight with id {0}", id);
+        _logger.LogInformation("Put flight with id {id}", id);
         var airplane = ctx.Airplanes.FirstOrDefault(airplane => airplane.Id == flightToPut.AirplaneId);
         if (airplane == null)
         {
@@ -102,7 +99,7 @@ public class FlightController : ControllerBase
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
         {
-            _logger.LogInformation($"Not found flight with id {id}");
+            _logger.LogInformation("Not found flight with id {id}", id);
             return NotFound();
         }
         else
@@ -122,11 +119,11 @@ public class FlightController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put flight with id ({id})");
+        _logger.LogInformation("Put flight with id ({id})", id);
         var flight = ctx.Flights.FirstOrDefault(flight => flight.Id == id);
         if (flight == null)
         {
-            _logger.LogInformation($"Not found flight with id ({id})");
+            _logger.LogInformation("Not found flight with id ({id})", id);
             return NotFound();
         }
         else

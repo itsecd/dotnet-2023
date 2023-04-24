@@ -133,7 +133,7 @@ public class AnalyticsController : ControllerBase
         }
     }
     /// <summary>
-    ///Get Pharmacy From Address
+    ///Get pharmacy from address
     /// </summary>
     /// <param name="productId"></param> 
     /// <param name="address"></param>
@@ -163,7 +163,7 @@ public class AnalyticsController : ControllerBase
         }
     }
     /// <summary>
-    ///Get Pharmacy with Min Cost
+    ///Get pharmacy with min cost
     /// </summary>
     /// <param name="productId"></param> 
     /// <returns></returns>

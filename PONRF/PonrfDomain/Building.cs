@@ -1,4 +1,7 @@
-﻿namespace PonrfDomain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PonrfDomain;
 
 /// <summary>
 /// Class Building describes a building 
@@ -8,6 +11,7 @@ public class Building
     /// <summary>
     /// Id is an identifier of building
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// RegistNum contains information about registration number of building
@@ -40,6 +44,7 @@ public class Building
     /// <summary>
     /// List of all privatized buildings (if the building is up for auction)
     /// </summary>
+    [ForeignKey("PrivatizedBuilding")]
     public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
     /// <summary>
     /// Constructor for Building

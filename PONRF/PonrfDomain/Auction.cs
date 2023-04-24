@@ -1,4 +1,7 @@
-﻿namespace PonrfDomain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PonrfDomain;
 /// <summary>
 /// Class Auction describes an auction
 /// </summary>
@@ -7,6 +10,7 @@ public class Auction
     /// <summary>
     /// Id is an identifier of auction
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Date is date of holding of the auction
@@ -19,6 +23,7 @@ public class Auction
     /// <summary>
     /// List of all privatized buildings (lots)
     /// </summary>
+    [ForeignKey("Lot")]
     public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
     /// <summary>
     /// Constructor for Auction

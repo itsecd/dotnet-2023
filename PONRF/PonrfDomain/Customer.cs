@@ -1,4 +1,6 @@
-﻿namespace PonrfDomain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PonrfDomain;
 
 /// <summary>
 /// Class Customer describes a customer
@@ -8,6 +10,7 @@ public class Customer
     /// <summary>
     /// Id is an identifier of customer
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Passport contains information about passport's number of customer

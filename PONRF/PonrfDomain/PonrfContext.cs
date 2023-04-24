@@ -4,7 +4,7 @@ namespace PonrfDomain;
 /// <summary>
 /// PonrfContex used to work with database
 /// </summary>
-public class PonrfContext: DbContext
+public class PonrfContext : DbContext
 {
     /// <summary>
     /// Collection of auctions

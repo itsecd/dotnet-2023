@@ -1,4 +1,7 @@
-﻿namespace PonrfDomain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PonrfDomain;
 
 /// <summary>
 /// Class PrivatizedBuilding describes sold buildings
@@ -8,6 +11,7 @@ public class PrivatizedBuilding
     /// <summary>
     /// Id is an identifier of privatized building
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// DateOfSale contains information about date of sale of the building
@@ -28,10 +32,12 @@ public class PrivatizedBuilding
     /// <summary>
     /// Information about auction
     /// </summary>
+    [ForeignKey("Auction")]
     public Auction? Auction { get; set; }
     /// <summary>
     /// Information about building
     /// </summary>
+    [ForeignKey("Building")]
     public Building? Building { get; set; }
     /// <summary>
     /// Constructor for PrivatizedBuilding

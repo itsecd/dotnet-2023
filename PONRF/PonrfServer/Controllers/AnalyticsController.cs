@@ -53,7 +53,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>AuctionGetDto</returns>
     [HttpGet("auctions_without_full_sales")]
-    public Task<ActionResult<AuctionGetDto>> AuctionsWithoutFullSales()
+    public async Task<ActionResult<AuctionGetDto>> AuctionsWithoutFullSales()
     {
         await using var context = _contextFactory.CreateDbContext();
         var request = (from auction in context.Auctions

@@ -64,10 +64,10 @@ public class AnalyticController : ControllerBase
                           select track).ToListAsync();
         if (resultList.Count == 0)
         {
-            _logger.LogInformation($"Get album information by name: There are no albums named {albumName}");
+            _logger.LogInformation("Get album information by name: There are no albums named {albumName}", albumName);
             return NotFound();
         }
-        _logger.LogInformation($"Get album information by name: {albumName}");
+        _logger.LogInformation("Get album information by name: {albumName}", albumName);
         return Ok(resultList);
     }
 
@@ -85,10 +85,10 @@ public class AnalyticController : ControllerBase
                           select new Tuple<AlbumGetDto, int>(_mapper.Map<Album, AlbumGetDto>(album), album.Tracks.Count)).ToListAsync();
         if (resultList.Count == 0)
         {
-            _logger.LogInformation($"Get album information by year: There are no album released in {year}");
+            _logger.LogInformation("Get album information by year: There are no album released in {year}", year);
             return NotFound();
         }
-        _logger.LogInformation($"Get album information by year:{year}");
+        _logger.LogInformation("Get album information by year:{year}", year);
         return Ok(resultList);
     }
 
@@ -100,7 +100,7 @@ public class AnalyticController : ControllerBase
     public async Task<IEnumerable<AlbumGetDto>> GetTopAlbums()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get top-5 longest album");
+        _logger.LogInformation("Get top-5 longest album");
         return await (from album in context.Albums.Include(album => album.Tracks)
                 orderby album.Tracks.Sum(track => track.Duration) descending
                 select _mapper.Map<Album, AlbumGetDto>(album)).Take(5).ToListAsync();
@@ -108,12 +108,13 @@ public class AnalyticController : ControllerBase
 
     /// <summary>
     /// Get the artists with the most albums
+    /// </summary>
     /// <returns>Artist with the most albums</returns>
     [HttpGet("max-album-artists")]
     public async Task<IEnumerable<ArtistGetDto>> GetMaxAlbumArtistTest()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get the artists with the most albums");
+        _logger.LogInformation("Get the artists with the most albums");
         var maxCount = await context.Artists.MaxAsync(artist => artist.Albums.Count);
         return await (from artist in context.Artists.Include(artist => artist.Albums)
                 where artist.Albums.Count == maxCount

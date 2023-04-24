@@ -16,11 +16,13 @@ public class Artist
     /// <summary>
     /// Name is used to store a name of artist
     /// </summary>
+    [Required]
     public string Name { get; set; }
 
     /// <summary>
     /// Description is used to store description of the artist
     /// </summary>
+    [Required]
     public string Description { get; set; }
 
     /// <summary>

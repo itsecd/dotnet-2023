@@ -59,12 +59,12 @@ public class GenreController : ControllerBase
         var genre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
         if (genre == null)
         {
-            _logger.LogInformation($"GET(id): Genre with id = {id} not found");
+            _logger.LogInformation("GET(id): Genre with id = {id} not found", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET(id): Get genre with id = {id}");
+            _logger.LogInformation("GET(id): Get genre with id = {id}", id);
             return Ok(genre);
         }
     }
@@ -96,13 +96,13 @@ public class GenreController : ControllerBase
         var genre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == id);
         if (genre == null)
         {
-            _logger.LogInformation($"PUT: Genre with id = {id} not found");
+            _logger.LogInformation("PUT: Genre with id = {id} not found", id);
             return NotFound();
         }
         else
         {
             genre.Name = putGenre.Name;
-            _logger.LogInformation($"PUT: Put genre with id = {id}");
+            _logger.LogInformation("PUT: Put genre with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok(new { genre.Id });
         }
@@ -120,7 +120,7 @@ public class GenreController : ControllerBase
         if (genre != null)
         {
             context.Genres.Remove(genre);
-            _logger.LogInformation($"DELETE: Delete genre with id = {id}");
+            _logger.LogInformation("DELETE: Delete genre with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();
         }

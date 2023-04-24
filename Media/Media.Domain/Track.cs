@@ -17,11 +17,13 @@ public class Track
     /// <summary>
     /// Number is used to store the track number in the album
     /// </summary>
+    [Required]
     public int Number { get; set; }
 
     /// <summary>
     /// Name is used to store a name of track
     /// </summary>
+    [Required]
     public string Name { get; set; }
 
     /// <summary>
@@ -33,5 +35,6 @@ public class Track
     /// <summary>
     /// Duration is used to store the duration of this track
     /// </summary>
+    [Required]
     public int Duration { get; set; }
 }

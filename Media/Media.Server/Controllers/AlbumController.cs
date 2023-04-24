@@ -59,12 +59,12 @@ public class AlbumController : ControllerBase
         var album = await context.Albums.FirstOrDefaultAsync(album => album.Id == id);
         if (album == null)
         {
-            _logger.LogInformation($"GET(id): Album with id = {id} not found");
+            _logger.LogInformation("GET(id): Album with id = {id} not found", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET(id): Get album with id = {id}");
+            _logger.LogInformation("GET(id): Get album with id = {id}", id);
             return Ok(_mapper.Map<Album, AlbumGetDto>(album));
         }
     }
@@ -102,7 +102,7 @@ public class AlbumController : ControllerBase
         var album = await context.Albums.FirstOrDefaultAsync(album => album.Id == id);
         if (album == null)
         {
-            _logger.LogInformation($"PUT: Album with id = {id} not found");
+            _logger.LogInformation("PUT: Album with id = {id} not found", id);
             return NotFound();
         }
         else
@@ -117,7 +117,7 @@ public class AlbumController : ControllerBase
             album.ArtistId = putAlbum.ArtistId;
             album.GenreId = putAlbum.GenreId;
             album.Year = putAlbum.Year;
-            _logger.LogInformation($"PUT: Put album with id = {id}");
+            _logger.LogInformation("PUT: Put album with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();
         }
@@ -136,7 +136,7 @@ public class AlbumController : ControllerBase
         {
             context.Albums.Remove(album);
             await context.SaveChangesAsync();
-            _logger.LogInformation($"DELETE: Delete album with id = {id}");
+            _logger.LogInformation("DELETE: Delete album with id = {id}", id);
             return Ok();
         }
         return NotFound();

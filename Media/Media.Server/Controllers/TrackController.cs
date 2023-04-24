@@ -59,12 +59,12 @@ public class TrackController : ControllerBase
         var track = await context.Tracks.FirstOrDefaultAsync(track => track.Id == id);
         if (track == null)
         {
-            _logger.LogInformation($"GET(id): Track with id = {id} not found");
+            _logger.LogInformation("GET(id): Track with id = {id} not found", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET(id): Get track with id = {id}");
+            _logger.LogInformation("GET(id): Get track with id = {id}", id);
             return Ok(track);
         }
     }
@@ -99,7 +99,7 @@ public class TrackController : ControllerBase
         var track = await context.Tracks.FirstOrDefaultAsync(track => track.Id == id);
         if (track == null)
         {
-            _logger.LogInformation($"PUT: Track with id = {id} not found");
+            _logger.LogInformation("PUT: Track with id = {id} not found", id);
             return NotFound();
         }
         else
@@ -111,7 +111,7 @@ public class TrackController : ControllerBase
             track.Number = putTrack.Number;
             track.AlbumId = putTrack.AlbumId;
             track.Duration = putTrack.Duration;
-            _logger.LogInformation($"PUT: Put track with id = {id}");
+            _logger.LogInformation("PUT: Put track with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();
         }
@@ -129,7 +129,7 @@ public class TrackController : ControllerBase
         if (track != null)
         {
             context.Tracks.Remove(track);
-            _logger.LogInformation($"DELETE: Delete track with id = {id}");
+            _logger.LogInformation("DELETE: Delete track with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();
         }

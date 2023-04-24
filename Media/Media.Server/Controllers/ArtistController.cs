@@ -59,12 +59,12 @@ public class ArtistController : ControllerBase
         var artist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == id);
         if (artist == null)
         {
-            _logger.LogInformation($"GET(id): Artist with id = {id} not found");
+            _logger.LogInformation("GET(id): Artist with id = {id} not found", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"GET(id): Get artist with id = {id}");
+            _logger.LogInformation("GET(id): Get artist with id = {id}", id);
             return Ok(_mapper.Map<Artist, ArtistGetDto>(artist));
         }
     }
@@ -95,7 +95,7 @@ public class ArtistController : ControllerBase
         var artist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == id);
         if (artist == null)
         {
-            _logger.LogInformation($"PUT: Artist with id = {id} not found");
+            _logger.LogInformation("PUT: Artist with id = {id} not found", id);
             return NotFound();
         }
         else
@@ -120,7 +120,7 @@ public class ArtistController : ControllerBase
         if (artist != null)
         {
             context.Artists.Remove(artist); 
-            _logger.LogInformation($"DELETE: Delete artist with id = {id}");
+            _logger.LogInformation("DELETE: Delete artist with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();
         }

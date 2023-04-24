@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// Manufacturer controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ManufacturerController : ControllerBase
@@ -18,13 +21,20 @@ public class ManufacturerController : ControllerBase
         _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Get info about all manufacturers
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<ManufacturerGetDto> Get()
     {
         return _pharmacyCityNetworkRepository.Manufacturers.Select(manufacturer => _mapper.Map<ManufacturerGetDto>(manufacturer));
     }
-
+    /// <summary>
+    /// Get manufacturer info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Manufacturer> Get(int id)
     {
@@ -39,13 +49,21 @@ public class ManufacturerController : ControllerBase
             return Ok(_mapper.Map<ManufacturerGetDto>(manufacturer));
         }
     }
-
+    /// <summary>
+    /// Post a new manufacturer
+    /// </summary>
+    /// <param name="manufacturer"></param>
     [HttpPost]
     public void Post([FromBody] ManufacturerPostDto manufacturer)
     {
         _pharmacyCityNetworkRepository.Manufacturers.Add(_mapper.Map<Manufacturer>(manufacturer));
     }
-
+    /// <summary>
+    /// Put manufacturer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="manufacturerToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ManufacturerPostDto manufacturerToPut)
     {
@@ -61,7 +79,11 @@ public class ManufacturerController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete a manufacturer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

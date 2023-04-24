@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// PharmaGroup controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PharmaGroupController : ControllerBase
@@ -18,13 +21,20 @@ public class PharmaGroupController : ControllerBase
         _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Get info about all pharmaGroups
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<PharmaGroupGetDto> Get()
     {
         return _pharmacyCityNetworkRepository.PharmaGroups.Select(pharmaGroup => _mapper.Map<PharmaGroupGetDto>(pharmaGroup));
     }
-
+    /// <summary>
+    /// Get pharmaGroup info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<PharmaGroup> Get(int id)
     {
@@ -39,13 +49,21 @@ public class PharmaGroupController : ControllerBase
             return Ok(_mapper.Map<PharmaGroupGetDto>(pharmaGroup));
         }
     }
-
+    /// <summary>
+    /// Post a new pharmaGroup
+    /// </summary>
+    /// <param name="pharmaGroup"></param>
     [HttpPost]
     public void Post([FromBody] PharmaGroupPostDto pharmaGroup)
     {
         _pharmacyCityNetworkRepository.PharmaGroups.Add(_mapper.Map<PharmaGroup>(pharmaGroup));
     }
-
+    /// <summary>
+    /// Put pharmaGroup
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pharmaGroupToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PharmaGroupPostDto pharmaGroupToPut)
     {
@@ -61,7 +79,11 @@ public class PharmaGroupController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete a pharmaGroup
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

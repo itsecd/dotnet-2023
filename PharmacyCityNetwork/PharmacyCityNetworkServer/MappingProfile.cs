@@ -2,7 +2,9 @@
 using PharmacyCityNetwork.Server.Dto;
 
 namespace PharmacyCityNetwork.Server;
-
+/// <summary>
+/// Class to mapping types
+/// </summary>
 public class MappingProfile : Profile
 {
     public MappingProfile()

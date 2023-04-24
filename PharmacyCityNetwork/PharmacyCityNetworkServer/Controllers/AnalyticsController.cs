@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// Analytics controller for queries
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
@@ -60,7 +63,7 @@ public class AnalyticsController : ControllerBase
                        {
                             Pharmacy = g.Key,
                             Count = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
-                                    from productPharmacy in pharmacy.ProductPharmacys
+                                     from productPharmacy in pharmacy.ProductPharmacys
                                      where productPharmacy.Pharmacy.PharmacyName.Equals(g.Key)
                                      where productPharmacy.Product.Id == productId 
                                      select productPharmacy.ProductCount)
@@ -111,7 +114,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("top-five-pharmacy")]
     public ActionResult<List<dynamic>> GetTopFivePharmacy(DateTime dateOne, DateTime dateTwo)
     {
-        _logger.LogInformation("Get Top Five Pharmacy");
+        _logger.LogInformation("Get top five pharmacy");
         var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
@@ -139,13 +142,13 @@ public class AnalyticsController : ControllerBase
     [HttpGet("pharmacy-from-address")]
     public ActionResult<List<dynamic>> GetPharmacyFromAddress(uint productId, string address, int countProduct)
     {
-        _logger.LogInformation("Get Pharmacy From Address");
+        _logger.LogInformation("Get pharmacy from address");
         var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
                        where productPharmacy.Product.Id == productId
                        && productPharmacy.ProductCount > countProduct
-                       && (pharmacy.PharmacyAddress.Contains(address))
+                       && pharmacy.PharmacyAddress.Contains(address)
                        orderby pharmacy.PharmacyName
                        select pharmacy.PharmacyName).Distinct().ToList();
         if (!request.Any())
@@ -167,7 +170,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("pharmacy-min-cost")]
     public ActionResult<List<dynamic>> GetPharmacyMinCost(uint productId)
     {
-        _logger.LogInformation("Get Pharmacy Min Cost");
+        _logger.LogInformation("Get pharmacy min cost");
         var minCost = (from product in _pharmacyCityNetworkRepository.Products
                        from productPharmacy in product.ProductPharmacys
                        where productPharmacy.Product.Id == productId

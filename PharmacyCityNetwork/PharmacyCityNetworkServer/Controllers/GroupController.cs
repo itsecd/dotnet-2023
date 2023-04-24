@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// Group controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class GroupController : ControllerBase
@@ -18,13 +21,20 @@ public class GroupController : ControllerBase
         _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Get info about all groups
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<GroupGetDto> Get()
     {
         return _pharmacyCityNetworkRepository.Groups.Select(group => _mapper.Map<GroupGetDto>(group));
     }
-
+    /// <summary>
+    /// Get group info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Group> Get(int id)
     {
@@ -39,13 +49,21 @@ public class GroupController : ControllerBase
             return Ok(_mapper.Map<GroupGetDto>(group));
         }
     }
-
+    /// <summary>
+    /// Post a new group
+    /// </summary>
+    /// <param name="group"></param>
     [HttpPost]
     public void Post([FromBody] GroupPostDto group)
     {
         _pharmacyCityNetworkRepository.Groups.Add(_mapper.Map<Group>(group));
     }
-
+    /// <summary>
+    /// Put group
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="groupToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GroupPostDto groupToPut)
     {
@@ -61,7 +79,11 @@ public class GroupController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete a group
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// ProductPharmacy controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ProductPharmacyController : ControllerBase
@@ -18,13 +21,20 @@ public class ProductPharmacyController : ControllerBase
         _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Get info about all productPharmacys
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<ProductPharmacyGetDto> Get()
     {
         return _pharmacyCityNetworkRepository.ProductPharmacys.Select(productPharmacy => _mapper.Map<ProductPharmacyGetDto>(productPharmacy));
     }
-
+    /// <summary>
+    /// Get productPharmacy info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<ProductPharmacy> Get(int id)
     {
@@ -39,13 +49,21 @@ public class ProductPharmacyController : ControllerBase
             return Ok(_mapper.Map<ProductPharmacyGetDto>(productPharmacy));
         }
     }
-
+    /// <summary>
+    /// Post a new productPharmacy
+    /// </summary>
+    /// <param name="productPharmacy"></param>
     [HttpPost]
     public void Post([FromBody] ProductPharmacyPostDto productPharmacy)
     {
         _pharmacyCityNetworkRepository.ProductPharmacys.Add(_mapper.Map<ProductPharmacy>(productPharmacy));
     }
-
+    /// <summary>
+    /// Put productPharmacy
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="productPharmacyToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPharmacyPostDto productPharmacyToPut)
     {
@@ -61,7 +79,11 @@ public class ProductPharmacyController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete a productPharmacy
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

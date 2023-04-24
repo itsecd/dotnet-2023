@@ -4,6 +4,9 @@ using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+/// <summary>
+/// Pharmacy controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PharmacyController : ControllerBase
@@ -18,13 +21,20 @@ public class PharmacyController : ControllerBase
         _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Get info about all pharmacys
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<PharmacyGetDto> Get()
     {
         return _pharmacyCityNetworkRepository.Pharmacys.Select(pharmacy => _mapper.Map<PharmacyGetDto>(pharmacy));
     }
-
+    /// <summary>
+    /// Get pharmacy info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<Pharmacy> Get(int id)
     {
@@ -39,13 +49,21 @@ public class PharmacyController : ControllerBase
             return Ok(_mapper.Map<PharmacyGetDto>(pharmacy));
         }
     }
-
+    /// <summary>
+    /// Post a new pharmacy
+    /// </summary>
+    /// <param name="pharmacy"></param>
     [HttpPost]
     public void Post([FromBody] PharmacyPostDto pharmacy)
     {
         _pharmacyCityNetworkRepository.Pharmacys.Add(_mapper.Map<Pharmacy>(pharmacy));
     }
-
+    /// <summary>
+    /// Put pharmacy
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pharmacyToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PharmacyPostDto pharmacyToPut)
     {
@@ -61,7 +79,11 @@ public class PharmacyController : ControllerBase
             return Ok();
         }
     }
-
+    /// <summary>
+    /// Delete a pharmacy
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

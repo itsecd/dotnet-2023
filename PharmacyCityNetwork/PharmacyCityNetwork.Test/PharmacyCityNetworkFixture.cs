@@ -34,7 +34,7 @@ public class PharmacyCityNetworkFixture
         var fifthPharmacy = new Pharmacy(5, "Tabls", "9229303", "Gagarina, 67", "Parshin");
 
         var firstProduct = new Product("Paracetamol", 1, firstGroup, firstManufacturer, 1, 1);
-        var firstProductPharmacy = new ProductPharmacy(1, 300, firstProduct, firstPharmacy, 1, 1);
+        var firstProductPharmacy = new ProductPharmacy(1, 300, firstProduct, firstPharmacy, 1, 1, 1);
         firstProduct.ProductPharmacys.Add(firstProductPharmacy);
         firstPharmacy.ProductPharmacys.Add(firstProductPharmacy);
 
@@ -50,7 +50,7 @@ public class PharmacyCityNetworkFixture
         firstProduct.Sales.Add(firstSale);
 
         var secondProduct = new Product("Espumizan", 2, secondGroup, secondManufacturer, 2, 2);
-        var secondProductPharmacy = new ProductPharmacy(2, 250, secondProduct, firstPharmacy, 2, 1);
+        var secondProductPharmacy = new ProductPharmacy(2, 250, secondProduct, firstPharmacy, 2, 1, 2);
         secondProduct.ProductPharmacys.Add(secondProductPharmacy);
         firstPharmacy.ProductPharmacys.Add(secondProductPharmacy);
 
@@ -66,11 +66,11 @@ public class PharmacyCityNetworkFixture
         secondProduct.Sales.Add(secondSale);
 
         var thridProduct = new Product("Noshpa", 3, thridGroup, secondManufacturer, 3, 2);
-        var thridProductPharmacy = new ProductPharmacy(3, 200, thridProduct, thridPharmacy, 3, 3);
+        var thridProductPharmacy = new ProductPharmacy(3, 200, thridProduct, thridPharmacy, 3, 3, 3);
         thridProduct.ProductPharmacys.Add(thridProductPharmacy);
         thridPharmacy.ProductPharmacys.Add(thridProductPharmacy);
 
-        var sixthProductPharmacy = new ProductPharmacy(4, 180, thridProduct, secondPharmacy, 3, 2);
+        var sixthProductPharmacy = new ProductPharmacy(4, 180, thridProduct, secondPharmacy, 3, 2, 3);
         thridProduct.ProductPharmacys.Add(sixthProductPharmacy);
         secondPharmacy.ProductPharmacys.Add(sixthProductPharmacy);
 
@@ -89,7 +89,7 @@ public class PharmacyCityNetworkFixture
         thridProduct.Sales.Add(sixthSale);
 
         var fourthProduct = new Product("Analgin", 4, thridGroup, firstManufacturer, 3, 1);
-        var fourthProductPharmacy = new ProductPharmacy(4, 135, fourthProduct, secondPharmacy, 4, 2);
+        var fourthProductPharmacy = new ProductPharmacy(4, 135, fourthProduct, secondPharmacy, 4, 2, 4);
         fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
         fourthProduct.ProductPharmacys.Add(fourthProductPharmacy);
 
@@ -105,7 +105,7 @@ public class PharmacyCityNetworkFixture
         fourthProduct.Sales.Add(fourthSale);
 
         var fifthProduct = new Product("Nekst", 5, firstGroup, firstManufacturer, 1, 1);
-        var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy, 5, 5);
+        var fifthProductPharmacy = new ProductPharmacy(10, 350, fifthProduct, fifthPharmacy, 5, 5, 5);
         fifthProduct.ProductPharmacys.Add(fifthProductPharmacy);
         fifthPharmacy.ProductPharmacys.Add(fifthProductPharmacy);
 

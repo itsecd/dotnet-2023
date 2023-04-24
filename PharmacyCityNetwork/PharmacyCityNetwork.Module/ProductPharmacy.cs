@@ -6,6 +6,10 @@
 public class ProductPharmacy
 {
     /// <summary>
+    /// Id of productPharmacy
+    /// </summary>
+    public int Id { get; set; } = 0;
+    /// <summary>
     /// Product count
     /// </summary>
     public int ProductCount { get; set; } = 0;
@@ -24,7 +28,7 @@ public class ProductPharmacy
     public int PharmacyId { get; set; }
     public Pharmacy Pharmacy { get; set; }
     public ProductPharmacy() { }
-    public ProductPharmacy(int productCount, int productCost, Product product, Pharmacy pharmacy, int productId, int pharmacyId)
+    public ProductPharmacy(int productCount, int productCost, Product product, Pharmacy pharmacy, int productId, int pharmacyId, int id)
     {
         ProductCount = productCount;
         ProductCost = productCost;
@@ -32,5 +36,6 @@ public class ProductPharmacy
         Pharmacy = pharmacy;
         ProductId = productId;
         PharmacyId = pharmacyId;
+        Id = id;
     }
 }

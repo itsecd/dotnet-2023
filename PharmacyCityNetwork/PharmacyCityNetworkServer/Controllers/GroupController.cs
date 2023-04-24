@@ -10,25 +10,25 @@ public class GroupController : ControllerBase
 {
     private readonly ILogger<GroupController> _logger;
 
-    private readonly IPharmacyCityNetworkRepository _groupsRepository;
+    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
     private readonly IMapper _mapper;
-    public GroupController(ILogger<GroupController> logger, IPharmacyCityNetworkRepository groupsRepository, IMapper mapper)
+    public GroupController(ILogger<GroupController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
     {
         _logger = logger;
-        _groupsRepository = groupsRepository;
+        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<GroupGetDto> Get()
     {
-        return _groupsRepository.Groups.Select(group => _mapper.Map<GroupGetDto>(group));
+        return _pharmacyCityNetworkRepository.Groups.Select(group => _mapper.Map<GroupGetDto>(group));
     }
 
     [HttpGet("{id}")]
     public ActionResult<Group> Get(int id)
     {
-        var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
+        var group = _pharmacyCityNetworkRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
             _logger.LogInformation($"Not found group: {id}");
@@ -43,13 +43,13 @@ public class GroupController : ControllerBase
     [HttpPost]
     public void Post([FromBody] GroupPostDto group)
     {
-        _groupsRepository.Groups.Add(_mapper.Map<Group>(group));
+        _pharmacyCityNetworkRepository.Groups.Add(_mapper.Map<Group>(group));
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GroupPostDto groupToPut)
     {
-        var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
+        var group = _pharmacyCityNetworkRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
             _logger.LogInformation("Not found group: {id}", id);
@@ -65,7 +65,7 @@ public class GroupController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var group = _groupsRepository.Groups.FirstOrDefault(group => group.Id == id);
+        var group = _pharmacyCityNetworkRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
             _logger.LogInformation($"Not found group: {id}");
@@ -73,7 +73,7 @@ public class GroupController : ControllerBase
         }
         else
         {
-            _groupsRepository.Groups.Remove(group);
+            _pharmacyCityNetworkRepository.Groups.Remove(group);
             return Ok();
         }
     }

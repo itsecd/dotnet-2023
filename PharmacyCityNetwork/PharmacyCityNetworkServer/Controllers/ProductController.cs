@@ -10,25 +10,25 @@ public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
 
-    private readonly IPharmacyCityNetworkRepository _productsRepository;
+    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
     private readonly IMapper _mapper;
-    public ProductController(ILogger<ProductController> logger, IPharmacyCityNetworkRepository productsRepository, IMapper mapper)
+    public ProductController(ILogger<ProductController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
     {
         _logger = logger;
-        _productsRepository = productsRepository;
+        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<ProductGetDto> Get()
     {
-        return _productsRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
+        return _pharmacyCityNetworkRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
     }
 
     [HttpGet("{id}")]
     public ActionResult<Product> Get(int id)
     {
-        var product = _productsRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product: {id}");
@@ -43,13 +43,13 @@ public class ProductController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ProductPostDto product)
     {
-        _productsRepository.Products.Add(_mapper.Map<Product>(product));
+        _pharmacyCityNetworkRepository.Products.Add(_mapper.Map<Product>(product));
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
     {
-        var product = _productsRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation("Not found product: {id}", id);
@@ -65,7 +65,7 @@ public class ProductController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var product = _productsRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product: {id}");
@@ -73,7 +73,7 @@ public class ProductController : ControllerBase
         }
         else
         {
-            _productsRepository.Products.Remove(product);
+            _pharmacyCityNetworkRepository.Products.Remove(product);
             return Ok();
         }
     }

@@ -10,25 +10,25 @@ public class ManufacturerController : ControllerBase
 {
     private readonly ILogger<ManufacturerController> _logger;
 
-    private readonly IPharmacyCityNetworkRepository _manufacturersRepository;
+    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
     private readonly IMapper _mapper;
-    public ManufacturerController(ILogger<ManufacturerController> logger, IPharmacyCityNetworkRepository manufacturersRepository, IMapper mapper)
+    public ManufacturerController(ILogger<ManufacturerController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
     {
         _logger = logger;
-        _manufacturersRepository = manufacturersRepository;
+        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<ManufacturerGetDto> Get()
     {
-        return _manufacturersRepository.Manufacturers.Select(manufacturer => _mapper.Map<ManufacturerGetDto>(manufacturer));
+        return _pharmacyCityNetworkRepository.Manufacturers.Select(manufacturer => _mapper.Map<ManufacturerGetDto>(manufacturer));
     }
 
     [HttpGet("{id}")]
     public ActionResult<Manufacturer> Get(int id)
     {
-        var manufacturer = _manufacturersRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
         if (manufacturer == null)
         {
             _logger.LogInformation($"Not found manufacturer: {id}");
@@ -43,13 +43,13 @@ public class ManufacturerController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ManufacturerPostDto manufacturer)
     {
-        _manufacturersRepository.Manufacturers.Add(_mapper.Map<Manufacturer>(manufacturer));
+        _pharmacyCityNetworkRepository.Manufacturers.Add(_mapper.Map<Manufacturer>(manufacturer));
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ManufacturerPostDto manufacturerToPut)
     {
-        var manufacturer = _manufacturersRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
         if (manufacturer == null)
         {
             _logger.LogInformation("Not found manufacturer: {id}",  id);
@@ -65,7 +65,7 @@ public class ManufacturerController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var manufacturer = _manufacturersRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
         if (manufacturer == null)
         {
             _logger.LogInformation($"Not found manufacturer: {id}");
@@ -73,7 +73,7 @@ public class ManufacturerController : ControllerBase
         }
         else
         {
-            _manufacturersRepository.Manufacturers.Remove(manufacturer);
+            _pharmacyCityNetworkRepository.Manufacturers.Remove(manufacturer);
             return Ok();
         }
     }

@@ -3,6 +3,10 @@
 public class ProductPharmacyGetDto
 {
     /// <summary>
+    /// Id of productPharmacy
+    /// </summary>
+    public int Id { get; set; } = 0;
+    /// <summary>
     /// Product count
     /// </summary>
     public int ProductCount { get; set; } = 0;

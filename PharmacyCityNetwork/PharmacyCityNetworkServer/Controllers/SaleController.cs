@@ -10,25 +10,25 @@ public class SaleController : ControllerBase
 {
     private readonly ILogger<SaleController> _logger;
 
-    private readonly IPharmacyCityNetworkRepository _salesRepository;
+    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
     private readonly IMapper _mapper;
-    public SaleController(ILogger<SaleController> logger, IPharmacyCityNetworkRepository salesRepository, IMapper mapper)
+    public SaleController(ILogger<SaleController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
     {
         _logger = logger;
-        _salesRepository = salesRepository;
+        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<SaleGetDto> Get()
     {
-        return _salesRepository.Sale.Select(sale => _mapper.Map<SaleGetDto>(sale));
+        return _pharmacyCityNetworkRepository.Sale.Select(sale => _mapper.Map<SaleGetDto>(sale));
     }
 
     [HttpGet("{id}")]
     public ActionResult<Sale> Get(int id)
     {
-        var sale = _salesRepository.Sale.FirstOrDefault(sale => sale.Id == id);
+        var sale = _pharmacyCityNetworkRepository.Sale.FirstOrDefault(sale => sale.Id == id);
         if (sale == null)
         {
             _logger.LogInformation($"Not found sale: {id}");
@@ -43,13 +43,13 @@ public class SaleController : ControllerBase
     [HttpPost]
     public void Post([FromBody] SalePostDto sale)
     {
-        _salesRepository.Sale.Add(_mapper.Map<Sale>(sale));
+        _pharmacyCityNetworkRepository.Sale.Add(_mapper.Map<Sale>(sale));
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SalePostDto saleToPut)
     {
-        var sale = _salesRepository.Sale.FirstOrDefault(sale => sale.Id == id);
+        var sale = _pharmacyCityNetworkRepository.Sale.FirstOrDefault(sale => sale.Id == id);
         if (sale == null)
         {
             _logger.LogInformation("Not found sale: {id}", id);
@@ -65,7 +65,7 @@ public class SaleController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var sale = _salesRepository.Sale.FirstOrDefault(sale => sale.Id == id);
+        var sale = _pharmacyCityNetworkRepository.Sale.FirstOrDefault(sale => sale.Id == id);
         if (sale == null)
         {
             _logger.LogInformation($"Not found sale: {id}");
@@ -73,7 +73,7 @@ public class SaleController : ControllerBase
         }
         else
         {
-            _salesRepository.Sale.Remove(sale);
+            _pharmacyCityNetworkRepository.Sale.Remove(sale);
             return Ok();
         }
     }

@@ -10,25 +10,25 @@ public class ProductPharmaGroupController : ControllerBase
 {
     private readonly ILogger<ProductPharmaGroupController> _logger;
 
-    private readonly IPharmacyCityNetworkRepository _productPharmaGroupsRepository;
+    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
     private readonly IMapper _mapper;
-    public ProductPharmaGroupController(ILogger<ProductPharmaGroupController> logger, IPharmacyCityNetworkRepository productPharmaGroupsRepository, IMapper mapper)
+    public ProductPharmaGroupController(ILogger<ProductPharmaGroupController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
     {
         _logger = logger;
-        _productPharmaGroupsRepository = productPharmaGroupsRepository;
+        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<ProductPharmaGroupGetDto> Get()
     {
-        return _productPharmaGroupsRepository.ProductPharmaGroups.Select(productPharmaGroup => _mapper.Map<ProductPharmaGroupGetDto>(productPharmaGroup));
+        return _pharmacyCityNetworkRepository.ProductPharmaGroups.Select(productPharmaGroup => _mapper.Map<ProductPharmaGroupGetDto>(productPharmaGroup));
     }
 
     [HttpGet("{id}")]
     public ActionResult<ProductPharmaGroup> Get(int id)
     {
-        var productPharmaGroup = _productPharmaGroupsRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
+        var productPharmaGroup = _pharmacyCityNetworkRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
         if (productPharmaGroup == null)
         {
             _logger.LogInformation($"Not found productPharmaGroup: {id}");
@@ -43,13 +43,13 @@ public class ProductPharmaGroupController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ProductPharmaGroupPostDto productPharmaGroup)
     {
-        _productPharmaGroupsRepository.ProductPharmaGroups.Add(_mapper.Map<ProductPharmaGroup>(productPharmaGroup));
+        _pharmacyCityNetworkRepository.ProductPharmaGroups.Add(_mapper.Map<ProductPharmaGroup>(productPharmaGroup));
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPharmaGroupPostDto productPharmaGroupToPut)
     {
-        var productPharmaGroup = _productPharmaGroupsRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
+        var productPharmaGroup = _pharmacyCityNetworkRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
         if (productPharmaGroup == null)
         {
             _logger.LogInformation("Not found productPharmaGroup: {id}", id);
@@ -65,7 +65,7 @@ public class ProductPharmaGroupController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var productPharmaGroup = _productPharmaGroupsRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
+        var productPharmaGroup = _pharmacyCityNetworkRepository.ProductPharmaGroups.FirstOrDefault(productPharmaGroup => productPharmaGroup.Id == id);
         if (productPharmaGroup == null)
         {
             _logger.LogInformation($"Not found productPharmaGroup: {id}");
@@ -73,7 +73,7 @@ public class ProductPharmaGroupController : ControllerBase
         }
         else
         {
-            _productPharmaGroupsRepository.ProductPharmaGroups.Remove(productPharmaGroup);
+            _pharmacyCityNetworkRepository.ProductPharmaGroups.Remove(productPharmaGroup);
             return Ok();
         }
     }

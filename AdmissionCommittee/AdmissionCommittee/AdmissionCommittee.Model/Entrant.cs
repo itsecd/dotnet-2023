@@ -1,4 +1,6 @@
-﻿namespace AdmissionCommittee.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about entrants
 /// </summary>
@@ -7,6 +9,7 @@ public class Entrant
     /// <summary>
     /// IdEntrant - int type value for storing the id entrant
     /// </summary>
+    [Key]
     public int IdEntrant { get; set; }
 
     /// <summary>
@@ -28,11 +31,6 @@ public class Entrant
     /// City - string value for storing the entrant's city
     /// </summary>
     public string? City { get; set; }
-
-    /// <summary>
-    /// StatementId - int value for storing the id statement of entrant
-    /// </summary>
-    public int StatementId { get; set; }
 
     /// <summary>
     /// Statement - link to statements's entrant

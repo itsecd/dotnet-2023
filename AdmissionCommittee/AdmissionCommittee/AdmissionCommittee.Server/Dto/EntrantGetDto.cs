@@ -28,9 +28,4 @@ public class EntrantGetDto
     /// City - string value for storing the entrant's city
     /// </summary>
     public string? City { get; set; }
-
-    /// <summary>
-    /// StatementId - int value for storing the id statement of entrant
-    /// </summary>
-    public int StatementId { get; set; }
 }

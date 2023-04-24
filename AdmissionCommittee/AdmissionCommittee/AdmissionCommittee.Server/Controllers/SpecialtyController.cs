@@ -1,9 +1,8 @@
 ﻿using AdmissionCommittee.Model;
 using AdmissionCommittee.Server.Dto;
-using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
@@ -12,14 +11,14 @@ public class SpecialtyController : ControllerBase
 {
     private readonly ILogger<SpecialtyController> _logger;
 
-    private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
+    private readonly IDbContextFactory<AdmissionCommitteeContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
-    public SpecialtyController(ILogger<SpecialtyController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public SpecialtyController(ILogger<SpecialtyController> logger, IDbContextFactory<AdmissionCommitteeContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _admissionCommitteeRepository = admissionCommitteeRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -28,10 +27,12 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <returns> IEnumerable type Specialty </returns>
     [HttpGet]
-    public IEnumerable<SpecialtyGetDto> Get()
+    public async Task<IEnumerable<SpecialtyGetDto>> Get()
     {
         _logger.LogInformation("Get all Specialties");
-        return _admissionCommitteeRepository.Specialties.Select(specialty => _mapper.Map<SpecialtyGetDto>(specialty));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var specialties = await ctx.Specialties.ToArrayAsync();
+        return _mapper.Map<IEnumerable<SpecialtyGetDto>>(specialties);
     }
 
     /// <summary>
@@ -40,9 +41,10 @@ public class SpecialtyController : ControllerBase
     /// <param name="idSpecialty">id Speciality</param>
     /// <returns>Ok with SpecialtyGetDto or NotFound</returns>
     [HttpGet("{idSpecialty}")]
-    public ActionResult<SpecialtyGetDto> Get(int idSpecialty)
+    public async Task<ActionResult<SpecialtyGetDto>> Get(int idSpecialty)
     {
-        var specialty = _admissionCommitteeRepository.Specialties.FirstOrDefault(specialty => specialty.IdSpecialty == idSpecialty);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = await ctx.Specialties.FirstOrDefaultAsync(specialty => specialty.IdSpecialty == idSpecialty);
         if (specialty == null)
         {
             _logger.LogInformation("Not found Specialty : {idSpecialty}", idSpecialty);
@@ -60,10 +62,12 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <param name="specialty">new Specialty</param>
     [HttpPost]
-    public void Post([FromBody] SpecialtyPostDto specialty)
+    public async Task Post([FromBody] SpecialtyPostDto specialty)
     {
         _logger.LogInformation("Create new Specialty");
-        _admissionCommitteeRepository.Specialties.Add(_mapper.Map<Specialty>(specialty));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Specialties.AddAsync(_mapper.Map<Specialty>(specialty));
+        await ctx.SaveChangesAsync();
     }
 
     /// <summary>
@@ -73,9 +77,10 @@ public class SpecialtyController : ControllerBase
     /// <param name="specialtyToPut">Specialty that is updated</param>
     /// <returns>Ok or NotFound</returns>
     [HttpPut("{idSpecialty}")]
-    public IActionResult Put(int idSpecialty, [FromBody] SpecialtyPostDto specialtyToPut)
+    public async Task<IActionResult> Put(int idSpecialty, [FromBody] SpecialtyPostDto specialtyToPut)
     {
-        var specialty = _admissionCommitteeRepository.Specialties.FirstOrDefault(specialty => specialty.IdSpecialty == idSpecialty);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = await ctx.Specialties.FirstOrDefaultAsync(specialty => specialty.IdSpecialty == idSpecialty);
         if (specialty == null)
         {
             _logger.LogInformation("Not found Specialty : {idSpecialty}", idSpecialty);
@@ -85,6 +90,8 @@ public class SpecialtyController : ControllerBase
         {
             _logger.LogInformation("Update Specialty by id {idSpecialty}", idSpecialty);
             _mapper.Map(specialtyToPut, specialty);
+            ctx.Specialties.Update(_mapper.Map<Specialty>(specialty));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -95,9 +102,11 @@ public class SpecialtyController : ControllerBase
     /// <param name="idSpecialty">id Specialty for delete</param>
     /// <returns>Ok or NotFound</returns>
     [HttpDelete("{idSpecialty}")]
-    public IActionResult Delete(int idSpecialty)
+    public async Task<IActionResult> Delete(int idSpecialty)
     {
-        var specialty = _admissionCommitteeRepository.Specialties.FirstOrDefault(specialty => specialty.IdSpecialty == idSpecialty);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = await ctx.Specialties.Include(specialty => specialty.StatementSpecialties)
+                                             .FirstOrDefaultAsync(specialty => specialty.IdSpecialty == idSpecialty);
         if (specialty == null)
         {
             _logger.LogInformation($"Not found Specialty : {idSpecialty}");
@@ -106,7 +115,6 @@ public class SpecialtyController : ControllerBase
         else
         {
             _logger.LogInformation("Delete Specialty by id {idSpecialty}", idSpecialty);
-            _admissionCommitteeRepository.Specialties.Remove(specialty);
             return Ok();
         }
     }

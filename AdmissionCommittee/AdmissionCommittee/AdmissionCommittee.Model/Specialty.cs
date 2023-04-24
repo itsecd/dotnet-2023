@@ -1,4 +1,6 @@
-﻿namespace AdmissionCommittee.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about the speciality
 /// </summary>
@@ -7,6 +9,7 @@ public class Specialty
     /// <summary>
     /// IdSpeciality - int value for storing the id speciality
     /// </summary>
+    [Key]
     public int IdSpecialty { get; set; }
 
     /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace AdmissionCommittee.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AdmissionCommittee.Model;
 /// <summary>
 /// Information about the result of the entrant's exam
 /// </summary>
@@ -7,6 +9,7 @@ public class Result
     /// <summary>
     /// IdResult - int value for storing the id result
     /// </summary>
+    [Key]
     public int IdResult { get; set; }
 
     /// <summary>

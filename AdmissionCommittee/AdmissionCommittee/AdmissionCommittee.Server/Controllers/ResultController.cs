@@ -1,9 +1,8 @@
 ﻿using AdmissionCommittee.Model;
 using AdmissionCommittee.Server.Dto;
-using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
@@ -12,14 +11,14 @@ public class ResultController : ControllerBase
 {
     private readonly ILogger<ResultController> _logger;
 
-    private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
+    private readonly IDbContextFactory<AdmissionCommitteeContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
-    public ResultController(ILogger<ResultController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public ResultController(ILogger<ResultController> logger, IDbContextFactory<AdmissionCommitteeContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _admissionCommitteeRepository = admissionCommitteeRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -28,10 +27,12 @@ public class ResultController : ControllerBase
     /// </summary>
     /// <returns> IEnumerable type collection Result </returns>
     [HttpGet]
-    public IEnumerable<ResultGetDto> Get()
+    public async Task<IEnumerable<ResultGetDto>> Get()
     {
         _logger.LogInformation("Get all Results");
-        return _admissionCommitteeRepository.Results.Select(result => _mapper.Map<ResultGetDto>(result));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var results = await ctx.Results.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ResultGetDto>>(results);
     }
 
     /// <summary>
@@ -40,9 +41,10 @@ public class ResultController : ControllerBase
     /// <param name="idResult">id Result</param>
     /// <returns>Ok with EntrantGetDto or NotFound</returns>
     [HttpGet("{idResult}")]
-    public ActionResult<ResultGetDto> Get(int idResult)
+    public async Task<ActionResult<ResultGetDto>> Get(int idResult)
     {
-        var result = _admissionCommitteeRepository.Results.FirstOrDefault(result => result.IdResult == idResult);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await ctx.Results.FirstOrDefaultAsync(result => result.IdResult == idResult);
         if (result == null)
         {
             _logger.LogInformation("Not found Result : {idResult}", idResult);
@@ -60,10 +62,12 @@ public class ResultController : ControllerBase
     /// </summary>
     /// <param name="result">new result</param>
     [HttpPost]
-    public void Post(ResultPostDto result)
+    public async Task Post([FromBody] ResultPostDto result)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new Result");
-        _admissionCommitteeRepository.Results.Add(_mapper.Map<Result>(result));
+        await ctx.Results.AddAsync(_mapper.Map<Result>(result));
+        await ctx.SaveChangesAsync();
     }
 
     /// <summary>
@@ -73,9 +77,10 @@ public class ResultController : ControllerBase
     /// <param name="resultToPut">Result that is updated</param>
     /// <returns>Ok or NotFound</returns>
     [HttpPut("{idResult}")]
-    public IActionResult Put(int idResult, [FromBody] ResultPostDto resultToPut)
+    public async Task<IActionResult> Put(int idResult, [FromBody] ResultPostDto resultToPut)
     {
-        var result = _admissionCommitteeRepository.Results.FirstOrDefault(result => result.IdResult == idResult);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await ctx.Results.FirstOrDefaultAsync(result => result.IdResult == idResult);
         if (result == null)
         {
             _logger.LogInformation("Not found Result : {idResult}", idResult);
@@ -85,6 +90,8 @@ public class ResultController : ControllerBase
         {
             _logger.LogInformation("Update Result by id {idResult}", idResult);
             _mapper.Map(resultToPut, result);
+            ctx.Results.Update(_mapper.Map<Result>(result));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -95,9 +102,11 @@ public class ResultController : ControllerBase
     /// <param name="idResult">id Result for delete</param>
     /// <returns>Ok or NotFound</returns>
     [HttpDelete("{idResult}")]
-    public IActionResult Delete(int idResult)
+    public async Task<IActionResult> Delete(int idResult)
     {
-        var result = _admissionCommitteeRepository.Results.FirstOrDefault(result => result.IdResult == idResult);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await ctx.Results.Include(result => result.EntrantResults)
+                                      .FirstOrDefaultAsync(result => result.IdResult == idResult);
         if (result == null)
         {
             _logger.LogInformation("Not found Result : {idResult}", idResult);
@@ -106,7 +115,8 @@ public class ResultController : ControllerBase
         else
         {
             _logger.LogInformation("Delete Result by id {idResult}", idResult);
-            _admissionCommitteeRepository.Results.Remove(result);
+            ctx.Results.Remove(result);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

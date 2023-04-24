@@ -445,8 +445,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Lebedeva Kira Romanovna",
                 DateBirth = new DateTime(2005, 01, 19),
                 Country = "Russian Federation",
-                City = "Saint-Petersburg",
-                StatementId = 1
+                City = "Saint-Petersburg"
             },
 
             new Entrant
@@ -455,8 +454,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Popova Eva Artemovna",
                 DateBirth = new DateTime(2002, 11, 12),
                 Country = "Russian Federation",
-                City = "Kazan",
-                StatementId = 2
+                City = "Kazan"
             },
 
             new Entrant
@@ -465,8 +463,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Novikov Roman Evgenievich",
                 DateBirth = new DateTime(2005, 08, 29),
                 Country = "Kazakhstan",
-                City = "Astana",
-                StatementId = 3
+                City = "Astana"
             },
 
             new Entrant
@@ -475,8 +472,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Isaev Nikita Grigorievich",
                 DateBirth = new DateTime(2001, 01, 01),
                 Country = "Russian Federation",
-                City = "Saint-Petersburg",
-                StatementId = 4
+                City = "Saint-Petersburg"
             },
             new Entrant
             {
@@ -484,8 +480,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Pastukhova Sofya Maksimovna",
                 DateBirth = new DateTime(2004, 01, 29),
                 Country = "Uzbekistan",
-                City = "Tashkent",
-                StatementId = 5
+                City = "Tashkent"
             },
             new Entrant
             {
@@ -493,8 +488,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Gromova Alyona Andreevna",
                 DateBirth = new DateTime(2003, 08, 02),
                 Country = "Russian Federation",
-                City = "Ekaterinburg",
-                StatementId = 6
+                City = "Ekaterinburg"
             },
             new Entrant
             {
@@ -502,8 +496,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Bykova Anastasia Miroslavovna",
                 DateBirth = new DateTime(2003, 08, 30),
                 Country = "Uzbekistan",
-                City = "Mirabad",
-                StatementId = 7
+                City = "Mirabad"
             },
 
             new Entrant
@@ -512,8 +505,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Soboleva Alice Yaroslavovna",
                 DateBirth = new DateTime(2003, 08, 03),
                 Country = "Russian Federation",
-                City = "Azov",
-                StatementId = 8
+                City = "Azov"
             },
 
             new Entrant
@@ -522,8 +514,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Kalinina Elena Vasilyevna",
                 DateBirth = new DateTime(2003, 02, 01),
                 Country = "Russian Federation",
-                City = "Samara",
-                StatementId = 9
+                City = "Samara"
             },
 
             new Entrant
@@ -532,8 +523,7 @@ public class AdmissionCommitteeRepository : IAdmissionCommitteeRepository
                 FullName = "Vinogradov Dmitry Artemovich",
                 DateBirth = new DateTime(2005, 05, 31),
                 Country = "Latvia",
-                City = "Smiltene",
-                StatementId = 10
+                City = "Smiltene"
             }
         };
 

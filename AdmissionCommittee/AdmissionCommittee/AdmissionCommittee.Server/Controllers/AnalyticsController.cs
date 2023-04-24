@@ -1,31 +1,32 @@
-﻿using AdmissionCommittee.Server.Dto;
-using AdmissionCommittee.Server.Repository;
+﻿using AdmissionCommittee.Model;
+using AdmissionCommittee.Server.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
-
     private readonly ILogger<AnalyticsController> _logger;
 
-    private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
+    private readonly IDbContextFactory<AdmissionCommitteeContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
-    public AnalyticsController(ILogger<AnalyticsController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IDbContextFactory<AdmissionCommitteeContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _admissionCommitteeRepository = admissionCommitteeRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
-    private List<string> GetAllSubject()
+    private async Task<List<string>> GetAllSubject()
     {
         var subjectList = new List<string>();
-        foreach (var res in _admissionCommitteeRepository.Results)
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        foreach (var res in ctx.Results)
         {
             subjectList.Add(res.NameSubject);
         }
@@ -38,13 +39,15 @@ public class AnalyticsController : ControllerBase
     /// <param name="city">Name city</param>
     /// <returns>list Entrants from specified city</returns>
     [HttpGet("GetEntrantsFromSpecifiedCity")]
-    public ActionResult<List<EntrantGetDto>> GetEntrantsFromSpecifiedCity(string city)
+    public async Task<ActionResult<List<EntrantGetDto>>> GetEntrantsFromSpecifiedCity(string city)
     {
-        var selectedEntrants = (from entrant in _admissionCommitteeRepository.EntrantsWithStatement
-                                where entrant.City == city
-                                select _mapper.Map<EntrantGetDto>(entrant)).ToList();
+        var ctx = await _contextFactory.CreateDbContextAsync();
 
-        if (selectedEntrants == null)
+        var selectedEntrants = await (from entrant in ctx.Entrants
+                                      where entrant.City == city
+                                      select _mapper.Map<EntrantGetDto>(entrant)).ToListAsync();
+
+        if (!selectedEntrants.Any())
         {
             _logger.LogInformation("Not found Entrants from {city}", city);
             return NotFound($"The Entrants does't exist from city {city}");
@@ -61,33 +64,37 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list Entrants older than 20 years</returns>
     [HttpGet("GetEntrantsOverTwentyYearsOlder")]
-    public List<EntrantGetDto> GetEntrantsOverTwentyYearsOlder()
+    public async Task<List<EntrantGetDto>> GetEntrantsOverTwentyYearsOlder()
     {
-        _logger.LogInformation($"Get information about Entrants Over Twenty Years Older");
+        _logger.LogInformation("Get information about Entrants Over Twenty Years Older");
+        var ctx = await _contextFactory.CreateDbContextAsync();
 
-        return (from entrant in _admissionCommitteeRepository.EntrantsWithStatement
-                where (DateTime.Now.Year - entrant.DateBirth.Year) > 20
-                orderby entrant.FullName
-                select _mapper.Map<EntrantGetDto>(entrant)).ToList();
+        var selectedEntrants = await (from entrant in ctx.Entrants
+                                      where (DateTime.Now.Year - entrant.DateBirth.Year) > 20
+                                      orderby entrant.FullName
+                                      select _mapper.Map<EntrantGetDto>(entrant)).ToListAsync();
+
+        return selectedEntrants;
     }
 
     /// <summary>
     /// Entrants entering the specified specialty
     /// (without taking into account priority)
     /// </summary>
-    /// <param name="specialty">name Speciality</param>
+    /// <param name="specialty">name Specialty</param>
     /// <returns>list Entrants entering the specified specialty</returns>
     [HttpGet("GetEntrantsEnteringSpecifiedSpecialty")]
-    public ActionResult<List<EntrantGetDto>> GetEntrantsEnteringSpecifiedSpecialty(string specialty)
+    public async Task<ActionResult<List<EntrantGetDto>>> GetEntrantsEnteringSpecifiedSpecialty(string specialty)
     {
-        var selectedEntrants = (from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                                from stspec in entrant.Statement.StatementSpecialties
-                                where stspec.Specialty.NameSpecialty == specialty
-                                orderby entrant.EntrantResults.Sum(t => t.Mark) descending
-                                select _mapper.Map<EntrantGetDto>(entrant)).ToList();
+        var ctx = await _contextFactory.CreateDbContextAsync();
 
+        var selectedEntrants = await (from entrant in ctx.Entrants
+                                      from stspec in entrant.Statement.StatementSpecialties
+                                      where stspec.Specialty.NameSpecialty == specialty
+                                      orderby entrant.EntrantResults.Sum(t => t.Mark) descending
+                                      select _mapper.Map<EntrantGetDto>(entrant)).ToListAsync();
 
-        if (selectedEntrants == null)
+        if (!selectedEntrants.Any())
         {
             _logger.LogInformation("Not found Entrants entering the specialty {specialty}", specialty);
             return NotFound($"The Entrants does't exist entering the specialty {specialty}");
@@ -104,24 +111,27 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list name of Specialties with count of Entrants</returns>
     [HttpGet("CountOfEntrantsEnteringEachSpecialty")]
-    public ActionResult<dynamic> GetCountOfEntrantsEnteringEachSpecialty()
+    public async Task<ActionResult<dynamic>> GetCountOfEntrantsEnteringEachSpecialty()
     {
-        _logger.LogInformation($"Get information about count of Entrants entering each specialty");
+        _logger.LogInformation("Get information about count of Entrants entering each specialty");
 
-        return (from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                from stspec in entrant.Statement.StatementSpecialties
-                where stspec.Priority == 1
-                group stspec by stspec.Specialty.NameSpecialty into gstspec
-                select new
-                {
-                    NameSpecialty = gstspec.Key,
-                    CountEntrants = (from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                                     from stspec in entrant.Statement.StatementSpecialties
-                                     where stspec.Specialty.NameSpecialty.Equals(gstspec.Key)
-                                     where stspec.Priority == 1
-                                     select _mapper.Map<EntrantGetDto>(entrant)).Count()
-                }
-                ).ToList();
+        var ctx = await _contextFactory.CreateDbContextAsync();
+
+        var countEntrantsEachSpecialties = await (from entrant in ctx.Entrants
+                                                  from stspec in entrant.Statement.StatementSpecialties
+                                                  where stspec.Priority == 1
+                                                  group stspec by stspec.Specialty.NameSpecialty into gstspec
+                                                  select new
+                                                  {
+                                                      NameSpecialty = gstspec.Key,
+                                                      CountEntrants = (from entrant in ctx.Entrants
+                                                                       from stspec in entrant.Statement.StatementSpecialties
+                                                                       where stspec.Specialty.NameSpecialty.Equals(gstspec.Key)
+                                                                       where stspec.Priority == 1
+                                                                       select _mapper.Map<EntrantGetDto>(entrant)).Count()
+                                                  }).ToListAsync();
+
+        return countEntrantsEachSpecialties;
     }
 
     /// <summary>
@@ -129,13 +139,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list Entrant with the highest number of marks for 3 subject</returns>
     [HttpGet("TopFiveEntrants")]
-    public List<EntrantGetDto> GetTopFiveEntrants()
+    public async Task<List<EntrantGetDto>> GetTopFiveEntrants()
     {
-        _logger.LogInformation($"Get information about Top 5 Entrants");
+        _logger.LogInformation("Get information about Top 5 Entrants");
 
-        return ((from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                 orderby entrant.EntrantResults.Sum(t => t.Mark) descending
-                 select _mapper.Map<EntrantGetDto>(entrant)).Take(5)).ToList();
+        var ctx = await _contextFactory.CreateDbContextAsync();
+
+        var topFiveEntrants = await ((from entrant in ctx.Entrants
+                                      orderby entrant.EntrantResults.Sum(t => t.Mark) descending
+                                      select _mapper.Map<EntrantGetDto>(entrant)).Take(5)).ToListAsync();
+
+        return topFiveEntrants;
     }
 
     /// <summary>
@@ -143,27 +157,29 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list of list entrants with max mark in each of the subject</returns>
     [HttpGet("EntrantsMaxMarkEachSubject")]
-    public List<List<EntrantWithMaxMarkGet>> GetEntrantsMaxMarkEachSubject()
+    public async Task<List<List<EntrantWithMaxMarkGet>>> GetEntrantsMaxMarkEachSubject()
     {
         _logger.LogInformation("Get information about the entrants who scored the maxmum mark in each of the subject");
-        var subjectList = GetAllSubject();
+        var subjectList = await GetAllSubject();
         var selectedEntrants = new List<List<EntrantWithMaxMarkGet>>();
+
+        var ctx = await _contextFactory.CreateDbContextAsync();
         foreach (var subject in subjectList)
         {
-            selectedEntrants.Add((from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                                  from stspec in entrant.Statement.StatementSpecialties
-                                  from res in entrant.EntrantResults
-                                  where res.Result.NameSubject == subject
-                                  where res.Mark == (from entrant in _admissionCommitteeRepository.EntrantsWithEntrantResult
-                                                     from res in entrant.EntrantResults
-                                                     where res.Result.NameSubject == subject
-                                                     select res.Mark).Max()
-                                  select new EntrantWithMaxMarkGet
-                                  {
-                                      NameEntrant = entrant.FullName,
-                                      NameSpecialty = stspec.Specialty.NameSpecialty,
-                                      MaxMark = res.Mark
-                                  }).ToList());
+            selectedEntrants.Add(await (from entrant in ctx.Entrants
+                                        from stspec in entrant.Statement.StatementSpecialties
+                                        from res in entrant.EntrantResults
+                                        where res.Result.NameSubject == subject
+                                        where res.Mark == (from entrant in ctx.Entrants
+                                                           from res in entrant.EntrantResults
+                                                           where res.Result.NameSubject == subject
+                                                           select res.Mark).Max()
+                                        select new EntrantWithMaxMarkGet
+                                        {
+                                            NameEntrant = entrant.FullName,
+                                            NameSpecialty = stspec.Specialty.NameSpecialty,
+                                            MaxMark = res.Mark
+                                        }).ToListAsync());
         }
 
         return selectedEntrants;

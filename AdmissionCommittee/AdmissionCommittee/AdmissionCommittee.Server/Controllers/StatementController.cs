@@ -1,8 +1,8 @@
 ﻿using AdmissionCommittee.Model;
 using AdmissionCommittee.Server.Dto;
-using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
@@ -11,14 +11,14 @@ public class StatementController : ControllerBase
 {
     private readonly ILogger<StatementController> _logger;
 
-    private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
+    private readonly IDbContextFactory<AdmissionCommitteeContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
-    public StatementController(ILogger<StatementController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public StatementController(ILogger<StatementController> logger, IDbContextFactory<AdmissionCommitteeContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _admissionCommitteeRepository = admissionCommitteeRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -27,10 +27,12 @@ public class StatementController : ControllerBase
     /// </summary>
     /// <returns>IEnumerable type Statement</returns>
     [HttpGet]
-    public IEnumerable<StatementGetDto> Get()
+    public async Task<IEnumerable<StatementGetDto>> Get()
     {
         _logger.LogInformation("Get all Statements");
-        return _admissionCommitteeRepository.Statements.Select(statement => _mapper.Map<StatementGetDto>(statement));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var statements = await ctx.Statements.ToArrayAsync();
+        return _mapper.Map<IEnumerable<StatementGetDto>>(statements);
     }
 
     /// <summary>
@@ -39,9 +41,10 @@ public class StatementController : ControllerBase
     /// <param name="idStatement">id Statement</param>
     /// <returns>Ok with StatementGetDto or NotFound</returns>
     [HttpGet("{idStatement}")]
-    public ActionResult<StatementGetDto> Get(int idStatement)
+    public async Task<ActionResult<StatementGetDto>> Get(int idStatement)
     {
-        var statement = _admissionCommitteeRepository.Statements.FirstOrDefault(statement => statement.IdStatement == idStatement);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var statement = await ctx.Statements.FirstOrDefaultAsync(statement => statement.IdStatement == idStatement);
         if (statement == null)
         {
             _logger.LogInformation("Not found Statement : {idStatement}", idStatement);
@@ -59,10 +62,19 @@ public class StatementController : ControllerBase
     /// </summary>
     /// <param name="statement">new Statement</param>
     [HttpPost]
-    public void Post([FromBody] StatementPostDto statement)
+    public async Task<ActionResult> Post([FromBody] StatementPostDto statement)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var checkEntrant = await ctx.Entrants.FirstOrDefaultAsync(entrant => entrant.IdEntrant == statement.EntrantId);
+        if (checkEntrant == null)
+        {
+            _logger.LogInformation("Can't work post: Entrant doesn't exist with this id {statement.EntrantId}", statement.EntrantId);
+            return BadRequest($"Entrant doesn't exist with this id {statement.EntrantId}");
+        }
         _logger.LogInformation("Create new Statement");
-        _admissionCommitteeRepository.Statements.Add(_mapper.Map<Statement>(statement));
+        await ctx.Statements.AddAsync(_mapper.Map<Statement>(statement));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -72,20 +84,30 @@ public class StatementController : ControllerBase
     /// <param name="statementToPut">Statement that is updated</param>
     /// <returns>Ok or NotFound</returns>
     [HttpPut("{idStatement}")]
-    public IActionResult Put(int idStatement, [FromBody] StatementPostDto statementToPut)
+    public async Task<IActionResult> Put(int idStatement, [FromBody] StatementPostDto statementToPut)
     {
-        var statement = _admissionCommitteeRepository.Statements.FirstOrDefault(statement => statement.IdStatement == idStatement);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var statement = await ctx.Statements.FirstOrDefaultAsync(statement => statement.IdStatement == idStatement);
         if (statement == null)
         {
             _logger.LogInformation("Not found Statement : {idStatement}", idStatement);
             return NotFound($"The Statement does't exist by this id {idStatement}");
         }
-        else
+
+        var checkEntrant = await ctx.Entrants.FirstOrDefaultAsync(entrant => entrant.IdEntrant == statementToPut.EntrantId);
+        if (checkEntrant == null)
         {
-            _logger.LogInformation("Update Statement by id {idStatement}", idStatement);
-            _mapper.Map(statementToPut, statement);
-            return Ok();
+            _logger.LogInformation("Can't work put: Entrant doesn't exist with this id {statementToPut.EntrantId}", statementToPut.EntrantId);
+            return BadRequest($"Entrant doesn't exist with this id {statementToPut.EntrantId}");
         }
+
+        _logger.LogInformation("Update Statement by id {idStatement}", idStatement);
+        _mapper.Map(statementToPut, statement);
+
+        ctx.Statements.Update(_mapper.Map<Statement>(statement));
+        await ctx.SaveChangesAsync();
+        return Ok();
+
     }
 
     /// <summary>
@@ -94,9 +116,12 @@ public class StatementController : ControllerBase
     /// <param name="idStatement">id Statement by delete</param>
     /// <returns>Ok or NotFound</returns>
     [HttpDelete("{idStatement}")]
-    public IActionResult Delete(int idStatement)
+    public async Task<IActionResult> Delete(int idStatement)
     {
-        var statement = _admissionCommitteeRepository.Statements.FirstOrDefault(statement => statement.IdStatement == idStatement);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var statement = await ctx.Statements.Include(statement => statement.Entrant)
+                                            .Include(statement => statement.StatementSpecialties)
+                                            .FirstOrDefaultAsync(statement => statement.IdStatement == idStatement);
         if (statement == null)
         {
             _logger.LogInformation("Not found Statement : {idStatement}", idStatement);
@@ -105,7 +130,8 @@ public class StatementController : ControllerBase
         else
         {
             _logger.LogInformation("Delete Statement by id {idStatement}", idStatement);
-            _admissionCommitteeRepository.Statements.Remove(statement);
+            ctx.Statements.Remove(statement);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

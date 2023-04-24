@@ -1,9 +1,18 @@
+using AdmissionCommittee.Model;
 using AdmissionCommittee.Server;
 using AdmissionCommittee.Server.Repository;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContextFactory<AdmissionCommitteeContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(AdmissionCommittee));
+    optionsBuilder.UseMySQL(connectionString);
+
+});
 
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();

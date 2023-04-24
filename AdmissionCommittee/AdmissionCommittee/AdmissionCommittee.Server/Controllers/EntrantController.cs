@@ -1,8 +1,8 @@
 ﻿using AdmissionCommittee.Model;
 using AdmissionCommittee.Server.Dto;
-using AdmissionCommittee.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdmissionCommittee.Server.Controllers;
 [Route("api/[controller]")]
@@ -11,14 +11,14 @@ public class EntrantController : ControllerBase
 {
     private readonly ILogger<EntrantController> _logger;
 
-    private readonly IAdmissionCommitteeRepository _admissionCommitteeRepository;
+    private readonly IDbContextFactory<AdmissionCommitteeContext> _contextFactory;
 
     private readonly IMapper _mapper;
 
-    public EntrantController(ILogger<EntrantController> logger, IAdmissionCommitteeRepository admissionCommitteeRepository, IMapper mapper)
+    public EntrantController(ILogger<EntrantController> logger, IDbContextFactory<AdmissionCommitteeContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _admissionCommitteeRepository = admissionCommitteeRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -27,10 +27,12 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <returns> IEnumerable type EntrantGetDto </returns>
     [HttpGet]
-    public IEnumerable<EntrantGetDto> Get()
+    public async Task<IEnumerable<EntrantGetDto>> Get()
     {
         _logger.LogInformation("Get all Entrants");
-        return _admissionCommitteeRepository.EntrantsWithStatement.Select(entrant => _mapper.Map<EntrantGetDto>(entrant));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var entrants = await ctx.Entrants.ToArrayAsync();
+        return _mapper.Map<IEnumerable<EntrantGetDto>>(entrants);
     }
 
     /// <summary>
@@ -39,9 +41,10 @@ public class EntrantController : ControllerBase
     /// <param name="idEntrant">id entrant</param>
     /// <returns>Ok with EntrantGetDto or NotFound</returns>
     [HttpGet("{idEntrant}")]
-    public ActionResult<EntrantGetDto> Get(int idEntrant)
+    public async Task<ActionResult<EntrantGetDto>> Get(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var entrant = await ctx.Entrants.FirstOrDefaultAsync(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
@@ -59,10 +62,12 @@ public class EntrantController : ControllerBase
     /// </summary>
     /// <param name="entrant">new Entrant</param>
     [HttpPost]
-    public void Post([FromBody] EntrantPostDto entrant)
+    public async Task Post([FromBody] EntrantPostDto entrant)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new Entrant");
-        _admissionCommitteeRepository.EntrantsWithStatement.Add(_mapper.Map<Entrant>(entrant));
+        await ctx.Entrants.AddAsync(_mapper.Map<Entrant>(entrant));
+        await ctx.SaveChangesAsync();
     }
 
     /// <summary>
@@ -72,9 +77,10 @@ public class EntrantController : ControllerBase
     /// <param name="entrantToPut">Entrant that is updated</param>
     /// <returns>Ok or NotFound</returns>
     [HttpPut("{idEntrant}")]
-    public IActionResult Put(int idEntrant, [FromBody] EntrantPostDto entrantToPut)
+    public async Task<IActionResult> Put(int idEntrant, [FromBody] EntrantPostDto entrantToPut)
     {
-        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var entrant = await ctx.Entrants.FirstOrDefaultAsync(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation("Not found Entrant : {idEntrant}", idEntrant);
@@ -84,6 +90,8 @@ public class EntrantController : ControllerBase
         {
             _logger.LogInformation("Update Entrant by id {idEntrant}", idEntrant);
             _mapper.Map(entrantToPut, entrant);
+            ctx.Entrants.Update(_mapper.Map<Entrant>(entrant));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -94,9 +102,12 @@ public class EntrantController : ControllerBase
     /// <param name="idEntrant">id Entrant for delete</param>
     /// <returns>Ok or NotFound</returns>
     [HttpDelete("{idEntrant}")]
-    public IActionResult Delete(int idEntrant)
+    public async Task<IActionResult> Delete(int idEntrant)
     {
-        var entrant = _admissionCommitteeRepository.EntrantsWithStatement.FirstOrDefault(entrant => entrant.IdEntrant == idEntrant);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var entrant = await ctx.Entrants.Include(entrant => entrant.Statement)
+                                        .Include(entrant => entrant.EntrantResults)
+                                        .FirstOrDefaultAsync(entrant => entrant.IdEntrant == idEntrant);
         if (entrant == null)
         {
             _logger.LogInformation($"Not found Entrant : {idEntrant}");
@@ -105,7 +116,8 @@ public class EntrantController : ControllerBase
         else
         {
             _logger.LogInformation("Delete Entrant by id {idEntrant}", idEntrant);
-            _admissionCommitteeRepository.EntrantsWithStatement.Remove(entrant);
+            ctx.Entrants.Remove(entrant);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

@@ -24,7 +24,7 @@ public class PharmaGroupController : ControllerBase
     /// <summary>
     /// Get info about all pharmaGroups
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all pharmaGroups</returns>
     [HttpGet]
     public IEnumerable<PharmaGroupGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class PharmaGroupController : ControllerBase
     /// <summary>
     /// Get pharmaGroup info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">PharmaGroup Id</param>
+    /// <returns>Return pharmaGroup with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<PharmaGroup> Get(int id)
     {
         var pharmaGroup = _pharmacyCityNetworkRepository.PharmaGroups.FirstOrDefault(pharmaGroup => pharmaGroup.Id == id);
         if (pharmaGroup == null)
         {
-            _logger.LogInformation($"Not found pharmacy: {id}");
+            _logger.LogInformation("Not found pharmacy: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class PharmaGroupController : ControllerBase
     /// <summary>
     /// Post a new pharmaGroup
     /// </summary>
-    /// <param name="pharmaGroup"></param>
+    /// <param name="pharmaGroup">PharmaGroup class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] PharmaGroupPostDto pharmaGroup)
     {
@@ -61,9 +61,9 @@ public class PharmaGroupController : ControllerBase
     /// <summary>
     /// Put pharmaGroup
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="pharmaGroupToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of pharmaGroup which would be changed</param>
+    /// <param name="pharmaGroupToPut">PharmaGroup class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PharmaGroupPostDto pharmaGroupToPut)
     {
@@ -82,15 +82,15 @@ public class PharmaGroupController : ControllerBase
     /// <summary>
     /// Delete a pharmaGroup
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of pharmaGroup which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var pharmaGroup = _pharmacyCityNetworkRepository.PharmaGroups.FirstOrDefault(pharmaGroup => pharmaGroup.Id == id);
         if (pharmaGroup == null)
         {
-            _logger.LogInformation($"Not found pharmacy: {id}");
+            _logger.LogInformation("Not found pharmacy: {id}", id);
             return NotFound();
         }
         else

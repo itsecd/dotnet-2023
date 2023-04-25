@@ -5,7 +5,7 @@ public class ManufacturerGetDto
     /// <summary>
     /// Id of manufacturer
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Manufacturer name
     /// </summary>

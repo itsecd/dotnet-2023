@@ -22,9 +22,9 @@ public class SaleController : ControllerBase
         _mapper = mapper;
     }
     /// <summary>
-    /// Get info about all sale
+    /// Get info about all sales
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all sales</returns>
     [HttpGet]
     public IEnumerable<SaleGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class SaleController : ControllerBase
     /// <summary>
     /// Get sale info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Sale Id</param>
+    /// <returns>Return sale with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<Sale> Get(int id)
     {
         var sale = _pharmacyCityNetworkRepository.Sale.FirstOrDefault(sale => sale.Id == id);
         if (sale == null)
         {
-            _logger.LogInformation($"Not found sale: {id}");
+            _logger.LogInformation("Not found sale: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class SaleController : ControllerBase
     /// <summary>
     /// Post a new sale
     /// </summary>
-    /// <param name="sale"></param>
+    /// <param name="sale">Sale class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] SalePostDto sale)
     {
@@ -61,9 +61,9 @@ public class SaleController : ControllerBase
     /// <summary>
     /// Put sale
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="saleToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of sale which would be changed</param>
+    /// <param name="saleToPut">Sale class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SalePostDto saleToPut)
     {
@@ -82,15 +82,15 @@ public class SaleController : ControllerBase
     /// <summary>
     /// Delete a sale
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of sale which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var sale = _pharmacyCityNetworkRepository.Sale.FirstOrDefault(sale => sale.Id == id);
         if (sale == null)
         {
-            _logger.LogInformation($"Not found sale: {id}");
+            _logger.LogInformation("Not found sale: {id}", id);
             return NotFound();
         }
         else

@@ -5,7 +5,7 @@ public class PharmacyGetDto
     /// <summary>
     /// Id of pharmacy
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Pharmacy name
     /// </summary>

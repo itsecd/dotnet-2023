@@ -5,7 +5,7 @@ public class ProductGetDto
     /// <summary>
     /// Id of product
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Product name
     /// </summary>

@@ -24,7 +24,7 @@ public class ProductPharmacyController : ControllerBase
     /// <summary>
     /// Get info about all productPharmacys
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all productPharmacys</returns>
     [HttpGet]
     public IEnumerable<ProductPharmacyGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class ProductPharmacyController : ControllerBase
     /// <summary>
     /// Get productPharmacy info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">ProductPharmacy Id</param>
+    /// <returns>Return productPharmacy with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<ProductPharmacy> Get(int id)
     {
         var productPharmacy = _pharmacyCityNetworkRepository.ProductPharmacys.FirstOrDefault(productPharmacy => productPharmacy.Id == id);
         if (productPharmacy == null)
         {
-            _logger.LogInformation($"Not found productPharmacy: {id}");
+            _logger.LogInformation("Not found productPharmacy: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class ProductPharmacyController : ControllerBase
     /// <summary>
     /// Post a new productPharmacy
     /// </summary>
-    /// <param name="productPharmacy"></param>
+    /// <param name="productPharmacy">ProductPharmacy class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] ProductPharmacyPostDto productPharmacy)
     {
@@ -61,9 +61,9 @@ public class ProductPharmacyController : ControllerBase
     /// <summary>
     /// Put productPharmacy
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="productPharmacyToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of productPharmacy which would be changed</param>
+    /// <param name="productPharmacyToPut">ProductPharmacy class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPharmacyPostDto productPharmacyToPut)
     {
@@ -82,15 +82,15 @@ public class ProductPharmacyController : ControllerBase
     /// <summary>
     /// Delete a productPharmacy
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of productPharmacy which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var productPharmacy = _pharmacyCityNetworkRepository.ProductPharmacys.FirstOrDefault(productPharmacy => productPharmacy.Id == id);
         if (productPharmacy == null)
         {
-            _logger.LogInformation($"Not found productPharmacy: {id}");
+            _logger.LogInformation("Not found productPharmacy: {id}", id);
             return NotFound();
         }
         else

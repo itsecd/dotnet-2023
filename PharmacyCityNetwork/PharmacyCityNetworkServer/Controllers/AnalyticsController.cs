@@ -23,8 +23,8 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get all products from pharmacy 
     /// </summary>
-    /// <param name="pharmacyId"></param>
-    /// <returns></returns>
+    /// <param name="pharmacyId">Prarmacy Id</param>
+    /// <returns>All products from pharmacy</returns>
     [HttpGet("all-products-from-pharmacy")]
     public ActionResult<IEnumerable<ProductGetDto>> GetAllProductFromPharmacy(uint pharmacyId)
     {
@@ -49,8 +49,8 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get products from pharmacy 
     /// </summary>
-    /// <param name="productId"></param>
-    /// <returns></returns>
+    /// <param name="productId">Product Id</param>
+    /// <returns>Products from pharmacy</returns>
     [HttpGet("products-from-pharmacy")]
     public ActionResult<List<dynamic>> GetProductsFromPharmacy(uint productId)
     {
@@ -82,7 +82,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get average cost for each farmGroup and pharmacy
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Average cost for each farmGroup and pharmacy</returns>
     [HttpGet("farm-group")]
     public ActionResult<List<dynamic>> GetFarmGroup()
     {
@@ -108,9 +108,9 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get top five pharmacy
     /// </summary>
-    /// <param name="dateOne"></param> 
-    /// <param name="dateTwo"></param>
-    /// <returns></returns>
+    /// <param name="dateOne">Beginning of the period</param> 
+    /// <param name="dateTwo">End of the period</param>
+    /// <returns>Top five pharmacy</returns>
     [HttpGet("top-five-pharmacy")]
     public ActionResult<List<dynamic>> GetTopFivePharmacy(DateTime dateOne, DateTime dateTwo)
     {
@@ -124,7 +124,7 @@ public class AnalyticsController : ControllerBase
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys with sales between {dateOne} and {dateTwo}", dateOne, dateTwo);
-            return NotFound("There are no sales between this time interval");
+            return NotFound($"There are no sales between this time interval between {dateOne} and {dateTwo}");
         }
         else
         {
@@ -135,10 +135,10 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get pharmacy from address
     /// </summary>
-    /// <param name="productId"></param> 
-    /// <param name="address"></param>
-    /// <param name="countProduct"></param>
-    /// <returns></returns>
+    /// <param name="productId">Product Id</param> 
+    /// <param name="address">Address pharmacy</param>
+    /// <param name="countProduct">Count Product</param>
+    /// <returns>Pharmacy from address</returns>
     [HttpGet("pharmacy-from-address")]
     public ActionResult<List<dynamic>> GetPharmacyFromAddress(uint productId, string address, int countProduct)
     {
@@ -154,7 +154,7 @@ public class AnalyticsController : ControllerBase
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys {productId}, {address}, {countProduct}", productId, address, countProduct);
-            return NotFound($"There are no pharmacy with these parameters");
+            return NotFound($"There are no pharmacy with these parameters: {productId}, {address}, {countProduct}");
         }
         else
         {
@@ -165,25 +165,24 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get pharmacy with min cost
     /// </summary>
-    /// <param name="productId"></param> 
-    /// <returns></returns>
+    /// <param name="productId">Product Id</param> 
+    /// <returns>Pharmacy with min cost</returns>
     [HttpGet("pharmacy-min-cost")]
     public ActionResult<List<dynamic>> GetPharmacyMinCost(uint productId)
     {
         _logger.LogInformation("Get pharmacy min cost");
-        var minCost = (from product in _pharmacyCityNetworkRepository.Products
-                       from productPharmacy in product.ProductPharmacys
-                       where productPharmacy.Product.Id == productId
-                       select productPharmacy.ProductCost).Min();
         var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        where productPharmacy.Product.Id == productId
-                       && productPharmacy.ProductCost == minCost
+                       && productPharmacy.ProductCost == (from product in _pharmacyCityNetworkRepository.Products
+                                                          from productPharmacy in product.ProductPharmacys
+                                                          where productPharmacy.Product.Id == productId
+                                                          select productPharmacy.ProductCost).Min()
                        select pharmacy.PharmacyName).ToList();
         if (!request.Any())
         {
             _logger.LogInformation("Not found product {productId}", productId);
-            return NotFound($"There are no pharmacy with product");
+            return NotFound($"There are no pharmacy with product {productId}");
         }
         else
         {

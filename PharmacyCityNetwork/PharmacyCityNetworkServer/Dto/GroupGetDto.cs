@@ -5,7 +5,7 @@ public class GroupGetDto
     /// <summary>
     /// Id of group
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Group name
     /// </summary>

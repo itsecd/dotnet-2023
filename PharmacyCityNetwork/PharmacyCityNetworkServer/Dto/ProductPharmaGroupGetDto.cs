@@ -5,7 +5,7 @@ public class ProductPharmaGroupGetDto
     /// <summary>
     /// Id of product pharma group
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Pharma group
     /// </summary>

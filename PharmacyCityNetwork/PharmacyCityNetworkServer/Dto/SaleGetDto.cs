@@ -5,7 +5,7 @@ public class SaleGetDto
     /// <summary>
     /// Id of sale
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Payment choice
     /// </summary>

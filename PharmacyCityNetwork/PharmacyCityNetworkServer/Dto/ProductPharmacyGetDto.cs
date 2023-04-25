@@ -5,15 +5,15 @@ public class ProductPharmacyGetDto
     /// <summary>
     /// Id of productPharmacy
     /// </summary>
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Product count
     /// </summary>
-    public int ProductCount { get; set; } = 0;
+    public int ProductCount { get; set; }
     /// <summary>
     /// Product cost
     /// </summary>
-    public int ProductCost { get; set; } = 0;
+    public int ProductCost { get; set; }
     /// <summary>
     /// Products of product pharmacy
     /// </summary>

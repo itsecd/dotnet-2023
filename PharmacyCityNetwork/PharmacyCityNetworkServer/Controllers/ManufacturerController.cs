@@ -24,7 +24,7 @@ public class ManufacturerController : ControllerBase
     /// <summary>
     /// Get info about all manufacturers
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all manufacturers</returns>
     [HttpGet]
     public IEnumerable<ManufacturerGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class ManufacturerController : ControllerBase
     /// <summary>
     /// Get manufacturer info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Manufacturer Id</param>
+    /// <returns>Return manufacturer with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<Manufacturer> Get(int id)
     {
         var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
         if (manufacturer == null)
         {
-            _logger.LogInformation($"Not found manufacturer: {id}");
+            _logger.LogInformation("Not found manufacturer: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class ManufacturerController : ControllerBase
     /// <summary>
     /// Post a new manufacturer
     /// </summary>
-    /// <param name="manufacturer"></param>
+    /// <param name="manufacturer">Manufacturer class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] ManufacturerPostDto manufacturer)
     {
@@ -61,9 +61,9 @@ public class ManufacturerController : ControllerBase
     /// <summary>
     /// Put manufacturer
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="manufacturerToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of manufacturer which would be changed</param>
+    /// <param name="manufacturerToPut">Manufacturer class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ManufacturerPostDto manufacturerToPut)
     {
@@ -82,15 +82,15 @@ public class ManufacturerController : ControllerBase
     /// <summary>
     /// Delete a manufacturer
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of manufacturer which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
         if (manufacturer == null)
         {
-            _logger.LogInformation($"Not found manufacturer: {id}");
+            _logger.LogInformation("Not found manufacturer: {id}", id);
             return NotFound();
         }
         else

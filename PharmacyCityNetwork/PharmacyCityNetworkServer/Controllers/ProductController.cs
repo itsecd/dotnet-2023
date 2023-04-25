@@ -24,7 +24,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// Get info about all products
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all products</returns>
     [HttpGet]
     public IEnumerable<ProductGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class ProductController : ControllerBase
     /// <summary>
     /// Get product info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Product Id</param>
+    /// <returns>Return product with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<Product> Get(int id)
     {
         var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product: {id}");
+            _logger.LogInformation("Not found product: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// Post a new product
     /// </summary>
-    /// <param name="product"></param>
+    /// <param name="product">Product class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] ProductPostDto product)
     {
@@ -61,9 +61,9 @@ public class ProductController : ControllerBase
     /// <summary>
     /// Put product
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="productToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of product which would be changed</param>
+    /// <param name="productToPut">Product class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
     {
@@ -82,15 +82,15 @@ public class ProductController : ControllerBase
     /// <summary>
     /// Delete a product
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of product which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product: {id}");
+            _logger.LogInformation("Not found product: {id}", id);
             return NotFound();
         }
         else

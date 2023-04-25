@@ -24,7 +24,7 @@ public class PharmacyController : ControllerBase
     /// <summary>
     /// Get info about all pharmacys
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all pharmacys</returns>
     [HttpGet]
     public IEnumerable<PharmacyGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class PharmacyController : ControllerBase
     /// <summary>
     /// Get pharmacy info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Pharmacy Id</param>
+    /// <returns>Return pharmacy with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<Pharmacy> Get(int id)
     {
         var pharmacy = _pharmacyCityNetworkRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
         if (pharmacy == null)
         {
-            _logger.LogInformation($"Not found pharmacy: {id}");
+            _logger.LogInformation("Not found pharmacy: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class PharmacyController : ControllerBase
     /// <summary>
     /// Post a new pharmacy
     /// </summary>
-    /// <param name="pharmacy"></param>
+    /// <param name="pharmacy">Pharmacy class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] PharmacyPostDto pharmacy)
     {
@@ -61,9 +61,9 @@ public class PharmacyController : ControllerBase
     /// <summary>
     /// Put pharmacy
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="pharmacyToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of pharmacy which would be changed</param>
+    /// <param name="pharmacyToPut">Pharmacy class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] PharmacyPostDto pharmacyToPut)
     {
@@ -82,15 +82,15 @@ public class PharmacyController : ControllerBase
     /// <summary>
     /// Delete a pharmacy
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of pharmacy which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var pharmacy = _pharmacyCityNetworkRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
         if (pharmacy == null)
         {
-            _logger.LogInformation($"Not found pharmacy: {id}");
+            _logger.LogInformation("Not found pharmacy: {id}", id);
             return NotFound();
         }
         else

@@ -24,7 +24,7 @@ public class GroupController : ControllerBase
     /// <summary>
     /// Get info about all groups
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Return all groups</returns>
     [HttpGet]
     public IEnumerable<GroupGetDto> Get()
     {
@@ -33,15 +33,15 @@ public class GroupController : ControllerBase
     /// <summary>
     /// Get group info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Group Id</param>
+    /// <returns>Return group with specified id</returns>
     [HttpGet("{id}")]
     public ActionResult<Group> Get(int id)
     {
         var group = _pharmacyCityNetworkRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
-            _logger.LogInformation($"Not found group: {id}");
+            _logger.LogInformation("Not found group: {id}", id);
             return NotFound();
         }
         else
@@ -52,7 +52,7 @@ public class GroupController : ControllerBase
     /// <summary>
     /// Post a new group
     /// </summary>
-    /// <param name="group"></param>
+    /// <param name="group">Group class instance to insert to table</param>
     [HttpPost]
     public void Post([FromBody] GroupPostDto group)
     {
@@ -61,9 +61,9 @@ public class GroupController : ControllerBase
     /// <summary>
     /// Put group
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="groupToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of group which would be changed</param>
+    /// <param name="groupToPut">Group class instance to insert to table</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] GroupPostDto groupToPut)
     {
@@ -82,15 +82,15 @@ public class GroupController : ControllerBase
     /// <summary>
     /// Delete a group
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">An id of group which would be deleted</param>
+    /// <returns>Signalization of success of error</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         var group = _pharmacyCityNetworkRepository.Groups.FirstOrDefault(group => group.Id == id);
         if (group == null)
         {
-            _logger.LogInformation($"Not found group: {id}");
+            _logger.LogInformation("Not found group: {id}", id);
             return NotFound();
         }
         else

@@ -46,7 +46,7 @@ public class QueryController : Controller
                                            .FirstOrDefaultAsync(classType => classType.ClassId == classId);
         if (foundClassType == null)
             return NotFound();
-        return Ok(_mapper.Map<IEnumerable<StudentGetDto>>(foundClassType.Students));
+        return Ok(_mapper.Map<IEnumerable<StudentGetDto>>(foundClassType.Students.OrderBy(student => student.StudentName)));
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class QueryController : Controller
     /// <param name="idSubject"></param>
     /// <returns></returns>
     [HttpGet("CountMaxMinAverage/{idSubject}")]
-    public async Task<ActionResult<IEnumerable<MaxMinAverageMarkDto>>> Get(int idSubject)
+    public async Task<ActionResult<MaxMinAverageMarkDto>> Get(int idSubject)
     {
         _logger.LogInformation("Display information about the maximum, minimum, average mark by Id");
         var ctx = await _dbContextFactory.CreateDbContextAsync();

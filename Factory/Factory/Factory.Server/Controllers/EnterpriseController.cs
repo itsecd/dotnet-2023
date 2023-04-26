@@ -1,14 +1,8 @@
-﻿using Factory.Domain;
+﻿using AutoMapper;
+using Factory.Domain;
 using Factory.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Xml.Linq;
-using System;
-using Factory.Server.Repository;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Org.BouncyCastle.Crypto.Signers;
 
 namespace Factory.Server.Controllers;
 
@@ -29,7 +23,7 @@ public class EnterpriseController : ControllerBase
         _contextFactory = contextFactory;
         _logger = logger;
         _mapper = mapper;
-      //  using var ctx = _contextFactory.CreateDbContext();
+        //  using var ctx = _contextFactory.CreateDbContext();
     }
 
     /// <summary>
@@ -37,11 +31,12 @@ public class EnterpriseController : ControllerBase
     /// </summary>
     /// <returns>enterprises</returns>
     [HttpGet]
-    public IEnumerable<EnterpriseGetDto> Get()
+    public async Task<IEnumerable<EnterpriseGetDto>> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var enterprises = await ctx.Enterprises.ToArrayAsync();
         _logger.LogInformation("Get Enterprises");
-        return _mapper.Map<IEnumerable<EnterpriseGetDto>>(ctx.Enterprises) ;
+        return _mapper.Map<IEnumerable<EnterpriseGetDto>>(enterprises);
     }
 
     /// <summary>
@@ -50,10 +45,10 @@ public class EnterpriseController : ControllerBase
     /// <param name="id"></param>
     /// <returns>enterprise</returns>
     [HttpGet("{id}")]
-    public ActionResult<EnterpriseGetDto> Get(int id)
+    public async Task<ActionResult<EnterpriseGetDto>> Get(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var enterprise = ctx.Find<EnterpriseGetDto>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var enterprise = await ctx.FindAsync<Enterprise>(id);
         if (enterprise == null)
         {
             _logger.LogInformation("Not found enterprise: {id}", id);
@@ -71,12 +66,13 @@ public class EnterpriseController : ControllerBase
     /// </summary>
     /// <param name="enterprise"></param>
     [HttpPost]
-    public void Post([FromBody] EnterprisePostDto enterprise)
+    public async Task<ActionResult> Post([FromBody] EnterprisePostDto enterprise)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        _logger.LogInformation("Post enterprise");
-        ctx.Enterprises.Add(_mapper.Map<Enterprise>(enterprise));
-        ctx.SaveChanges();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation($"POST enterprise ({enterprise.Name})");
+        await ctx.Enterprises.AddAsync(_mapper.Map<Enterprise>(enterprise));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -86,10 +82,10 @@ public class EnterpriseController : ControllerBase
     /// <param name="enterpriseToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] EnterprisePostDto enterpriseToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] EnterprisePostDto enterpriseToPut)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var enterprise = ctx.Find<Enterprise>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var enterprise = await ctx.FindAsync<Enterprise>(id);
         if (enterprise == null)
         {
             _logger.LogInformation($"Not found enterprise: {id}");
@@ -99,7 +95,7 @@ public class EnterpriseController : ControllerBase
         {
             _logger.LogInformation($"Put enterprise with id {id}");
             _mapper.Map(enterpriseToPut, enterprise);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -110,10 +106,10 @@ public class EnterpriseController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var enterprise = ctx.Find<Enterprise>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var enterprise = await ctx.FindAsync<Enterprise>(id);
         if (enterprise == null)
         {
             _logger.LogInformation($"Not found enterprise: {id}");
@@ -123,7 +119,7 @@ public class EnterpriseController : ControllerBase
         {
             _logger.LogInformation($"Get enterprise with id {id}");
             ctx.Enterprises.Remove(enterprise);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

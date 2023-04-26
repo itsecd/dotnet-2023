@@ -1,6 +1,4 @@
-﻿using Factory.Domain;
-
-namespace Factory.Server.Dto;
+﻿namespace Factory.Server.Dto;
 
 /// <summary>
 /// Class describing supplier

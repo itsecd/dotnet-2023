@@ -1,6 +1,6 @@
-﻿using Factory.Domain;
+﻿using AutoMapper;
+using Factory.Domain;
 using Factory.Server.Dto;
-using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,10 +17,13 @@ public class OwnershipFormController : ControllerBase
 
     private readonly ILogger<OwnershipFormController> _logger;
 
-    public OwnershipFormController(IDbContextFactory<FactoryContext> contextFactory, ILogger<OwnershipFormController> logger)
+    private readonly IMapper _mapper;
+
+    public OwnershipFormController(IDbContextFactory<FactoryContext> contextFactory, ILogger<OwnershipFormController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -28,11 +31,11 @@ public class OwnershipFormController : ControllerBase
     /// </summary>
     /// <returns>ownership forms</returns>
     [HttpGet]
-    public IEnumerable<OwnershipForm> Get()
+    public async Task<IEnumerable<OwnershipFormGetDto>> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get Ownership Forms");
-        return ctx.OwnershipForms;
+        return _mapper.Map<IEnumerable<OwnershipFormGetDto>>(ctx.OwnershipForms);
     }
 
     /// <summary>
@@ -41,10 +44,10 @@ public class OwnershipFormController : ControllerBase
     /// <param name="id"></param>
     /// <returns>ownership forms</returns>
     [HttpGet("{id}")]
-    public ActionResult<OwnershipForm> Get(int id)
+    public async Task<ActionResult<OwnershipFormGetDto>> Get(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var ownershipForm = ctx.Find<OwnershipForm>(id); 
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var ownershipForm = await ctx.FindAsync<OwnershipForm>(id);
         if (ownershipForm == null)
         {
             _logger.LogInformation($"Not found ownership form: {id}");
@@ -53,7 +56,7 @@ public class OwnershipFormController : ControllerBase
         else
         {
             _logger.LogInformation($"Get ownership form with id {id}");
-            return Ok(ownershipForm);
+            return Ok(_mapper.Map<OwnershipFormGetDto>(ownershipForm));
         }
     }
 }

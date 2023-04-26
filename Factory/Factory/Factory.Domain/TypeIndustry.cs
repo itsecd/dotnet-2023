@@ -1,4 +1,6 @@
-﻿namespace Factory.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Factory.Domain;
 
 /// <summary>
 /// Class describing type of industry
@@ -8,7 +10,8 @@ public sealed class TypeIndustry
     /// <summary>
     /// Type ID
     /// </summary>
-    public int TypeIndustryID { get; set; } 
+    [Key]
+    public int TypeIndustryID { get; set; } = 0;
 
     /// <summary>
     /// Type name

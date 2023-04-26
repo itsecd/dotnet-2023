@@ -1,5 +1,6 @@
-﻿using Factory.Domain;
-using Factory.Server.Repository;
+﻿using AutoMapper;
+using Factory.Domain;
+using Factory.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,13 +14,16 @@ namespace Factory.Server.Controllers;
 public class TypeIndustryController : ControllerBase
 {
     private readonly IDbContextFactory<FactoryContext> _contextFactory;
-    
+
     private readonly ILogger<TypeIndustryController> _logger;
 
-    public TypeIndustryController(IDbContextFactory<FactoryContext> contextFactory, ILogger<TypeIndustryController> logger)
+    private readonly IMapper _mapper;
+
+    public TypeIndustryController(IDbContextFactory<FactoryContext> contextFactory, ILogger<TypeIndustryController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -27,11 +31,11 @@ public class TypeIndustryController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeIndustry> Get()
+    public IEnumerable<TypeIndustryGetDto> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext(); 
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get IndustryType");
-         return ctx.IndustryTypes;
+        return _mapper.Map<IEnumerable<TypeIndustryGetDto>>(ctx.IndustryTypes);
     }
 
     /// <summary>
@@ -40,19 +44,19 @@ public class TypeIndustryController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeIndustry> Get(int id)
+    public async Task<ActionResult<TypeIndustryGetDto>> Get(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var typeIndustry = ctx.Find<TypeIndustry>(id);
-        if (typeIndustry == null) 
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var typeIndustry = await ctx.FindAsync<TypeIndustry>(id);
+        if (typeIndustry == null)
         {
             _logger.LogInformation($"Not found type industry: {id}");
             return NotFound();
         }
-        else 
-        { 
+        else
+        {
             _logger.LogInformation($"Get Industry Type with id {id}");
-            return Ok(typeIndustry); 
+            return Ok(_mapper.Map<TypeIndustryGetDto>(typeIndustry));
         }
     }
 }

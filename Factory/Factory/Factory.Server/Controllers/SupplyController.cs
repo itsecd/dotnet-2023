@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Factory.Domain;
 using Factory.Server.Dto;
-using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,11 +31,11 @@ public class SupplyController : ControllerBase
     /// </summary>
     /// <returns>supplies</returns>
     [HttpGet]
-    public IEnumerable<Supply> Get()
+    public async Task<IEnumerable<SupplyGetDto>> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get Supplies");
-        return ctx.Supplies;
+        return _mapper.Map<IEnumerable<SupplyGetDto>>(ctx.Supplies);
     }
 
     /// <summary>
@@ -45,10 +44,10 @@ public class SupplyController : ControllerBase
     /// <param name="id"></param>
     /// <returns>supply</returns>
     [HttpGet("{id}")]
-    public ActionResult<Supply> Get(int id)
+    public async Task<ActionResult<Supply>> Get(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supply = ctx.Find<SupplierGetDto>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.FindAsync<Supply>(id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supply: {id}");
@@ -57,7 +56,7 @@ public class SupplyController : ControllerBase
         else
         {
             _logger.LogInformation($"Get supply with id {id}");
-            return Ok(supply);
+            return Ok(_mapper.Map<SupplyGetDto>(supply));
         }
     }
 
@@ -66,12 +65,13 @@ public class SupplyController : ControllerBase
     /// </summary>
     /// <param name="supply"></param>
     [HttpPost]
-    public void Post([FromBody] SupplyPostDto supply)
+    public async Task<ActionResult> Post([FromBody] SupplyPostDto supply)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        _logger.LogInformation("Post supply");
-        ctx.Supplies.Add(_mapper.Map<Supply>(supply));
-        ctx.SaveChanges();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation($"POST supply ({supply.Date})");
+        await ctx.Supplies.AddAsync(_mapper.Map<Supply>(supply));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -81,10 +81,10 @@ public class SupplyController : ControllerBase
     /// <param name="supplyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SupplyPostDto supplyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SupplyPostDto supplyToPut)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supply = ctx.Find<Supply>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.FindAsync<Supply>(id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supply: {id}");
@@ -94,7 +94,7 @@ public class SupplyController : ControllerBase
         {
             _logger.LogInformation($"Put supplier with id {id}");
             _mapper.Map(supplyToPut, supply);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -105,10 +105,10 @@ public class SupplyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supply = ctx.Find<Supply>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.FindAsync<Supply>(id);
         if (supply == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -118,7 +118,7 @@ public class SupplyController : ControllerBase
         {
             _logger.LogInformation($"Get supplier with id {id}");
             ctx.Supplies.Remove(supply);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

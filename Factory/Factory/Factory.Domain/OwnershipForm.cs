@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Factory.Domain;
 
@@ -14,6 +10,7 @@ public class OwnershipForm
     /// <summary>
     /// Ownership Form ID
     /// </summary>
+    [Key]
     public int OwnershipFormID { get; set; } = 0;
 
     /// <summary>

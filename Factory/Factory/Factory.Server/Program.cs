@@ -1,9 +1,8 @@
 using AutoMapper;
 using Factory.Domain;
 using Factory.Server;
-using Microsoft.Extensions.Options;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +16,7 @@ builder.Services.AddDbContextFactory<FactoryContext>(optionsBuilder =>
     var connectionString = builder.Configuration.GetConnectionString(nameof(Factory));
     optionsBuilder.UseMySQL(connectionString);
 });
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

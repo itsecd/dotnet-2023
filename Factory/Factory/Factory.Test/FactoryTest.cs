@@ -218,7 +218,7 @@ public class FactoryTest
     /// TypeIndustry constructor with parameters test
     /// </summary>
     [Fact]
-    public void TypeConstructoryTest() 
+    public void TypeConstructoryTest()
     {
         var type = new TypeIndustry(2, "Транспорт");
         Assert.Equal(2, type.TypeIndustryID);
@@ -244,7 +244,7 @@ public class FactoryTest
     {
         var supply = new Supply(1, 1, 1, "20.01.2023", 3);
         var enterprise = new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>() { supply });
-        
+
         Assert.Equal(1, enterprise.EnterpriseID);
         Assert.Equal("1036300446093", enterprise.RegistrationNumber);
         Assert.Equal(6, enterprise.TypeID);

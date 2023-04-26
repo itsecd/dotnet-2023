@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Factory.Domain;
 using Factory.Server.Dto;
-using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,9 +31,9 @@ public class SupplierController : ControllerBase
     /// </summary>
     /// <returns>suppliers</returns>
     [HttpGet]
-    public IEnumerable<SupplierGetDto> Get()
+    public async Task<IEnumerable<SupplierGetDto>> Get()
     {
-        using var ctx = _contextFactory.CreateDbContext();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get Suppliers");
         return _mapper.Map<IEnumerable<SupplierGetDto>>(ctx.Suppliers);
     }
@@ -45,10 +44,10 @@ public class SupplierController : ControllerBase
     /// <param name="id"></param>
     /// <returns>supplier</returns>
     [HttpGet("{id}")]
-    public ActionResult<SupplierGetDto> Get(int id)
+    public async Task<ActionResult<SupplierGetDto>> Get(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supplier = ctx.Find<SupplierGetDto>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supplier = await ctx.FindAsync<Supplier>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -66,12 +65,13 @@ public class SupplierController : ControllerBase
     /// </summary>
     /// <param name="supplier"></param>
     [HttpPost]
-    public void Post([FromBody] SupplierPostDto supplier)
+    public async Task<ActionResult> Post([FromBody] SupplierPostDto supplier)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        _logger.LogInformation("Post supplier");
-        ctx.Suppliers.Add(_mapper.Map<Supplier>(supplier));
-        ctx.SaveChanges();
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation($"POST supplier ({supplier.Name})");
+        await ctx.Suppliers.AddAsync(_mapper.Map<Supplier>(supplier));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -81,10 +81,10 @@ public class SupplierController : ControllerBase
     /// <param name="supplierToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SupplierPostDto supplierToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SupplierPostDto supplierToPut)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supplier = ctx.Find<Supplier>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supplier = await ctx.FindAsync<Supplier>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -94,7 +94,7 @@ public class SupplierController : ControllerBase
         {
             _logger.LogInformation($"Put supplier with id {id}");
             _mapper.Map(supplierToPut, supplier);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -105,10 +105,10 @@ public class SupplierController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var ctx = _contextFactory.CreateDbContext();
-        var supplier = ctx.Find<Supplier>(id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var supplier = await ctx.FindAsync<Supplier>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -118,7 +118,7 @@ public class SupplierController : ControllerBase
         {
             _logger.LogInformation($"Get supplier with id {id}");
             ctx.Suppliers.Remove(supplier);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

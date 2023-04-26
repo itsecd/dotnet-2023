@@ -1,4 +1,6 @@
-﻿namespace Factory.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Factory.Domain;
 
 /// <summary>
 /// Class describing supplier
@@ -8,6 +10,7 @@ public class Supplier
     /// <summary>
     /// Supplier identifier
     /// </summary>
+    [Key]
     public int SupplierID { get; set; } = 0;
 
     /// <summary>
@@ -28,16 +31,16 @@ public class Supplier
     /// <summary>
     /// List of supplies
     /// </summary>
-    public List<Supply> Supplies { get; set; } = new List<Supply>();
+    public List<Supply> Supplies { get; set; } = null!;
 
     public Supplier() { }
 
-    public Supplier(int supplierID, string name, string address, string phone, List<Supply> supplies)
+    public Supplier(int supplierID, string name, string address, string phone)
     {
         SupplierID = supplierID;
         Name = name;
         Address = address;
         Phone = phone;
-        Supplies = supplies;
+        Supplies = new List<Supply>();
     }
 }

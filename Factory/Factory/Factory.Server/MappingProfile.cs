@@ -9,13 +9,15 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Enterprise, EnterpriseGetDto>();
-        CreateMap<Enterprise, EnterprisePostDto>();
         CreateMap<EnterprisePostDto, Enterprise>();
 
         CreateMap<Supplier, SupplierGetDto>();
-        CreateMap<Supplier, SupplierPostDto>();
         CreateMap<SupplierPostDto, Supplier>();
 
-        CreateMap<Supply, SupplyPostDto>();
+        CreateMap<Supply, SupplyGetDto>();
+        CreateMap<SupplyPostDto, Supply>();
+
+        CreateMap<TypeIndustry, TypeIndustryGetDto>();
+        CreateMap<OwnershipForm, OwnershipFormGetDto>();
     }
 }

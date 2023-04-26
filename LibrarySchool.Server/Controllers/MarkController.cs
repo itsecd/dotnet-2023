@@ -94,13 +94,20 @@ public class MarkController : Controller
     public async Task<IActionResult> Put(int id, [FromBody] MarkPostDto fixedMark)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == fixedMark.StudentId);
+        if (foundStudent == null)
+            return StatusCode(500, $"Not found student id: {fixedMark.StudentId}");
+        var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == fixedMark.SubjectId);
+        if (foundSubject == null)
+            return StatusCode(500, $"Not found subject id: {fixedMark.SubjectId}");
+
         var markToFix = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
         if (fixedMark == null)
         {
             _logger.LogInformation("Not found mark {id}", id);
             return NotFound();
         }
-        _mapper.Map(markToFix, fixedMark);
+        _mapper.Map(fixedMark, markToFix);
         ctx.Update(_mapper.Map<Mark>(markToFix));
         await ctx.SaveChangesAsync();   
         return Ok();

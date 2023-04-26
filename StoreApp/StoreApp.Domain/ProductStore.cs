@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
+using System.ComponentModel.DataAnnotations;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -10,22 +10,27 @@ public class ProductStore
     /// <summary>
     /// CustomerId
     /// </summary>
-    public int Id { get; set; } = -1;
+    [Key] 
+    public int Id { get; set; }
+
     /// <summary>
     /// Product ID
     /// </summary>
-    [ForeignKey("ProductId")]
+    [ForeignKey("Product")]
+    [Required]
     public int ProductId { get; set; } = -1;
 
     /// <summary>
     /// Store ID
     /// </summary>
-    [ForeignKey("StoreId")]
+    [ForeignKey("Store")]
+    [Required]
     public int StoreId { get; set; } = -1;
 
     /// <summary>
     /// Product quantity
     /// </summary>
+    [Required] 
     public int Quantity { get; set; } = 0;
 
     public ProductStore() { }

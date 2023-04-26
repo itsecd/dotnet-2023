@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
+using System.ComponentModel.DataAnnotations;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -10,36 +10,43 @@ public class Product
     /// <summary>
     /// Product ID, corresponds to its barcode
     /// </summary>
-    public int ProductId { get; set; } = -1;
+    [Key]
+    public int ProductId { get; set; }
 
     /// <summary>
     /// Product Group
     /// </summary>
+    [Required] 
     public int ProductGroup { get; set; } = -1;
 
     /// <summary>
     /// Product name
     /// </summary>
+    [Required] 
     public string ProductName { get; set; } = string.Empty;
 
     /// <summary>
     /// Product weight
     /// </summary>
+    [Required] 
     public double ProductWeight { get; set; } = 0.0;
 
     /// <summary>
     /// Product type (piece, weighted) piece -> true | weighted -> false
     /// </summary>
+    [Required] 
     public bool ProductType { get; set; } = false;
 
     /// <summary>
     /// Product price
     /// </summary>
+    [Required] 
     public double ProductPrice { get; set; } = -1.0;
 
     /// <summary>
     /// Product deadline date storage
     /// </summary>
+    [Required] 
     public DateTime DateStorage { get; set; } = new DateTime(1970, 1, 1);
 
     /// <summary>

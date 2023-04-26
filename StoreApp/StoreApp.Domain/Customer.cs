@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
+using System.ComponentModel.DataAnnotations;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -10,15 +10,19 @@ public class Customer
     /// <summary>
     /// ID of customer
     /// </summary>
+    [Key]
     public int CustomerId { get; set; }
+
     /// <summary>
     /// Full name of customer
     /// </summary>
+    [Required]
     public string CustomerName { get; set; } = string.Empty;
 
     /// <summary>
     /// Customer card number
     /// </summary>
+    [Required]
     public int CustomerCardNumber { get; set; } = -1;
 
     /// <summary>

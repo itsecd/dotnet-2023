@@ -6,6 +6,9 @@ using System.Xml.Linq;
 using System;
 using Factory.Server.Repository;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Org.BouncyCastle.Crypto.Signers;
 
 namespace Factory.Server.Controllers;
 
@@ -16,16 +19,17 @@ namespace Factory.Server.Controllers;
 [ApiController]
 public class EnterpriseController : ControllerBase
 {
+    private readonly IDbContextFactory<FactoryContext> _contextFactory;
+
     private readonly ILogger<EnterpriseController> _logger;
 
-    private readonly IFactoryRepository _factoryRepository;
-
     private readonly IMapper _mapper;
-    public EnterpriseController(ILogger<EnterpriseController> logger, IFactoryRepository factoryRepository, IMapper mapper)
+    public EnterpriseController(IDbContextFactory<FactoryContext> contextFactory, ILogger<EnterpriseController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _factoryRepository = factoryRepository;
         _mapper = mapper;
+      //  using var ctx = _contextFactory.CreateDbContext();
     }
 
     /// <summary>
@@ -35,9 +39,9 @@ public class EnterpriseController : ControllerBase
     [HttpGet]
     public IEnumerable<EnterpriseGetDto> Get()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get Enterprises");
-        return _factoryRepository.Enterprises.Select(enterprise =>
-            _mapper.Map<EnterpriseGetDto>(enterprise)) ;
+        return _mapper.Map<IEnumerable<EnterpriseGetDto>>(ctx.Enterprises) ;
     }
 
     /// <summary>
@@ -48,7 +52,8 @@ public class EnterpriseController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<EnterpriseGetDto> Get(int id)
     {
-        var enterprise = _factoryRepository.Enterprises.FirstOrDefault(enterprise => enterprise.EnterpriseID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var enterprise = ctx.Find<EnterpriseGetDto>(id);
         if (enterprise == null)
         {
             _logger.LogInformation("Not found enterprise: {id}", id);
@@ -68,7 +73,10 @@ public class EnterpriseController : ControllerBase
     [HttpPost]
     public void Post([FromBody] EnterprisePostDto enterprise)
     {
-        _factoryRepository.Enterprises.Add(_mapper.Map<Enterprise>(enterprise));
+        using var ctx = _contextFactory.CreateDbContext();
+        _logger.LogInformation("Post enterprise");
+        ctx.Enterprises.Add(_mapper.Map<Enterprise>(enterprise));
+        ctx.SaveChanges();
     }
 
     /// <summary>
@@ -80,7 +88,8 @@ public class EnterpriseController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] EnterprisePostDto enterpriseToPut)
     {
-        var enterprise = _factoryRepository.Enterprises.FirstOrDefault(enterprise => enterprise.EnterpriseID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var enterprise = ctx.Find<Enterprise>(id);
         if (enterprise == null)
         {
             _logger.LogInformation($"Not found enterprise: {id}");
@@ -90,6 +99,7 @@ public class EnterpriseController : ControllerBase
         {
             _logger.LogInformation($"Put enterprise with id {id}");
             _mapper.Map(enterpriseToPut, enterprise);
+            ctx.SaveChanges();
             return Ok();
         }
     }
@@ -102,7 +112,8 @@ public class EnterpriseController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var enterprise = _factoryRepository.Enterprises.FirstOrDefault(enterprise => enterprise.EnterpriseID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var enterprise = ctx.Find<Enterprise>(id);
         if (enterprise == null)
         {
             _logger.LogInformation($"Not found enterprise: {id}");
@@ -111,7 +122,8 @@ public class EnterpriseController : ControllerBase
         else
         {
             _logger.LogInformation($"Get enterprise with id {id}");
-            _factoryRepository.Enterprises.Remove(enterprise);
+            ctx.Enterprises.Remove(enterprise);
+            ctx.SaveChanges();
             return Ok();
         }
     }

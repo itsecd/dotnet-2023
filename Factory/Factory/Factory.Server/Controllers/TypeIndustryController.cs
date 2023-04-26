@@ -1,7 +1,7 @@
 ﻿using Factory.Domain;
 using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Server.Controllers;
 
@@ -12,14 +12,14 @@ namespace Factory.Server.Controllers;
 [ApiController]
 public class TypeIndustryController : ControllerBase
 {
+    private readonly IDbContextFactory<FactoryContext> _contextFactory;
+    
     private readonly ILogger<TypeIndustryController> _logger;
 
-    private readonly IFactoryRepository _factoryRepository;
-
-    public TypeIndustryController(ILogger<TypeIndustryController> logger, IFactoryRepository factoryRepository)
+    public TypeIndustryController(IDbContextFactory<FactoryContext> contextFactory, ILogger<TypeIndustryController> logger)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _factoryRepository = factoryRepository;
     }
 
     /// <summary>
@@ -29,8 +29,9 @@ public class TypeIndustryController : ControllerBase
     [HttpGet]
     public IEnumerable<TypeIndustry> Get()
     {
+        using var ctx = _contextFactory.CreateDbContext(); 
         _logger.LogInformation("Get IndustryType");
-        return _factoryRepository.IndustryTypes;
+         return ctx.IndustryTypes;
     }
 
     /// <summary>
@@ -41,7 +42,8 @@ public class TypeIndustryController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<TypeIndustry> Get(int id)
     {
-        var typeIndustry = _factoryRepository.IndustryTypes.FirstOrDefault(industryType => industryType.TypeID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var typeIndustry = ctx.Find<TypeIndustry>(id);
         if (typeIndustry == null) 
         {
             _logger.LogInformation($"Not found type industry: {id}");

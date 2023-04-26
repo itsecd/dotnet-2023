@@ -221,7 +221,7 @@ public class FactoryTest
     public void TypeConstructoryTest() 
     {
         var type = new TypeIndustry(2, "Транспорт");
-        Assert.Equal(2, type.TypeID);
+        Assert.Equal(2, type.TypeIndustryID);
         Assert.Equal("Транспорт", type.Name);
     }
 
@@ -294,7 +294,7 @@ public class FactoryTest
     public void TDefaultConstructorTest()
     {
         var type = new TypeIndustry();
-        Assert.Equal(0, type.TypeID);
+        Assert.Equal(0, type.TypeIndustryID);
         Assert.Equal(string.Empty, type.Name);
     }
 

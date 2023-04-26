@@ -1,6 +1,8 @@
 ﻿using Factory.Domain;
+using Factory.Server.Dto;
 using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Server.Controllers;
 
@@ -11,14 +13,14 @@ namespace Factory.Server.Controllers;
 [ApiController]
 public class OwnershipFormController : ControllerBase
 {
+    private readonly IDbContextFactory<FactoryContext> _contextFactory;
+
     private readonly ILogger<OwnershipFormController> _logger;
 
-    private readonly IFactoryRepository _factoryRepository;
-
-    public OwnershipFormController(ILogger<OwnershipFormController> logger, IFactoryRepository factoryRepository)
+    public OwnershipFormController(IDbContextFactory<FactoryContext> contextFactory, ILogger<OwnershipFormController> logger)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _factoryRepository = factoryRepository;
     }
 
     /// <summary>
@@ -28,8 +30,9 @@ public class OwnershipFormController : ControllerBase
     [HttpGet]
     public IEnumerable<OwnershipForm> Get()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get Ownership Forms");
-        return _factoryRepository.OwnershipForms;
+        return ctx.OwnershipForms;
     }
 
     /// <summary>
@@ -40,7 +43,8 @@ public class OwnershipFormController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<OwnershipForm> Get(int id)
     {
-        var ownershipForm = _factoryRepository.OwnershipForms.FirstOrDefault(ownershipForm => ownershipForm.OwnershipFormID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var ownershipForm = ctx.Find<OwnershipForm>(id); 
         if (ownershipForm == null)
         {
             _logger.LogInformation($"Not found ownership form: {id}");

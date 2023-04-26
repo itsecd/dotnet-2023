@@ -3,6 +3,7 @@ using Factory.Server.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Factory.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Server.Controllers;
 
@@ -13,15 +14,18 @@ namespace Factory.Server.Controllers;
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
+    private readonly IDbContextFactory<FactoryContext> _contextFactory;
+
     private readonly ILogger<AnalyticsController> _logger;
 
-    private readonly IFactoryRepository _factoryRepository;
+    //private readonly IFactoryRepository _factoryRepository;
 
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IFactoryRepository factoryRepository, IMapper mapper)
+
+    public AnalyticsController(IDbContextFactory<FactoryContext> contextFactory, ILogger<AnalyticsController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _factoryRepository = factoryRepository;
         _mapper = mapper;
     }
 
@@ -32,9 +36,10 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/InformationAboutEnterprise")]
     public IEnumerable<EnterpriseGetDto> GetInformationAboutEnterprise(string registration)
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get information about enterprise");
        
-        var result = from e in _factoryRepository.Enterprises
+        var result = from e in ctx.Enterprises
                      where e.RegistrationNumber == registration
                      select _mapper.Map<EnterpriseGetDto>(e);
 
@@ -48,9 +53,10 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/SuppliersWhoMadeSuppliesOnDate")]
     public IEnumerable<SupplierGetDto> GetSuppliersWhoMadeSupliesOnDate(DateTime date1, DateTime date2)
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get suppliers who made supplies from date1 to date2");
-        var result = from sr in _factoryRepository.Suppliers
-                     join s in _factoryRepository.Supplies on sr.SupplierID equals s.SupplierID
+        var result = from sr in ctx.Suppliers
+                     join s in ctx.Supplies on sr.SupplierID equals s.SupplierID
                      where s.Date > date1 && s.Date < date2
                      orderby sr.Name
                      select _mapper.Map<SupplierGetDto>(sr);
@@ -65,11 +71,11 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/CountOfEnterprisesWorkingWithEverySupplier")]
     public IActionResult GetCountOfEnterprisesWorkingWithEverySupplier()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get count of enterprises working with every supplier");
-
-        var result = from sr in _factoryRepository.Suppliers
-                     join s in _factoryRepository.Supplies on sr.SupplierID equals s.SupplierID
-                     join e in _factoryRepository.Enterprises on s.EnterpriseID equals e.EnterpriseID
+        var result = from sr in ctx.Suppliers
+                     join s in ctx.Supplies on sr.SupplierID equals s.SupplierID
+                     join e in ctx.Enterprises on s.EnterpriseID equals e.EnterpriseID
                      group e by sr.Name into g
                      select new
                      {
@@ -86,10 +92,11 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/CountOfSuppliersForEveryTypeAndOwneship")]
     public IActionResult GetCountOfSuppliersForEveryTypeAndOwnership()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get count of suppliers for every type of industry and owneship form");
-        var result = from sr in _factoryRepository.Suppliers
-                     join s in _factoryRepository.Supplies on sr.SupplierID equals s.SupplierID
-                     join e in _factoryRepository.Enterprises on s.EnterpriseID equals e.EnterpriseID
+        var result = from sr in ctx.Suppliers
+                     join s in ctx.Supplies on sr.SupplierID equals s.SupplierID
+                     join e in ctx.Enterprises on s.EnterpriseID equals e.EnterpriseID
                      group sr by new { e.TypeID, e.OwnershipFormID } into g
                      select new 
                      {
@@ -108,10 +115,10 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/Top5EnterprisesBySupplyCount")]
     public IEnumerable<EnterpriseGetDto> GetTop5EnterprisesBySupplies()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get top-5 enterprises by supply count");
-
-        var result = (from s in _factoryRepository.Supplies
-                      join e in _factoryRepository.Enterprises on s.EnterpriseID equals e.EnterpriseID
+        var result = (from s in ctx.Supplies
+                      join e in ctx.Enterprises on s.EnterpriseID equals e.EnterpriseID
                       group s by e into g
                       orderby g.Count() descending
                       select _mapper.Map<EnterpriseGetDto>(g.Key))
@@ -128,10 +135,10 @@ public class AnalyticsController : ControllerBase
     [HttpGet("/SupplierWhoDeliveredMaxQuantityOfGoodsOnDate")]
     public IEnumerable<SupplierGetDto> GetSupplierWhoDeliveredMaxGoodsOnDate(DateTime date1, DateTime date2)
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get supplier who delivered max quantity of goods from date1 to date2");
-
-        var result = (from s in _factoryRepository.Suppliers
-                      join sp in _factoryRepository.Supplies on s.SupplierID equals sp.SupplierID
+        var result = (from s in ctx.Suppliers
+                      join sp in ctx.Supplies on s.SupplierID equals sp.SupplierID
                       where sp.Date > date1 && sp.Date < date2
                       orderby sp.Quantity descending
                       select _mapper.Map<SupplierGetDto>(s)).Take(1);

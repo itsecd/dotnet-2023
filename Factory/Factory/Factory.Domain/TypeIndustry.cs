@@ -3,12 +3,12 @@
 /// <summary>
 /// Class describing type of industry
 /// </summary>
-public class TypeIndustry
+public sealed class TypeIndustry
 {
     /// <summary>
     /// Type ID
     /// </summary>
-    public int TypeID { get; set; } = 0;
+    public int TypeIndustryID { get; set; } 
 
     /// <summary>
     /// Type name
@@ -19,7 +19,7 @@ public class TypeIndustry
 
     public TypeIndustry(int typeID, string name)
     {
-        TypeID = typeID;
+        TypeIndustryID = typeID;
         Name = name;
     }
 }

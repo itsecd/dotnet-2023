@@ -1,7 +1,9 @@
 using AutoMapper;
+using Factory.Domain;
 using Factory.Server;
-using Factory.Server.Repository;
+using Microsoft.Extensions.Options;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,17 +11,21 @@ var mapperConfig = new MapperConfiguration(config => config.AddProfile(new Mappi
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<IFactoryRepository, FactoryRepository>();
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContextFactory<FactoryContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(Factory));
+    optionsBuilder.UseMySQL(connectionString);
+});
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
+
+
 
 var app = builder.Build();
 

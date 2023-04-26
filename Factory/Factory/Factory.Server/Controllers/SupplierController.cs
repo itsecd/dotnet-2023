@@ -3,6 +3,7 @@ using Factory.Domain;
 using Factory.Server.Dto;
 using Factory.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Factory.Server.Controllers;
 
@@ -13,16 +14,16 @@ namespace Factory.Server.Controllers;
 [ApiController]
 public class SupplierController : ControllerBase
 {
-    private readonly ILogger<SupplierController> _logger;
+    private readonly IDbContextFactory<FactoryContext> _contextFactory;
 
-    private readonly IFactoryRepository _factoryRepository;
+    private readonly ILogger<SupplierController> _logger;
 
     private readonly IMapper _mapper;
 
-    public SupplierController(ILogger<SupplierController> logger, IFactoryRepository factoryRepository, IMapper mapper)
+    public SupplierController(IDbContextFactory<FactoryContext> contextFactory, ILogger<SupplierController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _factoryRepository = factoryRepository;
         _mapper = mapper;
     }
 
@@ -33,9 +34,9 @@ public class SupplierController : ControllerBase
     [HttpGet]
     public IEnumerable<SupplierGetDto> Get()
     {
+        using var ctx = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get Suppliers");
-        return _factoryRepository.Suppliers.Select(supplier =>
-            _mapper.Map<SupplierGetDto>(supplier));
+        return _mapper.Map<IEnumerable<SupplierGetDto>>(ctx.Suppliers);
     }
 
     /// <summary>
@@ -46,7 +47,8 @@ public class SupplierController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<SupplierGetDto> Get(int id)
     {
-        var supplier = _factoryRepository.Suppliers.FirstOrDefault(supplier => supplier.SupplierID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var supplier = ctx.Find<SupplierGetDto>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -66,7 +68,10 @@ public class SupplierController : ControllerBase
     [HttpPost]
     public void Post([FromBody] SupplierPostDto supplier)
     {
-        _factoryRepository.Suppliers.Add(_mapper.Map<Supplier>(supplier));
+        using var ctx = _contextFactory.CreateDbContext();
+        _logger.LogInformation("Post supplier");
+        ctx.Suppliers.Add(_mapper.Map<Supplier>(supplier));
+        ctx.SaveChanges();
     }
 
     /// <summary>
@@ -78,7 +83,8 @@ public class SupplierController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] SupplierPostDto supplierToPut)
     {
-        var supplier = _factoryRepository.Suppliers.FirstOrDefault(supplier => supplier.SupplierID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var supplier = ctx.Find<Supplier>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -88,6 +94,7 @@ public class SupplierController : ControllerBase
         {
             _logger.LogInformation($"Put supplier with id {id}");
             _mapper.Map(supplierToPut, supplier);
+            ctx.SaveChanges();
             return Ok();
         }
     }
@@ -100,7 +107,8 @@ public class SupplierController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var supplier = _factoryRepository.Suppliers.FirstOrDefault(supplier => supplier.SupplierID == id);
+        using var ctx = _contextFactory.CreateDbContext();
+        var supplier = ctx.Find<Supplier>(id);
         if (supplier == null)
         {
             _logger.LogInformation($"Not found supplier: {id}");
@@ -109,7 +117,8 @@ public class SupplierController : ControllerBase
         else
         {
             _logger.LogInformation($"Get supplier with id {id}");
-            _factoryRepository.Suppliers.Remove(supplier); 
+            ctx.Suppliers.Remove(supplier);
+            ctx.SaveChanges();
             return Ok();
         }
     }

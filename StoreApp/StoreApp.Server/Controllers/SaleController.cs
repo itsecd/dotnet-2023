@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
 using StoreApp.Server.Repository;
@@ -10,15 +11,14 @@ namespace StoreApp.Server.Controllers;
 [ApiController]
 public class SaleController : ControllerBase
 {
-
+    private readonly IDbContextFactory<StoreAppContext> _contextFactory;
     private readonly ILogger<SaleController> _logger;
-    private readonly IStoreAppRepository _storeAppRepository;
     private readonly IMapper _mapper;
 
-    public SaleController(ILogger<SaleController> logger, IStoreAppRepository storeAppRepository, IMapper mapper)
+    public SaleController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<SaleController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _storeAppRepository = storeAppRepository;
         _mapper = mapper;
     }
 
@@ -29,10 +29,12 @@ public class SaleController : ControllerBase
     /// JSON Sales
     /// </returns>
     [HttpGet]
-    public IEnumerable<SaleGetDto> Get()
+    public async Task<IEnumerable<SaleGetDto>> Get()
     {
         _logger.LogInformation("GET sales");
-        return _storeAppRepository.Sales.Select(sale => _mapper.Map<SaleGetDto>(sale));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var sales = await ctx.Sales.ToArrayAsync();
+        return _mapper.Map<IEnumerable<SaleGetDto>>(sales);
     }
 
     /// <summary>
@@ -45,9 +47,10 @@ public class SaleController : ControllerBase
     /// JSON Sale
     /// </returns>
     [HttpGet("{saleId}")]
-    public ActionResult<SaleGetDto> Get(int saleId)
+    public async Task<ActionResult<SaleGetDto>> Get(int saleId)
     {
-        var getSale = _storeAppRepository.Sales.FirstOrDefault(sale => sale.SaleId == saleId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var getSale = await ctx.Sales.FirstOrDefaultAsync(sale => sale.SaleId == saleId);
         if (getSale == null)
         {
             _logger.LogInformation($"Not found sale with ID: {saleId}.");
@@ -71,9 +74,11 @@ public class SaleController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
-    public ActionResult Post([FromBody] SalePostDto saleToPost)
+    public async Task<ActionResult> Post([FromBody] SalePostDto saleToPost)
     {
-        _storeAppRepository.Sales.Add(_mapper.Map<Sale>(saleToPost));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Sales.AddAsync(_mapper.Map<Sale>(saleToPost));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"POST sale ({saleToPost.DateSale}, {saleToPost.CustomerId}, {saleToPost.StoreId}, {saleToPost.Sum})");
         return Ok();
     }
@@ -91,9 +96,10 @@ public class SaleController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{saleId}")]
-    public ActionResult Put(int saleId, [FromBody] SalePostDto saleToPut)
+    public async Task<ActionResult> Put(int saleId, [FromBody] SalePostDto saleToPut)
     {
-        var sale = _storeAppRepository.Sales.FirstOrDefault(x => x.SaleId == saleId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var sale = await ctx.Sales.FirstOrDefaultAsync(x => x.SaleId == saleId);
         if (sale == null)
         {
             _logger.LogInformation($"Not found sale with ID: {saleId}");
@@ -104,6 +110,7 @@ public class SaleController : ControllerBase
             _logger.LogInformation($"PUT sale with id {saleId} ({saleToPut.DateSale}->{saleToPut.DateSale}, {saleToPut.CustomerId}->{saleToPut.CustomerId}, " +
                 $"{saleToPut.StoreId}->{saleToPut.StoreId}, {saleToPut.Sum}->{saleToPut.Sum})");
             _mapper.Map(saleToPut, sale);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -118,9 +125,10 @@ public class SaleController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{saleId}")]
-    public IActionResult Delete(int saleId)
+    public async Task<IActionResult> Delete(int saleId)
     {
-        var sale = _storeAppRepository.Sales.FirstOrDefault(x => x.SaleId == saleId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var sale = await ctx.Sales.FirstOrDefaultAsync(x => x.SaleId == saleId);
         if (sale == null)
         {
             _logger.LogInformation($"Not found sale with ID: {saleId}");
@@ -129,7 +137,8 @@ public class SaleController : ControllerBase
         else
         {
             _logger.LogInformation($"DELETE sale with ID: {saleId}");
-            _storeAppRepository.Sales.Remove(sale);
+            ctx.Sales.Remove(sale);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
 using StoreApp.Server.Repository;
@@ -10,15 +12,14 @@ namespace StoreApp.Server.Controllers;
 [ApiController]
 public class StoreController : ControllerBase
 {
-
+    private readonly IDbContextFactory<StoreAppContext> _contextFactory;
     private readonly ILogger<StoreController> _logger;
-    private readonly IStoreAppRepository _storeAppRepository;
     private readonly IMapper _mapper;
 
-    public StoreController(ILogger<StoreController> logger, IStoreAppRepository storeAppRepository, IMapper mapper)
+    public StoreController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<StoreController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _storeAppRepository = storeAppRepository;
         _mapper = mapper;
     }
 
@@ -29,10 +30,12 @@ public class StoreController : ControllerBase
     /// JSON stores
     /// </returns>
     [HttpGet]
-    public IEnumerable<StoreGetDto> Get()
+    public async Task<IEnumerable<StoreGetDto>> Get()
     {
         _logger.LogInformation("Get stores");
-        return _storeAppRepository.Stores.Select(store => _mapper.Map<StoreGetDto>(store));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var stores = await ctx.Stores.ToArrayAsync();
+        return _mapper.Map<IEnumerable<StoreGetDto>>(stores);
     }
 
     /// <summary>
@@ -45,9 +48,10 @@ public class StoreController : ControllerBase
     /// JSON store
     /// </returns>
     [HttpGet("{storeId}")]
-    public ActionResult<StoreGetDto> Get(int storeId)
+    public async Task<ActionResult<StoreGetDto>> Get(int storeId)
     {
-        var getStore = _storeAppRepository.Stores.FirstOrDefault(store => store.StoreId == storeId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var getStore = await ctx.Stores.FirstOrDefaultAsync(store => store.StoreId == storeId);
         if (getStore == null)
         {
             _logger.LogInformation($"Not found store with ID: {storeId}.");
@@ -71,9 +75,11 @@ public class StoreController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
-    public ActionResult Post([FromBody] StorePostDto storeToPost)
+    public async Task<ActionResult> Post([FromBody] StorePostDto storeToPost)
     {
-        _storeAppRepository.Stores.Add(_mapper.Map<Store>(storeToPost));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Stores.AddAsync(_mapper.Map<Store>(storeToPost));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"POST store ({storeToPost.StoreName},  {storeToPost.StoreAddress})");
         return Ok();
     }
@@ -91,9 +97,10 @@ public class StoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{storeId}")]
-    public ActionResult Put(int storeId, [FromBody] StorePostDto storeToPut)
+    public async Task<ActionResult> Put(int storeId, [FromBody] StorePostDto storeToPut)
     {
-        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == storeId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var store = await ctx.Stores.FirstOrDefaultAsync(x => x.StoreId == storeId);
         if (store == null)
         {
             _logger.LogInformation($"Not found store with ID: {storeId}");
@@ -103,6 +110,7 @@ public class StoreController : ControllerBase
         {
             _logger.LogInformation($"PUT store with ID: {storeId} ({store.StoreName}->{storeToPut.StoreName}, {store.StoreAddress}->{storeToPut.StoreAddress})");
             _mapper.Map(storeToPut, store);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -117,9 +125,10 @@ public class StoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{storeId}")]
-    public IActionResult Delete(int storeId)
+    public async Task<IActionResult> Delete(int storeId)
     {
-        var store = _storeAppRepository.Stores.FirstOrDefault(x => x.StoreId == storeId);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var store = await ctx.Stores.FirstOrDefaultAsync(x => x.StoreId == storeId);
         if (store == null)
         {
             _logger.LogInformation($"Not found store with ID: {storeId}");
@@ -128,7 +137,8 @@ public class StoreController : ControllerBase
         else
         {
             _logger.LogInformation($"DELETE store with ID: {storeId}");
-            _storeAppRepository.Stores.Remove(store);
+            ctx.Stores.Remove(store);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

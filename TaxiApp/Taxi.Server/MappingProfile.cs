@@ -14,6 +14,7 @@ public class MappingProfile : Profile
         CreateMap<PassengerPostDto, Passenger>();
         CreateMap<Passenger, PassengerGetDto>();
         CreateMap<RidePostDto, Ride>()
-            .ForMember(ride => ride.RideTime, s => s.MapFrom(ride => TimeSpan.FromSeconds(ride.RideTime)));
+            .ForMember(ride => ride.RideTime, s => 
+                s.MapFrom(ride => TimeSpan.FromSeconds(ride.RideTime)));
     }
 }

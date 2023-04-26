@@ -1,5 +1,7 @@
 using System.Reflection;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Taxi.Domain;
 using Taxi.Server;
 using Taxi.Server.Repository;
 
@@ -12,6 +14,10 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<ITaxiRepository, TaxiRepository>();
 
 builder.Services.AddControllers();
+
+var connectionString = builder.Configuration.GetConnectionString(nameof(Taxi));
+builder.Services.AddDbContextFactory<TaxiContext>(optionsBuilder => optionsBuilder.UseMySQL(connectionString));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

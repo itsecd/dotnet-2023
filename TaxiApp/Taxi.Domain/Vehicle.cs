@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Taxi.Domain;
 
 /// <summary>
@@ -8,16 +11,21 @@ public class Vehicle
     /// <summary>
     ///     Id - unique identifier of the vehicle
     /// </summary>
+    [Key]
     public ulong Id { get; set; }
 
     /// <summary>
     ///     RegistrationCarPlate - a sequence of letters and numbers used to identify the vehicle in real life
     /// </summary>
+    [Required]
+    [MaxLength(9)]
     public string RegistrationCarPlate { get; set; } = string.Empty;
 
     /// <summary>
     ///     Colour - property that stores the colour of the vehicle
     /// </summary>
+    [Required]
+    [MaxLength(20)]
     public string Colour { get; set; } = string.Empty;
 
     /// <summary>
@@ -29,6 +37,8 @@ public class Vehicle
     ///     DriverId - id of the driver who drives this vehicle
     /// </summary>
     public ulong DriverId { get; set; }
+    [ForeignKey("DriverId")]
+    public Driver Driver { get; set; } = null!;
 
     /// <summary>
     ///     Rides - a list of the current vehicle`s rides

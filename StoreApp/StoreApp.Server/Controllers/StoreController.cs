@@ -30,6 +30,7 @@ public class StoreController : ControllerBase
     /// JSON stores
     /// </returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<StoreGetDto>> Get()
     {
         _logger.LogInformation("Get stores");
@@ -48,6 +49,8 @@ public class StoreController : ControllerBase
     /// JSON store
     /// </returns>
     [HttpGet("{storeId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<StoreGetDto>> Get(int storeId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -75,6 +78,7 @@ public class StoreController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] StorePostDto storeToPost)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -97,6 +101,8 @@ public class StoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{storeId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Put(int storeId, [FromBody] StorePostDto storeToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -125,6 +131,8 @@ public class StoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{storeId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int storeId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();

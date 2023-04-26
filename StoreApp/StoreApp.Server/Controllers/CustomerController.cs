@@ -28,6 +28,7 @@ public class CustomerController : ControllerBase
     /// JSON customers
     /// </returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<CustomerGetDto>> Get()
     {
         _logger.LogInformation("GET customers");
@@ -46,6 +47,8 @@ public class CustomerController : ControllerBase
     /// JSON customer
     /// </returns>
     [HttpGet("{customerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CustomerGetDto>> Get(int customerId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -73,6 +76,7 @@ public class CustomerController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] CustomerPostDto customerToPost)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -95,6 +99,8 @@ public class CustomerController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{customerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Put(int customerId, [FromBody] CustomerPostDto customerToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -123,6 +129,8 @@ public class CustomerController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{customerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int customerId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();

@@ -27,6 +27,7 @@ public class ProductStoreController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<ProductStoreGetDto>> Get()
     {
         _logger.LogInformation("GET productStores");
@@ -45,6 +46,8 @@ public class ProductStoreController : ControllerBase
     /// JSON ProductStore
     /// </returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProductStoreGetDto>> Get(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -73,6 +76,8 @@ public class ProductStoreController : ControllerBase
     /// JSON ProductStore
     /// </returns>
     [HttpGet("{productId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProductStoreGetDto>> GetByProduct(int productId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -100,6 +105,8 @@ public class ProductStoreController : ControllerBase
     /// JSON ProductStore
     /// </returns>
     [HttpGet("{storeId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProductStoreGetDto>> GetByStore(int storeId)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -127,6 +134,7 @@ public class ProductStoreController : ControllerBase
     /// Code-200
     /// </returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] ProductStorePostDto productStoreToPost)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -149,6 +157,8 @@ public class ProductStoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Put(int id, [FromBody] ProductStorePostDto productStoreToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -177,6 +187,8 @@ public class ProductStoreController : ControllerBase
     /// Code-200 or Code-404
     /// </returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();

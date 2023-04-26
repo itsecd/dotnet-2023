@@ -119,6 +119,9 @@ public class StudentController : ControllerBase
             _logger.LogInformation("Not found student id: {id}", id);
             return NotFound();
         }
+        var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
+        if (founClassType == null)
+            return StatusCode(500, $"Not found class id: {studentPostDto.ClassId}");
         _mapper.Map(studentPostDto, foundStudent);
         ctx.Students.Update(_mapper.Map<Student>(foundStudent));
         await ctx.SaveChangesAsync();

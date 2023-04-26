@@ -40,11 +40,11 @@ public class WarehouseCellsController : ControllerBase
     ///     Return all warehouse cells
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<WarehouseCellsGetDto>> Get()
+    public async Task<IEnumerable<WarehouseCellsDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get cells");
-        return _mapper.Map<IEnumerable<WarehouseCellsGetDto>>(await ctx.Cells.ToListAsync());
+        return _mapper.Map<IEnumerable<WarehouseCellsDto>>(await ctx.Cells.ToListAsync());
     }
     /// <summary>
     ///     Get by id method for warehouse cells table
@@ -53,8 +53,8 @@ public class WarehouseCellsController : ControllerBase
     ///     Return cells with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<WarehouseCellsGetDto>> Get(int id)
-    {
+    public async Task<ActionResult<WarehouseCellsDto>> Get(int id)
+    {  
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get cells with id {id}");
         var cell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
@@ -65,7 +65,7 @@ public class WarehouseCellsController : ControllerBase
         }
         else
         {
-            return Ok(_mapper.Map<WarehouseCellsGetDto>(cell));
+            return Ok(_mapper.Map<WarehouseCellsDto>(cell));
         }
     }
     /// <summary>
@@ -73,7 +73,7 @@ public class WarehouseCellsController : ControllerBase
     /// </summary>
     /// <param name="cell"> Warehouse cell class instance to insert to table </param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] WarehouseCellsPostDto cell)
+    public async Task<IActionResult> Post([FromBody] WarehouseCellsDto cell)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post cell");
@@ -90,7 +90,7 @@ public class WarehouseCellsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] WarehouseCellsPostDto cellToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] WarehouseCellsDto cellToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put cell with id {0}", id);

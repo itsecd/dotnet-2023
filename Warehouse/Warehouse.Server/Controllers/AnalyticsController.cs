@@ -73,14 +73,14 @@ public class AnalyticsController : ControllerBase
     ///     Warehouse cells and their content
     /// </returns>
     [HttpGet("warehouse-cells-and-their-content")]
-    public async Task<ActionResult<IEnumerable<WarehouseCellsGetDto>>> WarehouseCellsAndTheirContent()
+    public async Task<ActionResult<IEnumerable<WarehouseCellsDto>>> WarehouseCellsAndTheirContent()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Warehouse cells and their content");
         var request = (from goods in ctx.Products
                        from cell in goods.WarehouseCell
                        orderby cell.CellNumber
-                       select _mapper.Map<WarehouseCellsGetDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount})).ToListAsync();
+                       select _mapper.Map<WarehouseCellsDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount})).ToListAsync();
         return Ok(request);
     }
     /// <summary>

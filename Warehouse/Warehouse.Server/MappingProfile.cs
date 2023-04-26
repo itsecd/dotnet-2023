@@ -11,9 +11,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<WarehouseCells, WarehouseCellsGetDto>();
-        CreateMap<WarehouseCells, WarehouseCellsPostDto>();
-        CreateMap<WarehouseCellsPostDto, WarehouseCells>();
+        CreateMap<WarehouseCells, WarehouseCellsDto>();
+        CreateMap<WarehouseCellsDto, WarehouseCells>();
 
         CreateMap<Supply, SupplyGetDto>();
         CreateMap<Supply, SupplyPostDto>();

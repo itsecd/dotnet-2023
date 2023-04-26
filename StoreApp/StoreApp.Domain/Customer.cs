@@ -10,7 +10,6 @@ public class Customer
     /// <summary>
     /// ID of customer
     /// </summary>
-    [ForeignKey("Sale")]
     public int CustomerId { get; set; }
     /// <summary>
     /// Full name of customer

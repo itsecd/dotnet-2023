@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -30,7 +30,7 @@ public class ProductSale
     /// <summary>
     /// Product quantity
     /// </summary>
-    [Required] 
+    [Required]
     public int Quantity { get; set; } = 0;
 
     public ProductSale() { }

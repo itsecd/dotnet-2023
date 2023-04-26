@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
-using StoreApp.Server.Repository;
 
 namespace SaleApp.Server.Controllers;
 

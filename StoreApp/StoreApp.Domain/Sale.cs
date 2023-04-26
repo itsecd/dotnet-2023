@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -16,7 +16,7 @@ public class Sale
     /// <summary>
     /// Date and time of sale
     /// </summary>
-    [Required] 
+    [Required]
     public DateTime DateSale { get; set; } = new DateTime(1970, 1, 1);
 
     /// <summary>
@@ -36,7 +36,7 @@ public class Sale
     /// <summary>
     /// Purchase amount
     /// </summary>
-    [Required] 
+    [Required]
     public double Sum { get; set; } = 0.0;
 
     /// <summary>

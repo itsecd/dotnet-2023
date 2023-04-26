@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
-using StoreApp.Server.Repository;
 
 namespace StoreApp.Server.Controllers;
 

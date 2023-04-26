@@ -12,7 +12,7 @@ public class CustomerController : ControllerBase
 {
     private readonly IDbContextFactory<StoreAppContext> _contextFactory;
     private readonly ILogger<CustomerController> _logger;
-    private readonly IMapper _mapper;  
+    private readonly IMapper _mapper;
 
     public CustomerController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<CustomerController> logger, IMapper mapper)
     {

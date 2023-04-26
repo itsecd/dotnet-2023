@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -10,19 +9,19 @@ public class Store
     /// <summary>
     /// Store ID
     /// </summary>
-    [Key] 
+    [Key]
     public int StoreId { get; set; }
 
     /// <summary>
     /// Store name
     /// </summary>
-    [Required] 
+    [Required]
     public string StoreName { get; set; } = string.Empty;
 
     /// <summary>
     /// Store address
     /// </summary>
-    [Required] 
+    [Required]
     public string StoreAddress { get; set; } = string.Empty;
 
     /// <summary>

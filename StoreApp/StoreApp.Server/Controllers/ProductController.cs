@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
-using StoreApp.Server.Repository;
 
 namespace StoreApp.Server.Controllers;
 
@@ -18,7 +17,7 @@ public class ProductController : ControllerBase
     public ProductController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<ProductController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
-        _logger = logger;  
+        _logger = logger;
         _mapper = mapper;
     }
 

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace StoreApp.Domain;
 
 /// <summary>
@@ -16,37 +15,37 @@ public class Product
     /// <summary>
     /// Product Group
     /// </summary>
-    [Required] 
+    [Required]
     public int ProductGroup { get; set; } = -1;
 
     /// <summary>
     /// Product name
     /// </summary>
-    [Required] 
+    [Required]
     public string ProductName { get; set; } = string.Empty;
 
     /// <summary>
     /// Product weight
     /// </summary>
-    [Required] 
+    [Required]
     public double ProductWeight { get; set; } = 0.0;
 
     /// <summary>
     /// Product type (piece, weighted) piece -> true | weighted -> false
     /// </summary>
-    [Required] 
+    [Required]
     public bool ProductType { get; set; } = false;
 
     /// <summary>
     /// Product price
     /// </summary>
-    [Required] 
+    [Required]
     public double ProductPrice { get; set; } = -1.0;
 
     /// <summary>
     /// Product deadline date storage
     /// </summary>
-    [Required] 
+    [Required]
     public DateTime DateStorage { get; set; } = new DateTime(1970, 1, 1);
 
     /// <summary>

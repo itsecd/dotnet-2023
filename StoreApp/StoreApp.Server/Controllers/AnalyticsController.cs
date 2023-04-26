@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StoreApp.Domain;
 using StoreApp.Server.Dto;
 using StoreApp.Server.Repository;
 
@@ -9,14 +11,14 @@ namespace StoreApp.Server.Controllers;
 [ApiController]
 public class AnalyticsController : Controller
 {
+    private readonly IDbContextFactory<StoreAppContext> _contextFactory;
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly IStoreAppRepository _storeAppRepository;
     private readonly IMapper _mapper;
 
-    public AnalyticsController(ILogger<AnalyticsController> logger, IStoreAppRepository storeAppRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<StoreAppContext> contextFactory, ILogger<AnalyticsController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _storeAppRepository = storeAppRepository;
         _mapper = mapper;
     }
 
@@ -24,32 +26,23 @@ public class AnalyticsController : Controller
     /// Display information about all products in a given store
     /// </summary>
     /// <param name="storeId">
-    /// CustomerId store
+    /// StoreId
     /// </param>
     /// <returns>
     /// JSON products
     /// </returns>
     [HttpGet("/ProductsInSpecifiedStore/{storeId}")]
-    public IActionResult ProductsInSpecifiedStore(int storeId)
+    public async Task<IActionResult> ProductsInSpecifiedStore(int storeId)
     {
-        var getStore = _storeAppRepository.Stores.FirstOrDefault(store => store.StoreId == storeId);
-        if (getStore == null)
-        {
-            _logger.LogInformation($"Not found store with ID: {storeId}.");
-            return NotFound();
-        }
-        else
-        {
-            _logger.LogInformation($"Get information about products in store with ID: {storeId}");
-            var result = from ps in _storeAppRepository.ProductStores
-                         join p in _storeAppRepository.Products on ps.ProductId equals p.ProductId
-                         join s in _storeAppRepository.Stores on ps.StoreId equals s.StoreId
-                         where s.StoreId == storeId && ps.Quantity > 0
-                         select _mapper.Map<ProductGetDto>(p);
+        _logger.LogInformation($"Get information about products in store with ID: {storeId}");
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await (from ps in ctx.ProductStores
+                        join p in ctx.Products on ps.ProductId equals p.ProductId
+                        join s in ctx.Stores on ps.StoreId equals s.StoreId
+                        where s.StoreId == storeId && ps.Quantity > 0
+                        select _mapper.Map<ProductGetDto>(p)).ToListAsync();
 
-            return Ok(result);
-        }
-
+        return Ok(result);
     }
 
 
@@ -57,31 +50,23 @@ public class AnalyticsController : Controller
     /// For a given product, display a list of stores where it is located in availability
     /// </summary>
     /// <param name="productId">
-    /// CustomerId product
+    /// ProductId
     /// </param>
     /// <returns>
     /// JSON stores
     /// </returns>
     [HttpGet("/StoresWithProduct/{productId}")]
-    public IActionResult StoresWithProduct(int productId)
+    public async Task<IActionResult> StoresWithProduct(int productId)
     {
-        var getProduct = _storeAppRepository.Products.FirstOrDefault(product => product.ProductId == productId);
-        if (getProduct == null)
-        {
-            _logger.LogInformation($"Not found product with ID: {productId}.");
-            return NotFound();
-        }
-        else
-        {
-            _logger.LogInformation($"Get list of stores where product with ID {productId} is located in availability");
-            var result = from ps in _storeAppRepository.ProductStores
-                         join p in _storeAppRepository.Products on ps.ProductId equals p.ProductId
-                         join s in _storeAppRepository.Stores on ps.StoreId equals s.StoreId
-                         where ps.Quantity > 0 && p.ProductId == productId
-                         select _mapper.Map<StoreGetDto>(s);
+        _logger.LogInformation($"Get list of stores where product with ID {productId} is located in availability");
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await (from ps in ctx.ProductStores
+                        join p in ctx.Products on ps.ProductId equals p.ProductId
+                        join s in ctx.Stores on ps.StoreId equals s.StoreId
+                        where ps.Quantity > 0 && p.ProductId == productId
+                        select _mapper.Map<StoreGetDto>(s)).ToListAsync();
 
-            return Ok(result);
-        }
+        return Ok(result);
     }
 
 
@@ -92,19 +77,20 @@ public class AnalyticsController : Controller
     /// JSON (Store, Avg, Category)
     /// </returns>
     [HttpGet("/InfomationAboutAvgPrice")]
-    public IActionResult InfomationAboutAvgPrice()
+    public async Task<IActionResult> InfomationAboutAvgPrice()
     {
         _logger.LogInformation("Get information about the average cost of goods of each product group for each store.");
-        var result = from ps in _storeAppRepository.ProductStores
-                     join p in _storeAppRepository.Products on ps.ProductId equals p.ProductId
-                     join s in _storeAppRepository.Stores on ps.StoreId equals s.StoreId
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await (from ps in ctx.ProductStores
+                     join p in ctx.Products on ps.ProductId equals p.ProductId
+                     join s in ctx.Stores on ps.StoreId equals s.StoreId
                      group new { p, s } by new { p.ProductGroup, s.StoreId } into grp
                      select new
                      {
                          StoreId = grp.Key.StoreId,
                          ProductCategory = grp.Key.ProductGroup,
                          AveragePrice = grp.Average(x => x.p.ProductPrice)
-                     };
+                     }).ToListAsync();
 
         return Ok(result);
     }
@@ -117,12 +103,13 @@ public class AnalyticsController : Controller
     /// JSON sales
     /// </returns>
     [HttpGet("/TopSales")]
-    public IActionResult TopSales()
+    public async Task<IActionResult> TopSales()
     {
         _logger.LogInformation("Get top 5 purchases by total sale amount.");
-        var result = ((from sa in _storeAppRepository.Sales
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await ((from sa in ctx.Sales
                        orderby sa.Sum descending
-                       select sa).Take(5)).ToList();
+                       select sa).Take(5)).ToListAsync();
         return Ok(result);
     }
 
@@ -134,12 +121,13 @@ public class AnalyticsController : Controller
     /// JSON store-product
     /// </returns>
     [HttpGet("/ExpiredProducts")]
-    public IActionResult ExpiredProducts()
+    public async Task<IActionResult> ExpiredProducts()
     {
         _logger.LogInformation("Display all information about products that exceed the storage date limit, indicating the store");
-        var result = from ps in _storeAppRepository.ProductStores
-                     join p in _storeAppRepository.Products on ps.ProductId equals p.ProductId
-                     join s in _storeAppRepository.Stores on ps.StoreId equals s.StoreId
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await (from ps in ctx.ProductStores
+                     join p in ctx.Products on ps.ProductId equals p.ProductId
+                     join s in ctx.Stores on ps.StoreId equals s.StoreId
                      where p.DateStorage < DateTime.Now
                      select new
                      {
@@ -152,7 +140,7 @@ public class AnalyticsController : Controller
                          ProductType = p.ProductType,
                          ProductPrice = p.ProductPrice,
                          DateStorage = p.DateStorage
-                     };
+                     }).ToListAsync();
         return Ok(result);
     }
 
@@ -167,7 +155,7 @@ public class AnalyticsController : Controller
     /// JSON store-amount
     /// </returns>
     [HttpGet("/StoresWithAmountMoreThen/{minSalesAmount}")]
-    public IActionResult StoresWithAmountMoreThen(double minSalesAmount)
+    public async Task<IActionResult> StoresWithAmountMoreThen(double minSalesAmount)
     {
         if (minSalesAmount.GetType() != typeof(double))
         {
@@ -176,8 +164,9 @@ public class AnalyticsController : Controller
         else
         {
             _logger.LogInformation($"Display a list of stores that sold goods for the month amount more then {minSalesAmount}");
+            using var ctx = await _contextFactory.CreateDbContextAsync();
             DateTime startDate = DateTime.Now.AddMonths(-2);
-            var result = from sale in _storeAppRepository.Sales
+            var result = await (from sale in ctx.Sales
                          where sale.DateSale >= startDate
                          group sale by sale.StoreId into storeGroup
                          select new
@@ -186,7 +175,7 @@ public class AnalyticsController : Controller
                              TotalSales = storeGroup.Sum(sale => sale.Sum),
                          } into storeSales
                          where storeSales.TotalSales >= minSalesAmount
-                         select new { StoreId = storeSales.StoreId, TotalSales = storeSales.TotalSales };
+                         select new { StoreId = storeSales.StoreId, TotalSales = storeSales.TotalSales }).ToListAsync();
             return Ok(result);
         }
     }

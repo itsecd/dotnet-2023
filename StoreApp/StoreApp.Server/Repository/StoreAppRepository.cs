@@ -78,7 +78,7 @@ public class StoreAppRepository : IStoreAppRepository
             new Sale(4, "18.02.2023", 2, 2, 284.0),
             new Sale(5, "16.02.2023", 3, 3, 241.0),
             new Sale(6, "28.02.2023", 4, 1, 364.0),
-            new Sale(7, "01.03.2023", 4, 0, 284.0),
+            new Sale(7, "01.03.2023", 4, 0, 284.0)
         };
 
     }

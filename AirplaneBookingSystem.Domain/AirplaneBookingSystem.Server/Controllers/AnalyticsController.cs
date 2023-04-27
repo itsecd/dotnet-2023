@@ -26,62 +26,81 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>All flight</returns>
     [HttpGet("all-flight")]
-    public IEnumerable<FlightGetDto> GetAllFlight()
+    public ActionResult<IEnumerable<FlightGetDto>> GetAllFlight()
     {
         _logger.LogInformation("Get all flight");
         var request = (from flight in _airplaneBookingSystemRepository.Flights
                        select _mapper.Map<FlightGetDto>(flight));
-        return request;
+        return Ok(request);
     }
     /// <summary>
     /// Get method which return clients with specific flight
     /// </summary>
+    /// <param name="numberOfFlight">Number of flight</param>
     /// <returns>Clients with specific flight</returns>
     [HttpGet("clients-with-specific-flight")]
-    public IEnumerable<ClientGetDto> ClientsWithSpecificFlight()
+    public ActionResult<IEnumerable<ClientGetDto>> ClientsWithSpecificFlight(uint numberOfFlight)
     {
         _logger.LogInformation("Get clients with specific flight");
         var request = (from client in _airplaneBookingSystemRepository.Client
                        from ticket in client.Tickets
-                       where ticket.Flight.NumberOfFlight == 2
+                       where ticket.Flight.NumberOfFlight == numberOfFlight
                        orderby client.Name
                        select _mapper.Map<ClientGetDto>(client));
-        return request;
+        if (!request.Any())
+        {
+            _logger.LogInformation("Not found clients with flight {numberOfFlight}", numberOfFlight);
+            return NotFound($"There are no clients with flight {numberOfFlight}");
+        }
+        else
+        {
+            _logger.LogInformation("Get information about all clients with flight: {numberOfFlight}", numberOfFlight);
+            return Ok(request);
+        }
     }
     /// <summary>
     /// Get method which return flight with specific departure city and data
     /// </summary>
+    /// <param name="departureCity">Departure city</param>
+    /// <param name="departureData">Departure date</param>
     /// <returns>Flight with specific departure city and data</returns>
     [HttpGet("flight-with-specific-departure-city-and-data")]
-    public IEnumerable<FlightGetDto> FlightWithSpecificDepartureCityAndData()
+    public ActionResult<IEnumerable<FlightGetDto>> FlightWithSpecificDepartureCityAndData(string departureCity, DateTime departureData)
     {
         _logger.LogInformation("Flight with specific departure city and data");
-        var specifiedDate = new DateTime(2023, 8, 28);
         var request = (from flight in _airplaneBookingSystemRepository.Flights
-                       where (flight.DepartureCity == "Kurumoch") && (flight.DepartureDate == specifiedDate)
+                       where (flight.DepartureCity == departureCity) && (flight.DepartureDate == departureData)
                        select _mapper.Map<FlightGetDto>(flight));
-        return request;
+        if (!request.Any())
+        {
+            _logger.LogInformation("Not found flights with departure city {departureCity} and data {departureData}", departureCity, departureData);
+            return NotFound($"There are no flights with departure city {departureCity} and data {departureData}");
+        }
+        else
+        {
+            _logger.LogInformation("Get information about all flights with departure city {departureCity} and data {departureData}", departureCity, departureData);
+            return Ok(request);
+        }
     }
     /// <summary>
     /// Get method which return top five flight 
     /// </summary>
     /// <returns>Top five flight</returns>
     [HttpGet("top-five-flight")]
-    public IEnumerable<FlightGetDto> TopFiveFlight()
+    public ActionResult<IEnumerable<FlightGetDto>> TopFiveFlight()
     {
-        _logger.LogInformation("Top five flight");
-        var specifiedDate = new DateTime(2023, 8, 28);
+        _logger.LogInformation("Top 5 flight");
         var request = (from flight in _airplaneBookingSystemRepository.Flights
                        orderby flight.Tickets.Count descending
                        select _mapper.Map<FlightGetDto>(flight)).Take(5);
-        return request;
+        return Ok(request);
     }
     /// <summary>
     /// Get method which return flight with max amount of clients
     /// </summary>
     /// <returns>Flight with max amount of clients</returns>
     [HttpGet("flight-with-max-amount-of-clients")]
-    public IEnumerable<FlightGetDto> FlightsWithMaxCountOfClient()
+    public ActionResult<IEnumerable<FlightGetDto>> FlightsWithMaxCountOfClient()
     {
         _logger.LogInformation("Flight with max amount of clients");
         var max = (from flight in _airplaneBookingSystemRepository.Flights
@@ -89,23 +108,35 @@ public class AnalyticsController : ControllerBase
         var request = (from flight in _airplaneBookingSystemRepository.Flights
                        where flight.Tickets.Count == max
                        select _mapper.Map<FlightGetDto>(flight));
-        return request;
+        return Ok(request);
     }
     /// <summary>
-    /// Get method which return flight with max, min, avg amount of clients and with specific departure city
+    /// Get method which return clients statistics from flights with specific departure city
     /// </summary>
-    /// <returns>Flight with max, min, avg amount of clients and with specific departure city</returns>
-    [HttpGet("flight-with-max-min-avg-amount-of-clients-and-specific-departure-city")]
-    public IEnumerable<double> MaxAndMinAndAvgClientsAmountFromSpecifiedDepartureCity()
+    /// <param name="departureCity">Departure city</param>
+    /// <returns>Clients statistics from flights with specific departure city</returns>
+    [HttpGet("clients-statistics-from-flights-with-specific-departure-city")]
+    public ActionResult<IEnumerable<double>> ClientsStatisticsFromSpecifiedDepartureCity(string departureCity)
     {
-        _logger.LogInformation("Flight with max, min, avg amount of clients and with specific departure city");
+        _logger.LogInformation("Clients statistics from flights with specific departure city");
         var flightWithCountOfTickets = (from flight in _airplaneBookingSystemRepository.Flights
-                                        where flight.DepartureCity == "Kurumoch"
+                                        where flight.DepartureCity == departureCity
                                         select flight.Tickets.Count);
-        var max = flightWithCountOfTickets.Max();
-        var min = flightWithCountOfTickets.Min();
-        var avg = flightWithCountOfTickets.Average();
-        var request = new List<double>() { max, min, avg };
-        return request;
+        if (!flightWithCountOfTickets.Any())
+        {
+            _logger.LogInformation("Clients not found");
+            return NotFound($"There are no clients with departure city {departureCity}");
+        }
+        else
+        {
+            var request = new Dictionary<string, double>()
+            {
+               { "Max = ", flightWithCountOfTickets.Max()},
+               { "Min = ", flightWithCountOfTickets.Min()},
+               { "Average  = ", flightWithCountOfTickets.Average()}
+            };
+            _logger.LogInformation("Get clients statistics with departure city: {departureCity}", departureCity);
+            return Ok(request);
+        }
     }
 }

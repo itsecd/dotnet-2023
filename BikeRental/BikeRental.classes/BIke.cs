@@ -1,4 +1,4 @@
-﻿namespace BikeRental.classes;
+﻿namespace BikeRental.Domain;
 
 /// <summary>
 /// Class Bike has the info about bikes
@@ -19,4 +19,9 @@ public class Bike
     /// Color info of a bike
     /// </summary>
     public string Color { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Type of a rented bike
+    /// </summary>
+    public BikeType Type { get; set; } = new();
 }

@@ -83,10 +83,10 @@ public class LibrarySchoolTest
     {
         return new List<Subject>()
         {
-            new Subject(0, "Industrial programming", 2023),
-            new Subject(1, "Database", 2023),
-            new Subject(2, "Computer algebra", 2023),
-            new Subject(3, "Information theory", 2023),
+            new Subject() {SubjectId = 0, SubjectName = "Industrial programming", YearStudy = 2023},
+            new Subject() {SubjectId = 1, SubjectName = "Database", YearStudy = 2023},
+            new Subject() {SubjectId = 2, SubjectName = "Computer algebra", YearStudy = 2023},
+            new Subject() {SubjectId = 3, SubjectName = "Information theory", YearStudy = 2022}
         };
     }
 

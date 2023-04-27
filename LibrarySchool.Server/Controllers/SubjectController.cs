@@ -75,6 +75,7 @@ public class SubjectController : ControllerBase
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.Subjects.AddAsync(_mapper.Map<Subject>(subjectPostDto));
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new subject");
     }
 
     /// <summary>
@@ -96,6 +97,7 @@ public class SubjectController : ControllerBase
         _mapper.Map(subjectPostDto, foundSubject);
         ctx.Subjects.Update(foundSubject);
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly change subject id: {id}", id);
         return Ok();
     }
 
@@ -117,6 +119,7 @@ public class SubjectController : ControllerBase
         }
         ctx.Subjects.Remove(foundSubject);
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly delete subject id: {id}", id);
         return Ok();
     }
 }

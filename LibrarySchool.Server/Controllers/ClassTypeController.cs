@@ -79,6 +79,7 @@ public class ClassTypeController : Controller
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.ClassTypes.AddAsync(_mapper.Map<ClassType>(classTypeToPost));
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new class-type");
     }
 
     /// <summary>
@@ -101,8 +102,8 @@ public class ClassTypeController : Controller
         ctx.Update(_mapper.Map<ClassType>(foundClassType));
 
         await Task.Run(() => ctx.Update(_mapper.Map<ClassType>(foundClassType)));
-
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly change class id: {id}", id);
         return Ok();
     }
 
@@ -125,6 +126,7 @@ public class ClassTypeController : Controller
         }
         ctx.ClassTypes.Remove(foundClassType);
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly delete class id: {id}", id);
         return Ok();
     }
 }

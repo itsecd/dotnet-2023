@@ -78,6 +78,7 @@ public class MarkController : Controller
             return StatusCode(500, $"Not found subject id: {markToPost.SubjectId}");
         await ctx.Marks.AddAsync(_mapper.Map<Mark>(markToPost));
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new mark");
         return Ok();
     }
 
@@ -93,22 +94,22 @@ public class MarkController : Controller
     public async Task<IActionResult> Put(int id, [FromBody] MarkPostDto fixedMark)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        var markToFix = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
+        if (markToFix == null)
+        {
+            _logger.LogInformation("Not found mark {id}", id);
+            return NotFound();
+        }
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == fixedMark.StudentId);
         if (foundStudent == null)
             return StatusCode(500, $"Not found student id: {fixedMark.StudentId}");
         var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == fixedMark.SubjectId);
         if (foundSubject == null)
             return StatusCode(500, $"Not found subject id: {fixedMark.SubjectId}");
-
-        var markToFix = await ctx.Marks.FirstOrDefaultAsync(mark => mark.MarkId == id);
-        if (fixedMark == null)
-        {
-            _logger.LogInformation("Not found mark {id}", id);
-            return NotFound();
-        }
         _mapper.Map(fixedMark, markToFix);
         ctx.Update(_mapper.Map<Mark>(markToFix));
-        await ctx.SaveChangesAsync();   
+        await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly update mark id: {id}", id);
         return Ok();
     }
 
@@ -132,6 +133,7 @@ public class MarkController : Controller
         }
         ctx.Remove(foundMark);
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly delete mark id: {id}", id);
         return Ok();
     }
 }

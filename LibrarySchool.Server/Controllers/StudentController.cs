@@ -78,6 +78,7 @@ public class StudentController : ControllerBase
             return StatusCode(500, $"Not found class id: {studentPostDto.ClassId}");
         await ctx.Students.AddAsync(_mapper.Map<Student>(studentPostDto));
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new student");
         return Ok();
     }
 
@@ -100,6 +101,7 @@ public class StudentController : ControllerBase
         }
         ctx.Students.Remove(foundStudent);
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly delete student id: {id}", id);
         return Ok();
     }
 
@@ -125,6 +127,7 @@ public class StudentController : ControllerBase
         _mapper.Map(studentPostDto, foundStudent);
         ctx.Students.Update(_mapper.Map<Student>(foundStudent));
         await ctx.SaveChangesAsync();
+        _logger.LogInformation("Successfuly change student id: {id}", id);
         return Ok();    
     }
 

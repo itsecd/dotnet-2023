@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StoreApp.Domain;
 using StoreApp.Server.Dto;
 
@@ -158,6 +159,7 @@ public class AnalyticsController : Controller
     {
         if (minSalesAmount.GetType() != typeof(double))
         {
+            _logger.LogInformation($"Tying to get stores with non double amount [minSalesAmount = {minSalesAmount}]");
             return BadRequest("Invalid minSalesAmount parameter");
         }
         else

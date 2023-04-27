@@ -1,13 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace StoreApp.Domain;
+
+/// <summary>
+/// Class for storing instances of database entities
+/// </summary>
 public class StoreAppContext : DbContext
 {
+    /// <summary>
+    /// Customer data set
+    /// </summary>
     public DbSet<Customer> Customers { get; set; } = null!;
+
+    /// <summary>
+    /// Product data set
+    /// </summary>
     public DbSet<Product> Products { get; set; } = null!;
+
+    /// <summary>
+    /// ProductStore data set
+    /// </summary>
     public DbSet<ProductStore> ProductStores { get; set; } = null!;
+
+    /// <summary>
+    /// ProductSale data set
+    /// </summary>
     public DbSet<ProductSale> ProductSales { get; set; } = null!;
+
+    /// <summary>
+    /// Sale data set
+    /// </summary>
     public DbSet<Sale> Sales { get; set; } = null!;
+
+    /// <summary>
+    /// Store data set
+    /// </summary>
     public DbSet<Store> Stores { get; set; } = null!;
     public StoreAppContext(DbContextOptions options) : base(options)
     {

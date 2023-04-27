@@ -108,7 +108,7 @@ public class AnalyticsController : Controller
         using var ctx = await _contextFactory.CreateDbContextAsync();
         var result = await ((from sa in ctx.Sales
                              orderby sa.Sum descending
-                             select sa).Take(5)).ToListAsync();
+                             select _mapper.Map<SaleGetDto>(sa)).Take(5)).ToListAsync();
         return Ok(result);
     }
 

@@ -4,7 +4,6 @@ using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>

@@ -157,31 +157,32 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list of list entrants with max mark in each of the subject</returns>
     [HttpGet("EntrantsMaxMarkEachSubject")]
-    public async Task<List<List<EntrantWithMaxMarkGet>>> GetEntrantsMaxMarkEachSubject()
+    public async Task<Dictionary<string, List<EntrantWithMaxMarkGet>>> GetEntrantsMaxMarkEachSubject()
     {
         _logger.LogInformation("Get information about the entrants who scored the maxmum mark in each of the subject");
         var subjectList = await GetAllSubject();
-        var selectedEntrants = new List<List<EntrantWithMaxMarkGet>>();
+
+        var subjectsWithEntrants = new Dictionary<string, List<EntrantWithMaxMarkGet>>();
 
         var ctx = await _contextFactory.CreateDbContextAsync();
         foreach (var subject in subjectList)
         {
-            selectedEntrants.Add(await (from entrant in ctx.Entrants
-                                        from stspec in entrant.Statement.StatementSpecialties
-                                        from res in entrant.EntrantResults
-                                        where res.Result.NameSubject == subject
-                                        where res.Mark == (from entrant in ctx.Entrants
-                                                           from res in entrant.EntrantResults
-                                                           where res.Result.NameSubject == subject
-                                                           select res.Mark).Max()
-                                        select new EntrantWithMaxMarkGet
-                                        {
-                                            NameEntrant = entrant.FullName,
-                                            NameSpecialty = stspec.Specialty.NameSpecialty,
-                                            MaxMark = res.Mark
-                                        }).ToListAsync());
+            subjectsWithEntrants.Add(subject, await (from entrant in ctx.Entrants
+                                                     from stspec in entrant.Statement.StatementSpecialties
+                                                     from res in entrant.EntrantResults
+                                                     where res.Result.NameSubject == subject
+                                                     where res.Mark == (from entrant in ctx.Entrants
+                                                                        from res in entrant.EntrantResults
+                                                                        where res.Result.NameSubject == subject
+                                                                        select res.Mark).Max()
+                                                     select new EntrantWithMaxMarkGet
+                                                     {
+                                                         NameEntrant = entrant.FullName,
+                                                         NameSpecialty = stspec.Specialty.NameSpecialty,
+                                                         MaxMark = res.Mark
+                                                     }).ToListAsync());
         }
 
-        return selectedEntrants;
+        return subjectsWithEntrants;
     }
 }

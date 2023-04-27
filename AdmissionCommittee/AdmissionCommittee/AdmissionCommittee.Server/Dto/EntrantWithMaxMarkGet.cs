@@ -1,4 +1,4 @@
-﻿namespace AdmissionCommittee.Server;
+﻿namespace AdmissionCommittee.Server.Dto;
 /// <summary>
 /// Class to output entrants with maximum mark in each subject
 /// </summary>

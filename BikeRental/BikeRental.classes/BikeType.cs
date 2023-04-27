@@ -1,4 +1,4 @@
-﻿namespace BikeRental.classes;
+﻿namespace BikeRental.Domain;
 /// <summary>
 /// Class BikeType has the info about bike types
 /// </summary>

@@ -1,24 +1,26 @@
-﻿using AirplaneBookingSystem.Domain;
-using AirplaneBookingSystem.Server.Dto;
-using AirplaneBookingSystem.Server.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AirplaneBookingSystem.Domain;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+using AirplaneBookingSystem.Server.Dto;
 
-namespace Airlines.Server.Controllers;
+namespace AirplaneBookingSystem.Server.Controllers;
 /// <summary>
-/// Controller for client table
+/// Clients
 /// </summary>
+
 [Route("api/[controller]")]
 [ApiController]
 public class ClientController : ControllerBase
 {
-    private readonly ILogger<ClientController> _logger;
-    private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
+    private readonly IDbContextFactory<AirplaneBookingSystemDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public ClientController(ILogger<ClientController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    private readonly ILogger<AirplaneController> _logger;
+
+    public ClientController(ILogger<AirplaneController> logger, IDbContextFactory<AirplaneBookingSystemDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _airplaneBookingSystemRepository = airplaneBookingSystemRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -28,82 +30,93 @@ public class ClientController : ControllerBase
     /// Return all clients
     /// </returns>
     [HttpGet]
-    public IEnumerable<ClientGetDto> Get()
+    public async Task<IEnumerable<ClientGetDto>> GetClients()
     {
-        _logger.LogInformation("Get clients");
-        return _airplaneBookingSystemRepository.Client.Select(client => _mapper.Map<ClientGetDto>(client));
+        _logger.LogInformation("Get all clients");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var clients = await ctx.Clients.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ClientGetDto>>(clients);
     }
     /// <summary>
     /// Get by id method for client table
     /// </summary>
-    /// <returns>
-    /// Return client with specified id
-    /// </returns>
-    [HttpGet("{id}")]
-    public ActionResult<ClientGetDto> Get(int id)
+    /// <param name="idClient">id client</param>
+    /// <returns>Ok with ClientGetDto or NotFound</returns>
+    [HttpGet("{idClient}")]
+    public async Task<ActionResult<ClientGetDto>> GetClient(int idClient)
     {
-        _logger.LogInformation($"Get client with id ({id})");
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.FirstOrDefaultAsync(client => client.Id == idClient);
         if (client == null)
         {
-            _logger.LogInformation($"Not found client with id ({id})");
-            return NotFound();
+            _logger.LogInformation("Not found client : {idClient}", idClient);
+            return NotFound($"The client does't exist by this id {idClient}");
         }
         else
         {
+            _logger.LogInformation("Get client by {idClient}", idClient);
             return Ok(_mapper.Map<ClientGetDto>(client));
+        }
+    }
+    /// <summary>
+    /// Put method for client table
+    /// </summary>
+    /// <param name="idClient">An id of client which would be changed </param>
+    /// <param name="clientToPut">Client class instance to insert to table</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpPut("{idClient}")]
+    public async Task<IActionResult> PutClient(int idClient, [FromBody] ClientPostDto clientToPut)
+    {
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.FirstOrDefaultAsync(client => client.Id == idClient);
+        if (client == null)
+        {
+            _logger.LogInformation("Not found client : {idClient}", idClient);
+            return NotFound($"The client does't exist by this id {idClient}");
+        }
+        else
+        {
+            _logger.LogInformation("Update client by id {idClient}", idClient);
+            _mapper.Map(clientToPut, client);
+            ctx.Clients.Update(_mapper.Map<Domain.Client>(client));
+            await ctx.SaveChangesAsync();
+            return Ok();
         }
     }
     /// <summary>
     /// Post method for client table
     /// </summary>
     /// <param name="client"> Client class instance to insert to table</param>
+    /// <returns>Сreated client</returns>
     [HttpPost]
-    public void Post([FromBody] ClientPostDto client)
+    public async Task PostClient([FromBody] ClientPostDto client)
     {
-        _logger.LogInformation("Post");
-        _airplaneBookingSystemRepository.Client.Add(_mapper.Map<Client>(client));
-    }
-    /// <summary>
-    /// Put method for client table
-    /// </summary>
-    /// <param name="id">An id of client which would be changed </param>
-    /// <param name="clientToPut">Client class instance to insert to table</param>
-    /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ClientPostDto clientToPut)
-    {
-        _logger.LogInformation("Put client with id {0}", id);
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
-        if (client == null)
-        {
-            _logger.LogInformation("Not found client with id {0}", id);
-            return NotFound();
-        }
-        else
-        {
-            _mapper.Map(clientToPut, client);
-            return Ok();
-        }
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new client");
+        await ctx.Clients.AddAsync(_mapper.Map<Domain.Client>(client));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of client which would be deleted</param>
-    /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <param name="idClient">An id of client which would be deleted</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpDelete("{idClient}")]
+    public async Task<IActionResult> DeleteClient(int idClient)
     {
-        _logger.LogInformation($"Put client with id ({id})");
-        var client = _airplaneBookingSystemRepository.Client.FirstOrDefault(client => client.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.Include(clients => clients.Tickets)
+                                        .FirstOrDefaultAsync(clients => clients.Id == idClient);
         if (client == null)
         {
-            _logger.LogInformation($"Not found client with id ({id})");
-            return NotFound();
+            _logger.LogInformation($"Not found client : {idClient}");
+            return NotFound($"The client does't exist by this id {idClient}");
         }
         else
         {
-            _airplaneBookingSystemRepository.Client.Remove(client);
+            _logger.LogInformation("Delete client by id {idClient}", idClient);
+            ctx.Clients.Remove(client);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

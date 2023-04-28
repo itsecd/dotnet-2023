@@ -1,4 +1,7 @@
-﻿namespace AirplaneBookingSystem.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirplaneBookingSystem.Domain;
 
 /// <summary>
 /// Class describing a ticket
@@ -8,6 +11,8 @@ public class Ticket
     /// <summary>
     /// Unique Id of ticket
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Number of ticket
@@ -20,6 +25,7 @@ public class Ticket
     /// <summary>
     /// Client`s id of ticket
     /// </summary>
+    [ForeignKey("Client")]
     public int ClientId { get; set; }
     /// <summary>
     /// Flight for which the ticket is registered
@@ -28,6 +34,7 @@ public class Ticket
     /// <summary>
     /// Flight`s id of ticket
     /// </summary>
+    [ForeignKey("Flight")]
     public int FlightId { get; set; }
     public Ticket() { }
     public Ticket(int id, int ticketNumber, Client client, Flight flight)

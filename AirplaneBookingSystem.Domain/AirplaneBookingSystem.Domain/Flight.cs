@@ -1,4 +1,7 @@
-﻿namespace AirplaneBookingSystem.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirplaneBookingSystem.Domain;
 
 /// <summary>
 /// Сlass describing the flight of an airplane
@@ -8,6 +11,8 @@ public class Flight
     /// <summary>
     /// Unique Id of flight
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Number of flight
@@ -28,6 +33,7 @@ public class Flight
     /// <summary>
     /// Arrival date
     /// </summary>
+
     public DateTime ArrivalDate { get; set; } = new DateTime();
     /// <summary>
     /// List of tickets on this flight
@@ -37,6 +43,7 @@ public class Flight
     /// Airplane of flight
     /// </summary>
     public Airplane Airplane { get; set; }
+    [ForeignKey("Airplane")]
     public int AirplaneId { get; set; }
     public Flight() { }
     public Flight(int id, int numberOfFlight, string departureCity, string arrivalCity, DateTime departureDate, DateTime arrivalDate, Airplane airplane)

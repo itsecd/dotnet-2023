@@ -1,4 +1,7 @@
-﻿namespace AirplaneBookingSystem.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirplaneBookingSystem.Domain;
 /// <summary>
 /// Сlass describing an airplane
 /// </summary>
@@ -7,6 +10,8 @@ public class Airplane
     /// <summary>
     /// Unique Id of Airplane 
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     ///  Model of Airplane 

@@ -1,4 +1,7 @@
-﻿namespace AirplaneBookingSystem.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirplaneBookingSystem.Domain;
 
 /// <summary>
 /// Сlass describing the client
@@ -8,6 +11,8 @@ public class Client
     /// <summary>
     /// Unique Id of client
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Client`s passport number 
@@ -15,7 +20,7 @@ public class Client
     public string PassportNumber { get; set; } = string.Empty;
     /// <summary>
     /// Client`s birthday
-    /// </summary>
+    /// </summary> 
     public DateTime BirthdayData { get; set; } = new DateTime();
     /// <summary>
     /// Client`s name

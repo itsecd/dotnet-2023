@@ -1,25 +1,26 @@
-﻿using AirplaneBookingSystem.Domain;
-using AirplaneBookingSystem.Server.Dto;
-using AirplaneBookingSystem.Server.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AirplaneBookingSystem.Domain;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+using AirplaneBookingSystem.Server.Dto;
 
-namespace Airlines.Server.Controllers;
+namespace AirplaneBookingSystem.Server.Controllers;
 /// <summary>
-/// Controller for ticket table
+/// Tickets
 /// </summary>
+
 [Route("api/[controller]")]
 [ApiController]
 public class TicketController : ControllerBase
 {
-    private readonly ILogger<TicketController> _logger;
-    private readonly IAirplaneBookingSystemRepository _airplaneBookingSystemRepository;
+    private readonly IDbContextFactory<AirplaneBookingSystemDbContext> _contextFactory;
     private readonly IMapper _mapper;
+    private readonly ILogger<AirplaneController> _logger;
 
-    public TicketController(ILogger<TicketController> logger, IAirplaneBookingSystemRepository airplaneBookingSystemRepository, IMapper mapper)
+    public TicketController(ILogger<AirplaneController> logger, IDbContextFactory<AirplaneBookingSystemDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _airplaneBookingSystemRepository = airplaneBookingSystemRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -29,81 +30,92 @@ public class TicketController : ControllerBase
     /// Return all tickets
     /// </returns>
     [HttpGet]
-    public IEnumerable<TicketGetDto> Get()
+    public async Task<IEnumerable<TicketGetDto>> GetTicket()
     {
-        _logger.LogInformation("Get ticket");
-        return _airplaneBookingSystemRepository.Tickets.Select(ticket => _mapper.Map<TicketGetDto>(ticket));
+        _logger.LogInformation("Get all tickets");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var tickets = await ctx.Tickets.ToArrayAsync();
+        return _mapper.Map<IEnumerable<TicketGetDto>>(tickets);
     }
     /// <summary>
     /// Get by id method for ticket table
     /// </summary>
-    /// <returns>
-    /// Return ticket with specified id
-    /// </returns>
-    [HttpGet("{id}")]
-    public ActionResult<TicketGetDto> Get(int id)
+    /// <param name="idTicket">id ticket</param>
+    /// <returns>Ok with TicketGetDto or NotFound</returns>
+    [HttpGet("{idTicket}")]
+    public async Task<ActionResult<TicketGetDto>> GetTicket(int idTicket)
     {
-        _logger.LogInformation("Get ticket with id {id}", id);
-        var ticket = _airplaneBookingSystemRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var ticket = await ctx.Tickets.FirstOrDefaultAsync(ticket => ticket.Id == idTicket);
         if (ticket == null)
         {
-            _logger.LogInformation("Not found ticket with id {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found ticket : {idTicket}", idTicket);
+            return NotFound($"The ticket does't exist by this id {idTicket}");
         }
         else
         {
+            _logger.LogInformation("Get ticket by {idTicket}", idTicket);
             return Ok(_mapper.Map<TicketGetDto>(ticket));
+        }
+    }
+    /// <summary>
+    /// Put method for ticket table
+    /// </summary>
+    /// <param name="idTicket">An id of ticket which would be changed </param>
+    /// <param name="ticketToPut">Ticket class instance to insert to table</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpPut("{idTicket}")]
+    public async Task<IActionResult> PutTicket(int idTicket, [FromBody] TicketPostDto ticketToPut)
+    {
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var ticket = await ctx.Tickets.FirstOrDefaultAsync(ticket => ticket.Id == idTicket);
+        if (ticket == null)
+        {
+            _logger.LogInformation("Not found ticket : {idTicket}", idTicket);
+            return NotFound($"The ticket does't exist by this id {idTicket}");
+        }
+        else
+        {
+            _logger.LogInformation("Update ticket by id {idTicket}", idTicket);
+            _mapper.Map(ticketToPut, ticket);
+            ctx.Tickets.Update(_mapper.Map<Ticket>(ticket));
+            await ctx.SaveChangesAsync();
+            return Ok();
         }
     }
     /// <summary>
     /// Post method for ticket table
     /// </summary>
     /// <param name="ticket"> Ticket class instance to insert to table</param>
+    /// <returns>Сreated ticket</returns>
     [HttpPost]
-    public void Post([FromBody] TicketPostDto ticket)
+    public async Task PostTicket([FromBody] TicketPostDto ticket)
     {
-        _airplaneBookingSystemRepository.Tickets.Add(_mapper.Map<Ticket>(ticket));
-    }
-    /// <summary>
-    /// Put method for ticket table
-    /// </summary>
-    /// <param name="id">An id of ticket which would be changed </param>
-    /// <param name="ticketToPut">Ticket class instance to insert to table</param>
-    /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public ActionResult Put(int id, [FromBody] TicketPostDto ticketToPut)
-    {
-        _logger.LogInformation("Put ticket with id {id}", id);
-        var ticket = _airplaneBookingSystemRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
-        if (ticket == null)
-        {
-            _logger.LogInformation("Not found ticket with id {id}", id);
-            return NotFound();
-        }
-        else
-        {
-            _mapper.Map(ticketToPut, ticket);
-            return Ok();
-        }
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new ticket");
+        await ctx.Tickets.AddAsync(_mapper.Map<Ticket>(ticket));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Delete method 
     /// </summary>
-    /// <param name="id">An id of ticket which would be deleted</param>
-    /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    /// <param name="idTicket">An id of ticket which would be deleted</param>
+    /// <returns>Ok or NotFound</returns>
+    [HttpDelete("{idTicket}")]
+    public async Task<IActionResult> DeleteTicket(int idTicket)
     {
-        _logger.LogInformation("Delete ticket with id {id}", id);
-        var ticket = _airplaneBookingSystemRepository.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var ticket = await ctx.Tickets.FirstOrDefaultAsync(ticket => ticket.Id == idTicket);
         if (ticket == null)
         {
-            _logger.LogInformation("Not found ticket with id {id}", id);
-            return NotFound();
+            _logger.LogInformation($"Not found ticket : {idTicket}");
+            return NotFound($"The ticket does't exist by this id {idTicket}");
         }
         else
         {
-            _airplaneBookingSystemRepository.Tickets.Remove(ticket);
+            _logger.LogInformation("Delete ticket by id {idTicket}", idTicket);
+            ctx.Tickets.Remove(ticket);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

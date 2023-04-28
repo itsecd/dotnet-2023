@@ -44,7 +44,7 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Get clients with specific flight");
         var request = (from client in _airplaneBookingSystemRepository.Client
                        from ticket in client.Tickets
-                       where ticket.Flight.NumberOfFlight == numberOfFlight
+                       where ticket.FlightId == numberOfFlight
                        orderby client.Name
                        select _mapper.Map<ClientGetDto>(client));
         if (!request.Any())

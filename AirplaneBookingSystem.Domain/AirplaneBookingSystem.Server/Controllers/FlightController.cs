@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AirplaneBookingSystem.Domain;
-using AutoMapper;
+﻿using AirplaneBookingSystem.Domain;
 using AirplaneBookingSystem.Server.Dto;
-using MySqlX.XDevAPI;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirplaneBookingSystem.Server.Controllers;
 /// <summary>

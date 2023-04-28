@@ -13,9 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Core", "Socia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Data", "SocialNetwork.Data\SocialNetwork.Data.csproj", "{FB21F131-FC0D-4B32-AEE5-6823B2E52395}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Dekstop", "SocialNetwork.Dekstop\SocialNetwork.Dekstop.csproj", "{B6FB51AB-5151-49AB-955A-680812CF83D9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Client", "SocialNetwork.Client\SocialNetwork.Client.csproj", "{5E3BC572-C8C0-4B52-9066-83FBEFE320B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Client", "SocialNetwork.Client\SocialNetwork.Client.csproj", "{5E3BC572-C8C0-4B52-9066-83FBEFE320B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{FB21F131-FC0D-4B32-AEE5-6823B2E52395}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB21F131-FC0D-4B32-AEE5-6823B2E52395}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB21F131-FC0D-4B32-AEE5-6823B2E52395}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6FB51AB-5151-49AB-955A-680812CF83D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6FB51AB-5151-49AB-955A-680812CF83D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6FB51AB-5151-49AB-955A-680812CF83D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6FB51AB-5151-49AB-955A-680812CF83D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E3BC572-C8C0-4B52-9066-83FBEFE320B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E3BC572-C8C0-4B52-9066-83FBEFE320B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E3BC572-C8C0-4B52-9066-83FBEFE320B7}.Release|Any CPU.ActiveCfg = Release|Any CPU

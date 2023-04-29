@@ -86,12 +86,12 @@ public sealed class RecruitmentAgencyContext : DbContext
             var firstTitle = new Title();
             firstTitle.Section = "It";
             firstTitle.JobTitle = "Backend";
-            firstTitle.Id = 0;
+            firstTitle.Id = 1;
 
             var secondTitle = new Title();
             secondTitle.Section = "It";
             secondTitle.JobTitle = "Frontend";
-            secondTitle.Id = 1;
+            secondTitle.Id = 2;
 
             var firstCompany = new Company();
             firstCompany.CompanyName = "Oracle";
@@ -103,7 +103,7 @@ public sealed class RecruitmentAgencyContext : DbContext
             firstApplication.WorkExperience = 0;
             firstApplication.Salary = 50000;
             firstApplication.Date = new DateTime(2022, 12, 12);
-            firstApplication.TitleId = firstTitle.Id;
+            firstApplication.TitleId = 1;
             firstApplication.Education = "None";
             firstApplication.Id = 0;
             companiesApplications.Add(firstApplication);
@@ -119,7 +119,7 @@ public sealed class RecruitmentAgencyContext : DbContext
             secondApplication.WorkExperience = 1;
             secondApplication.Salary = 60000;
             secondApplication.Date = new DateTime(2022, 5, 9);
-            secondApplication.TitleId = secondTitle.Id;
+            secondApplication.TitleId = 2;
             secondApplication.Education = "Half";
             secondApplication.Id = 1;
             companiesApplications.Add(secondApplication);
@@ -135,7 +135,7 @@ public sealed class RecruitmentAgencyContext : DbContext
             thirdApplication.WorkExperience = 2;
             thirdApplication.Salary = 70000;
             thirdApplication.Date = new DateTime(2022, 7, 6);
-            thirdApplication.TitleId = firstTitle.Id;
+            thirdApplication.TitleId = 1;
             thirdApplication.Education = "Full";
             thirdApplication.Id = 2;
             companiesApplications.Add(thirdApplication);

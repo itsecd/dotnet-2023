@@ -31,11 +31,11 @@ public class University
     /// <summary>
     /// Собственность учреждения
     /// </summary>
-    public string UniversityProperty { get; set; }
+    public UniversityProperty UniversityProperty { get; set; }
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public string ConstructionProperty { get; set; }
+    public ConstructionProperty ConstructionProperty { get; set; }
     /// <summary>
     /// Факультеты университета
     /// </summary>

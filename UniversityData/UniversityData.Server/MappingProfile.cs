@@ -23,5 +23,9 @@ public class MappingProfile : Profile
         CreateMap<UniversityPostDto, University>();
         CreateMap<SpecialtyTableNodePostDto, SpecialtyTableNode>();
         CreateMap<University, UniversityGetStructureDto>();
+        CreateMap<UniversityProperty, UniversityPropertyDto>();
+        CreateMap<UniversityPropertyDto, UniversityProperty>();
+        CreateMap<ConstructionProperty, ConstructionPropertyDto>();
+        CreateMap<ConstructionPropertyDto, ConstructionProperty>();
     }
 }

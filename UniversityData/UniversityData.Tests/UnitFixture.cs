@@ -1,9 +1,41 @@
 namespace UniversityData.Tests;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UniversityData.Domain;
 
 public class UnitFixture
 {
+    public List<UniversityProperty> UniversityProperties
+    {
+        get
+        {
+            var data = new List<UniversityProperty>();
+            for (var i = 0; i < 2; ++i)
+            {
+                data.Add(new UniversityProperty());
+            }
+            data[0].NameUniversityProperty = "муниципальная";
+            data[1].NameUniversityProperty = "частная";
+            return data;
+        }
+    }
+
+    public List<ConstructionProperty> ConstructionProperties
+    {
+        get
+        {
+            var data = new List<ConstructionProperty>();
+            for (var i = 0; i < 3; ++i)
+            {
+                data.Add(new ConstructionProperty());
+            }
+            data[0].NameConstructionProperty = "муниципальная";
+            data[1].NameConstructionProperty = "частная";
+            data[2].NameConstructionProperty = "федеральная";
+            return data;
+        }
+    }
+
     public List<Specialty> Specialties
     {
         get
@@ -158,20 +190,20 @@ public class UnitFixture
             data[0].Name = "Самарский университет";
             data[0].Address = "Самара";
             data[0].RectorData = Rectors[0];
-            data[0].UniversityProperty = "муниципальная";
-            data[0].ConstructionProperty = "муниципальная";
+            data[0].UniversityProperty = UniversityProperties[0];
+            data[0].ConstructionProperty = ConstructionProperties[0];
             data[1].Number = "56789";
             data[1].Name = "СамГТУ";
             data[1].Address = "Самара";
             data[1].RectorData = Rectors[1];
-            data[1].UniversityProperty = "муниципальная";
-            data[1].ConstructionProperty = "муниципальная";
+            data[1].UniversityProperty = UniversityProperties[0];
+            data[1].ConstructionProperty = ConstructionProperties[0];
             data[2].Number = "45678";
             data[2].Name = "ПГУТИ";
             data[2].Address = "Самара";
             data[2].RectorData = Rectors[2];
-            data[2].UniversityProperty = "муниципальная";
-            data[2].ConstructionProperty = "федеральная";
+            data[2].UniversityProperty = UniversityProperties[0];
+            data[2].ConstructionProperty = ConstructionProperties[2];
             data[0].FacultiesData.AddRange(new Faculty[] { Faculties[0], Faculties[1], Faculties[2] });
             data[0].DepartmentsData.AddRange(new Department[] { Departments[0], Departments[1] });
             data[0].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[0], SpecialtyTableNodes[1], SpecialtyTableNodes[2] });

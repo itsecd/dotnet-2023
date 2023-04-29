@@ -116,7 +116,7 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get information about universities with target property");
         return (from university in _universityDataRepository.Universities
-                where (university.UniversityProperty == universityProperty)
+                where (university.UniversityProperty.NameUniversityProperty == universityProperty)
                 select new
                 {
                     university.Id,

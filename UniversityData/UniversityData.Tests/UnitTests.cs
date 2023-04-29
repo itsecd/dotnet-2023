@@ -68,7 +68,7 @@ public class UnitTests : IClassFixture<UnitFixture>
     public void UniversityWithProperty()
     {
         var result = (from university in _fixture.Universities
-                      where (university.UniversityProperty == "муниципальная")
+                      where (university.UniversityProperty.NameUniversityProperty == "муниципальная")
                       select new
                       {
                           university.Id,
@@ -107,10 +107,10 @@ public class UnitTests : IClassFixture<UnitFixture>
                           Specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count)
                       }
                       ).ToList();
-        Assert.Equal("муниципальная", result[0].UniversityProp);
-        Assert.Equal("муниципальная", result[1].UniversityProp);
-        Assert.Equal("муниципальная", result[0].ConstProp);
-        Assert.Equal("федеральная", result[1].ConstProp);
+        Assert.Equal("муниципальная", result[0].UniversityProp.NameUniversityProperty);
+        Assert.Equal("муниципальная", result[1].UniversityProp.NameUniversityProperty);
+        Assert.Equal("муниципальная", result[0].ConstProp.NameConstructionProperty);
+        Assert.Equal("федеральная", result[1].ConstProp.NameConstructionProperty);
         Assert.Equal(5, result[0].Faculties);
         Assert.Equal(1, result[1].Faculties);
         Assert.Equal(3, result[0].Departments);

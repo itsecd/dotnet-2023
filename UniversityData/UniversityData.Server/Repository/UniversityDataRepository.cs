@@ -10,9 +10,31 @@ public class UniversityDataRepository : IUniversityDataRepository
     private readonly List<Rector> _rectors;
     private readonly List<Specialty> _specialties;
     private readonly List<SpecialtyTableNode> _specialtyTableNodes;
+    private readonly List<UniversityProperty> _universityProperties;
+    private readonly List<ConstructionProperty> _constructionProperties;
+
 
     public UniversityDataRepository()
     {
+        _universityProperties = new List<UniversityProperty>();
+        for (var i = 0; i < 2; ++i)
+        {
+            _universityProperties.Add(new UniversityProperty());
+            _universityProperties[i].Id = i;
+        }
+        _universityProperties[0].NameUniversityProperty = "муниципальная";
+        _universityProperties[1].NameUniversityProperty = "частная";
+
+        _constructionProperties = new List<ConstructionProperty>();
+        for (var i = 0; i < 2; ++i)
+        {
+            _constructionProperties.Add(new ConstructionProperty());
+            _constructionProperties[i].Id = i;
+        }
+        _constructionProperties[0].NameConstructionProperty = "муниципальная";
+        _constructionProperties[1].NameConstructionProperty = "частная";
+        _constructionProperties[1].NameConstructionProperty = "федеральная";
+
         _specialties = new List<Specialty>();
         for (var i = 0; i < 5; ++i)
         {
@@ -169,22 +191,22 @@ public class UniversityDataRepository : IUniversityDataRepository
         _universities[0].Name = "Самарский университет";
         _universities[0].Address = "Самара";
         _universities[0].RectorData = Rectors[0];
-        _universities[0].UniversityProperty = "муниципальная";
-        _universities[0].ConstructionProperty = "муниципальная";
+        _universities[0].UniversityProperty = _universityProperties[0];
+        _universities[0].ConstructionProperty = _constructionProperties[0];
         _universities[0].RectorId = 0;
         _universities[1].Number = "56789";
         _universities[1].Name = "СамГТУ";
         _universities[1].Address = "Самара";
         _universities[1].RectorData = Rectors[1];
-        _universities[1].UniversityProperty = "муниципальная";
-        _universities[1].ConstructionProperty = "муниципальная";
+        _universities[1].UniversityProperty = _universityProperties[0];
+        _universities[1].ConstructionProperty = _constructionProperties[0];
         _universities[1].RectorId = 1;
         _universities[2].Number = "45678";
         _universities[2].Name = "ПГУТИ";
         _universities[2].Address = "Самара";
         _universities[2].RectorData = Rectors[2];
-        _universities[2].UniversityProperty = "муниципальная";
-        _universities[2].ConstructionProperty = "федеральная";
+        _universities[2].UniversityProperty = _universityProperties[0];
+        _universities[2].ConstructionProperty = _constructionProperties[2];
         _universities[2].RectorId = 2;
         _universities[0].FacultiesData.AddRange(new Faculty[] { Faculties[0], Faculties[1], Faculties[2] });
         _universities[0].DepartmentsData.AddRange(new Department[] { Departments[0], Departments[1] });
@@ -204,5 +226,7 @@ public class UniversityDataRepository : IUniversityDataRepository
     public List<Specialty> Specialties => _specialties;
     public List<Rector> Rectors => _rectors;
     public List<SpecialtyTableNode> SpecialtyTableNodes => _specialtyTableNodes;
+    public List<UniversityProperty> UniversityProperties => _universityProperties;
+    public List<ConstructionProperty> ConstructionProperties => _constructionProperties;
 
 }

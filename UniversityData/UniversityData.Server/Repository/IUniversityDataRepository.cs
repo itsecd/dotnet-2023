@@ -9,4 +9,6 @@ public interface IUniversityDataRepository
     List<Specialty> Specialties { get; }
     List<SpecialtyTableNode> SpecialtyTableNodes { get; }
     List<University> Universities { get; }
+    List<UniversityProperty> UniversityProperties { get; }
+    List<ConstructionProperty> ConstructionProperties { get; }
 }

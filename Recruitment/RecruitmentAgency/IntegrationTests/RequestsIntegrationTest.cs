@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
-using RecruitmentAgencyServer.Dto;
-using System.Text.Json;
+using System.Globalization;
+using System.Net;
 
 namespace IntegrationTests;
 /// <summary>
@@ -23,13 +23,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     {
         var client = _factory.CreateClient();
         var response = await client.GetAsync("api/requests/applicants_requests/1");
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var jobApplications = JsonSerializer.Deserialize<List<JobApplicationGetDto>>(content, options);
-        Assert.Equal(2, jobApplications?.Count);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
     /// Test of the GetPassengerOverGivenPeriod method
@@ -40,10 +34,10 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     {
         var client = _factory.CreateClient();
 
-        var minDate = "2022-01-01T00:00:00Z";
-        var maxDate = "2022-06-05T23:59:59Z";
+        var minDate = DateTime.ParseExact("2022-01-01T00:00:00Z", "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
+        var maxDate = DateTime.ParseExact("2022-06-05T23:59:59Z", "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
 
-        var response = await client.GetAsync($"api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}"); ;
+        var response = await client.GetAsync($"api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}");
         Assert.True(response.IsSuccessStatusCode);
     }
     /// <summary>

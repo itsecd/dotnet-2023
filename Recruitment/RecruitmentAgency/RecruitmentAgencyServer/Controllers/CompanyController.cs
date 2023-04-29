@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using System.Collections.Generic;
 
 namespace RecruitmentAgencyServer.Controllers;
 

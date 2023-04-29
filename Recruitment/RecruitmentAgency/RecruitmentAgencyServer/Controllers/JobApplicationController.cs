@@ -79,11 +79,11 @@ public class JobApplicationController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] JobApplicationPostDto jobApplicationToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put job application  with id {id}", id);
-        var jobApplication = ctx.Companies.FirstOrDefault(jobApplication => jobApplication.Id == id);
+        _logger.LogInformation("Put job application with id {id}", id);
+        var jobApplication = ctx.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
         if (jobApplication == null)
         {
-            _logger.LogInformation("Not found job application with id {id}", id);
+            _logger.LogInformation("Not found jobApplication with id {id}", id);
             return NotFound();
         }
         ctx.Update(_mapper.Map(jobApplicationToPut, jobApplication));

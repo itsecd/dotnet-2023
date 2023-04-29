@@ -64,11 +64,10 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     {
         var client = _factory.CreateClient();
 
-        var newTitle = new TitleGetDto()
+        var newTitle = new TitlePostDto()
         {
             Section = "IT",
             JobTitle = "Test",
-            Id = 0
         };
 
         var options = new JsonSerializerOptions
@@ -78,7 +77,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
         };
         var requestContent = JsonSerializer.Serialize(newTitle, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/Title/0", putData);
+        var response = await client.PutAsync("api/Title/2", putData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -91,7 +90,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/Title/0");
+        var response = await client.DeleteAsync("api/Title/2");
 
         Assert.True(response.IsSuccessStatusCode);
     }

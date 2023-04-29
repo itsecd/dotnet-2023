@@ -45,7 +45,7 @@ public class MediaTest : IClassFixture<RecruitmentFixture>
                           Salary = employee.Salary,
                           CompanySalary = companyApplication.Salary
                       });
-       Assert.Single(result);
+        Assert.Single(result);
     }
     [Fact]
     public void NumberApplicationTest()

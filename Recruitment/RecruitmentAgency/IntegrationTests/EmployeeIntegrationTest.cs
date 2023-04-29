@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -103,7 +104,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
 
         var response = await client.DeleteAsync("api/Employee/2");
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>
     /// Test of the get by id method

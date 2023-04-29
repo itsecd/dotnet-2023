@@ -17,7 +17,7 @@ public class CompanyApplicationPostDto
     /// </summary>
     public int Salary { set; get; }
     /// <summary>
-    /// Title - shows the job id
+    /// Education - shows the level of education
     /// </summary>
     public string? Education { set; get; }
 }

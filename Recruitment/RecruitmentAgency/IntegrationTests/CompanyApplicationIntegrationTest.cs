@@ -28,7 +28,10 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
 
         var newCompany = new CompanyApplicationPostDto()
         {
-            
+            Date = DateTime.Now,
+            WorkExperience = 0,
+            Salary = 50000,
+            Education = "None"
         };
         var options = new JsonSerializerOptions
         {

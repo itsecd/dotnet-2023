@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Taxi.Domain;
 using Taxi.Server.Dto;
-using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -13,17 +13,16 @@ namespace Taxi.Server.Controllers;
 [ApiController]
 public class VehicleController : ControllerBase
 {
+    private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<VehicleController> _logger;
-
     private readonly IMapper _mapper;
 
-    private readonly ITaxiRepository _taxiRepository;
-
-    public VehicleController(ILogger<VehicleController> logger, ITaxiRepository taxiRepository, IMapper mapper)
+    public VehicleController(IDbContextFactory<TaxiDbContext> contextFactory, IMapper mapper,
+        ILogger<VehicleController> logger)
     {
-        _logger = logger;
-        _taxiRepository = taxiRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -33,10 +32,11 @@ public class VehicleController : ControllerBase
     ///     List of vehicles
     /// </returns>
     [HttpGet]
-    public IEnumerable<VehicleGetDto> Get()
+    public async Task<IEnumerable<VehicleGetDto>> Get()
     {
         _logger.LogInformation("Get vehicle");
-        return _taxiRepository.Vehicles.Select(vehicle => _mapper.Map<VehicleGetDto>(vehicle));
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        return await _mapper.ProjectTo<VehicleGetDto>(ctx.Vehicles).ToListAsync();
     }
 
     /// <summary>
@@ -47,9 +47,10 @@ public class VehicleController : ControllerBase
     ///     Vehicle with the required id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<VehicleGetDto> Get(ulong id)
+    public async Task<ActionResult<VehicleGetDto>> Get(ulong id)
     {
-        Vehicle? vehicle = _taxiRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle with id={id}");
@@ -63,13 +64,21 @@ public class VehicleController : ControllerBase
     /// <summary>
     ///     Post method which add new vehicle in ride table
     /// </summary>
-    /// <param name="vehicle"> New vehicle for addition</param>
+    /// <param name="vehicleToPost"> New vehicle for addition</param>
     /// >
     [HttpPost]
-    public void Post([FromBody] VehiclePostDto vehicle)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<VehicleGetDto>> Post(VehicleSetDto vehicleToPost)
     {
         _logger.LogInformation("Post vehicle");
-        _taxiRepository.Vehicles.Add(_mapper.Map<Vehicle>(vehicle));
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        Vehicle? mappedVehicle = _mapper.Map<Vehicle>(vehicleToPost);
+
+        await ctx.Vehicles.AddAsync(mappedVehicle);
+        await ctx.SaveChangesAsync();
+        return CreatedAtAction("Post", new { id = mappedVehicle.Id },
+            _mapper.Map<RideGetDto>(mappedVehicle));
     }
 
     /// <summary>
@@ -81,9 +90,10 @@ public class VehicleController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] VehiclePostDto vehicleToPut)
+    public async Task<IActionResult> Put(ulong id, VehicleSetDto vehicleToPut)
     {
-        Vehicle? vehicle = _taxiRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle with id={id}", id);
@@ -91,8 +101,8 @@ public class VehicleController : ControllerBase
         }
 
         _logger.LogInformation($"Put vehicle with id={id}", id);
-        _mapper.Map(vehicleToPut, vehicle);
-        return Ok();
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 
     /// <summary>
@@ -103,9 +113,10 @@ public class VehicleController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
-        Vehicle? vehicle = _taxiRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle with id={id}", id);
@@ -113,7 +124,8 @@ public class VehicleController : ControllerBase
         }
 
         _logger.LogInformation("Delete vehicle with id={id}", id);
-        _taxiRepository.Vehicles.Remove(vehicle);
-        return Ok();
+        ctx.Vehicles.Remove(vehicle);
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 }

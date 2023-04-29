@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Taxi.Domain;
-using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -11,15 +11,14 @@ namespace Taxi.Server.Controllers;
 [ApiController]
 public class VehicleClassificationController : ControllerBase
 {
+    private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<VehicleClassificationController> _logger;
 
-    private readonly ITaxiRepository _taxiRepository;
-
-    public VehicleClassificationController(ILogger<VehicleClassificationController> logger,
-        ITaxiRepository taxiRepository)
+    public VehicleClassificationController(IDbContextFactory<TaxiDbContext> contextFactory,
+        ILogger<VehicleClassificationController> logger)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _taxiRepository = taxiRepository;
     }
 
     /// <summary>
@@ -29,10 +28,11 @@ public class VehicleClassificationController : ControllerBase
     ///     List of vehicle classification
     /// </returns>
     [HttpGet]
-    public IEnumerable<VehicleClassification> Get()
+    public async Task<IEnumerable<VehicleClassification>> Get()
     {
         _logger.LogInformation("Get vehicles classification");
-        return _taxiRepository.VehicleClassifications;
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        return await ctx.VehicleClassifications.ToListAsync();
     }
 
     /// <summary>
@@ -43,10 +43,10 @@ public class VehicleClassificationController : ControllerBase
     ///     Vehicle classification with the required id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<VehicleClassification> Get(ulong id)
+    public async Task<ActionResult<VehicleClassification>> Get(ulong id)
     {
-        VehicleClassification? vehicleClassification =
-            _taxiRepository.VehicleClassifications.FirstOrDefault(vehicle => vehicle.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        VehicleClassification? vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
         if (vehicleClassification == null)
         {
             _logger.LogInformation("Not found vehicle classification with id={id}", id);

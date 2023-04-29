@@ -8,13 +8,13 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<DriverPostDto, Driver>();
-        CreateMap<Vehicle, VehiclePostDto>();
+        CreateMap<DriverSetDto, Driver>();
+        CreateMap<Vehicle, VehicleSetDto>();
         CreateMap<Vehicle, VehicleGetDto>();
-        CreateMap<PassengerPostDto, Passenger>();
+        CreateMap<PassengerSetDto, Passenger>();
         CreateMap<Passenger, PassengerGetDto>();
-        CreateMap<RidePostDto, Ride>()
-            .ForMember(ride => ride.RideTime, s => 
+        CreateMap<RideSetDto, Ride>()
+            .ForMember(ride => ride.RideTime, s =>
                 s.MapFrom(ride => TimeSpan.FromSeconds(ride.RideTime)));
     }
 }

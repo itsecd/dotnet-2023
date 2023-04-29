@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Taxi.Domain;
 using Taxi.Server.Dto;
-using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -13,15 +13,16 @@ namespace Taxi.Server.Controllers;
 [ApiController]
 public class PassengerController : ControllerBase
 {
+    private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<PassengerController> _logger;
     private readonly IMapper _mapper;
-    private readonly ITaxiRepository _taxiRepository;
 
-    public PassengerController(ILogger<PassengerController> logger, ITaxiRepository taxiRepository, IMapper mapper)
+    public PassengerController(IDbContextFactory<TaxiDbContext> contextFactory, IMapper mapper,
+        ILogger<PassengerController> logger)
     {
-        _logger = logger;
-        _taxiRepository = taxiRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,10 +32,11 @@ public class PassengerController : ControllerBase
     ///     List of passenger
     /// </returns>
     [HttpGet]
-    public IEnumerable<PassengerGetDto> Get()
+    public async Task<IEnumerable<PassengerGetDto>> Get()
     {
         _logger.LogInformation("Get passenger");
-        return _taxiRepository.Passengers.Select(passenger => _mapper.Map<PassengerGetDto>(passenger));
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        return await _mapper.ProjectTo<PassengerGetDto>(ctx.Passengers).ToListAsync();
     }
 
     /// <summary>
@@ -45,9 +47,10 @@ public class PassengerController : ControllerBase
     ///     Passenger with the required id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<PassengerGetDto> Get(ulong id)
+    public async Task<ActionResult<PassengerGetDto>> Get(ulong id)
     {
-        Passenger? passenger = _taxiRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Passenger? passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);
@@ -61,13 +64,21 @@ public class PassengerController : ControllerBase
     /// <summary>
     ///     Post method which add new passenger in passenger table
     /// </summary>
-    /// <param name="passenger"> New passenger for addition</param>
+    /// <param name="passengerToPost"> New passenger for addition</param>
     /// >
     [HttpPost]
-    public void Post([FromBody] PassengerPostDto passenger)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<PassengerGetDto>> Post(PassengerSetDto passengerToPost)
     {
         _logger.LogInformation("Post passenger");
-        _taxiRepository.Passengers.Add(_mapper.Map<Passenger>(passenger));
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        Passenger? mappedPassenger = _mapper.Map<Passenger>(passengerToPost);
+
+        await ctx.Passengers.AddAsync(mappedPassenger);
+        await ctx.SaveChangesAsync();
+        return CreatedAtAction("Post", new { id = mappedPassenger.Id },
+            _mapper.Map<PassengerGetDto>(mappedPassenger));
     }
 
     /// <summary>
@@ -79,9 +90,10 @@ public class PassengerController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] PassengerPostDto passengerToPut)
+    public async Task<IActionResult> Put(ulong id, PassengerSetDto passengerToPut)
     {
-        Passenger? passenger = _taxiRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Passenger? passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);
@@ -90,7 +102,8 @@ public class PassengerController : ControllerBase
 
         _logger.LogInformation("Put passenger with id={id}", id);
         _mapper.Map(passengerToPut, passenger);
-        return Ok();
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 
     /// <summary>
@@ -101,9 +114,10 @@ public class PassengerController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
-        Passenger? passenger = _taxiRepository.Passengers.FirstOrDefault(passenger => passenger.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Passenger? passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);
@@ -111,7 +125,8 @@ public class PassengerController : ControllerBase
         }
 
         _logger.LogInformation("Delete passenger with id={id}", id);
-        _taxiRepository.Passengers.Remove(passenger);
-        return Ok();
+        ctx.Passengers.Remove(passenger);
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 }

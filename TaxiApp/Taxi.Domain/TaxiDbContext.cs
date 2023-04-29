@@ -2,18 +2,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Taxi.Domain;
 
-public class TaxiContext: DbContext
+public class TaxiDbContext : DbContext
 {
+    public TaxiDbContext(DbContextOptions options) : base(options)
+    {
+        Database.EnsureCreated();
+    }
+
     public DbSet<Driver> Drivers { get; set; } = null!;
     public DbSet<Passenger> Passengers { get; set; } = null!;
     public DbSet<Ride> Rides { get; set; } = null!;
     public DbSet<Vehicle> Vehicles { get; set; } = null!;
     public DbSet<VehicleClassification> VehicleClassifications { get; set; } = null!;
-    
-    public TaxiContext(DbContextOptions options) : base(options)
-    {
-        Database.EnsureCreated();
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -186,7 +186,7 @@ public class TaxiContext: DbContext
                 Patronymic = "Данииловна",
                 PhoneNumber = "79023367578"
             });
-        
+
         var streets = new List<string> { "Советская", "Ульяновская", "Победы", "Володарского", "Дзержинского" };
         var dates = new List<DateTime>
         {
@@ -199,7 +199,7 @@ public class TaxiContext: DbContext
 
         for (var i = 0; i < 20; i++)
         {
-            modelBuilder.Entity<Ride>().HasData( 
+            modelBuilder.Entity<Ride>().HasData(
                 new Ride
                 {
                     Id = (ulong)i + 1,

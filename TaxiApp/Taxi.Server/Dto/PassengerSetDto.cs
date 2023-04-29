@@ -1,6 +1,6 @@
 namespace Taxi.Server.Dto;
 
-public class PassengerPostDto
+public class PassengerSetDto
 {
     /// <summary>
     ///     FirstName - first name of the passenger

@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Taxi.Domain;
 using Taxi.Server.Dto;
-using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -13,17 +13,16 @@ namespace Taxi.Server.Controllers;
 [ApiController]
 public class RideController : ControllerBase
 {
+    private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<RideController> _logger;
-
     private readonly IMapper _mapper;
 
-    private readonly ITaxiRepository _taxiRepository;
-
-    public RideController(ILogger<RideController> logger, ITaxiRepository taxiRepository, IMapper mapper)
+    public RideController(IDbContextFactory<TaxiDbContext> contextFactory, IMapper mapper,
+        ILogger<RideController> logger)
     {
-        _logger = logger;
-        _taxiRepository = taxiRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -33,10 +32,11 @@ public class RideController : ControllerBase
     ///     List of ride
     /// </returns>
     [HttpGet]
-    public IEnumerable<Ride> Get()
+    public async Task<IEnumerable<RideGetDto>> Get()
     {
         _logger.LogInformation("Get rides");
-        return _taxiRepository.Rides;
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        return await _mapper.ProjectTo<RideGetDto>(ctx.Rides).ToListAsync();
     }
 
     /// <summary>
@@ -47,9 +47,10 @@ public class RideController : ControllerBase
     ///     Ride with the required id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<Ride> Get(ulong id)
+    public async Task<ActionResult<RideGetDto>> Get(ulong id)
     {
-        Ride? ride = _taxiRepository.Rides.FirstOrDefault(ride => ride.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Ride? ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);
@@ -57,19 +58,27 @@ public class RideController : ControllerBase
         }
 
         _logger.LogInformation("Get ride with id={id}", id);
-        return Ok(ride);
+        return Ok(_mapper.Map<RideGetDto>(ride));
     }
 
     /// <summary>
     ///     Post method which add new ride in ride table
     /// </summary>
-    /// <param name="ride"> New ride for addition</param>
+    /// <param name="rideToPost"> New ride for addition</param>
     /// >
     [HttpPost]
-    public void Post([FromBody] RidePostDto ride)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<Ride>> Post(RideSetDto rideToPost)
     {
         _logger.LogInformation("Post ride");
-        _taxiRepository.Rides.Add(_mapper.Map<Ride>(ride));
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        Ride? mappedRide = _mapper.Map<Ride>(rideToPost);
+
+        await ctx.Rides.AddAsync(mappedRide);
+        await ctx.SaveChangesAsync();
+        return CreatedAtAction("Post", new { id = mappedRide.Id },
+            _mapper.Map<RideGetDto>(mappedRide));
     }
 
     /// <summary>
@@ -81,9 +90,10 @@ public class RideController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] RidePostDto rideToPut)
+    public async Task<IActionResult> Put(ulong id, RideSetDto rideToPut)
     {
-        Ride? ride = _taxiRepository.Rides.FirstOrDefault(ride => ride.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Ride? ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);
@@ -92,7 +102,8 @@ public class RideController : ControllerBase
 
         _logger.LogInformation("Put ride with id={id}", id);
         _mapper.Map(rideToPut, ride);
-        return Ok();
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 
     /// <summary>
@@ -103,9 +114,10 @@ public class RideController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
-        Ride? ride = _taxiRepository.Rides.FirstOrDefault(ride => ride.Id == id);
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        Ride? ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);
@@ -113,7 +125,8 @@ public class RideController : ControllerBase
         }
 
         _logger.LogInformation("Delete ride with id={id}", id);
-        _taxiRepository.Rides.Remove(ride);
-        return Ok();
+        ctx.Rides.Remove(ride);
+        await ctx.SaveChangesAsync();
+        return NoContent();
     }
 }

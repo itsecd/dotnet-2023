@@ -1,6 +1,6 @@
 namespace Taxi.Server.Dto;
 
-public class DriverPostDto
+public class DriverSetDto
 {
     /// <summary>
     ///     FirstName - first name of the driver

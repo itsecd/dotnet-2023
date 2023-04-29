@@ -16,7 +16,7 @@ builder.Services.AddSingleton<ITaxiRepository, TaxiRepository>();
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString(nameof(Taxi));
-builder.Services.AddDbContextFactory<TaxiContext>(optionsBuilder => optionsBuilder.UseMySQL(connectionString));
+builder.Services.AddDbContextFactory<TaxiDbContext>(optionsBuilder => optionsBuilder.UseMySQL(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

@@ -1,6 +1,6 @@
 namespace Taxi.Server.Dto;
 
-public class RidePostDto
+public class RideSetDto
 {
     /// <summary>
     ///     DeparturePoint - a address where the ride starts

@@ -1,6 +1,6 @@
 namespace Taxi.Server.Dto;
 
-public class VehiclePostDto
+public class VehicleSetDto
 {
     /// <summary>
     ///     RegistrationCarPlate - a sequence of letters and numbers used to identify the vehicle in real life

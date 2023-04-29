@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -14,15 +16,15 @@ namespace RecruitmentAgencyServer.Controllers;
 public class TitleController : ControllerBase
 {
     private readonly ILogger<TitleController> _logger;
-    private readonly IRecruitmentAgencyServerRepository _companiesRepository;
+    private readonly IDbContextFactory<RecruitmentAgencyContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public TitleController(ILogger<TitleController> logger, IRecruitmentAgencyServerRepository companiesRepository, IMapper mapper)
+    public TitleController(ILogger<TitleController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _companiesRepository = companiesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -30,10 +32,12 @@ public class TitleController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all titles</returns>
     [HttpGet]
-    public IEnumerable<TitleGetDto> Get()
+    public async Task<IEnumerable<TitleGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get titles");
-        return _companiesRepository.Titles.Select(title => _mapper.Map<TitleGetDto>(title));
+        var titles = _mapper.Map<IEnumerable<TitleGetDto>>(await ctx.Titles.ToListAsync());
+        return titles;
     }
     /// <summary>
     ///  Get method that returns a title with a specific id
@@ -41,10 +45,11 @@ public class TitleController : ControllerBase
     /// <param name="id">Title id</param>
     /// <returns>Title with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<TitleGetDto> Get(int id)
+    public async Task<ActionResult<TitleGetDto>> Get(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get title with id {id}");
-        var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
+        var title = ctx.Titles.FirstOrDefault(title => title.Id == id);
         if (title == null)
         {
             _logger.LogInformation("Not found title with id equals to: {id}", id);
@@ -57,9 +62,13 @@ public class TitleController : ControllerBase
     /// </summary>
     /// <param name="title"></param>
     [HttpPost]
-    public void Post([FromBody] TitleGetDto title)
+    public async Task<IActionResult> Post([FromBody] TitleGetDto title)
     {
-        _companiesRepository.Titles.Add(_mapper.Map<Title>(title));
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Post title");
+        await ctx.Titles.AddAsync(_mapper.Map<Title>(title));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -69,13 +78,18 @@ public class TitleController : ControllerBase
     /// <param name="titleToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TitleGetDto titleToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] TitleGetDto titleToPut)
     {
-        _logger.LogInformation($" Attempting to change a title with an id equal to =  {id}");
-        var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
-        if (title == null) return NotFound();
-        _mapper.Map<TitleGetDto, Title>(titleToPut, title);
-
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Put title with id {id}", id);
+        var title = ctx.Titles.FirstOrDefault(title => title.Id == id);
+        if (title == null)
+        {
+            _logger.LogInformation("Not found title with id {id}", id);
+            return NotFound();
+        }
+        ctx.Update(_mapper.Map(titleToPut, title));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
     /// <summary>
@@ -84,12 +98,18 @@ public class TitleController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        _logger.LogInformation($" Attempting to delete a title with an id equal to =  {id}");
-        var title = _companiesRepository.Titles.FirstOrDefault(title => title.Id == id);
-        if (title == null) return NotFound();
-        _companiesRepository.Titles.Remove(title);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Delete title with id ({id})", id);
+        var title = ctx.Titles.FirstOrDefault(title => title.Id == id);
+        if (title == null)
+        {
+            _logger.LogInformation("Not found title with id ({id})", id);
+            return NotFound();
+        }
+        ctx.Companies.Remove(title);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

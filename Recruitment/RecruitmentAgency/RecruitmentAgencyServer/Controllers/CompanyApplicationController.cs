@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -14,15 +16,15 @@ namespace RecruitmentAgencyServer.Controllers;
 public class CompanyApplicationController : ControllerBase
 {
     private readonly ILogger<CompanyApplicationController> _logger;
-    private readonly IRecruitmentAgencyServerRepository _companiesRepository;
+    private readonly IDbContextFactory<RecruitmentAgencyContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public CompanyApplicationController(ILogger<CompanyApplicationController> logger, IRecruitmentAgencyServerRepository companiesRepository, IMapper mapper)
+    public CompanyApplicationController(ILogger<CompanyApplicationController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _companiesRepository = companiesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -30,10 +32,12 @@ public class CompanyApplicationController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all companies applications</returns>
     [HttpGet]
-    public IEnumerable<CompanyApplicationGetDto> Get()
+    public async Task<IEnumerable<CompanyApplicationGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get companies applications");
-        return _companiesRepository.CompaniesApplications.Select(companyApplication => _mapper.Map<CompanyApplicationGetDto>(companyApplication));
+        var companyApplications = _mapper.Map<IEnumerable<CompanyApplicationGetDto>>(await ctx.Companies.ToListAsync());
+        return companyApplications;
     }
     /// <summary>
     ///  Get method that returns company application with a specific id
@@ -41,25 +45,30 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="id">Company application id</param>
     /// <returns>Company with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<CompanyApplicationGetDto> Get(int id)
+    public async Task<ActionResult<CompanyApplicationGetDto>> Get(int id)
     {
-        _logger.LogInformation($"Get company application with id {id}");
-        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation($"Get company applicaiton with id {id}");
+        var companyApplication = ctx.CompanyApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
         if (companyApplication == null)
         {
             _logger.LogInformation("Not found company application with id equals to: {id}", id);
             return NotFound();
         }
-        return Ok(_mapper.Map<CompanyApplicationGetDto>(companyApplication));
+        return Ok(_mapper.Map<CompanyGetDto>(companyApplication));
     }
     /// <summary>
     /// Post method that adding a new company application
     /// </summary>
     /// <param name="companyApplication"></param>
     [HttpPost]
-    public void Post([FromBody] CompanyApplicationGetDto companyApplication)
+    public async Task<IActionResult> Post([FromBody] CompanyApplicationGetDto companyApplication)
     {
-        _companiesRepository.CompaniesApplications.Add(_mapper.Map<CompanyApplication>(companyApplication));
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Post company application");
+        await ctx.CompanyApplications.AddAsync(_mapper.Map<CompanyApplication>(companyApplication));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -69,13 +78,18 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="companyApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CompanyApplicationGetDto companyApplicationToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] CompanyApplicationGetDto companyApplicationToPut)
     {
-        _logger.LogInformation($" Attempting to change a company application with an id equal to =  {id}");
-        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
-        if (companyApplication == null) return NotFound();
-        _mapper.Map<CompanyApplicationGetDto, CompanyApplication>(companyApplicationToPut, companyApplication);
-
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Put company application with id {id}", id);
+        var companyApplication = ctx.CompanyApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        if (companyApplication == null)
+        {
+            _logger.LogInformation("Not found company application with id {id}", id);
+            return NotFound();
+        }
+        ctx.Update(_mapper.Map(companyApplicationToPut, companyApplication));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
     /// <summary>
@@ -84,12 +98,18 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        _logger.LogInformation($" Attempting to delete a company application with an id equal to =  {id}");
-        var companyApplication = _companiesRepository.CompaniesApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
-        if (companyApplication == null) return NotFound();
-        _companiesRepository.CompaniesApplications.Remove(companyApplication);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Delete company  application with id ({id})", id);
+        var companyApplication = ctx.Companies.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        if (companyApplication == null)
+        {
+            _logger.LogInformation("Not found company application with id ({id})", id);
+            return NotFound();
+        }
+        ctx.Companies.Remove(companyApplication);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

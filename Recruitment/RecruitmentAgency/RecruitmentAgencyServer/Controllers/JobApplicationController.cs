@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -14,15 +16,15 @@ namespace RecruitmentAgencyServer.Controllers;
 public class JobApplicationController : ControllerBase
 {
     private readonly ILogger<JobApplicationController> _logger;
-    private readonly IRecruitmentAgencyServerRepository _companiesRepository;
+    private readonly IDbContextFactory<RecruitmentAgencyContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public JobApplicationController(ILogger<JobApplicationController> logger, IRecruitmentAgencyServerRepository companiesRepository, IMapper mapper)
+    public JobApplicationController(ILogger<JobApplicationController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _companiesRepository = companiesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -30,10 +32,12 @@ public class JobApplicationController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all job applications</returns>
     [HttpGet]
-    public IEnumerable<JobApplicationGetDto> Get()
+    public async Task<IEnumerable<JobApplicationGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get job applications");
-        return _companiesRepository.JobApplications.Select(jobApplication => _mapper.Map<JobApplicationGetDto>(jobApplication));
+        var jobApplications = _mapper.Map<IEnumerable<JobApplicationGetDto>>(await ctx.JobApplications.ToListAsync());
+        return jobApplications;
     }
     /// <summary>
     ///  Get method that returns a job Application with a specific id
@@ -41,10 +45,11 @@ public class JobApplicationController : ControllerBase
     /// <param name="id">Job Application id</param>
     /// <returns>Job application with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<JobApplicationGetDto> Get(int id)
+    public async Task<ActionResult<JobApplicationGetDto>> Get(int id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get job application with id {id}");
-        var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
+        var jobApplication = ctx.Companies.FirstOrDefault(jobApplication => jobApplication.Id == id);
         if (jobApplication == null)
         {
             _logger.LogInformation("Not found job application with id equals to: {id}", id);
@@ -57,9 +62,13 @@ public class JobApplicationController : ControllerBase
     /// </summary>
     /// <param name="jobApplication"></param>
     [HttpPost]
-    public void Post([FromBody] JobApplicationGetDto jobApplication)
+    public async Task<IActionResult> Post([FromBody] JobApplicationGetDto jobApplication)
     {
-        _companiesRepository.JobApplications.Add(_mapper.Map<JobApplication>(jobApplication));
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Post job application");
+        await ctx.JobApplications.AddAsync(_mapper.Map<JobApplication>(jobApplication));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -69,12 +78,18 @@ public class JobApplicationController : ControllerBase
     /// <param name="jobApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] JobApplicationGetDto jobApplicationToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] JobApplicationGetDto jobApplicationToPut)
     {
-        _logger.LogInformation($" Attempting to change a company with an id equal to =  {id}");
-        var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
-        if (jobApplication == null) return NotFound();
-        _mapper.Map<JobApplicationGetDto, JobApplication>(jobApplicationToPut, jobApplication);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Put job application  with id {id}", id);
+        var jobApplication = ctx.Companies.FirstOrDefault(jobApplication => jobApplication.Id == id);
+        if (jobApplication == null)
+        {
+            _logger.LogInformation("Not found job application with id {id}", id);
+            return NotFound();
+        }
+        ctx.Update(_mapper.Map(jobApplicationToPut, jobApplication));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
     /// <summary>
@@ -83,12 +98,18 @@ public class JobApplicationController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        _logger.LogInformation($" Attempting to delete a job application with an id equal to =  {id}");
-        var jobApplication = _companiesRepository.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
-        if (jobApplication == null) return NotFound();
-        _companiesRepository.JobApplications.Remove(jobApplication);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Delete job application with id ({id})", id);
+        var jobApplication = ctx.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
+        if (jobApplication == null)
+        {
+            _logger.LogInformation("Not found job application with id ({id})", id);
+            return NotFound();
+        }
+        ctx.JobApplications.Remove(jobApplication);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
 using RecruitmentAgencyServer.Repository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -14,15 +16,15 @@ namespace RecruitmentAgencyServer.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly ILogger<EmployeeController> _logger;
-    private readonly IRecruitmentAgencyServerRepository _companiesRepository;
+    private readonly IDbContextFactory<RecruitmentAgencyContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public EmployeeController(ILogger<EmployeeController> logger, IRecruitmentAgencyServerRepository companiesRepository, IMapper mapper)
+    public EmployeeController(ILogger<EmployeeController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _companiesRepository = companiesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -30,10 +32,12 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <returns>Returns a list of all employees</returns>
     [HttpGet]
-    public IEnumerable<EmployeeGetDto> Get()
+    public async Task<IEnumerable<EmployeeGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get employees");
-        return _companiesRepository.Employees.Select(employee => _mapper.Map<EmployeeGetDto>(employee));
+        var employees = _mapper.Map<IEnumerable<EmployeeGetDto>>(await ctx.Employees.ToListAsync());
+        return employees;
     }
     /// <summary>
     ///  Get method that returns an employee with a specific id
@@ -41,10 +45,12 @@ public class EmployeeController : ControllerBase
     /// <param name="id">Employee id</param>
     /// <returns>Employee with required id</returns>
     [HttpGet("{id}")]
-    public ActionResult<EmployeeGetDto> Get(int id)
+    public async Task<ActionResult<EmployeeGetDto>> Get(int id)
     {
+
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get employee with id {id}");
-        var employee = _companiesRepository.Employees.FirstOrDefault(employee => employee.Id == id);
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null)
         {
             _logger.LogInformation("Not found employee with id equals to: {id}", id);
@@ -57,9 +63,13 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <param name="employee"></param>
     [HttpPost]
-    public void Post([FromBody] EmployeePostDto employee)
+    public async Task<IActionResult> Post([FromBody] EmployeePostDto employee)
     {
-        _companiesRepository.Employees.Add(_mapper.Map<Employee>(employee));
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Post employee");
+        await ctx.Employees.AddAsync(_mapper.Map<Employee>(employee));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -69,11 +79,18 @@ public class EmployeeController : ControllerBase
     /// <param name="employeeToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] EmployeePostDto employeeToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] EmployeePostDto employeeToPut)
     {
-        _logger.LogInformation($" Attempting to change an employee with an id equal to =  {id}");
-        var employee = _companiesRepository.Companies.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) return NotFound();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Put employee with id {id}", id);
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
+        if (employee == null)
+        {
+            _logger.LogInformation("Not found employee with id {id}", id);
+            return NotFound();
+        }
+        ctx.Update(_mapper.Map(employeeToPut, employee));
+        await ctx.SaveChangesAsync();
         return Ok();
     }
     /// <summary>
@@ -82,12 +99,18 @@ public class EmployeeController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        _logger.LogInformation($" Attempting to delete an employee with an id equal to =  {id}");
-        var employee = _companiesRepository.Employees.FirstOrDefault(employee => employee.Id == id);
-        if (employee == null) return NotFound();
-        _companiesRepository.Employees.Remove(employee);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Delete employee with id ({id})", id);
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
+        if (employee == null)
+        {
+            _logger.LogInformation("Not found employee with id ({id})", id);
+            return NotFound();
+        }
+        ctx.Employees.Remove(employee);
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

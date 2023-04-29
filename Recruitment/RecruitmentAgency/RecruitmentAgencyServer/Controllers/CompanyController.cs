@@ -35,8 +35,8 @@ public class CompanyController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get companies");
-        var x = _mapper.Map<IEnumerable<CompanyGetDto>>(await ctx.Companies.ToListAsync());
-        return x;
+        var companies = _mapper.Map<IEnumerable<CompanyGetDto>>(await ctx.Companies.ToListAsync());
+        return companies;
     }
     /// <summary>
     ///  Get method that returns a company with a specific id
@@ -106,7 +106,7 @@ public class CompanyController : ControllerBase
         var company = ctx.Companies.FirstOrDefault(company => company.Id == id);
         if (company == null)
         {
-            _logger.LogInformation("Not found airplane with id ({id})", id);
+            _logger.LogInformation("Not found company with id ({id})", id);
             return NotFound();
         }
        ctx.Companies.Remove(company);

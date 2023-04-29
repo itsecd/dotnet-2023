@@ -1,8 +1,8 @@
-﻿using RecruitmentAgencyServer.Dto;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using RecruitmentAgencyServer;
+using RecruitmentAgencyServer.Dto;
 using System.Text;
 using System.Text.Json;
-using RecruitmentAgencyServer;
 
 namespace IntegrationTests;
 /// <summary>
@@ -31,7 +31,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
         {
             PropertyNameCaseInsensitive = true
         };
-        var titles = JsonSerializer.Deserialize <List<TitleGetDto>> (content, options);
+        var titles = JsonSerializer.Deserialize<List<TitleGetDto>>(content, options);
         Assert.Equal(1, titles?.Count);
     }
     /// <summary>

@@ -1,6 +1,6 @@
-﻿using RecruitmentAgencyServer.Dto;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
-using Microsoft.AspNetCore.Mvc.Testing;
+using RecruitmentAgencyServer.Dto;
 using System.Text;
 using System.Text.Json;
 
@@ -12,7 +12,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
 {
     private readonly WebApplicationFactory<Server> _factory;
     public JobApplicationIntegrationTests(WebApplicationFactory<Server> factory)
-    {   
+    {
         _factory = factory;
     }
     /// <summary>

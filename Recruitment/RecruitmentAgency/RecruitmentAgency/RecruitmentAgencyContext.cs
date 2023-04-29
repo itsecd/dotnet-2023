@@ -1,7 +1,4 @@
-﻿    using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace RecruitmentAgency;
 /// <summary>
@@ -12,7 +9,7 @@ public sealed class RecruitmentAgencyContext : DbContext
     public RecruitmentAgencyContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
-    }   
+    }
     public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<CompanyApplication> CompanyApplications { get; set; } = null!;
     public DbSet<Employee> Employees { get; set; } = null!;
@@ -30,7 +27,7 @@ public sealed class RecruitmentAgencyContext : DbContext
             firstCompany.Telephone = "540-031";
             firstCompany.ContactName = "Steve Peterson";
             firstCompany.Id = -1;
-            firstCompany.Applications.Add(companiesApplications[0].Id) ;
+            firstCompany.Applications.Add(companiesApplications[0].Id);
             companies.Add(firstCompany);
             var secondCompany = new Company();
             secondCompany.CompanyName = "Netflix";
@@ -267,7 +264,7 @@ public sealed class RecruitmentAgencyContext : DbContext
         index = 1;
         foreach (var company in companies)
         {
-            company.Id= index;
+            company.Id = index;
             modelBuilder.Entity<Company>().HasData(company);
             index++;
         }

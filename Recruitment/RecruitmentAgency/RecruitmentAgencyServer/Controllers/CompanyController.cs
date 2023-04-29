@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using RecruitmentAgencyServer.Repository;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -88,9 +87,9 @@ public class CompanyController : ControllerBase
             _logger.LogInformation("Not found company with id {id}", id);
             return NotFound();
         }
-            ctx.Update(_mapper.Map(companyToPut, company));
-            await ctx.SaveChangesAsync();
-            return Ok();
+        ctx.Update(_mapper.Map(companyToPut, company));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -109,8 +108,8 @@ public class CompanyController : ControllerBase
             _logger.LogInformation("Not found company with id ({id})", id);
             return NotFound();
         }
-       ctx.Companies.Remove(company);
-       await ctx.SaveChangesAsync();
-       return Ok();
+        ctx.Companies.Remove(company);
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 }

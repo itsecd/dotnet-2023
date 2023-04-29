@@ -131,7 +131,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         {
             PropertyNameCaseInsensitive = true
         };
-        var applicationReturned = JsonSerializer.Deserialize<CompanyApplicationGetDto> (content, options);
+        var applicationReturned = JsonSerializer.Deserialize<CompanyApplicationGetDto>(content, options);
         Assert.Equal(expectedApplication.Id, applicationReturned?.Id);
     }
 }

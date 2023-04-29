@@ -1,8 +1,8 @@
-﻿using RecruitmentAgencyServer;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Text.Json;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
+using System.Text;
+using System.Text.Json;
 
 namespace IntegrationTests;
 /// <summary>
@@ -109,10 +109,10 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         var client = _factory.CreateClient();
         var expectedCompany = new CompanyGetDto
         {
-            Id = 1, 
-            CompanyName = "Acme Inc.", 
-            Telephone = "555-1234", 
-            ContactName = "John Doe" 
+            Id = 1,
+            CompanyName = "Acme Inc.",
+            Telephone = "555-1234",
+            ContactName = "John Doe"
         };
 
         var response = await client.GetAsync("api/Company/1");

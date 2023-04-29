@@ -24,13 +24,12 @@ public class BicycleRental
     /// <summary>
     /// RentalStartTime - shows the rental Start time
     /// </summary> 
+    [Required]
     public DateTime RentalStartTime { get; set; }
     /// <summary>
     /// RentalEndTime - shows the rental end time
     /// </summary> 
+    [Required]
     public DateTime RentalEndTime { get; set; }
-    public double RentalDurationHours
-    {
-        get { return (RentalEndTime - RentalStartTime).TotalHours; }
-    }
+
 }

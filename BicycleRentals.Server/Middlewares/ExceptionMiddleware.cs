@@ -10,7 +10,11 @@ public class ExceptionMiddleware
 	/// </summary>
 	public readonly RequestDelegate next;
 
-	public ExceptionMiddleware(RequestDelegate next)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExceptionMiddleware"/> class.
+    /// </summary>
+    /// <param name="next">The next middleware in the pipeline.</param>
+    public ExceptionMiddleware(RequestDelegate next)
 	{
 		this.next = next;
 	}

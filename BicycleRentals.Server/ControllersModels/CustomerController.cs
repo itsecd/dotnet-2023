@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BicycleRentals.Domain;
-using BicycleRentals.Server.Controllers;
 using BicycleRentals.Server.Dto;
-using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,20 +50,24 @@ public class CustomerController : ControllerBase
             return NotFound();
         }
         else
-            return Ok(_mapper.Map<CustomerGetDto>(customer));
+        {
+            _logger.LogInformation($"GET: Get list of customer with id {id}");
+            return Ok(_mapper.Map<Customer, CustomerGetDto>(customer));
+        }
     }
 
     /// <summary> 
     /// Create a new customer. 
     /// </summary> 
-    /// <param name="CustomerPostDto">New bicycle. </param> 
-    /// <returns>New bicycle id.</returns>
+    /// <param name="CustomerPostDto">New customer. </param> 
+    /// <returns>New customer id.</returns>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CustomerPostDto c)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         await context.Customers.AddAsync(_mapper.Map<Customer>(c));
         await context.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new customer");
         return Ok();
     }
 
@@ -81,7 +83,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(c => c.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found bicycle with id {id}");
+            _logger.LogInformation($"Not found customer with id {id}");
             return NotFound();
         }
         else
@@ -89,6 +91,7 @@ public class CustomerController : ControllerBase
             _mapper.Map(c, customer);
             context.Customers.Update(_mapper.Map<Customer>(customer));
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly change customer with id {id}");
             return Ok();
         }
 
@@ -106,13 +109,14 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(c => c.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found bicycle with id {id}");
+            _logger.LogInformation($"Not found customer with id {id}");
             return NotFound();
         }
         else
         {
             context.Customers.Remove(customer);
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly delete customer with id {id}");
             return Ok();
         }
     }

@@ -1,6 +1,6 @@
-﻿using BicycleRentals.Domain;
-using BicycleRentals.Server.Respostory;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using AutoMapper;
+using BicycleRentals.Domain;
+using BicycleRentals.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +12,13 @@ public class BicycleTypeController : ControllerBase
     private readonly ILogger<BicycleTypeController> _logger;
 
     private readonly IDbContextFactory<BicycleRentalContext> _contextFactory;
-    public BicycleTypeController(ILogger<BicycleTypeController> logger, IDbContextFactory<BicycleRentalContext> contextFactory)
+
+    private readonly IMapper _mapper;
+    public BicycleTypeController(ILogger<BicycleTypeController> logger, IDbContextFactory<BicycleRentalContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
         _contextFactory = contextFactory;
+        _mapper = mapper;
     }
 
     /// <summary> 
@@ -23,11 +26,11 @@ public class BicycleTypeController : ControllerBase
     /// </summary> 
     /// <returns>The list of all types.</returns>
     [HttpGet]
-    public async Task<IEnumerable<BicycleType>> Get()
+    public async Task<IEnumerable<BicycleTypeGetDto>> Get()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("GET: Get list of type");
-        return await context.BicycleTypes.ToListAsync();
+        return _mapper.Map<IEnumerable<BicycleTypeGetDto>>(context.BicycleTypes);
     }
 
     /// <summary> 
@@ -36,7 +39,7 @@ public class BicycleTypeController : ControllerBase
     /// <param name="id">The type id.</param> 
     /// <returns>OK (the type found by the specified id) or NotFound. </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<BicycleType>> Get(int id)
+    public async Task<ActionResult<BicycleTypeGetDto>> Get(int id)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var bicycleType = await context.BicycleTypes.FirstOrDefaultAsync(bt => bt.TypeId == id);
@@ -46,6 +49,9 @@ public class BicycleTypeController : ControllerBase
             return NotFound();
         }
         else
-            return Ok(bicycleType);
+        {
+            _logger.LogInformation($"GET: Get list of type with id {id}");
+            return Ok(_mapper.Map<BicycleType, BicycleTypeGetDto>(bicycleType));
+        }
     }
 }

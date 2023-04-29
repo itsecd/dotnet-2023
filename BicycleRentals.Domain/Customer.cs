@@ -14,14 +14,17 @@ public class Customer
     /// <summary>
     /// FullName - shows the customer's name
     /// </summary> 
+    [Required]
     public string? FullName { get; set; }
     /// <summary>
     /// BirthYear - shows the customer's Year of Birth
     /// </summary> 
+    [Required]
     public int BirthYear { get; set; }
     /// <summary>
     /// Phone - shows the customer's telephone
     /// </summary> 
+    [Required]
     public string? Phone { get; set; }
     /// <summary>
     /// Rentals - shows the Rentals 

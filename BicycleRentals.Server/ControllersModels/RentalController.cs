@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BicycleRentals.Domain;
 using BicycleRentals.Server.Dto;
-using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +30,7 @@ public class RentalController : ControllerBase
     public async Task<IEnumerable<RentalGetDto>> Get()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("GET: Get list of customer");
+        _logger.LogInformation("GET: Get list of rental");
         return _mapper.Map<IEnumerable<RentalGetDto>>(context.BicycleRentals);
     }
 
@@ -47,11 +46,14 @@ public class RentalController : ControllerBase
         var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found customer with id {id}");
+            _logger.LogInformation($"Not found rental with id {id}");
             return NotFound();
         }
         else
-            return Ok(_mapper.Map<RentalGetDto>(rental));
+        {
+            _logger.LogInformation($"GET: Get list of rental with id {id}");
+            return Ok(_mapper.Map<BicycleRental, RentalGetDto>(rental));
+        }
     }
 
     /// <summary> 
@@ -65,6 +67,7 @@ public class RentalController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         await context.BicycleRentals.AddAsync(_mapper.Map<BicycleRental>(r));
         await context.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new rental");
         return Ok();
     }
 
@@ -80,7 +83,7 @@ public class RentalController : ControllerBase
         var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found bicycle with id {id}");
+            _logger.LogInformation($"Not found rental with id {id}");
             return NotFound();
         }
         else
@@ -88,6 +91,7 @@ public class RentalController : ControllerBase
             _mapper.Map(r, rental);
             context.BicycleRentals.Update(_mapper.Map<BicycleRental>(rental));
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly change rental with id {id}");
             return Ok();
         }
 
@@ -105,13 +109,14 @@ public class RentalController : ControllerBase
         var rental = await context.BicycleRentals.FirstOrDefaultAsync(r => r.RentalId == id);
         if (rental == null)
         {
-            _logger.LogInformation($"Not found bicycle with id {id}");
+            _logger.LogInformation($"Not found rental with id {id}");
             return NotFound();
         }
         else
         {
             context.BicycleRentals.Remove(rental);
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly delete rental with id {id}");
             return Ok();
         }
     }

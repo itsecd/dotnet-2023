@@ -20,11 +20,13 @@ public class Bicycle
     public BicycleType BicycleType { get; set; } = null!;
     /// <summary>
     /// Model - shows the Bicycle's model
-    /// </summary>     
+    /// </summary>   
+    [Required]
     public string? Model { get; set; }
     /// <summary>
     /// Color - shows the Bicycle's color
     /// </summary> 
+    [Required]
     public string? Color { get; set; }
     /// <summary>
     /// Rentals - shows the Rentals 

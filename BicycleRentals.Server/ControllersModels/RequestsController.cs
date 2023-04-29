@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using BicycleRentals.Domain;
 using BicycleRentals.Server.Dto;
-using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
-using System.Linq;
 
 namespace BicycleRentals.Server.ControllersModels;
 [Route("api/[controller]")]
@@ -29,28 +27,38 @@ public class RequestsController : ControllerBase
     /// </summary> 
     /// <returns>The list of all sports bicycles.</returns>
     [HttpGet("GetSportBicycles")]
-    public async Task<IEnumerable<BicycleGetDto>> GetSportBicycles()
+    public async Task<ActionResult<IEnumerable<BicycleGetDto>>> GetSportBicycles()
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        return await (from bicycle in context.Bicycles
-                      where bicycle.TypeId == 3
-                      select _mapper.Map<Bicycle, BicycleGetDto>(bicycle)).ToListAsync();
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var bicycles = await context.Bicycles
+            .Where(b => b.TypeId == 3)
+            .ToListAsync();
+        if (bicycles == null)
+            return NotFound();
+        _logger.LogInformation("Get list of all sports bicycles ");
+        return Ok(_mapper.Map<IEnumerable<BicycleGetDto>>(bicycles));
     }
+
+
 
     /// <summary> 
     /// Returns a list of all clients who rented mountain bicycles, sort by name.. 
     /// </summary> 
     /// <returns>The list of all clients who rented mountain bicycles, sort by name.</returns>
     [HttpGet("GetCustomersWhoRentedMountainBikes")]
-    public async Task<IEnumerable<CustomerGetDto>> GetCustomersWhoRentedMountainBikes()
+    public async Task<ActionResult<IEnumerable<CustomerGetDto>>> GetCustomersWhoRentedMountainBikes()
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        return await (from customer in context.Customers.Include(c => c.Rentals)
-                                   .ThenInclude(r => r.Bicycle)
-                                   .Where(c => c.Rentals.Any(r => r.Bicycle.TypeId == 1))
-                                   .OrderByDescending(c => c.FullName)
-                                   select _mapper.Map<Customer, CustomerGetDto>(customer))
-                                   .ToListAsync();               
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var customers = await context.Customers
+            .Include(c => c.Rentals)
+            .ThenInclude(r => r.Bicycle)
+            .Where(c => c.Rentals.Any(r => r.Bicycle.TypeId == 1))
+            .OrderBy(c => c.FullName)
+            .ToListAsync();
+        if (customers == null)
+            return NotFound();
+        _logger.LogInformation("Get list of all clients who rented mountain bicycles, sort by name ");
+        return Ok(_mapper.Map<IEnumerable<CustomerGetDto>>(customers));
     }
 
     /// <summary> 
@@ -58,43 +66,64 @@ public class RequestsController : ControllerBase
     /// </summary> 
     /// <returns>The list of the total rental time for each type of bicycle.</returns>
     [HttpGet("GetTotalRentalTimePerBicycleType")]
-    public async Task<IEnumerable> GetTotalRentalTimePerBicycleType()
+    public async Task<IActionResult> GetTotalRentalTimePerBicycleType()
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();       
-        return await (from rental in context.BicycleRentals.Include(r => r.Bicycle.TypeId)
-                      group rental by rental.Bicycle.TypeId into g
-                      select new{TypeId = g.Key,TotalTime = g.Sum(br => br.RentalDurationHours)}
-                      ).ToListAsync();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        var rentalTimes = await context.BicycleTypes
+            .Select(bt => new
+            {
+                Type_Name = bt.TypeName,
+                TotalRentalTime = bt.Bicycles
+                    .SelectMany(b => b.Rentals)
+                    .Sum(r => (r.RentalEndTime - r.RentalStartTime).TotalHours)
+            })
+            .ToListAsync();
+        if (rentalTimes == null)
+            return NotFound();
+        _logger.LogInformation("Get list of the total rental time for each type of bicycle ");
+        return Ok(rentalTimes);
     }
 
     /// <summary> 
     /// Returns customer who have rented more bicycles. 
     /// </summary> 
     /// <returns>customer who have rented more bicycles.</returns>
-    [HttpGet("GetCustomersWithMostRentalsReturnsCorrectCount")]
-    public async Task<IEnumerable> GetCustomersWithMostRentals()
+    [HttpGet("GetCustomersWithMostRentals")]
+    public async Task<IActionResult> GetCustomersWithMostRentals()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        return await ( from customer in context.Customers.Include(c => c.Rentals)
-                                        .OrderByDescending(c=> c.Rentals.Count())
-                                        .Take(1)                                         
-                                         select new{CustomerId = customer.FullName,RentalCount = customer.Rentals.Count()}
-                                         ).ToListAsync();        
+        var customer = await context.Customers
+            .Include(c => c.Rentals)
+            .OrderByDescending(c => c.Rentals.Count)
+            .FirstOrDefaultAsync();
+        if (customer == null)
+            return NotFound();
+
+        var response = new { CustomerId = customer.FullName ?? "Unknown", RentalCount = customer.Rentals.Count };
+        _logger.LogInformation("Get customer who have rented more bicycles ");
+        return Ok(response);
     }
 
     /// <summary> 
     /// Returns a list of the top 5 most frequently rented bicycles. 
     /// </summary> 
     /// <returns>top 5 most frequently rented bicycles.</returns>
+
     [HttpGet("Top5MostRentedBikes")]
-    public async Task<IEnumerable> Top5MostRentedBikes()
+    public async Task<IActionResult> Top5MostRentedBikes()
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        return await (from bicycle in context.Bicycles.Include(b => b.Rentals)
-           .OrderByDescending(b => b.Rentals.Count())
-           .Take(5)
-            select new { BicycleId = bicycle.SerialNumber, RentalCount = bicycle.Rentals.Count()}
-            ).ToListAsync();
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var bikes = await context.Bicycles
+            .Include(b => b.Rentals)
+            .OrderByDescending(b => b.Rentals.Count())
+            .Take(5)
+            .Select(b => new { BicycleId = b.SerialNumber, RentalCount = b.Rentals.Count })
+            .ToListAsync();
+        if (bikes == null)
+            return NotFound();
+        _logger.LogInformation("Get top 5 most frequently rented bicycles ");
+        return Ok(bikes);
     }
 
     /// <summary> 
@@ -102,17 +131,28 @@ public class RequestsController : ControllerBase
     /// </summary> 
     /// <returns>minimum, maximum and average bicycle rental time.</returns>
     [HttpGet("MinMaxAvgRentalTime")]
-    public async Task<IEnumerable> MinMaxAvgRentalTime()
+    public async Task<IActionResult> MinMaxAvgRentalTime()
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        return await (from rental in context.BicycleRentals.Include(r => r.Bicycle)     
-                      group rental by rental.Bicycle.TypeId into g
-                      select new
-                           {
-                               TypeId = g.Key,
-                               minRentalTime = g.Min(br => br.RentalDurationHours),
-                               maxRentalTime = g.Max(br => br.RentalDurationHours),
-                               avgRentalTime = g.Average(br => br.RentalDurationHours)
-                           }).ToListAsync();
+        using var context = await _contextFactory.CreateDbContextAsync();
+
+        var result = await context.BicycleTypes
+            .Select(bt => new
+            {
+                Type_Name = bt.TypeName,
+                MinRentalTime = bt.Bicycles
+                    .SelectMany(b => b.Rentals)
+                    .Min(r => (r.RentalEndTime - r.RentalStartTime).TotalHours),
+                MaxRentalTime = bt.Bicycles
+                    .SelectMany(b => b.Rentals)
+                    .Max(r => (r.RentalEndTime - r.RentalStartTime).TotalHours),
+                AvgRentalTime = bt.Bicycles
+                    .SelectMany(b => b.Rentals)
+                    .Average(r => (r.RentalEndTime - r.RentalStartTime).TotalHours)
+            })
+            .ToListAsync();
+        if (result == null)
+            return NotFound();
+        _logger.LogInformation("Get list of minimum, maximum and average bicycle rental time ");
+        return Ok(result);
     }
 }

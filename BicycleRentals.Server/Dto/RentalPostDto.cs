@@ -3,10 +3,6 @@
 public class RentalPostDto
 {
     /// <summary>
-    /// RentalId - shows the rental's id
-    /// </summary> 
-    public int RentalId { get; set; }
-    /// <summary>
     /// SerialNumber - shows the Bicycle's id
     /// </summary>  
     public int SerialNumber { get; set; }

@@ -7,6 +7,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<BicycleType, BicycleTypeGetDto>();
+
         CreateMap<Bicycle, BicycleGetDto>();
         CreateMap<Bicycle, BicyclePostDto>();
         CreateMap<BicyclePostDto, Bicycle>();

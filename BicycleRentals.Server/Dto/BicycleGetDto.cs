@@ -1,6 +1,4 @@
-﻿using BicycleRentals.Domain;
-
-namespace BicycleRentals.Server.Dto;
+﻿namespace BicycleRentals.Server.Dto;
 
 public class BicycleGetDto
 {
@@ -20,8 +18,4 @@ public class BicycleGetDto
     /// Color - shows the Bicycle's color
     /// </summary> 
     public string? Color { get; set; }
-    /// <summary>
-    /// Rentals - shows the Rentals 
-    /// </summary>
-    public List<BicycleRental> Rentals { get; set; } = new List<BicycleRental>();
 }

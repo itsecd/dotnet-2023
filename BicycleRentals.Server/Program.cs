@@ -12,9 +12,10 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddDbContextFactory<BicycleRentalContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString(nameof(BicycleRentals)) ?? "defaut connection string";
+    var connectionString = builder.Configuration.GetConnectionString(nameof(BicycleRentals));
     optionsBuilder.UseMySQL(connectionString);
 });
+
 // Add services to the container.
 
 builder.Services.AddControllers();

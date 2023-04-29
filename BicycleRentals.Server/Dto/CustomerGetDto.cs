@@ -20,8 +20,4 @@ public class CustomerGetDto
     /// Phone - shows the customer's telephone
     /// </summary> 
     public string? Phone { get; set; }
-    /// <summary>
-    /// Rentals - shows the Rentals 
-    /// </summary>
-    public List<BicycleRental> Rentals { get; set; } = new List<BicycleRental>();
 }

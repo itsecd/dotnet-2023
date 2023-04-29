@@ -1,8 +1,6 @@
 using AutoMapper;
 using BicycleRentals.Domain;
-using BicycleRentals.Server.ControllersModels;
 using BicycleRentals.Server.Dto;
-using BicycleRentals.Server.Respostory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,7 +49,10 @@ public class BicycleController : ControllerBase
             return NotFound();
         }
         else
-            return Ok(_mapper.Map<BicycleGetDto>(bicycle));
+        {
+            _logger.LogInformation($"GET: Get list of bicycle with id {id}");
+            return Ok(_mapper.Map<Bicycle, BicycleGetDto>(bicycle));
+        }
     }
 
     /// <summary> 
@@ -63,8 +64,9 @@ public class BicycleController : ControllerBase
     public async Task<IActionResult> Post([FromBody] BicyclePostDto b)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Bicycles.AddAsync(_mapper.Map<Bicycle>(b));
+        await context.Bicycles.AddAsync(_mapper.Map<BicyclePostDto,Bicycle>(b));
         await context.SaveChangesAsync();
+        _logger.LogInformation("Successfuly add new bicycle");
         return Ok();
     }
 
@@ -88,6 +90,7 @@ public class BicycleController : ControllerBase
             _mapper.Map(b, bicycle); //assign b to bicycle
             context.Bicycles.Update(_mapper.Map<Bicycle>(bicycle));
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly change bicycle id: {id}");
             return Ok();
         }
 
@@ -112,6 +115,7 @@ public class BicycleController : ControllerBase
         {
             context.Bicycles.Remove(bicycle);
             await context.SaveChangesAsync();
+            _logger.LogInformation($"Successfuly delete bicycle id: {id}");
             return Ok();
         }
     }

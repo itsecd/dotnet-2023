@@ -3,10 +3,6 @@
 public class BicyclePostDto
 {
     /// <summary>
-    /// SerialNumber - shows the Bicycle's id
-    /// </summary>  
-    public int SerialNumber { get; set; }
-    /// <summary>
     /// TypeId - shows the Type's id
     /// </summary>  
     public int TypeId { get; set; }

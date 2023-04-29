@@ -3,10 +3,6 @@
 public class CustomerPostDto
 {
     /// <summary>
-    /// Id - shows the customer's id
-    /// </summary> 
-    public int Id { get; set; }
-    /// <summary>
     /// FullName - shows the customer's name
     /// </summary> 
     public string? FullName { get; set; }

@@ -1,5 +1,11 @@
 ﻿namespace UniversityData.Server.Dto;
-
-public class UniversityPropertyDto
+/// <summary>
+/// Собственность зданий университета
+/// </summary>
+public class ConstructionPropertyDto
 {
+    /// <summary>
+    /// Название собственности зданий университета
+    /// </summary>
+    public string NameConstructionProperty { get; set; }
 }

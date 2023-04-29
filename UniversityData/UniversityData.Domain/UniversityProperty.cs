@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UniversityData.Domain;
-internal class UniversityProperty
+﻿namespace UniversityData.Domain;
+/// <summary>
+/// Собственность университета
+/// </summary>
+public class UniversityProperty
 {
+    /// <summary>
+    /// ID
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
+    /// Название собственности университета
+    /// </summary>
+    public string NameUniversityProperty { get; set; }
 }

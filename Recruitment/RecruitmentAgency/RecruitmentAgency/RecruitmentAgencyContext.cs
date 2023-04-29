@@ -87,15 +87,17 @@ public sealed class RecruitmentAgencyContext : DbContext
             firstTitle.Section = "It";
             firstTitle.JobTitle = "Backend";
             firstTitle.Id = 0;
+
             var secondTitle = new Title();
             secondTitle.Section = "It";
             secondTitle.JobTitle = "Frontend";
             secondTitle.Id = 1;
+
             var firstCompany = new Company();
             firstCompany.CompanyName = "Oracle";
             firstCompany.Telephone = "540-031";
             firstCompany.ContactName = "Steve Peterson";
-            firstCompany.Id = 0;
+            firstCompany.Id = 1;
             var firstApplication = new CompanyApplication();
             firstApplication.CompanyId = firstCompany.Id;
             firstApplication.WorkExperience = 0;
@@ -105,13 +107,15 @@ public sealed class RecruitmentAgencyContext : DbContext
             firstApplication.Education = "None";
             firstApplication.Id = 0;
             companiesApplications.Add(firstApplication);
+
+
             var secondCompany = new Company();
             secondCompany.CompanyName = "Netflix";
             secondCompany.Telephone = "532-176";
             secondCompany.ContactName = "Nikolay Petrov";
-            secondCompany.Id = 1;
+            secondCompany.Id = 2;
             var secondApplication = new CompanyApplication();
-            secondApplication.TitleId = secondCompany.Id;
+            secondApplication.CompanyId = secondCompany.Id;
             secondApplication.WorkExperience = 1;
             secondApplication.Salary = 60000;
             secondApplication.Date = new DateTime(2022, 5, 9);
@@ -119,13 +123,15 @@ public sealed class RecruitmentAgencyContext : DbContext
             secondApplication.Education = "Half";
             secondApplication.Id = 1;
             companiesApplications.Add(secondApplication);
+
+
             var thirdApplication = new CompanyApplication();
             var thirdCompany = new Company();
             thirdCompany.CompanyName = "Microsoft";
             thirdCompany.Telephone = "539-122";
             thirdCompany.ContactName = "Kyle Smith";
-            thirdCompany.Id = 2;
-            thirdApplication.TitleId = thirdCompany.Id;
+            thirdCompany.Id = 3;
+            thirdApplication.CompanyId = thirdCompany.Id;
             thirdApplication.WorkExperience = 2;
             thirdApplication.Salary = 70000;
             thirdApplication.Date = new DateTime(2022, 7, 6);
@@ -133,6 +139,8 @@ public sealed class RecruitmentAgencyContext : DbContext
             thirdApplication.Education = "Full";
             thirdApplication.Id = 2;
             companiesApplications.Add(thirdApplication);
+
+
             return companiesApplications;
         }
     }
@@ -205,20 +213,20 @@ public sealed class RecruitmentAgencyContext : DbContext
             thirdEmployee.Id = 2;
             var jobApplications = new List<JobApplication>();
             var firstApplication = new JobApplication();
-            firstApplication.EmployeeId = firstEmployee.Id;
-            firstApplication.TitleId = 0;
+            firstApplication.EmployeeId = 1;
+            firstApplication.TitleId = 1;
             firstApplication.Date = new DateTime(2022, 11, 11);
             firstApplication.Id = 0;
             jobApplications.Add(firstApplication);
             var secondApplication = new JobApplication();
-            secondApplication.EmployeeId = secondEmployee.Id;
-            secondApplication.TitleId = 1;
+            secondApplication.EmployeeId = 2;
+            secondApplication.TitleId = 2;
             secondApplication.Date = new DateTime(2022, 4, 9);
             secondApplication.Id = 1;
             jobApplications.Add(secondApplication);
             var thirdApplication = new JobApplication();
-            thirdApplication.EmployeeId = thirdEmployee.Id;
-            thirdApplication.TitleId = 0;
+            thirdApplication.EmployeeId = 3;
+            thirdApplication.TitleId = 1;
             thirdApplication.Date = new DateTime(2022, 6, 5);
             thirdApplication.Id = 2;
             jobApplications.Add(thirdApplication);

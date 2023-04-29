@@ -60,7 +60,7 @@ public class JobApplicationController : ControllerBase
     /// </summary>
     /// <param name="jobApplication"></param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] JobApplicationGetDto jobApplication)
+    public async Task<IActionResult> Post([FromBody] JobApplicationPostDto jobApplication)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post job application");
@@ -76,7 +76,7 @@ public class JobApplicationController : ControllerBase
     /// <param name="jobApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] JobApplicationGetDto jobApplicationToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] JobApplicationPostDto jobApplicationToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put job application  with id {id}", id);

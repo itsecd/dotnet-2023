@@ -60,7 +60,7 @@ public class TitleController : ControllerBase
     /// </summary>
     /// <param name="title"></param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] TitleGetDto title)
+    public async Task<IActionResult> Post([FromBody] TitlePostDto title)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post title");
@@ -76,7 +76,7 @@ public class TitleController : ControllerBase
     /// <param name="titleToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] TitleGetDto titleToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] TitlePostDto titleToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put title with id {id}", id);

@@ -24,10 +24,6 @@ public class EmployeePostDto
     /// Salary - shows the desired salary
     /// </summary>  
     public int Salary { set; get; }
-    /// <summary>  
-    /// id - shows the employee's id 
-    /// </summary>  
-    public int Id { set; get; }
 
 }
 

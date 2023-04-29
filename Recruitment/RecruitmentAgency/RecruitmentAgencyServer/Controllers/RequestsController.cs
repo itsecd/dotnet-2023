@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
+using System.ComponentModel.Design;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -37,18 +38,19 @@ public class RequestsController : ControllerBase
     public async Task<ActionResult<IEnumerable<JobApplicationGetDto>>> GetApplicantsRequestsForSpecificJobTitle(int jobTitle)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var query = (from jobApplications in ctx.JobApplications
-                     where jobApplications.TitleId == jobTitle
-                     orderby jobApplications.EmployeeId
-                     select _mapper.Map<JobApplicationGetDto>(jobApplications)).ToList();
-        if (query.Count == 0)
+        var result = await (from employee in ctx.Employees
+                            join jobApplication in ctx.JobApplications on employee.Id equals jobApplication.EmployeeId
+                            join title in ctx.Titles on jobApplication.TitleId equals title.Id
+                            where title.Id == jobTitle
+                            select employee).ToListAsync();
+        if (result.Count() == 0)
         {
             _logger.LogInformation("No applications for the title={jobTitle} position were found", jobTitle);
             return NotFound();
         }
 
         _logger.LogInformation("Get applications for the title = {jobTitle}", jobTitle);
-        return Ok(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -89,13 +91,20 @@ public class RequestsController : ControllerBase
     public async Task<ActionResult<IEnumerable<EmployeeGetDto>>> GetApplicantsThatMatchCompanyApplication(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var query = from jobApp in ctx.JobApplications
-                    join companyApp in ctx.CompanyApplications on jobApp.TitleId equals companyApp.TitleId
-                    join employee in ctx.Employees on jobApp.EmployeeId equals employee.Id
-                    where companyApp.Id == id
-                        && employee.Applications.Any(appId => appId == jobApp.Id)
-                    select employee;
-        if (!query.Any())
+        var query = await (from employee in ctx.Employees
+                           join jobApplication in ctx.JobApplications on employee.Id equals jobApplication.EmployeeId
+                           join companyApplication in ctx.CompanyApplications on jobApplication.TitleId equals companyApplication.TitleId
+                           where jobApplication.TitleId == id &&
+                                 employee.Salary <= companyApplication.Salary &&
+                                 employee.Education == companyApplication.Education
+                           select new 
+                           {
+                               PersonalName = employee.PersonalName,
+                               Salary = employee.Salary,
+                               CompanySalary = companyApplication.Salary
+                           }).ToListAsync();
+
+        if (query is null)
         {
             _logger.LogInformation("No match for company application with id = {id}", id);
             return NotFound();
@@ -113,19 +122,20 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("applications_number")]
-    public async Task<ActionResult<IEnumerable<TitleGetDto>>> GetNumberApplications()
+    public async Task<ActionResult> GetNumberApplications()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var query = from title in ctx.Titles
-                    group title by new { title.Section, title.JobTitle } into grp
-                    select new
-                    {
-                        Section = grp.Key.Section,
-                        JobTitle = grp.Key.JobTitle,
-                        NumApplications = grp.Sum(title => title.EmployeeApplications.Count + title.CompanyApplications.Count)
-                    };
+        var query = (from titles in ctx.Titles
+                     join jobApplications in ctx.JobApplications on titles.Id equals jobApplications.TitleId into jobApplicationsGroup
+                     select new
+                     {
+                         JobSection = titles.Section,
+                         JobTitle = titles.JobTitle,
+                         NumJobApplications = jobApplicationsGroup.Count(),
+                         NumCompanyApplications = titles.CompanyApplications.Count()
+                     }).ToList();
 
-        if (!query.Any())
+        if (query is null)
         {
             _logger.LogInformation("There are no requests");
             return NotFound();
@@ -143,17 +153,18 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("the_most_popular_companies")]
-    public async Task<ActionResult<IEnumerable<Company>>> GetTheMostPopularCompanies()
+    public async Task<ActionResult> GetTheMostPopularCompanies()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var query = ctx.Companies
-                  .OrderByDescending(c => c.Applications.Count)
-                  .Take(5)
-                  .Select(c => new
-                  {
-                      CompanyName = c.CompanyName,
-                      NumberOfApplications = c.Applications.Count
-                  });
+        var query = (from company in ctx.Companies
+                     join companyApplication in ctx.CompanyApplications on company.Id equals companyApplication.CompanyId into gj
+                     orderby gj.Count() descending
+                     select new
+                     {
+                         CompanyName = company.CompanyName,
+                         NumberOfApplications = gj.Count()
+                     }).Take(5).ToList();
+
         if (!query.Any())
         {
             _logger.LogInformation("There are no companies");
@@ -172,18 +183,17 @@ public class RequestsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("the_highest_wage")]
-    public async Task<ActionResult<IEnumerable<CompanyApplication>>> GetTheCompanyWithHighestWage()
+    public async Task<ActionResult> GetTheCompanyWithHighestWage()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var query = ctx.Companies
-                 .OrderByDescending(c => c.Applications
-                 .SelectMany(appId => ctx.CompanyApplications
-                  .Where(ca => ca.CompanyId == c.Id && ca.Id == appId)
-                   .Select(ca => ca.Salary))
-                   .Max())
-                 .Take(5);
-
-        if (!query.Any())
+        var query = (from companyApplication in ctx.CompanyApplications
+                     where companyApplication.Salary == (from companyApplicationSalaries in ctx.CompanyApplications
+                                                         select companyApplicationSalaries.Salary).Max()
+                     select new
+                     {
+                         CompanyRequest = companyApplication,
+                     }).ToList();
+        if (query is null)
         {
             _logger.LogInformation("There are no companies");
             return NotFound();

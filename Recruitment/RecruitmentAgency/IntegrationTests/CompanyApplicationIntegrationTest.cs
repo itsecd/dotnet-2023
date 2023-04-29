@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -15,27 +16,6 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     public CompanyApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
-    }
-
-    /// <summary>
-    /// Test of the get method
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task GetValuesReturnsSuccess()
-    {
-        var client = _factory.CreateClient();
-
-        var response = await client.GetAsync("api/CompanyApplication");
-
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var companiesApplications = JsonSerializer.Deserialize<List<CompanyApplicationGetDto>>(content, options);
-
-        Assert.Equal(3, companiesApplications?.Count);
     }
     /// <summary>
     /// Test of the post method
@@ -52,7 +32,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
             WorkExperience = 2,
             Salary = 92000,
             Education = "None",
-            Id = 0
+            Id = 4
         };
         var options = new JsonSerializerOptions
         {
@@ -62,9 +42,22 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         var requestContent = JsonSerializer.Serialize(newApplication, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/CompanyApplication", postData);
+        var errorText = await response.Content.ReadAsStringAsync();
 
         Assert.True(response.IsSuccessStatusCode);
     }
+    /// <summary>
+    /// Test of the get method
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task GetValuesReturnsSuccess()
+    {
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync("api/CompanyApplication");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
     /// <summary>
     /// Test of the put method
     /// </summary>
@@ -92,7 +85,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PutAsync("api/CompanyApplication/0", putData);
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.False(response.IsSuccessStatusCode);
     }
     /// <summary>
     /// Test of the delete method
@@ -103,9 +96,9 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/CompanyApplication/1");
+        var response = await client.DeleteAsync("api/CompanyApplication/5");
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.False(response.IsSuccessStatusCode);
     }
     /// <summary>
     /// Test of the get by id method

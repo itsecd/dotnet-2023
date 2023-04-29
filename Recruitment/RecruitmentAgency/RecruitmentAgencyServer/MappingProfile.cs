@@ -24,15 +24,15 @@ public class MappingProfile : Profile
         CreateMap<EmployeePostDto, Employee>();
 
         CreateMap<JobApplication, JobApplicationGetDto>();
-
-        CreateMap<JobApplicationGetDto, JobApplication>();
-        CreateMap<JobApplication, JobApplicationGetDto>();
+        CreateMap<JobApplication, JobApplicationPostDto>();
+        CreateMap<JobApplicationPostDto, JobApplication>();
 
         CreateMap<CompanyApplication, CompanyApplicationGetDto>();
-
+        CreateMap<CompanyApplicationPostDto, CompanyApplication>();
         CreateMap<CompanyApplicationGetDto, CompanyApplication>();
 
         CreateMap<Title, TitleGetDto>();
         CreateMap<TitleGetDto, Title>();
+        CreateMap<TitlePostDto, Title>();
     }
 }

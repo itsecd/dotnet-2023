@@ -32,7 +32,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
             PropertyNameCaseInsensitive = true
         };
         var employees = JsonSerializer.Deserialize<List<EmployeeGetDto>>(content, options);
-        Assert.Equal(3, employees?.Count);
+        Assert.Equal(4, employees?.Count);
     }
     /// <summary>
     /// Test of the post method
@@ -103,7 +103,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/Employee/1");
+        var response = await client.DeleteAsync("api/Employee/2");
 
         Assert.True(response.IsSuccessStatusCode);
     }

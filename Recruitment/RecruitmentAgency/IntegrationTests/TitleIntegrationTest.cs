@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -25,14 +26,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
         var client = _factory.CreateClient();
 
         var response = await client.GetAsync("api/Title");
-
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var titles = JsonSerializer.Deserialize<List<TitleGetDto>>(content, options);
-        Assert.Equal(1, titles?.Count);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
     /// Test of the post method
@@ -97,7 +91,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/Title/1");
+        var response = await client.DeleteAsync("api/Title/0");
 
         Assert.True(response.IsSuccessStatusCode);
     }

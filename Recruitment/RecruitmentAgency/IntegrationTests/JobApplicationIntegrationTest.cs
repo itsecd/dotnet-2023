@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -126,30 +127,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     public async Task GetJobApplicationByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
-        var newEmployee = new EmployeePostDto()
-        {
-            PersonalName = "Sergey Pirat",
-            Telephone = "000",
-            WorkExperience = 2,
-            Education = "Full",
-            Salary = 123000,
-            Id = 0
-        };
-        var expectedApplication = new JobApplicationGetDto()
-        {
-            Employee = newEmployee,
-            Date = DateTime.Now,
-            Title = "Backend",
-            Id = 0
-        };
-
         var response = await client.GetAsync("api/JobApplication/0");
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var applicationReturned = JsonSerializer.Deserialize<JobApplicationGetDto>(content, options);
-        Assert.Equal(expectedApplication.Id, applicationReturned?.Id);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

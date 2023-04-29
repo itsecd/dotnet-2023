@@ -1,4 +1,7 @@
-﻿namespace RecruitmentAgency;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecruitmentAgency;
 /// <summary>
 /// Employee - a class that describes the characteristics of a worker
 /// </summary>
@@ -27,10 +30,11 @@ public class Employee
     /// <summary>  
     /// id - shows the employee's id 
     /// </summary>  
+    [Key]
     public int Id { set; get; }
     /// <summary>
     /// Applications - shows the current employee's applications
     /// </summary>
-    public List<JobApplication> Applications { set; get; } = new List<JobApplication>();
+    public List<int> Applications { set; get; } = new List<int>();
 
 }

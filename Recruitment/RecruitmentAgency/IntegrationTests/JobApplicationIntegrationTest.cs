@@ -12,7 +12,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
 {
     private readonly WebApplicationFactory<Server> _factory;
     public JobApplicationIntegrationTests(WebApplicationFactory<Server> factory)
-    {
+    {   
         _factory = factory;
     }
     /// <summary>

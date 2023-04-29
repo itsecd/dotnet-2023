@@ -1,4 +1,7 @@
-﻿namespace RecruitmentAgency;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecruitmentAgency;
 /// <summary>
 /// Title - a class that describes the field of work and position
 /// </summary>
@@ -15,13 +18,14 @@ public class Title
     /// <summary>  
     /// id - shows the title's
     /// </summary>  
+    [Key]
     public int Id { set; get; }
     /// <summary>
     /// Applications - shows the employees' applications 
     /// </summary>
-    public List<JobApplication> EmployeeApplications { set; get; } = new List<JobApplication>();
+    public List<int> EmployeeApplications { set; get; } = new List<int>();
     /// <summary>
     /// Applications - shows the company requests
     /// </summary>
-    public List<CompanyApplication> CompanyApplications { set; get; } = new List<CompanyApplication>();
+    public List<int> CompanyApplications { set; get; } = new List<int>();
 }

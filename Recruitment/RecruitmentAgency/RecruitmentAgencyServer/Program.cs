@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using RecruitmentAgency;
 using RecruitmentAgencyServer.Repository;
 using System.Reflection;
 
@@ -17,9 +19,16 @@ public class Server
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDbContextFactory<RecruitmentAgencyContext>(optionsBuilder =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString(nameof(RecruitmentAgency));
+            optionsBuilder.UseMySQL(connectionString);
+        });
+
         var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
         var mapper = mapperConfig.CreateMapper();
         builder.Services.AddSingleton(mapper);
+
 
         builder.Services.AddSingleton<IRecruitmentAgencyServerRepository, RecruitmentAgencyServerRepository>();
 

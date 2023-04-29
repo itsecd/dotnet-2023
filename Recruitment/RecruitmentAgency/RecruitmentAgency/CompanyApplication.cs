@@ -1,4 +1,7 @@
-﻿namespace RecruitmentAgency;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecruitmentAgency;
 /// <summary>
 /// Company - a class that describes the company application
 /// </summary>
@@ -23,13 +26,16 @@ public class CompanyApplication
     /// <summary>  
     /// id - shows the company's application id
     /// </summary>  
+    [Key]
     public int Id { set; get; }
     /// <summary>
     /// Company - contains information about the company
-    /// </summary>  
-    public Company? Company { get; set; }
+    /// </summary>
+    [ForeignKey("CompanyId")]
+    public int CompanyId { get; set; }
     /// <summary>
     /// Title - shows the job id
     /// </summary>
-    public Title? Title { set; get; }
+    [ForeignKey("TitleId")]
+    public int TitleId { set; get; }
 }

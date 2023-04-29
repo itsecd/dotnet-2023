@@ -1,31 +1,24 @@
-﻿using RecruitmentAgency;
+﻿    using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
-namespace RecruitmentAgencyServer.Repository;
-
+namespace RecruitmentAgency;
 /// <summary>
-/// A class for storing and modifying table data
+/// Class represented a DbContext of RecruitmentAgency
 /// </summary>
-public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerRepository
+public sealed class RecruitmentAgencyContext : DbContext
 {
-    private readonly List<Company> _companies;
-    private readonly List<Title> _titles;
-    private readonly List<CompanyApplication> _companiesApplications;
-    private readonly List<Employee> _employees;
-    private readonly List<JobApplication> _jobApplications;
-    /// <summary>
-    /// A constructor that adds some default values for tables
-    /// </summary>
-    public RecruitmentAgencyServerRepository()
+    public RecruitmentAgencyContext(DbContextOptions options) : base(options)
     {
-        _companies = RepositoryCompanies;
-        _titles = RepositoryTitles;
-        _companiesApplications = RepositoryCompaniesApplications;
-        _employees = RepositoryEmployees;
-        _jobApplications = RepositoryJobApplications;
-    }
-    /// <summary>
-    /// Return the list of companies with default values
-    /// </summary>
+        Database.EnsureCreated();
+    }   
+    public DbSet<Company> Companies { get; set; } = null!;
+    public DbSet<CompanyApplication> CompanyApplications { get; set; } = null!;
+    public DbSet<Employee> Employees { get; set; } = null!;
+    public DbSet<JobApplication> JobApplications { get; set; } = null!;
+    public DbSet<Title> Titles { get; set; } = null!;
+
     private List<Company> RepositoryCompanies
     {
         get
@@ -36,21 +29,21 @@ public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerReposit
             firstCompany.CompanyName = "Oracle";
             firstCompany.Telephone = "540-031";
             firstCompany.ContactName = "Steve Peterson";
-            firstCompany.Id = 0;
-            firstCompany.Applications.Add(companiesApplications[0].Id);
+            firstCompany.Id = -1;
+            firstCompany.Applications.Add(companiesApplications[0].Id) ;
             companies.Add(firstCompany);
             var secondCompany = new Company();
             secondCompany.CompanyName = "Netflix";
             secondCompany.Telephone = "532-176";
             secondCompany.ContactName = "Nikolay Petrov";
-            secondCompany.Id = 1;
+            secondCompany.Id = -2;
             secondCompany.Applications.Add(companiesApplications[1].Id);
             companies.Add(secondCompany);
             var thirdCompany = new Company();
             thirdCompany.CompanyName = "Microsoft";
             thirdCompany.Telephone = "539-122";
             thirdCompany.ContactName = "Kyle Smith";
-            thirdCompany.Id = 2;
+            thirdCompany.Id = -3;
             thirdCompany.Applications.Add(companiesApplications[2].Id);
             companies.Add(thirdCompany);
             return companies;
@@ -121,7 +114,7 @@ public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerReposit
             secondCompany.ContactName = "Nikolay Petrov";
             secondCompany.Id = 1;
             var secondApplication = new CompanyApplication();
-            secondApplication.CompanyId = secondCompany.Id;
+            secondApplication.TitleId = secondCompany.Id;
             secondApplication.WorkExperience = 1;
             secondApplication.Salary = 60000;
             secondApplication.Date = new DateTime(2022, 5, 9);
@@ -135,7 +128,7 @@ public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerReposit
             thirdCompany.Telephone = "539-122";
             thirdCompany.ContactName = "Kyle Smith";
             thirdCompany.Id = 2;
-            thirdApplication.CompanyId = thirdCompany.Id;
+            thirdApplication.TitleId = thirdCompany.Id;
             thirdApplication.WorkExperience = 2;
             thirdApplication.Salary = 70000;
             thirdApplication.Date = new DateTime(2022, 7, 6);
@@ -235,24 +228,57 @@ public class RecruitmentAgencyServerRepository : IRecruitmentAgencyServerReposit
             return jobApplications;
         }
     }
-    /// <summary>
-    /// A list of Companies that will change by methods
-    /// </summary>
-    public List<Company> Companies => _companies;
-    /// <summary>
-    /// A list of Titles that will change by methods
-    /// </summary>
-    public List<Title> Titles => _titles;
-    /// <summary>
-    /// A list of CompaniesApplications that will change by methods
-    /// </summary>
-    public List<CompanyApplication> CompaniesApplications => _companiesApplications;
-    /// <summary>
-    /// A list of Employess that will change by methods
-    /// </summary>
-    public List<Employee> Employees => _employees;
-    /// <summary>
-    /// A list of JobApplications that will change by methods
-    /// </summary>
-    public List<JobApplication> JobApplications => _jobApplications;
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        var companies = RepositoryCompanies;
+        var companyApplications = RepositoryCompaniesApplications;
+        var employees = RepositoryEmployees;
+        var jobApplications = RepositoryJobApplications;
+        var titles = RepositoryTitles;
+        modelBuilder.Entity<Company>().Ignore(company => company.Applications);
+        modelBuilder.Entity<Employee>().Ignore(employee => employee.Applications);
+        modelBuilder.Entity<Title>().Ignore(title => title.CompanyApplications);
+        modelBuilder.Entity<Title>().Ignore(title => title.EmployeeApplications);
+
+        var index = 1;
+        foreach (var title in titles)
+        {
+            title.Id = index;
+            modelBuilder.Entity<Title>().HasData(title);
+            index++;
+        }
+
+        index = 1;
+        foreach (var companyApplication in companyApplications)
+        {
+            companyApplication.Id = index;
+            modelBuilder.Entity<CompanyApplication>().HasData(companyApplication);
+            index++;
+        }
+
+        index = 1;
+        foreach (var jobApplication in jobApplications)
+        {
+            jobApplication.Id = index;
+            modelBuilder.Entity<JobApplication>().HasData(jobApplication);
+            index++;
+        }
+
+        index = 1;
+        foreach (var company in companies)
+        {
+            company.Id= index;
+            modelBuilder.Entity<Company>().HasData(company);
+            index++;
+        }
+
+
+        index = 1;
+        foreach (var employee in employees)
+        {
+            employee.Id = index;
+            modelBuilder.Entity<Employee>().HasData(employee);
+            index++;
+        }
+    }
 }

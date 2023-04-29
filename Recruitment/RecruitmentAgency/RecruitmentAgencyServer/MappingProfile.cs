@@ -23,8 +23,7 @@ public class MappingProfile : Profile
         CreateMap<Employee, EmployeePostDto>();
         CreateMap<EmployeePostDto, Employee>();
 
-        CreateMap<JobApplication, JobApplicationGetDto>()
-             .ForMember(dest => dest.Employee, opt => opt.MapFrom(src => src.Employee.Id));
+        CreateMap<JobApplication, JobApplicationGetDto>();
 
         CreateMap<JobApplicationGetDto, JobApplication>();
         CreateMap<JobApplication, JobApplicationGetDto>();

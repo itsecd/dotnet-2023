@@ -106,7 +106,7 @@ public class TitleController : ControllerBase
             _logger.LogInformation("Not found title with id ({id})", id);
             return NotFound();
         }
-        ctx.Companies.Remove(title);
+        ctx.Titles.Remove(title);
         await ctx.SaveChangesAsync();
         return Ok();
     }

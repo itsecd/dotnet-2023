@@ -108,7 +108,7 @@ public class TicketController : ControllerBase
         var ticket = await ctx.Tickets.FirstOrDefaultAsync(ticket => ticket.Id == idTicket);
         if (ticket == null)
         {
-            _logger.LogInformation($"Not found ticket : {idTicket}");
+            _logger.LogInformation("Not found ticket : {idTicket}", idTicket);
             return NotFound($"The ticket does't exist by this id {idTicket}");
         }
         else

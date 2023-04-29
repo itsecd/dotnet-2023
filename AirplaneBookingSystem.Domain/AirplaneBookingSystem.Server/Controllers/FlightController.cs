@@ -110,7 +110,7 @@ public class FlightController : ControllerBase
                                         .FirstOrDefaultAsync(flights => flights.Id == idFlight);
         if (flight == null)
         {
-            _logger.LogInformation($"Not found flight : {idFlight}");
+            _logger.LogInformation("Not found flight : {idFlight}", idFlight);
             return NotFound($"The flight does't exist by this id {idFlight}");
         }
         else

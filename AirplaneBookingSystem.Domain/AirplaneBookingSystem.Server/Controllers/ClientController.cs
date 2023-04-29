@@ -109,7 +109,7 @@ public class ClientController : ControllerBase
                                         .FirstOrDefaultAsync(clients => clients.Id == idClient);
         if (client == null)
         {
-            _logger.LogInformation($"Not found client : {idClient}");
+            _logger.LogInformation("Not found client : {idClient}", idClient);
             return NotFound($"The client does't exist by this id {idClient}");
         }
         else

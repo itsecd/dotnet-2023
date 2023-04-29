@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using System.ComponentModel.Design;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -97,7 +96,7 @@ public class RequestsController : ControllerBase
                            where jobApplication.TitleId == id &&
                                  employee.Salary <= companyApplication.Salary &&
                                  employee.Education == companyApplication.Education
-                           select new 
+                           select new
                            {
                                PersonalName = employee.PersonalName,
                                Salary = employee.Salary,

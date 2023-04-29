@@ -49,8 +49,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
             Telephone = "000",
             WorkExperience = 2,
             Education = "Full",
-            Salary = 123000,
-            Id = 0
+            Salary = 123000
         };
 
         var options = new JsonSerializerOptions
@@ -79,8 +78,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
             Telephone = "000",
             WorkExperience = 2,
             Education = "Full",
-            Salary = 123000,
-            Id = 0
+            Salary = 123000
         };
 
         var options = new JsonSerializerOptions

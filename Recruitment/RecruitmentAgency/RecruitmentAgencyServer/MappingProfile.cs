@@ -30,6 +30,7 @@ public class MappingProfile : Profile
         CreateMap<CompanyApplication, CompanyApplicationGetDto>();
         CreateMap<CompanyApplicationPostDto, CompanyApplication>();
         CreateMap<CompanyApplicationGetDto, CompanyApplication>();
+        CreateMap<CompanyApplicationPostDto, CompanyApplication>();
 
         CreateMap<Title, TitleGetDto>();
         CreateMap<TitleGetDto, Title>();

@@ -2,6 +2,7 @@
 using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
 using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -28,6 +29,8 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         var response = await client.GetAsync("api/Company");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var companies = await response.Content.ReadFromJsonAsync<IEnumerable<CompanyGetDto>>();
+        Assert.NotNull(companies);
     }
     /// <summary>
     /// Test of the post method
@@ -102,7 +105,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     public async Task GetCompanyByIdReturnsSuccess()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync("api/Company/2");
+        var response = await client.GetAsync("api/Company/15");
         var content = await response.Content.ReadAsStringAsync();
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

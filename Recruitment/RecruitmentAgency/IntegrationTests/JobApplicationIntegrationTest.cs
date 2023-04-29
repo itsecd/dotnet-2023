@@ -49,8 +49,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
             Telephone = "000",
             WorkExperience = 2,
             Education = "Full",
-            Salary = 123000,
-            Id = 0
+            Salary = 123000
         };
         var newApplication = new JobApplicationGetDto()
         {
@@ -84,8 +83,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
             Telephone = "000",
             WorkExperience = 2,
             Education = "Full",
-            Salary = 123000,
-            Id = 0
+            Salary = 123000
         };
         var newApplication = new JobApplicationGetDto()
         {

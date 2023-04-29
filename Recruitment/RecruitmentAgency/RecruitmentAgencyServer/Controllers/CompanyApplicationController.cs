@@ -33,10 +33,11 @@ public class CompanyApplicationController : ControllerBase
     public async Task<IEnumerable<CompanyApplicationGetDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get companies applications");
-        var companyApplications = _mapper.Map<IEnumerable<CompanyApplicationGetDto>>(await ctx.CompanyApplications.ToListAsync());
-        return companyApplications;
+        _logger.LogInformation("Get company applications");
+        var companyApplications = await ctx.CompanyApplications.ToListAsync();
+        return _mapper.Map<IEnumerable<CompanyApplicationGetDto>>(companyApplications);
     }
+
     /// <summary>
     ///  Get method that returns company application with a specific id
     /// </summary>
@@ -46,11 +47,12 @@ public class CompanyApplicationController : ControllerBase
     public async Task<ActionResult<CompanyApplicationGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get company applicaiton with id {id}");
-        var companyApplication = ctx.CompanyApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        _logger.LogInformation($"Get company application with id {id}");
+        var companyApplication = await ctx.CompanyApplications
+                                            .Where(ca => ca.Id == id)
+                                            .FirstOrDefaultAsync();
         if (companyApplication == null)
         {
-            _logger.LogInformation("Not found company application with id equals to: {id}", id);
             return NotFound();
         }
         return Ok(_mapper.Map<CompanyApplicationGetDto>(companyApplication));
@@ -69,6 +71,7 @@ public class CompanyApplicationController : ControllerBase
         return Ok();
     }
 
+
     /// <summary>
     /// Put method which allows change the data of company application with a specific id
     /// </summary>
@@ -76,7 +79,7 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="companyApplicationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] CompanyApplicationPostDto companyApplicationToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] CompanyApplicationPostDto companyApplicationToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put company application with id {id}", id);
@@ -96,7 +99,7 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Delete company  application with id ({id})", id);

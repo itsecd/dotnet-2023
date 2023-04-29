@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
+using System.Collections.Generic;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -34,8 +35,8 @@ public class CompanyController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get companies");
-        var companies = _mapper.Map<IEnumerable<CompanyGetDto>>(await ctx.Companies.ToListAsync());
-        return companies;
+        var companies = await ctx.Companies.ToListAsync();
+        return _mapper.Map<IEnumerable<CompanyGetDto>>(companies);
     }
     /// <summary>
     ///  Get method that returns a company with a specific id

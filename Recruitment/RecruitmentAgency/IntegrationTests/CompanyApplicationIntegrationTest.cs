@@ -26,23 +26,18 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     {
         var client = _factory.CreateClient();
 
-        var newApplication = new CompanyApplicationGetDto()
+        var newCompany = new CompanyApplicationPostDto()
         {
-            Date = DateTime.Now,
-            WorkExperience = 2,
-            Salary = 92000,
-            Education = "None",
-            Id = 4
+            
         };
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true
         };
-        var requestContent = JsonSerializer.Serialize(newApplication, options);
+        var requestContent = JsonSerializer.Serialize(newCompany, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await client.PostAsync("api/CompanyApplication", postData);
-        var errorText = await response.Content.ReadAsStringAsync();
 
         Assert.True(response.IsSuccessStatusCode);
     }

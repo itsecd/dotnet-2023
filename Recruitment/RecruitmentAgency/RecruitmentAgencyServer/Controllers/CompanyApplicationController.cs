@@ -34,7 +34,7 @@ public class CompanyApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get companies applications");
-        var companyApplications = _mapper.Map<IEnumerable<CompanyApplicationGetDto>>(await ctx.Companies.ToListAsync());
+        var companyApplications = _mapper.Map<IEnumerable<CompanyApplicationGetDto>>(await ctx.CompanyApplications.ToListAsync());
         return companyApplications;
     }
     /// <summary>
@@ -53,7 +53,7 @@ public class CompanyApplicationController : ControllerBase
             _logger.LogInformation("Not found company application with id equals to: {id}", id);
             return NotFound();
         }
-        return Ok(_mapper.Map<CompanyGetDto>(companyApplication));
+        return Ok(_mapper.Map<CompanyApplicationGetDto>(companyApplication));
     }
     /// <summary>
     /// Post method that adding a new company application
@@ -100,13 +100,13 @@ public class CompanyApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Delete company  application with id ({id})", id);
-        var companyApplication = ctx.Companies.FirstOrDefault(companyApplication => companyApplication.Id == id);
+        var companyApplication = ctx.CompanyApplications.FirstOrDefault(companyApplication => companyApplication.Id == id);
         if (companyApplication == null)
         {
             _logger.LogInformation("Not found company application with id ({id})", id);
             return NotFound();
         }
-        ctx.Companies.Remove(companyApplication);
+        ctx.CompanyApplications.Remove(companyApplication);
         await ctx.SaveChangesAsync();
         return Ok();
     }

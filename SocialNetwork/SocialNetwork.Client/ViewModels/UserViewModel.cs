@@ -1,6 +1,8 @@
 ﻿
 using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Reactive;
 
 namespace SocialNetwork.Client.ViewModels;
 
@@ -14,16 +16,18 @@ public class UserViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _id, value); 
 	}
 
-	private string _name = string.Empty;
+	private string _firstName = string.Empty;
 
+	[Required]
 	public string FirstName 
 	{
-		get => _name;
-		set => this.RaiseAndSetIfChanged(ref _name, value);
+		get => _firstName;
+		set => this.RaiseAndSetIfChanged(ref _firstName, value);
 	}
 
 	private string _lastName = string.Empty;
 
+	[Required]
 	public string LastName 
 	{
 		get => _lastName;
@@ -32,6 +36,7 @@ public class UserViewModel : ViewModelBase
 
 	private string _patronymic = string.Empty;
 
+	[Required]
 	public string Patronymic 
 	{
 		get => _patronymic;
@@ -40,6 +45,7 @@ public class UserViewModel : ViewModelBase
 
 	private string _gender = string.Empty;
 
+	[Required]
 	public string Gender 
 	{
 		get => _gender;
@@ -48,6 +54,7 @@ public class UserViewModel : ViewModelBase
 
 	private DateTime? _birthDate;
 
+	[Required]
 	public DateTime? BirthDate 
 	{
 		get => _birthDate;
@@ -56,9 +63,17 @@ public class UserViewModel : ViewModelBase
 
 	private DateTime? _registrationDate;
 
+	[Required]
 	public DateTime? RegistrationDate 
 	{
 		get => _registrationDate;
 		set => this.RaiseAndSetIfChanged(ref _registrationDate, value);
+	}
+
+	public ReactiveCommand<Unit, UserViewModel> OnSubmitCommand { get; set; }
+
+	public UserViewModel()
+	{
+		OnSubmitCommand = ReactiveCommand.Create(() => this);
 	}
 }

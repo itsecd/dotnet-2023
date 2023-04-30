@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.Extensions.Configuration;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SocialNetwork.Client;
@@ -18,7 +18,7 @@ public class ApiWrapper
 			.Build();
 
 		_client = new ApiClient(configuration.GetSection("ServerUrl").Value, 
-			new System.Net.Http.HttpClient());
+			new HttpClient());
 	}
 
 	public async Task<ICollection<GroupDtoGet>> GetAllGroups() => await _client.GetAllGroupsAsync();

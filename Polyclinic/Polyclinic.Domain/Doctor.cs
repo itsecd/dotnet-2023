@@ -56,20 +56,4 @@ public class Doctor
     public Doctor()
     {
     }
-
-    /*/// <summary>
-    /// method for adding an appointment to the doctor's list of appointments
-    /// </summary>
-    public void AddToRegList(int id)
-    {
-        RegistrationsList.Add(id);
-    }
-    /// <summary>
-    /// method for adding admission conclusions to the list of doctor's conclusions
-    /// </summary>
-    public void AddToComList(int id)
-    {
-        RegistrationsList.Add(id);
-    }*/
-
 }

@@ -240,12 +240,36 @@ public sealed class RecruitmentAgencyContext : DbContext
         var employees = RepositoryEmployees;
         var jobApplications = RepositoryJobApplications;
         var titles = RepositoryTitles;
+        var index = 1;
         modelBuilder.Entity<Company>().Ignore(company => company.Applications);
         modelBuilder.Entity<Employee>().Ignore(employee => employee.Applications);
         modelBuilder.Entity<Title>().Ignore(title => title.CompanyApplications);
         modelBuilder.Entity<Title>().Ignore(title => title.EmployeeApplications);
 
-        var index = 1;
+        modelBuilder.Entity<CompanyApplication>()
+        .HasOne<Company>()
+        .WithMany()
+        .HasForeignKey(companyApplication => companyApplication.CompanyId)
+        .IsRequired();
+
+        modelBuilder.Entity<CompanyApplication>()
+       .HasOne<Title>()
+       .WithMany()
+       .HasForeignKey(companyApplication => companyApplication.TitleId)
+       .IsRequired();
+
+        modelBuilder.Entity<JobApplication>()
+      .HasOne<Employee>()
+      .WithMany()
+      .HasForeignKey(jobApplication => jobApplication.EmployeeId)
+      .IsRequired();
+
+        modelBuilder.Entity<JobApplication>()
+      .HasOne<Title>()
+      .WithMany()
+      .HasForeignKey(jobApplication => jobApplication.TitleId)
+      .IsRequired();
+
         foreach (var title in titles)
         {
             title.Id = index;

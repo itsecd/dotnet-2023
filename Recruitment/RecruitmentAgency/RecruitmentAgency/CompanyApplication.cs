@@ -32,10 +32,10 @@ public class CompanyApplication
     /// Company - contains information about the company
     /// </summary>
     [ForeignKey("CompanyId")]
-    public int CompanyId { get; set; }
+    public int? CompanyId { get; set; }
     /// <summary>
     /// Title - shows the job id
     /// </summary>
     [ForeignKey("TitleId")]
-    public int TitleId { set; get; }
+    public int? TitleId { set; get; }
 }

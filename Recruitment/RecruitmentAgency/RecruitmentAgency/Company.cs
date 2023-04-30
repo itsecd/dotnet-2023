@@ -22,9 +22,9 @@ public class Company
     /// id - shows the company's id
     /// </summary>  
     [Key]
-    public int Id { set; get; }
+    public int? Id { set; get; }
     /// <summary>
     /// Applications - shows the applications 
     /// </summary>
-    public List<int> Applications { set; get; } = new List<int>();
+    public List<int>? Applications { set; get; } = new List<int>();
 }

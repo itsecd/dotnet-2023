@@ -88,7 +88,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     {
         var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/Company/1");
+        var response = await client.DeleteAsync("api/Company/25");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }

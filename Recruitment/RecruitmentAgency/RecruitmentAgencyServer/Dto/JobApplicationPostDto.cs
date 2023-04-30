@@ -7,7 +7,7 @@ public class JobApplicationPostDto
     /// <summary>
     /// Employee - contains employee id
     /// </summary>  
-    public EmployeePostDto? Employee { get; set; }
+    public int EmployeeId { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  

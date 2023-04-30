@@ -66,6 +66,12 @@ public class CompanyApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post company application");
+        var titleExists = await ctx.Titles.AnyAsync(t => t.Id == companyApplication.TitleId);
+        var companyExists = await ctx.Companies.AnyAsync(c => c.Id == companyApplication.CompanyId);
+        if (!titleExists || !companyExists)
+        {
+            return BadRequest("Title or Company does not exist");
+        }
         await ctx.CompanyApplications.AddAsync(_mapper.Map<CompanyApplication>(companyApplication));
         await ctx.SaveChangesAsync();
         return Ok();

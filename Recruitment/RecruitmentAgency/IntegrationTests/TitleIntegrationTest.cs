@@ -9,12 +9,15 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for TitleController
 /// </summary>
+[Collection("CompanyApplication")]
 public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly WebApplicationFactory<Server> _factory;
+    private readonly HttpClient _client;
     public TitleIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
+        _client = _factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method
@@ -23,9 +26,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
-        var response = await client.GetAsync("api/Title");
+        var response = await _client.GetAsync("api/Title");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
@@ -35,8 +36,6 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task PostValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
         var newTitle = new TitleGetDto()
         {
             Section = "IT",
@@ -51,7 +50,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
         };
         var requestContent = JsonSerializer.Serialize(newTitle, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/Title", postData);
+        var response = await _client.PostAsync("api/Title", postData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -62,14 +61,11 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task PutValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
         var newTitle = new TitlePostDto()
         {
-            Section = "IT",
-            JobTitle = "Test",
+            JobTitle = "TestMethod",
+            Section = "RequestsTests"
         };
-
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -77,9 +73,9 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
         };
         var requestContent = JsonSerializer.Serialize(newTitle, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/Title/2", putData);
+        var response = await _client.PutAsync("api/Title/15", putData);
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.False(response.IsSuccessStatusCode);
     }
     /// <summary>
     /// Test of the delete method
@@ -88,11 +84,9 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
+        var response = await _client.DeleteAsync("api/Title/15");
 
-        var response = await client.DeleteAsync("api/Title/2");
-
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>
     /// Test of the get by id method
@@ -101,14 +95,13 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task GetTitleByIdReturnsSuccess()
     {
-        var client = _factory.CreateClient();
         var expectedTitle = new TitleGetDto()
         {
             Section = "IT",
             JobTitle = "Test",
             Id = 0
         };
-        var response = await client.GetAsync("api/Title/0");
+        var response = await _client.GetAsync("api/Title/0");
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {

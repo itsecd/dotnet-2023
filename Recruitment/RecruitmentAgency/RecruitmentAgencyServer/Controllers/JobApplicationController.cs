@@ -64,6 +64,12 @@ public class JobApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post job application");
+        var titleExists = await ctx.Titles.AnyAsync(title => title.Id ==jobApplication.TitleId);
+        var employeeExists = await ctx.Employees.AnyAsync(employee => employee.Id == jobApplication.TitleId);
+        if (!titleExists || !employeeExists)
+        {
+            return BadRequest("Title does not exist");
+        }
         await ctx.JobApplications.AddAsync(_mapper.Map<JobApplication>(jobApplication));
         await ctx.SaveChangesAsync();
         return Ok();

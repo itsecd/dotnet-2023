@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace RecruitmentAgency;
 /// <summary>
@@ -268,7 +269,8 @@ public sealed class RecruitmentAgencyContext : DbContext
       .HasOne<Title>()
       .WithMany()
       .HasForeignKey(jobApplication => jobApplication.TitleId)
-      .IsRequired();
+        .IsRequired();
+
 
         foreach (var title in titles)
         {

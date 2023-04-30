@@ -29,13 +29,13 @@ public class CompanyApplication
     [Key]
     public int Id { set; get; }
     /// <summary>
-    /// Company - contains information about the company
+    /// CompanyId - contains company id
     /// </summary>
     [ForeignKey("CompanyId")]
-    public int? CompanyId { get; set; }
+    public int? CompanyId { get; set; } = 0;
     /// <summary>
     /// Title - shows the job id
     /// </summary>
     [ForeignKey("TitleId")]
-    public int? TitleId { set; get; }
+    public int? TitleId { set; get; } = 0;
 }

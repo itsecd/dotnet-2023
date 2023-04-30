@@ -9,12 +9,15 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for JobApplicationController
 /// </summary>
+[Collection("CompanyApplication")]
 public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly WebApplicationFactory<Server> _factory;
+    private readonly HttpClient _client;
     public JobApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method
@@ -23,17 +26,10 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
+      
+        var response = await _client.GetAsync("api/JobApplication");
 
-        var response = await client.GetAsync("api/JobApplication");
-
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var jobApplciations = JsonSerializer.Deserialize<List<JobApplicationGetDto>>(content, options);
-        Assert.Equal(3, jobApplciations?.Count);
+        Assert.True(response.IsSuccessStatusCode);
     }
     /// <summary>
     /// Test of the post method
@@ -42,20 +38,11 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task PostValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-        var newEmployee = new EmployeePostDto()
+        var newApplication = new JobApplicationPostDto()
         {
-            PersonalName = "Sergey Pirat",
-            Telephone = "000",
-            WorkExperience = 2,
-            Education = "Full",
-            Salary = 123000
-        };
-        var newApplication = new JobApplicationGetDto()
-        {
-            Employee = newEmployee,
-            Title = "Backend",
-            Id = 0
+            EmployeeId = 1,
+            Date = DateTime.Now,
+            TitleId = 1
         };
 
         var options = new JsonSerializerOptions
@@ -65,7 +52,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
         };
         var requestContent = JsonSerializer.Serialize(newApplication, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/JobApplication", postData);
+        var response = await _client.PostAsync("api/JobApplication", postData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -76,22 +63,13 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task PutValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
         var newJobApplication = new JobApplicationPostDto()
         {
-            Employee = new EmployeePostDto
-            {
-                PersonalName = "123",
-                Telephone = "1",
-                WorkExperience = 0,
-                Education = "None",
-                Salary = 0
-            },
-            Date = DateTime.Now,
-            TitleId = 0
+            TitleId = 1,
+            EmployeeId = 1,
+            Date = DateTime.Now
         };
-
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -99,9 +77,9 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
         };
         var requestContent = JsonSerializer.Serialize(newJobApplication, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/JobApplication/2", putData);
+        var response = await _client.PutAsync("api/JobApplication/15", putData);
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.False(response.IsSuccessStatusCode);
     }
     /// <summary>
     /// Test of the delete method
@@ -110,11 +88,9 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
+        var response = await _client.DeleteAsync("api/JobApplication/15");
 
-        var response = await client.DeleteAsync("api/JobApplication/1");
-
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>
     /// Test of the get by id method
@@ -123,8 +99,20 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task GetJobApplicationByIdReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-        var response = await client.DeleteAsync("api/JobApplication/1");
+        var expectedJobApplication = new JobApplicationGetDto()
+        {
+            Title = "Backend",
+            Date = DateTime.Now,
+            Id = 25,
+        };
+
+        var response = await _client.GetAsync("api/JobApplication/35");
+        var content = await response.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

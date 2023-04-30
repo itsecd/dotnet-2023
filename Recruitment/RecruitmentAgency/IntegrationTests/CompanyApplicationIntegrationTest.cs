@@ -7,15 +7,22 @@ using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace IntegrationTests;
+
+
+
 /// <summary>
 /// Integration tests for CompanyApplicationController
 /// </summary>
+/// 
+[Collection("CompanyApplication")]
 public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly WebApplicationFactory<Server> _factory;
+    private readonly HttpClient _client;
     public CompanyApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
         _factory = factory;
+        _client = _factory.CreateClient();
     }
     /// <summary>
     /// Test of the post method
@@ -24,14 +31,14 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task PostValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
         var newCompany = new CompanyApplicationPostDto()
         {
             Date = DateTime.Now,
             WorkExperience = 0,
             Salary = 50000,
-            Education = "None"
+            Education = "None",
+            CompanyId = 0,
+            TitleId = 1
         };
         var options = new JsonSerializerOptions
         {
@@ -40,9 +47,9 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         };
         var requestContent = JsonSerializer.Serialize(newCompany, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/CompanyApplication", postData);
+        var response = await _client.PostAsync("api/CompanyApplication", postData);
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest,response.StatusCode);
     }
     /// <summary>
     /// Test of the get method
@@ -51,8 +58,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-        var response = await client.GetAsync("api/CompanyApplication");
+        var response = await _client.GetAsync("api/CompanyApplication");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -63,7 +69,6 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task PutValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
         var newApplication = new CompanyApplicationGetDto()
         {
@@ -81,7 +86,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         };
         var requestContent = JsonSerializer.Serialize(newApplication, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/CompanyApplication/0", putData);
+        var response = await _client.PutAsync("api/CompanyApplication/0", putData);
 
         Assert.False(response.IsSuccessStatusCode);
     }
@@ -92,9 +97,8 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/CompanyApplication/5");
+        var response = await _client.DeleteAsync("api/CompanyApplication/5");
 
         Assert.False(response.IsSuccessStatusCode);
     }
@@ -105,7 +109,6 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task GetCompanyApplicationByIdReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
         var expectedApplication = new CompanyApplicationGetDto()
         {
@@ -116,7 +119,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
             Id = 0
         };
 
-        var response = await client.GetAsync("api/CompanyApplication/0");
+        var response = await _client.GetAsync("api/CompanyApplication/0");
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {

@@ -1,4 +1,6 @@
-﻿namespace RecruitmentAgencyServer.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// CompanyApplication - a class that describes the company application
 /// </summary>
@@ -20,4 +22,11 @@ public class CompanyApplicationPostDto
     /// Education - shows the level of education
     /// </summary>
     public string? Education { set; get; }
+    /// <summary>
+    /// CompanyId - contains company id
+    /// </summary>
+    public int? CompanyId { get; set; } = 0;
+    /// <summary>
+    /// Title - shows the job id
+    public int? TitleId { set; get; } = 0;
 }

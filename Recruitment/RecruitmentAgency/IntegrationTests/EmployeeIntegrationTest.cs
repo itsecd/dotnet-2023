@@ -9,6 +9,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for EmployeeController
 /// </summary>
+[Collection("CompanyApplication")]
 public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly WebApplicationFactory<Server> _factory;

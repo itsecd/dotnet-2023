@@ -8,15 +8,15 @@ public class Specializations
     /// <summary>
     /// specialty identifier
     /// </summary>
-    public int IdSpecialization { get; set; } = 0;
+    public int Id { get; set; } = 0;
     /// <summary>
     /// name of specialty
     /// </summary>
     public string NameSpecialization { get; set; } = string.Empty;
 
-    public Specializations(int idSpecialization, string nameSpecialization)
+    public Specializations(int id, string nameSpecialization)
     {
-        IdSpecialization = idSpecialization;
+        Id = id;
         NameSpecialization = nameSpecialization;
     }
 

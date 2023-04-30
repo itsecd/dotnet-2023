@@ -31,11 +31,11 @@ public class Doctor
     /// <summary>
     /// list of appointments for this doctor
     /// </summary>
-    public List<int> RegistrationsList { get; set; }
+    //public List<int> RegistrationsList { get; set; } = null!;
     /// <summary>
     /// list of conclusions made by this doctor
     /// </summary>
-    public List<int> CompletionsList { get; set; }
+    //public List<int> CompletionsList { get; set; } = null!;
     public Doctor(int passportNumber, string fullName, DateTime dateBirth, int specialization, int workExperience, int id)
     {
         PassportNumber = passportNumber;
@@ -44,8 +44,8 @@ public class Doctor
         IdSpecialization = specialization;
         WorkExperience = workExperience;
         Id = id;
-        RegistrationsList = new List<int>();
-        CompletionsList = new List<int>();
+        //RegistrationsList = new List<int>();
+        //CompletionsList = new List<int>();
     }
 
     public Doctor()
@@ -57,14 +57,14 @@ public class Doctor
     /// </summary>
     public void AddToRegList(int id)
     {
-        RegistrationsList.Add(id);
+        //RegistrationsList.Add(id);
     }
     /// <summary>
     /// method for adding admission conclusions to the list of doctor's conclusions
     /// </summary>
     public void AddToComList(int id)
     {
-        RegistrationsList.Add(id);
+        //RegistrationsList.Add(id);
     }
 
 }

@@ -39,7 +39,7 @@ public class SpecializationsController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Specializations> Get(int id)
     {
-        var specialization = _polyclinicRepository.Specializations.FirstOrDefault(specialization => specialization.IdSpecialization == id);
+        var specialization = _polyclinicRepository.Specializations.FirstOrDefault(specialization => specialization.Id == id);
         if (specialization == null)
         {
             _logger.LogInformation($"Not found speciaization: {id}");

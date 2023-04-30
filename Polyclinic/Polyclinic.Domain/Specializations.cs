@@ -1,13 +1,16 @@
-﻿namespace Polyclinic.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Polyclinic.Domain;
 
 /// <summary>
 /// class reference book containing specialties of doctors
 /// </summary>
-public class Specializations
+public sealed class Specializations
 {
     /// <summary>
     /// specialty identifier
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// name of specialty

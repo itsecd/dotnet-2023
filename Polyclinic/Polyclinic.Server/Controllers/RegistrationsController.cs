@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Polyclinic.Domain;
 using Polyclinic.Server.Dto;
-using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
 
@@ -14,12 +14,12 @@ namespace Polyclinic.Server.Controllers;
 public class RegistrationsController : ControllerBase
 {
     private readonly ILogger<RegistrationsController> _logger;
-    private readonly IPolyclinicRepository _polyclinicRepository;
+    private readonly IDbContextFactory<PolyclinicDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public RegistrationsController(ILogger<RegistrationsController> logger, IPolyclinicRepository polyclinicRepository, IMapper mapper)
+    public RegistrationsController(ILogger<RegistrationsController> logger, IDbContextFactory<PolyclinicDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _polyclinicRepository = polyclinicRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -28,10 +28,12 @@ public class RegistrationsController : ControllerBase
     /// </summary>
     /// <returns>patients</returns>
     [HttpGet]
-    public IEnumerable<Registration> Get()
+    public async Task<IEnumerable<RegistrationGetDto>> Get()
     {
         _logger.LogInformation("Get Registrations");
-        return _polyclinicRepository.Registrations;
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var registrations = await ctx.Registrations.ToArrayAsync();
+        return _mapper.Map<IEnumerable<RegistrationGetDto>>(registrations);
     }
 
     /// <summary>
@@ -40,9 +42,10 @@ public class RegistrationsController : ControllerBase
     /// <param name="id"></param>
     /// <returns>patient</returns>
     [HttpGet("{id}")]
-    public ActionResult<Registration> Get(int id)
+    public async Task<ActionResult<Registration>> Get(int id)
     {
-        var registration = _polyclinicRepository.Registrations.FirstOrDefault(registration => registration.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var registration = await ctx.FindAsync<RegistrationGetDto>(id);
         if (registration == null)
         {
             _logger.LogInformation($"Not found registration: {id}");
@@ -60,10 +63,13 @@ public class RegistrationsController : ControllerBase
     /// </summary>
     /// <param name="registration"></param>
     [HttpPost]
-    public void Post([FromBody] RegistrationPostDto registration)
+    public async Task<ActionResult> Post([FromBody] RegistrationPostDto registration)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post registration");
-        _polyclinicRepository.Registrations.Add(_mapper.Map<Registration>(registration));
+        await ctx.Registrations.AddAsync(_mapper.Map<Registration>(registration));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -73,9 +79,10 @@ public class RegistrationsController : ControllerBase
     /// <param name="registrationToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] RegistrationPostDto registrationToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] RegistrationPostDto registrationToPut)
     {
-        var registration = _polyclinicRepository.Registrations.FirstOrDefault(registration => registration.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var registration = await ctx.FindAsync<Registration>(id);
         if (registration == null)
         {
             _logger.LogInformation($"Not found registration: {id}");
@@ -85,6 +92,7 @@ public class RegistrationsController : ControllerBase
         {
             _logger.LogInformation($"Put registration with id {id}");
             _mapper.Map(registrationToPut, registration);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -95,9 +103,10 @@ public class RegistrationsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
-        var registration = _polyclinicRepository.Registrations.FirstOrDefault(registration => registration.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var registration = await ctx.FindAsync<Registration>(id);
         if (registration == null)
         {
             _logger.LogInformation($"Not found registration: {id}");
@@ -106,7 +115,8 @@ public class RegistrationsController : ControllerBase
         else
         {
             _logger.LogInformation($"Put registration with id {id}");
-            _polyclinicRepository.Registrations.Remove(registration);
+            ctx.Registrations.Remove(registration);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

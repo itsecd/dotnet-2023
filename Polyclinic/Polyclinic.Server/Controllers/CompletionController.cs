@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Polyclinic.Domain;
 using Polyclinic.Server.Dto;
-using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
 
@@ -14,12 +14,12 @@ namespace Polyclinic.Server.Controllers;
 public class CompletionController : ControllerBase
 {
     private readonly ILogger<CompletionController> _logger;
-    private readonly IPolyclinicRepository _polyclinicRepository;
+    private readonly IDbContextFactory<PolyclinicDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public CompletionController(ILogger<CompletionController> logger, IPolyclinicRepository polyclinicRepository, IMapper mapper)
+    public CompletionController(ILogger<CompletionController> logger, IDbContextFactory<PolyclinicDbContext> contextFactory, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _polyclinicRepository = polyclinicRepository;
         _mapper = mapper;
     }
 
@@ -28,10 +28,12 @@ public class CompletionController : ControllerBase
     /// </summary>
     /// <returns>completions</returns>
     [HttpGet]
-    public IEnumerable<Completion> Get()
+    public async Task<IEnumerable<CompletionGetDto>> Get()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var completions = await ctx.Completions.ToArrayAsync();
         _logger.LogInformation("Get completion");
-        return _polyclinicRepository.Completions;
+        return _mapper.Map<IEnumerable<CompletionGetDto>>(completions);
     }
 
     /// <summary>
@@ -40,9 +42,10 @@ public class CompletionController : ControllerBase
     /// <param name="id"></param>
     /// <returns>completion</returns>
     [HttpGet("{id}")]
-    public ActionResult Get(int id)
+    public async Task<ActionResult> Get(int id)
     {
-        var completion = _polyclinicRepository.Completions.FirstOrDefault(completion => completion.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var completion = await ctx.FindAsync<CompletionGetDto>(id);
         if (completion == null)
         {
             _logger.LogInformation($"Not found completion: {id}");
@@ -61,10 +64,13 @@ public class CompletionController : ControllerBase
     /// </summary>
     /// <param name="completion"></param>
     [HttpPost]
-    public void Post([FromBody] CompletionPostDto completion)
+    public async Task<ActionResult> Post([FromBody] CompletionPostDto completion)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post completion");
-        _polyclinicRepository.Completions.Add(_mapper.Map<Completion>(completion));
+        await ctx.Completions.AddAsync(_mapper.Map<Completion>(completion));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -74,9 +80,10 @@ public class CompletionController : ControllerBase
     /// <param name="completionToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CompletionPostDto completionToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] CompletionPostDto completionToPut)
     {
-        var completion = _polyclinicRepository.Completions.FirstOrDefault(completion => completion.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var completion = await ctx.FindAsync<Completion>(id);
         if (completion == null)
         {
             _logger.LogInformation($"Not found completion: {id}");
@@ -86,6 +93,7 @@ public class CompletionController : ControllerBase
         {
             _logger.LogInformation($"Put completion with id {id}");
             _mapper.Map(completionToPut, completion);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -96,9 +104,10 @@ public class CompletionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
-        var completion = _polyclinicRepository.Completions.FirstOrDefault(completion => completion.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var completion = await ctx.FindAsync<Completion>(id);
         if (completion == null)
         {
             _logger.LogInformation($"Not found completion: {id}");
@@ -107,7 +116,8 @@ public class CompletionController : ControllerBase
         else
         {
             _logger.LogInformation($"Put completion with id {id}");
-            _polyclinicRepository.Completions.Remove(completion);
+            ctx.Completions.Remove(completion);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

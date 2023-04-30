@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Polyclinic.Domain;
-using Polyclinic.Server.Repository;
+using Polyclinic.Server.Dto;
 
 namespace Polyclinic.Server.Controllers;
 
@@ -12,12 +14,13 @@ namespace Polyclinic.Server.Controllers;
 public class SpecializationsController : ControllerBase
 {
     private readonly ILogger<SpecializationsController> _logger;
-    private readonly IPolyclinicRepository _polyclinicRepository;
-
-    public SpecializationsController(ILogger<SpecializationsController> logger, IPolyclinicRepository polyclinicRepository)
+    private readonly IDbContextFactory<PolyclinicDbContext> _contextFactory;
+    private readonly IMapper _mapper;
+    public SpecializationsController(ILogger<SpecializationsController> logger, IDbContextFactory<PolyclinicDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _polyclinicRepository = polyclinicRepository;
+        _contextFactory = contextFactory;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -25,10 +28,11 @@ public class SpecializationsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Specializations> Get()
+    public IEnumerable<SpecializationsGetDto> Get()
     {
         _logger.LogInformation("Get Specializations");
-        return _polyclinicRepository.Specializations;
+        using var ctx = _contextFactory.CreateDbContext();
+        return _mapper.Map<IEnumerable<SpecializationsGetDto>>(ctx.Specializations);
     }
 
     /// <summary>
@@ -37,9 +41,10 @@ public class SpecializationsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Specializations> Get(int id)
+    public async Task<ActionResult<SpecializationsGetDto>> Get(int id)
     {
-        var specialization = _polyclinicRepository.Specializations.FirstOrDefault(specialization => specialization.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var specialization = await ctx.FindAsync<Specializations>(id);
         if (specialization == null)
         {
             _logger.LogInformation($"Not found speciaization: {id}");
@@ -48,7 +53,7 @@ public class SpecializationsController : ControllerBase
         else
         {
             _logger.LogInformation($"Get specialization with id {id}");
-            return Ok(specialization);
+            return Ok((_mapper.Map<SpecializationsGetDto>(specialization)));
         }
     }
 

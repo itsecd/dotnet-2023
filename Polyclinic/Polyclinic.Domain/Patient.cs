@@ -1,4 +1,6 @@
-﻿namespace Polyclinic.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Polyclinic.Domain;
 /// <summary>
 /// class describing the patient
 /// </summary>
@@ -23,15 +25,16 @@ public class Patient
     /// <summary>
     /// individual patient number
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// list of patient appointments
     /// </summary>
-    //public List<int> RegistrationsList { get; set; } = null!;
+    public List<Registration> RegistrationsList { get; set; } = null!;
     /// <summary>
     /// list of doctor's conclusions issued to the patient
     /// </summary>
-    //public List<int> CompletionList { get; set; } = null!;
+    public List<Completion> CompletionList { get; set; } = null!;
     public Patient(int passportNumber, string fullName, DateTime dateBirth, string address, int id)
     {
         PassportNumber = passportNumber;
@@ -39,27 +42,11 @@ public class Patient
         DateBirth = dateBirth;
         Address = address;
         Id = id;
-        //RegistrationsList = new List<int>();
-        //CompletionList = new List<int>();
+        RegistrationsList = new List<Registration>();
+        CompletionList = new List<Completion>();
     }
 
     public Patient()
     {
     }
-
-    /// <summary>
-    /// method for adding appointments for a patient to list
-    /// </summary>
-    public void AddToRegList(int id)
-    {
-        //RegistrationsList.Add(id);
-    }
-    /// <summary>
-    /// method for adding conclusions to the list
-    /// </summary>
-    public void AddToComList(int id)
-    {
-        //CompletionList.Add(id);
-    }
-
 }

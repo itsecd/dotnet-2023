@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Polyclinic.Domain;
 using Polyclinic.Server.Dto;
-using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
 
@@ -12,15 +13,14 @@ namespace Polyclinic.Server.Controllers;
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
+    private readonly IDbContextFactory<PolyclinicDbContext> _contextFactory;
     private readonly ILogger<AnalyticsController> _logger;
 
-    private readonly IPolyclinicRepository _polyclinicRepository;
-
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IPolyclinicRepository polyclinicRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<PolyclinicDbContext> contextFactory, ILogger<AnalyticsController> logger, IMapper mapper)
     {
         _logger = logger;
-        _polyclinicRepository = polyclinicRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -29,14 +29,15 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutDoctorsExp")]
-    public IEnumerable<DoctorGetDto> GetInformationAboutDoctors()
+    public async Task<IActionResult> GetInformationAboutDoctors()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about doctors work experience");
 
-        var result = from d in _polyclinicRepository.Doctors
-                     where d.WorkExperience >= 10
-                     select _mapper.Map<DoctorGetDto>(d);
-        return result;
+        var result = await (from d in ctx.Doctors
+                            where d.WorkExperience >= 10
+                            select _mapper.Map<DoctorGetDto>(d)).ToListAsync();
+        return Ok(result);
     }
 
     /// <summary>
@@ -44,18 +45,19 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutRegistrationsPatients")]
-    public IEnumerable<PatientGetDto> GetInformationAboutPatients(string name)
+    public async Task<IActionResult> GetInformationAboutPatients(string name)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about registrations patients");
 
-        var result = from reg in _polyclinicRepository.Registrations
-                     join p in _polyclinicRepository.Patients on reg.IdPatient equals p.Id
-                     join d in _polyclinicRepository.Doctors on reg.IdDoctor equals d.Id
-                     where d.FullName == name
-                     orderby p.FullName
-                     select _mapper.Map<PatientGetDto>(p);
+        var result = await (from reg in ctx.Registrations
+                            join p in ctx.Patients on reg.IdPatient equals p.Id
+                            join d in ctx.Doctors on reg.IdDoctor equals d.Id
+                            where d.FullName == name
+                            orderby p.FullName
+                            select _mapper.Map<PatientGetDto>(p)).ToListAsync();
 
-        return result;
+        return Ok(result);
     }
 
     /// <summary>
@@ -63,17 +65,18 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutHealthyPatients")]
-    public IEnumerable<PatientGetDto> GetInformationAboutHealtyPatients()
+    public async Task<IActionResult> GetInformationAboutHealtyPatients()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about healthy patients");
 
-        var result = from c in _polyclinicRepository.Completions
-                     join p in _polyclinicRepository.Patients on c.IdPatient equals p.Id
-                     where c.Status == 1
-                     group p by p.Id into g
-                     select _mapper.Map<PatientGetDto>(g.First());
+        var result = await (from c in ctx.Completions
+                            join p in ctx.Patients on c.IdPatient equals p.Id
+                            where c.Status == 1
+                            group p by p.Id into g
+                            select _mapper.Map<PatientGetDto>(g.First())).ToListAsync();
 
-        return result;
+        return Ok(result);
     }
 
     /// <summary>
@@ -81,16 +84,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutAppointmentsPatients")]
-    public IActionResult GetInformationAboutAppointmentsPatients(DateTime lastMonth1, DateTime lastMonth2)
+    public async Task<IActionResult> GetInformationAboutAppointmentsPatients(DateTime lastMonth1, DateTime lastMonth2)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about count patients of visits to doctors for last month");
 
-        var result = from r in _polyclinicRepository.Registrations
-                     join p in _polyclinicRepository.Patients on r.IdPatient equals p.Id
-                     join d in _polyclinicRepository.Doctors on r.IdDoctor equals d.Id
-                     where r.TimeAdmission >= lastMonth1 && r.TimeAdmission <= lastMonth2
-                     group r by d into dGroup
-                     select new { Doctor = dGroup.Key.FullName, Appointments = dGroup.Count() };
+        var result = await (from r in ctx.Registrations
+                            join p in ctx.Patients on r.IdPatient equals p.Id
+                            join d in ctx.Doctors on r.IdDoctor equals d.Id
+                            where r.TimeAdmission >= lastMonth1 && r.TimeAdmission <= lastMonth2
+                            group r by d into dGroup
+                            select new { Doctor = dGroup.Key.FullName, Appointments = dGroup.Count() }).ToListAsync();
 
         return Ok(result);
     }
@@ -100,15 +104,16 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutTopFiveDiseases")]
-    public IActionResult GetInformationAboutTopFiveDiseases()
+    public async Task<IActionResult> GetInformationAboutTopFiveDiseases()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about top 5 most common diseases patients");
 
-        var result = (from c in _polyclinicRepository.Completions
-                      join p in _polyclinicRepository.Patients on c.IdPatient equals p.Id
-                      group c by c.Conclusion into g
-                      orderby g.Count() descending
-                      select new { Disease = g.Key, Count = g.Count() }).Take(5).ToList();
+        var result = await ((from c in ctx.Completions
+                             join p in ctx.Patients on c.IdPatient equals p.Id
+                             group c by c.Conclusion into g
+                             orderby g.Count() descending
+                             select new { Disease = g.Key, Count = g.Count() }).Take(5)).ToListAsync();
 
         return Ok(result);
     }
@@ -118,18 +123,19 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutPatientsOverThirty")]
-    public IEnumerable<PatientGetDto> GetInformationAboutPatientsOverThirty()
+    public async Task<IActionResult> GetInformationAboutPatientsOverThirty()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about patients older than 30 who are registered on multiple doctor appointments");
 
-        var result = from p in _polyclinicRepository.Patients
-                     let age = (int)(DateOnly.FromDateTime(DateTime.Today).Year - p.DateBirth.Year / 365)
-                     where age > 30
-                     join r in _polyclinicRepository.Registrations on p.Id equals r.IdPatient into appointments
-                     where appointments.GroupBy(a => a.IdDoctor).Count() > 1
-                     orderby p.DateBirth
-                     select _mapper.Map<PatientGetDto>(p);
+        var result = await (from p in ctx.Patients
+                            let age = (int)(DateOnly.FromDateTime(DateTime.Today).Year - p.DateBirth.Year / 365)
+                            where age > 30
+                            join r in ctx.Registrations on p.Id equals r.IdPatient into appointments
+                            where appointments.GroupBy(a => a.IdDoctor).Count() > 1
+                            orderby p.DateBirth
+                            select _mapper.Map<PatientGetDto>(p)).ToListAsync();
 
-        return result;
+        return Ok(result);
     }
 }

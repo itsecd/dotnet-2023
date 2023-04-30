@@ -1,4 +1,7 @@
-﻿namespace Polyclinic.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Polyclinic.Domain;
 /// <summary>
 /// class describing the conclusion of the doctor on the admission of the patient
 /// </summary>
@@ -7,6 +10,7 @@ public class Completion
     /// <summary>
     /// conclusion number
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// conclusion - patient's diagnosis
@@ -15,17 +19,17 @@ public class Completion
     /// <summary>
     /// number of the doctor conducting the appointment
     /// </summary>
+    [ForeignKey("Doctor")]
     public int IdDoctor { get; set; } = 0;
     /// <summary>
     /// number of the patient who came to the appointment
     /// </summary>
+    [ForeignKey("Patient")]
     public int IdPatient { get; set; } = 0;
     /// <summary>
     /// patient status (0 - on treatment, 1 - healthy)
     /// </summary>
     public int Status { get; set; } = 0;
-
-
 
     public Completion(int id, int idPatient, int idDoctor, int status, string conclusion)
     {

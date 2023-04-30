@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Polyclinic.Domain;
 using Polyclinic.Server.Dto;
-using Polyclinic.Server.Repository;
 
 namespace Polyclinic.Server.Controllers;
 
@@ -14,12 +14,12 @@ namespace Polyclinic.Server.Controllers;
 public class PatientController : ControllerBase
 {
     private readonly ILogger<PatientController> _logger;
-    private readonly IPolyclinicRepository _polyclinicRepository;
+    private readonly IDbContextFactory<PolyclinicDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public PatientController(ILogger<PatientController> logger, IPolyclinicRepository polyclinicRepository, IMapper mapper)
+    public PatientController(ILogger<PatientController> logger, IDbContextFactory<PolyclinicDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _polyclinicRepository = polyclinicRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -28,10 +28,12 @@ public class PatientController : ControllerBase
     /// </summary>
     /// <returns>patients</returns>
     [HttpGet]
-    public IEnumerable<PatientGetDto> Get()
+    public async Task<IEnumerable<PatientGetDto>> Get()
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get Patients");
-        return _polyclinicRepository.Patients.Select(patient => _mapper.Map<PatientGetDto>(patient));
+        var patients = await ctx.Patients.ToArrayAsync();
+        return _mapper.Map<IEnumerable<PatientGetDto>>(patients);
     }
 
     /// <summary>
@@ -40,9 +42,10 @@ public class PatientController : ControllerBase
     /// <param name="id"></param>
     /// <returns>patient</returns>
     [HttpGet("{id}")]
-    public ActionResult Get(int id)
+    public async Task<ActionResult> Get(int id)
     {
-        var patient = _polyclinicRepository.Patients.FirstOrDefault(patient => patient.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var patient = await ctx.FindAsync<PatientGetDto>(id);
         if (patient == null)
         {
             _logger.LogInformation($"Not found patient: {id}");
@@ -51,7 +54,7 @@ public class PatientController : ControllerBase
         else
         {
             _logger.LogInformation($"Get patient with id {id}");
-            return Ok(_mapper.Map<PatientGetDto>(patient));
+            return Ok(patient);
         }
     }
 
@@ -60,10 +63,13 @@ public class PatientController : ControllerBase
     /// </summary>
     /// <param name="patient"></param>
     [HttpPost]
-    public void Post([FromBody] PatientPostDto patient)
+    public async Task<ActionResult> Post([FromBody] PatientPostDto patient)
     {
+        using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post patient");
-        _polyclinicRepository.Patients.Add(_mapper.Map<Patient>(patient));
+        await ctx.Patients.AddAsync(_mapper.Map<Patient>(patient));
+        await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -73,9 +79,10 @@ public class PatientController : ControllerBase
     /// <param name="patientToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PatientPostDto patientToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] PatientPostDto patientToPut)
     {
-        var patient = _polyclinicRepository.Patients.FirstOrDefault(patient => patient.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var patient = await ctx.FindAsync<Patient>(id);
         if (patient == null)
         {
             _logger.LogInformation($"Not found patient: {id}");
@@ -85,6 +92,7 @@ public class PatientController : ControllerBase
         {
             _logger.LogInformation($"Put patient with id {id}");
             _mapper.Map(patientToPut, patient);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -95,9 +103,10 @@ public class PatientController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
-        var patient = _polyclinicRepository.Patients.FirstOrDefault(patient => patient.Id == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var patient = await ctx.FindAsync<Patient>(id);
         if (patient == null)
         {
             _logger.LogInformation($"Not found patient: {id}");
@@ -106,7 +115,8 @@ public class PatientController : ControllerBase
         else
         {
             _logger.LogInformation($"Put patient with id {id}");
-            _polyclinicRepository.Patients.Remove(patient);
+            ctx.Patients.Remove(patient);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

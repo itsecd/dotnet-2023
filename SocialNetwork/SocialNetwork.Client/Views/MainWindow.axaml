@@ -8,13 +8,18 @@
 	</Window.Styles>
 	
 	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Command="{Binding OnAddGroupCommand}">Добавить</Button>
-			<Button Command="{Binding OnChangeGroupCommand}">Редактировать</Button>
-			<Button Command="{Binding OnDeleteGroupCommand}">Удалить</Button>
+
+		<StackPanel Grid.Row="0" Orientation="Vertical">
+			<Label>Группы</Label>
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Button Command="{Binding OnAddGroupCommand}">Добавить</Button>
+				<Button Command="{Binding OnChangeGroupCommand}">Редактировать</Button>
+				<Button Command="{Binding OnDeleteGroupCommand}">Удалить</Button>
+			</StackPanel>
+			<TextBlock Text="{Binding Value}"></TextBlock>
 		</StackPanel>
 
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Groups}"
+		<DataGrid Classes="ResultTable" Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Groups}"
 				SelectedItem="{Binding SelectedGroup}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
@@ -24,13 +29,17 @@
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<StackPanel Grid.Row="2" Orientation="Horizontal">
-			<Button Command="{Binding OnAddNoteCommand}">Добавить</Button>
-			<Button Command="{Binding OnChangeNoteCommand}">Редактировать</Button>
-			<Button Command="{Binding OnDeleteNoteCommand}">Удалить</Button>
+		<StackPanel Grid.Row="2" Orientation="Vertical">
+			<Label>Записи</Label>
+		<StackPanel Orientation="Horizontal">
+				<Button Command="{Binding OnAddNoteCommand}">Добавить</Button>
+				<Button Command="{Binding OnChangeNoteCommand}">Редактировать</Button>
+				<Button Command="{Binding OnDeleteNoteCommand}">Удалить</Button>
+			</StackPanel>	
 		</StackPanel>
 			
-		<DataGrid Grid.Row="3" AutoGenerateColumns="False" Items="{Binding Notes}">
+		<DataGrid Classes="ResultTable" Grid.Row="3" AutoGenerateColumns="False" Items="{Binding Notes}"
+				  SelectedItem="{Binding SelectedNote}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
 				<DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
@@ -40,25 +49,33 @@
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<StackPanel Grid.Row="4" Orientation="Horizontal">
-			<Button Command="{Binding OnAddRoleCommand}">Добавить</Button>
-			<Button Command="{Binding OnChangeRoleCommand}">Редактировать</Button>
-			<Button Command="{Binding OnDeleteRoleCommand}">Удалить</Button>
+		<StackPanel Grid.Row="4" Orientation="Vertical">
+			<Label>Роли</Label>
+			<StackPanel Orientation="Horizontal">
+				<Button Command="{Binding OnAddRoleCommand}">Добавить</Button>
+				<Button Command="{Binding OnChangeRoleCommand}">Редактировать</Button>
+				<Button Command="{Binding OnDeleteRoleCommand}">Удалить</Button>
+			</StackPanel>
 		</StackPanel>
 
-		<DataGrid Grid.Row="5" AutoGenerateColumns="False" Items="{Binding Roles}">
+		<DataGrid Classes="ResultTable" Grid.Row="5" AutoGenerateColumns="False" Items="{Binding Roles}"
+				  SelectedItem="{Binding SelectedRole}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<StackPanel Grid.Row="6" Orientation="Horizontal">
-			<Button Command="{Binding OnAddUserCommand}">Добавить</Button>
-			<Button Command="{Binding OnChangeUserCommand}">Редактировать</Button>
-			<Button Command="{Binding OnDeleteUserCommand}">Удалить</Button>
+		<StackPanel Grid.Row="6" Orientation="Vertical">
+
+			<StackPanel Orientation="Horizontal">
+				<Button Command="{Binding OnAddUserCommand}">Добавить</Button>
+				<Button Command="{Binding OnChangeUserCommand}">Редактировать</Button>
+				<Button Command="{Binding OnDeleteUserCommand}">Удалить</Button>
+			</StackPanel>
 		</StackPanel>
 
-		<DataGrid Grid.Row="7" AutoGenerateColumns="False" Items="{Binding Users}">
+		<DataGrid Classes="ResultTable" Grid.Row="7" AutoGenerateColumns="False" Items="{Binding Users}"
+				  SelectedItem="{Binding SelectedUser}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
 				<DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>

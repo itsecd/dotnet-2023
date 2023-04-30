@@ -7,7 +7,7 @@
 		xmlns:vm="using:SocialNetwork.Client.ViewModels"
         Title="Редактирование пользователя"
 		SizeToContent="Height"
-		MaxWidth="500">
+		MaxWidth="1000">
 	<Design.DataContext>
 		<vm:GroupViewModel/>
 	</Design.DataContext>
@@ -16,7 +16,7 @@
 		<StyleInclude Source="/SocialNetworkStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *">
 		<Label Grid.Row="0" Grid.Column="0">Фамилия</Label>
 		<Label Grid.Row="0" Grid.Column="1">Имя</Label>
 		<Label Grid.Row="0" Grid.Column="2">Отчество</Label>
@@ -29,7 +29,7 @@
 		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Patronymic}"/>
 		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Gender}"/>
 		<TextBox Grid.Row="1" Grid.Column="4" Text="{Binding BirthDate}"/>
-		<TextBox Grid.Row="1" Grid.Column="5" Text="{Binding CreationDate}"/>
+		<TextBox Grid.Row="1" Grid.Column="5" Text="{Binding RegistrationDate}"/>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

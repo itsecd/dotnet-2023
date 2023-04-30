@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ReactiveUI;
 using Splat;
+using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -15,6 +16,38 @@ public class MainWindowViewModel : ViewModelBase
 	private readonly IMapper _mapper;
 
 	private GroupViewModel? _selectedGroup;
+
+	private string _groupExceptionValue = string.Empty;
+
+	public string GroupExceptionValue
+	{
+		get => _groupExceptionValue;
+		set => this.RaiseAndSetIfChanged(ref _groupExceptionValue, value);
+	}
+
+	private string _noteExceptionValue = string.Empty;
+
+	public string NoteExceptionValue
+	{
+		get => _noteExceptionValue;
+		set => this.RaiseAndSetIfChanged(ref _noteExceptionValue, value);
+	}
+
+	private string _roleExceptionValue = string.Empty;
+
+	public string RoleExceptionValue
+	{
+		get => _roleExceptionValue;
+		set => this.RaiseAndSetIfChanged(ref _roleExceptionValue, value);
+	}
+
+	private string _userExceptionValue = string.Empty;
+
+	public string UserExceptionValue
+	{
+		get => _userExceptionValue;
+		set => this.RaiseAndSetIfChanged(ref _userExceptionValue, value);
+	}
 
 	public GroupViewModel? SelectedGroup
 	{
@@ -66,17 +99,17 @@ public class MainWindowViewModel : ViewModelBase
 
 	public ReactiveCommand<Unit, Unit> OnDeleteNoteCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnAddRoleCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnAddRoleCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnChangeRoleCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnChangeRoleCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnDeleteRoleCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnDeleteRoleCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnAddUserCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnAddUserCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnChangeUserCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnChangeUserCommand { get; set; }
 
-	//public ReactiveCommand<Unit, Unit> OnDeleteUserCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> OnDeleteUserCommand { get; set; }
 
 	public Interaction<GroupViewModel, GroupViewModel?> ShowGroupDialog { get; set; }
 
@@ -107,9 +140,15 @@ public class MainWindowViewModel : ViewModelBase
 
 			if (groupViewModel != null)
 			{
-				await _apiClient.CreateGroup(_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
-
-				Groups.Add(groupViewModel);
+				try
+				{
+					await _apiClient.CreateGroup(_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
+					Groups.Add(groupViewModel);
+				}
+				catch (Exception ex)
+				{
+					GroupExceptionValue = ex.Message;
+				}
 			}
 		});
 
@@ -119,10 +158,16 @@ public class MainWindowViewModel : ViewModelBase
 
 			if (groupViewModel != null)
 			{
-				await _apiClient.UpdateGroup(SelectedGroup!.Id, 
-					_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
-
-				_mapper.Map(groupViewModel, SelectedGroup);
+				try
+				{
+					await _apiClient.UpdateGroup(SelectedGroup!.Id,
+						_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
+					_mapper.Map(groupViewModel, SelectedGroup);
+				}
+				catch (Exception ex)
+				{
+					GroupExceptionValue = ex.Message;
+				}
 
 			}
 		}, this.WhenAnyValue(vm => vm.SelectedGroup)
@@ -130,10 +175,15 @@ public class MainWindowViewModel : ViewModelBase
 
 		OnDeleteGroupCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-
-			await _apiClient.DeleteGroup(SelectedGroup!.Id);
-
-			Groups.Remove(SelectedGroup);
+			try
+			{
+				await _apiClient.DeleteGroup(SelectedGroup!.Id);
+				Groups.Remove(SelectedGroup);
+			}
+			catch (Exception ex)
+			{
+				GroupExceptionValue = ex.Message;
+			}
 			
 		}, this.WhenAnyValue(vm => vm.SelectedGroup)
 			.Select(selectGroup => selectGroup != null));
@@ -144,9 +194,15 @@ public class MainWindowViewModel : ViewModelBase
 
 			if (noteViewModel != null)
 			{
-				await _apiClient.CreateNote(_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
-
-				Notes.Add(noteViewModel);
+				try
+				{
+					await _apiClient.CreateNote(_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
+					Notes.Add(noteViewModel);
+				}
+				catch (Exception ex)
+				{
+					NoteExceptionValue = ex.Message;
+				}
 			}
 		});
 
@@ -156,21 +212,138 @@ public class MainWindowViewModel : ViewModelBase
 
 			if (noteViewModel != null)
 			{
-				await _apiClient.UpdateNote(SelectedNote!.Id,
-					_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
-
-				_mapper.Map(noteViewModel, SelectedNote);
-
+				try
+				{
+					await _apiClient.UpdateNote(SelectedNote!.Id,
+						_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
+					_mapper.Map(noteViewModel, SelectedNote);
+				}
+				catch (Exception ex)
+				{
+					NoteExceptionValue = ex.Message;
+				}
 			}
 		}, this.WhenAnyValue(vm => vm.SelectedNote)
 			.Select(selectNote => selectNote != null));
 
 		OnDeleteNoteCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-			await _apiClient.DeleteNote(SelectedNote!.Id);
-			Notes.Remove(SelectedNote);
+			try
+			{
+				await _apiClient.DeleteNote(SelectedNote!.Id);
+				Notes.Remove(SelectedNote);
+			}
+			catch (Exception ex)
+			{
+				NoteExceptionValue = ex.Message;
+			}
 		}, this.WhenAnyValue(vm => vm.SelectedNote)
 			.Select(selectNote => selectNote != null));
+
+		OnAddRoleCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var roleViewModel = await ShowRoleDialog.Handle(new RoleViewModel());
+
+			if (roleViewModel != null)
+			{
+				try
+				{
+					await _apiClient.CreateRole(_mapper.Map<RoleDtoPostOrPut>(roleViewModel));
+					Roles.Add(roleViewModel);
+				}
+				catch (Exception ex)
+				{
+					RoleExceptionValue = ex.Message;
+				}
+			}
+		});
+
+		OnChangeRoleCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var roleViewModel = await ShowRoleDialog.Handle(SelectedRole!);
+
+			if (roleViewModel != null)
+			{
+				try
+				{
+					await _apiClient.UpdateRole(SelectedRole!.Id,
+						_mapper.Map<RoleDtoPostOrPut>(roleViewModel));
+					_mapper.Map(roleViewModel, SelectedRole);
+				}
+				catch (Exception ex)
+				{
+					RoleExceptionValue = ex.Message;
+				}
+			}
+		}, this.WhenAnyValue(vm => vm.SelectedRole)
+			.Select(selectRole => selectRole != null));
+
+		OnDeleteRoleCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			try
+			{
+				await _apiClient.DeleteRole(SelectedRole!.Id);
+				Roles.Remove(SelectedRole);
+			}
+			catch (Exception ex)
+			{
+				RoleExceptionValue = ex.Message;
+			}
+
+		}, this.WhenAnyValue(vm => vm.SelectedRole)
+			.Select(selectRole => selectRole != null));
+
+		OnAddUserCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var userViewModel = await ShowUserDialog.Handle(new UserViewModel());
+
+			if (userViewModel != null)
+			{
+				try
+				{
+					await _apiClient.CreateUser(_mapper.Map<UserDtoPostOrPut>(userViewModel));
+					Users.Add(userViewModel);
+				}
+				catch (Exception ex)
+				{
+					UserExceptionValue = ex.Message;
+				}
+			}
+		});
+
+		OnChangeUserCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var userViewModel = await ShowUserDialog.Handle(SelectedUser!);
+
+			if (userViewModel != null)
+			{
+				try
+				{
+					await _apiClient.UpdateUser(SelectedUser!.Id,
+						_mapper.Map<UserDtoPostOrPut>(userViewModel));
+					_mapper.Map(userViewModel, SelectedUser);
+				}
+				catch (Exception ex)
+				{
+					UserExceptionValue = ex.Message;
+				}
+			}
+		}, this.WhenAnyValue(vm => vm.SelectedUser)
+			.Select(selectUser => selectUser != null));
+
+		OnDeleteUserCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			try
+			{
+				await _apiClient.DeleteUser(SelectedUser!.Id);
+				Users.Remove(SelectedUser);
+			}
+			catch (Exception ex)
+			{
+				UserExceptionValue = ex.Message;
+			}
+		}, this.WhenAnyValue(vm => vm.SelectedUser)
+			.Select(selectUser => selectUser != null));
 	}
 
 	private async void LoadGroupsAsync()

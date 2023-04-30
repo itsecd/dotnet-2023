@@ -1,4 +1,4 @@
-﻿using AirplaneBookingSystem.Domain;
+﻿using AirplaneBookingSystem.Model;
 using AirplaneBookingSystem.Server.Dto;
 using AutoMapper;
 

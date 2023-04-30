@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AirplaneBookingSystem.Domain;
+namespace AirplaneBookingSystem.Model;
 /// <summary>
 /// Сlass describing an airplane
 /// </summary>

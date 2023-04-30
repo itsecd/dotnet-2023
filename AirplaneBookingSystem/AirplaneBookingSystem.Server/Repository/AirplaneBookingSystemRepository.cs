@@ -1,4 +1,4 @@
-﻿using AirplaneBookingSystem.Domain;
+﻿using AirplaneBookingSystem.Model;
 namespace AirplaneBookingSystem.Server.Repository;
 
 public class AirplaneBookingSystemRepository : IAirplaneBookingSystemRepository

@@ -1,4 +1,4 @@
-﻿using AirplaneBookingSystem.Domain;
+﻿using AirplaneBookingSystem.Model;
 using AirplaneBookingSystem.Server.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -78,7 +78,7 @@ public class ClientController : ControllerBase
         {
             _logger.LogInformation("Update client by id {idClient}", idClient);
             _mapper.Map(clientToPut, client);
-            ctx.Clients.Update(_mapper.Map<Domain.Client>(client));
+            ctx.Clients.Update(_mapper.Map<Client>(client));
             await ctx.SaveChangesAsync();
             return Ok();
         }
@@ -93,7 +93,7 @@ public class ClientController : ControllerBase
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new client");
-        await ctx.Clients.AddAsync(_mapper.Map<Domain.Client>(client));
+        await ctx.Clients.AddAsync(_mapper.Map<Client>(client));
         await ctx.SaveChangesAsync();
     }
     /// <summary>

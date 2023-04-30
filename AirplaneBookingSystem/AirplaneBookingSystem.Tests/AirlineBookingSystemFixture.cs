@@ -1,6 +1,6 @@
 ﻿namespace AirplaneBookingSystem.Tests;
 
-using AirplaneBookingSystem.Domain;
+using AirplaneBookingSystem.Model;
 
 public class AirlineBookingSystemFixture
 {

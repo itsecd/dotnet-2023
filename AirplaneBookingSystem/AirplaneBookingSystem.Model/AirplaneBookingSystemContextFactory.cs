@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace AirplaneBookingSystem.Domain;
+namespace AirplaneBookingSystem.Model;
 public class AirplaneBookingSystemContextFactory : IDesignTimeDbContextFactory<AirplaneBookingSystemDbContext>
 {
     public AirplaneBookingSystemDbContext CreateDbContext(string[] args)

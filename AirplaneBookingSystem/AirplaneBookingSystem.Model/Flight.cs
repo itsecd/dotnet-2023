@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AirplaneBookingSystem.Domain;
+namespace AirplaneBookingSystem.Model;
 
 /// <summary>
 /// Сlass describing the flight of an airplane
@@ -22,17 +22,17 @@ public class Flight
     /// <summary>
     /// Departure city
     /// </summary>
-    [Column("departureCity")] 
+    [Column("departureCity")]
     public string DepartureCity { get; set; } = string.Empty;
     /// <summary>
     /// Arrival city
     /// </summary>
-    [Column("arrivalCity")] 
+    [Column("arrivalCity")]
     public string ArrivalCity { get; set; } = string.Empty;
     /// <summary>
     /// Departure date
     /// </summary>
-    [Column("departureDate")] 
+    [Column("departureDate")]
     public DateTime DepartureDate { get; set; } = new DateTime();
     /// <summary>
     /// Arrival date

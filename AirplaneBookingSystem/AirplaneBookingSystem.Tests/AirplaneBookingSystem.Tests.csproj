@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirplaneBookingSystem.Domain\AirplaneBookingSystem.Domain.csproj" />
+    <ProjectReference Include="..\AirplaneBookingSystem.Model\AirplaneBookingSystem.Model.csproj" />
   </ItemGroup>
 
 </Project>

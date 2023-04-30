@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AirplaneBookingSystem.Domain;
+namespace AirplaneBookingSystem.Model;
 public class AirplaneBookingSystemDbContext : DbContext
 {
     public DbSet<Client>? Clients { get; set; }

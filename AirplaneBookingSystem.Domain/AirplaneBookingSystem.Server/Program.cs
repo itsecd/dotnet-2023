@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<AirplaneBookingSystemDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("AirplaneBookingSystem"))
+    options.UseMySQL(builder.Configuration.GetConnectionString("AirplaneBookingSystem")!)
 );
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();

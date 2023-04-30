@@ -16,6 +16,7 @@ public class Airplane
     /// <summary>
     ///  Model of Airplane 
     /// </summary>
+    [Column("model")]
     public string Model { get; set; } = string.Empty;
     /// <summary>
     /// A flights   

@@ -17,6 +17,7 @@ public class Ticket
     /// <summary>
     /// Number of ticket
     /// </summary>
+    [Column("ticketNumber")]
     public int TicketNumber { get; set; } = 0;
     /// <summary>
     /// Сlient who owns the ticket
@@ -26,6 +27,7 @@ public class Ticket
     /// Client`s id of ticket
     /// </summary>
     [ForeignKey("Client")]
+    [Column("clientId")]
     public int ClientId { get; set; }
     /// <summary>
     /// Flight for which the ticket is registered
@@ -35,6 +37,7 @@ public class Ticket
     /// Flight`s id of ticket
     /// </summary>
     [ForeignKey("Flight")]
+    [Column("flightId")]
     public int FlightId { get; set; }
     public Ticket() { }
     public Ticket(int id, int ticketNumber, Client client, Flight flight)

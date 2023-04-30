@@ -74,7 +74,7 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Flight with specific departure city and data");
         var request = await (from flight in ctx.Flights
                              where (flight.DepartureCity == departureCity) && (flight.DepartureDate == departureData)
-                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync(); ;
+                             select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found flights with departure city {departureCity} and data {departureData}", departureCity, departureData);
@@ -97,7 +97,7 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Top 5 flight");
         var request = await (from flight in ctx.Flights
                              orderby flight.Tickets.Count descending
-                             select _mapper.Map<FlightGetDto>(flight)).Take(5).ToListAsync(); ;
+                             select _mapper.Map<FlightGetDto>(flight)).Take(5).ToListAsync();
         return Ok(request);
     }
     /// <summary>

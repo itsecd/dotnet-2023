@@ -17,14 +17,17 @@ public class Client
     /// <summary>
     /// Client`s passport number 
     /// </summary>
+    [Column("passportNumber")]
     public string PassportNumber { get; set; } = string.Empty;
     /// <summary>
     /// Client`s birthday
     /// </summary> 
+    [Column("birthdayData")]
     public DateTime BirthdayData { get; set; } = new DateTime();
     /// <summary>
     /// Client`s name
     /// </summary>
+    [Column("name")]
     public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Client`s tickets 

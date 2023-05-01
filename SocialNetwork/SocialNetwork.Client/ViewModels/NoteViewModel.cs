@@ -1,7 +1,6 @@
 ﻿
 using ReactiveUI;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace SocialNetwork.Client.ViewModels;
@@ -18,7 +17,6 @@ public class NoteViewModel : ViewModelBase
 
 	private string _name = string.Empty;
 
-	[Required]
 	public string Name
 	{
 		get => _name;
@@ -27,7 +25,6 @@ public class NoteViewModel : ViewModelBase
 
 	private string _description = string.Empty;
 
-	[Required]
 	public string Description
 	{
 		get => _description;
@@ -36,7 +33,6 @@ public class NoteViewModel : ViewModelBase
 
 	private DateTime? _creationDate;
 
-	[Required]
 	public DateTime? CreationDate
 	{
 		get => _creationDate;
@@ -45,7 +41,6 @@ public class NoteViewModel : ViewModelBase
 
 	private int _userId;
 
-	[Required]
 	public int UserId
 	{
 		get => _userId;
@@ -54,7 +49,6 @@ public class NoteViewModel : ViewModelBase
 
 	private int _groupId;
 
-	[Required]
 	public int GroupId
 	{
 		get => _groupId;

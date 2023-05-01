@@ -1,4 +1,5 @@
 ﻿using SocialNetwork.Core;
+using System.Text.RegularExpressions;
 
 namespace SocialNetwork.Web.Middlewares;
 
@@ -35,7 +36,8 @@ public class ValidationExceptionMiddleware
 		catch (FluentValidation.ValidationException ex) 
 		{
 			httpContext.Response.StatusCode = 400;
-			await httpContext.Response.WriteAsJsonAsync(ex.Message);
+			await httpContext.Response
+				.WriteAsJsonAsync(ex.Errors.Select(x => x.ErrorMessage).ToList());
 		}
 	}
 }

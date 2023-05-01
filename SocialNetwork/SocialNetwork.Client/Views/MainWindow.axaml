@@ -7,7 +7,7 @@
 		<StyleInclude Source="/SocialNetworkStyles.axaml"/>
 	</Window.Styles>
 
-	<ScrollViewer>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 		
 		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
 

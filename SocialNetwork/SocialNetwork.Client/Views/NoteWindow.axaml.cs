@@ -1,4 +1,5 @@
 
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -19,5 +20,11 @@ public partial class NoteWindow : ReactiveWindow<NoteViewModel>
 	public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
 	{
 		Close();
+	}
+
+	public void ChangedNoteCreationDateEvent(object sender, DatePickerSelectedValueChangedEventArgs e)
+	{
+		ViewModel!.CreationDate = new DateTime(noteCreationDate.SelectedDate!.Value.Year,
+			noteCreationDate.SelectedDate.Value.Month, noteCreationDate.SelectedDate.Value.Day);
 	}
 }

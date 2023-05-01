@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace SocialNetwork.Client.ViewModels;
@@ -17,7 +16,6 @@ public class GroupViewModel : ViewModelBase
 
     private string _name = string.Empty;
 
-    [Required]
     public string Name 
     {
         get => _name;
@@ -26,7 +24,6 @@ public class GroupViewModel : ViewModelBase
 
     private string _description = string.Empty;
 
-	[Required]
 	public string Description 
     {
         get => _description;
@@ -35,23 +32,21 @@ public class GroupViewModel : ViewModelBase
 
 	private DateTime? _creationDate;
 
-	[Required]
 	public DateTime? CreationDate 
     {
         get => _creationDate;
-        set => this.RaiseAndSetIfChanged(ref _creationDate, value);
+        set => this.RaiseAndSetIfChanged(ref _creationDate, value); 
     }
 
     private int _userId;
 
-	[Required]
 	public int UserId 
     {
         get => _userId;
         set => this.RaiseAndSetIfChanged(ref _userId, value);
     }
 
-    public ReactiveCommand<Unit, GroupViewModel> OnSubmitCommand { get; set; } 
+	public ReactiveCommand<Unit, GroupViewModel> OnSubmitCommand { get; set; } 
 
     public GroupViewModel()
     {

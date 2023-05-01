@@ -1,6 +1,5 @@
 ﻿
 using ReactiveUI;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace SocialNetwork.Client.ViewModels;
@@ -17,7 +16,6 @@ public class RoleViewModel : ViewModelBase
 
 	private string _name = string.Empty;
 
-	[Required]
 	public string Name 
 	{
 		get => _name;

@@ -28,8 +28,8 @@
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
 		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Patronymic}"/>
 		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Gender}"/>
-		<TextBox Grid.Row="1" Grid.Column="4" Text="{Binding BirthDate}"/>
-		<TextBox Grid.Row="1" Grid.Column="5" Text="{Binding RegistrationDate}"/>
+		<DatePicker x:Name="userBirthDate" Grid.Row="1" Grid.Column="4" SelectedDateChanged="ChangedUserBirthDateEvent"/>
+		<DatePicker x:Name="userRegistrationDate" Grid.Row="1" Grid.Column="5" SelectedDateChanged="ChangedUserRegistrationDateEvent"/>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

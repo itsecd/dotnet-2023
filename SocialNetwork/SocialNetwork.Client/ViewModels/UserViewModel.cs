@@ -1,7 +1,6 @@
 ﻿
 using ReactiveUI;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace SocialNetwork.Client.ViewModels;
@@ -18,7 +17,6 @@ public class UserViewModel : ViewModelBase
 
 	private string _firstName = string.Empty;
 
-	[Required]
 	public string FirstName 
 	{
 		get => _firstName;
@@ -27,7 +25,6 @@ public class UserViewModel : ViewModelBase
 
 	private string _lastName = string.Empty;
 
-	[Required]
 	public string LastName 
 	{
 		get => _lastName;
@@ -36,7 +33,6 @@ public class UserViewModel : ViewModelBase
 
 	private string _patronymic = string.Empty;
 
-	[Required]
 	public string Patronymic 
 	{
 		get => _patronymic;
@@ -45,7 +41,6 @@ public class UserViewModel : ViewModelBase
 
 	private string _gender = string.Empty;
 
-	[Required]
 	public string Gender 
 	{
 		get => _gender;
@@ -54,7 +49,6 @@ public class UserViewModel : ViewModelBase
 
 	private DateTime? _birthDate;
 
-	[Required]
 	public DateTime? BirthDate 
 	{
 		get => _birthDate;
@@ -63,7 +57,6 @@ public class UserViewModel : ViewModelBase
 
 	private DateTime? _registrationDate;
 
-	[Required]
 	public DateTime? RegistrationDate 
 	{
 		get => _registrationDate;

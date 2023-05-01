@@ -20,6 +20,14 @@ public class MainWindowViewModel : ViewModelBase
 
 	private string _groupExceptionValue = string.Empty;
 
+	private DateTime _groupCreationDate;
+
+	public DateTime GroupCreationDate
+	{
+		get => _groupCreationDate;
+		set => this.RaiseAndSetIfChanged(ref _groupCreationDate, value);
+	}
+
 	public string GroupExceptionValue
 	{
 		get => _groupExceptionValue;
@@ -138,6 +146,8 @@ public class MainWindowViewModel : ViewModelBase
 		OnAddGroupCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			var groupViewModel = await ShowGroupDialog.Handle(new GroupViewModel());
+
+			var d = GroupCreationDate;
 
 			if (groupViewModel != null)
 			{

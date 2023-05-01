@@ -21,11 +21,12 @@
 		<Label Grid.Row="0" Grid.Column="1">Описание</Label>
 		<Label Grid.Row="0" Grid.Column="2">Дата создания</Label>
 		<Label Grid.Row="0" Grid.Column="3">Идентификатор создателя</Label>
-
+		
 		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Name}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"/>
-		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding CreationDate}"/>
+		<DatePicker x:Name="groupCreationDate" Grid.Row="1" Grid.Column="2" SelectedDateChanged="ChangedGroupCreationDateEvent"/>
 		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding UserId}"/>
+		
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

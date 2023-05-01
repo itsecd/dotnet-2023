@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SocialNetwork.Core.Validators;
 using SocialNetwork.Domain;
 
 namespace SocialNetwork.Core;
@@ -34,13 +33,15 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	private readonly IValidator<User> _userValidator;
 
-	public SocialNetworkService(ISocialNetworkRepository socialNetworkRepository)
+	public SocialNetworkService(ISocialNetworkRepository socialNetworkRepository, 
+		IValidator<Group> groupValidator, IValidator<Note> noteValidator, 
+		IValidator<Role> roleValidator, IValidator<User> userValidator)
 	{
 		_socialNetworkRepository = socialNetworkRepository;
-		_groupValidator = new GroupValidator();
-		_noteValidator = new NoteValidator();
-		_roleValidator = new RoleValidator();
-		_userValidator = new UserValidator();
+		_groupValidator = groupValidator;
+		_noteValidator = noteValidator;
+		_roleValidator = roleValidator;
+		_userValidator = userValidator;
 	}
 
 	/// <summary>
@@ -74,7 +75,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Невалидный объект.</exception>
 	public async Task<int> CreateGroup(Group model)
 	{
-		await _groupValidator.ValidateAsync(model);
+		await _groupValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
 		{
@@ -93,7 +94,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Попытка присвоить группе несуществующий идентификатор создателя!</exception>
 	public async Task UpdateGroup(int id, Group model)
 	{
-		await _groupValidator.ValidateAsync(model);
+		await _groupValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetGroup(id) == null)
 		{
@@ -161,7 +162,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// или несуществующим идентификатором группы!</exception>
 	public async Task<int> CreateNote(Note model)
 	{
-		await _noteValidator.ValidateAsync(model);
+		await _noteValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(model.UserId) == null)
 		{
@@ -186,7 +187,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// или несуществующим идентификатором группы!</exception>
 	public async Task UpdateNote(int id, Note model)
 	{
-		await _noteValidator.ValidateAsync(model);
+		await _noteValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetNote(id) == null)
 		{
@@ -252,7 +253,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="ValidationException">Роль с указанным названием уже присутствует!</exception>
 	public async Task<int> CreateRole(Role model)
 	{
-		await _roleValidator.ValidateAsync(model);
+		await _roleValidator.ValidateAndThrowAsync(model);
 
 		if ((await _socialNetworkRepository.GetAllRoles())
 			.Where(role => role.Name == model.Name).ToList().Count != 0)
@@ -271,7 +272,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="NotFoundException">Роль с указанным идентификатором не найдена.</exception>
 	public async Task UpdateRole(int id, Role model)
 	{
-		await _roleValidator.ValidateAsync(model);
+		await _roleValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetRole(id) == null)
 		{
@@ -327,7 +328,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
 	public async Task<int> CreateUser(User model)
 	{
-		await _userValidator.ValidateAsync(model); 
+		await _userValidator.ValidateAndThrowAsync(model); 
 
 		return await _socialNetworkRepository.CreateUser(model);
 	}
@@ -340,7 +341,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <exception cref="NotFoundException">Пользователь с указанным идентификатором не найден.</exception>
 	public async Task UpdateUser(int id, User model)
 	{
-		await _userValidator.ValidateAsync(model);
+		await _userValidator.ValidateAndThrowAsync(model);
 
 		if (await _socialNetworkRepository.GetUser(id) == null)
 		{

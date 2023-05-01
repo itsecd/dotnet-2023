@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Core;
 using SocialNetwork.Data;
@@ -19,12 +21,15 @@ builder.Services.AddSwaggerGen(options =>
 	var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 	options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
+builder.Services.AddFluentValidation()
+	.AddValidatorsFromAssembly(typeof(SocialNetworkService).Assembly);
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<NotFoundExceptionMiddleware>();
 app.UseMiddleware<ValidationExceptionMiddleware>();
+
 
 if (app.Environment.IsDevelopment())
 {

@@ -11,7 +11,7 @@
 ## Клиентское приложение
 
 ![Главное окно](SocialNetwork/Images/MainWindow.jpg)
-![Окно группы](/Images/GroupWindow.jpg)
-![Окно записи](/Images/NoteWindow.jpg)
-![Окно роли](/Images/RoleWindow.jpg)
-![Окно пользователя](/Images/UserWindow.jpg)
+![Окно группы](SocialNetwork/Images/GroupWindow.jpg)
+![Окно записи](SocialNetwork/Images/NoteWindow.jpg)
+![Окно роли](SocialNetwork/Images/RoleWindow.jpg)
+![Окно пользователя](SocialNetwork/Images/UserWindow.jpg)

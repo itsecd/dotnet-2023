@@ -14,7 +14,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     private readonly HttpClient _client;
     public EmployeeIntegrationTests(WebApplicationFactory<Server> factory)
     {
-            _client = factory.CreateClient();
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method

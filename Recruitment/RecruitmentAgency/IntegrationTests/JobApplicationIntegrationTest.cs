@@ -23,7 +23,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-      
+
         var response = await _client.GetAsync("api/JobApplication");
 
         Assert.True(response.IsSuccessStatusCode);

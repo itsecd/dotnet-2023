@@ -42,7 +42,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await _client.PostAsync("api/CompanyApplication", postData);
 
-        Assert.Equal(HttpStatusCode.BadRequest,response.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     /// <summary>
     /// Test of the get method

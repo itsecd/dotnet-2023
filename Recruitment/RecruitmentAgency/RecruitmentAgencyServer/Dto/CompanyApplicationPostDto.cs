@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace RecruitmentAgencyServer.Dto;
+﻿namespace RecruitmentAgencyServer.Dto;
 /// <summary>
 /// CompanyApplication - a class that describes the company application
 /// </summary>

@@ -64,7 +64,7 @@ public class JobApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post job application");
-        var titleExists = await ctx.Titles.AnyAsync(title => title.Id ==jobApplication.TitleId);
+        var titleExists = await ctx.Titles.AnyAsync(title => title.Id == jobApplication.TitleId);
         var employeeExists = await ctx.Employees.AnyAsync(employee => employee.Id == jobApplication.TitleId);
         if (!titleExists || !employeeExists)
         {

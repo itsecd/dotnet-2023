@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using RecruitmentAgency;
 using RecruitmentAgencyServer;
 using System.Globalization;
 using System.Net;
@@ -68,7 +67,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     /// <returns></returns>
     [Fact]
     public async Task GetTheMostPopularCompaniesTest()
-    {   
+    {
         var response = await _client.GetAsync("api/requests/the_most_popular_companies");
         Assert.True(response.IsSuccessStatusCode);
     }

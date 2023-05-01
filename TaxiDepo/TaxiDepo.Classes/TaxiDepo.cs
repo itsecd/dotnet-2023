@@ -15,19 +15,19 @@ public class TaxiDepot
     /// <summary>
     /// Drivers who are registered in the taxi company
     /// </summary>
-    public List<Driver> Drivers { get; set; } = new List<Driver>();
+    public List<Driver>? Drivers { get; set; } = new List<Driver>();
     /// <summary>
     /// Cars who are registered in the taxi company
     /// </summary>
-    public List<Car> Cars { get; set; } = new List<Car>();
+    public List<Car>? Cars { get; set; } = new List<Car>();
     /// <summary>
     /// Peoples that are used the taxi company
     /// </summary>
-    public List<User> Users { get; set; } = new List<User>();
+    public List<User>? Users { get; set; } = new List<User>();
     /// <summary>
     /// Taxi company's trip info
     /// </summary>
-    public List<Ride> Rides { get; set; } = new List<Ride>();
+    public List<Ride>? Rides { get; set; } = new List<Ride>();
     /// <summary>
     /// Constructor without parameters to instantiate the class TaxiDepot
     /// </summary>

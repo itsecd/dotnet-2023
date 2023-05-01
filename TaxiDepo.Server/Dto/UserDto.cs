@@ -26,7 +26,7 @@ public class UserDto
     /// </summary>
     public string UserPhoneNumber { get; set; } = string.Empty;
     /// <summary>
-    /// User rides amount
+    /// User amount rides
     /// </summary>
     public int AmountRides { get; set; }
 }

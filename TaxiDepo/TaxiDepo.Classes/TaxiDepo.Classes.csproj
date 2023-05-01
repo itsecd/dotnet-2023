@@ -15,4 +15,8 @@
       <DocumentationFile>bin\Release\net6.0\TaxiDepo.Classes.xml</DocumentationFile>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2" />
+    </ItemGroup>
+
 </Project>

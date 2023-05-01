@@ -1,3 +1,5 @@
+using TaxiDepo.Domain;
+
 namespace TaxiDepo.Server.Dto;
 
 /// <summary>
@@ -22,11 +24,11 @@ public class CarDto
     /// </summary>
     public string CarColor { get; set; } = string.Empty;
     /// <summary>
-    /// Indicator that the driver is assigned to the car
+    /// Assigned driver Id
     /// </summary>
-    public bool CarIsAssigned { get; set; } = false;
+    public int DriverId { get; set; }
     /// <summary>
-    /// Car amount rides
+    /// Assigned driver
     /// </summary>
-    public int AmountRides { get; set; } = 0;
+    public Driver? AssignedDriver { get; set; }
 }

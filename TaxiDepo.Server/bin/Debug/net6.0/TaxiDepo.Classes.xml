@@ -29,9 +29,9 @@
             Car color
             </summary>
         </member>
-        <member name="P:TaxiDepo.Domain.Car.CarIsAssigned">
+        <member name="P:TaxiDepo.Domain.Car.DriverId">
             <summary>
-            Indicator that the driver is assigned to the car
+            Assigned driver Id
             </summary>
         </member>
         <member name="P:TaxiDepo.Domain.Car.AssignedDriver">
@@ -39,14 +39,9 @@
             Assigned driver info
             </summary>
         </member>
-        <member name="P:TaxiDepo.Domain.Car.CarRides">
+        <member name="P:TaxiDepo.Domain.Car.CarRide">
             <summary>
-            Rides collection
-            </summary>
-        </member>
-        <member name="P:TaxiDepo.Domain.Car.AmountRides">
-            <summary>
-            Car amount rides
+            Car ride collection
             </summary>
         </member>
         <member name="M:TaxiDepo.Domain.Car.#ctor">
@@ -59,26 +54,9 @@
             Constructor with parameters to instantiate the class Car
             </summary>
             <param name="id">Car id</param>
-            <param name="number">Car goverment number</param>
+            <param name="number">Car government number</param>
             <param name="model">Car model</param>
             <param name="color">Car color</param>
-        </member>
-        <member name="M:TaxiDepo.Domain.Car.TrySignDriver(TaxiDepo.Domain.Driver)">
-            <summary>
-            Try to sign a driver
-            </summary>
-            <param name="driverInfo"></param>
-        </member>
-        <member name="M:TaxiDepo.Domain.Car.TryAddRideToCollection(TaxiDepo.Domain.Ride)">
-            <summary>
-            Try to add ride to car collection
-            </summary>
-            <param name="rideInfo"></param>
-        </member>
-        <member name="M:TaxiDepo.Domain.Car.IncrementAmountRides">
-            <summary>
-            
-            </summary>
         </member>
         <member name="M:TaxiDepo.Domain.Car.Equals(System.Object)">
             <summary>
@@ -155,22 +133,12 @@
             Driver phone number
             </summary>
         </member>
-        <member name="P:TaxiDepo.Domain.Driver.DriverIsAssigned">
-            <summary>
-            Indicator that the driver is assigned to the car
-            </summary>
-        </member>
-        <member name="P:TaxiDepo.Domain.Driver.AssignedCar">
-            <summary>
-            Assigned car info
-            </summary>
-        </member>
         <member name="M:TaxiDepo.Domain.Driver.#ctor">
             <summary>
             Constructor without parameters to instantiate the class Driver
             </summary>
         </member>
-        <member name="M:TaxiDepo.Domain.Driver.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String,TaxiDepo.Domain.Car)">
+        <member name="M:TaxiDepo.Domain.Driver.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.String)">
             <summary>
             Constructor with parameters to instantiate the class Driver
             </summary>
@@ -181,13 +149,6 @@
             <param name="passportId">Driver passport ID</param>
             <param name="address">Driver address</param>
             <param name="phoneNumber">Driver phone number</param>
-            <param name="car">Driver assigned car</param>
-        </member>
-        <member name="M:TaxiDepo.Domain.Driver.TrySignCar(TaxiDepo.Domain.Car)">
-            <summary>
-            Try to sign driver to car
-            </summary>
-            <param name="carInfo"></param>
         </member>
         <member name="M:TaxiDepo.Domain.Driver.Equals(System.Object)">
             <summary>
@@ -257,6 +218,16 @@
         <member name="P:TaxiDepo.Domain.Ride.TripPrice">
             <summary>
             Trip price
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.CarId">
+            <summary>
+            Trip car Id 
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.Ride.UserId">
+            <summary>
+            Trip user Id 
             </summary>
         </member>
         <member name="P:TaxiDepo.Domain.Ride.TripCar">
@@ -361,6 +332,55 @@
             <param name="userObj">List of users(User class object)</param>
             <param name="rideObj">List of rides(Ride class object)</param>
         </member>
+        <member name="T:TaxiDepo.Domain.TaxiDepoContextFactory">
+            <summary>
+            TaxiDepoContextFactory class 
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.TaxiDepoContextFactory.CreateDbContext(System.String[])">
+            <summary>
+            Create DbContext 
+            </summary>
+            <param name="args">Pargs</param>
+            <returns>new TaxiDepoDbContext</returns>
+            <exception cref="T:System.NotImplementedException">Exception</exception>
+        </member>
+        <member name="T:TaxiDepo.Domain.TaxiDepoDbContext">
+            <summary>
+            TaxiDepoDbContext class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepoDbContext.Cars">
+            <summary>
+            Cars of Db
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepoDbContext.Drivers">
+            <summary>
+            Drivers of Db
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepoDbContext.Users">
+            <summary>
+            Users of Db
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.TaxiDepoDbContext.Rides">
+            <summary>
+            Rides of Db
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.TaxiDepoDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            TaxiDepoDbContext constructor 
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Domain.TaxiDepoDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            OnModelCreating method
+            </summary>
+            <param name="modelBuilder">EF param</param>
+        </member>
         <member name="T:TaxiDepo.Domain.User">
             <summary>
             User class
@@ -391,14 +411,14 @@
             User phone number
             </summary>
         </member>
-        <member name="P:TaxiDepo.Domain.User.UserRides">
-            <summary>/
-            Rides collection
-            </summary>
-        </member>
         <member name="P:TaxiDepo.Domain.User.AmountRides">
             <summary>
-            User rides amount
+            Amount user rides
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Domain.User.UserRide">
+            <summary>
+            User ride collection
             </summary>
         </member>
         <member name="M:TaxiDepo.Domain.User.#ctor">
@@ -415,17 +435,6 @@
             <param name="name">User name</param>
             <param name="patronymic">User patronymic</param>
             <param name="phoneNumber">User phone number</param>
-        </member>
-        <member name="M:TaxiDepo.Domain.User.TryAddRideToCollection(TaxiDepo.Domain.Ride)">
-            <summary>
-            Try to add ride to user collection
-            </summary>
-            <param name="rideInfo">Ride info</param>
-        </member>
-        <member name="M:TaxiDepo.Domain.User.IncrementAmountRides">
-            <summary>
-            
-            </summary>
         </member>
         <member name="M:TaxiDepo.Domain.User.Equals(System.Object)">
             <summary>

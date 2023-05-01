@@ -34,14 +34,6 @@ public class Driver
     /// </summary>
     public string DriverPhoneNumber { get; set; } = string.Empty;
     /// <summary>
-    /// Indicator that the driver is assigned to the car
-    /// </summary>
-    public bool DriverIsAssigned { get; set; } = false;
-    /// <summary>
-    /// Assigned car info
-    /// </summary>
-    public Car? AssignedCar { get; set; }
-    /// <summary>
     /// Constructor without parameters to instantiate the class Driver
     /// </summary>
     public Driver() {}
@@ -55,8 +47,7 @@ public class Driver
     /// <param name="passportId">Driver passport ID</param>
     /// <param name="address">Driver address</param>
     /// <param name="phoneNumber">Driver phone number</param>
-    /// <param name="car">Driver assigned car</param>
-    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber, Car? car)
+    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber)
     {
         Id = id; 
         DriverSurname = surname;
@@ -65,7 +56,6 @@ public class Driver
         DriverPassportId = passportId;
         DriverAddress = address;
         DriverPhoneNumber = phoneNumber;
-        AssignedCar = car;
     }
     /// <summary>
     /// Overload Equals
@@ -111,7 +101,7 @@ public class Driver
     public void PrintDriverData(Driver obj)
     {
         Console.WriteLine(
-            $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}, his car - {obj.AssignedCar}");
+            $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}");
     }
     /// <summary>
     /// Get hash code func

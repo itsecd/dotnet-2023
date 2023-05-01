@@ -1,17 +1,20 @@
 using System.Reflection;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TaxiDepo.Server;
 using Microsoft.OpenApi.Models;
-using TaxiDepo.Server.Repositories;
+using TaxiDepo.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TaxiDepoDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("TaxiDepo")!)
+    );
 
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<ITaxiDepoRepository, TaxiDepoRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

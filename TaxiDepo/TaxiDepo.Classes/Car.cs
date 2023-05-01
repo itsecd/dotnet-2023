@@ -22,21 +22,17 @@ public class Car
     /// </summary>
     public string CarColor { get; set; } = string.Empty;
     /// <summary>
-    /// Indicator that the driver is assigned to the car
+    /// Assigned driver Id
     /// </summary>
-    public bool CarIsAssigned { get; set; } = false;
+    public int DriverId { get; set; }
     /// <summary>
     /// Assigned driver info
     /// </summary>
-    public Driver AssignedDriver { get; set; }
+    public Driver? AssignedDriver { get; set; }
     /// <summary>
-    /// Rides collection
+    /// Car ride collection
     /// </summary>
-    public List<Ride>? CarRides { get; set; } = new List<Ride>();
-    /// <summary>
-    /// Car amount rides
-    /// </summary>
-    public int AmountRides { get; set; } = 0;
+    public IEnumerable<Ride>? CarRide { get; set; }
     /// <summary>
     /// Constructor without parameters to instantiate the class Car
     /// </summary>
@@ -45,7 +41,7 @@ public class Car
     /// Constructor with parameters to instantiate the class Car
     /// </summary>
     /// <param name="id">Car id</param>
-    /// <param name="number">Car goverment number</param>
+    /// <param name="number">Car government number</param>
     /// <param name="model">Car model</param>
     /// <param name="color">Car color</param>
     public Car(int id, string number, string model, string color)
@@ -54,46 +50,6 @@ public class Car
         CarNumber = number;
         CarModel = model;
         CarColor = color;
-    }
-    /// <summary>
-    /// Try to sign a driver
-    /// </summary>
-    /// <param name="driverInfo"></param>
-    public void TrySignDriver(Driver driverInfo)
-    {
-        try
-        {
-            AssignedDriver = driverInfo;
-            CarIsAssigned = true;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-    /// <summary>
-    /// Try to add ride to car collection
-    /// </summary>
-    /// <param name="rideInfo"></param>
-    public void TryAddRideToCollection(Ride rideInfo)
-    {
-        try
-        {
-            CarRides?.Add(rideInfo);
-        }
-        catch (ArgumentException)
-        {
-            Console.WriteLine("Error");
-            throw;
-        }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void IncrementAmountRides()
-    {
-        AmountRides += 1;
     }
     /// <summary>
     /// Overload Equals

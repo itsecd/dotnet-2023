@@ -20,7 +20,7 @@ public class Ride
     /// <summary>
     /// Trip date
     /// </summary>
-    public DateTime? TripDate { get; set; }
+    public DateTime TripDate { get; set; }
     /// <summary>
     /// Trip time
     /// </summary>
@@ -30,9 +30,17 @@ public class Ride
     /// </summary>
     public double TripPrice { get; set;  } = 0.0;
     /// <summary>
+    /// Trip car Id 
+    /// </summary>
+    public int CarId { get; set; }
+    /// <summary>
+    /// Trip user Id 
+    /// </summary>
+    public int UserId { get; set; }
+     /// <summary>
     /// Assigned car
     /// </summary>
-    public Car? TripCar { get; set; }
+    public Car TripCar { get; set; }
     /// <summary>
     /// Information about the user who made this trip
     /// </summary>
@@ -63,10 +71,6 @@ public class Ride
         TripPrice = price;
         TripCar = auto;
         UserInfo = user;
-        user.TryAddRideToCollection(this);
-        auto.TryAddRideToCollection(this);
-        user.IncrementAmountRides();
-        auto.IncrementAmountRides();
     }
     /// <summary>
     /// Overload Equals

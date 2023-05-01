@@ -1,143 +1,256 @@
-using System.Collections;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text.RegularExpressions;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using TaxiDepo.Domain;
 using TaxiDepo.Server.Dto;
-using TaxiDepo.Server.Repositories;
 
 namespace TaxiDepo.Server.Controllers;
-
 /// <summary>
-/// RequiredTasks controller class 
+/// RequiredController class 
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class RequiredTasksController : ControllerBase
+public class RequiredController : ControllerBase
 {
     /// <summary>
-    /// RequiredTasks logger
+    /// Logger for RequiredController class
     /// </summary>
-    private readonly ILogger<RequiredTasksController> _logger;
+    private readonly ILogger<RequiredController> _logger;
     /// <summary>
-    /// TaxiDepo repository
+    /// TaxiDepoDbContext class object
     /// </summary>
-    private readonly ITaxiDepoRepository _taxiRepository;
+    private readonly TaxiDepoDbContext _context;
     /// <summary>
-    /// Mapper
+    /// Mapper for RequiredController class
     /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
-    /// RequiredTasksController class constructor with params
+    /// Constructor with params of RequiredController class
     /// </summary>
-    /// <param name="logger">Car logger</param>
-    /// <param name="taxiRepository">Taxi repository</param>
-    /// <param name="mapper">Mapper</param>
-    public RequiredTasksController(ILogger<RequiredTasksController> logger, ITaxiDepoRepository taxiRepository, IMapper mapper)
+    /// <param name="context">TaxiDepoDbContext class object</param>
+    /// <param name="mapper">IMapper object</param>
+    /// <param name="logger">ILogger object</param>
+    public RequiredController(TaxiDepoDbContext context, IMapper mapper, ILogger<RequiredController> logger)
     {
-        _logger = logger;
-        _taxiRepository = taxiRepository;
+        _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
     /// <summary>
     /// Task 1 - Print info about driver, his car
     /// </summary>
-    /// <returns>Driver object</returns>
-    [HttpGet("GetCarDriver")]
-    public IEnumerable<DriverDto> GetCarAndDriver(int driverId)
+    /// <returns>CarDto object</returns>
+    [HttpGet("GetCarAndDriver")]
+    public async Task<ActionResult<IEnumerable<CarDto>>> GetCarAndDriver(int id)
     {
-        _logger.LogInformation("Get driver and his car");
-        var request = (from drive in _taxiRepository.Drivers
-            where (drive.Id == driverId) 
-            select _mapper.Map<DriverDto>(drive));
-        return request;
+        if (_context.Cars == null)
+        {
+            _logger.LogInformation("Not found a car");
+            return NotFound();
+        }
+        _logger.LogInformation("Get car and driver");
+        var request = (from cars in _context.Cars
+            where (cars.Id == id)
+            select cars).Include(car => car.AssignedDriver);
+
+        return await _mapper.ProjectTo<CarDto>(request).ToListAsync();
+        
     }
     /// <summary>
     /// Task 2 - Print info about user who driven in date range sort by surname
     /// </summary>
-    /// <returns>User object</returns>
-    [HttpGet("GetUserByDate")]
-    public IEnumerable<UserDto> GetUserByDate(DateTime dateBefore, DateTime dateAfter)
+    /// <param name="dateBefore">date before for filter</param>
+    /// <param name="dateAfter">date after for filter</param>
+    /// <returns>UserDto object</returns>
+    [HttpGet("GetUsersByDate")]
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersByDate(DateTime dateBefore, DateTime dateAfter)
     {
-        _logger.LogInformation("Get user by date");
-        var user = (from obj in _taxiRepository.Rides
-            where (obj.TripDate > dateBefore &&
-                   obj.TripDate < dateAfter)
-            orderby obj.UserInfo.UserSurname descending 
-            select _mapper.Map<UserDto>(obj.UserInfo));
-        return user;
+        if (_context.Rides == null)
+        {
+            _logger.LogInformation("Not found a ride");
+            return NotFound();
+        }
+        _logger.LogInformation("Get user by date of trip");
+        var user = (from rides in _context.Rides
+            where (rides.TripDate > dateBefore &&
+                   rides.TripDate < dateAfter)
+            orderby rides.UserInfo.UserSurname descending
+            select rides.UserInfo);
+        return await _mapper.ProjectTo<UserDto>(user).ToListAsync();
     }
     /// <summary>
     /// Task 3 - Print user rides amount
     /// </summary>
-    /// <returns>Users object</returns>
-    [HttpGet("UserRidesAmount")]
-    public IEnumerable<UserDto> GetUserRides()
+    /// <returns>UserDto object</returns>
+    [HttpGet("GetUserRides")]
+    public async Task<ActionResult<dynamic>> GetUserRides()
     {
-        _logger.LogInformation("Get user rides amount");
-        var user = (from obj in _taxiRepository.Users
-            select _mapper.Map<UserDto>(obj));
-        return user;
+        if (_context.Rides == null)
+        {
+            _logger.LogInformation("Not found a ride");
+            return NotFound();
+        }
+        if (_context.Users == null)
+        {
+            _logger.LogInformation("Not found a user");
+            return NotFound();
+        }
+        _logger.LogInformation("Get user rides");
+        var userAmountRides = await (from rides in _context.Rides
+            group rides by rides.UserId into newobj
+                select new
+                {
+                    Id = newobj.Key,
+                    Surname = (from users in _context.Users
+                        where users.Id == newobj.Key
+                        select users.UserSurname).ToList(),
+                    Name = (from users in _context.Users
+                        where users.Id == newobj.Key
+                        select users.UserName).ToList(),
+                    Patronymic = (from users in _context.Users
+                        where users.Id == newobj.Key
+                        select users.UserPatronymic).ToList(),
+                    PhoneNumber = (from users in _context.Users
+                        where users.Id == newobj.Key
+                        select users.UserPhoneNumber).ToList(),
+                    AmountRides = newobj.Count(),
+                    
+                }).ToListAsync();
+        return userAmountRides;
     }
     /// <summary>
     /// Task 4 - Print top five drivers with max amount rides
     /// </summary>
-    /// <returns>Drivers object</returns>
-    [HttpGet("TopDriversRides")]
-    public IEnumerable<DriverDto> GetTopFiveDriversByRides()
+    /// <returns>DriverDto object</returns>
+    [HttpGet("TopFiveDrivers")]
+    public async Task<ActionResult<dynamic>> TopFiveDrivers()
     {
-        _logger.LogInformation("Get drivers ride");
-        var driver = (from obj in _taxiRepository.Rides
-            where (obj.TripCar != null)
-            select _mapper.Map<DriverDto>(obj.TripCar.AssignedDriver)).Take(5);
-        return driver;
+        if (_context.Rides == null)
+        {
+            _logger.LogInformation("Not found a ride");
+            return NotFound();
+        }
+        if (_context.Drivers == null)
+        {
+            _logger.LogInformation("Not found a drivers");
+            return NotFound();
+        }
+        _logger.LogInformation("Get top five drivers");
+        var userAmountRides = await (from rides in _context.Rides
+            orderby rides.TripCar.CarRide.Count() descending
+            group rides by rides.TripCar.DriverId into rar
+            select new
+            {
+                Id = rar.Key,
+                Surname = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverSurname).ToList(),
+                Name = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverName).ToList(),
+                Patronymic = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPatronymic).ToList(),
+                PhoneNumber = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPhoneNumber).ToList(),
+                Address = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverAddress).ToList(),
+                PassportId = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPassportId).ToList(),
+                AmountRides = rar.Count()
+            }).Take(5).ToListAsync();
+        return userAmountRides;
     }
     /// <summary>
-    /// Task 5 - Print info about max trip time
+    /// Task 5 - Print info about drivers, his trip time and max trip time
     /// </summary>
-    /// <returns>String</returns>
-    [HttpGet("MaxDriversTripTime")]
-    public IEnumerable<string> GetMaxTime()
+    /// <returns>DriversDto object</returns>
+    [HttpGet("DriversTripTime")]
+    public async Task<ActionResult<dynamic>> DriversTripTime()
     {
-        var cars = (from obj in _taxiRepository.Rides
-            group obj by obj.TripCar).ToList();
-        var maxTime = new List<TimeSpan>();
-        var avg = new List<TimeSpan>();
-        for (var i = 0; i < cars.Capacity; i++) {
-            var tmp = new List<TimeSpan>();
-            var singleRides = cars[i].Key.CarRides?.ToList();
-            if (singleRides != null) {
-                foreach (var t in singleRides) {
-                    tmp.Add(t.TripTime);
-                }
-            }
-            else 
-                tmp.Add(new TimeSpan());
-            maxTime.Add(tmp.Max());
-            avg.Add(new TimeSpan(Convert.ToInt64(tmp.Average(timeSpan => timeSpan.Ticks))));
-        }
-        var request = new List<string>();
-        for (var i = 0; i < _taxiRepository.Drivers.Count; i++)
+        if (_context.Rides == null)
         {
-            request.Add($"driverId: {i}, max: {maxTime[i]}, average: {avg[i]}");
+            _logger.LogInformation("Not found a ride");
+            return NotFound();
         }
-        return _mapper.Map<IEnumerable<string>>(request);
+        if (_context.Drivers == null)
+        {
+            _logger.LogInformation("Not found a drivers");
+            return NotFound();
+        }
+        _logger.LogInformation("Get drivers with his trip info");
+        var request = await (from rides in _context.Rides
+            group rides by (rides.TripCar.AssignedDriver.Id) into rar
+            select new
+            {
+                Id = rar.Key,
+                Surname = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverSurname).ToList(),
+                Name = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverName).ToList(),
+                Patronymic = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPatronymic).ToList(),
+                PhoneNumber = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPhoneNumber).ToList(),
+                Address = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverAddress).ToList(),
+                PassportId = (from drivers in _context.Drivers
+                    where drivers.Id == rar.Key
+                    select drivers.DriverPassportId).ToList(),
+                MaxTime = (from rides in _context.Rides
+                        where rides.TripCar.AssignedDriver.Id == rar.Key
+                            select rides.TripTime).Max(),
+            }).ToListAsync();
+        return request;
     }
     /// <summary>
     /// Task 6 - Print info about users, with max amount of rides
     /// </summary>
-    /// <returns>User object</returns>
-    [HttpGet("UsersWithAmountRidesByDate")]
-    public ActionResult<UserDto> GetUserByDateRange(DateTime dateBefore, DateTime dateAfter)
+    /// <returns>UserDto object</returns>
+    [HttpGet("UserWithAmountRidesByDate")]
+    public async Task<ActionResult<dynamic>> UsesWithAmountRidesByDate(DateTime dateBefore, DateTime dateAfter)
     {
-        _logger.LogInformation("Get user and with max amount of rides");
-        var user = (from obj in _taxiRepository.Rides
-            where (obj.TripDate < dateAfter && obj.TripDate > dateBefore)
-            orderby obj.UserInfo.AmountRides descending
-            select obj.UserInfo).First();
-        return _mapper.Map<UserDto>(user);
+        if (_context.Rides == null)
+        {
+            _logger.LogInformation("Not found a ride");
+            return NotFound();
+        }
+        if (_context.Users == null)
+        {
+            _logger.LogInformation("Not found a user");
+            return NotFound();
+        }
+        _logger.LogInformation("Get user with max amount of rides by date");
+        var userAmountRides = await (from rides in _context.Rides
+            orderby rides.UserInfo.AmountRides descending
+            where (rides.TripDate < dateAfter && rides.TripDate > dateBefore)
+            group rides by rides.UserId into rar
+            select new
+            {
+                Id = rar.Key,
+                Surname = (from users in _context.Users
+                        where users.Id == rar.Key
+                            select users.UserSurname).ToList(),
+                Name = (from users in _context.Users
+                    where users.Id == rar.Key
+                    select users.UserName).ToList(),
+                Patronymic = (from users in _context.Users
+                    where users.Id == rar.Key
+                    select users.UserPatronymic).ToList(),
+                PhoneNumber = (from users in _context.Users
+                    where users.Id == rar.Key
+                    select users.UserPhoneNumber).ToList(),
+                AmountRides = rar.Count()
+            }).Take(1).ToListAsync();
+        return userAmountRides;
     }
 }
+

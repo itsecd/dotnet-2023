@@ -25,14 +25,14 @@ public class User
     /// User phone number
     /// </summary>
     public string UserPhoneNumber { get; set; } = string.Empty;
-    /// <summary>/
-    /// Rides collection
-    /// </summary>
-    public List<Ride>? UserRides { get; set; } = new List<Ride>();
     /// <summary>
-    /// User rides amount
+    /// Amount user rides
     /// </summary>
-    public int AmountRides { get; set; } = 0;
+    public int AmountRides { get; set; }
+    /// <summary>
+    /// User ride collection
+    /// </summary>
+    public Ride? UserRide { get; set; }
     /// <summary>
     /// Constructor without parameters to instantiate the class User
     /// </summary>
@@ -52,29 +52,6 @@ public class User
         UserName = name;
         UserPatronymic = patronymic;
         UserPhoneNumber = phoneNumber;
-    }
-    /// <summary>
-    /// Try to add ride to user collection
-    /// </summary>
-    /// <param name="rideInfo">Ride info</param>
-    public void TryAddRideToCollection(Ride rideInfo)
-    {
-        try
-        {
-            UserRides?.Add(rideInfo);
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Ride is assigned");
-            throw;
-        }
-    }
-    /// <summary>
-    /// Increment rides
-    /// </summary>
-    public void IncrementAmountRides()
-    {
-        AmountRides += 1;
     }
     /// <summary>
     /// Overload Equals

@@ -35,12 +35,4 @@ public class DriverDto
     /// Driver phone number
     /// </summary>
     public string DriverPhoneNumber { get; set; } = string.Empty;
-    /// <summary>
-    /// Indicator that the driver is assigned to the car
-    /// </summary>
-    public bool DriverIsAssigned { get; set; } = false;
-    /// <summary>
-    /// Assigned car
-    /// </summary>
-    public Car? AssignedCar { get; set; }
 }

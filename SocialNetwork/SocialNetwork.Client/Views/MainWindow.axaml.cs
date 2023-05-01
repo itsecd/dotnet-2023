@@ -10,10 +10,10 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 	{
 		InitializeComponent();
 
-		this.WhenActivated(d => d(ViewModel!.ShowGroupDialog.RegisterHandler(ShowGroupDialogAsync)));
-		this.WhenActivated(d => d(ViewModel!.ShowNoteDialog.RegisterHandler(ShowNoteDialogAsync)));
-		this.WhenActivated(d => d(ViewModel!.ShowRoleDialog.RegisterHandler(ShowRoleDialogAsync)));
-		this.WhenActivated(d => d(ViewModel!.ShowUserDialog.RegisterHandler(ShowUserDialogAsync)));
+		this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowGroupDialog.RegisterHandler(ShowGroupDialogAsync)));
+		this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowNoteDialog.RegisterHandler(ShowNoteDialogAsync)));
+		this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowRoleDialog.RegisterHandler(ShowRoleDialogAsync)));
+		this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowUserDialog.RegisterHandler(ShowUserDialogAsync)));
 	}
 
 	private async Task ShowGroupDialogAsync(InteractionContext<GroupViewModel, GroupViewModel?> interaction)

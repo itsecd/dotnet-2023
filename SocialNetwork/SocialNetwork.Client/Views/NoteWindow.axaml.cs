@@ -12,7 +12,8 @@ public partial class NoteWindow : ReactiveWindow<NoteViewModel>
 	{
 		InitializeComponent();
 
-		this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
+		this.WhenActivated(disposableElement 
+			=> disposableElement(ViewModel!.OnSubmitCommand.Subscribe(Close)));
 	}
 
 	public void CancelButton_OnClick(object? sender, RoutedEventArgs e)

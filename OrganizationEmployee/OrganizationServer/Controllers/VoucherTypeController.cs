@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -12,16 +13,16 @@ namespace OrganizationServer.Controllers;
 [ApiController]
 public class VoucherTypeController : Controller
 {
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly ILogger<VoucherTypeController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the VoucherTypeController
     /// </summary>
-    public VoucherTypeController(OrganizationRepository organizationRepository, IMapper mapper,
-        ILogger<VoucherTypeController> logger)
+    public VoucherTypeController(IDbContextFactory<EmployeeDbContext> contextFactory,
+        OrganizationRepository organizationRepository, IMapper mapper, ILogger<VoucherTypeController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +31,11 @@ public class VoucherTypeController : Controller
     /// </summary>
     /// <returns>All the voucher types in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetVoucherTypeDto> Get()
+    public async Task<IEnumerable<GetVoucherTypeDto>> Get()
     {
         _logger.LogInformation("Get vacation voucher types");
-        return _mapper.Map<IEnumerable<GetVoucherTypeDto>>(_organizationRepository.VoucherTypes);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetVoucherTypeDto>>(ctx.VacationVouchersTypes);
     }
     /// <summary>
     /// The method returns an voucher type by ID
@@ -41,16 +43,20 @@ public class VoucherTypeController : Controller
     /// <param name="id">VoucherType ID</param>
     /// <returns>VoucherType with the given ID or 404 code if VoucherType is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetVoucherTypeDto> Get(int id)
+    public async Task<ActionResult<GetVoucherTypeDto>> Get(int id)
     {
         _logger.LogInformation("Get voucher type with id {id}", id);
-        var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var voucherType = ctx.VacationVouchersTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null)
         {
             _logger.LogInformation("The voucher type with ID {id} is not found", id);
             return NotFound();
         }
+        // TODO: DELETE because this was just for testing
+        var voucher_types = ctx.VacationVouchersTypes.Include(type => type.VacationVouchers).ToList();
         var mappedVoucherType = _mapper.Map<GetVoucherTypeDto>(voucherType);
+        var vouchers = ctx.VacationVouchers.Include(voucher => voucher.VoucherType).ToList();
         return Ok(mappedVoucherType);
     }
     /// <summary>
@@ -59,11 +65,12 @@ public class VoucherTypeController : Controller
     /// <param name="voucherType">A new VoucherType that needs to be added</param>
     /// <returns>Code 200 with an added VoucherType</returns>
     [HttpPost]
-    public ActionResult<PostVoucherTypeDto> Post([FromBody] PostVoucherTypeDto voucherType)
+    public async Task<ActionResult<PostVoucherTypeDto>> Post([FromBody] PostVoucherTypeDto voucherType)
     {
         _logger.LogInformation("POST voucher type method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
-        _organizationRepository.VoucherTypes.Add(mappedVoucherType);
+        ctx.VacationVouchersTypes.Add(mappedVoucherType);
         return Ok(voucherType);
     }
     /// <summary>
@@ -75,18 +82,19 @@ public class VoucherTypeController : Controller
     /// 404 code if an VoucherType is not found;</returns>
 
     [HttpPut("{id}")]
-    public ActionResult<PostVoucherTypeDto> Put(int id, [FromBody] PostVoucherTypeDto newVoucherType)
+    public async Task<ActionResult<PostVoucherTypeDto>> Put(int id, [FromBody] PostVoucherTypeDto newVoucherType)
     {
         _logger.LogInformation("PUT voucher type method");
-        var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var voucherType = ctx.VacationVouchersTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null)
         {
             _logger.LogInformation("An voucher type with id {id} doesn't exist", id);
             return NotFound();
         }
-        _organizationRepository.VoucherTypes.Remove(voucherType);
+        ctx.VacationVouchersTypes.Remove(voucherType);
         var mappedVoucherType = _mapper.Map<VoucherType>(newVoucherType);
-        _organizationRepository.VoucherTypes.Add(mappedVoucherType);
+        ctx.VacationVouchersTypes.Add(mappedVoucherType);
         return Ok(newVoucherType);
     }
     /// <summary>
@@ -95,16 +103,17 @@ public class VoucherTypeController : Controller
     /// <param name="id">An ID of the VoucherType</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostVoucherTypeDto> Delete(int id)
+    public async Task<ActionResult<PostVoucherTypeDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE voucher type method");
-        var voucherType = _organizationRepository.VoucherTypes.FirstOrDefault(voucherType => voucherType.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var voucherType = ctx.VacationVouchersTypes.FirstOrDefault(voucherType => voucherType.Id == id);
         if (voucherType == null)
         {
             _logger.LogInformation("An voucher type with id {id} doesn't exist", id);
             return NotFound();
         }
-        _organizationRepository.VoucherTypes.Remove(voucherType);
+        ctx.VacationVouchersTypes.Remove(voucherType);
         return Ok();
     }
 }

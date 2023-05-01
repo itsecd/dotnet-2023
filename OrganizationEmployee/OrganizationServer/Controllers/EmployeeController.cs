@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -13,15 +14,15 @@ namespace OrganizationServer.Controllers;
 public class EmployeeController : Controller
 {
     private readonly ILogger<EmployeeController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the EmployeeController
     /// </summary>
-    public EmployeeController(OrganizationRepository organizationRepository, IMapper mapper,
+    public EmployeeController(IDbContextFactory<EmployeeDbContext> сontextFactory, IMapper mapper,
         ILogger<EmployeeController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = сontextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +31,11 @@ public class EmployeeController : Controller
     /// </summary>
     /// <returns>All the employee in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetEmployeeDto> Get()
+    public async Task<IEnumerable<GetEmployeeDto>> Get()
     {
         _logger.LogInformation("Get employees");
-        return _mapper.Map<IEnumerable<GetEmployeeDto>>(_organizationRepository.Employees);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetEmployeeDto>>(ctx.Employees);
     }
     /// <summary>
     /// The method returns an employee by ID
@@ -41,10 +43,11 @@ public class EmployeeController : Controller
     /// <param name="id">Employee ID</param>
     /// <returns>Employee with the given ID or 404 code if employee is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetEmployeeDto> Get(uint id)
+    public async Task<ActionResult<GetEmployeeDto>> Get(uint id)
     {
         _logger.LogInformation("Get employee with id {id}", id);
-        var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null)
         {
             _logger.LogInformation("The employee with ID {id} is not found", id);
@@ -61,13 +64,14 @@ public class EmployeeController : Controller
     /// 404 code if a workshop is not found;
     /// 409 code if an employee with same RegNumber already exists</returns>
     [HttpPost]
-    public ActionResult<PostEmployeeDto> Post([FromBody] PostEmployeeDto employee)
+    public async Task<ActionResult<PostEmployeeDto>> Post([FromBody] PostEmployeeDto employee)
     {
         _logger.LogInformation("POST employee method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedEmployee = _mapper.Map<Employee>(employee);
         var workshop =
-               _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
-        var employeeWithRegNumber = _organizationRepository.Employees
+               ctx.Workshops.FirstOrDefault(workshop => workshop.Id == mappedEmployee.WorkshopId);
+        var employeeWithRegNumber = ctx.Employees
             .FirstOrDefault(employee => employee.RegNumber == mappedEmployee.RegNumber);
         if (employeeWithRegNumber != null)
         {
@@ -80,7 +84,7 @@ public class EmployeeController : Controller
             _logger.LogInformation("The workshop with ID {id} is not found", employee.WorkshopId);
             return NotFound("A workshop with given id doesn't exist");
         }
-        _organizationRepository.Employees.Add(mappedEmployee);
+        ctx.Employees.Add(mappedEmployee);
         return Ok(employee);
     }
     /// <summary>
@@ -92,17 +96,18 @@ public class EmployeeController : Controller
     /// 404 code if a workshop is not found;
     /// 409 code if an employee with same RegNumber and different ID already exists</returns>
     [HttpPut("{id}")]
-    public ActionResult<PostEmployeeDto> Put(uint id, [FromBody] PostEmployeeDto newEmployee)
+    public async Task<ActionResult<PostEmployeeDto>> Put(uint id, [FromBody] PostEmployeeDto newEmployee)
     {
         _logger.LogInformation("PUT employee method with ID: {id}", id);
-        var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null)
         {
             _logger.LogInformation("The employee with ID {id} is not found", id);
             return NotFound($"Employee with ID {id} doesn't exist");
         }
         var workshop =
-       _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == newEmployee.WorkshopId);
+            ctx.Workshops.FirstOrDefault(workshop => workshop.Id == newEmployee.WorkshopId);
         if (workshop == null)
         {
             _logger.LogInformation("The workshop with ID {id} is not found", employee.WorkshopId);
@@ -110,7 +115,7 @@ public class EmployeeController : Controller
         }
         var mappedEmployee = _mapper.Map<Employee>(newEmployee);
 
-        var employeeWithRegNumber = _organizationRepository.Employees.FirstOrDefault(
+        var employeeWithRegNumber = ctx.Employees.FirstOrDefault(
             employee => (employee.RegNumber == mappedEmployee.RegNumber
                           && employee.Id != mappedEmployee.Id));
         if (employeeWithRegNumber != null)
@@ -118,8 +123,8 @@ public class EmployeeController : Controller
             _logger.LogInformation("The employee with regNumber {regNumb} already exists", employee.RegNumber);
             return Conflict("An employee with given registration number already exists");
         }
-        _organizationRepository.Employees.Remove(employee);
-        _organizationRepository.Employees.Add(mappedEmployee);
+        ctx.Employees.Remove(employee);
+        ctx.Employees.Add(mappedEmployee);
         return Ok(newEmployee);
     }
     /// <summary>
@@ -128,16 +133,17 @@ public class EmployeeController : Controller
     /// <param name="id">An ID of the employee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostEmployeeDto> Delete(uint id)
+    public async Task<ActionResult<PostEmployeeDto>> Delete(uint id)
     {
         _logger.LogInformation("DELETE employee method with ID: {id}", id);
-        var employee = _organizationRepository.Employees.FirstOrDefault(employee => employee.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employee = ctx.Employees.FirstOrDefault(employee => employee.Id == id);
         if (employee == null)
         {
             _logger.LogInformation("The employee with ID {id} is not found", id);
             return NotFound();
         }
-        _organizationRepository.Employees.Remove(employee);
+        ctx.Employees.Remove(employee);
         return Ok();
     }
 }

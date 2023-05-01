@@ -58,11 +58,11 @@ public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Progr
 
         var response = await client.GetAsync($"api/Workshop/{workshopId}");
 
-        var content = await response.Content.ReadAsStringAsync();
-        var workshop = JsonSerializer.Deserialize<GetWorkshopDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
+            var content = await response.Content.ReadAsStringAsync();
+            var workshop = JsonSerializer.Deserialize<GetWorkshopDto>(content, _serializeOptions);
             Assert.NotNull(workshop);
             Assert.Equal(workshopName, workshop.Name);
         }

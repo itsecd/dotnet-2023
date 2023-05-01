@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -13,13 +16,15 @@ public class StatisticsController : Controller
 {
     private readonly ILogger<StatisticsController> _logger;
     private readonly OrganizationRepository _organizationRepository;
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the StatisticsController
     /// </summary>
-    public StatisticsController(OrganizationRepository organizationRepository, IMapper mapper,
-        ILogger<StatisticsController> logger)
+    public StatisticsController(OrganizationRepository organizationRepository,
+        IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, ILogger<StatisticsController> logger)
     {
+        _contextFactory = contextFactory;
         _organizationRepository = organizationRepository;
         _mapper = mapper;
         _logger = logger;
@@ -31,12 +36,13 @@ public class StatisticsController : Controller
     /// <returns>Code 200 with statistical data in form of IEnumerable of PostEmployeeDto
     /// Code 404 if a department with given ID doesn't exist</returns>
     [HttpGet("DepartmentId/{departmentId}")]
-    public ActionResult<IEnumerable<GetEmployeeDto>> Get(int departmentId)
+    public async Task<ActionResult<IEnumerable<GetEmployeeDto>>> Get(int departmentId)
     {
         _logger.LogInformation("Get all employees of the given department");
-        var employeesInDepartment = (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employeesInDepartment = (from employee in ctx.Employees
                                      from departmentEmployeeItem in employee.DepartmentEmployees
-                                     where departmentEmployeeItem.Department?.Id == departmentId
+                                     where departmentEmployeeItem.Department.Id == departmentId
                                      select _mapper.Map<GetEmployeeDto>(employee)).ToList();
         if (employeesInDepartment.Count() == 0)
         {
@@ -51,11 +57,12 @@ public class StatisticsController : Controller
     /// </summary>
     /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeWithFewDepartmentsDto</returns>
     [HttpGet("EmployeesWithFewDepartments")]
-    public ActionResult<IEnumerable<EmployeeWithFewDepartmentsDto>> GetEmployeesWithFewDepartments()
+    public async Task<ActionResult<IEnumerable<EmployeeWithFewDepartmentsDto>>> GetEmployeesWithFewDepartments()
     {
         _logger.LogInformation("Get all employees working in more than 1 department");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeesWithFewDepartments =
-            (from employee in _organizationRepository.EmployeesWithDepartmentEmployeeFilled
+            (from employee in ctx.Employees
              orderby employee.LastName, employee.FirstName, employee.PatronymicName
              from departmentEmployeeItem in employee.DepartmentEmployees
              group employee by new
@@ -83,23 +90,24 @@ public class StatisticsController : Controller
     /// </summary>
     /// <returns>Code 200 with statistical data in form of IEnumerable of ArchiveOfDismissalsDto</returns>
     [HttpGet("ArchiveOfDismissals")]
-    public ActionResult<IEnumerable<ArchiveOfDismissalsDto>> GetArchiveOfDismissals()
+    public async Task<ActionResult<IEnumerable<ArchiveOfDismissalsDto>>> GetArchiveOfDismissals()
     {
         _logger.LogInformation("Get archive of dismissals");
-        var archiveOfDismissals = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
-                                   where employeeOccupationItem?.DismissalDate != null
-                                   from department in employeeOccupationItem?.Employee?.DepartmentEmployees
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var archiveOfDismissals = (from employeeOccupationItem in ctx.EmployeeOccupations
+                                   where employeeOccupationItem.DismissalDate != null
+                                   from department in employeeOccupationItem.Employee.DepartmentEmployees
                                    select
                                    new ArchiveOfDismissalsDto()
                                    {
-                                       RegNumber = employeeOccupationItem.Employee?.RegNumber,
-                                       FirstName = employeeOccupationItem.Employee?.FirstName,
-                                       LastName = employeeOccupationItem.Employee?.LastName,
-                                       PatronymicName = employeeOccupationItem.Employee?.PatronymicName,
-                                       BirthDate = employeeOccupationItem.Employee?.BirthDate,
-                                       WorkshopName = employeeOccupationItem.Employee?.Workshop?.Name,
-                                       DepartmentName = department.Department?.Name,
-                                       OccupationName = employeeOccupationItem?.Occupation?.Name
+                                       RegNumber = employeeOccupationItem.Employee.RegNumber,
+                                       FirstName = employeeOccupationItem.Employee.FirstName,
+                                       LastName = employeeOccupationItem.Employee.LastName,
+                                       PatronymicName = employeeOccupationItem.Employee.PatronymicName,
+                                       BirthDate = employeeOccupationItem.Employee.BirthDate,
+                                       WorkshopName = employeeOccupationItem.Employee.Workshop.Name,
+                                       DepartmentName = department.Department.Name,
+                                       OccupationName = employeeOccupationItem.Occupation.Name
                                    }
                       ).ToList();
         return Ok(archiveOfDismissals);
@@ -109,10 +117,11 @@ public class StatisticsController : Controller
     /// </summary>
     /// <returns>Code 200 with statistical data in form of IEnumerable of AverageAgeInDepartmentDto</returns>
     [HttpGet("AvgAgeInDepartments")]
-    public ActionResult<IEnumerable<AverageAgeInDepartmentDto>> GetAvgAgeInDepartments()
+    public async Task<ActionResult<IEnumerable<AverageAgeInDepartmentDto>>> GetAvgAgeInDepartments()
     {
         _logger.LogInformation("Get average age of employees for each department");
-        var employees = _organizationRepository.EmployeesWithDepartmentEmployeeFilled;
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employees = ctx.Employees;
         var avgAgeInDepartments =
             (from tuple in
                  (from employee in employees
@@ -122,8 +131,8 @@ public class StatisticsController : Controller
                   {
                       EmployeeAge = ((DateTime.Now -
                                       employee.BirthDate).TotalDays / 365.2422),
-                      DepartmentId = departmentEmployeeItem.Department?.Id,
-                      DepartmentName = departmentEmployeeItem.Department?.Name,
+                      DepartmentId = departmentEmployeeItem.Department.Id,
+                      DepartmentName = departmentEmployeeItem.Department.Name,
                   }
                   )
              group tuple by new
@@ -144,18 +153,19 @@ public class StatisticsController : Controller
     /// </summary>
     /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeLastYearVoucherDto</returns>
     [HttpGet("EmployeeLastYearVoucher")]
-    public ActionResult<IEnumerable<EmployeeLastYearVoucherDto>> GetEmployeeLastYearVoucher()
+    public async Task<ActionResult<IEnumerable<EmployeeLastYearVoucherDto>>> GetEmployeeLastYearVoucher()
     {
         _logger.LogInformation("Get the info about employees, who received a vacation voucher in past year");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeeLastYearVoucher =
-            (from employeeVoucherItem in _organizationRepository.EmployeeVacationVouchers
-             where (new DateTime(2023, 3, 10) - employeeVoucherItem.VacationVoucher?.IssueDate)?.TotalDays < 365
+            (from employeeVoucherItem in ctx.EmployeeVacationVouchers
+             where (new DateTime(2023, 3, 10) - employeeVoucherItem.VacationVoucher.IssueDate).TotalDays < 365
              select new EmployeeLastYearVoucherDto()
              {
-                 RegNumber = employeeVoucherItem.Employee?.RegNumber,
-                 FirstName = employeeVoucherItem.Employee?.FirstName,
-                 LastName = employeeVoucherItem.Employee?.LastName,
-                 VoucherTypeName = employeeVoucherItem.VacationVoucher?.VoucherType?.Name
+                 RegNumber = employeeVoucherItem.Employee.RegNumber,
+                 FirstName = employeeVoucherItem.Employee.FirstName,
+                 LastName = employeeVoucherItem.Employee.LastName,
+                 VoucherTypeName = employeeVoucherItem.VacationVoucher.VoucherType.Name
              }
              ).ToList();
         return Ok(employeeLastYearVoucher);
@@ -165,17 +175,18 @@ public class StatisticsController : Controller
     /// </summary>
     /// <returns>Code 200 with statistical data in form of IEnumerable of EmployeeWorkExperienceDto</returns>
     [HttpGet("EmployeeWithLongestWorkExperience")]
-    public ActionResult<IEnumerable<EmployeeWorkExperienceDto>> GetEmployeeWithLongestWorkExperience()
+    public async Task<ActionResult<IEnumerable<EmployeeWorkExperienceDto>>> GetEmployeeWithLongestWorkExperience()
     {
         _logger.LogInformation("Get the top-5 employees who have the longest working experience at the company");
-        var subqueryReplaceNull = (from employeeOccupationItem in _organizationRepository.EmployeeOccupations
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var subqueryReplaceNull = (from employeeOccupationItem in ctx.EmployeeOccupations
                                    select new
                                    {
-                                       employeeOccupationItem.Employee?.RegNumber,
+                                       employeeOccupationItem.Employee.RegNumber,
                                        employeeOccupationItem.HireDate,
                                        DismissalDate = employeeOccupationItem.DismissalDate ?? DateTime.Now,
-                                       employeeOccupationItem.Employee?.FirstName,
-                                       employeeOccupationItem.Employee?.LastName
+                                       employeeOccupationItem.Employee.FirstName,
+                                       employeeOccupationItem.Employee.LastName
                                    }
                                ).ToList();
         var employeeWorkExperience =

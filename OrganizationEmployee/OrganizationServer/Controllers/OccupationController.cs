@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -13,15 +14,15 @@ namespace OrganizationServer.Controllers;
 public class OccupationController : Controller
 {
     private readonly ILogger<OccupationController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the OccupationController
     /// </summary>
-    public OccupationController(OrganizationRepository organizationRepository, IMapper mapper,
+    public OccupationController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, 
         ILogger<OccupationController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +31,11 @@ public class OccupationController : Controller
     /// </summary>
     /// <returns>All the occupations in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetOccupationDto> Get()
+    public async Task<IEnumerable<GetOccupationDto>> Get()
     {
         _logger.LogInformation("Get occupations");
-        return _mapper.Map<IEnumerable<GetOccupationDto>>(_organizationRepository.Occupations);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetOccupationDto>>(ctx.Occupations);
     }
     /// <summary>
     /// The method returns an occupation by ID
@@ -41,10 +43,11 @@ public class OccupationController : Controller
     /// <param name="id">Occupation ID</param>
     /// <returns>Occupation with the given ID or 404 code if occupation is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetOccupationDto> Get(int id)
+    public async Task<ActionResult<GetOccupationDto>> Get(int id)
     {
         _logger.LogInformation("Get occupation with id {id}", id);
-        var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var occupation = ctx.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null)
         {
             _logger.LogInformation("The occupation with ID {id} is not found", id);
@@ -59,11 +62,12 @@ public class OccupationController : Controller
     /// <param name="occupation">A new occupation that needs to be added</param>
     /// <returns>Code 200 with an added occupation</returns>
     [HttpPost]
-    public ActionResult<PostOccupationDto> Post([FromBody] PostOccupationDto occupation)
+    public async Task<ActionResult<PostOccupationDto>> Post([FromBody] PostOccupationDto occupation)
     {
         _logger.LogInformation("POST occupation method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
-        _organizationRepository.Occupations.Add(mappedOccupation);
+        ctx.Occupations.Add(mappedOccupation);
         return Ok(occupation);
     }
     /// <summary>
@@ -74,18 +78,19 @@ public class OccupationController : Controller
     /// <returns>Code 200 and the updated occupation class if success; 
     /// 404 code if an occupation is not found;</returns>
     [HttpPut("{id}")]
-    public ActionResult<PostOccupationDto> Put(int id, [FromBody] PostOccupationDto newDepartment)
+    public async Task<ActionResult<PostOccupationDto>> Put(int id, [FromBody] PostOccupationDto newDepartment)
     {
         _logger.LogInformation("PUT occupation method");
-        var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var occupation = ctx.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null)
         {
             _logger.LogInformation("The occupation with ID {id} is not found", id);
             return NotFound("The occupation with given id is not found");
         }
-        _organizationRepository.Occupations.Remove(occupation);
+        ctx.Occupations.Remove(occupation);
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
-        _organizationRepository.Occupations.Add(mappedOccupation);
+        ctx.Occupations.Add(mappedOccupation);
         return Ok(newDepartment);
     }
     /// <summary>
@@ -94,16 +99,17 @@ public class OccupationController : Controller
     /// <param name="id">An ID of the occupation</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostOccupationDto> Delete(int id)
+    public async Task<ActionResult<PostOccupationDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE occupation method with ID: {id}", id);
-        var occupation = _organizationRepository.Occupations.FirstOrDefault(occupation => occupation.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var occupation = ctx.Occupations.FirstOrDefault(occupation => occupation.Id == id);
         if (occupation == null)
         {
             _logger.LogInformation("The occupation with ID {id} is not found", id);
             return NotFound("The occupation with given id is not found");
         }
-        _organizationRepository.Occupations.Remove(occupation);
+        ctx.Occupations.Remove(occupation);
         return Ok();
     }
 }

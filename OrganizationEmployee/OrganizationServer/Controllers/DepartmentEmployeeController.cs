@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -13,15 +14,15 @@ namespace OrganizationServer.Controllers;
 public class DepartmentEmployeeController : Controller
 {
     private readonly ILogger<DepartmentEmployeeController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the DepartmentEmployeeController
     /// </summary>
-    public DepartmentEmployeeController(OrganizationRepository organizationRepository, IMapper mapper,
+    public DepartmentEmployeeController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper,
         ILogger<DepartmentEmployeeController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +31,11 @@ public class DepartmentEmployeeController : Controller
     /// </summary>
     /// <returns>All the connections between Department and Employee in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetDepartmentEmployeeDto> Get()
+    public async Task<IEnumerable<GetDepartmentEmployeeDto>> Get()
     {
         _logger.LogInformation("Get DepartmentEmployees");
-        return _mapper.Map<IEnumerable<GetDepartmentEmployeeDto>>(_organizationRepository.DepartmentEmployees);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetDepartmentEmployeeDto>>(ctx.DepartmentEmployees);
     }
     /// <summary>
     /// The method returns a DepartmentEmployee by ID
@@ -41,11 +43,12 @@ public class DepartmentEmployeeController : Controller
     /// <param name="id">DepartmentEmployee ID</param>
     /// <returns>DepartmentEmployee with the given ID or 404 code if DepartmentEmployee is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetDepartmentEmployeeDto> Get(int id)
+    public async Task<ActionResult<GetDepartmentEmployeeDto>> Get(int id)
     {
         _logger.LogInformation("Get DepartmentEmployee with id {id}", id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var departmentEmployee =
-            _organizationRepository.DepartmentEmployees
+            ctx.DepartmentEmployees
             .FirstOrDefault(departEmployee => departEmployee.Id == id);
         if (departmentEmployee == null)
         {
@@ -62,12 +65,13 @@ public class DepartmentEmployeeController : Controller
     /// <returns>Code 200 and the added DepartmentEmployee is success; 404 code if department or employee is not found
     /// </returns>
     [HttpPost]
-    public ActionResult<PostDepartmentEmployeeDto> Post([FromBody] PostDepartmentEmployeeDto departmentEmployee)
+    public async Task<ActionResult<PostDepartmentEmployeeDto>> Post([FromBody] PostDepartmentEmployeeDto departmentEmployee)
     {
         _logger.LogInformation("POST DepartmentEmployee method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(departmentEmployee);
         var employee =
-            _organizationRepository.Employees
+            ctx.Employees
             .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
         if (employee == null)
         {
@@ -76,7 +80,7 @@ public class DepartmentEmployeeController : Controller
             return NotFound($"An employee with given id={mappedDepartmentEmployee.EmployeeId} doesn't exist");
         }
         var department =
-            _organizationRepository.Departments
+            ctx.Departments
             .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
         if (department == null)
         {
@@ -86,7 +90,7 @@ public class DepartmentEmployeeController : Controller
         }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
-        _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
+        ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
         return Ok(departmentEmployee);
     }
     /// <summary>
@@ -96,10 +100,11 @@ public class DepartmentEmployeeController : Controller
     /// <param name="newDepartmentEmployee">New information of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
-    public ActionResult<PostDepartmentEmployeeDto> Put(int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
+    public async Task<ActionResult<PostDepartmentEmployeeDto>> Put(int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
     {
         _logger.LogInformation("PUT DepartmentEmployee method");
-        var departmentEmployee = _organizationRepository
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var departmentEmployee = ctx
             .DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
         if (departmentEmployee == null)
         {
@@ -108,7 +113,7 @@ public class DepartmentEmployeeController : Controller
         }
         var mappedDepartmentEmployee = _mapper.Map<DepartmentEmployee>(newDepartmentEmployee);
         var employee =
-                       _organizationRepository.Employees
+                       ctx.Employees
                        .FirstOrDefault(employee => employee.Id == mappedDepartmentEmployee.EmployeeId);
         if (employee == null)
         {
@@ -116,7 +121,7 @@ public class DepartmentEmployeeController : Controller
             return NotFound($"An employee with given id={mappedDepartmentEmployee.EmployeeId} doesn't exist");
         }
         var department =
-                        _organizationRepository.Departments
+                        ctx.Departments
                         .FirstOrDefault(department => department.Id == mappedDepartmentEmployee.DepartmentId);
         if (department == null)
         {
@@ -125,8 +130,8 @@ public class DepartmentEmployeeController : Controller
         }
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
-        _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
-        _organizationRepository.DepartmentEmployees.Add(mappedDepartmentEmployee);
+        ctx.DepartmentEmployees.Remove(departmentEmployee);
+        ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
         return Ok(newDepartmentEmployee);
     }
     /// <summary>
@@ -135,16 +140,17 @@ public class DepartmentEmployeeController : Controller
     /// <param name="id">An ID of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostDepartmentEmployeeDto> Delete(int id)
+    public async Task<ActionResult<PostDepartmentEmployeeDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE DepartmentEmployee method with ID: {id}", id);
-        var departmentEmployee = _organizationRepository.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var departmentEmployee = ctx.DepartmentEmployees.FirstOrDefault(departmentEmployee => departmentEmployee.Id == id);
         if (departmentEmployee == null)
         {
             _logger.LogInformation("The DepartmentEmployee with ID {id} is not found", id);
             return NotFound();
         }
-        _organizationRepository.DepartmentEmployees.Remove(departmentEmployee);
+        ctx.DepartmentEmployees.Remove(departmentEmployee);
         return Ok();
     }
 }

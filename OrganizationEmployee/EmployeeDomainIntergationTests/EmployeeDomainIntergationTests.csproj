@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+	  <XunitJson>xunit.runner.json</XunitJson>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\EmployeeDomain\EmployeeDomain.csproj" />
     <ProjectReference Include="..\OrganizationServer\OrganizationServer.csproj" />

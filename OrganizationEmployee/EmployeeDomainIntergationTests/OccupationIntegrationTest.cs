@@ -48,8 +48,8 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// <param name="occupationName">Correct name of the Occupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(0, "Аналитик данных", true)]
-    [InlineData(1, "Программист", true)]
+    [InlineData(1, "Аналитик данных", true)]
+    [InlineData(2, "Программист", true)]
     [InlineData(1337, "", false)]
     [InlineData(555, "", false)]
     public async Task GetOccupation(uint occupationId, string occupationName, bool isSuccess)

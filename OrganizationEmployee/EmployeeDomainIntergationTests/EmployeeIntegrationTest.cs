@@ -47,9 +47,9 @@ public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Progr
     /// <param name="employeeRegNumber">Correct registration number of the Employee</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(0, 1337, true)]
-    [InlineData(2, 3, true)]
-    [InlineData(3, 5, true)]
+    [InlineData(1, 1337, true)]
+    [InlineData(3, 3, true)]
+    [InlineData(4, 5, true)]
     [InlineData(1337, 0, false)]
     [InlineData(555, 0, false)]
     public async Task GetEmployee(uint employeeId, uint employeeRegNumber, bool isSuccess)

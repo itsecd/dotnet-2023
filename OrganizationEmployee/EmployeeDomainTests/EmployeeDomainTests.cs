@@ -172,7 +172,7 @@ public class EmployeeDomainTestClass : IClassFixture<EmployeeDomainFixture>
                                subqueryElem.HireDate).TotalDays / 365.2422)
                           }
                           ).Take(5).ToList();
-        Assert.Equal(4, sixthQuery.Count);
+        Assert.Equal(4, sixthQuery.Count());
         Assert.True(sixthQuery[0].WorkExperience > 24);
         Assert.True(sixthQuery[1].WorkExperience > 23);
         Assert.True(sixthQuery[2].WorkExperience > 22);

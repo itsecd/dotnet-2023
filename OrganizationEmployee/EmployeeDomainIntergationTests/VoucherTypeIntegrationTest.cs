@@ -32,8 +32,9 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     public async Task GetVoucherTypes()
     {
         var client = _factory.CreateClient();
-
         var response = await client.GetAsync("api/VoucherType");
+        // Debugger.Launch();
+        Console.Write(response);
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
@@ -48,8 +49,8 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     /// <param name="voucherTypeName">Correct name of the voucher type</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(0, "Санаторий", true)]
-    [InlineData(1, "Дом отдыха", true)]
+    [InlineData(1, "Санаторий", true)]
+    [InlineData(2, "Дом отдыха", true)]
     [InlineData(1337, "", false)]
     [InlineData(555, "", false)]
     public async Task GetVoucherType(uint voucherTypeId, string voucherTypeName, bool isSuccess)

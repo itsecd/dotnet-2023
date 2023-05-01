@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
 using OrganizationServer.Repository;
 
@@ -12,16 +13,16 @@ namespace OrganizationServer.Controllers;
 [ApiController]
 public class WorkshopController : ControllerBase
 {
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly ILogger<WorkshopController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the WorkshopController
     /// </summary>
-    public WorkshopController(OrganizationRepository organizationRepository, IMapper mapper,
+    public WorkshopController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, 
         ILogger<WorkshopController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +31,11 @@ public class WorkshopController : ControllerBase
     /// </summary>
     /// <returns>All the workshops in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetWorkshopDto> Get()
+    public async Task<IEnumerable<GetWorkshopDto>> Get()
     {
         _logger.LogInformation("Get workshops");
-        return _mapper.Map<IEnumerable<GetWorkshopDto>>(_organizationRepository.Workshops);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetWorkshopDto>>(ctx.Workshops);
     }
     /// <summary>
     /// The method returns an workshop by ID
@@ -41,10 +43,11 @@ public class WorkshopController : ControllerBase
     /// <param name="id">Workshop ID</param>
     /// <returns>Workshop with the given ID or 404 code if workshop is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetWorkshopDto> Get(int id)
+    public async Task<ActionResult<GetWorkshopDto>> Get(int id)
     {
         _logger.LogInformation("Get workshop with id {id}", id);
-        var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var workshop = ctx.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null)
         {
             _logger.LogInformation("The workshop with ID {id} is not found", id);
@@ -59,11 +62,12 @@ public class WorkshopController : ControllerBase
     /// <param name="workshop">A new workshop that needs to be added</param>
     /// <returns>Code 200 with an added workshop</returns>
     [HttpPost]
-    public ActionResult<PostWorkshopDto> Post([FromBody] PostWorkshopDto workshop)
+    public async Task<ActionResult<PostWorkshopDto>> Post([FromBody] PostWorkshopDto workshop)
     {
         _logger.LogInformation("POST workshop method");
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
-        _organizationRepository.Workshops.Add(mappedWorkshop);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Workshops.Add(mappedWorkshop);
         return Ok(workshop);
     }
     /// <summary>
@@ -74,18 +78,19 @@ public class WorkshopController : ControllerBase
     /// <returns>Code 200 and the updated workshop class if success; 
     /// 404 code if a workshop is not found;</returns>
     [HttpPut("{id}")]
-    public ActionResult<PostWorkshopDto> Put(int id, [FromBody] PostWorkshopDto newWorkshop)
+    public async Task<ActionResult<PostWorkshopDto>> Put(int id, [FromBody] PostWorkshopDto newWorkshop)
     {
         _logger.LogInformation("PUT workshop method");
-        var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var workshop = ctx.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null)
         {
             _logger.LogInformation("An workshop with id {id} doesn't exist", id);
             return NotFound();
         }
-        _organizationRepository.Workshops.Remove(workshop);
+        ctx.Workshops.Remove(workshop);
         var mappedWorkshop = _mapper.Map<Workshop>(newWorkshop);
-        _organizationRepository.Workshops.Add(mappedWorkshop);
+        ctx.Workshops.Add(mappedWorkshop);
         return Ok(newWorkshop);
     }
     /// <summary>
@@ -94,16 +99,17 @@ public class WorkshopController : ControllerBase
     /// <param name="id">An ID of the workshop</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostWorkshopDto> Delete(int id)
+    public async Task<ActionResult<PostWorkshopDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE workshop method");
-        var workshop = _organizationRepository.Workshops.FirstOrDefault(workshop => workshop.Id == id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var workshop = ctx.Workshops.FirstOrDefault(workshop => workshop.Id == id);
         if (workshop == null)
         {
             _logger.LogInformation("An workshop with id {id} doesn't exist", id);
             return NotFound();
         }
-        _organizationRepository.Workshops.Remove(workshop);
+        ctx.Workshops.Remove(workshop);
         return Ok();
     }
 }

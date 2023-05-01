@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainTests", "Empl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationServer", "OrganizationServer\OrganizationServer.csproj", "{3C56F3CB-5D74-47EC-A6F2-5EAF6239FE3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeDomainIntergationTests", "EmployeeDomainIntergationTests\EmployeeDomainIntergationTests.csproj", "{D5CD163B-1FBB-45D1-815C-0589A29146A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainIntergationTests", "EmployeeDomainIntergationTests\EmployeeDomainIntergationTests.csproj", "{D5CD163B-1FBB-45D1-815C-0589A29146A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

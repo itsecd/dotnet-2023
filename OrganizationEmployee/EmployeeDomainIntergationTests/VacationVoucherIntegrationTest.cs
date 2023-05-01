@@ -78,7 +78,7 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
     /// <param name="voucherTypeId">The voucher type id of the vacation voucher</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(2020, 11, 23, 0, true)]
+    [InlineData(2020, 11, 23, 2, true)]
     [InlineData(2011, 3, 15, 1, true)]
     [InlineData(2011, 3, 15, 33, false)]
     public async Task PostVacationVoucher(int issueYear, int issueMonth, int issueDay,
@@ -112,9 +112,9 @@ public class VacationVoucherIntegrationTest : IClassFixture<WebApplicationFactor
     /// <param name="voucherTypeId">The new voucher type id of the vacation voucher</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(2, 2020, 11, 23, 0, true)]
+    [InlineData(2, 2020, 11, 23, 1, true)]
     [InlineData(2, 2020, 11, 23, 55, false)]
-    [InlineData(55, 2011, 3, 15, 0, false)]
+    [InlineData(55, 2011, 3, 15, 1, false)]
     public async Task PutVacationVoucher(uint vacationVoucherId, int issueYear, int issueMonth, int issueDay,
         uint voucherTypeId, bool isSuccess)
     {

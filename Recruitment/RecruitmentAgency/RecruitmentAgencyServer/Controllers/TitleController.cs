@@ -58,7 +58,7 @@ public class TitleController : ControllerBase
     /// <summary>
     /// Post method that adding a new title 
     /// </summary>
-    /// <param name="title"></param>
+    /// <param name="title">Title data</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] TitlePostDto title)
     {
@@ -72,8 +72,8 @@ public class TitleController : ControllerBase
     /// <summary>
     /// Put method which allows change the data of a title with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="titleToPut"></param>
+    /// <param name="id">Title id</param>
+    /// <param name="titleToPut">Title data</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] TitlePostDto titleToPut)
@@ -93,7 +93,7 @@ public class TitleController : ControllerBase
     /// <summary>
     /// Delete method which allows delete a title with a specific id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Title id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

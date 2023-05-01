@@ -25,7 +25,7 @@ public class RequestsController : ControllerBase
     /// <summary>
     ///   Display information about all applicants looking for a job in a given position, sorted by full name.
     /// </summary>
-    /// <param name="jobTitle"> Job title</param>
+    /// <param name="jobTitle">Job title</param>
     /// <returns>
     ///     Display information about all applicants looking for a job
     ///     Signalization of success or error

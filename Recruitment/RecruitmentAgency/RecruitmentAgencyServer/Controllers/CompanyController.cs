@@ -59,7 +59,7 @@ public class CompanyController : ControllerBase
     /// <summary>
     /// Post method that adding a new company 
     /// </summary>
-    /// <param name="company"></param>
+    /// <param name="company">Company data</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CompanyPostDto company)
     {
@@ -73,8 +73,8 @@ public class CompanyController : ControllerBase
     /// <summary>
     /// Put method which allows change the data of a company with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="companyToPut"></param>
+    /// <param name="id">Company id</param>
+    /// <param name="companyToPut">Company data</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] CompanyPostDto companyToPut)
@@ -95,7 +95,7 @@ public class CompanyController : ControllerBase
     /// <summary>
     /// Delete method which allows delete a company with a specific id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Company id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

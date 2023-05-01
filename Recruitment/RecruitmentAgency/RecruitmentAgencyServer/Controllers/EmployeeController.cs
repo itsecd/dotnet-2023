@@ -7,7 +7,7 @@ using RecruitmentAgencyServer.Dto;
 namespace RecruitmentAgencyServer.Controllers;
 
 /// <summary>
-///     Controller foremployees
+///     Controller for employees
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -59,7 +59,7 @@ public class EmployeeController : ControllerBase
     /// <summary>
     /// Post method that adding a new employee
     /// </summary>
-    /// <param name="employee"></param>
+    /// <param name="employee">Employee data</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] EmployeePostDto employee)
     {
@@ -73,8 +73,8 @@ public class EmployeeController : ControllerBase
     /// <summary>
     /// Put method which allows change the data of an employee with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="employeeToPut"></param>
+    /// <param name="id">Employee id</param>
+    /// <param name="employeeToPut">Employee data</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] EmployeePostDto employeeToPut)
@@ -94,7 +94,7 @@ public class EmployeeController : ControllerBase
     /// <summary>
     /// Delete method which allows delete an employee with a specific id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Employee id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

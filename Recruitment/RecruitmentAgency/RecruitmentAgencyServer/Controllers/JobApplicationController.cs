@@ -58,7 +58,7 @@ public class JobApplicationController : ControllerBase
     /// <summary>
     /// Post method that adding a new job application
     /// </summary>
-    /// <param name="jobApplication"></param>
+    /// <param name="jobApplication">Job application data</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] JobApplicationPostDto jobApplication)
     {
@@ -78,8 +78,8 @@ public class JobApplicationController : ControllerBase
     /// <summary>
     /// Put method which allows change the data of a job application with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="jobApplicationToPut"></param>
+    /// <param name="id">Job application id</param>
+    /// <param name="jobApplicationToPut">Job application data</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] JobApplicationPostDto jobApplicationToPut)
@@ -99,7 +99,7 @@ public class JobApplicationController : ControllerBase
     /// <summary>
     /// Delete method which allows delete a job application with a specific id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Job application id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

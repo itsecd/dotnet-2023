@@ -60,7 +60,7 @@ public class CompanyApplicationController : ControllerBase
     /// <summary>
     /// Post method that adding a new company application
     /// </summary>
-    /// <param name="companyApplication"></param>
+    /// <param name="companyApplication">Company application data to post</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CompanyApplicationPostDto companyApplication)
     {

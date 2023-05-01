@@ -96,6 +96,8 @@ public class MainWindowViewModel : ViewModelBase
 
 	public ObservableCollection<UserViewModel> Users { get; } = new();
 
+	public ObservableCollection<GroupViewModel> GroupsWithMaxNotesCount { get; } = new(); 
+
 	public ReactiveCommand<Unit, Unit> OnAddGroupCommand { get; set; }
 
 	public ReactiveCommand<Unit, Unit> OnChangeGroupCommand { get; set; }
@@ -142,12 +144,11 @@ public class MainWindowViewModel : ViewModelBase
 		RxApp.MainThreadScheduler.Schedule(LoadNotesAsync);
 		RxApp.MainThreadScheduler.Schedule(LoadRolesAsync);
 		RxApp.MainThreadScheduler.Schedule(LoadUsersAsync);
+		RxApp.MainThreadScheduler.Schedule(LoadGroupsWithMaxNotesCount);
 
 		OnAddGroupCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			var groupViewModel = await ShowGroupDialog.Handle(new GroupViewModel());
-
-			var d = GroupCreationDate;
 
 			if (groupViewModel != null)
 			{
@@ -169,6 +170,7 @@ public class MainWindowViewModel : ViewModelBase
 						});
 					}
 
+					LoadGroupsWithMaxNotesCount();
 					ClearExceptionsValues();
 				}
 				catch (Exception ex)
@@ -189,6 +191,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateGroup(SelectedGroup!.Id,
 						_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
 					_mapper.Map(groupViewModel, SelectedGroup);
+					LoadGroupsWithMaxNotesCount();
 					ClearExceptionsValues();
 				}
 				catch (Exception ex)
@@ -212,6 +215,7 @@ public class MainWindowViewModel : ViewModelBase
 				}
 
 				Groups.Remove(SelectedGroup!);
+				LoadGroupsWithMaxNotesCount();
 				ClearExceptionsValues();
 			}
 			catch (Exception ex)
@@ -233,6 +237,7 @@ public class MainWindowViewModel : ViewModelBase
 					noteViewModel.Id = await _apiClient
 						.CreateNote(_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
 					Notes.Add(_mapper.Map<NoteViewModel>(noteViewModel));
+					LoadGroupsWithMaxNotesCount();
 					ClearExceptionsValues();
 				}
 				catch (Exception ex)
@@ -253,6 +258,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateNote(SelectedNote!.Id,
 						_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
 					_mapper.Map(noteViewModel, SelectedNote);
+					LoadGroupsWithMaxNotesCount();
 					ClearExceptionsValues();
 				}
 				catch (Exception ex)
@@ -269,6 +275,7 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				await _apiClient.DeleteNote(SelectedNote!.Id);
 				Notes.Remove(SelectedNote);
+				LoadGroupsWithMaxNotesCount();
 				ClearExceptionsValues();
 			}
 			catch (Exception ex)
@@ -441,6 +448,16 @@ public class MainWindowViewModel : ViewModelBase
 		foreach (var user in await _apiClient.GetAllUsers())
 		{
 			Users.Add(_mapper.Map<UserViewModel>(user));
+		}
+	}
+
+	private async void LoadGroupsWithMaxNotesCount()
+	{
+		GroupsWithMaxNotesCount.Clear();
+
+		foreach (var group in await _apiClient.GetGroupsWithMaxNotesCount())
+		{
+			GroupsWithMaxNotesCount.Add(_mapper.Map<GroupViewModel>(group));
 		}
 	}
 }

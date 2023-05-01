@@ -21,7 +21,8 @@ public class ApiWrapper
 			new HttpClient());
 	}
 
-	public async Task<ICollection<GroupDtoGet>> GetAllGroups() => await _client.GetAllGroupsAsync();
+	public async Task<ICollection<GroupDtoGet>> GetAllGroups() 
+		=> await _client.GetAllGroupsAsync();
 
 	public async Task<int> CreateGroup(GroupDtoPostOrPut model) 
 		=> await _client.CreateGroupAsync(model);
@@ -37,7 +38,8 @@ public class ApiWrapper
 		await _client.DeleteGroupAsync(id);
 	}
 
-	public async Task<ICollection<NoteDtoGet>> GetAllNotes() => await _client.GetAllNotesAsync();
+	public async Task<ICollection<NoteDtoGet>> GetAllNotes() 
+		=> await _client.GetAllNotesAsync();
 
 	public async Task<int> CreateNote(NoteDtoPostOrPut model) => 
 		await _client.CreateNoteAsync(model);
@@ -53,7 +55,8 @@ public class ApiWrapper
 		await _client.DeleteNoteAsync(id);
 	}
 
-	public async Task<ICollection<RoleDtoGet>> GetAllRoles() => await _client.GetAllRolesAsync();
+	public async Task<ICollection<RoleDtoGet>> GetAllRoles()
+		=> await _client.GetAllRolesAsync();
 
 	public async Task<int> CreateRole(RoleDtoPostOrPut model) => 
 		await _client.CreateRoleAsync(model);
@@ -69,7 +72,8 @@ public class ApiWrapper
 		await _client.DeleteRoleAsync(id);
 	}
 
-	public async Task<ICollection<UserDtoGet>> GetAllUsers() => await _client.GetAllUsersAsync();
+	public async Task<ICollection<UserDtoGet>> GetAllUsers() 
+		=> await _client.GetAllUsersAsync();
 
 	public async Task<int> CreateUser(UserDtoPostOrPut model) => 
 		await _client.CreateUserAsync(model);
@@ -84,4 +88,8 @@ public class ApiWrapper
 	{
 		await _client.DeleteUserAsync(id);
 	}
+
+	public async Task<ICollection<GroupDtoGet>> GetGroupsWithMaxNotesCount()
+		=> await _client.GetGroupsWithMaxNotesCountAsync();
+
 }

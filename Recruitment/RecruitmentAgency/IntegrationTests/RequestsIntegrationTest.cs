@@ -9,12 +9,10 @@ namespace IntegrationTests;
 /// </summary>
 public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
     private readonly HttpClient _client;
     public RequestsIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
-        _client = _factory.CreateClient();
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the GetApplicantsRequestsForSpecificJobTitle method

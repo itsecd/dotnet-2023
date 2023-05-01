@@ -7,22 +7,15 @@ using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace IntegrationTests;
-
-
-
 /// <summary>
 /// Integration tests for CompanyApplicationController
 /// </summary>
-/// 
-[Collection("CompanyApplication")]
 public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
     private readonly HttpClient _client;
     public CompanyApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
-        _client = _factory.CreateClient();
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the post method

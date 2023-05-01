@@ -81,8 +81,8 @@ public class CompanyApplicationController : ControllerBase
     /// <summary>
     /// Put method which allows change the data of company application with a specific id
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="companyApplicationToPut"></param>
+    /// <param name="id">Company application id</param>
+    /// <param name="companyApplicationToPut">Company application data</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, [FromBody] CompanyApplicationPostDto companyApplicationToPut)
@@ -102,7 +102,7 @@ public class CompanyApplicationController : ControllerBase
     /// <summary>
     /// Delete method which allows delete a company application with a specific id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Company application id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)

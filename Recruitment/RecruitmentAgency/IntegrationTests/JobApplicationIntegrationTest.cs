@@ -9,14 +9,11 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for JobApplicationController
 /// </summary>
-[Collection("CompanyApplication")]
 public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
     private readonly HttpClient _client;
     public JobApplicationIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
         _client = factory.CreateClient();
     }
     /// <summary>
@@ -99,20 +96,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task GetJobApplicationByIdReturnsSuccess()
     {
-        var expectedJobApplication = new JobApplicationGetDto()
-        {
-            Title = "Backend",
-            Date = DateTime.Now,
-            Id = 25,
-        };
-
         var response = await _client.GetAsync("api/JobApplication/35");
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

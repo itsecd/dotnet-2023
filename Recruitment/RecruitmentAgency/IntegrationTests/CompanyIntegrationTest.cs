@@ -9,13 +9,12 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for CompanyController
 /// </summary>
-[Collection("CompanyApplication")]
 public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
+    private readonly HttpClient _client;
     public CompanyIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method
@@ -24,8 +23,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-        var response = await client.GetAsync("api/Company");
+        var response = await _client.GetAsync("api/Company");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
@@ -35,7 +33,6 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task PostValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
         var newCompany = new CompanyPostDto()
         {
@@ -50,7 +47,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         };
         var requestContent = JsonSerializer.Serialize(newCompany, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/Company", postData);
+        var response = await _client.PostAsync("api/Company", postData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -61,7 +58,6 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task PutValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
         var newCompany = new CompanyPostDto()
         {
@@ -76,7 +72,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
         };
         var requestContent = JsonSerializer.Serialize(newCompany, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/Company/0", putData);
+        var response = await _client.PutAsync("api/Company/0", putData);
 
         Assert.False(response.IsSuccessStatusCode);
     }
@@ -87,9 +83,8 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
-        var response = await client.DeleteAsync("api/Company/25");
+        var response = await _client.DeleteAsync("api/Company/25");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -100,9 +95,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task GetCompanyByIdReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-        var response = await client.GetAsync("api/Company/15");
-        var content = await response.Content.ReadAsStringAsync();
+        var response = await _client.GetAsync("api/Company/15");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

@@ -9,15 +9,12 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for TitleController
 /// </summary>
-[Collection("CompanyApplication")]
 public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
     private readonly HttpClient _client;
     public TitleIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
-        _client = _factory.CreateClient();
+        _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method

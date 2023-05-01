@@ -8,7 +8,6 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for RequestsController
 /// </summary>
-[Collection("CompanyApplication")]
 public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly WebApplicationFactory<Server> _factory;
@@ -39,17 +38,7 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
         await Task.Delay(5000).ConfigureAwait(false);
         var minDate = DateTime.ParseExact("2022-01-01T00:00:00Z", "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
         var maxDate = DateTime.ParseExact("2022-06-05T23:59:59Z", "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
-        var newEmployee = new Employee
-        {
-            Id = 30,
-            Education = "Full",
-            Salary = 55555,
-            PersonalName = "Smp5",
-            Telephone = "555555",
-            WorkExperience = 15
-        };
         var response = await _client.GetAsync($"api/requests/applicants_over_given_period?minDate={minDate}&maxDate={maxDate}");
-        var res = response.Content.ReadAsStringAsync();
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>

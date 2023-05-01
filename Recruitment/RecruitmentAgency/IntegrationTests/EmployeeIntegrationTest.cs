@@ -9,13 +9,12 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for EmployeeController
 /// </summary>
-[Collection("CompanyApplication")]
 public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
-    private readonly WebApplicationFactory<Server> _factory;
+    private readonly HttpClient _client;
     public EmployeeIntegrationTests(WebApplicationFactory<Server> factory)
     {
-        _factory = factory;
+            _client = factory.CreateClient();
     }
     /// <summary>
     /// Test of the get method
@@ -24,9 +23,8 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task GetValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
 
-        var response = await client.GetAsync("api/Employee");
+        var response = await _client.GetAsync("api/Employee");
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
@@ -37,8 +35,6 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task PostValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
         var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
@@ -55,7 +51,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
         };
         var requestContent = JsonSerializer.Serialize(newEmployee, options);
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/Employee", postData);
+        var response = await _client.PostAsync("api/Employee", postData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -66,8 +62,6 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task PutValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
         var newEmployee = new EmployeePostDto()
         {
             PersonalName = "Sergey Pirat",
@@ -84,7 +78,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
         };
         var requestContent = JsonSerializer.Serialize(newEmployee, options);
         var putData = new StringContent(requestContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync("api/Employee/1", putData);
+        var response = await _client.PutAsync("api/Employee/1", putData);
 
         Assert.True(response.IsSuccessStatusCode);
     }
@@ -95,9 +89,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var client = _factory.CreateClient();
-
-        var response = await client.DeleteAsync("api/Employee/25");
+        var response = await _client.DeleteAsync("api/Employee/25");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -108,7 +100,6 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task GetEmployeeByIdReturnsSuccess()
     {
-        var client = _factory.CreateClient();
         var expectedEmployee = new EmployeeGetDto()
         {
             PersonalName = "Sergey Pirat",
@@ -119,7 +110,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
             Id = 0
         };
 
-        var response = await client.GetAsync("api/Employee/0");
+        var response = await _client.GetAsync("api/Employee/0");
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
         {

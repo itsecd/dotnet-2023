@@ -72,7 +72,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
 	/// <exception cref="ValidationException">Невалидный объект.</exception>
-	public async Task CreateGroup(Group model)
+	public async Task<int> CreateGroup(Group model)
 	{
 		await _groupValidator.ValidateAsync(model);
 
@@ -81,7 +81,7 @@ public class SocialNetworkService : ISocialNetworkService
 			throw new ValidationException("Попытка присвоить группе несуществующий идентификатор создателя!");
 		}
 
-		await _socialNetworkRepository.CreateGroup(model);
+		return await _socialNetworkRepository.CreateGroup(model);
 	}
 
 	/// <summary>
@@ -159,7 +159,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
 	/// <exception cref="ValidationException">Попытка создать запись с несуществующим идентификатором автора
 	/// или несуществующим идентификатором группы!</exception>
-	public async Task CreateNote(Note model)
+	public async Task<int> CreateNote(Note model)
 	{
 		await _noteValidator.ValidateAsync(model);
 
@@ -173,7 +173,7 @@ public class SocialNetworkService : ISocialNetworkService
 			throw new ValidationException("Попытка создать запись с несуществующим идентификатором группы!");
 		}
 
-		await _socialNetworkRepository.CreateNote(model);
+		return await _socialNetworkRepository.CreateNote(model);
 	}
 
 	/// <summary>
@@ -250,7 +250,7 @@ public class SocialNetworkService : ISocialNetworkService
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
 	/// <exception cref="ValidationException">Роль с указанным названием уже присутствует!</exception>
-	public async Task CreateRole(Role model)
+	public async Task<int> CreateRole(Role model)
 	{
 		await _roleValidator.ValidateAsync(model);
 
@@ -260,7 +260,7 @@ public class SocialNetworkService : ISocialNetworkService
 			throw new ValidationException("Роль с указанным названием уже присутствует!");
 		}
 
-		await _socialNetworkRepository.CreateRole(model);
+		return await _socialNetworkRepository.CreateRole(model);
 	}
 
 	/// <summary>
@@ -325,11 +325,11 @@ public class SocialNetworkService : ISocialNetworkService
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	public async Task CreateUser(User model)
+	public async Task<int> CreateUser(User model)
 	{
 		await _userValidator.ValidateAsync(model); 
 
-		await _socialNetworkRepository.CreateUser(model);
+		return await _socialNetworkRepository.CreateUser(model);
 	}
 
 	/// <summary>

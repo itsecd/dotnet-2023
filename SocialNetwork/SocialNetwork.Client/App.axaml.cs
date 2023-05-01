@@ -32,9 +32,13 @@ public partial class App : Application
 				cfg.CreateMap<UserViewModel, UserDtoGet>();
 
 				cfg.CreateMap<GroupViewModel, GroupDtoPostOrPut>();
+				cfg.CreateMap<GroupDtoPostOrPut, GroupViewModel>();
 				cfg.CreateMap<NoteViewModel, NoteDtoPostOrPut>();
+				cfg.CreateMap<NoteDtoPostOrPut, NoteViewModel>();
 				cfg.CreateMap<RoleViewModel, RoleDtoPostOrPut>();
-				cfg.CreateMap<UserViewModel, UserDtoPostOrPut>(); 
+				cfg.CreateMap<RoleDtoPostOrPut, RoleViewModel>();
+				cfg.CreateMap<UserViewModel, UserDtoPostOrPut>();
+				cfg.CreateMap<UserDtoPostOrPut, UserViewModel>();
 			});
 
 			Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

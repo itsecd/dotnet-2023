@@ -67,9 +67,8 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
 	[HttpPost(Name = "CreateUser")]
-	public async Task CreateUser([FromBody] UserDtoPostOrPut model)
-	{
-		await _socialNetworkService.CreateUser(new User
+	public async Task<int> CreateUser([FromBody] UserDtoPostOrPut model)
+		=> await _socialNetworkService.CreateUser(new User
 		{
 			FirstName = model.FirstName,
 			LastName = model.LastName,
@@ -78,7 +77,6 @@ public class UserController : ControllerBase
 			BirthDate = model.BirthDate,
 			RegistrationDate = model.RegistrationDate
 		});
-	}
 
 	/// <summary>
 	/// Изменение данных пользователя.

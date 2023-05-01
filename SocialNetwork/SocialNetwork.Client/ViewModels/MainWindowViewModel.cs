@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using DynamicData;
 using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -142,8 +144,23 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				try
 				{
-					await _apiClient.CreateGroup(_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
+					groupViewModel.Id = await _apiClient
+						.CreateGroup(_mapper.Map<GroupDtoPostOrPut>(groupViewModel));				
 					Groups.Add(groupViewModel);
+
+					if (Roles.FirstOrDefault(role => role.Name == "Админ") == null)
+					{
+						Roles.Add(new RoleViewModel
+						{
+							Id = await _apiClient.CreateRole(new RoleDtoPostOrPut
+							{
+								Name = "Админ"
+							}),
+							Name = "Админ"
+						});
+					}
+
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -163,6 +180,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateGroup(SelectedGroup!.Id,
 						_mapper.Map<GroupDtoPostOrPut>(groupViewModel));
 					_mapper.Map(groupViewModel, SelectedGroup);
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -178,7 +196,14 @@ public class MainWindowViewModel : ViewModelBase
 			try
 			{
 				await _apiClient.DeleteGroup(SelectedGroup!.Id);
-				Groups.Remove(SelectedGroup);
+
+				foreach (var note in Notes.Where(note => note.GroupId == SelectedGroup!.Id).ToList())
+				{
+					Notes.Remove(note);
+				}
+
+				Groups.Remove(SelectedGroup!);
+				ClearExceptionsValues();
 			}
 			catch (Exception ex)
 			{
@@ -196,8 +221,10 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				try
 				{
-					await _apiClient.CreateNote(_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
-					Notes.Add(noteViewModel);
+					noteViewModel.Id = await _apiClient
+						.CreateNote(_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
+					Notes.Add(_mapper.Map<NoteViewModel>(noteViewModel));
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -217,6 +244,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateNote(SelectedNote!.Id,
 						_mapper.Map<NoteDtoPostOrPut>(noteViewModel));
 					_mapper.Map(noteViewModel, SelectedNote);
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -232,6 +260,7 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				await _apiClient.DeleteNote(SelectedNote!.Id);
 				Notes.Remove(SelectedNote);
+				ClearExceptionsValues();
 			}
 			catch (Exception ex)
 			{
@@ -248,8 +277,10 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				try
 				{
-					await _apiClient.CreateRole(_mapper.Map<RoleDtoPostOrPut>(roleViewModel));
+					roleViewModel.Id = await _apiClient
+						.CreateRole(_mapper.Map<RoleDtoPostOrPut>(roleViewModel));
 					Roles.Add(roleViewModel);
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -269,6 +300,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateRole(SelectedRole!.Id,
 						_mapper.Map<RoleDtoPostOrPut>(roleViewModel));
 					_mapper.Map(roleViewModel, SelectedRole);
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -284,6 +316,7 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				await _apiClient.DeleteRole(SelectedRole!.Id);
 				Roles.Remove(SelectedRole);
+				ClearExceptionsValues();
 			}
 			catch (Exception ex)
 			{
@@ -301,8 +334,10 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				try
 				{
-					await _apiClient.CreateUser(_mapper.Map<UserDtoPostOrPut>(userViewModel));
-					Users.Add(userViewModel);
+					userViewModel.Id = await _apiClient
+						.CreateUser(_mapper.Map<UserDtoPostOrPut>(userViewModel));
+					Users.Add(_mapper.Map<UserViewModel>(userViewModel));
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -322,6 +357,7 @@ public class MainWindowViewModel : ViewModelBase
 					await _apiClient.UpdateUser(SelectedUser!.Id,
 						_mapper.Map<UserDtoPostOrPut>(userViewModel));
 					_mapper.Map(userViewModel, SelectedUser);
+					ClearExceptionsValues();
 				}
 				catch (Exception ex)
 				{
@@ -336,7 +372,20 @@ public class MainWindowViewModel : ViewModelBase
 			try
 			{
 				await _apiClient.DeleteUser(SelectedUser!.Id);
-				Users.Remove(SelectedUser);
+
+				foreach (var note in Notes.Where(note => note.UserId == SelectedUser!.Id).ToList())
+				{
+					Notes.Remove(note);
+				}
+
+				foreach (var group in Groups
+					.Where(group => group.UserId == SelectedUser!.Id).ToList())
+				{
+					Groups.Remove(group);
+				}
+
+				Users.Remove(SelectedUser!);
+				ClearExceptionsValues();
 			}
 			catch (Exception ex)
 			{
@@ -344,6 +393,14 @@ public class MainWindowViewModel : ViewModelBase
 			}
 		}, this.WhenAnyValue(vm => vm.SelectedUser)
 			.Select(selectUser => selectUser != null));
+	}
+
+	private void ClearExceptionsValues()
+	{
+		GroupExceptionValue = string.Empty;
+		NoteExceptionValue = string.Empty;
+		RoleExceptionValue = string.Empty;
+		UserExceptionValue = string.Empty;
 	}
 
 	private async void LoadGroupsAsync()

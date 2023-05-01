@@ -69,7 +69,7 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// Создание группы.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
-	public async Task CreateGroup(Group model)
+	public async Task<int> CreateGroup(Group model)
 	{
 		var groupDbModel = new GroupDbModel
 		{
@@ -110,6 +110,8 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 		});
 
 		await _context.SaveChangesAsync();
+
+		return groupDbModel.Id;
 	}
 
 	/// <summary>
@@ -194,18 +196,22 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// Создание записи.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
-	public async Task CreateNote(Note model)
+	public async Task<int> CreateNote(Note model)
 	{
-		await _context.Notes.AddAsync(new NoteDbModel
+		var noteDbModel = new NoteDbModel
 		{
 			Name = model.Name,
 			Description = model.Description,
 			CreationDate = model.CreationDate,
 			UserId = model.UserId,
 			GroupId = model.GroupId
-		});
+		};
+
+		await _context.Notes.AddAsync(noteDbModel);
 
 		await _context.SaveChangesAsync();
+
+		return noteDbModel.Id;
 	}
 
 	/// <summary>
@@ -280,14 +286,18 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// Создание роли.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
-	public async Task CreateRole(Role model)
+	public async Task<int> CreateRole(Role model)
 	{
-		await _context.Roles.AddAsync(new RoleDbModel
+		var roleDbModel = new RoleDbModel
 		{
 			Name = model.Name
-		});
+		};
+
+		await _context.Roles.AddAsync(roleDbModel);
 
 		await _context.SaveChangesAsync();
+
+		return roleDbModel.Id;
 	}
 
 	/// <summary>
@@ -371,9 +381,9 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	public async Task CreateUser(User model)
+	public async Task<int> CreateUser(User model)
 	{
-		await _context.Users.AddAsync(new UserDbModel
+		var userDbModel = new UserDbModel
 		{
 			FirstName = model.FirstName,
 			LastName = model.LastName,
@@ -381,9 +391,13 @@ public class SocialNetworkRepository : ISocialNetworkRepository
 			Gender = model.Gender,
 			BirthDate = model.BirthDate,
 			RegistrationDate = model.RegistrationDate
-		});
+		};
+
+		await _context.Users.AddAsync(userDbModel);
 
 		await _context.SaveChangesAsync();
+
+		return userDbModel.Id;
 	}
 
 	/// <summary>

@@ -24,7 +24,7 @@ public interface ISocialNetworkService
 	/// Создание группы.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
-	Task CreateGroup(Group model);
+	Task<int> CreateGroup(Group model);
 
 	/// <summary>
 	/// Изменение данных группы.
@@ -56,7 +56,7 @@ public interface ISocialNetworkService
 	/// Создание записи.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
-	Task CreateNote(Note model);
+	Task<int> CreateNote(Note model);
 
 	/// <summary>
 	/// Изменение данных записи.
@@ -88,7 +88,7 @@ public interface ISocialNetworkService
 	/// Создание роли.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
-	Task CreateRole(Role model);
+	Task<int> CreateRole(Role model);
 
 	/// <summary>
 	/// Изменение данных роли.
@@ -120,7 +120,7 @@ public interface ISocialNetworkService
 	/// Создание пользователя.
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания пользователя.</param>
-	Task CreateUser(User model);
+	Task<int> CreateUser(User model);
 
 	/// <summary>
 	/// Изменение данных пользователя.

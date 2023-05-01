@@ -23,10 +23,9 @@ public class ApiWrapper
 
 	public async Task<ICollection<GroupDtoGet>> GetAllGroups() => await _client.GetAllGroupsAsync();
 
-	public async Task CreateGroup(GroupDtoPostOrPut model)
-	{
-		await _client.CreateGroupAsync(model);
-	}
+	public async Task<int> CreateGroup(GroupDtoPostOrPut model) 
+		=> await _client.CreateGroupAsync(model);
+	
 
 	public async Task UpdateGroup(int id, GroupDtoPostOrPut model)
 	{
@@ -40,10 +39,9 @@ public class ApiWrapper
 
 	public async Task<ICollection<NoteDtoGet>> GetAllNotes() => await _client.GetAllNotesAsync();
 
-	public async Task CreateNote(NoteDtoPostOrPut model)
-	{
+	public async Task<int> CreateNote(NoteDtoPostOrPut model) => 
 		await _client.CreateNoteAsync(model);
-	}
+	
 
 	public async Task UpdateNote(int id, NoteDtoPostOrPut model)
 	{
@@ -57,10 +55,9 @@ public class ApiWrapper
 
 	public async Task<ICollection<RoleDtoGet>> GetAllRoles() => await _client.GetAllRolesAsync();
 
-	public async Task CreateRole(RoleDtoPostOrPut model)
-	{
+	public async Task<int> CreateRole(RoleDtoPostOrPut model) => 
 		await _client.CreateRoleAsync(model);
-	}
+	
 
 	public async Task UpdateRole(int id, RoleDtoPostOrPut model)
 	{
@@ -74,10 +71,9 @@ public class ApiWrapper
 
 	public async Task<ICollection<UserDtoGet>> GetAllUsers() => await _client.GetAllUsersAsync();
 
-	public async Task CreateUser(UserDtoPostOrPut model)
-	{
+	public async Task<int> CreateUser(UserDtoPostOrPut model) => 
 		await _client.CreateUserAsync(model);
-	}
+	
 
 	public async Task UpdateUser(int id, UserDtoPostOrPut model)
 	{

@@ -57,13 +57,12 @@ public class RoleController : ControllerBase
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания роли.</param>
 	[HttpPost(Name = "CreateRole")]
-	public async Task CreateRole([FromBody] RoleDtoPostOrPut model)
-	{
-		await _socialNetworkService.CreateRole(new Role
+	public async Task<int> CreateRole([FromBody] RoleDtoPostOrPut model)
+		=> await _socialNetworkService.CreateRole(new Role
 		{
 			Name = model.Name
 		});
-	}
+	
 
 	/// <summary>
 	/// Изменение данных роли.

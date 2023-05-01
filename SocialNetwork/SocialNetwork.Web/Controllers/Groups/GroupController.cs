@@ -63,16 +63,14 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="model">Модель, в которой содержатся данные для создания группы.</param>
     [HttpPost(Name = "CreateGroup")]
-    public async Task CreateGroup([FromBody] GroupDtoPostOrPut model)
-    {
-        await _socialNetworkService.CreateGroup(new Group
+    public async Task<int> CreateGroup([FromBody] GroupDtoPostOrPut model)
+        => await _socialNetworkService.CreateGroup(new Group
         {
             Name = model.Name,
             Description = model.Description,
             CreationDate = model.CreationDate,
             UserId = model.UserId
         });
-    }
 
     /// <summary>
     /// Изменение данных группы.

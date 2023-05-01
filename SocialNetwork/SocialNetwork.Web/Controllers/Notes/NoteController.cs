@@ -65,9 +65,8 @@ public class NoteController : ControllerBase
 	/// </summary>
 	/// <param name="model">Модель, в которой содержатся данные для создания записи.</param>
 	[HttpPost(Name = "CreateNote")]
-	public async Task CreateNote([FromBody] NoteDtoPostOrPut model)
-	{
-		await _socialNetworkService.CreateNote(new Note
+	public async Task<int> CreateNote([FromBody] NoteDtoPostOrPut model)
+		=> await _socialNetworkService.CreateNote(new Note
 		{
 			Name = model.Name,
 			Description = model.Description,
@@ -75,8 +74,7 @@ public class NoteController : ControllerBase
 			UserId = model.UserId,
 			GroupId  = model.GroupId
 		});
-	}
-
+	
 	/// <summary>
 	/// Изменение данных записи.
 	/// </summary>

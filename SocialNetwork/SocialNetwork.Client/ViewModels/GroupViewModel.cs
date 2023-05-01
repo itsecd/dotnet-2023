@@ -9,7 +9,7 @@ public class GroupViewModel : ViewModelBase
 {
     private int _id;
 
-    public int Id 
+	public int Id 
     {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);

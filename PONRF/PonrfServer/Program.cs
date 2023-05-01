@@ -1,18 +1,16 @@
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using PonrfDomain;
-using PonrfServer.Repository;
+using PonrfServer;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContextFactory<PonrfContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString(nameof(PonrfDomain));
+    var connectionString = builder.Configuration.GetConnectionString(nameof(PONRF));
     optionsBuilder.UseMySQL(connectionString);
 });
 
-builder.Services.AddSingleton<IPonrfRepository, PonrfRepository>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

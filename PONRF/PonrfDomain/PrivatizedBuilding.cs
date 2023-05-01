@@ -20,6 +20,7 @@ public class PrivatizedBuilding
     /// <summary>
     /// FirstCost is a original auction price
     /// </summary>
+    [Required]
     public int FirstCost { get; set; }
     /// <summary>
     /// SecondCost is a final cost
@@ -28,6 +29,7 @@ public class PrivatizedBuilding
     /// <summary>
     /// Information about customer
     /// </summary>
+    [ForeignKey("Customer")]
     public Customer? Customer { get; set; }
     /// <summary>
     /// Information about auction

@@ -15,10 +15,12 @@ public class Auction
     /// <summary>
     /// Date is date of holding of the auction
     /// </summary>
+    [Required]
     public DateTime Date { get; set; } = DateTime.MinValue;
     /// <summary>
     /// Organizer is a auction company 
     /// </summary>
+    [Required]
     public string Organizer { get; set; } = string.Empty;
     /// <summary>
     /// List of all privatized buildings (lots)

@@ -37,9 +37,9 @@ public class PrivatizedBuildingController : ControllerBase
     /// </summary>
     /// <returns>List of privatized buildings</returns>
     [HttpGet]
-    public IEnumerable<PrivatizedBuildingGetDto> Get()
+    public async Task<IEnumerable<PrivatizedBuildingGetDto>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about all privatized buildings");
         return _mapper.Map<IEnumerable<PrivatizedBuildingGetDto>>(context.PrivatizedBuildings);
     }
@@ -50,10 +50,10 @@ public class PrivatizedBuildingController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Privatized building</returns>
     [HttpGet("{id}")]
-    public ActionResult<PrivatizedBuildingGetDto?> Get(int id)
+    public async Task<ActionResult<PrivatizedBuildingGetDto?>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var privatizedBuilding = await context.PrivatizedBuildings.FirstOrDefaultAsync(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -71,12 +71,13 @@ public class PrivatizedBuildingController : ControllerBase
     /// </summary>
     /// <param name="privatizedBuilding"></param>
     [HttpPost]
-    public void Post([FromBody] PrivatizedBuildingPostDto privatizedBuilding)
+    public async Task<ActionResult> Post([FromBody] PrivatizedBuildingPostDto privatizedBuilding)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post a new privatized building");
         context.PrivatizedBuildings.Add(_mapper.Map<PrivatizedBuilding>(privatizedBuilding));
-        context.SaveChanges();
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -86,10 +87,10 @@ public class PrivatizedBuildingController : ControllerBase
     /// <param name="privatizedBuildingToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PrivatizedBuildingPostDto privatizedBuildingToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] PrivatizedBuildingPostDto privatizedBuildingToPut)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var privatizedBuilding = await context.PrivatizedBuildings.FirstOrDefaultAsync(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -98,7 +99,7 @@ public class PrivatizedBuildingController : ControllerBase
         else
         {
             _mapper.Map(privatizedBuildingToPut, privatizedBuilding);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation("Put a privatized building");
             return Ok();
         }
@@ -110,10 +111,10 @@ public class PrivatizedBuildingController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var privatizedBuilding = context.PrivatizedBuildings.FirstOrDefault(privatizedBuilding => privatizedBuilding.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var privatizedBuilding = await context.PrivatizedBuildings.FirstOrDefaultAsync(privatizedBuilding => privatizedBuilding.Id == id);
         if (privatizedBuilding == null)
         {
             _logger.LogInformation("Not found privatized building with {id}", id);
@@ -123,7 +124,7 @@ public class PrivatizedBuildingController : ControllerBase
         {
             _logger.LogInformation("Delete a privatized building");
             context.PrivatizedBuildings.Remove(privatizedBuilding);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

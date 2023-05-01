@@ -15,14 +15,17 @@ public class Customer
     /// <summary>
     /// Passport contains information about passport's number of customer
     /// </summary>
+    [Required]
     public string Passport { get; set; } = string.Empty;
     /// <summary>
     /// FIO contains information about full name of customer
     /// </summary>  
+    [Required]
     public string Fio { get; set; } = string.Empty;
     /// <summary>
     /// Address contains information about home address of customer
     /// </summary>
+    [Required]
     public string Address { get; set; } = string.Empty;
     /// <summary>
     /// Constructor for Customer

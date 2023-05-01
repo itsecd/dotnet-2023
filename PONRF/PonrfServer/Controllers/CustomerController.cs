@@ -37,9 +37,9 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns>List of customers</returns>
     [HttpGet]
-    public IEnumerable<CustomerGetDto> Get()
+    public async Task<IEnumerable<CustomerGetDto>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about all customers");
         return _mapper.Map<IEnumerable<CustomerGetDto>>(context.Customers);
     }
@@ -50,10 +50,10 @@ public class CustomerController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Customer</returns>
     [HttpGet("{id}")]
-    public ActionResult<CustomerGetDto?> Get(int id)
+    public async Task<ActionResult<CustomerGetDto?>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -71,12 +71,13 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="customer"></param>
     [HttpPost]
-    public void Post([FromBody] CustomerPostDto customer)
+    public async Task<ActionResult> Post([FromBody] CustomerPostDto customer)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post a new customer");
         context.Customers.Add(_mapper.Map<Customer>(customer));
-        context.SaveChanges();
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -86,10 +87,10 @@ public class CustomerController : ControllerBase
     /// <param name="customerToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CustomerPostDto customerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] CustomerPostDto customerToPut)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -98,7 +99,7 @@ public class CustomerController : ControllerBase
         else
         {
             _mapper.Map(customerToPut, customer);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation("Put a customer");
             return Ok();
         }
@@ -110,10 +111,10 @@ public class CustomerController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var customer = context.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation("Not found customer with {id}", id);
@@ -122,7 +123,7 @@ public class CustomerController : ControllerBase
         else
         {
             context.Customers.Remove(customer);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation("Delete an customer");
             return Ok();
         }

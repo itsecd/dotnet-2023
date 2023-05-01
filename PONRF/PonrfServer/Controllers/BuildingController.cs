@@ -36,9 +36,9 @@ public class BuildingController : ControllerBase
     /// </summary>
     /// <returns>List of buildings</returns>
     [HttpGet]
-    public IEnumerable<BuildingGetDto> Get()
+    public async Task<IEnumerable<BuildingGetDto>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about all buildings");
         return _mapper.Map<IEnumerable<BuildingGetDto>>(context.Buildings);
     }
@@ -49,10 +49,10 @@ public class BuildingController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Building</returns>
     [HttpGet("{id}")]
-    public ActionResult<BuildingGetDto?> Get(int id)
+    public async Task<ActionResult<BuildingGetDto?>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var building = context.Buildings.FirstOrDefault(building => building.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var building = await context.Buildings.FirstOrDefaultAsync(building => building.Id == id);
         if (building == null)
         {
             _logger.LogInformation("Not found building with {id}", id);
@@ -70,12 +70,13 @@ public class BuildingController : ControllerBase
     /// </summary>
     /// <param name="building"></param>
     [HttpPost]
-    public void Post([FromBody] BuildingPostDto building)
+    public async Task<ActionResult> Post([FromBody] BuildingPostDto building)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post a new building");
         context.Buildings.Add(_mapper.Map<Building>(building));
-        context.SaveChanges();
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>

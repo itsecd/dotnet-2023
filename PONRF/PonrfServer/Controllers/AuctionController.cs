@@ -37,9 +37,9 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <returns>List of auctions</returns>
     [HttpGet]
-    public IEnumerable<AuctionGetDto> Get()
+    public async Task<IEnumerable<AuctionGetDto>> Get()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about all auctions");
         return _mapper.Map<IEnumerable<AuctionGetDto>>(context.Auctions);
     }
@@ -50,10 +50,10 @@ public class AuctionController : ControllerBase
     /// <param name="id"></param>
     /// <returns>AuctionGetDto</returns>
     [HttpGet("{id}")]
-    public ActionResult<AuctionGetDto?> Get(int id)
+    public async Task<ActionResult<AuctionGetDto?>> Get(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var auction = await context.Auctions.FirstOrDefaultAsync(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -71,12 +71,13 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <param name="auction"></param>
     [HttpPost]
-    public void Post([FromBody] AuctionPostDto auction)
+    public async Task<ActionResult> Post([FromBody] AuctionPostDto auction)
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post a new auction");
-        context.Auctions.Add(_mapper.Map<Auction>(auction));
-        context.SaveChanges();
+        await context.Auctions.AddAsync(_mapper.Map<Auction>(auction));
+        await context.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>
@@ -86,10 +87,10 @@ public class AuctionController : ControllerBase
     /// <param name="auctionToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AuctionPostDto auctionToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] AuctionPostDto auctionToPut)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var auction = await context.Auctions.FirstOrDefaultAsync(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -98,7 +99,7 @@ public class AuctionController : ControllerBase
         else
         {
             _mapper.Map(auctionToPut, auction);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation("Put an auction");
             return Ok();
         }
@@ -110,10 +111,10 @@ public class AuctionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        using var context = _contextFactory.CreateDbContext();
-        var auction = context.Auctions.FirstOrDefault(auction => auction.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var auction = await context.Auctions.FirstOrDefaultAsync(auction => auction.Id == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with {id}", id);
@@ -122,7 +123,7 @@ public class AuctionController : ControllerBase
         else
         {
             context.Auctions.Remove(auction);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             _logger.LogInformation("Delete an auction");
             return Ok();
         }

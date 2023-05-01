@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore;
 using PonrfDomain;
 using PonrfServer.Dto;
-using PonrfServer.Repository;
 
 namespace PonrfServer.Controllers;
 
@@ -42,104 +40,109 @@ public class AnalyticsController : ControllerBase
     [HttpGet("view_all_customers")]
     public async Task<ActionResult<CustomerGetDto>> ViewAllCustomers()
     {
-        await using var context = _contextFactory.CreateDbContext();
-        var request = (from customer in context.Customers
-                       select _mapper.Map<CustomerGetDto>(customer)).ToList();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var request = await (from customer in context.Customers
+                             select _mapper.Map<CustomerGetDto>(customer)).ToListAsync();
         return Ok(request);
     }
 
-    /// <summary>
-    /// Get infomation about auctions without full sales
-    /// </summary>
-    /// <returns>AuctionGetDto</returns>
-    [HttpGet("auctions_without_full_sales")]
-    public async Task<ActionResult<AuctionGetDto>> AuctionsWithoutFullSales()
-    {
-        await using var context = _contextFactory.CreateDbContext();
-        var request = (from auction in context.Auctions
-                       join privatizedBuilding in context.PrivatizedBuildings on auction.Id equals privatizedBuilding.Auction?.Id
-                       join building in context.Buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
-                       where privatizedBuilding.Customer?.Passport == null
-                       select _mapper.Map<AuctionGetDto>(auction)).ToList();
-        return Ok(request);
-    }
+    ///// <summary>
+    ///// Get infomation about auctions without full sales
+    ///// </summary>
+    ///// <returns>AuctionGetDto</returns>
+    //[HttpGet("auctions_without_full_sales")]
+    //public async Task<ActionResult<AuctionGetDto>> AuctionsWithoutFullSales()
+    //{
+    //    await using var context = await _contextFactory.CreateDbContextAsync();
+    //    var request = await (from auction in context.Auctions.Include(auction => auction.Id)
+    //                         join privatizedBuilding in context.PrivatizedBuildings.Include(privatizedBuilding => privatizedBuilding)
+    //                         on auction.Id equals privatizedBuilding.Auction.Id
+    //                         join building in context.Buildings.Include(building => building.Id)
+    //                         on privatizedBuilding.Building.RegistNum equals building.RegistNum
+    //                         where privatizedBuilding.Customer.Passport == null
+    //                         select _mapper.Map<AuctionGetDto>(auction)).ToListAsync();
+    //    return Ok(request);
+    //}
 
-    /// <summary>
-    /// Get information about customers and total amount of privatized buildings in district
-    /// </summary>
-    /// <returns>Customers and total amount of privatized buildings in district</returns>
-    [HttpGet("customers_and_total_amount_in_district")]
-    public IActionResult CustomersAndTotalAmountInDistrict()
-    {
-        using var context = _contextFactory.CreateDbContext();
-        var customers = (from customer in context.Customers
-                         join privatizedBuilding in context.PrivatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
-                         join building in context.Buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
-                         where building.District == "Кировский"
-                         orderby customer.Fio
-                         select _mapper.Map<CustomerGetDto>(customer)).ToList();
-        var totalAmount = (from privatizedBuilding in context.PrivatizedBuildings
-                           join customer in context.Customers on privatizedBuilding.Customer?.Passport equals customer.Passport
-                           join building in context.Buildings on privatizedBuilding.Building?.RegistNum equals building.RegistNum
-                           where building.District == "Кировский"
-                           select privatizedBuilding.SecondCost).Sum();
-        var result = new { customers, totalAmount };
-        return Ok(result);
-    }
+    ///// <summary>
+    ///// Get information about customers and total amount of privatized buildings in district
+    ///// </summary>
+    ///// <param name="district">District for search</param>
+    ///// <returns>Customers and total amount of privatized buildings in district</returns>
+    //[HttpGet("customers_and_total_amount_in_district/{district}")]
+    //public async Task<IActionResult> CustomersAndTotalAmountInDistrict(string district)
+    //{
+    //    await using var context = await _contextFactory.CreateDbContextAsync();
+    //    var customers = await (from privatizedBuilding in context.PrivatizedBuildings.Include(privatizedBuilding => privatizedBuilding.Id)
+    //                           where privatizedBuilding.Building.District == district
+    //                           from customer in context.Customers.Include(customer => customer.Id)
+    //                           where customer.Passport == privatizedBuilding.Customer.Passport
+    //                           orderby customer.Fio
+    //                           select _mapper.Map<CustomerGetDto>(customer)).ToListAsync();
+    //    var totalAmount = await (from privatizedBuilding in context.PrivatizedBuildings.Include(privatizedBuilding => privatizedBuilding)
+    //                             from customer in context.Customers.Include(customer => customer.Id)
+    //                             where customer.Passport == privatizedBuilding.Customer.Passport
+    //                             join building in context.Buildings.Include(building => building.Id) on privatizedBuilding.Building.RegistNum equals building.RegistNum
+    //                             where building.District == district
+    //                             select privatizedBuilding.SecondCost).SumAsync();
+    //    var result = new { customers, totalAmount };
+    //    return Ok(result);
+    //}
 
-    /// <summary>
-    /// Get addresses of auction participants
-    /// </summary>
-    /// <returns>Addresses of auction participants</returns>
-    [HttpGet("addresses_of_auction_participants")]
-    public IActionResult AddressesOfAuctionParticipants()
-    {
-        using var context = _contextFactory.CreateDbContext();
-        var date = DateTime.Parse("2023-02-02");
-        var request = (from customer in context.Customers
-                       join privatizedBuilding in context.PrivatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
-                       join auction in context.Auctions on privatizedBuilding.Auction?.Id equals auction.Id
-                       where auction.Date == date
-                       select customer.Address).ToList();
-        return Ok(request);
-    }
+    ///// <summary>
+    ///// Get addresses of auction participants
+    ///// </summary>
+    ///// <returns>Addresses of auction participants</returns>
+    //[HttpGet("addresses_of_auction_participants")]
+    //public async Task<IActionResult> AddressesOfAuctionParticipants()
+    //{
+    //    await using var context = await _contextFactory.CreateDbContextAsync();
+    //    var date = DateTime.Parse("2023-02-02");
+    //    var request = await (from customer in context.Customers
+    //                         join privatizedBuilding in context.PrivatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
+    //                         join auction in context.Auctions on privatizedBuilding.Auction?.Id equals auction.Id
+    //                         where auction.Date == date
+    //                         select customer.Address).ToListAsync();
+    //    return Ok(request);
+    //}
 
-    /// <summary>
-    /// Get top 5 customers who spent the most amount of money
-    /// </summary>
-    /// <returns>Top-5 customers</returns>
-    [HttpGet("top_five_customers")]
-    public IActionResult TopFiveCustomers()
-    {
-        using var context = _contextFactory.CreateDbContext();
-        var request = (from customer in context.Customers
-                       join privatizedBuilding in context.PrivatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
-                       group privatizedBuilding by new { privatizedBuilding.Customer?.Fio } into privBuild
-                       select new
-                       {
-                           privBuild.Key.Fio,
-                           Total = privBuild.Sum(lot => lot.SecondCost)
-                       }).OrderByDescending(lot => lot.Total).Take(5).ToList();
-        return Ok(request);
-    }
+    ///// <summary>
+    ///// Get top 5 customers who spent the most amount of money
+    ///// </summary>
+    ///// <returns>Top-5 customers</returns>
+    //[HttpGet("top_five_customers")]
+    //public async Task<IActionResult> TopFiveCustomers()
+    //{
+    //    await using var context = await _contextFactory.CreateDbContextAsync();
+    //    var request = await (from customer in context.Customers
+    //                         join privatizedBuilding in context.PrivatizedBuildings on customer.Passport equals privatizedBuilding.Customer?.Passport
+    //                         group privatizedBuilding by new { privatizedBuilding.Customer?.Fio } into privBuild
+    //                         select new
+    //                         {
+    //                             privBuild.Key.Fio,
+    //                             Total = privBuild.Sum(lot => lot.SecondCost)
+    //                         }).OrderByDescending(lot => lot.Total).Take(5).ToListAsync();
+    //    return Ok(request);
+    //}
 
-    /// <summary>
-    /// Get infomation about most profitable auctions
-    /// </summary>
-    /// <returns>Auction</returns>
-    [HttpGet("most_profitable_auctions")]
-    public IActionResult MostProfitableAuctions()
-    {
-        using var context = _contextFactory.CreateDbContext();
-        var request = (from auction in context.Auctions
-                       join privatizedBuilding in context.PrivatizedBuildings on auction.Id equals privatizedBuilding.Auction?.Id
-                       where privatizedBuilding.SecondCost != int.MinValue
-                       group privatizedBuilding by new { privatizedBuilding.Auction?.Organizer } into privBuild
-                       select new
-                       {
-                           privBuild.Key.Organizer,
-                           Profit = privBuild.Sum(lot => lot.SecondCost - lot.FirstCost)
-                       }).OrderByDescending(lot => lot.Profit).Take(2).ToList();
-        return Ok(request);
-    }
+    ///// <summary>
+    ///// Get infomation about most profitable auctions
+    ///// </summary>
+    ///// <returns>Auction</returns>
+    //[HttpGet("most_profitable_auctions")]
+    //public async Task<IActionResult> MostProfitableAuctions()
+    //{
+    //    await using var context = await _contextFactory.CreateDbContextAsync();
+    //    var request = await (from auction in context.Auctions.Include(auction => auction.Id)
+    //                         join privatizedBuilding in context.PrivatizedBuildings.Include(privatizedBuilding => privatizedBuilding.Id)
+    //                         on auction.Id == privatizedBuilding.Auction.Id
+    //                         where privatizedBuilding.SecondCost != int.MinValue
+    //                         group privatizedBuilding by new { privatizedBuilding.Auction.Organizer } into privBuild
+    //                         select new
+    //                         {
+    //                             privBuild.Key.Organizer,
+    //                             Profit = privBuild.Sum(lot => lot.SecondCost - lot.FirstCost)
+    //                         }).OrderByDescending(lot => lot.Profit).Take(2).ToListAsync();
+    //    return Ok(request);
+    //}
 }

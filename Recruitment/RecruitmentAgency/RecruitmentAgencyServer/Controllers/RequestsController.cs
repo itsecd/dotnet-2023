@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Asn1.Pkcs;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using System.Globalization;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -17,15 +15,13 @@ public class RequestsController : ControllerBase
 {
     private readonly ILogger<RequestsController> _logger;
     private readonly IDbContextFactory<RecruitmentAgencyContext> _contextFactory;
-    private readonly IMapper _mapper;
     /// <summary>
     ///     Controller constructor
     /// </summary>
-    public RequestsController(ILogger<RequestsController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory, IMapper mapper)
+    public RequestsController(ILogger<RequestsController> logger, IDbContextFactory<RecruitmentAgencyContext> contextFactory)
     {
         _logger = logger;
         _contextFactory = contextFactory;
-        _mapper = mapper;
     }
     /// <summary>
     ///   Display information about all applicants looking for a job in a given position, sorted by full name.
@@ -44,7 +40,7 @@ public class RequestsController : ControllerBase
                             join title in ctx.Titles on jobApplication.TitleId equals title.Id
                             where title.Id == jobTitle
                             select employee).ToListAsync();
-        if (result.Count() == 0)
+        if (result.Count == 0)
         {
             _logger.LogInformation("No applications for the title={jobTitle} position were found", jobTitle);
             return NotFound();
@@ -104,8 +100,7 @@ public class RequestsController : ControllerBase
                                Salary = employee.Salary,
                                CompanySalary = companyApplication.Salary
                            }).ToListAsync();
-
-        if (query is null)
+        if (query.Count == 0)
         {
             _logger.LogInformation("No match for company application with id = {id}", id);
             return NotFound();
@@ -136,7 +131,7 @@ public class RequestsController : ControllerBase
                          NumCompanyApplications = titles.CompanyApplications.Count()
                      }).ToList();
 
-        if (query is null)
+        if (query.Count == 0)
         {
             _logger.LogInformation("There are no requests");
             return NotFound();
@@ -166,7 +161,7 @@ public class RequestsController : ControllerBase
                          NumberOfApplications = gj.Count()
                      }).Take(5).ToList();
 
-        if (!query.Any())
+        if (query.Count == 0)
         {
             _logger.LogInformation("There are no companies");
             return NotFound();
@@ -194,7 +189,7 @@ public class RequestsController : ControllerBase
                      {
                          CompanyRequest = companyApplication,
                      }).ToList();
-        if (query is null)
+        if (query.Count == 0)
         {
             _logger.LogInformation("There are no companies");
             return NotFound();

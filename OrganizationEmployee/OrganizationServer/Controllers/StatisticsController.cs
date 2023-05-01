@@ -15,17 +15,15 @@ namespace OrganizationServer.Controllers;
 public class StatisticsController : Controller
 {
     private readonly ILogger<StatisticsController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
     private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the StatisticsController
     /// </summary>
-    public StatisticsController(OrganizationRepository organizationRepository,
-        IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, ILogger<StatisticsController> logger)
+    public StatisticsController(IDbContextFactory<EmployeeDbContext> contextFactory, 
+        IMapper mapper, ILogger<StatisticsController> logger)
     {
         _contextFactory = contextFactory;
-        _organizationRepository = organizationRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -121,7 +119,8 @@ public class StatisticsController : Controller
     {
         _logger.LogInformation("Get average age of employees for each department");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var employees = ctx.Employees;
+        var employees = ctx.Employees.Include(employee => employee.DepartmentEmployees)
+            .ThenInclude(departmentEmployee => departmentEmployee.Department).ToList();
         var avgAgeInDepartments =
             (from tuple in
                  (from employee in employees
@@ -157,15 +156,19 @@ public class StatisticsController : Controller
     {
         _logger.LogInformation("Get the info about employees, who received a vacation voucher in past year");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var employeeVacationVouchers = ctx.EmployeeVacationVouchers
+            .Include(emplVacationVoucher => emplVacationVoucher.VacationVoucher)
+            .Include(emplVacationVoucher => emplVacationVoucher.Employee)
+            .ToList();
         var employeeLastYearVoucher =
-            (from employeeVoucherItem in ctx.EmployeeVacationVouchers
-             where (new DateTime(2023, 3, 10) - employeeVoucherItem.VacationVoucher.IssueDate).TotalDays < 365
+            (from employeeVoucherItem in employeeVacationVouchers
+             where (new DateTime(2023, 3, 10) - employeeVoucherItem!.VacationVoucher!.IssueDate).TotalDays < 365
              select new EmployeeLastYearVoucherDto()
              {
-                 RegNumber = employeeVoucherItem.Employee.RegNumber,
-                 FirstName = employeeVoucherItem.Employee.FirstName,
-                 LastName = employeeVoucherItem.Employee.LastName,
-                 VoucherTypeName = employeeVoucherItem.VacationVoucher.VoucherType.Name
+                 RegNumber = employeeVoucherItem?.Employee?.RegNumber,
+                 FirstName = employeeVoucherItem?.Employee?.FirstName,
+                 LastName = employeeVoucherItem?.Employee?.LastName,
+                 VoucherTypeName = employeeVoucherItem?.VacationVoucher?.VoucherType?.Name
              }
              ).ToList();
         return Ok(employeeLastYearVoucher);

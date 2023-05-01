@@ -81,25 +81,21 @@ public class EmployeeDbContext : DbContext
                 {
                     Name = "Санаторий",
                     Id = 1,
-                    // VacationVouchers = new List<VacationVoucher>()
                 },
                 new VoucherType
                 {
                     Name = "Дом отдыха",
                     Id = 2,
-                    // VacationVouchers = new List<VacationVoucher>()
                 },
                 new VoucherType
                 {
                     Name = "Пионерский лагерь предприятия",
                     Id = 3,
-                    // VacationVouchers = new List<VacationVoucher>()
                 },
                 new VoucherType
                 {
                     Name = "Путевка на горнолыжный курорт",
                     Id = 4,
-                   // VacationVouchers = new List<VacationVoucher>()
                 }
             };
         }
@@ -149,48 +145,37 @@ public class EmployeeDbContext : DbContext
     {
         get
         {
-            var vouchersTypes = VoucherTypeRepository;
             return new()
             {
                 new VacationVoucher
                 {
                     Id = 1,
-                    //VoucherType = vouchersTypes[0],
-                    VoucherTypeId = vouchersTypes[0].Id,
+                    VoucherTypeId = VoucherTypeRepository[0].Id,
                     IssueDate = DateTime.Now.AddDays(-330),
-                    // EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 2,
-                    //VoucherType = vouchersTypes[1],
-                    VoucherTypeId = vouchersTypes[1].Id,
+                    VoucherTypeId = VoucherTypeRepository[1].Id,
                     IssueDate = DateTime.Now.AddDays(-300),
-                    // EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 3,
-                    //VoucherType = vouchersTypes[2],
-                    VoucherTypeId = vouchersTypes[2].Id,
+                    VoucherTypeId = VoucherTypeRepository[2].Id,
                     IssueDate = DateTime.Now.AddYears(-2),
-                    // EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 4,
-                    //VoucherType = vouchersTypes[2],
-                    VoucherTypeId = vouchersTypes[2].Id,
+                    VoucherTypeId = VoucherTypeRepository[2].Id,
                     IssueDate = DateTime.Now.AddYears(-5),
-                    // EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 },
                 new VacationVoucher
                 {
                     Id = 5,
-                    //VoucherType = vouchersTypes[2],
-                    VoucherTypeId = vouchersTypes[2].Id,
+                    VoucherTypeId = VoucherTypeRepository[2].Id,
                     IssueDate = DateTime.Now.AddYears(-8),
-                    // EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
                 }
             };
         }
@@ -260,7 +245,6 @@ public class EmployeeDbContext : DbContext
     {
         get
         {
-            var workshopList = WorkshopRepository;
             return new()
             {
             new Employee
@@ -271,7 +255,7 @@ public class EmployeeDbContext : DbContext
                     LastName = "Мещеряков",
                     PatronymicName = "Даниилович",
                     BirthDate = new DateTime(1978, 3, 22),
-                    WorkshopId = workshopList[4].Id,
+                    WorkshopId = WorkshopRepository[4].Id,
                     HomeAddress = "пгт. Безенчук, ул.Нефтянников д.35",
                     HomeTelephone = "89633154365",
                     WorkTelephone = "88462322442",
@@ -290,7 +274,7 @@ public class EmployeeDbContext : DbContext
                     LastName = "Ляхов",
                     PatronymicName = "Сергеевич",
                     BirthDate = new DateTime(2000, 1, 23),
-                    WorkshopId = workshopList[5].Id,
+                    WorkshopId = WorkshopRepository[5].Id,
                     HomeAddress = "г.Самара, ул.Ленина, д.57",
                     HomeTelephone = "89633154365",
                     WorkTelephone = "88462322442",
@@ -309,7 +293,7 @@ public class EmployeeDbContext : DbContext
                     LastName = "Зайцев",
                     PatronymicName = "Иванович",
                     BirthDate = new DateTime(1978, 8, 6),
-                    WorkshopId = workshopList[6].Id,
+                    WorkshopId = WorkshopRepository[6].Id,
                     HomeAddress = "г.Самара Московское шоссе, д.108",
                     HomeTelephone = "89633154365",
                     WorkTelephone = "88462322442",
@@ -328,7 +312,7 @@ public class EmployeeDbContext : DbContext
                     LastName = "Заварзина",
                     PatronymicName = "Анатольевна",
                     BirthDate = new DateTime(1980, 10, 10),
-                    WorkshopId = workshopList[3].Id,
+                    WorkshopId = WorkshopRepository[3].Id,
                     HomeAddress =  "пгт.Безенчук ул.Чапева д.43",
                     HomeTelephone = "89633154365",
                     WorkTelephone = "88462322442",
@@ -347,51 +331,49 @@ public class EmployeeDbContext : DbContext
     {
         get
         {
-            var departments = DepartmentRepository;
-            var employees = EmployeeRepository;
             return new()
             {
                 new DepartmentEmployee
                 {
                     Id = 1,
-                    DepartmentId = departments[0].Id,
-                    EmployeeId = employees[0].Id
+                    DepartmentId = DepartmentRepository[0].Id,
+                    EmployeeId = EmployeeRepository[0].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 2,
-                    DepartmentId = departments[1].Id,
-                    EmployeeId = employees[0].Id
+                    DepartmentId = DepartmentRepository[1].Id,
+                    EmployeeId = EmployeeRepository[0].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 3,
-                    DepartmentId = departments[1].Id,
-                    EmployeeId = employees[1].Id
+                    DepartmentId = DepartmentRepository[1].Id,
+                    EmployeeId = EmployeeRepository[1].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 4,
-                    DepartmentId = departments[0].Id,
-                    EmployeeId = employees[2].Id
+                    DepartmentId = DepartmentRepository[0].Id,
+                    EmployeeId = EmployeeRepository[2].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 5,
-                    DepartmentId = departments[0].Id,
-                    EmployeeId = employees[1].Id
+                    DepartmentId = DepartmentRepository[0].Id,
+                    EmployeeId = EmployeeRepository[1].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 6,
-                    DepartmentId = departments[1].Id,
-                    EmployeeId = employees[2].Id
+                    DepartmentId = DepartmentRepository[1].Id,
+                    EmployeeId = EmployeeRepository[2].Id
                 },
                 new DepartmentEmployee
                 {
                     Id = 7,
-                    DepartmentId = departments[1].Id,
-                    EmployeeId = employees[3].Id
+                    DepartmentId = DepartmentRepository[1].Id,
+                    EmployeeId = EmployeeRepository[3].Id
                 }
             };
         }
@@ -403,7 +385,90 @@ public class EmployeeDbContext : DbContext
         {
             return new()
             {
+                new EmployeeOccupation
+                {
+                    Id = 1,
+                    HireDate = new DateTime(2000, 1, 27),
+                    DismissalDate = null,
+                    EmployeeId = EmployeeRepository[0].Id,
+                    OccupationId = OccupationRepository[1].Id,
+                },
+                new EmployeeOccupation
+                {
+                    Id = 2,
+                    HireDate = new DateTime(1998, 3, 20),
+                    DismissalDate = new DateTime(2010, 5, 23),
+                    EmployeeId = EmployeeRepository[2].Id,
+                    OccupationId = OccupationRepository[4].Id
+                },
+                new EmployeeOccupation
+                {
+                    Id = 3,
+                    HireDate = new DateTime(2010, 5, 24),
+                    DismissalDate = null,
+                    EmployeeId = EmployeeRepository[2].Id,
+                    OccupationId = OccupationRepository[1].Id
+                },
+                new EmployeeOccupation
+                {
+                    Id = 4,
+                    HireDate = new DateTime(2018, 8, 7),
+                    DismissalDate = null,
+                    EmployeeId = EmployeeRepository[1].Id,
+                    OccupationId = OccupationRepository[2].Id
+                },
+                new EmployeeOccupation
+                {
+                    Id = 5,
+                    HireDate = new DateTime(2000, 9, 10),
+                    DismissalDate = new DateTime(2011, 11, 11),
+                    EmployeeId = EmployeeRepository[3].Id,
+                    OccupationId = OccupationRepository[1].Id
+                },
+                new EmployeeOccupation
+                {
+                    Id = 6,
+                    HireDate = new DateTime(2011, 11, 12),
+                    DismissalDate = new DateTime(2016, 3, 24),
+                    EmployeeId = EmployeeRepository[3].Id,
+                    OccupationId = OccupationRepository[3].Id
+                },
+                new EmployeeOccupation
+                {
+                    Id = 7,
+                    HireDate = new DateTime(2016, 3, 25),
+                    DismissalDate = null,
+                    EmployeeId = EmployeeRepository[3].Id,
+                    OccupationId = OccupationRepository[4].Id
+                }
+            };
+        }
+    }
 
+    public List<EmployeeVacationVoucher> EmployeeVacationVoucherRepository
+    {
+        get
+        {
+            return new()
+            {
+                new EmployeeVacationVoucher
+                {
+                    Id = 1,
+                    EmployeeId = EmployeeRepository[0].Id,
+                    VacationVoucherId = VacationVoucherRepository[0].Id
+                },
+                new EmployeeVacationVoucher
+                {
+                    Id = 2,
+                    EmployeeId = EmployeeRepository[1].Id,
+                    VacationVoucherId = VacationVoucherRepository[1].Id
+                },
+                new EmployeeVacationVoucher
+                {
+                    Id = 3,
+                    EmployeeId = EmployeeRepository[2].Id,
+                    VacationVoucherId = VacationVoucherRepository[2].Id
+                }
             };
         }
     }
@@ -471,6 +536,18 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         foreach (var departmentEmployee in departmentEmployees)
         {
             modelBuilder.Entity<DepartmentEmployee>().HasData(departmentEmployee);
+        }
+
+        var employeeOccupations = EmployeeOccupationRepository;
+        foreach (var employeeOccupation in employeeOccupations)
+        {
+            modelBuilder.Entity<EmployeeOccupation>().HasData(employeeOccupation);
+        }
+
+        var employeeVacationVouchers = EmployeeVacationVoucherRepository;
+        foreach (var employeeVacationVoucher in employeeVacationVouchers)
+        {
+            modelBuilder.Entity<EmployeeVacationVoucher>().HasData(employeeVacationVoucher);
         }
     }
 }

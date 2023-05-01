@@ -20,7 +20,7 @@ public class VoucherTypeController : Controller
     /// A constructor of the VoucherTypeController
     /// </summary>
     public VoucherTypeController(IDbContextFactory<EmployeeDbContext> contextFactory,
-        OrganizationRepository organizationRepository, IMapper mapper, ILogger<VoucherTypeController> logger)
+        IMapper mapper, ILogger<VoucherTypeController> logger)
     {
         _contextFactory = contextFactory;
         _mapper = mapper;

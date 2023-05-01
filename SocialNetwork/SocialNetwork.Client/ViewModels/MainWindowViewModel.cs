@@ -187,7 +187,7 @@ public class MainWindowViewModel : ViewModelBase
 				}
 
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedGroup)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedGroup)
 			.Select(selectGroup => selectGroup != null));
 
 		OnDeleteGroupCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -209,7 +209,7 @@ public class MainWindowViewModel : ViewModelBase
 				GroupExceptionValue = ex.Message;
 			}
 			
-		}, this.WhenAnyValue(vm => vm.SelectedGroup)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedGroup)
 			.Select(selectGroup => selectGroup != null));
 
 		OnAddNoteCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -250,7 +250,7 @@ public class MainWindowViewModel : ViewModelBase
 					NoteExceptionValue = ex.Message;
 				}
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedNote)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedNote)
 			.Select(selectNote => selectNote != null));
 
 		OnDeleteNoteCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -265,7 +265,7 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				NoteExceptionValue = ex.Message;
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedNote)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedNote)
 			.Select(selectNote => selectNote != null));
 
 		OnAddRoleCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -306,7 +306,7 @@ public class MainWindowViewModel : ViewModelBase
 					RoleExceptionValue = ex.Message;
 				}
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedRole)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedRole)
 			.Select(selectRole => selectRole != null));
 
 		OnDeleteRoleCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -322,7 +322,7 @@ public class MainWindowViewModel : ViewModelBase
 				RoleExceptionValue = ex.Message;
 			}
 
-		}, this.WhenAnyValue(vm => vm.SelectedRole)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedRole)
 			.Select(selectRole => selectRole != null));
 
 		OnAddUserCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -363,7 +363,7 @@ public class MainWindowViewModel : ViewModelBase
 					UserExceptionValue = ex.Message;
 				}
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedUser)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
 			.Select(selectUser => selectUser != null));
 
 		OnDeleteUserCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -390,7 +390,7 @@ public class MainWindowViewModel : ViewModelBase
 			{
 				UserExceptionValue = ex.Message;
 			}
-		}, this.WhenAnyValue(vm => vm.SelectedUser)
+		}, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
 			.Select(selectUser => selectUser != null));
 	}
 

@@ -20,25 +20,25 @@ public partial class App : Application
 		{
 			Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
 
-			var config = new MapperConfiguration(cfg =>
+			var config = new MapperConfiguration(configuration =>
 			{
-				cfg.CreateMap<GroupDtoGet, GroupViewModel>();
-				cfg.CreateMap<GroupViewModel, GroupDtoGet>();
-				cfg.CreateMap<NoteDtoGet, NoteViewModel>();
-				cfg.CreateMap<NoteViewModel, NoteDtoGet>();
-				cfg.CreateMap<RoleDtoGet, RoleViewModel>();
-				cfg.CreateMap<RoleViewModel, RoleDtoGet>();
-				cfg.CreateMap<UserDtoGet, UserViewModel>();
-				cfg.CreateMap<UserViewModel, UserDtoGet>();
+				configuration.CreateMap<GroupDtoGet, GroupViewModel>();
+				configuration.CreateMap<GroupViewModel, GroupDtoGet>();
+				configuration.CreateMap<NoteDtoGet, NoteViewModel>();
+				configuration.CreateMap<NoteViewModel, NoteDtoGet>();
+				configuration.CreateMap<RoleDtoGet, RoleViewModel>();
+				configuration.CreateMap<RoleViewModel, RoleDtoGet>();
+				configuration.CreateMap<UserDtoGet, UserViewModel>();
+				configuration.CreateMap<UserViewModel, UserDtoGet>();
 
-				cfg.CreateMap<GroupViewModel, GroupDtoPostOrPut>();
-				cfg.CreateMap<GroupDtoPostOrPut, GroupViewModel>();
-				cfg.CreateMap<NoteViewModel, NoteDtoPostOrPut>();
-				cfg.CreateMap<NoteDtoPostOrPut, NoteViewModel>();
-				cfg.CreateMap<RoleViewModel, RoleDtoPostOrPut>();
-				cfg.CreateMap<RoleDtoPostOrPut, RoleViewModel>();
-				cfg.CreateMap<UserViewModel, UserDtoPostOrPut>();
-				cfg.CreateMap<UserDtoPostOrPut, UserViewModel>();
+				configuration.CreateMap<GroupViewModel, GroupDtoPostOrPut>();
+				configuration.CreateMap<GroupDtoPostOrPut, GroupViewModel>();
+				configuration.CreateMap<NoteViewModel, NoteDtoPostOrPut>();
+				configuration.CreateMap<NoteDtoPostOrPut, NoteViewModel>();
+				configuration.CreateMap<RoleViewModel, RoleDtoPostOrPut>();
+				configuration.CreateMap<RoleDtoPostOrPut, RoleViewModel>();
+				configuration.CreateMap<UserViewModel, UserDtoPostOrPut>();
+				configuration.CreateMap<UserDtoPostOrPut, UserViewModel>();
 			});
 
 			Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

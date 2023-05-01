@@ -9,7 +9,7 @@ namespace EmployeeDomainIntergationTests;
 /// </summary>
 public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly HttpClient _client;
+    private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
     /// _serializeOptions - options for JsonSerializer
     /// </summary>
@@ -24,7 +24,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true
         };
-        _client = factory.CreateClient();
+        _factory = factory;
     }
     /// <summary>
     /// Tests the parameterless GET method
@@ -32,7 +32,8 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     [Fact]
     public async Task GetDepartmentEmployees()
     {
-        var response = await _client.GetAsync("api/DepartmentEmployee");
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync("api/DepartmentEmployee");
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
@@ -52,7 +53,8 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     [InlineData(555, false)]
     public async Task GetDepartmentEmployee(uint departmentEmployeeId, bool isSuccess)
     {
-        var response = await _client.GetAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
 
         var content = await response.Content.ReadAsStringAsync();
         var departmentEmployee = JsonSerializer.Deserialize<GetDepartmentEmployeeDto>(content, _serializeOptions);
@@ -84,9 +86,10 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             DepartmentId = departmentId,
             EmployeeId = employeeId
         };
+        var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(departmentEmployeeDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync("api/DepartmentEmployee", stringContent);
+        var response = await client.PostAsync("api/DepartmentEmployee", stringContent);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
@@ -116,9 +119,10 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
             DepartmentId = departmentId,
             EmployeeId = employeeId
         };
+        var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(departmentEmployeeDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await _client.PutAsync($"api/DepartmentEmployee/{departmentEmployeeId}", stringContent);
+        var response = await client.PutAsync($"api/DepartmentEmployee/{departmentEmployeeId}", stringContent);
 
         if (isSuccess)
         {
@@ -139,7 +143,8 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     [InlineData(133, false)]
     public async Task DeleteDepartmentEmployee(int departmentEmployeeId, bool isSuccess)
     {
-        var response = await _client.DeleteAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
+        var client = _factory.CreateClient();
+        var response = await client.DeleteAsync($"api/DepartmentEmployee/{departmentEmployeeId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

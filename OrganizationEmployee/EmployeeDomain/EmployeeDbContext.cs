@@ -3,22 +3,58 @@ using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EmployeeDomain;
+/// <summary>
+/// EmployeeDbContext - represents a DbContext used to make queries to database
+/// </summary>
 public class EmployeeDbContext : DbContext
 {
+    /// <summary>
+    /// Departments - represents a collection of departments in database
+    /// </summary>
     public DbSet<Department> Departments { get; set; }
+    /// <summary>
+    /// Departments - represents a collection of DepartmentEmployee in database
+    /// </summary>
     public DbSet<DepartmentEmployee> DepartmentEmployees { get; set; }
+    /// <summary>
+    /// Employees - represents a collection of employees in database
+    /// </summary>
     public DbSet<Employee> Employees { get; set; }
+    /// <summary>
+    /// EmployeeOccupations - represents a collection of EmployeeOccupation in database
+    /// </summary>
     public DbSet<EmployeeOccupation> EmployeeOccupations { get; set; }
+    /// <summary>
+    /// EmployeeVacationVouchers - represents a collection of EmployeeVacationVoucher in database
+    /// </summary>
     public DbSet<EmployeeVacationVoucher> EmployeeVacationVouchers { get; set; }
+    /// <summary>
+    /// Occupations - represents a collection of occupations in database
+    /// </summary>
     public DbSet<Occupation> Occupations { get; set; }
+    /// <summary>
+    /// VacationVouchers - represents a collection of vacation vouchers in database
+    /// </summary>
     public DbSet<VacationVoucher> VacationVouchers { get; set; }
+    /// <summary>
+    /// VacationVouchersTypes - represents a collection of vacation voucher types in database
+    /// </summary>
     public DbSet<VoucherType> VacationVouchersTypes { get; set; }
+    /// <summary>
+    /// Workshops - represents a collection of workshops in database
+    /// </summary>
     public DbSet<Workshop> Workshops { get; set; }
-
+    /// <summary>
+    /// The constructor of EmployeeDbContext
+    /// </summary>
+    /// <param name="options">Parameters for EmployeeDbContext</param>
     public EmployeeDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
+    /// <summary>
+    /// WorkshopRepository - the data of workshops, which is needed to be added into database
+    /// </summary>
     public List<Workshop> WorkshopRepository
     {
         get
@@ -70,7 +106,10 @@ public class EmployeeDbContext : DbContext
         }
 
     }
-
+    /// <summary>
+    /// VoucherTypeRepository - the data of vacation voucher types,
+    /// which is needed to be added into database
+    /// </summary>
     public List<VoucherType> VoucherTypeRepository
     {
         get
@@ -100,7 +139,9 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// OccupationRepository - the data of occupations, which is needed to be added into database
+    /// </summary>
     public List<Occupation> OccupationRepository
     {
         get
@@ -140,7 +181,9 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// VacationVoucherRepository - the data of vacation vouchers, which is needed to be added into database
+    /// </summary>
     public List<VacationVoucher> VacationVoucherRepository
     {
         get
@@ -180,7 +223,9 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// DepartmentRepository - the data of departments, which is needed to be added into database
+    /// </summary>
     public List<Department> DepartmentRepository
     {
         get
@@ -240,7 +285,9 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// EmployeeRepository - the data of employees, which is needed to be added into database
+    /// </summary>
     public List<Employee> EmployeeRepository
     {
         get
@@ -326,7 +373,10 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// DepartmentEmployeeRepository - the data of DepartmentEmployee entities, 
+    /// which is needed to be added into database
+    /// </summary>
     public List<DepartmentEmployee> DepartmentEmployeeRepository
     {
         get
@@ -378,7 +428,10 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// EmployeeOccupationRepository - the data of EmployeeOccupation entities, 
+    /// which is needed to be added into database
+    /// </summary>
     public List<EmployeeOccupation> EmployeeOccupationRepository
     {
         get
@@ -444,7 +497,10 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
+    /// <summary>
+    /// EmployeeVacationVoucherRepository - the data of EmployeeVacationVoucher entities, 
+    /// which is needed to be added into database
+    /// </summary>
     public List<EmployeeVacationVoucher> EmployeeVacationVoucherRepository
     {
         get
@@ -472,30 +528,12 @@ public class EmployeeDbContext : DbContext
             };
         }
     }
-
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+    /// <summary>
+    /// Inserts the data into the database
+    /// </summary>
+    /// <param name="modelBuilder">Entity for configuring the state of database</param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-        //modelBuilder.Entity<DepartmentEmployee>()
-        //.HasOne<Department>()
-        //.WithMany()
-        //.HasForeignKey(deparmentEmployee => deparmentEmployee.DepartmentId)
-        //.IsRequired();
-
-        //modelBuilder.Entity<DepartmentEmployee>()
-        //.HasOne<Employee>()
-        //.WithMany()
-        //.HasForeignKey(deparmentEmployee => deparmentEmployee.EmployeeId)
-        //.IsRequired();
-        //modelBuilder.Entity<VoucherType>().HasMany(type => type.VacationVouchers);
-        //modelBuilder.Entity<VacationVoucher>().HasOne(voucher => voucher.VoucherType);
-
-        /*modelBuilder.Entity<VoucherType>()
-            .HasMany(type => type.VacationVouchers)
-            .WithOne(voucher => voucher.VoucherType)
-            .HasForeignKey(voucher => voucher.VoucherTypeId)
-            .HasPrincipalKey(type => type.Id); */
-
         var workshops = WorkshopRepository;
         foreach (var workshop in workshops)
         {

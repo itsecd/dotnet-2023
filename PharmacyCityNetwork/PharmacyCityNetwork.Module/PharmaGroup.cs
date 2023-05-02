@@ -1,8 +1,11 @@
-﻿namespace PharmacyCityNetwork;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PharmacyCityNetwork;
 
 /// <summary>
 /// Class describing a pharma group
 /// </summary>
+[Table("pharma_groups")]
 public class PharmaGroup
 {
     /// <summary>

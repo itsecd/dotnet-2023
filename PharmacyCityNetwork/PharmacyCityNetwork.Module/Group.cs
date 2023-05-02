@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace PharmacyCityNetwork;
 
 /// <summary>
@@ -8,10 +11,13 @@ public class Group
     /// <summary>
     /// Id of group
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Group name
     /// </summary>
+    [Column("groupName")]
     public string GroupName { get; set; } = string.Empty;
     /// <summary>
     /// Products of group

@@ -83,16 +83,7 @@ public class RequiredController : ControllerBase
             into newobj
             select new
             {
-                Id = newobj.Key,
-                Surname = 
-                    (from users in _context.Users where users.Id == newobj.Key select users.UserSurname).Single(),
-                Name = (from users in _context.Users where users.Id == newobj.Key select users.UserName).Single(),
-                Patronymic =
-                    (from users in _context.Users where users.Id == newobj.Key select users.UserPatronymic)
-                    .Single(),
-                PhoneNumber = (from users in _context.Users
-                    where users.Id == newobj.Key
-                    select users.UserPhoneNumber).Single(),
+                user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
                 AmountRides = newobj.Count(),
             }).ToListAsync();
         return users;
@@ -123,16 +114,7 @@ public class RequiredController : ControllerBase
             into newobj
             select new
             {
-                Id = newobj.Key,
-                Surname = 
-                   (from users in _context.Users where users.Id == newobj.Key select users.UserSurname).Single(),
-                Name = (from users in _context.Users where users.Id == newobj.Key select users.UserName).Single(),
-                Patronymic =
-                    (from users in _context.Users where users.Id == newobj.Key select users.UserPatronymic)
-                    .Single(),
-                PhoneNumber = (from users in _context.Users
-                    where users.Id == newobj.Key
-                    select users.UserPhoneNumber).Single(),
+                user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
                 AmountRides = newobj.Count(),
             }).ToListAsync();
         return userAmountRides;
@@ -161,29 +143,11 @@ public class RequiredController : ControllerBase
         var userAmountRides = await (from rides in _context.Rides
                 orderby rides.TripCar.CarRide.Count() descending
                 group rides by rides.TripCar.DriverId
-                into rar
+                into newobj
                 select new
                 {
-                    Id = rar.Key,
-                    Surname =
-                        (from drivers in _context.Drivers where drivers.Id == rar.Key select drivers.DriverSurname)
-                        .Single(),
-                    Name =
-                        (from drivers in _context.Drivers where drivers.Id == rar.Key select drivers.DriverName)
-                        .Single(),
-                    Patronymic =
-                        (from drivers in _context.Drivers where drivers.Id == rar.Key select drivers.DriverPatronymic)
-                        .Single(),
-                    PhoneNumber =
-                        (from drivers in _context.Drivers where drivers.Id == rar.Key select drivers.DriverPhoneNumber)
-                        .Single(),
-                    Address =
-                        (from drivers in _context.Drivers where drivers.Id == rar.Key select drivers.DriverAddress)
-                        .Single(),
-                    PassportId = (from drivers in _context.Drivers
-                        where drivers.Id == rar.Key
-                        select drivers.DriverPassportId).Single(),
-                    AmountRides = rar.Count()
+                    driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
+                    AmountRides = newobj.Count()
                 }).Take(5)
             .ToListAsync();
         return userAmountRides;
@@ -214,25 +178,7 @@ public class RequiredController : ControllerBase
             into newobj
             select new
             {
-                Id = newobj.Key,
-                Surname =
-                    (from drivers in _context.Drivers where drivers.Id == newobj.Key select drivers.DriverSurname)
-                    .Single(),
-                Name =
-                    (from drivers in _context.Drivers where drivers.Id == newobj.Key select drivers.DriverName)
-                    .Single(),
-                Patronymic =
-                    (from drivers in _context.Drivers where drivers.Id == newobj.Key select drivers.DriverPatronymic)
-                    .Single(),
-                PhoneNumber =
-                    (from drivers in _context.Drivers where drivers.Id == newobj.Key select drivers.DriverPhoneNumber)
-                    .Single(),
-                Address =
-                    (from drivers in _context.Drivers where drivers.Id == newobj.Key select drivers.DriverAddress)
-                    .Single(),
-                PassportId =
-                    (from drivers in _context.Drivers where drivers.Id ==newobj.Key select drivers.DriverPassportId)
-                    .Single(),
+                driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
                 MaxTime = (from rides in _context.Rides
                     where rides.TripCar.AssignedDriver.Id == newobj.Key
                     select rides.TripTime).Max(),
@@ -268,18 +214,11 @@ public class RequiredController : ControllerBase
                 orderby rides.UserInfo.AmountRides descending
                 where (rides.TripDate < dateAfter && rides.TripDate > dateBefore)
                 group rides by rides.UserId
-                into rar
+                into newobj
                 select new
                 {
-                    Id = rar.Key,
-                    Surname =
-                        (from users in _context.Users where users.Id == rar.Key select users.UserSurname).Single(),
-                    Name = (from users in _context.Users where users.Id == rar.Key select users.UserName).Single(),
-                    Patronymic =
-                        (from users in _context.Users where users.Id == rar.Key select users.UserPatronymic).Single(),
-                    PhoneNumber =
-                        (from users in _context.Users where users.Id == rar.Key select users.UserPhoneNumber).Single(),
-                    AmountRides = rar.Count()
+                    user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
+                    AmountRides = newobj.Count()
                 }).Take(1)
             .ToListAsync();
         return userAmountRides;

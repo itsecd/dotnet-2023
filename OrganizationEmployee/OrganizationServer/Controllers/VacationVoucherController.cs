@@ -3,7 +3,6 @@ using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -19,7 +18,7 @@ public class VacationVoucherController : Controller
     /// <summary>
     /// A constructor of the VacationVoucherController
     /// </summary>
-    public VacationVoucherController(IMapper mapper, 
+    public VacationVoucherController(IMapper mapper,
         IDbContextFactory<EmployeeDbContext> contextFactory, ILogger<VacationVoucherController> logger)
     {
         _contextFactory = contextFactory;

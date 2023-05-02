@@ -3,7 +3,6 @@ using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>

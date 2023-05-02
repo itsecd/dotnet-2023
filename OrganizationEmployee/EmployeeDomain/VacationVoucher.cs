@@ -31,5 +31,5 @@ public class VacationVoucher
     /// <summary>
     /// EmployeeVacationVoucher - a list of EmployeeVacationVoucher objects. For more details proceed to EmployeeVacationVoucher class
     /// </summary>
-    public List<EmployeeVacationVoucher> EmployeeVacationVouchers { get; set; } 
+    public List<EmployeeVacationVoucher> EmployeeVacationVouchers { get; set; }
 }

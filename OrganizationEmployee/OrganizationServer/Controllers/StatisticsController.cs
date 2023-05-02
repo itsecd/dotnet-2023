@@ -2,9 +2,7 @@
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -20,7 +18,7 @@ public class StatisticsController : Controller
     /// <summary>
     /// A constructor of the StatisticsController
     /// </summary>
-    public StatisticsController(IDbContextFactory<EmployeeDbContext> contextFactory, 
+    public StatisticsController(IDbContextFactory<EmployeeDbContext> contextFactory,
         IMapper mapper, ILogger<StatisticsController> logger)
     {
         _contextFactory = contextFactory;

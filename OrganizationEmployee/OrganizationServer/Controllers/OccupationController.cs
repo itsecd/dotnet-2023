@@ -3,7 +3,6 @@ using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -19,7 +18,7 @@ public class OccupationController : Controller
     /// <summary>
     /// A constructor of the OccupationController
     /// </summary>
-    public OccupationController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, 
+    public OccupationController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper,
         ILogger<OccupationController> logger)
     {
         _contextFactory = contextFactory;

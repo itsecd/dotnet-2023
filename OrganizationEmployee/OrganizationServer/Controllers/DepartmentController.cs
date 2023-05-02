@@ -3,7 +3,6 @@ using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -19,7 +18,7 @@ public class DepartmentController : Controller
     /// <summary>
     /// A constructor of the DepartmentController
     /// </summary>
-    public DepartmentController(IMapper mapper, ILogger<DepartmentController> logger, 
+    public DepartmentController(IMapper mapper, ILogger<DepartmentController> logger,
         IDbContextFactory<EmployeeDbContext> contextFactory)
     {
         _contextFactory = contextFactory;

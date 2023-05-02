@@ -3,7 +3,6 @@ using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -19,7 +18,7 @@ public class WorkshopController : ControllerBase
     /// <summary>
     /// A constructor of the WorkshopController
     /// </summary>
-    public WorkshopController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper, 
+    public WorkshopController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper,
         ILogger<WorkshopController> logger)
     {
         _contextFactory = contextFactory;

@@ -1,6 +1,4 @@
-﻿using EmployeeDomain;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeDomain;
 /// <summary>

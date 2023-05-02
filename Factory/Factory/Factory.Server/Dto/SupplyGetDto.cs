@@ -1,4 +1,4 @@
-﻿namespace Factory.Domain;
+﻿namespace Factory.Server.Dto;
 
 /// <summary>
 /// Class describing supplying

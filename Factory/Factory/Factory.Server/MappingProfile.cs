@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Factory.Domain;
+using Factory.Model;
 using Factory.Server.Dto;
 
 namespace Factory.Server;

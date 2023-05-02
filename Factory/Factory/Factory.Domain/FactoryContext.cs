@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Factory.Domain;
+namespace Factory.Model;
 
 /// <summary>
 /// Class FactoryContext connecting with database

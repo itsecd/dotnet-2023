@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Factory.Domain;
+namespace Factory.Model;
 
 /// <summary>
 /// Class describing Ownership Form

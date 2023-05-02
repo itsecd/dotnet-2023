@@ -1,10 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TaxiDepo.Domain;
+using TaxiDepo.Model;
 using TaxiDepo.Server.Dto;
 
 namespace TaxiDepo.Server.Controllers;
+
 /// <summary>
 /// RidesController class 
 /// </summary>
@@ -16,14 +17,17 @@ public class RidesController : ControllerBase
     /// TaxiDepoDbContext class object
     /// </summary>
     private readonly TaxiDepoDbContext _context;
+
     /// <summary>
     /// Mapper for RidesController class
     /// </summary>
     private readonly IMapper _mapper;
+
     /// <summary>
     /// Logger for RidesController class
     /// </summary>
     private readonly ILogger<RidesController> _logger;
+
     /// <summary>
     /// Constructor with params of RidesController class 
     /// </summary>
@@ -36,6 +40,7 @@ public class RidesController : ControllerBase
         _mapper = mapper;
         _logger = logger;
     }
+
     /// <summary>
     /// Get all rides from collection
     /// </summary>
@@ -48,9 +53,11 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a rides");
             return NotFound();
         }
+
         _logger.LogInformation("Get all rides from collection");
         return await _mapper.ProjectTo<RideDto>(_context.Rides).ToListAsync();
     }
+
     /// <summary>
     /// Get ride by id from collection
     /// </summary>
@@ -64,6 +71,7 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a rides");
             return NotFound();
         }
+
         _logger.LogInformation("Get ride by id from collection");
         var ride = await _context.Rides.FindAsync(id);
         if (ride == null)
@@ -71,8 +79,10 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a ride by id");
             return NotFound();
         }
+
         return _mapper.Map<RideDto>(ride);
     }
+
     /// <summary>
     /// Put ride from collection
     /// </summary>
@@ -87,6 +97,7 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a rides");
             return NotFound();
         }
+
         _logger.LogInformation("Put a ride by id from collection");
         var rideToModify = await _context.Rides.FindAsync(id);
         if (rideToModify == null)
@@ -94,10 +105,12 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a ride by id");
             return NotFound();
         }
+
         _mapper.Map(ride, rideToModify);
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
     /// <summary>
     /// Post ride to collection
     /// </summary>
@@ -111,12 +124,14 @@ public class RidesController : ControllerBase
         {
             return Problem("Entity set 'TaxiDepoDbContext.Rides'  is null.");
         }
+
         _logger.LogInformation("Posting ride to collection");
         var mappedRide = _mapper.Map<Ride>(ride);
         _context.Rides.Add(mappedRide);
         await _context.SaveChangesAsync();
         return CreatedAtAction("PostRide", new { id = mappedRide.Id }, _mapper.Map<RideDto>(mappedRide));
     }
+
     /// <summary>
     /// Delete ride from collection
     /// </summary>
@@ -130,6 +145,7 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a rides");
             return NotFound();
         }
+
         _logger.LogInformation("Deletion ride from collection");
         var ride = await _context.Rides.FindAsync(id);
         if (ride == null)
@@ -137,6 +153,7 @@ public class RidesController : ControllerBase
             _logger.LogInformation("Not found a ride by id");
             return NotFound();
         }
+
         _context.Rides.Remove(ride);
         await _context.SaveChangesAsync();
         return NoContent();

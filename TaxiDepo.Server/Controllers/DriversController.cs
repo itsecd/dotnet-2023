@@ -1,10 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TaxiDepo.Domain;
+using TaxiDepo.Model;
 using TaxiDepo.Server.Dto;
 
 namespace TaxiDepo.Server.Controllers;
+
 /// <summary>
 /// DriversController class
 /// </summary>
@@ -16,14 +17,17 @@ public class DriversController : ControllerBase
     /// TaxiDepoDbContext class object
     /// </summary>
     private readonly TaxiDepoDbContext _context;
+
     /// <summary>
     /// Mapper for DriversController class
     /// </summary>
     private readonly IMapper _mapper;
+
     /// <summary>
     /// Logger for DriversController class
     /// </summary>
     private readonly ILogger<DriversController> _logger;
+
     /// <summary>
     /// Constructor with params of DriversController class 
     /// </summary>
@@ -36,6 +40,7 @@ public class DriversController : ControllerBase
         _mapper = mapper;
         _logger = logger;
     }
+
     /// <summary>
     /// Get all drivers from collection
     /// </summary>
@@ -48,9 +53,11 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a drivers");
             return NotFound();
         }
+
         _logger.LogInformation("Get all drivers from collection");
         return await _mapper.ProjectTo<DriverDto>(_context.Drivers).ToListAsync();
     }
+
     /// <summary>
     /// Get driver by id from collection
     /// </summary>
@@ -64,6 +71,7 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a drivers");
             return NotFound();
         }
+
         _logger.LogInformation("Get driver by id from collection");
         var driver = await _context.Drivers.FindAsync(id);
         if (driver == null)
@@ -71,8 +79,10 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a driver by id");
             return NotFound();
         }
+
         return _mapper.Map<DriverDto>(driver);
     }
+
     /// <summary>
     /// Put driver from collection
     /// </summary>
@@ -87,6 +97,7 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a drivers");
             return NotFound();
         }
+
         _logger.LogInformation("Put a driver by id from collection");
         var driverToModify = await _context.Drivers.FindAsync(id);
         if (driverToModify == null)
@@ -94,10 +105,12 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a driver by id");
             return NotFound();
         }
+
         _mapper.Map(driver, driverToModify);
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
     /// <summary>
     /// Post driver to collection
     /// </summary>
@@ -111,12 +124,14 @@ public class DriversController : ControllerBase
         {
             return Problem("Entity set 'TaxiDepoDbContext.Drivers'  is null.");
         }
+
         _logger.LogInformation("Posting driver to collection");
         var mappedDriver = _mapper.Map<Driver>(driver);
         _context.Drivers.Add(mappedDriver);
         await _context.SaveChangesAsync();
         return CreatedAtAction("PostDriver", new { id = mappedDriver.Id }, _mapper.Map<DriverDto>(mappedDriver));
     }
+
     /// <summary>
     /// Delete driver from collection
     /// </summary>
@@ -130,6 +145,7 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a drivers");
             return NotFound();
         }
+
         _logger.LogInformation("Deletion driver from collection");
         var driver = await _context.Drivers.FindAsync(id);
         if (driver == null)
@@ -137,6 +153,7 @@ public class DriversController : ControllerBase
             _logger.LogInformation("Not found a driver by id");
             return NotFound();
         }
+
         _context.Drivers.Remove(driver);
         await _context.SaveChangesAsync();
         return NoContent();

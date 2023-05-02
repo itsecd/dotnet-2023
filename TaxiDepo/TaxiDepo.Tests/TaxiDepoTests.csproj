@@ -25,6 +25,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <ProjectReference Include="..\TaxiDepo.Classes\TaxiDepo.Classes.csproj" />
+        <ProjectReference Include="..\TaxiDepo.Model\TaxiDepo.Model.csproj" />
     </ItemGroup>
 </Project>

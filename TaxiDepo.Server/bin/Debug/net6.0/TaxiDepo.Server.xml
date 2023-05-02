@@ -24,7 +24,7 @@
             Logger for CarsController class
             </summary>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.CarsController.#ctor(TaxiDepo.Domain.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.CarsController})">
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.CarsController})">
             <summary>
             Constructor with params of CarsController class 
             </summary>
@@ -87,7 +87,7 @@
             Logger for DriversController class
             </summary>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.DriversController.#ctor(TaxiDepo.Domain.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.DriversController})">
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.DriversController})">
             <summary>
             Constructor with params of DriversController class 
             </summary>
@@ -150,7 +150,7 @@
             Mapper for RequiredController class
             </summary>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredController.#ctor(TaxiDepo.Domain.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RequiredController})">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RequiredController})">
             <summary>
             Constructor with params of RequiredController class
             </summary>
@@ -216,7 +216,7 @@
             Logger for RidesController class
             </summary>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RidesController.#ctor(TaxiDepo.Domain.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RidesController})">
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RidesController})">
             <summary>
             Constructor with params of RidesController class 
             </summary>
@@ -279,7 +279,7 @@
             Logger for UsersController class
             </summary>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.UsersController.#ctor(TaxiDepo.Domain.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.UsersController})">
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.UsersController})">
             <summary>
             Constructor with params of UsersController class 
             </summary>

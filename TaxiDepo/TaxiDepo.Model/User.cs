@@ -1,4 +1,4 @@
-namespace TaxiDepo.Domain;
+namespace TaxiDepo.Model;
 
 /// <summary>
 /// User class
@@ -9,34 +9,44 @@ public class User
     /// User id
     /// </summary>
     public int Id { get; set; } = 0;
+
     /// <summary>
     /// User surname
     /// </summary>
     public string UserSurname { get; set; } = string.Empty;
+
     /// <summary>
     /// User name
     /// </summary>
     public string UserName { get; set; } = string.Empty;
+
     /// <summary>
     /// User patronymic
     /// </summary>
     public string UserPatronymic { get; set; } = string.Empty;
+
     /// <summary>
     /// User phone number
     /// </summary>
     public string UserPhoneNumber { get; set; } = string.Empty;
+
     /// <summary>
     /// Amount user rides
     /// </summary>
     public int AmountRides { get; set; }
+
     /// <summary>
     /// User ride collection
     /// </summary>
     public Ride? UserRide { get; set; }
+
     /// <summary>
     /// Constructor without parameters to instantiate the class User
     /// </summary>
-    public User() {}
+    public User()
+    {
+    }
+
     /// <summary>
     /// Constructor with parameters to instantiate the class User
     /// </summary>
@@ -53,6 +63,7 @@ public class User
         UserPatronymic = patronymic;
         UserPhoneNumber = phoneNumber;
     }
+
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -60,34 +71,34 @@ public class User
     /// <returns>True - equal or false - not equal</returns>
     public override bool Equals(object? userObj)
     {
-        if (userObj is not User param || GetType() != userObj.GetType())
-            return false;
-        
-        return UserSurname == param.UserSurname &&
-               UserName == param.UserName &&
-               UserPatronymic == param.UserPatronymic &&
-               UserPhoneNumber == param.UserPhoneNumber;
+        if (userObj is not User param || GetType() != userObj.GetType()) return false;
+
+        return UserSurname == param.UserSurname && UserName == param.UserName &&
+               UserPatronymic == param.UserPatronymic && UserPhoneNumber == param.UserPhoneNumber;
     }
+
     /// <summary>
     /// Overload == through Equals
     /// </summary>
     /// <param name="userObj1">User class object</param>
     /// <param name="userObj2">User class object</param>
     /// <returns>True - equal or false - not equal</returns>
-    public static bool operator ==(User userObj1, User userObj2)        
-    {            
-        return Object.Equals(userObj1, userObj2);        
+    public static bool operator ==(User userObj1, User userObj2)
+    {
+        return Object.Equals(userObj1, userObj2);
     }
+
     /// <summary>
     /// Overload != through Equals
     /// </summary>
     /// <param name="userObj1">User class object</param>
     /// <param name="userObj2">User class object</param>
     /// <returns>True - not equal or false - equal</returns>
-    public static bool operator !=(User userObj1, User userObj2)        
-    {            
-        return !Object.Equals(userObj1, userObj2);        
+    public static bool operator !=(User userObj1, User userObj2)
+    {
+        return !Object.Equals(userObj1, userObj2);
     }
+
     /// <summary>
     /// Print function
     /// </summary>
@@ -97,6 +108,7 @@ public class User
         Console.WriteLine(
             $"User: {obj.UserSurname} {obj.UserName} {obj.UserPatronymic}, phone number - {obj.UserPhoneNumber}");
     }
+
     /// <summary>
     /// Get hash code func
     /// </summary>

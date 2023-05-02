@@ -1,4 +1,4 @@
-namespace TaxiDepo.Domain;
+namespace TaxiDepo.Model;
 
 /// <summary>
 /// Driver class
@@ -9,34 +9,44 @@ public class Driver
     /// Driver id
     /// </summary>
     public int Id { get; set; } = 0;
+
     /// <summary>
     /// Driver surname
     /// </summary>
     public string DriverSurname { get; set; } = string.Empty;
+
     /// <summary>
     /// Driver name
     /// </summary>
     public string DriverName { get; set; } = string.Empty;
+
     /// <summary>
     /// Driver patronymic
     /// </summary>
     public string DriverPatronymic { get; set; } = string.Empty;
+
     /// <summary>
     /// Driver passport ID
     /// </summary>
     public int DriverPassportId { get; set; } = 0;
+
     /// <summary>
     /// Driver address
     /// </summary>
     public string DriverAddress { get; set; } = string.Empty;
+
     /// <summary>
     /// Driver phone number
     /// </summary>
     public string DriverPhoneNumber { get; set; } = string.Empty;
+
     /// <summary>
     /// Constructor without parameters to instantiate the class Driver
     /// </summary>
-    public Driver() {}
+    public Driver()
+    {
+    }
+
     /// <summary>
     /// Constructor with parameters to instantiate the class Driver
     /// </summary>
@@ -47,9 +57,10 @@ public class Driver
     /// <param name="passportId">Driver passport ID</param>
     /// <param name="address">Driver address</param>
     /// <param name="phoneNumber">Driver phone number</param>
-    public Driver(int id, string surname, string name, string patronymic, int passportId, string address, string phoneNumber)
+    public Driver(int id, string surname, string name, string patronymic, int passportId, string address,
+        string phoneNumber)
     {
-        Id = id; 
+        Id = id;
         DriverSurname = surname;
         DriverName = name;
         DriverPatronymic = patronymic;
@@ -57,6 +68,7 @@ public class Driver
         DriverAddress = address;
         DriverPhoneNumber = phoneNumber;
     }
+
     /// <summary>
     /// Overload Equals
     /// </summary>
@@ -64,36 +76,35 @@ public class Driver
     /// <returns>True - equal or false - not equal</returns>
     public override bool Equals(object? driverObj)
     {
-        if (driverObj is not Driver param || GetType() != driverObj.GetType())
-            return false;
-        
-        return DriverSurname == param.DriverSurname &&
-               DriverName == param.DriverName &&
-               DriverPatronymic == param.DriverPatronymic &&
-               DriverPassportId == param.DriverPassportId && 
-               DriverAddress == param.DriverAddress &&
-               DriverPhoneNumber == param.DriverPhoneNumber;
+        if (driverObj is not Driver param || GetType() != driverObj.GetType()) return false;
+
+        return DriverSurname == param.DriverSurname && DriverName == param.DriverName &&
+               DriverPatronymic == param.DriverPatronymic && DriverPassportId == param.DriverPassportId &&
+               DriverAddress == param.DriverAddress && DriverPhoneNumber == param.DriverPhoneNumber;
     }
+
     /// <summary>
     /// Overload == through Equals
     /// </summary>
     /// <param name="driverObj1">Driver class object</param>
     /// <param name="driverObj2">Driver class object</param>
     /// <returns>True - equal or false - not equal</returns>
-    public static bool operator==(Driver driverObj1, Driver driverObj2)        
-    {            
-        return Object.Equals(driverObj1, driverObj2);        
+    public static bool operator ==(Driver? driverObj1, Driver? driverObj2)
+    {
+        return Object.Equals(driverObj1, driverObj2);
     }
+
     /// <summary>
     /// Overload != through Equals
     /// </summary>
     /// <param name="driverObj1">Driver class object</param>
     /// <param name="driverObj2">Driver class object</param>
     /// <returns>True - not equal or false - equal</returns>
-    public static bool operator!=(Driver driverObj1, Driver driverObj2)        
-    {            
-        return !Object.Equals(driverObj1, driverObj2);        
+    public static bool operator !=(Driver driverObj1, Driver driverObj2)
+    {
+        return !Object.Equals(driverObj1, driverObj2);
     }
+
     /// <summary>
     /// Print function
     /// </summary>
@@ -103,6 +114,7 @@ public class Driver
         Console.WriteLine(
             $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}");
     }
+
     /// <summary>
     /// Get hash code func
     /// </summary>

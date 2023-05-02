@@ -1,5 +1,5 @@
 using AutoMapper;
-using TaxiDepo.Domain;
+using TaxiDepo.Model;
 using TaxiDepo.Server.Dto;
 
 namespace TaxiDepo.Server;
@@ -7,7 +7,7 @@ namespace TaxiDepo.Server;
 /// <summary>
 /// MappingProfile class
 /// </summary>
-public class MappingProfile: Profile
+public class MappingProfile : Profile
 {
     /// <summary>
     /// Constructor without params
@@ -19,4 +19,4 @@ public class MappingProfile: Profile
         CreateMap<Ride, RideDto>().ReverseMap();
         CreateMap<User, UserDto>().ReverseMap();
     }
-} 
+}

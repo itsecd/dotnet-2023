@@ -38,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TaxiDepo\TaxiDepo.Classes\TaxiDepo.Classes.csproj" />
+      <ProjectReference Include="..\TaxiDepo\TaxiDepo.Model\TaxiDepo.Model.csproj" />
     </ItemGroup>
 
 </Project>

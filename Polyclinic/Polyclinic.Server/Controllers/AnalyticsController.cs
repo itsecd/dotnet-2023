@@ -84,7 +84,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("/InformationAboutAppointmentsPatients")]
-    public async Task<IActionResult> GetInformationAboutAppointmentsPatients(DateTime lastMonth1, DateTime lastMonth2)
+    public async Task<IActionResult> GetInformationAboutAppointmentsPatients()
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about count patients of visits to doctors for last month");
@@ -92,7 +92,7 @@ public class AnalyticsController : ControllerBase
         var result = await (from r in ctx.Registrations
                             join p in ctx.Patients on r.IdPatient equals p.Id
                             join d in ctx.Doctors on r.IdDoctor equals d.Id
-                            where r.TimeAdmission >= lastMonth1 && r.TimeAdmission <= lastMonth2
+                            where r.TimeAdmission >= DateTime.Now.AddMonths(-1) && r.TimeAdmission <= DateTime.Now
                             group r by d into dGroup
                             select new { Doctor = dGroup.Key.FullName, Appointments = dGroup.Count() }).ToListAsync();
 

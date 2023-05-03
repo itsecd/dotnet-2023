@@ -91,40 +91,24 @@ public class BicycleRentalContext : DbContext
         modelBuilder.Entity<Customer>().HasKey(c => c.Id);
         modelBuilder.Entity<BicycleRental>().HasKey(br => br.RentalId);
 
-        /*modelBuilder.Entity<BicycleType>()
-                    .HasMany(b => b.Bicycles)
-                    .WithOne(bt => bt.BicycleType)                    
-                    .HasForeignKey(bt => bt.TypeId)
-                    .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Bicycle>()
-                    .HasMany(r => r.Rentals)
-                    .WithOne(b => b.Bicycle)
-                    .HasForeignKey(b => b.SerialNumber)
-                    .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<Customer>()
-                    .HasMany(r => r.Rentals)
-                    .WithOne(c => c.Customer)
-                    .HasForeignKey(c => c.CustomerId)
-                    .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);*/
         modelBuilder.Entity<Bicycle>()
                     .HasOne<BicycleType>(b => b.BicycleType)
                     .WithMany(t => t.Bicycles)
-                    .HasForeignKey(b => b.TypeId);
+                    .HasForeignKey(b => b.TypeId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<BicycleRental>()
-            .HasOne<Bicycle>(r => r.Bicycle)
-            .WithMany(b => b.Rentals)
-            .HasForeignKey(r => r.SerialNumber);
+                    .HasOne<Bicycle>(r => r.Bicycle)
+                    .WithMany(b => b.Rentals)
+                    .HasForeignKey(r => r.SerialNumber)
+                    .OnDelete(DeleteBehavior.Cascade); ;
 
         modelBuilder.Entity<BicycleRental>()
-            .HasOne<Customer>(r => r.Customer)
-            .WithMany(c => c.Rentals)
-            .HasForeignKey(r => r.CustomerId);
+                    .HasOne<Customer>(r => r.Customer)
+                    .WithMany(c => c.Rentals)
+                    .HasForeignKey(r => r.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade); ;
 
     }
 }

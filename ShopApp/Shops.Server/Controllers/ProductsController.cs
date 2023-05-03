@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
 using Shops.Server.Repository;
@@ -13,15 +14,15 @@ namespace Shops.Server.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly ILogger<ProductsController> _logger;
-    private readonly IShopRepository _shopRepository;
+    private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
     /// </summary>
-    public ProductsController(ILogger<ProductsController> logger, IShopRepository shopRepository, IMapper mapper)
+    public ProductsController(ILogger<ProductsController> logger, IDbContextFactory<ShopsContext> dbContextFactory, IMapper mapper)
     {
         _logger = logger;
-        _shopRepository = shopRepository;
+        _dbContextFactory = dbContextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -29,10 +30,12 @@ public class ProductsController : ControllerBase
     /// </summary>
     /// <returns>Ok(List of product)</returns>
     [HttpGet]
-    public ActionResult<IEnumerable<ProductGetDto>> Get()
+    public async Task<ActionResult<IEnumerable<ProductGetDto>>> Get()
     {
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
         _logger.LogInformation("Get list of product");
-        return Ok(_shopRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product)));
+        return Ok(_mapper.Map<IEnumerable<ProductGetDto>>(ctx.Products));
     }
     /// <summary>
     /// Return product by id
@@ -40,10 +43,11 @@ public class ProductsController : ControllerBase
     /// <param name="id"> Product id</param>
     /// <returns>Ok (the product found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
-    public ActionResult<ProductGetDto> Get(int id)
+    public async Task<ActionResult<ProductGetDto>> Get(int id)
     {
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
-        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id = {id}");
@@ -57,20 +61,24 @@ public class ProductsController : ControllerBase
     }
     /// <summary>
     /// Add new product in list of products
-    /// </summary>
+    /// </summary> обработать отсутствие груп айди
     /// <param name="product"> New product</param>
     /// <returns>Ok(add new product) </returns>
     [HttpPost]
-    public IActionResult Post([FromBody] ProductPostDto product)
+    public async Task<IActionResult> Post([FromBody] ProductPostDto product)
     {
-
-        var newId = _shopRepository.Products
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var foundProductGroup = await ctx.ProductGroups.FirstOrDefaultAsync(fProductGroup => fProductGroup.Id == product.ProductGroupId);
+        if (foundProductGroup == null)
+            return NotFound();
+        var newId = ctx.Products
             .Select(product => product.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newProduct = _mapper.Map<Product>(product);
         newProduct.Id = newId;
-        _shopRepository.Products.Add(newProduct);
+        await ctx.Products.AddAsync(newProduct);
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"Post product, id = {newId}");
         return Ok();
     }
@@ -81,9 +89,13 @@ public class ProductsController : ControllerBase
     /// <param name="productToPut">New information</param>
     /// <returns>Ok (update product by id) or NotFound</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ProductPostDto productToPut)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var foundProductGroup = await ctx.ProductGroups.FirstOrDefaultAsync(fProductGroup => fProductGroup.Id == productToPut.ProductGroupId);
+        if (foundProductGroup == null)
+            return NotFound();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id = {id}");
@@ -93,6 +105,7 @@ public class ProductsController : ControllerBase
         {
             _logger.LogInformation($"Update information product with id = {id}");
             _mapper.Map<ProductPostDto, Product>(productToPut, product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -103,9 +116,11 @@ public class ProductsController : ControllerBase
     /// <param name="newDateLimit">New storage limit date</param>
     /// <returns>Ok (update  limit date product by id) or NotFound</returns>
     [HttpPut("{id}, update-limit-date")]
-    public IActionResult PutDate(int id, [FromBody] DateTime newDateLimit)
+    public async Task<IActionResult> PutDate(int id, [FromBody] DateTime newDateLimit)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id = {id}");
@@ -115,6 +130,7 @@ public class ProductsController : ControllerBase
         {
             _logger.LogInformation($"Update storage limit date product with id = {id}");
             product.StorageLimitDate = newDateLimit;
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -124,9 +140,11 @@ public class ProductsController : ControllerBase
     /// <param name="id">Product id</param>
     /// <returns>Ok (delete product by id) or NotFound</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var product = _shopRepository.Products.FirstOrDefault(product => product.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
             _logger.LogInformation($"Not found product with id = {id}");
@@ -135,7 +153,8 @@ public class ProductsController : ControllerBase
         else
         {
             _logger.LogInformation($"Delete product with id = {id}");
-            _shopRepository.Products.Remove(product);
+            ctx.Products.Remove(product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

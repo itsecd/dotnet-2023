@@ -1,4 +1,6 @@
-﻿namespace Shops.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shops.Domain;
 /// <summary>
 /// Customer -  class describes the buyers
 /// </summary>
@@ -16,6 +18,7 @@ public class Customer
     /// <summary>
     /// Customer id
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Customer first name

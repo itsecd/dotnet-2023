@@ -15,7 +15,7 @@ public class ProductPostDto
     /// <summary>
     /// Product group code 
     /// </summary>
-    public int ProductGroupCode { get; set; } = 0;
+    public int ProductGroupId { get; set; } = 0;
     /// <summary>
     /// Product weight
     /// </summary>

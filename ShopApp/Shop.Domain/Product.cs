@@ -1,17 +1,20 @@
-﻿namespace Shops.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Shops.Domain;
 /// <summary>
 /// Product - class describing products
 /// </summary>
 public class Product
 {
     public Product() { }
-    public Product(int id, string barcode, string name, int productGroupCode, double weight, string productType,
+    public Product(int id, string barcode, string name, int productGroupId, double weight, string productType,
         double price, DateTime storageLimitDate)
     {
         Id = id;
         Barcode = barcode;
         Name = name;
-        ProductGroupCode = productGroupCode;
+        ProductGroupId = productGroupId;
         Weight = weight;
         ProductType = productType;
         Price = price;
@@ -20,6 +23,7 @@ public class Product
     /// <summary>
     /// Id is used to product the ID.
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Product barcode
@@ -32,10 +36,11 @@ public class Product
     /// <summary>
     /// Product group code 
     /// </summary>
-    public int ProductGroupCode { get; set; } = 0;
+    public int ProductGroupId { get; set; } = 0;
     /// <summary>
     /// Product weight
     /// </summary>
+    public ProductGroup? ProductGroup { get; set; }
     public double Weight { get; set; } = 0.0;
     /// <summary>
     /// Product type (piece or bulk)

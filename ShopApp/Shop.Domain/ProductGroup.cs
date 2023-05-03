@@ -1,4 +1,6 @@
-﻿namespace Shops.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shops.Domain;
 /// <summary>
 /// Product - class describing product groups
 /// </summary>
@@ -13,6 +15,7 @@ public class ProductGroup
     /// <summary>
     /// Product group id
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Name product group

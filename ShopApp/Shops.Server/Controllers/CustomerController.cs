@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
 using Shops.Server.Repository;
@@ -13,15 +14,15 @@ namespace Shops.Server.Controllers;
 public class CustomerController : ControllerBase
 {
     private readonly ILogger<CustomerController> _logger;
-    private readonly IShopRepository _shopRepository;
+    private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
     /// </summary>
-    public CustomerController(ILogger<CustomerController> logger, IShopRepository shopRepository, IMapper mapper)
+    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory<ShopsContext> dbContextFactory, IMapper mapper)
     {
         _logger = logger;
-        _shopRepository = shopRepository;
+        _dbContextFactory = dbContextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -29,10 +30,11 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns>Ok(List of customer)</returns>
     [HttpGet]
-    public ActionResult<IEnumerable<CustomersGetDto>> Get()
+    public async Task<ActionResult<IEnumerable<CustomersGetDto>>> Get()
     {
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get list of customer");
-        return Ok(_shopRepository.Customers.Select(customer => _mapper.Map<CustomersGetDto>(customer)));
+        return Ok(_mapper.Map<IEnumerable<CustomersGetDto>>(ctx.Customers));
     }
     /// <summary>
     /// Return customer by id
@@ -40,9 +42,11 @@ public class CustomerController : ControllerBase
     /// <param name="id"> Customer id</param>
     /// <returns>Ok (the customer found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
-    public ActionResult<CustomersGetDto> Get(int id)
+    public async Task<ActionResult<CustomersGetDto>> Get(int id)
     {
-        var customer = _shopRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var customer = await  ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with id = {id}");
@@ -60,15 +64,18 @@ public class CustomerController : ControllerBase
     /// <param name="customer"> New customer</param>
     /// <returns>Ok(add new customer) </returns>
     [HttpPost]
-    public IActionResult Post([FromBody] CustomerPostDto customer)
+    public async Task<IActionResult> Post([FromBody] CustomerPostDto customer)
     {
-        var newId = _shopRepository.Customers
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var newId = ctx.Customers
             .Select(customer => customer.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newCustomer = _mapper.Map<Customer>(customer);
         newCustomer.Id = newId;
-        _shopRepository.Customers.Add(newCustomer);
+        await ctx.Customers.AddAsync(newCustomer);
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"Post customer, id = {newId}");
         return Ok();
     }
@@ -79,9 +86,11 @@ public class CustomerController : ControllerBase
     /// <param name="customerToPut">New information</param>
     /// <returns>Ok (update customer by id) or NotFound</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CustomerPostDto customerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] CustomerPostDto customerToPut)
     {
-        var customer = _shopRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with id = {id}");
@@ -91,6 +100,7 @@ public class CustomerController : ControllerBase
         {
             _logger.LogInformation($"Update information customer with id = {id}");
             _mapper.Map<CustomerPostDto, Customer>(customerToPut, customer);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -100,9 +110,11 @@ public class CustomerController : ControllerBase
     /// <param name="id">customer id</param>
     /// <returns>Ok (delete customer by id) or NotFound</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var customer = _shopRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with id = {id}");
@@ -111,7 +123,8 @@ public class CustomerController : ControllerBase
         else
         {
             _logger.LogInformation($"Delete customer with id = {id}");
-            _shopRepository.Customers.Remove(customer);
+            ctx.Customers.Remove(customer);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

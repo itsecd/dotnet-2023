@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
 using Shops.Server.Repository;
@@ -12,15 +13,15 @@ using Shops.Server.Repository;
 public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly IShopRepository _shopRepository;
     private readonly IMapper _mapper;
+    private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
     /// <summary>
     /// Controller constructor 
     /// </summary>
-    public AnalyticsController(ILogger<AnalyticsController> logger, IShopRepository shopRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IDbContextFactory<ShopsContext> dbContextFactory, IMapper mapper)
     {
         _logger = logger;
-        _shopRepository = shopRepository;
+        _dbContextFactory = dbContextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -29,24 +30,25 @@ public class AnalyticsController : ControllerBase
     /// <param name="id"> Id of shop.</param>
     /// <returns>Ok(information about all products in shop by id)</returns>
     [HttpGet("information-product-in-shop")]
-    public ActionResult Get(int id)
+    public async Task<ActionResult> Get(int id)
     {
-        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var foundShop =  await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == id);
         if (foundShop == null)
             return NotFound();
         _logger.LogInformation("Get list of products in shop");
-        var fixtureShop = _shopRepository.Shops;
-        var query =
+        var fixtureShop = ctx.Shops;
+        var query = await
             (from shop in fixtureShop
              where shop.Id == id
-             select shop.Products).ToList()[0];
-        if (query.Count == 0)
+             select shop.Products).ToListAsync();
+        if (query[0].Count == 0)
         {
             return NotFound();
         }
         else
         {
-            var result = _mapper.Map<IEnumerable<ProductQuantity>, IEnumerable<ProductQuantityGetDto>>(query);
+            var result = _mapper.Map<IEnumerable<ProductQuantity>, IEnumerable<ProductQuantityGetDto>>(query[0]);
             return Ok(result);
         }
 
@@ -57,18 +59,19 @@ public class AnalyticsController : ControllerBase
     /// <param name="id"> Id of product.</param>
     /// <returns>Ok(information about all products in shop by id)</returns>
     [HttpGet("shops-with-product")]
-    public ActionResult GetProductAvailable(int id)
+    public async Task<ActionResult> GetProductAvailable(int id)
     {
-        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var foundProduct = await ctx.Products.FirstOrDefaultAsync(fProduct => fProduct.Id == id);
         if (foundProduct == null)
             return NotFound();
         _logger.LogInformation("Get list of shop with product");
-        var fixtureShop = _shopRepository.Shops;
-        var query =
+        var fixtureShop = ctx.Shops;
+        var query = await
             (from shop in fixtureShop
              from products in shop.Products
              where products.ProductId == id
-             select shop).ToList();
+             select shop).ToListAsync();
         if (query.Count == 0)
         {
             return NotFound();
@@ -81,25 +84,26 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Ok(information about the average cost products groups in shops)</returns>
     [HttpGet("average-price-product-groups")]
-    public ActionResult GetAvgPriceProductGroup()
+    public async Task<ActionResult> GetAvgPriceProductGroup()
     {
         _logger.LogInformation("Get list of avg price ");
-        var fixtureShop = _shopRepository.Shops;
-        var productList = _shopRepository.Products;
-        var productInShop =
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var fixtureShop = ctx.Shops;
+        var productList = ctx.Products;
+        var productInShop = await
             (from shop in fixtureShop
              from products in shop.Products
-             select products).ToList();
+             select products).ToListAsync();
 
-        var result =
+        var result = 
             (from ps in productInShop
              join p in productList on ps.ProductId equals p.Id
              join s in fixtureShop on ps.ShopId equals s.Id
-             group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
+             group new { p, s } by new { p.ProductGroupId, s.Id } into grp
              select new
              {
                  ShopId = grp.Key.Id,
-                 PoductGroup = grp.Key.ProductGroupCode,
+                 PoductGroup = grp.Key.ProductGroupId,
                  AvgPrice = grp.Average(x => x.p.Price)
              }
             ).ToList();
@@ -110,17 +114,18 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Ok(information about top 5 purchases by the total amount of the sale)</returns>
     [HttpGet("top-5-purchases")]
-    public ActionResult GetTop5Purchases()
+    public async Task<ActionResult> GetTop5Purchases()
     {
         _logger.LogInformation("Get list of top 5 purchases");
-        var customer = _shopRepository.Customers;
-        var fixtureShop = _shopRepository.Shops;
-        var topPurch =
+        await using var ctx =  await _dbContextFactory.CreateDbContextAsync();
+        var customer = ctx.Customers;
+        var fixtureShop = ctx.Shops;
+        var topPurch = await 
             (from shop in fixtureShop
              from pr in shop.PurchaseRecords
              orderby pr.Sum descending
              select pr
-            ).Take(5).ToList();
+            ).Take(5).ToListAsync();
         var result = _mapper.Map<IEnumerable<PurchaseRecord>, IEnumerable<PurchaseRecordGetDto>>(topPurch);
 
         return Ok(result);
@@ -130,15 +135,16 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Ok(information about goods exceeding the storage limit date)</returns>
     [HttpGet("product-delay")]
-    public ActionResult GetProductDelay()
+    public async Task<ActionResult> GetProductDelay()
     {
         _logger.LogInformation("Get list of product delay");
-        var fixtureShop = _shopRepository.Shops;
-        var productList = _shopRepository.Products;
-        var productInShop =
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var fixtureShop = ctx.Shops;
+        var productList = ctx.Products;
+        var productInShop = await
             (from shop in fixtureShop
              from products in shop.Products
-             select products).ToList();
+             select products).ToListAsync();
         var expiredProduct =
             (from ps in productInShop
              join p in productList on ps.ProductId equals p.Id
@@ -160,11 +166,12 @@ public class AnalyticsController : ControllerBase
     /// <param name="beginDate">The number from which the month is counted.</param>
     /// <returns>Ok(stores in which goods were sold for a month in excess of the specified amount)</returns>
     [HttpGet("shop-earned-more")]
-    public ActionResult GetShopEarnedMore(double amount, DateTime beginDate)
+    public async Task<ActionResult> GetShopEarnedMore(double amount, DateTime beginDate)
     {
         _logger.LogInformation("Get list of stores in which goods were sold for a month in excess of the specified amount");
-        var fixtureShop = _shopRepository.Shops;
-        var purchases =
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var fixtureShop = ctx.Shops;
+        var purchases =await
            (from shop in fixtureShop
             from pr in shop.PurchaseRecords
             select new
@@ -173,7 +180,7 @@ public class AnalyticsController : ControllerBase
                 DateSale = pr.DateSale,
                 Sale = pr.Sum
             }
-            ).ToList();
+            ).ToListAsync();
         var result =
            (from purchase in purchases
             where purchase.DateSale >= beginDate && purchase.DateSale <= beginDate.AddMonths(1)

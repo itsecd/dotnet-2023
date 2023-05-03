@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
 using Shops.Server.Repository;
@@ -13,15 +14,15 @@ namespace Shops.Server.Controllers;
 public class PurchaseRecordController : ControllerBase
 {
     private readonly ILogger<PurchaseRecordController> _logger;
-    private readonly IShopRepository _shopRepository;
+    private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
     /// </summary>
-    public PurchaseRecordController(ILogger<PurchaseRecordController> logger, IShopRepository shopRepository, IMapper mapper)
+    public PurchaseRecordController(ILogger<PurchaseRecordController> logger, IDbContextFactory<ShopsContext> dbContextFactory, IMapper mapper)
     {
         _logger = logger;
-        _shopRepository = shopRepository;
+        _dbContextFactory = dbContextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -29,10 +30,12 @@ public class PurchaseRecordController : ControllerBase
     /// </summary>
     /// <returns>Ok(List of purchase record)</returns>
     [HttpGet]
-    public ActionResult<IEnumerable<PurchaseRecordGetDto>> Get()
+    public async Task<ActionResult<IEnumerable<PurchaseRecordGetDto>>> Get()
     {
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
         _logger.LogInformation("Get list of purchase record");
-        return Ok(_shopRepository.PurchaseRecords.Select(product => _mapper.Map<PurchaseRecordGetDto>(product)));
+        return Ok(_mapper.Map<IEnumerable<PurchaseRecordGetDto>>(ctx.PurchaseRecords));
     }
     /// <summary>
     /// Return purchase record
@@ -40,9 +43,11 @@ public class PurchaseRecordController : ControllerBase
     /// <param name="id"> Purchase record id</param>
     /// <returns>Ok (the purchase record found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
-    public ActionResult<PurchaseRecordGetDto> Get(int id)
+    public async Task<ActionResult<PurchaseRecordGetDto>> Get(int id)
     {
-        var record = _shopRepository.PurchaseRecords.FirstOrDefault(record => record.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
             _logger.LogInformation($"Not found purchase record with id = {id}");
@@ -61,25 +66,28 @@ public class PurchaseRecordController : ControllerBase
     /// <param name="record"> New purchase record</param>
     /// <returns>Ok(add new product in shop) </returns>
     [HttpPost]
-    public IActionResult Post([FromBody] PurchaseRecordPostDto record)
+    public async Task<IActionResult> Post([FromBody] PurchaseRecordPostDto record)
     {
-        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == record.ProductId);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var foundProduct = await ctx.Products.FirstOrDefaultAsync(fProduct => fProduct.Id == record.ProductId);
         if (foundProduct == null)
             return NotFound();
-        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == record.ShopId);
+        var foundShop = await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == record.ShopId);
         if (foundShop == null)
             return NotFound();
-        var foundCustomer = _shopRepository.Customers.FirstOrDefault(fCustomer => fCustomer.Id == record.CustomerId);
+        var foundCustomer = await ctx.Customers.FirstOrDefaultAsync(fCustomer => fCustomer.Id == record.CustomerId);
         if (foundCustomer == null)
             return NotFound();
-        var newId = _shopRepository.PurchaseRecords
+        var newId = ctx.PurchaseRecords
             .Select(product => product.Id)
             .DefaultIfEmpty()
             .Max() + 1;
         var newRecord = _mapper.Map<PurchaseRecord>(record);
         newRecord.Id = newId;
         newRecord.Sum = record.Quantity * foundProduct.Price;
-        _shopRepository.PurchaseRecords.Add(newRecord);
+        await ctx.PurchaseRecords.AddAsync(newRecord);
+        await ctx.SaveChangesAsync();
         _logger.LogInformation($"Post new purchase record, id = {newId}");
         return Ok();
     }
@@ -90,19 +98,21 @@ public class PurchaseRecordController : ControllerBase
     /// <param name="recordToPut">New information purchase record</param>
     /// <returns>Ok (update information purchase record) or NotFound</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PurchaseRecordPostDto recordToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] PurchaseRecordPostDto recordToPut)
     {
-        var foundProduct = _shopRepository.Products.FirstOrDefault(fProduct => fProduct.Id == recordToPut.ProductId);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var foundProduct = await ctx.Products.FirstOrDefaultAsync(fProduct => fProduct.Id == recordToPut.ProductId);
         if (foundProduct == null)
             return NotFound();
-        var foundShop = _shopRepository.Shops.FirstOrDefault(fShop => fShop.Id == recordToPut.ShopId);
+        var foundShop = await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == recordToPut.ShopId);
         if (foundShop == null)
             return NotFound();
-        var foundCustomer = _shopRepository.Customers.FirstOrDefault(fCustomer => fCustomer.Id == recordToPut.CustomerId);
+        var foundCustomer = await ctx.Customers.FirstOrDefaultAsync(fCustomer => fCustomer.Id == recordToPut.CustomerId);
         if (foundCustomer == null)
             return NotFound();
 
-        var record = _shopRepository.PurchaseRecords.FirstOrDefault(record => record.Id == id);
+        var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
             _logger.LogInformation($"Not found purchase record with id = {id}");
@@ -114,6 +124,7 @@ public class PurchaseRecordController : ControllerBase
             _logger.LogInformation($"Update information purchase record with id = {id}");
             _mapper.Map<PurchaseRecordPostDto, PurchaseRecord>(recordToPut, record);
             record.Sum = record.Quantity * foundProduct.Price;
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -123,9 +134,11 @@ public class PurchaseRecordController : ControllerBase
     /// <param name="id">purchase record id</param>
     /// <returns>Ok (delete purchase record  by id) or NotFound</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var record = _shopRepository.PurchaseRecords.FirstOrDefault(record => record.Id == id);
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
+
+        var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
             _logger.LogInformation($"Not found purchase record with id = {id}");
@@ -134,7 +147,8 @@ public class PurchaseRecordController : ControllerBase
         else
         {
             _logger.LogInformation($"Delete purchase record with id = {id}");
-            _shopRepository.PurchaseRecords.Remove(record);
+            ctx.PurchaseRecords.Remove(record);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

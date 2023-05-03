@@ -1,4 +1,7 @@
-﻿namespace Shops.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Shops.Domain;
 /// <summary>
 /// PurchaseRecord - class describing purchase record
 /// </summary>
@@ -20,27 +23,31 @@ public class PurchaseRecord
     /// <summary>
     /// Id is used to store the ID.
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Were bought
     /// </summary>
+    //[ForeignKey("Shop")]
     public int ShopId { get; set; }
     /// <summary>
     /// Who bought (id)
     /// </summary>
+    //[ForeignKey("Customer")]
     public int CustomerId { get; set; }
     /// <summary>
     /// Who bought 
     /// </summary>
-    public Customer Customer { get; set; } = new Customer();
+    public Customer? Customer { get; set; } 
     /// <summary>
     /// What bought (barcode)
     /// </summary>
+    //[ForeignKey("Product")]
     public int ProductId { get; set; }
     /// <summary>
     /// What bought (barcode)
     /// </summary>
-    public Product Product { get; set; } = new Product();
+    public Product? Product { get; set; }
     /// <summary>
     /// How much bought
     /// </summary>

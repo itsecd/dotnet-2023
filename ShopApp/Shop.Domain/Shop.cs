@@ -1,4 +1,6 @@
-﻿namespace Shops.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shops.Domain;
 /// <summary>
 /// Shop - class describes shop 
 /// </summary>
@@ -7,6 +9,7 @@ public class Shop
     /// <summary>
     /// Shop id
     /// </summary>
+    [Key]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Shop name

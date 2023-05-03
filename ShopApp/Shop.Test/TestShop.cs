@@ -54,11 +54,11 @@ public class TestShop : IClassFixture<ShopFixture>
             (from ps in productInShop
              join p in productList on ps.ProductId equals p.Id
              join s in fixtureShop on ps.ShopId equals s.Id
-             group new { p, s } by new { p.ProductGroupCode, s.Id } into grp
+             group new { p, s } by new { p.ProductGroupId, s.Id } into grp
              select new
              {
                  ShopId = grp.Key.Id,
-                 PoductGroup = grp.Key.ProductGroupCode,
+                 PoductGroup = grp.Key.ProductGroupId,
                  AvgPrice = grp.Average(x => x.p.Price)
              }
             ).ToList();

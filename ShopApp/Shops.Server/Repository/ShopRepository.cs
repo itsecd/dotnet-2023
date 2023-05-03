@@ -132,13 +132,13 @@ public class ShopRepository : IShopRepository
             var products = ListProducts;
             return new List<PurchaseRecord>
                 {
-                    new PurchaseRecord(9, 2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(10, 2, 5, customers[4], 6, products[6], 5.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(11, 2, 4, customers[3], 1, products[0], 1.0, new DateTime(2023, 01, 14)),
-                    new PurchaseRecord(12, 2, 4, customers[3], 4, products[3], 4.0, new DateTime(2023, 01, 14)),
-                    new PurchaseRecord(13, 2, 5, customers[4], 4, products[3], 2.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(14, 2, 5, customers[4], 7, products[6], 3.0, new DateTime(2023, 03, 13)),
-                    new PurchaseRecord(15, 2, 3, customers[2], 1, products[0], 2.0, new DateTime(2023, 03, 14)),
+                    new PurchaseRecord(9, 2, 5, customers[4], 4, products[3], 2.0,   new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(10, 2, 5, customers[4], 6, products[6], 5.0,  new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(11, 2, 4, customers[3], 1, products[0], 1.0,  new DateTime(2023, 01, 14)),
+                    new PurchaseRecord(12, 2, 4, customers[3], 4, products[3], 4.0,  new DateTime(2023, 01, 14)),
+                    new PurchaseRecord(13, 2, 5, customers[4], 4, products[3], 2.0,  new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(14, 2, 5, customers[4], 7, products[6], 3.0,  new DateTime(2023, 03, 13)),
+                    new PurchaseRecord(15, 2, 3, customers[2], 1, products[0], 2.0,  new DateTime(2023, 03, 14)),
                     new PurchaseRecord(16, 2, 3, customers[2], 4,  products[3], 1.0, new DateTime(2023, 03, 14)),
                 };
         }

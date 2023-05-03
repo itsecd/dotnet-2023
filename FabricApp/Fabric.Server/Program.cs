@@ -1,6 +1,8 @@
 using AutoMapper;
+using Fabrics.Domain;
 using Fabrics.Server;
 using Fabrics.Server.Repository;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,9 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<IFabricsRepository, FabricsRepository>();
+
+builder.Services.AddDbContext<FabricsDbContext>(options =>
+options.UseMySQL(builder.Configuration.GetConnectionString("Fabric")!));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

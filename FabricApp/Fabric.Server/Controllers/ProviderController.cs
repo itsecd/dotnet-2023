@@ -32,7 +32,7 @@ public class ProviderController : ControllerBase
     /// <param name="mapper">Map-object</param>
     public ProviderController(ILogger<ProviderController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
     {
-        _logger =  logger;
+        _logger = logger;
         _fabricsRepository = fabricsRepository;
         _mapper = mapper;
     }

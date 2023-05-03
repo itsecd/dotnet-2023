@@ -113,7 +113,7 @@ public class AnalyticsController : ControllerBase
     /// Get information about the number of providers for each form of ownership of fabrics.
     /// </summary>
     /// <returns>List of pairs: form of ownership - number of providers.</returns>
-    [HttpGet("number-of-providers-for-each-from")]
+    [HttpGet("number-of-providers-for-each-form")]
     public IActionResult GetNumberOfProvidersForEachType()
     {
         _logger.LogInformation("Get information about the number of providers for each form of ownership of fabrics.");

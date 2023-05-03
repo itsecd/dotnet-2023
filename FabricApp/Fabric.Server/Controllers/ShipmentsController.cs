@@ -1,34 +1,43 @@
-﻿using Fabrics.Domain;
+﻿using AutoMapper;
+using Fabrics.Domain;
+using Fabrics.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
-
+/// <summary>
+/// Shipment controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ShipmentsController : ControllerBase
 {
+    private readonly ILogger _logger;
+
     private readonly FabricsDbContext _context;
 
-    public ShipmentsController(FabricsDbContext context)
+    private readonly IMapper _mapper;
+
+    public ShipmentsController(FabricsDbContext context, IMapper mapper, ILogger logger)
     {
         _context = context;
+        _mapper = mapper;
+        _logger = logger;
     }
 
-    // GET: api/Shipments
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Shipment>>> GetShipments()
+    public async Task<ActionResult<IEnumerable<ShipmentGetDto>>> GetShipments()
     {
+        _logger.LogInformation("Get shipments");
         if (_context.Shipments == null)
         {
             return NotFound();
         }
-        return await _context.Shipments.ToListAsync();
+        return await _mapper.ProjectTo<ShipmentGetDto>(_context.Shipments).ToListAsync();
     }
 
-    // GET: api/Shipments/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Shipment>> GetShipment(int id)
+    public async Task<ActionResult<ShipmentGetDto>> GetShipment(int id)
     {
         if (_context.Shipments == null)
         {
@@ -41,56 +50,46 @@ public class ShipmentsController : ControllerBase
             return NotFound();
         }
 
-        return shipment;
+        return _mapper.Map<ShipmentGetDto>(shipment);
     }
 
-    // PUT: api/Shipments/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutShipment(int id, Shipment shipment)
+    public async Task<IActionResult> PutShipment(int id, ShipmentPostDto shipment)
     {
-        if (id != shipment.Id)
-        {
-            return BadRequest();
-        }
 
-        _context.Entry(shipment).State = EntityState.Modified;
+        if (_context.Fabrics == null)
+        {
+            return NotFound();
+        }
+        var shipmentToModify = await _context.Shipments.FindAsync(id);
+        if (shipmentToModify == null)
+        {
+            return NotFound();
+        }
+        _mapper.Map(shipment, shipmentToModify);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!ShipmentExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    // POST: api/Shipments
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Shipment>> PostShipment(Shipment shipment)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ShipmentGetDto>> PostShipment(ShipmentPostDto shipment)
     {
         if (_context.Shipments == null)
         {
             return Problem("Entity set 'FabricsDbContext.Shipments'  is null.");
         }
-        _context.Shipments.Add(shipment);
+
+        var mappedShipment = _mapper.Map<Shipment>(shipment);
+
+        _context.Shipments.Add(mappedShipment);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetShipment", new { id = shipment.Id }, shipment);
+        return CreatedAtAction("PostShipment", new { id = mappedShipment.Id }, _mapper.Map<FabricGetDto>(mappedShipment));
     }
 
-    // DELETE: api/Shipments/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteShipment(int id)
     {
@@ -108,10 +107,5 @@ public class ShipmentsController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
-    }
-
-    private bool ShipmentExists(int id)
-    {
-        return (_context.Shipments?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }

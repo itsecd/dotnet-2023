@@ -1,34 +1,43 @@
-﻿using Fabrics.Domain;
+﻿using AutoMapper;
+using Fabrics.Domain;
+using Fabrics.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
-
+/// <summary>
+/// Provider controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ProvidersController : ControllerBase
 {
+    private readonly ILogger<ProvidersController> _logger;
+
     private readonly FabricsDbContext _context;
 
-    public ProvidersController(FabricsDbContext context)
+    private readonly IMapper _mapper;
+
+    public ProvidersController(FabricsDbContext context, IMapper mapper, ILogger<ProvidersController> logger)
     {
         _context = context;
+        _mapper = mapper;
+        _logger = logger;
     }
 
-    // GET: api/Providers
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Provider>>> GetProviders()
+    public async Task<ActionResult<IEnumerable<ProviderGetDto>>> GetProviders()
     {
+        _logger.LogInformation("Get providers");
         if (_context.Providers == null)
         {
             return NotFound();
         }
-        return await _context.Providers.ToListAsync();
+        return await _mapper.ProjectTo<ProviderGetDto>(_context.Providers).ToListAsync();
     }
 
-    // GET: api/Providers/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Provider>> GetProvider(int id)
+    public async Task<ActionResult<ProviderGetDto>> GetProvider(int id)
     {
         if (_context.Providers == null)
         {
@@ -41,56 +50,48 @@ public class ProvidersController : ControllerBase
             return NotFound();
         }
 
-        return provider;
+        return _mapper.Map<ProviderGetDto>(provider);
     }
 
-    // PUT: api/Providers/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutProvider(int id, Provider provider)
+    public async Task<IActionResult> PutProvider(int id, ProviderPostDto provider)
     {
-        if (id != provider.Id)
+        if (_context.Providers == null)
         {
-            return BadRequest();
+            return NotFound();
         }
 
-        _context.Entry(provider).State = EntityState.Modified;
+        var providerToModify = await _context.Providers.FindAsync(id);
+        if (providerToModify == null)
+        {
+            return NotFound();
+        }
+        _mapper.Map(provider, providerToModify);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!ProviderExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+
+        await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    // POST: api/Providers
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Provider>> PostProvider(Provider provider)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ProviderGetDto>> PostProvider(Provider provider)
     {
         if (_context.Providers == null)
         {
             return Problem("Entity set 'FabricsDbContext.Providers'  is null.");
         }
-        _context.Providers.Add(provider);
+
+        var mappedProvider = _mapper.Map<Provider>(provider);
+
+        _context.Providers.Add(mappedProvider);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetProvider", new { id = provider.Id }, provider);
+        return CreatedAtAction("PostProvider", new { id = mappedProvider.Id }, _mapper.Map<ProviderGetDto>(mappedProvider));
     }
 
-    // DELETE: api/Providers/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProvider(int id)
     {
@@ -108,10 +109,5 @@ public class ProvidersController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
-    }
-
-    private bool ProviderExists(int id)
-    {
-        return (_context.Providers?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }

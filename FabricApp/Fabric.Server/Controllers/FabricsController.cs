@@ -13,6 +13,7 @@ namespace Fabrics.Server.Controllers;
 public class FabricsController : ControllerBase
 {
     private readonly ILogger<FabricsController> _logger;
+
     private readonly FabricsDbContext _context;
 
     private readonly IMapper _mapper;
@@ -28,7 +29,7 @@ public class FabricsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<FabricGetDto>>> GetFabrics()
     {
-        _logger.LogInformation("Get fabric");
+        _logger.LogInformation("Get fabrics");
         if (_context.Fabrics == null)
         {
             return NotFound();
@@ -66,7 +67,6 @@ public class FabricsController : ControllerBase
             return NotFound();
         }
         _mapper.Map(fabric, fabricToModify);
-
 
         await _context.SaveChangesAsync();
 

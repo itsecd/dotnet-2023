@@ -67,17 +67,18 @@ public class OccupationController : Controller
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
         ctx.Occupations.Add(mappedOccupation);
+        ctx.SaveChanges();
         return Ok(occupation);
     }
     /// <summary>
     /// The method updates an occupation information by ID
     /// </summary>
     /// <param name="id">An ID of the occupation</param>
-    /// <param name="newDepartment">New information of the occupation</param>
+    /// <param name="newOccupation">New information of the occupation</param>
     /// <returns>Code 200 and the updated occupation class if success; 
     /// 404 code if an occupation is not found;</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostOccupationDto>> Put(int id, [FromBody] PostOccupationDto newDepartment)
+    public async Task<ActionResult<PostOccupationDto>> Put(int id, [FromBody] PostOccupationDto newOccupation)
     {
         _logger.LogInformation("PUT occupation method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -87,10 +88,9 @@ public class OccupationController : Controller
             _logger.LogInformation("The occupation with ID {id} is not found", id);
             return NotFound("The occupation with given id is not found");
         }
-        ctx.Occupations.Remove(occupation);
-        var mappedOccupation = _mapper.Map<Occupation>(occupation);
-        ctx.Occupations.Add(mappedOccupation);
-        return Ok(newDepartment);
+        ctx.Occupations.Update(_mapper.Map(newOccupation, occupation));
+        ctx.SaveChanges();
+        return Ok(newOccupation);
     }
     /// <summary>
     /// The method deletes an occupation by ID
@@ -109,6 +109,7 @@ public class OccupationController : Controller
             return NotFound("The occupation with given id is not found");
         }
         ctx.Occupations.Remove(occupation);
+        ctx.SaveChanges();
         return Ok();
     }
 }

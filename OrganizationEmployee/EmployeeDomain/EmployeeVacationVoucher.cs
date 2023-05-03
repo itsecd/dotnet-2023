@@ -16,7 +16,7 @@ public class EmployeeVacationVoucher
     /// EmployeeId - an id of Employee object
     /// </summary>
     [ForeignKey("Employee")]
-    public uint EmployeeId { get; set; }
+    public uint? EmployeeId { get; set; }
     /// <summary>
     /// Employee - a link to Employee object, used for many-to-many relationship
     /// </summary>

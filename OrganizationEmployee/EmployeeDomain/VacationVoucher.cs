@@ -23,7 +23,7 @@ public class VacationVoucher
     /// VoucherTypeId - an id of VoucherType object
     /// </summary>
     [ForeignKey("VoucherType")]
-    public uint VoucherTypeId { get; set; } = 1;
+    public uint? VoucherTypeId { get; set; } = 1;
     /// <summary>
     /// VoucherType - a link to VoucherType of the given voucher
     /// </summary>

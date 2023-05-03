@@ -76,7 +76,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     /// <param name="employeeId">ID of Employee</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(1, 1, true)]
+    [InlineData(3, 3, true)]
     [InlineData(1, 555, false)]
     [InlineData(565, 1, false)]
     [InlineData(565, 15345, false)]

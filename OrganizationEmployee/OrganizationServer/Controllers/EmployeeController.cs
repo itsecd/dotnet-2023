@@ -84,6 +84,7 @@ public class EmployeeController : Controller
             return NotFound("A workshop with given id doesn't exist");
         }
         ctx.Employees.Add(mappedEmployee);
+        ctx.SaveChanges();
         return Ok(employee);
     }
     /// <summary>
@@ -122,8 +123,8 @@ public class EmployeeController : Controller
             _logger.LogInformation("The employee with regNumber {regNumb} already exists", employee.RegNumber);
             return Conflict("An employee with given registration number already exists");
         }
-        ctx.Employees.Remove(employee);
-        ctx.Employees.Add(mappedEmployee);
+        ctx.Employees.Update(_mapper.Map(newEmployee, employee));
+        ctx.SaveChanges();
         return Ok(newEmployee);
     }
     /// <summary>
@@ -143,6 +144,7 @@ public class EmployeeController : Controller
             return NotFound();
         }
         ctx.Employees.Remove(employee);
+        ctx.SaveChanges();
         return Ok();
     }
 }

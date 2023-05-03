@@ -52,10 +52,7 @@ public class VoucherTypeController : Controller
             _logger.LogInformation("The voucher type with ID {id} is not found", id);
             return NotFound();
         }
-        // TODO: DELETE because this was just for testing
-        var voucher_types = ctx.VacationVouchersTypes.Include(type => type.VacationVouchers).ToList();
         var mappedVoucherType = _mapper.Map<GetVoucherTypeDto>(voucherType);
-        var vouchers = ctx.VacationVouchers.Include(voucher => voucher.VoucherType).ToList();
         return Ok(mappedVoucherType);
     }
     /// <summary>
@@ -70,6 +67,7 @@ public class VoucherTypeController : Controller
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
         ctx.VacationVouchersTypes.Add(mappedVoucherType);
+        ctx.SaveChanges();
         return Ok(voucherType);
     }
     /// <summary>
@@ -91,9 +89,8 @@ public class VoucherTypeController : Controller
             _logger.LogInformation("An voucher type with id {id} doesn't exist", id);
             return NotFound();
         }
-        ctx.VacationVouchersTypes.Remove(voucherType);
-        var mappedVoucherType = _mapper.Map<VoucherType>(newVoucherType);
-        ctx.VacationVouchersTypes.Add(mappedVoucherType);
+        ctx.VacationVouchersTypes.Update(_mapper.Map(newVoucherType, voucherType));
+        ctx.SaveChanges();
         return Ok(newVoucherType);
     }
     /// <summary>
@@ -113,6 +110,15 @@ public class VoucherTypeController : Controller
             return NotFound();
         }
         ctx.VacationVouchersTypes.Remove(voucherType);
+        try
+        {
+            ctx.SaveChanges();
+        }
+        catch (DbUpdateException exception)
+        {
+            return StatusCode(500, exception.Message);
+        }
+
         return Ok();
     }
 }

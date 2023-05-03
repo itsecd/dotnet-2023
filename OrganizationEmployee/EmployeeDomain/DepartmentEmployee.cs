@@ -17,7 +17,7 @@ public class DepartmentEmployee
     /// DepartmentId - an id of Department object
     /// </summary>
     [ForeignKey("Department")]
-    public uint DepartmentId { get; set; }
+    public uint? DepartmentId { get; set; }
     /// <summary>
     /// Department - a link to Department object
     /// </summary>
@@ -26,7 +26,7 @@ public class DepartmentEmployee
     /// EmployeeId - an id of Employee object
     /// </summary>
     [ForeignKey("Employee")]
-    public uint EmployeeId { get; set; }
+    public uint? EmployeeId { get; set; }
     /// <summary>
     /// Employee - a link to Employee object
     /// </summary>

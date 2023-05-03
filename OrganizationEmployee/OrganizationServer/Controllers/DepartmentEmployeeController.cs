@@ -90,6 +90,7 @@ public class DepartmentEmployeeController : Controller
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
+        ctx.SaveChanges();
         return Ok(departmentEmployee);
     }
     /// <summary>
@@ -99,7 +100,8 @@ public class DepartmentEmployeeController : Controller
     /// <param name="newDepartmentEmployee">New information of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostDepartmentEmployeeDto>> Put(int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
+    public async Task<ActionResult<PostDepartmentEmployeeDto>> Put
+        (int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
     {
         _logger.LogInformation("PUT DepartmentEmployee method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -127,10 +129,8 @@ public class DepartmentEmployeeController : Controller
             _logger.LogInformation("The department with ID {id} is not found", mappedDepartmentEmployee.DepartmentId);
             return NotFound($"An department with given id={mappedDepartmentEmployee.DepartmentId} doesn't exist");
         }
-        mappedDepartmentEmployee.Department = department;
-        mappedDepartmentEmployee.Employee = employee;
-        ctx.DepartmentEmployees.Remove(departmentEmployee);
-        ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
+        ctx.DepartmentEmployees.Update(_mapper.Map(newDepartmentEmployee, departmentEmployee));
+        ctx.SaveChanges();
         return Ok(newDepartmentEmployee);
     }
     /// <summary>
@@ -150,6 +150,7 @@ public class DepartmentEmployeeController : Controller
             return NotFound();
         }
         ctx.DepartmentEmployees.Remove(departmentEmployee);
+        ctx.SaveChanges();
         return Ok();
     }
 }

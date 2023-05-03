@@ -127,7 +127,7 @@ public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// <param name="occupationId">The ID of the existing occupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(4, true)]
+    [InlineData(6, true)]
     [InlineData(133, false)]
     public async Task DeleteOccupation(int occupationId, bool isSuccess)
     {

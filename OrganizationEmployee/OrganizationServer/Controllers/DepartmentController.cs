@@ -66,6 +66,7 @@ public class DepartmentController : Controller
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedDepartment = _mapper.Map<Department>(department);
         ctx.Departments.Add(mappedDepartment);
+        ctx.SaveChanges();
     }
     /// <summary>
     /// The method updates a department information by ID
@@ -84,9 +85,8 @@ public class DepartmentController : Controller
             _logger.LogInformation("The department with ID {id} is not found", id);
             return NotFound();
         }
-        ctx.Departments.Remove(department);
-        var mappedDepartment = _mapper.Map<Department>(newDepartment);
-        ctx.Departments.Add(mappedDepartment);
+        ctx.Departments.Update(_mapper.Map(newDepartment, department));
+        ctx.SaveChanges();
         return Ok();
     }
     /// <summary>
@@ -106,6 +106,7 @@ public class DepartmentController : Controller
             return NotFound();
         }
         ctx.Departments.Remove(department);
+        ctx.SaveChanges();
         return Ok();
     }
 }

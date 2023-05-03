@@ -78,6 +78,7 @@ public class VacationVoucherController : Controller
         }
         ctx.VacationVouchers.Add(mappedVacationVoucher);
         voucherType.VacationVouchers.Add(mappedVacationVoucher);
+        ctx.SaveChanges();
         return Ok(vacationVoucher);
     }
     /// <summary>
@@ -88,7 +89,8 @@ public class VacationVoucherController : Controller
     /// <returns>Code 200 and the updated VacationVoucher class if success; 
     /// 404 code if an VacationVoucher is not found or VoucherType is not found;</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostVacationVoucherDto>> Put(int id, [FromBody] PostVacationVoucherDto newVacationVoucher)
+    public async Task<ActionResult<PostVacationVoucherDto>> Put
+        (int id, [FromBody] PostVacationVoucherDto newVacationVoucher)
     {
         _logger.LogInformation("PUT vacation voucher method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -108,9 +110,8 @@ public class VacationVoucherController : Controller
                 mappedVacationVoucher.VoucherTypeId);
             return NotFound("A voucher type with given id doesn't exist");
         }
-
-        ctx.VacationVouchers.Remove(vacationVoucher);
-        ctx.VacationVouchers.Add(mappedVacationVoucher);
+        ctx.VacationVouchers.Update(_mapper.Map(newVacationVoucher, vacationVoucher));
+        ctx.SaveChanges();
         return Ok(newVacationVoucher);
     }
     /// <summary>
@@ -130,6 +131,7 @@ public class VacationVoucherController : Controller
             return NotFound();
         }
         ctx.VacationVouchers.Remove(vacationVoucher);
+        ctx.SaveChanges();
         return Ok();
     }
 }

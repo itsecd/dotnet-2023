@@ -27,7 +27,7 @@ public class EmployeeOccupation
     /// OccupationId - an id of Occupation object
     /// </summary>
     [ForeignKey("Occupation")]
-    public uint OccupationId { get; set; }
+    public uint? OccupationId { get; set; }
     /// <summary>
     /// Occupation - a link to Occupation object, used for many-to-many relationship
     /// </summary>
@@ -36,7 +36,7 @@ public class EmployeeOccupation
     /// EmployeeId - an id of Employee object
     /// </summary>
     [ForeignKey("Employee")]
-    public uint EmployeeId { get; set; }
+    public uint? EmployeeId { get; set; }
     /// <summary>
     /// Employee - a link to Employee object, used for many-to-many relationship
     /// </summary>

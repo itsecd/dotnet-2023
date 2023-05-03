@@ -43,11 +43,11 @@ public class Employee
     /// WorkshopId - an id of the Workshop
     /// </summary>
     [ForeignKey("Workshop")]
-    public uint WorkshopId { get; set; }
+    public uint? WorkshopId { get; set; }
     /// <summary>
     /// Workshop - an workshop, where the employee is working
     /// </summary>
-    public Workshop Workshop { get; set; }
+    public Workshop? Workshop { get; set; }
     /// <summary>
     /// HomeAddress - home address of an employee
     /// </summary>

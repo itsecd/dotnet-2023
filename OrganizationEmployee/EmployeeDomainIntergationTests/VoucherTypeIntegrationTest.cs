@@ -127,7 +127,8 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     /// <param name="voucherTypeId">ID of the existing voucher type</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(3, true)]
+    [InlineData(4, true)]
+    [InlineData(3, false)]
     [InlineData(133, false)]
     public async Task DeleteVoucherType(int voucherTypeId, bool isSuccess)
     {

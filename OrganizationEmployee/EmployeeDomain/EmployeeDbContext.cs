@@ -48,6 +48,7 @@ public class EmployeeDbContext : DbContext
     /// <param name="options">Parameters for EmployeeDbContext</param>
     public EmployeeDbContext(DbContextOptions options) : base(options)
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
     /// <summary>
@@ -84,7 +85,7 @@ public class EmployeeDbContext : DbContext
                 },
                 new Workshop
                 {
-                    Name = "Новоспасский цех",
+                    Name = "Закрытый цех",
                     Id = 5,
                     Employees = new List<Employee>()
                 },
@@ -174,6 +175,12 @@ public class EmployeeDbContext : DbContext
                 {
                     Name = "Менеджер",
                     Id = 5,
+                    EmployeeOccupations = new List<EmployeeOccupation>()
+                },
+                new Occupation
+                {
+                    Name = "Удаленная должность",
+                    Id = 6,
                     EmployeeOccupations = new List<EmployeeOccupation>()
                 }
             };
@@ -300,7 +307,7 @@ public class EmployeeDbContext : DbContext
                     LastName = "Мещеряков",
                     PatronymicName = "Даниилович",
                     BirthDate = new DateTime(1978, 3, 22),
-                    WorkshopId = WorkshopRepository[4].Id,
+                    WorkshopId = WorkshopRepository[5].Id,
                     HomeAddress = "пгт. Безенчук, ул.Нефтянников д.35",
                     HomeTelephone = "89633154365",
                     WorkTelephone = "88462322442",
@@ -363,6 +370,25 @@ public class EmployeeDbContext : DbContext
                     WorkTelephone = "88462322442",
                     FamilyStatus = "замужем",
                     FamilyMembersCount = 3,
+                    ChildrenCount = 1,
+                    EmployeeOccupations = new List<EmployeeOccupation>(),
+                    DepartmentEmployees = new List<DepartmentEmployee>(),
+                    EmployeeVacationVouchers = new List<EmployeeVacationVoucher>()
+                },
+                new Employee
+                {
+                    Id = 77,
+                    RegNumber = 33,
+                    FirstName = "Удаленный",
+                    LastName = "Пользователь",
+                    PatronymicName = "Сотрудник",
+                    BirthDate = new DateTime(),
+                    WorkshopId = null,
+                    HomeAddress =  "неизвестно",
+                    HomeTelephone = "89633154365",
+                    WorkTelephone = "88462322442",
+                    FamilyStatus = "замужем",
+                    FamilyMembersCount = 1,
                     ChildrenCount = 1,
                     EmployeeOccupations = new List<EmployeeOccupation>(),
                     DepartmentEmployees = new List<DepartmentEmployee>(),

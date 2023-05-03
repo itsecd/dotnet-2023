@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using EmployeeDomain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrganizationServer.Dto;
-using OrganizationServer.Repository;
 
 namespace OrganizationServer.Controllers;
 /// <summary>
@@ -13,15 +13,15 @@ namespace OrganizationServer.Controllers;
 public class EmployeeVacationVoucherController : Controller
 {
     private readonly ILogger<EmployeeVacationVoucherController> _logger;
-    private readonly OrganizationRepository _organizationRepository;
+    private readonly IDbContextFactory<EmployeeDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// A constructor of the EmployeeVacationVoucher
     /// </summary>
-    public EmployeeVacationVoucherController(OrganizationRepository organizationRepository, IMapper mapper,
+    public EmployeeVacationVoucherController(IDbContextFactory<EmployeeDbContext> contextFactory, IMapper mapper,
         ILogger<EmployeeVacationVoucherController> logger)
     {
-        _organizationRepository = organizationRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
         _logger = logger;
     }
@@ -30,10 +30,11 @@ public class EmployeeVacationVoucherController : Controller
     /// </summary>
     /// <returns>All the connections between Employee and VacationVoucher in the organization</returns>
     [HttpGet]
-    public IEnumerable<GetEmployeeVacationVoucherDto> Get()
+    public async Task<IEnumerable<GetEmployeeVacationVoucherDto>> Get()
     {
         _logger.LogInformation("Get EmployeeVacationVouchers");
-        return _mapper.Map<IEnumerable<GetEmployeeVacationVoucherDto>>(_organizationRepository.EmployeeVacationVouchers);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<GetEmployeeVacationVoucherDto>>(ctx.EmployeeVacationVouchers);
     }
     /// <summary>
     /// The method returns a EmployeeVacationVoucher by ID
@@ -41,12 +42,12 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="id">EmployeeVacationVoucher ID</param>
     /// <returns>EmployeeVacationVoucher with the given ID or 404 code if EmployeeVacationVoucher is not found</returns>
     [HttpGet("{id}")]
-    public ActionResult<GetEmployeeVacationVoucherDto> Get(int id)
+    public async Task<ActionResult<GetEmployeeVacationVoucherDto>> Get(int id)
     {
         _logger.LogInformation("Get EmployeeVacationVoucher with id {id}", id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeeVacationVoucher =
-            _organizationRepository.EmployeeVacationVouchers
-            .FirstOrDefault(employeeVacationVoucher => employeeVacationVoucher.Id == id);
+            ctx.EmployeeVacationVouchers.FirstOrDefault(employeeVacationVoucher => employeeVacationVoucher.Id == id);
         if (employeeVacationVoucher == null)
         {
             _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
@@ -62,21 +63,21 @@ public class EmployeeVacationVoucherController : Controller
     /// <returns>Code 200 and the added EmployeeVacationVoucher is success; 404 code if department or 
     /// vacation voucher is not found </returns>
     [HttpPost]
-    public ActionResult<PostEmployeeVacationVoucherDto> Post([FromBody] PostEmployeeVacationVoucherDto employeeVoucher)
+    public async Task<ActionResult<PostEmployeeVacationVoucherDto>> Post
+        ([FromBody] PostEmployeeVacationVoucherDto employeeVoucher)
     {
         _logger.LogInformation("POST EmployeeVacationVoucher method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(employeeVoucher);
         var employee =
-            _organizationRepository.Employees
-            .FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
+            ctx.Employees.FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
         if (employee == null)
         {
             _logger.LogInformation("An employee with id {id} doesn't exist", employeeVoucher.EmployeeId);
             return NotFound("An employee with given id doesn't exist");
         }
         var voucher =
-            _organizationRepository.VacationVouchers
-            .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
+            ctx.VacationVouchers.FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
         if (voucher == null)
         {
             _logger.LogInformation("An vacation voucher with id {id} doesn't exist",
@@ -85,7 +86,8 @@ public class EmployeeVacationVoucherController : Controller
         }
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
-        _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
+        ctx.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
+        ctx.SaveChanges();
         return Ok(employeeVoucher);
     }
     /// <summary>
@@ -95,11 +97,13 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="newEmployeeVoucher">New information of the EmployeeVacationVoucher</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
-    public ActionResult<PostEmployeeVacationVoucherDto> Put(int id, [FromBody] PostEmployeeVacationVoucherDto newEmployeeVoucher)
+    public async Task<ActionResult<PostEmployeeVacationVoucherDto>> Put
+        (int id, [FromBody] PostEmployeeVacationVoucherDto newEmployeeVoucher)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("PUT EmployeeVacationVoucher method");
-        var employeeVoucher = _organizationRepository
-            .EmployeeVacationVouchers.FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
+        var employeeVoucher =
+            ctx.EmployeeVacationVouchers.FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
         if (employeeVoucher == null)
         {
             _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
@@ -108,8 +112,7 @@ public class EmployeeVacationVoucherController : Controller
 
         var mappedEmployeeVoucher = _mapper.Map<EmployeeVacationVoucher>(newEmployeeVoucher);
         var employee =
-            _organizationRepository.Employees
-            .FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
+            ctx.Employees.FirstOrDefault(employee => employee.Id == mappedEmployeeVoucher.EmployeeId);
         if (employee == null)
         {
             _logger.LogInformation("An employee with id {id} doesn't exist", newEmployeeVoucher.EmployeeId);
@@ -117,19 +120,15 @@ public class EmployeeVacationVoucherController : Controller
         }
 
         var voucher =
-            _organizationRepository.VacationVouchers
-            .FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
+            ctx.VacationVouchers.FirstOrDefault(voucher => voucher.Id == mappedEmployeeVoucher.VacationVoucherId);
         if (voucher == null)
         {
             _logger.LogInformation("An vacation voucher with id {id} doesn't exist",
                 employeeVoucher.VacationVoucherId);
             return NotFound("A vacation voucher with given id doesn't exist");
         }
-        mappedEmployeeVoucher.VacationVoucher = voucher;
-        mappedEmployeeVoucher.Employee = employee;
-
-        _organizationRepository.EmployeeVacationVouchers.Remove(employeeVoucher);
-        _organizationRepository.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
+        ctx.EmployeeVacationVouchers.Update(_mapper.Map(newEmployeeVoucher, employeeVoucher));
+        ctx.SaveChanges();
         return Ok(newEmployeeVoucher);
     }
     /// <summary>
@@ -138,18 +137,19 @@ public class EmployeeVacationVoucherController : Controller
     /// <param name="id">An ID of the EmployeeVacationVoucher</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public ActionResult<PostEmployeeVacationVoucherDto> Delete(int id)
+    public async Task<ActionResult<PostEmployeeVacationVoucherDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE EmployeeVacationVoucher method");
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeeVoucher =
-            _organizationRepository.EmployeeVacationVouchers
-            .FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
+            ctx.EmployeeVacationVouchers.FirstOrDefault(employeeVoucher => employeeVoucher.Id == id);
         if (employeeVoucher == null)
         {
             _logger.LogInformation("The EmployeeVacationVoucher with ID {id} is not found", id);
             return NotFound();
         }
-        _organizationRepository.EmployeeVacationVouchers.Remove(employeeVoucher);
+        ctx.EmployeeVacationVouchers.Remove(employeeVoucher);
+        ctx.SaveChanges();
         return Ok();
     }
 }

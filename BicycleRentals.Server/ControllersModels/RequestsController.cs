@@ -70,13 +70,13 @@ public class RequestsController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
 
-        var rentalTimes = await context.BicycleTypes
-            .Select(bt => new
+        var rentalTimes = await context.Bicycles
+                .Include(b => b.Rentals)
+                .GroupBy(b => b.TypeId)
+            .Select(g => new
             {
-                Type_Name = bt.TypeName,
-                TotalRentalTime = bt.Bicycles
-                    .SelectMany(b => b.Rentals)
-                    .Sum(r => (r.RentalEndTime - r.RentalStartTime).TotalHours)
+                Type_Name = g.Key,
+                TotalRentalTime = g.Sum(b => b.Rentals.Sum(r => r.RentalTime))
             })
             .ToListAsync();
         if (rentalTimes == null)
@@ -125,7 +125,7 @@ public class RequestsController : ControllerBase
         _logger.LogInformation("Get top 5 most frequently rented bicycles ");
         return Ok(bikes);
     }
-
+    
     /// <summary> 
     /// Returns a list of minimum, maximum and average bicycle rental time. 
     /// </summary> 
@@ -135,19 +135,15 @@ public class RequestsController : ControllerBase
     {
         using var context = await _contextFactory.CreateDbContextAsync();
 
-        var result = await context.BicycleTypes
-            .Select(bt => new
+        var result = await context.Bicycles
+                .Include(b => b.Rentals)
+                .GroupBy(b => b.TypeId)
+            .Select(g => new
             {
-                Type_Name = bt.TypeName,
-                MinRentalTime = bt.Bicycles
-                    .SelectMany(b => b.Rentals)
-                    .Min(r => (r.RentalEndTime - r.RentalStartTime).TotalHours),
-                MaxRentalTime = bt.Bicycles
-                    .SelectMany(b => b.Rentals)
-                    .Max(r => (r.RentalEndTime - r.RentalStartTime).TotalHours),
-                AvgRentalTime = bt.Bicycles
-                    .SelectMany(b => b.Rentals)
-                    .Average(r => (r.RentalEndTime - r.RentalStartTime).TotalHours)
+                Type_Name = g.Key,
+                MinRentalTime = g.Min(b => b.Rentals.Min(r => r.RentalTime)),
+                MaxRentalTime = g.Max(b => b.Rentals.Max(r => r.RentalTime)),
+                AvgRentalTime = g.Average(b => b.Rentals.Average(r => r.RentalTime)),
             })
             .ToListAsync();
         if (result == null)

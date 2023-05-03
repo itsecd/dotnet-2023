@@ -11,11 +11,7 @@ public class RentalPostDto
     /// </summary> 
     public int CustomerId { get; set; }
     /// <summary>
-    /// RentalStartTime - shows the rental Start time
+    /// RentalTime - shows the rental time
     /// </summary> 
-    public DateTime RentalStartTime { get; set; }
-    /// <summary>
-    /// RentalEndTime - shows the rental end time
-    /// </summary> 
-    public DateTime RentalEndTime { get; set; }
+    public int RentalTime { get; set; }
 }

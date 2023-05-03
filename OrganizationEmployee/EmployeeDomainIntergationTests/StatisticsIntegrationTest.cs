@@ -5,6 +5,7 @@ namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// StatisticsIntegrationTest  - represents a integration test of StatisticsController
 /// </summary>
+[Collection("Sequential")]
 public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

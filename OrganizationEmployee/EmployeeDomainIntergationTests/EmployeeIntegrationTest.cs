@@ -6,6 +6,7 @@ namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// EmployeeIntegrationTest  - represents a integration test of EmployeeController
 /// </summary>
+[Collection("Sequential")]
 public class EmployeeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

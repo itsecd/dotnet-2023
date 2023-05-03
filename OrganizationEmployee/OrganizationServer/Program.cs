@@ -18,12 +18,6 @@ public class Program
         builder.Services.AddSingleton<OrganizationRepository>();
 
         builder.Services.AddControllers();
-        /*
-                builder.Services.AddDbContextFactory<EmployeeInitializerDbContext>(optionsBuilder =>
-                {
-                    var connectionString = builder.Configuration.GetConnectionString(nameof(EmployeeDomain));
-                    optionsBuilder.UseMySQL(connectionString);
-                });*/
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -42,12 +36,6 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        /*
-        using (var scope = app.Services.CreateScope())
-        {
-            var service = scope.ServiceProvider;
-            var context = service.GetService<EmployeeInitializerDbContext>();
-        }*/
 
         app.UseAuthorization();
 

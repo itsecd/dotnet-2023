@@ -6,6 +6,7 @@ namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// VoucherTypeIntegrationTest  - represents a integration test of VoucherTypeController
 /// </summary>
+[Collection("Sequential")]
 public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

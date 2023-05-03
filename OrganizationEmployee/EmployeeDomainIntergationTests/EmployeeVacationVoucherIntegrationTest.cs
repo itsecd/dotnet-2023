@@ -7,6 +7,7 @@ namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// EmployeeVacationVoucherIntegrationTest  - represents a integration test of EmployeeVacationVoucherController
 /// </summary>
+[Collection("Sequential")]
 public class EmployeeVacationVoucherIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

@@ -6,6 +6,7 @@ namespace EmployeeDomainIntergationTests;
 /// <summary>
 /// WorkshopIntegrationTest  - represents a integration test of WorkshopController
 /// </summary>
+[Collection("Sequential")]
 public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;

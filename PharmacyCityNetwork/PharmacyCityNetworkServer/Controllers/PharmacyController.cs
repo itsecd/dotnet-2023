@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
-using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+
 /// <summary>
 /// Pharmacy controller
 /// </summary>
@@ -12,13 +13,12 @@ namespace PharmacyCityNetwork.Server.Controllers;
 public class PharmacyController : ControllerBase
 {
     private readonly ILogger<PharmacyController> _logger;
-
-    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
+    private readonly IDbContextFactory<PharmacyCityNetworkDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public PharmacyController(ILogger<PharmacyController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
+    public PharmacyController(ILogger<PharmacyController> logger, IDbContextFactory<PharmacyCityNetworkDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -26,26 +26,31 @@ public class PharmacyController : ControllerBase
     /// </summary>
     /// <returns>Return all pharmacys</returns>
     [HttpGet]
-    public IEnumerable<PharmacyGetDto> Get()
+    public async Task<IEnumerable<PharmacyGetDto>> GetPharmacys()
     {
-        return _pharmacyCityNetworkRepository.Pharmacys.Select(pharmacy => _mapper.Map<PharmacyGetDto>(pharmacy));
+        _logger.LogInformation("Get all pharmacys");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmacys = await ctx.Pharmacys.ToArrayAsync();
+        return _mapper.Map<IEnumerable<PharmacyGetDto>>(pharmacys);
     }
     /// <summary>
     /// Get pharmacy info by id
     /// </summary>
-    /// <param name="id">Pharmacy Id</param>
+    /// <param name="idPharmacy">Pharmacy Id</param>
     /// <returns>Return pharmacy with specified id</returns>
-    [HttpGet("{id}")]
-    public ActionResult<Pharmacy> Get(int id)
+    [HttpGet("{idPharmacy}")]
+    public async Task<ActionResult<PharmacyGetDto>> GetPharmacy(int idPharmacy)
     {
-        var pharmacy = _pharmacyCityNetworkRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmacy = await ctx.Pharmacys.FirstOrDefaultAsync(pharmacy => pharmacy.Id == idPharmacy);
         if (pharmacy == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmacy : {idPharmacy}", idPharmacy);
+            return NotFound($"The pharmacy does't exist by this id {idPharmacy}");
         }
         else
         {
+            _logger.LogInformation("Not found pharmacy : {idPharmacy}", idPharmacy);
             return Ok(_mapper.Map<PharmacyGetDto>(pharmacy));
         }
     }
@@ -54,48 +59,59 @@ public class PharmacyController : ControllerBase
     /// </summary>
     /// <param name="pharmacy">Pharmacy class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] PharmacyPostDto pharmacy)
+    public async Task PostPharmacy([FromBody] PharmacyPostDto pharmacy)
     {
-        _pharmacyCityNetworkRepository.Pharmacys.Add(_mapper.Map<Pharmacy>(pharmacy));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new pharmacy");
+        await ctx.Pharmacys.AddAsync(_mapper.Map<Pharmacy>(pharmacy));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put pharmacy
     /// </summary>
-    /// <param name="id">An id of pharmacy which would be changed</param>
+    /// <param name="idPharmacy">An id of pharmacy which would be changed</param>
     /// <param name="pharmacyToPut">Pharmacy class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PharmacyPostDto pharmacyToPut)
+    [HttpPut("{idPharmacy}")]
+    public async Task<IActionResult> PutPharmacy(int idPharmacy, [FromBody] PharmacyPostDto pharmacyToPut)
     {
-        var pharmacy = _pharmacyCityNetworkRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmacy = await ctx.Pharmacys.FirstOrDefaultAsync(pharmacy => pharmacy.Id == idPharmacy);
         if (pharmacy == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmacy : {idPharmacy}", idPharmacy);
+            return NotFound($"The pharmacy does't exist by this id {idPharmacy}");
         }
         else
         {
+            _logger.LogInformation("Update pharmacy by id {idPharmacy}", idPharmacy);
             _mapper.Map(pharmacyToPut, pharmacy);
+            ctx.Pharmacys.Update(_mapper.Map<Pharmacy>(pharmacy));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
     /// <summary>
     /// Delete a pharmacy
     /// </summary>
-    /// <param name="id">An id of pharmacy which would be deleted</param>
+    /// <param name="idPharmacy">An id of pharmacy which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{idPharmacy}")]
+    public async Task<IActionResult> DeletePharmacy(int idPharmacy)
     {
-        var pharmacy = _pharmacyCityNetworkRepository.Pharmacys.FirstOrDefault(pharmacy => pharmacy.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmacy = await ctx.Pharmacys.Include(pharmacy => pharmacy.ProductPharmacys)
+                                        .FirstOrDefaultAsync(pharmacy => pharmacy.Id == idPharmacy);
         if (pharmacy == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmacy: {idPharmacy}", idPharmacy);
+            return NotFound($"The pharmacy does't exist by this id {idPharmacy}");
         }
         else
         {
-            _pharmacyCityNetworkRepository.Pharmacys.Remove(pharmacy);
+            _logger.LogInformation("Delete airplane by id {idPharmacy}", idPharmacy);
+            ctx.Pharmacys.Remove(pharmacy);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

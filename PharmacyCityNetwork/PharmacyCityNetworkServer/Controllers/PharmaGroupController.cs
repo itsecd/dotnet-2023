@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
-using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+
 /// <summary>
 /// PharmaGroup controller
 /// </summary>
@@ -12,13 +13,12 @@ namespace PharmacyCityNetwork.Server.Controllers;
 public class PharmaGroupController : ControllerBase
 {
     private readonly ILogger<PharmaGroupController> _logger;
-
-    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
+    private readonly IDbContextFactory<PharmacyCityNetworkDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public PharmaGroupController(ILogger<PharmaGroupController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
+    public PharmaGroupController(ILogger<PharmaGroupController> logger, IDbContextFactory<PharmacyCityNetworkDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -26,26 +26,31 @@ public class PharmaGroupController : ControllerBase
     /// </summary>
     /// <returns>Return all pharmaGroups</returns>
     [HttpGet]
-    public IEnumerable<PharmaGroupGetDto> Get()
+    public async Task<IEnumerable<PharmaGroupGetDto>> GetPharmaGroups()
     {
-        return _pharmacyCityNetworkRepository.PharmaGroups.Select(pharmaGroup => _mapper.Map<PharmaGroupGetDto>(pharmaGroup));
+        _logger.LogInformation("Get all pharmaGroups");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmaGroups = await ctx.PharmaGroups.ToArrayAsync();
+        return _mapper.Map<IEnumerable<PharmaGroupGetDto>>(pharmaGroups);
     }
     /// <summary>
     /// Get pharmaGroup info by id
     /// </summary>
-    /// <param name="id">PharmaGroup Id</param>
+    /// <param name="idPharmaGroup">PharmaGroup Id</param>
     /// <returns>Return pharmaGroup with specified id</returns>
-    [HttpGet("{id}")]
-    public ActionResult<PharmaGroup> Get(int id)
+    [HttpGet("{idPharmaGroup}")]
+    public async Task<ActionResult<PharmaGroupGetDto>> GetPharmaGroup(int idPharmaGroup)
     {
-        var pharmaGroup = _pharmacyCityNetworkRepository.PharmaGroups.FirstOrDefault(pharmaGroup => pharmaGroup.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmaGroup = await ctx.PharmaGroups.FirstOrDefaultAsync(pharmaGroup => pharmaGroup.Id == idPharmaGroup);
         if (pharmaGroup == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmaGroup : {idPharmaGroup}", idPharmaGroup);
+            return NotFound($"The pharmaGroup does't exist by this id {idPharmaGroup}");
         }
         else
         {
+            _logger.LogInformation("Not found pharmaGroup : {idPharmaGroup}", idPharmaGroup);
             return Ok(_mapper.Map<PharmaGroupGetDto>(pharmaGroup));
         }
     }
@@ -54,48 +59,59 @@ public class PharmaGroupController : ControllerBase
     /// </summary>
     /// <param name="pharmaGroup">PharmaGroup class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] PharmaGroupPostDto pharmaGroup)
+    public async Task PostPharmaGroup([FromBody] PharmaGroupPostDto pharmaGroup)
     {
-        _pharmacyCityNetworkRepository.PharmaGroups.Add(_mapper.Map<PharmaGroup>(pharmaGroup));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new pharmaGroup");
+        await ctx.PharmaGroups.AddAsync(_mapper.Map<PharmaGroup>(pharmaGroup));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put pharmaGroup
     /// </summary>
-    /// <param name="id">An id of pharmaGroup which would be changed</param>
+    /// <param name="idPharmaGroup">An id of pharmaGroup which would be changed</param>
     /// <param name="pharmaGroupToPut">PharmaGroup class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PharmaGroupPostDto pharmaGroupToPut)
+    [HttpPut("{idPharmaGroup}")]
+    public async Task<IActionResult> PutPharmaGroup(int idPharmaGroup, [FromBody] PharmaGroupPostDto pharmaGroupToPut)
     {
-        var pharmaGroup = _pharmacyCityNetworkRepository.PharmaGroups.FirstOrDefault(pharmaGroup => pharmaGroup.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmaGroup = await ctx.PharmaGroups.FirstOrDefaultAsync(pharmaGroup => pharmaGroup.Id == idPharmaGroup);
         if (pharmaGroup == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmaGroup : {idPharmaGroup}", idPharmaGroup);
+            return NotFound($"The pharmaGroup does't exist by this id {idPharmaGroup}");
         }
         else
         {
+            _logger.LogInformation("Update pharmaGroup by id {idPharmaGroup}", idPharmaGroup);
             _mapper.Map(pharmaGroupToPut, pharmaGroup);
+            ctx.PharmaGroups.Update(_mapper.Map<PharmaGroup>(pharmaGroup));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
     /// <summary>
     /// Delete a pharmaGroup
     /// </summary>
-    /// <param name="id">An id of pharmaGroup which would be deleted</param>
+    /// <param name="idPharmaGroup">An id of pharmaGroup which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{idPharmaGroup}")]
+    public async Task<IActionResult> DeletePharmaGroup(int idPharmaGroup)
     {
-        var pharmaGroup = _pharmacyCityNetworkRepository.PharmaGroups.FirstOrDefault(pharmaGroup => pharmaGroup.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var pharmaGroup = await ctx.PharmaGroups.Include(pharmaGroup => pharmaGroup.ProductPharmaGroups)
+                                        .FirstOrDefaultAsync(pharmaGroup => pharmaGroup.Id == idPharmaGroup);
         if (pharmaGroup == null)
         {
-            _logger.LogInformation("Not found pharmacy: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found pharmaGroup: {idPharmaGroup}", idPharmaGroup);
+            return NotFound($"The pharmaGroup does't exist by this id {idPharmaGroup}");
         }
         else
         {
-            _pharmacyCityNetworkRepository.PharmaGroups.Remove(pharmaGroup);
+            _logger.LogInformation("Delete pharmaGroup by id {idPharmaGroup}", idPharmaGroup);
+            ctx.PharmaGroups.Remove(pharmaGroup);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

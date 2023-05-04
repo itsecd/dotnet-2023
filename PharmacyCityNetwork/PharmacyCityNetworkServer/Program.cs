@@ -1,9 +1,15 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PharmacyCityNetwork;
 using PharmacyCityNetwork.Server;
 using PharmacyCityNetwork.Server.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContextFactory<PharmacyCityNetworkDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("PharmacyCityNetwork")!)
+);
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 

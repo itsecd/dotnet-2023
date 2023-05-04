@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI;
 using System.Text.RegularExpressions;
 
 namespace PharmacyCityNetwork;
@@ -36,7 +37,7 @@ public class PharmacyCityNetworkDbContext : DbContext
         var firstPharmacy = new Pharmacy { Id = 1, PharmacyName = "Vita", PharmacyPhone = "8899606", PharmacyAddress = "Pushkina, 7", PharmacyDirector = "Yablokov" };
         var secondPharmacy = new Pharmacy { Id = 2, PharmacyName = "Plus", PharmacyPhone = "8844606", PharmacyAddress = "Turgeneva, 8", PharmacyDirector = "Pomelov" };
         var thridPharmacy = new Pharmacy { Id = 3, PharmacyName = "Alia", PharmacyPhone = "4499606", PharmacyAddress = "Tolstogo, 8", PharmacyDirector = "Slivin" };
-        //var fourthPharmacy = new Pharmacy(4, "Apteka63", "4558602", "Polevay, 23", "Chikarev");
+        var fourthPharmacy = new Pharmacy(4, "Apteka63", "4558602", "Polevay, 23", "Chikarev");
         var fifthPharmacy = new Pharmacy { Id = 5, PharmacyName = "Tabls", PharmacyPhone = "9229303", PharmacyAddress = "Gagarina, 67", PharmacyDirector = "Parshin" };
 
         var firstProduct = new Product { ProductName = "Paracetamol", Id = 1, GroupId = 1, ManufacturerId = 1 };
@@ -77,7 +78,7 @@ public class PharmacyCityNetworkDbContext : DbContext
         var fifthProductPharmaGroup = new ProductPharmaGroup { Id = 5, PharmaGroupId = 1, ProductId = 5 };
 
         var fifthSale = new Sale{PaymentChoice = "Online", PaymentDate = new DateTime(2022, 5, 23), ProductId = 5, Id = 5};
-`       
+       
         modelBuilder.Entity<Product>()
             .HasOne(product => product.Group)
             .WithMany(group => group.Products)
@@ -94,9 +95,32 @@ public class PharmacyCityNetworkDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ProductPharmacy>()
-           .HasOne(productPharmacy => productPharmacy.Product)
-           .WithMany(product => product.ProductPharmacys)
+           .HasOne(productPharmacy => productPharmacy.Pharmacy)
+           .WithMany(pharmacy => pharmacy.ProductPharmacys)
            .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<Sale>()
+          .HasOne(sale => sale.Product)
+          .WithMany(product => product.Sales)
+          .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ProductPharmaGroup>()
+           .HasOne(productPharmaGroup => productPharmaGroup.Product)
+           .WithMany(product => product.ProductPharmaGroups)
+           .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ProductPharmaGroup>()
+          .HasOne(productPharmaGroup => productPharmaGroup.PharmaGroup)
+          .WithMany(pharmaGroup => pharmaGroup.ProductPharmaGroups)
+          .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Product>().HasData(new List<Product> { firstProduct, secondProduct, thridProduct, fourthProduct, fifthProduct });
+        modelBuilder.Entity<Group>().HasData(new List<Group> { firstGroup, secondGroup, thridGroup });
+        modelBuilder.Entity<Manufacturer>().HasData(new List<Manufacturer> { firstManufacturer, secondManufacturer });
+        modelBuilder.Entity<PharmaGroup>().HasData(new List<PharmaGroup> { firstPharmaGroup, secondPharmaGroup, thridPharmaGroup, fourthPharmaGroup });
+        modelBuilder.Entity<Pharmacy>().HasData(new List<Pharmacy> { firstPharmacy, secondPharmacy, thridPharmacy, fourthPharmacy, fifthPharmacy });
+        modelBuilder.Entity<ProductPharmacy>().HasData(new List<ProductPharmacy> { firstProductPharmacy, secondProductPharmacy, thridProductPharmacy, fourthProductPharmacy, fifthProductPharmacy });
+        modelBuilder.Entity<ProductPharmaGroup>().HasData(new List<ProductPharmaGroup> { firstProductPharmaGroup, secondProductPharmaGroup, thridProductPharmaGroup, fourthProductPharmaGroup, fifthProductPharmaGroup });
+        modelBuilder.Entity<Sale>().HasData(new List<Sale> { firstSale, secondSale, thridSale, fourthSale, fifthSale, sixthSale });
     }
 }

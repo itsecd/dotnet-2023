@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
 using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+
 /// <summary>
 /// Manufacturer controller
 /// </summary>
@@ -12,13 +14,12 @@ namespace PharmacyCityNetwork.Server.Controllers;
 public class ManufacturerController : ControllerBase
 {
     private readonly ILogger<ManufacturerController> _logger;
-
-    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
+    private readonly IDbContextFactory<PharmacyCityNetworkDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public ManufacturerController(ILogger<ManufacturerController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
+    public ManufacturerController(ILogger<ManufacturerController> logger, IDbContextFactory<PharmacyCityNetworkDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -26,26 +27,31 @@ public class ManufacturerController : ControllerBase
     /// </summary>
     /// <returns>Return all manufacturers</returns>
     [HttpGet]
-    public IEnumerable<ManufacturerGetDto> Get()
+    public async Task<IEnumerable<ManufacturerGetDto>> GetManufacturers()
     {
-        return _pharmacyCityNetworkRepository.Manufacturers.Select(manufacturer => _mapper.Map<ManufacturerGetDto>(manufacturer));
+        _logger.LogInformation("Get all manufacturers");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var manufacturers = await ctx.Manufacturers.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ManufacturerGetDto>>(manufacturers);
     }
     /// <summary>
     /// Get manufacturer info by id
     /// </summary>
-    /// <param name="id">Manufacturer Id</param>
+    /// <param name="idManufacturer">Manufacturer Id</param>
     /// <returns>Return manufacturer with specified id</returns>
-    [HttpGet("{id}")]
-    public ActionResult<Manufacturer> Get(int id)
+    [HttpGet("{idManufacturer}")]
+    public async Task<ActionResult<ManufacturerGetDto>> GetManufacturer(int idManufacturer)
     {
-        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var manufacturer = await ctx.Manufacturers.FirstOrDefaultAsync(manufacturer => manufacturer.Id == idManufacturer);
         if (manufacturer == null)
         {
-            _logger.LogInformation("Not found manufacturer: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found manufacturer : {idManufacturer}", idManufacturer);
+            return NotFound($"The manufacturer does't exist by this id {idManufacturer}");
         }
         else
         {
+            _logger.LogInformation("Not found manufacturer : {idManufacturer}", idManufacturer);
             return Ok(_mapper.Map<ManufacturerGetDto>(manufacturer));
         }
     }
@@ -54,48 +60,59 @@ public class ManufacturerController : ControllerBase
     /// </summary>
     /// <param name="manufacturer">Manufacturer class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] ManufacturerPostDto manufacturer)
+    public async Task PostManufacturer([FromBody] ManufacturerPostDto manufacturer)
     {
-        _pharmacyCityNetworkRepository.Manufacturers.Add(_mapper.Map<Manufacturer>(manufacturer));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new manufacturer");
+        await ctx.Manufacturers.AddAsync(_mapper.Map<Manufacturer>(manufacturer));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put manufacturer
     /// </summary>
-    /// <param name="id">An id of manufacturer which would be changed</param>
+    /// <param name="idManufacturer">An id of manufacturer which would be changed</param>
     /// <param name="manufacturerToPut">Manufacturer class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ManufacturerPostDto manufacturerToPut)
+    [HttpPut("{idManufacturer}")]
+    public async Task<IActionResult> PutManufacturer(int idManufacturer, [FromBody] ManufacturerPostDto manufacturerToPut)
     {
-        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var manufacturer = await ctx.Manufacturers.FirstOrDefaultAsync(manufacturer => manufacturer.Id == idManufacturer);
         if (manufacturer == null)
         {
-            _logger.LogInformation("Not found manufacturer: {id}",  id);
-            return NotFound();
+            _logger.LogInformation("Not found manufacturer : {idManufacturer}", idManufacturer);
+            return NotFound($"The manufacturer does't exist by this id {idManufacturer}");
         }
         else
         {
-           _mapper.Map(manufacturerToPut, manufacturer);
+            _logger.LogInformation("Update group by id {idManufacturer}", idManufacturer);
+            _mapper.Map(manufacturerToPut, manufacturer);
+            ctx.Manufacturers.Update(_mapper.Map<Manufacturer>(manufacturer));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
     /// <summary>
     /// Delete a manufacturer
     /// </summary>
-    /// <param name="id">An id of manufacturer which would be deleted</param>
+    /// <param name="idManufacturer">An id of manufacturer which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{idManufacturer}")]
+    public async Task<IActionResult> DeleteManufacturer(int idManufacturer)
     {
-        var manufacturer = _pharmacyCityNetworkRepository.Manufacturers.FirstOrDefault(manufacturer => manufacturer.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var manufacturer = await ctx.Manufacturers.Include(manufacturer => manufacturer.Products)
+                                        .FirstOrDefaultAsync(manufacturer => manufacturer.Id == idManufacturer);
         if (manufacturer == null)
         {
-            _logger.LogInformation("Not found manufacturer: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found manufacturer: {idManufacturer}", idManufacturer);
+            return NotFound($"The manufacturer does't exist by this id {idManufacturer}");
         }
         else
         {
-            _pharmacyCityNetworkRepository.Manufacturers.Remove(manufacturer);
+            _logger.LogInformation("Delete manufacturer by id {idManufacturer}", idManufacturer);
+            ctx.Manufacturers.Remove(manufacturer);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

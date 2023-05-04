@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
-using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+
 /// <summary>
 /// Analytics controller for queries
 /// </summary>
@@ -12,12 +13,12 @@ namespace PharmacyCityNetwork.Server.Controllers;
 public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
+    private readonly IDbContextFactory<PharmacyCityNetworkDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IDbContextFactory<PharmacyCityNetworkDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -26,14 +27,15 @@ public class AnalyticsController : ControllerBase
     /// <param name="pharmacyId">Prarmacy Id</param>
     /// <returns>All products from pharmacy</returns>
     [HttpGet("all-products-from-pharmacy")]
-    public ActionResult<IEnumerable<ProductGetDto>> GetAllProductFromPharmacy(uint pharmacyId)
+    public async Task<ActionResult<List<ProductGetDto>>> GetAllProductFromPharmacy(uint pharmacyId)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all product from pharmacy");
-        var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
+        var request = await (from pharmacy in ctx.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        where pharmacy.Id == pharmacyId
                        orderby productPharmacy.Product.ProductName
-                       select _mapper.Map<ProductGetDto>(productPharmacy.Product));
+                       select _mapper.Map<ProductGetDto>(productPharmacy.Product)).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found products from pharmacy {pharmacyId}", pharmacyId);
@@ -52,22 +54,23 @@ public class AnalyticsController : ControllerBase
     /// <param name="productId">Product Id</param>
     /// <returns>Products from pharmacy</returns>
     [HttpGet("products-from-pharmacy")]
-    public ActionResult<List<dynamic>> GetProductsFromPharmacy(uint productId)
+    public async Task<ActionResult<List<dynamic>>> GetProductsFromPharmacy(uint productId)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get products from pharmacy");
-        var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacys
-                       where productPharmacy.Product.Id == productId
-                       group productPharmacy by productPharmacy.Pharmacy.PharmacyName into g
-                       select new
-                       {
-                            Pharmacy = g.Key,
-                            Count = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
-                                     from productPharmacy in pharmacy.ProductPharmacys
-                                     where productPharmacy.Pharmacy.PharmacyName.Equals(g.Key)
-                                     where productPharmacy.Product.Id == productId 
-                                     select productPharmacy.ProductCount)
-                       }).ToList();
+        var request = await (from pharmacy in ctx.Pharmacys
+                             from productPharmacy in pharmacy.ProductPharmacys
+                             where productPharmacy.Product.Id == productId
+                             group productPharmacy by productPharmacy.Pharmacy.PharmacyName into g
+                             select new
+                             {
+                                 Pharmacy = g.Key,
+                                 Count = (from pharmacy in ctx.Pharmacys
+                                          from productPharmacy in pharmacy.ProductPharmacys
+                                          where productPharmacy.Pharmacy.PharmacyName.Equals(g.Key)
+                                          where productPharmacy.Product.Id == productId
+                                          select productPharmacy.ProductCount).FirstOrDefault()
+                             }).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys with product with {productId}", productId);
@@ -84,10 +87,11 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Average cost for each farmGroup and pharmacy</returns>
     [HttpGet("farm-group")]
-    public ActionResult<List<dynamic>> GetFarmGroup()
+    public async Task<ActionResult<List<dynamic>>> GetFarmGroup()
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get average cost for each farmGroup and pharmacy");
-        var request = (from pharmaGroup in _pharmacyCityNetworkRepository.PharmaGroups
+        var request = await(from pharmaGroup in ctx.PharmaGroups
                        from productPharmaGroup in pharmaGroup.ProductPharmaGroups
                        from productPharmacy in productPharmaGroup.Product.ProductPharmacys
                        group productPharmacy by new
@@ -101,7 +105,7 @@ public class AnalyticsController : ControllerBase
                            Pharmacy = pharmacyGroups.Key.PharmacyName,
                            ProductCost = pharmacyGroups.Average(s => s.ProductCost)
                        }
-               ).ToList();
+               ).ToListAsync();
         _logger.LogInformation("Get information about average cost for each farmGroup and pharmacy");
         return Ok(request);
     }
@@ -112,15 +116,16 @@ public class AnalyticsController : ControllerBase
     /// <param name="dateTwo">End of the period</param>
     /// <returns>Top five pharmacy</returns>
     [HttpGet("top-five-pharmacy")]
-    public ActionResult<List<dynamic>> GetTopFivePharmacy(DateTime dateOne, DateTime dateTwo)
+    public async Task<ActionResult<List<dynamic>>> GetTopFivePharmacy(DateTime dateOne, DateTime dateTwo)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top five pharmacy");
-        var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
+        var request = await(from pharmacy in ctx.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
                        where sale.PaymentDate < dateTwo && sale.PaymentDate > dateOne
                        orderby productPharmacy.Product.Sales.Count
-                       select pharmacy.PharmacyName).Distinct().Take(5).ToList();
+                       select pharmacy.PharmacyName).Distinct().Take(5).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys with sales between {dateOne} and {dateTwo}", dateOne, dateTwo);
@@ -140,17 +145,18 @@ public class AnalyticsController : ControllerBase
     /// <param name="countProduct">Count Product</param>
     /// <returns>Pharmacy from address</returns>
     [HttpGet("pharmacy-from-address")]
-    public ActionResult<List<dynamic>> GetPharmacyFromAddress(uint productId, string address, int countProduct)
+    public async Task<ActionResult<List<dynamic>>> GetPharmacyFromAddress(uint productId, string address, int countProduct)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get pharmacy from address");
-        var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
+        var request = await(from pharmacy in ctx.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        from sale in productPharmacy.Product.Sales
                        where productPharmacy.Product.Id == productId
                        && productPharmacy.ProductCount > countProduct
                        && pharmacy.PharmacyAddress.Contains(address)
                        orderby pharmacy.PharmacyName
-                       select pharmacy.PharmacyName).Distinct().ToList();
+                       select pharmacy.PharmacyName).Distinct().ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys {productId}, {address}, {countProduct}", productId, address, countProduct);
@@ -168,17 +174,18 @@ public class AnalyticsController : ControllerBase
     /// <param name="productId">Product Id</param> 
     /// <returns>Pharmacy with min cost</returns>
     [HttpGet("pharmacy-min-cost")]
-    public ActionResult<List<dynamic>> GetPharmacyMinCost(uint productId)
+    public async Task<ActionResult<List<dynamic>>> GetPharmacyMinCost(uint productId)
     {
+        var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get pharmacy min cost");
-        var request = (from pharmacy in _pharmacyCityNetworkRepository.Pharmacys
+        var request = await(from pharmacy in ctx.Pharmacys
                        from productPharmacy in pharmacy.ProductPharmacys
                        where productPharmacy.Product.Id == productId
-                       && productPharmacy.ProductCost == (from product in _pharmacyCityNetworkRepository.Products
+                       && productPharmacy.ProductCost == (from product in ctx.Products
                                                           from productPharmacy in product.ProductPharmacys
                                                           where productPharmacy.Product.Id == productId
                                                           select productPharmacy.ProductCost).Min()
-                       select pharmacy.PharmacyName).ToList();
+                       select pharmacy.PharmacyName).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found product {productId}", productId);

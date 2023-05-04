@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
-using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
+
 /// <summary>
 /// Product controller
 /// </summary>
@@ -12,13 +13,12 @@ namespace PharmacyCityNetwork.Server.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
-
-    private readonly IPharmacyCityNetworkRepository _pharmacyCityNetworkRepository;
+    private readonly IDbContextFactory<PharmacyCityNetworkDbContext> _contextFactory;
     private readonly IMapper _mapper;
-    public ProductController(ILogger<ProductController> logger, IPharmacyCityNetworkRepository pharmacyCityNetworkRepository, IMapper mapper)
+    public ProductController(ILogger<ProductController> logger, IDbContextFactory<PharmacyCityNetworkDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _pharmacyCityNetworkRepository = pharmacyCityNetworkRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -26,26 +26,31 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <returns>Return all products</returns>
     [HttpGet]
-    public IEnumerable<ProductGetDto> Get()
+    public async Task<IEnumerable<ProductGetDto>> GetProducts()
     {
-        return _pharmacyCityNetworkRepository.Products.Select(product => _mapper.Map<ProductGetDto>(product));
+        _logger.LogInformation("Get all products");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var products = await ctx.Products.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ProductGetDto>>(products);
     }
     /// <summary>
     /// Get product info by id
     /// </summary>
-    /// <param name="id">Product Id</param>
+    /// <param name="idProduct">Product Id</param>
     /// <returns>Return product with specified id</returns>
-    [HttpGet("{id}")]
-    public ActionResult<Product> Get(int id)
+    [HttpGet("{idProduct}")]
+    public async Task<ActionResult<ProductGetDto>> GetProduct(int idProduct)
     {
-        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == idProduct);
         if (product == null)
         {
-            _logger.LogInformation("Not found product: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found product : {idProduct}", idProduct);
+            return NotFound($"The product does't exist by this id {idProduct}");
         }
         else
         {
+            _logger.LogInformation("Not found product : {idProduct}", idProduct);
             return Ok(_mapper.Map<ProductGetDto>(product));
         }
     }
@@ -54,48 +59,59 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param name="product">Product class instance to insert to table</param>
     [HttpPost]
-    public void Post([FromBody] ProductPostDto product)
+    public async Task PostProduct([FromBody] ProductPostDto product)
     {
-        _pharmacyCityNetworkRepository.Products.Add(_mapper.Map<Product>(product));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new product");
+        await ctx.Products.AddAsync(_mapper.Map<Product>(product));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put product
     /// </summary>
-    /// <param name="id">An id of product which would be changed</param>
+    /// <param name="idProduct">An id of product which would be changed</param>
     /// <param name="productToPut">Product class instance to insert to table</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
+    [HttpPut("{idProduct}")]
+    public async Task<IActionResult> PutProduct(int idProduct, [FromBody] ProductPostDto productToPut)
     {
-        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == idProduct);
         if (product == null)
         {
-            _logger.LogInformation("Not found product: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found product : {idProduct}", idProduct);
+            return NotFound($"The product does't exist by this id {idProduct}");
         }
         else
         {
+            _logger.LogInformation("Update product by id {idProduct}", idProduct);
             _mapper.Map(productToPut, product);
+            ctx.Products.Update(_mapper.Map<Product>(product));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
     /// <summary>
     /// Delete a product
     /// </summary>
-    /// <param name="id">An id of product which would be deleted</param>
+    /// <param name="idProduct">An id of product which would be deleted</param>
     /// <returns>Signalization of success of error</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{idProduct}")]
+    public async Task<IActionResult> DeleteProduct(int idProduct)
     {
-        var product = _pharmacyCityNetworkRepository.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.Include(product => product.ProductPharmacys)
+                                        .FirstOrDefaultAsync(product => product.Id == idProduct);
         if (product == null)
         {
-            _logger.LogInformation("Not found product: {id}", id);
-            return NotFound();
+            _logger.LogInformation("Not found product: {idProduct}", idProduct);
+            return NotFound($"The product does't exist by this id {idProduct}");
         }
         else
         {
-            _pharmacyCityNetworkRepository.Products.Remove(product);
+            _logger.LogInformation("Delete product by id {idProduct}", idProduct);
+            ctx.Products.Remove(product);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

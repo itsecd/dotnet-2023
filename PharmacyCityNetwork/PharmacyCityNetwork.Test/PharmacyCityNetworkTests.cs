@@ -43,16 +43,16 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
                        from productPharmaGroup in pharmaGroup.ProductPharmaGroups
                        from productPharmacy in productPharmaGroup.Product.ProductPharmacys
                        group productPharmacy by new
-                        {
-                            productPharmaGroup.PharmaGroup.Id,
-                            productPharmacy.Pharmacy.PharmacyName
-                        } into pharmacyGroups
-                        select new
-                        {
-                            PharmaGroup = pharmacyGroups.Key.Id,
-                            Pharmacy = pharmacyGroups.Key.PharmacyName,
-                            ProductCost = pharmacyGroups.Average(s => s.ProductCost)
-                        }
+                       {
+                           productPharmaGroup.PharmaGroup.Id,
+                           productPharmacy.Pharmacy.PharmacyName
+                       } into pharmacyGroups
+                       select new
+                       {
+                           PharmaGroup = pharmacyGroups.Key.Id,
+                           Pharmacy = pharmacyGroups.Key.PharmacyName,
+                           ProductCost = pharmacyGroups.Average(s => s.ProductCost)
+                       }
                ).ToList();
         Assert.Equal(300, request[0].ProductCost);
         Assert.Equal(1, request[0].PharmaGroup);
@@ -93,7 +93,7 @@ public class ClassesTest : IClassFixture<PharmacyCityNetworkFixture>
         Assert.Equal("Alia", request[0]);
         Assert.Equal("Plus", request[1]);
     }
-    
+
     [Fact]
     public void PharmacyMinCost()
     {

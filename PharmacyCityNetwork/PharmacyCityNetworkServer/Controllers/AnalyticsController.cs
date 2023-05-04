@@ -32,10 +32,10 @@ public class AnalyticsController : ControllerBase
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all product from pharmacy");
         var request = await (from pharmacy in ctx.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacys
-                       where pharmacy.Id == pharmacyId
-                       orderby productPharmacy.Product.ProductName
-                       select _mapper.Map<ProductGetDto>(productPharmacy.Product)).ToListAsync();
+                             from productPharmacy in pharmacy.ProductPharmacys
+                             where pharmacy.Id == pharmacyId
+                             orderby productPharmacy.Product.ProductName
+                             select _mapper.Map<ProductGetDto>(productPharmacy.Product)).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found products from pharmacy {pharmacyId}", pharmacyId);
@@ -91,20 +91,20 @@ public class AnalyticsController : ControllerBase
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get average cost for each farmGroup and pharmacy");
-        var request = await(from pharmaGroup in ctx.PharmaGroups
-                       from productPharmaGroup in pharmaGroup.ProductPharmaGroups
-                       from productPharmacy in productPharmaGroup.Product.ProductPharmacys
-                       group productPharmacy by new
-                       {
-                           productPharmaGroup.PharmaGroup.Id,
-                           productPharmacy.Pharmacy.PharmacyName
-                       } into pharmacyGroups
-                       select new
-                       {
-                           PharmaGroup = pharmacyGroups.Key.Id,
-                           Pharmacy = pharmacyGroups.Key.PharmacyName,
-                           ProductCost = pharmacyGroups.Average(s => s.ProductCost)
-                       }
+        var request = await (from pharmaGroup in ctx.PharmaGroups
+                             from productPharmaGroup in pharmaGroup.ProductPharmaGroups
+                             from productPharmacy in productPharmaGroup.Product.ProductPharmacys
+                             group productPharmacy by new
+                             {
+                                 productPharmaGroup.PharmaGroup.Id,
+                                 productPharmacy.Pharmacy.PharmacyName
+                             } into pharmacyGroups
+                             select new
+                             {
+                                 PharmaGroup = pharmacyGroups.Key.Id,
+                                 Pharmacy = pharmacyGroups.Key.PharmacyName,
+                                 ProductCost = pharmacyGroups.Average(s => s.ProductCost)
+                             }
                ).ToListAsync();
         _logger.LogInformation("Get information about average cost for each farmGroup and pharmacy");
         return Ok(request);
@@ -120,12 +120,12 @@ public class AnalyticsController : ControllerBase
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top five pharmacy");
-        var request = await(from pharmacy in ctx.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacys
-                       from sale in productPharmacy.Product.Sales
-                       where sale.PaymentDate < dateTwo && sale.PaymentDate > dateOne
-                       orderby productPharmacy.Product.Sales.Count
-                       select pharmacy.PharmacyName).Distinct().Take(5).ToListAsync();
+        var request = await (from pharmacy in ctx.Pharmacys
+                             from productPharmacy in pharmacy.ProductPharmacys
+                             from sale in productPharmacy.Product.Sales
+                             where sale.PaymentDate < dateTwo && sale.PaymentDate > dateOne
+                             orderby productPharmacy.Product.Sales.Count
+                             select pharmacy.PharmacyName).Distinct().Take(5).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys with sales between {dateOne} and {dateTwo}", dateOne, dateTwo);
@@ -149,14 +149,14 @@ public class AnalyticsController : ControllerBase
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get pharmacy from address");
-        var request = await(from pharmacy in ctx.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacys
-                       from sale in productPharmacy.Product.Sales
-                       where productPharmacy.Product.Id == productId
-                       && productPharmacy.ProductCount > countProduct
-                       && pharmacy.PharmacyAddress.Contains(address)
-                       orderby pharmacy.PharmacyName
-                       select pharmacy.PharmacyName).Distinct().ToListAsync();
+        var request = await (from pharmacy in ctx.Pharmacys
+                             from productPharmacy in pharmacy.ProductPharmacys
+                             from sale in productPharmacy.Product.Sales
+                             where productPharmacy.Product.Id == productId
+                             && productPharmacy.ProductCount > countProduct
+                             && pharmacy.PharmacyAddress.Contains(address)
+                             orderby pharmacy.PharmacyName
+                             select pharmacy.PharmacyName).Distinct().ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found pharmacys {productId}, {address}, {countProduct}", productId, address, countProduct);
@@ -178,14 +178,14 @@ public class AnalyticsController : ControllerBase
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get pharmacy min cost");
-        var request = await(from pharmacy in ctx.Pharmacys
-                       from productPharmacy in pharmacy.ProductPharmacys
-                       where productPharmacy.Product.Id == productId
-                       && productPharmacy.ProductCost == (from product in ctx.Products
-                                                          from productPharmacy in product.ProductPharmacys
-                                                          where productPharmacy.Product.Id == productId
-                                                          select productPharmacy.ProductCost).Min()
-                       select pharmacy.PharmacyName).ToListAsync();
+        var request = await (from pharmacy in ctx.Pharmacys
+                             from productPharmacy in pharmacy.ProductPharmacys
+                             where productPharmacy.Product.Id == productId
+                             && productPharmacy.ProductCost == (from product in ctx.Products
+                                                                from productPharmacy in product.ProductPharmacys
+                                                                where productPharmacy.Product.Id == productId
+                                                                select productPharmacy.ProductCost).Min()
+                             select pharmacy.PharmacyName).ToListAsync();
         if (!request.Any())
         {
             _logger.LogInformation("Not found product {productId}", productId);

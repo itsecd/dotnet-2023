@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PharmacyCityNetwork;
 
@@ -25,10 +25,13 @@ public class Sale
     [Column("paymentDate")]
     public DateTime PaymentDate { get; set; } = DateTime.Now;
     /// <summary>
-    /// Product
+    /// Product Id
     /// </summary>
     [Column("productId")]
     public int ProductId { get; set; }
+    /// <summary>
+    /// Product
+    /// </summary>
     public Product Product { get; set; }
     public Sale() { }
     public Sale(string paymentChoice, DateTime paymentDate, Product product, int productId, int id)

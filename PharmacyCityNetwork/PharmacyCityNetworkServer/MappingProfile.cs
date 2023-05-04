@@ -30,7 +30,7 @@ public class MappingProfile : Profile
         CreateMap<ProductPostDto, Product>();
 
         CreateMap<ProductPharmacy, ProductPharmacyGetDto>();
-        CreateMap<ProductPharmacy, ProductPharmacyPostDto >();
+        CreateMap<ProductPharmacy, ProductPharmacyPostDto>();
         CreateMap<ProductPharmacyPostDto, ProductPharmacy>();
 
         CreateMap<ProductPharmaGroup, ProductPharmaGroupGetDto>();

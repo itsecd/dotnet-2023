@@ -17,7 +17,7 @@ public class Manufacturer
     /// <summary>
     /// Manufacturer name
     /// </summary>
-    [Column("manufacturerName")] 
+    [Column("manufacturerName")]
     public string ManufacturerName { get; set; } = string.Empty;
     /// <summary>
     /// Products of manufacturer

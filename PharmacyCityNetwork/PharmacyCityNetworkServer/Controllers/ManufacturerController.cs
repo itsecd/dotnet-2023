@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PharmacyCityNetwork.Server.Dto;
-using PharmacyCityNetwork.Server.Repository;
 
 namespace PharmacyCityNetwork.Server.Controllers;
 

@@ -11,10 +11,13 @@ public class PharmaGroup
     /// <summary>
     /// Id of pharma group
     /// </summary>
+    /// [Key]
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Pharma group name
     /// </summary>
+    [Column("pharmaGroupName")]
     public string PharmaGroupName { get; set; } = string.Empty;
     /// <summary>
     /// ProductPharmaGroups of pharma group

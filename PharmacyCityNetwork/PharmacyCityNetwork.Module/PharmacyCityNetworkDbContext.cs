@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
-using System.Text.RegularExpressions;
 
 namespace PharmacyCityNetwork;
 public class PharmacyCityNetworkDbContext : DbContext
@@ -77,8 +75,8 @@ public class PharmacyCityNetworkDbContext : DbContext
 
         var fifthProductPharmaGroup = new ProductPharmaGroup { Id = 5, PharmaGroupId = 1, ProductId = 5 };
 
-        var fifthSale = new Sale{PaymentChoice = "Online", PaymentDate = new DateTime(2022, 5, 23), ProductId = 5, Id = 5};
-       
+        var fifthSale = new Sale { PaymentChoice = "Online", PaymentDate = new DateTime(2022, 5, 23), ProductId = 5, Id = 5 };
+
         modelBuilder.Entity<Product>()
             .HasOne(product => product.Group)
             .WithMany(group => group.Products)

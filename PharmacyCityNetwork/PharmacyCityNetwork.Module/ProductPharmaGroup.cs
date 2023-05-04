@@ -16,16 +16,22 @@ public class ProductPharmaGroup
     [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
-    /// Pharma group
+    /// Pharma group Id
     /// </summary>
     [Column("pharmaGroupId")]
     public int PharmaGroupId { get; set; }
     /// <summary>
-    /// Product of pharma group
+    /// Product Id of pharma group
     /// </summary>
     [Column("productId")]
     public int ProductId { get; set; }
+    /// <summary>
+    /// Pharma group
+    /// </summary>
     public PharmaGroup PharmaGroup { get; set; }
+    /// <summary>
+    /// Product of pharma group
+    /// </summary>
     public Product Product { get; set; }
     public ProductPharmaGroup() { }
     public ProductPharmaGroup(int id, PharmaGroup pharmaGroup, Product product, int pharmaGroupId, int productId)

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PharmacyCityNetwork;
 
@@ -12,7 +12,7 @@ public class Pharmacy
     /// Id of pharmacy
     /// </summary>
     [Key]
-    [Column("id")] 
+    [Column("id")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Pharmacy name
@@ -22,7 +22,7 @@ public class Pharmacy
     /// <summary>
     /// Pharmacy phone
     /// </summary>
-    [Column("pharmacyPhone")] 
+    [Column("pharmacyPhone")]
     public string PharmacyPhone { get; set; } = string.Empty;
     /// <summary>
     /// Pharmacy address

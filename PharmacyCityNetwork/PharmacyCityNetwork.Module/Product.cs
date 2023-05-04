@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PharmacyCityNetwork;
 
@@ -20,16 +20,22 @@ public class Product
     [Column("productName")]
     public string ProductName { get; set; } = string.Empty;
     /// <summary>
-    /// Product group
+    /// Product of group Id
     /// </summary>
     [Column("groupId")]
     public int GroupId { get; set; }
+    /// <summary>
+    /// Product of group
+    /// </summary>
     public Group Group { get; set; }
     /// <summary>
-    /// Product manufacturer
+    /// Product of manufacturer Id
     /// </summary>
     [Column("manufacturerId")]
     public int ManufacturerId { get; set; }
+    /// <summary>
+    /// Product of manufacturer
+    /// </summary>
     public Manufacturer Manufacturer { get; set; }
     /// <summary>
     /// ProductPharmacys of product

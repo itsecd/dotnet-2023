@@ -26,16 +26,22 @@ public class ProductPharmacy
     [Column("productCost")]
     public int ProductCost { get; set; } = 0;
     /// <summary>
-    /// Products of product pharmacy
+    /// Products Id of product pharmacy
     /// </summary>
     [Column("productId")]
     public int ProductId { get; set; }
+    /// <summary>
+    /// Products of product pharmacy
+    /// </summary>
     public Product Product { get; set; }
     /// <summary>
-    /// Pharmacy of product pharmacy
+    /// Pharmacy Id of product pharmacy
     /// </summary>
     [Column("pharmacyId")]
     public int PharmacyId { get; set; }
+    /// <summary>
+    /// Pharmacy Id of product pharmacy
+    /// </summary>
     public Pharmacy Pharmacy { get; set; }
     public ProductPharmacy() { }
     public ProductPharmacy(int productCount, int productCost, Product product, Pharmacy pharmacy, int productId, int pharmacyId, int id)

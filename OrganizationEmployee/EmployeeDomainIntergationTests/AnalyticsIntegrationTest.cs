@@ -6,7 +6,7 @@ namespace EmployeeDomainIntergationTests;
 /// StatisticsIntegrationTest  - represents a integration test of StatisticsController
 /// </summary>
 [Collection("Sequential")]
-public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
+public class AnalyticsIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
@@ -16,7 +16,7 @@ public class StatisticsIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// <summary>
     /// A constructor of the StatisticsIntegrationTest
     /// </summary>
-    public StatisticsIntegrationTest(WebApplicationFactory<Program> factory)
+    public AnalyticsIntegrationTest(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _serializeOptions = new JsonSerializerOptions

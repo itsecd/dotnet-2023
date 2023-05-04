@@ -1,0 +1,17 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="Button.ToolButton">
+        <Setter Property="Width" Value="30"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="Margin" Value="0,0,4, 0"></Setter>
+    </Style>
+    
+    <Style Selector="Grid.MainGrid">
+        <Setter Property="Margin" Value="10, 10, 0, 0"></Setter>
+    </Style>
+</Styles>

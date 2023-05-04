@@ -65,9 +65,9 @@ public class CarSharingQueries : IClassFixture<CarFixture>
                       select new
                           {
                               model = carGroup.Key,
-                              cntr = carGroup.Distinct().Count()
+                              counter = carGroup.Distinct().Count()
                           }).ToList();
-        Assert.Equal(4, result[0].cntr);
+        Assert.Equal(4, result[0].counter);
     }
     ///<summary>
     ///sixth request - rental point where the most cars were rented
@@ -76,9 +76,9 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     public void RentalPointStatistics()
     {
         var rentalPoint = _fixture.FixtureRentedCar.ToList();
-        var rentNumber = (from rp in rentalPoint
-                          orderby rp.Point.PointName
-                          group rp by rp.Point.PointName into rentalPointGroup
+        var rentNumber = (from rentalPointInfo in rentalPoint
+                          orderby rentalPointInfo.Point.PointName
+                          group rentalPointInfo by rentalPointInfo.Point.PointName into rentalPointGroup
                           select new
                           {
                               name = rentalPointGroup.Key,

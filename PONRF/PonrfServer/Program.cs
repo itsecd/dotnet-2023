@@ -1,18 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using PonrfDomain;
-using PonrfServer;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContextFactory<PonrfContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString(nameof(PONRF));
-    optionsBuilder.UseMySQL(connectionString);
+    var connectionString = builder.Configuration.GetConnectionString("PONRF");
+    optionsBuilder.UseNpgsql(connectionString);
 });
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

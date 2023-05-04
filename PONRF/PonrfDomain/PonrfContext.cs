@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace PonrfDomain;
 /// <summary>
@@ -10,22 +9,22 @@ public class PonrfContext : DbContext
     /// <summary>
     /// Collection of auctions
     /// </summary>
-    public DbSet<Auction>? Auctions { get; set; } = null!;
+    public DbSet<Auction> Auctions { get; set; } = null!;
 
     /// <summary>
     /// Collection of buildings
     /// </summary>
-    public DbSet<Building>? Buildings { get; set; } = null!;
+    public DbSet<Building> Buildings { get; set; } = null!;
 
     /// <summary>
     /// Collection of customers
     /// </summary>
-    public DbSet<Customer>? Customers { get; set; } = null!;
+    public DbSet<Customer> Customers { get; set; } = null!;
 
     /// <summary>
     /// Collection of privatized buildings
     /// </summary>
-    public DbSet<PrivatizedBuilding>? PrivatizedBuildings { get; set; } = null!;
+    public DbSet<PrivatizedBuilding> PrivatizedBuildings { get; set; } = null!;
 
     /// <summary>
     /// Constructor for PonrfContext
@@ -96,6 +95,18 @@ public class PonrfContext : DbContext
         buildings[3].PrivatizedBuilding?.Add(privatizedBuildings[6]);
         buildings[4].PrivatizedBuilding?.Add(privatizedBuildings[4]);
         buildings[5].PrivatizedBuilding?.Add(privatizedBuildings[3]);
+
+
+        modelBuilder.Entity<PrivatizedBuilding>()
+                    .HasOne<Building>()
+                    .WithMany()
+                    .HasForeignKey(privatizedBuilding => privatizedBuilding.BuildingId)
+                    .IsRequired();
+        modelBuilder.Entity<PrivatizedBuilding>()
+                    .HasOne<Auction>()
+                    .WithMany()
+                    .HasForeignKey(privatizedBuilding => privatizedBuilding.AuctionId)
+                    .IsRequired();
 
         modelBuilder.Entity<Auction>().HasData(auctions);
         modelBuilder.Entity<Building>().HasData(buildings);

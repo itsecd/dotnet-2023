@@ -25,24 +25,29 @@ public class Auction
     /// <summary>
     /// List of all privatized buildings (lots)
     /// </summary>
-    [ForeignKey("Lot")]
     public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
     /// <summary>
-    /// Constructor for Auction
+    /// Id of privatized building for foreign key
     /// </summary>
-    public Auction() { }
-    /// <summary>
-    /// Constructor for Auction with parameters
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="date"></param>
-    /// <param name="organizer"></param>
-    /// <param name="privatizedBuilding"></param>
-    public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
-    {
-        Id = id;
-        Date = date;
-        Organizer = organizer;
-        PrivatizedBuilding = privatizedBuilding;
-    }
+    [ForeignKey("PrivatizedBuildingId")]
+    public int? PrivatizedBuildingId { get; set; } = 0;
+
+    ///// <summary>
+    ///// Constructor for Auction
+    ///// </summary>
+    //public Auction() { }
+    ///// <summary>
+    ///// Constructor for Auction with parameters
+    ///// </summary>
+    ///// <param name="id"></param>
+    ///// <param name="date"></param>
+    ///// <param name="organizer"></param>
+    ///// <param name="privatizedBuilding"></param>
+    //public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
+    //{
+    //    Id = id;
+    //    Date = date;
+    //    Organizer = organizer;
+    //    PrivatizedBuilding = privatizedBuilding;
+    //}
 }

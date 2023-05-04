@@ -51,7 +51,7 @@ public class Building
     /// <summary>
     /// List of all privatized buildings (if the building is up for auction)
     /// </summary>
-    [ForeignKey("PrivatizedBuilding")]
+
     public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
     /// <summary>
     /// Constructor for Building

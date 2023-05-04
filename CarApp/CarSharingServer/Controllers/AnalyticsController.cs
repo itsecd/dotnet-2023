@@ -46,10 +46,10 @@ public class AnalyticsController : ControllerBase
     public IActionResult GetClientsRentedCar(uint id)
     {
         _logger.LogInformation("Get info about clients rented the car with id");
-        var result = (from client in _carRepository.RentedCars where client.CarId == id select client.Client.FirstName).ToList();
+        var result = (from client in _carRepository.RentedCars where client.Car.Id == id select client.Client.FirstName).ToList();
         if (result.Count == 0)
         {
-            _logger.LogInformation($"No one rented car with id {id}", id);
+            _logger.LogInformation("No one rented car with id {id}", id);
             return NotFound();
         }
         else return Ok(result);
@@ -79,7 +79,7 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get info about top five rented cars");
         var counter = (from car in _carRepository.RentedCars
-                       group car by car.Car.CarId into g
+                       group car by car.Car.Id into g
                        select new
                        {
                            carmodel = g.Key,

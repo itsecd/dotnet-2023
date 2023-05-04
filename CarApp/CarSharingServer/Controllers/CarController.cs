@@ -3,6 +3,7 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 using AutoMapper;
 using CarSharingServer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
 /// <summary>
@@ -13,18 +14,18 @@ namespace CarSharingServer.Controllers;
 public class CarController : ControllerBase
 {
     private readonly ILogger<CarController> _logger;
-    private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
     /// <summary>
     /// Constructor for CarController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public CarController(ILogger<CarController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public CarController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<CarController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _carRepository = carRepository;
         _mapper = mapper;
     }
 
@@ -33,10 +34,12 @@ public class CarController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<CarGetDto> Get()
+    public async Task<IEnumerable<CarGetDto>> GetCars()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get the cars");
-        return _carRepository.Cars.Select(car => _mapper.Map<CarGetDto>(car));
+        var cars = await ctx.Cars.ToArrayAsync();
+        return _mapper.Map<IEnumerable<CarGetDto>>(cars);
     }
     /// <summary>
     /// Get car info by id
@@ -44,29 +47,31 @@ public class CarController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<CarGetDto> Get(uint id)
+    public async Task<ActionResult<CarGetDto>> Get(uint id)
     {
-        _logger.LogInformation($"Get the car with id {id} ", id);
-        var carInfo = _carRepository.Cars.FirstOrDefault(info => info.CarId == id);
-        if (carInfo == null)
+        if (_contextFactory==null)
         {
-            _logger.LogInformation($"Not found a car with id {id}", id);
             return NotFound();
         }
-        else
-        {
-            return Ok(_mapper.Map<CarGetDto>(carInfo));
+        _logger.LogInformation("Get the car with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var car = await ctx.Cars.FindAsync(id);
+        if (car == null) {
+            return NotFound();
         }
+        return _mapper.Map<CarGetDto>(car);
     }
     /// <summary>
     /// Post a new car
     /// </summary>
     /// <param name="car"></param>
     [HttpPost]
-    public void Post([FromBody] CarPostDto car)
+    public async Task Post([FromBody] CarPostDto car)
     {
         _logger.LogInformation("Post a new car");
-        _carRepository.Cars.Add(_mapper.Map<Car>(car));
+        var ctx =await _contextFactory.CreateDbContextAsync();
+        await ctx.Cars.AddAsync(_mapper.Map<Car>(car));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put car
@@ -75,19 +80,21 @@ public class CarController : ControllerBase
     /// <param name="carToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(uint id, [FromBody] CarPostDto carToPut)
+    public async Task<IActionResult> Put(uint id, [FromBody] CarPostDto carToPut)
     {
-        var car = _carRepository.Cars.FirstOrDefault(info => info.CarId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var car = await ctx.Cars.FindAsync(id);
         if (car == null)
         {
-            _logger.LogInformation($"Not found a car with id {id}", id);
+            _logger.LogInformation("Not found car with id {id}", id);
             return NotFound();
         }
         else
         {
-
+            _logger.LogInformation("Updating a car with id {id}", id);
             _mapper.Map(carToPut, car);
-            _logger.LogInformation("Put a new car - success");
+            ctx.Update(_mapper.Map<Car>(car));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,18 +104,20 @@ public class CarController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(uint id)
+    public async Task<IActionResult> Delete(uint id)
     {
-        var car = _carRepository.Cars.FirstOrDefault(info => info.CarId == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var car = await ctx.Cars.FindAsync(id);
         if (car == null)
         {
-            _logger.LogInformation($"Not found a car with id {id}", id);
+            _logger.LogInformation("Not found car with id {id}", id);
             return NotFound();
         }
         else
         {
-            _carRepository.Cars.Remove(car);
             _logger.LogInformation("Delete a car - success");
+            ctx.Cars.Remove(car);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

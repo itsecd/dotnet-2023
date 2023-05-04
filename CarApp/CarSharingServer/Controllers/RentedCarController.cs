@@ -46,11 +46,11 @@ public class RentedCarController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<RentedCarGetDto> Get(uint id)
     {
-        _logger.LogInformation($"Get the rented car with id {id} ", id);
+        _logger.LogInformation("Get the rented car with id {id} ", id);
         var rentedCarInfo = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
         if (rentedCarInfo == null)
         {
-            _logger.LogInformation($"Not found a car with id {id}", id);
+            _logger.LogInformation("Not found a car with id {id}", id);
             return NotFound();
         }
         else
@@ -80,7 +80,7 @@ public class RentedCarController : ControllerBase
         var rentedCar = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
         if (rentedCar == null)
         {
-            _logger.LogInformation($"Not found rented car with id {id}", id);
+            _logger.LogInformation("Not found rented car with id {id}", id);
             return NotFound();
         }
         else
@@ -102,7 +102,7 @@ public class RentedCarController : ControllerBase
         var rentedCar = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
         if (rentedCar == null)
         {
-            _logger.LogInformation($"Not found a car with id {id}", id);
+            _logger.LogInformation("Not found a car with id {id}", id);
             return NotFound();
         }
         else

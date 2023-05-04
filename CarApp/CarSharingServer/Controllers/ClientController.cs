@@ -3,6 +3,7 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 using AutoMapper;
 using CarSharingServer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
 /// <summary>
@@ -13,18 +14,17 @@ namespace CarSharingServer.Controllers;
 public class ClientController : ControllerBase
 {
     private readonly ILogger<ClientController> _logger;
-    private readonly ICarSharingRepository _carRepository;
+    private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Constructor for ClientController
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public ClientController(ILogger<ClientController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public ClientController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<ClientController> logger,  IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _carRepository = carRepository;
         _mapper = mapper;
     }
 
@@ -33,10 +33,12 @@ public class ClientController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<ClientGetDto> Get()
+    public async Task<IEnumerable<ClientGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get the clients");
-        return _carRepository.Clients.Select(client => _mapper.Map<ClientGetDto>(client));
+        var clients = await ctx.Clients.ToArrayAsync();
+        return _mapper.Map<IEnumerable<ClientGetDto>>(clients);
     }
     /// <summary>
     /// Get client info by id
@@ -44,29 +46,33 @@ public class ClientController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<ClientGetDto> Get(uint id)
+    public async Task<ActionResult<ClientGetDto>> Get(uint id)
     {
-        _logger.LogInformation($"Get the client with id {id} ", id);
-        var clientInfo = _carRepository.Clients.FirstOrDefault(info => info.Uid == id);
-        if (clientInfo == null)
+        if (_contextFactory == null)
         {
-            _logger.LogInformation($"Not found a client with id {id}", id);
             return NotFound();
         }
-        else 
-        { 
-            return Ok(_mapper.Map<ClientGetDto>(clientInfo)); 
+        _logger.LogInformation("Get the client with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.FindAsync(id);
+        if (client == null)
+        {
+            return NotFound();
         }
+        return _mapper.Map<ClientGetDto>(client);
     }
+   
     /// <summary>
     /// Post a new client
     /// </summary>
     /// <param name="client"></param>
     [HttpPost]
-    public void Post([FromBody] ClientPostDto client)
+    public async Task Post([FromBody] ClientPostDto client)
     {
         _logger.LogInformation("Post a new client");
-        _carRepository.Clients.Add(_mapper.Map<Client>(client));
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.Clients.AddAsync(_mapper.Map<Client>(client));
+        await ctx.SaveChangesAsync();
     }
     /// <summary>
     /// Put a client
@@ -75,19 +81,21 @@ public class ClientController : ControllerBase
     /// <param name="clientToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(uint id, [FromBody] ClientPostDto clientToPut)
+    public async Task<IActionResult> Put(uint id, [FromBody] ClientPostDto clientToPut)
     {
-        var client = _carRepository.Clients.FirstOrDefault(info => info.Uid == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.FindAsync(id);
         if (client == null)
         {
-            _logger.LogInformation($"Not found a client with id {id}", id);
+            _logger.LogInformation("Not found client with id {id}", id);
             return NotFound();
         }
         else
         {
-            
+            _logger.LogInformation("Updating a client with id {id}", id);
             _mapper.Map(clientToPut, client);
-            _logger.LogInformation("Put a new client - success");
+            ctx.Update(_mapper.Map<Client>(client));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,18 +105,20 @@ public class ClientController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(uint id)
+    public async Task<IActionResult> Delete(uint id)
     {
-        var client = _carRepository.Clients.FirstOrDefault(info => info.Uid == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var client = await ctx.Clients.FindAsync(id);
         if (client == null)
         {
-            _logger.LogInformation($"Not found a client with id {id}", id);
+            _logger.LogInformation("Not found client with id {id}", id);
             return NotFound();
         }
         else
         {
-            _carRepository.Clients.Remove(client);
             _logger.LogInformation("Delete a client - success");
+            ctx.Clients.Remove(client);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

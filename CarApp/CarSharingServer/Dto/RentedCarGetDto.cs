@@ -23,5 +23,5 @@ public class RentedCarGetDto
     /// <summary>
     /// a day when car must be returned to the rental point
     /// </summary>
-    public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
+    public DateTime TimeOfReturn { get; set; } = DateTime.MinValue;
 }

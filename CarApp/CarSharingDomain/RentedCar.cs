@@ -55,8 +55,10 @@ public class RentedCar
     /// <summary>
     /// a day when car must be returned to the rental point
     /// </summary>
+    
     [Column("timeOfReturn")]
-    public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
+    public DateTime TimeOfReturn { get; set; } = DateTime.MinValue;
+    //public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
     /// <summary>
     /// Default constructor
     /// </summary>
@@ -70,7 +72,7 @@ public class RentedCar
     /// <param name="car"></param>
     /// <param name="timeOfRent"></param>
     /// <param name="rentPeriod"></param>
-    public RentedCar(uint id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod)
+    public RentedCar(uint id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod, DateTime timeOfReturn)
     {
         Id = id;
         Client = client;
@@ -78,5 +80,6 @@ public class RentedCar
         Car = car;
         TimeOfRent = timeOfRent;
         RentPeriod = rentPeriod;
+        TimeOfReturn = timeOfReturn;
     }
 }

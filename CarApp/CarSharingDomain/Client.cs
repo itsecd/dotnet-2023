@@ -34,10 +34,6 @@ public class Client
     [Column("id")]
     public uint Id { set; get; }
     /// <summary>
-    /// 
-    /// </summary>
-    //public List<RentedCar> RentedCars { get; set; } = new List<RentedCar>();
-    /// <summary>
     /// Default constructor
     /// </summary>
     public Client() { }

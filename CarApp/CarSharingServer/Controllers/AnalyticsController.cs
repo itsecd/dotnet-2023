@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using CarSharingDomain;
 using CarSharingServer.Dto;
 using CarSharingServer.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
 /// <summary>
@@ -12,18 +14,19 @@ namespace CarSharingServer.Controllers;
 public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
+    private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
     /// <summary>
     /// Constructor for AnalyticsController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public AnalyticsController(ILogger<AnalyticsController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<AnalyticsController> logger,  IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _carRepository = carRepository;
+        
         _mapper = mapper;
     }
     /// <summary>
@@ -31,11 +34,13 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("all_cars")]
-    public List<CarGetDto> GetAllCars()
+    public async Task<List<CarGetDto>> GetAllCars()
     {
+       await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about all cars");
-        return (from car in _carRepository.Cars
-                select _mapper.Map<CarGetDto>(car)).ToList();
+        var result = await (from car in ctx.Cars
+                            select _mapper.Map<CarGetDto>(car)).ToListAsync();
+        return result;
     }
     /// <summary>
     ///Get info about clients who rented car by id
@@ -43,10 +48,11 @@ public class AnalyticsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("clients_who_rented_model_by_id")]
-    public IActionResult GetClientsRentedCar(uint id)
+    public async Task<IActionResult> GetClientsRentedCar(uint id)
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about clients rented the car with id");
-        var result = (from client in _carRepository.RentedCars where client.Car.Id == id select client.Client.FirstName).ToList();
+        var result = await (from client in ctx.RentedCars where client.Car.Id == id select client.Client.LastName).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No one rented car with id {id}", id);
@@ -59,10 +65,11 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("all_cars_in_rent")]
-    public IActionResult GetAllCarsInRent()
+    public async Task<IActionResult> GetAllCarsInRent()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about cars in rent");
-        var result = (from car in _carRepository.RentedCars where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToList();
+        var result = await (from car in ctx.RentedCars where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("There are no cars in rent right now");
@@ -75,17 +82,18 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("top_five_rented_cars")]
-    public IActionResult GetTopFiveCars()
+    public async Task<IActionResult> GetTopFiveCars()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about top five rented cars");
-        var counter = (from car in _carRepository.RentedCars
-                       group car by car.Car.Id into g
+        var counter = await(from car in ctx.RentedCars
+                       group car by car.Car.Id into carGroup
                        select new
                        {
-                           carmodel = g.Key,
-                           count = g.Count()
-                       }).ToList();
-        var result = (from c in counter orderby c.count descending select c).Take(5).ToList();
+                           carmodel = carGroup.Key,
+                           count = carGroup.Count()
+                       }).ToListAsync();
+        var result = (from rents in counter orderby rents.count descending select rents).Take(5).ToList();
         return Ok(result);
     }
     /// <summary>
@@ -93,15 +101,16 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("number_of_rents_for_each_car")]
-    public IActionResult GetNumOfRents()
+    public async Task<IActionResult> GetNumOfRents()
     {
-        var result = (from rent in _carRepository.RentedCars
-                      group rent by rent.Car.Model into g
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var result = await(from rent in ctx.RentedCars
+                      group rent by rent.Car.Model into carGroup
                       select new
                       {
-                          model = g.Key,
-                          cntr = g.Distinct().Count()
-                      }).ToList();
+                          model = carGroup.Key,
+                          counter = carGroup.Distinct().Count()
+                      }).ToListAsync();
         return Ok(result);
     }
     /// <summary>
@@ -109,16 +118,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("rental_points_with_max_number_of_clients")]
-    public IActionResult GetRentalPointsStatistics()
+    public async Task<IActionResult> GetRentalPointsStatistics()
     {
-        var counter = (from rentalPoint in _carRepository.RentedCars
-                       group rentalPoint by rentalPoint.Point.PointName into g
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var counter = await (from rentalPoint in ctx.RentedCars
+                       group rentalPoint by rentalPoint.Point.PointName into rentalPointGroup
                        select new
                        {
-                           name = g.Key,
-                           counter = g.Distinct().Count()
-                       }).ToList();
-        var result = (from rentNum in counter where (rentNum.counter == counter.Max(x => x.counter)) select rentNum.name).ToList();
+                           name = rentalPointGroup.Key,
+                           counter = rentalPointGroup.Distinct().Count()
+                       }).ToListAsync();
+        var result = (from rentNum in counter where (rentNum.counter == counter.Max(point => point.counter)) select rentNum.name).ToList();
         return Ok(result);
     }
 }

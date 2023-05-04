@@ -24,10 +24,6 @@ public class RentalPoint
     [Column("id")]
     public uint Id { get; set; }
     /// <summary>
-    /// 
-    /// </summary>
-    //public List<RentedCar> RentedCars { get; set; } = new List<RentedCar>();
-    /// <summary>
     /// Default constructor
     /// </summary>
     public RentalPoint() { }

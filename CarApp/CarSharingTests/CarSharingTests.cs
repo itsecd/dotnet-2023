@@ -44,11 +44,11 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     {
         var rentedCars = _fixture.FixtureRentedCar.ToList();
         var counter = (from cartop in rentedCars
-                       group cartop by cartop.Car.Id into g
+                       group cartop by cartop.Car.Id into carGroup
                        select new
                        {
-                           carmodel = g.Key,
-                           count = g.Count()
+                           carmodel = carGroup.Key,
+                           count = carGroup.Count()
                        }).ToList();
         var result = (from carcounter in counter orderby carcounter.count descending select carcounter).Take(5).ToList();
         Assert.Equal(5, result.Count);
@@ -61,11 +61,11 @@ public class CarSharingQueries : IClassFixture<CarFixture>
     {
         var rentInfo = _fixture.FixtureRentedCar.ToList();
         var result = (from rent in rentInfo
-                          group rent by rent.Car.Model into g
-                          select new
+                          group rent by rent.Car.Model into carGroup
+                      select new
                           {
-                              model = g.Key,
-                              cntr = g.Distinct().Count()
+                              model = carGroup.Key,
+                              cntr = carGroup.Distinct().Count()
                           }).ToList();
         Assert.Equal(4, result[0].cntr);
     }
@@ -78,13 +78,13 @@ public class CarSharingQueries : IClassFixture<CarFixture>
         var rentalPoint = _fixture.FixtureRentedCar.ToList();
         var rentNumber = (from rp in rentalPoint
                           orderby rp.Point.PointName
-                          group rp by rp.Point.PointName into g
+                          group rp by rp.Point.PointName into rentalPointGroup
                           select new
                           {
-                              name = g.Key,
-                              counter = g.Distinct().Count()
+                              name = rentalPointGroup.Key,
+                              counter = rentalPointGroup.Distinct().Count()
                           }).ToList();
-        var maxRent = (from rn in rentNumber where (rn.counter == rentNumber.Max(x => x.counter)) select rn.name).ToList();
+        var maxRent = (from point in rentNumber where (point.counter == rentNumber.Max(rents => rents.counter)) select point.name).ToList();
         Assert.Equal("Kchau", maxRent[0]);
     }
 }

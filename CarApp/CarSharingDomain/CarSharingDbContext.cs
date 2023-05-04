@@ -61,15 +61,16 @@ public class CarSharingDbContext : DbContext
 
         modelBuilder.Entity<RentedCar>().HasData(new List<RentedCar>
         {
-             new RentedCar{ Id = 1, ClientId = 1, RentalPointId=4, CarId=1, TimeOfRent=DateTime.Parse("2023-02-21"), RentPeriod = 5},
-             new RentedCar{ Id = 2, CarId=2, ClientId = 3, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-03-02"), RentPeriod = 3},
-             new RentedCar{ Id = 3, CarId=1, ClientId = 2, RentalPointId=2 , TimeOfRent=DateTime.Parse("2023-02-25"), RentPeriod = 1},
-             new RentedCar{ Id = 4, CarId=3, ClientId = 4, RentalPointId=3 , TimeOfRent=DateTime.Parse("2023-03-21"), RentPeriod = 2},
-             new RentedCar{ Id = 5, CarId=1, ClientId = 3, RentalPointId=4 , TimeOfRent=DateTime.Parse("2023-03-01"), RentPeriod = 5},
-             new RentedCar{ Id = 6, CarId=1, ClientId = 2, RentalPointId=2 , TimeOfRent=DateTime.Parse("2023-05-02"), RentPeriod = 9},
-             new RentedCar{ Id = 7, CarId=4, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-03-11"), RentPeriod = 4},
-             new RentedCar{ Id = 8, CarId=5, ClientId = 2, RentalPointId=3 , TimeOfRent=DateTime.Parse("2023-04-02"), RentPeriod = 2},
-             new RentedCar{ Id = 9, CarId=5, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-05-01"), RentPeriod = 5},
+             new RentedCar{ Id = 1, ClientId = 1, RentalPointId=4, CarId=1, TimeOfRent=DateTime.Parse("2023-02-21"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-02-26")},
+             new RentedCar{ Id = 2, CarId=2, ClientId = 3, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-03-02"), RentPeriod = 3, TimeOfReturn = DateTime.Parse("2023-02-04")},
+             new RentedCar{ Id = 3, CarId=1, ClientId = 2, RentalPointId=2 , TimeOfRent=DateTime.Parse("2023-02-25"), RentPeriod = 1, TimeOfReturn = DateTime.Parse("2023-02-26")},
+             new RentedCar{ Id = 4, CarId=3, ClientId = 4, RentalPointId=3 , TimeOfRent=DateTime.Parse("2023-03-21"), RentPeriod = 2, TimeOfReturn = DateTime.Parse("2023-03-23")},
+             new RentedCar{ Id = 5, CarId=1, ClientId = 3, RentalPointId=4 , TimeOfRent=DateTime.Parse("2023-03-01"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-03-06")},
+             new RentedCar{ Id = 6, CarId=1, ClientId = 4, RentalPointId=2 , TimeOfRent=DateTime.Parse("2023-05-02"), RentPeriod = 9, TimeOfReturn = DateTime.Parse("2023-05-11")},
+             new RentedCar{ Id = 7, CarId=4, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-03-11"), RentPeriod = 4, TimeOfReturn = DateTime.Parse("2023-03-13")},
+             new RentedCar{ Id = 8, CarId=5, ClientId = 2, RentalPointId=3 , TimeOfRent=DateTime.Parse("2023-04-02"), RentPeriod = 2, TimeOfReturn = DateTime.Parse("2023-04-04")},
+             new RentedCar{ Id = 9, CarId=5, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-05-01"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-05-06")},
+             new RentedCar{ Id = 10, CarId=2, ClientId = 5,RentalPointId=5, TimeOfRent=DateTime.Parse("2023-05-01"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-05-06")}
         });
     }
 }

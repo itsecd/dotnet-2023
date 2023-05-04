@@ -15,19 +15,17 @@ public class RentalPointController : ControllerBase
 {
     private readonly ILogger<RentalPointController> _logger;
     private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
-    private readonly ICarSharingRepository _carRepository;
     private readonly IMapper _mapper;
     /// <summary>
     /// Constructor for RentalPointController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public RentalPointController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<RentalPointController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public RentalPointController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<RentalPointController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _carRepository = carRepository;
         _mapper = mapper;
     }
     /// <summary>

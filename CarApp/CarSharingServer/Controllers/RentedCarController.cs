@@ -3,6 +3,7 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 using AutoMapper;
 using CarSharingServer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
 /// <summary>
@@ -14,6 +15,7 @@ public class RentedCarController : ControllerBase
 {
     private readonly ILogger<RentedCarController> _logger;
     private readonly ICarSharingRepository _carRepository;
+    private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Constructor for RentedCarController
@@ -21,8 +23,9 @@ public class RentedCarController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public RentedCarController(ILogger<RentedCarController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public RentedCarController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<RentedCarController> logger, ICarSharingRepository carRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _carRepository = carRepository;
         _mapper = mapper;
@@ -33,10 +36,12 @@ public class RentedCarController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<RentedCarGetDto> Get()
+    public async Task<IEnumerable<RentedCarGetDto>> Get()
     {
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get the rented cars");
-        return _carRepository.RentedCars.Select(rentedCar => _mapper.Map<RentedCarGetDto>(rentedCar));
+        var rentedCars = await ctx.RentedCars.ToArrayAsync();
+        return _mapper.Map<IEnumerable<RentedCarGetDto>>(rentedCars);
     }
     /// <summary>
     /// Get rented car by id
@@ -44,40 +49,44 @@ public class RentedCarController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<RentedCarGetDto> Get(uint id)
+    public async Task<ActionResult<RentedCarGetDto>> Get(uint id)
     {
-        _logger.LogInformation("Get the rented car with id {id} ", id);
-        var rentedCarInfo = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
-        if (rentedCarInfo == null)
+        if (_contextFactory == null)
         {
-            _logger.LogInformation("Not found a car with id {id}", id);
             return NotFound();
         }
-        else
+        _logger.LogInformation("Get the rented car with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var rentedCar = await ctx.RentedCars.FindAsync(id);
+        if (rentedCar == null)
         {
-            return Ok(_mapper.Map<RentedCarGetDto>(rentedCarInfo));
+            return NotFound();
         }
+        return _mapper.Map<RentedCarGetDto>(rentedCar);
     }
     /// <summary>
     /// Post a new rented car
     /// </summary>
     /// <param name="rentedCar"></param>
     [HttpPost]
-    public void Post([FromBody] RentedCarPostDto rentedCar)
+    public async Task Post([FromBody] RentedCarPostDto rentedCar)
     {
-        _logger.LogInformation("Post a new car");
-        _carRepository.RentedCars.Add(_mapper.Map<RentedCar>(rentedCar));
+        _logger.LogInformation("Post a new rented car");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.RentedCars.AddAsync(_mapper.Map<RentedCar>(rentedCar));
+        await ctx.SaveChangesAsync();
     }
-   /// <summary>
-   /// Put a rented car
-   /// </summary>
-   /// <param name="id"></param>
-   /// <param name="rentedCarToPut"></param>
-   /// <returns></returns>
+    /// <summary>
+    /// Put a rented car
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="rentedCarToPut"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(uint id, [FromBody] RentedCarPostDto rentedCarToPut)
+    public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentedCarToPut)
     {
-        var rentedCar = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var rentedCar = await ctx.RentedCars.FindAsync(id);
         if (rentedCar == null)
         {
             _logger.LogInformation("Not found rented car with id {id}", id);
@@ -85,9 +94,10 @@ public class RentedCarController : ControllerBase
         }
         else
         {
-
+            _logger.LogInformation("Updating a rented car with id {id}", id);
             _mapper.Map(rentedCarToPut, rentedCar);
-            _logger.LogInformation("Put a new rented car - success");
+            ctx.Update(_mapper.Map<RentedCar>(rentedCar));
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,18 +107,20 @@ public class RentedCarController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(uint id)
+    public async Task<IActionResult> Delete(uint id)
     {
-        var rentedCar = _carRepository.RentedCars.FirstOrDefault(info => info.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var rentedCar = await ctx.RentedCars.FindAsync(id);
         if (rentedCar == null)
         {
-            _logger.LogInformation("Not found a car with id {id}", id);
+            _logger.LogInformation("Not found rented car with id {id}", id);
             return NotFound();
         }
         else
         {
-            _carRepository.RentedCars.Remove(rentedCar);
-            _logger.LogInformation("Delete a car - success");
+            _logger.LogInformation("Delete a rented car - success");
+            ctx.RentedCars.Remove(rentedCar);
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

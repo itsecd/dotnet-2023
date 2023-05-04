@@ -10,7 +10,7 @@ public class RentedCar
     /// <summary>
     /// connection to other class, represents a client, who rented a car
     /// </summary>
-    public Client Client { get; set; }
+    public Client? Client { get; set; }
     /// <summary>
     /// id of client, who rented a car
     /// </summary>
@@ -20,7 +20,7 @@ public class RentedCar
     /// <summary>
     ///connection to other class, represents a point, where client rented a car
     /// </summary>
-    public RentalPoint Point { get; set; }
+    public RentalPoint? Point { get; set; }
     /// <summary>
     /// id of rental point, where a car was rented
     /// </summary>
@@ -30,7 +30,7 @@ public class RentedCar
     /// <summary>
     /// connection to other class, represents a car rented by the client
     /// </summary>
-    public Car Car { get; set; }
+    public Car? Car { get; set; }
     /// <summary>
     /// id of model of rented car
     /// </summary>
@@ -51,6 +51,7 @@ public class RentedCar
     /// <summary>
     /// period of time when the client can use a rented car 
     /// </summary>
+    [Column("rentPeriod")]
     public uint RentPeriod { get; set; } = 0;
     /// <summary>
     /// a day when car must be returned to the rental point
@@ -58,7 +59,6 @@ public class RentedCar
     
     [Column("timeOfReturn")]
     public DateTime TimeOfReturn { get; set; } = DateTime.MinValue;
-    //public DateTime TimeOfReturn => TimeOfRent.AddDays(RentPeriod);
     /// <summary>
     /// Default constructor
     /// </summary>
@@ -72,6 +72,7 @@ public class RentedCar
     /// <param name="car"></param>
     /// <param name="timeOfRent"></param>
     /// <param name="rentPeriod"></param>
+    /// <param name="timeOfReturn"></param>
     public RentedCar(uint id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod, DateTime timeOfReturn)
     {
         Id = id;

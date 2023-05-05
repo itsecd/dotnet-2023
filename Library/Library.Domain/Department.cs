@@ -26,6 +26,6 @@ public class Department
     /// <summary>
     /// TypeDepartmentsId stores department's id
     /// </summary>
-    [Column("type_departments_id")]
-    public int TypeDepartmentsId { set; get; }
+    [Column("type_department_id")]
+    public int TypeDepartmentId { set; get; }
 }

@@ -67,7 +67,7 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about issued books");
         var request = (from book in _librariesRepository.Books
-                       join card in _librariesRepository.Cards on book.Id equals card.BooksId
+                       join card in _librariesRepository.Cards on book.Id equals card.BookId
                        orderby book.Name
                        group book by book into b
                        select new
@@ -96,7 +96,7 @@ public class RequestController : ControllerBase
         var request = (from department in _librariesRepository.Departments
                        join book in _librariesRepository.Books on department.BookId equals book.Id
                        where book.Id == id
-                       select new { department = department.TypeDepartmentsId, count = department.Count }).ToList();
+                       select new { department = department.TypeDepartmentId, count = department.Count }).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found book: {id}", id);

@@ -20,23 +20,23 @@ public class LibraryRepository : ILibraryRepository
     {
         _cards = new List<Card>
         {
-            new Card { Id = 0, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BooksId = 0, },
-            new Card { Id = 1, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BooksId = 3 },
-            new Card { Id = 2, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BooksId = 3 },
-            new Card { Id = 3, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BooksId = 1 },
-            new Card { Id = 4, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 31), DayCount = 31, ReaderId = 1, BooksId = 2 },
-            new Card { Id = 5, DateOfIssue = new DateTime(2022, 12, 30), DateOfReturn = new DateTime(2023, 2, 14), DayCount = 30, ReaderId = 2, BooksId = 2 },
-            new Card { Id = 6, DateOfIssue = new DateTime(2022, 12, 30), DateOfReturn = new DateTime(2023, 2, 14), DayCount = 30, ReaderId = 3, BooksId = 1 },
-            new Card { Id = 7, DateOfIssue = new DateTime(2023, 2, 14), DateOfReturn = new DateTime(2023, 2, 28), DayCount = 21, ReaderId = 4, BooksId = 0 }
+            new Card { Id = 0, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BookId = 0, },
+            new Card { Id = 1, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BookId = 3 },
+            new Card { Id = 2, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BookId = 3 },
+            new Card { Id = 3, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BookId = 1 },
+            new Card { Id = 4, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 31), DayCount = 31, ReaderId = 1, BookId = 2 },
+            new Card { Id = 5, DateOfIssue = new DateTime(2022, 12, 30), DateOfReturn = new DateTime(2023, 2, 14), DayCount = 30, ReaderId = 2, BookId = 2 },
+            new Card { Id = 6, DateOfIssue = new DateTime(2022, 12, 30), DateOfReturn = new DateTime(2023, 2, 14), DayCount = 30, ReaderId = 3, BookId = 1 },
+            new Card { Id = 7, DateOfIssue = new DateTime(2023, 2, 14), DateOfReturn = new DateTime(2023, 2, 28), DayCount = 21, ReaderId = 4, BookId = 0 }
         };
 
         _departments = new List<Department>
         {
-            new Department{ Id = 0, TypeDepartmentsId = 1, BookId = 0, Count = 40 },
-            new Department{ Id = 1, TypeDepartmentsId = 1, BookId = 1, Count = 35 },
-            new Department{ Id = 2, TypeDepartmentsId = 1, BookId = 2, Count = 33 },
-            new Department{ Id = 3, TypeDepartmentsId = 0, BookId = 3, Count = 15 },
-            new Department{ Id = 4, TypeDepartmentsId = 1, BookId = 3, Count = 20 },
+            new Department{ Id = 0, TypeDepartmentId = 1, BookId = 0, Count = 40 },
+            new Department{ Id = 1, TypeDepartmentId = 1, BookId = 1, Count = 35 },
+            new Department{ Id = 2, TypeDepartmentId = 1, BookId = 2, Count = 33 },
+            new Department{ Id = 3, TypeDepartmentId = 0, BookId = 3, Count = 15 },
+            new Department{ Id = 4, TypeDepartmentId = 1, BookId = 3, Count = 20 },
         };
 
         _books = new List<Book>

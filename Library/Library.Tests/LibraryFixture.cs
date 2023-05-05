@@ -120,31 +120,31 @@ public class LibraryFixture
             var departments = new List<Department>();
             var firstDepartment = new Department();
             firstDepartment.Id = 0;
-            firstDepartment.TypeDepartmentsId = 1;
+            firstDepartment.TypeDepartmentId = 1;
             firstDepartment.BookId = 0;
             firstDepartment.Count = 40;
             departments.Add(firstDepartment);
             var secondDepartment = new Department();
             secondDepartment.Id = 1;
-            secondDepartment.TypeDepartmentsId = 1;
+            secondDepartment.TypeDepartmentId = 1;
             secondDepartment.BookId = 1;
             secondDepartment.Count = 35;
             departments.Add(secondDepartment);
             var thirdDepartment = new Department();
             thirdDepartment.Id = 2;
-            thirdDepartment.TypeDepartmentsId = 1;
+            thirdDepartment.TypeDepartmentId = 1;
             thirdDepartment.BookId = 2;
             thirdDepartment.Count = 33;
             departments.Add(thirdDepartment);
             var fourthDepartment = new Department();
             fourthDepartment.Id = 3;
-            fourthDepartment.TypeDepartmentsId = 0;
+            fourthDepartment.TypeDepartmentId = 0;
             fourthDepartment.BookId = 3;
             fourthDepartment.Count = 15;
             departments.Add(fourthDepartment);
             var fifthDepartment = new Department();
             fifthDepartment.Id = 4;
-            fifthDepartment.TypeDepartmentsId = 1;
+            fifthDepartment.TypeDepartmentId = 1;
             fifthDepartment.BookId = 3;
             fifthDepartment.Count = 20;
             departments.Add(fifthDepartment);
@@ -216,7 +216,7 @@ public class LibraryFixture
             firstCard.DateOfReturn = new DateTime(2023, 1, 28);
             firstCard.DayCount = 31;
             firstCard.ReaderId = 0;
-            firstCard.BooksId = 0;
+            firstCard.BookId = 0;
             cards.Add(firstCard);
             var secondCard = new Card();
             secondCard.Id = 1;
@@ -224,7 +224,7 @@ public class LibraryFixture
             secondCard.DateOfReturn = new DateTime(2023, 1, 28);
             secondCard.DayCount = 31;
             secondCard.ReaderId = 0;
-            secondCard.BooksId = 3;
+            secondCard.BookId = 3;
             cards.Add(secondCard);
             var thirdCard = new Card();
             thirdCard.Id = 2;
@@ -232,7 +232,7 @@ public class LibraryFixture
             thirdCard.DateOfReturn = new DateTime(2023, 1, 28);
             thirdCard.DayCount = 31;
             thirdCard.ReaderId = 1;
-            thirdCard.BooksId = 3;
+            thirdCard.BookId = 3;
             cards.Add(thirdCard);
             var fourthCard = new Card();
             fourthCard.Id = 3;
@@ -240,7 +240,7 @@ public class LibraryFixture
             fourthCard.DateOfReturn = new DateTime(2023, 1, 28);
             fourthCard.DayCount = 31;
             fourthCard.ReaderId = 1;
-            fourthCard.BooksId = 1;
+            fourthCard.BookId = 1;
             cards.Add(fourthCard);
             var fifthCard = new Card();
             fifthCard.Id = 4;
@@ -248,7 +248,7 @@ public class LibraryFixture
             fifthCard.DateOfReturn = new DateTime(2023, 1, 31);
             fifthCard.DayCount = 31;
             fifthCard.ReaderId = 1;
-            fifthCard.BooksId = 2;
+            fifthCard.BookId = 2;
             cards.Add(fifthCard);
             var sixthCard = new Card();
             sixthCard.Id = 5;
@@ -256,7 +256,7 @@ public class LibraryFixture
             sixthCard.DateOfReturn = new DateTime(2023, 2, 14);
             sixthCard.DayCount = 30;
             sixthCard.ReaderId = 2;
-            sixthCard.BooksId = 2;
+            sixthCard.BookId = 2;
             cards.Add(sixthCard);
             var seventhCard = new Card();
             seventhCard.Id = 6;
@@ -264,7 +264,7 @@ public class LibraryFixture
             seventhCard.DateOfReturn = new DateTime(2023, 2, 14);
             seventhCard.DayCount = 30;
             seventhCard.ReaderId = 3;
-            seventhCard.BooksId = 1;
+            seventhCard.BookId = 1;
             cards.Add(seventhCard);
             var eighthCard = new Card();
             eighthCard.Id = 7;
@@ -272,7 +272,7 @@ public class LibraryFixture
             eighthCard.DateOfReturn = new DateTime(2023, 2, 28);
             eighthCard.DayCount = 21;
             eighthCard.ReaderId = 4;
-            eighthCard.BooksId = 0;
+            eighthCard.BookId = 0;
             cards.Add(eighthCard);
             return cards;
         }

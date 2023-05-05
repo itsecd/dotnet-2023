@@ -31,7 +31,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureBook = _fixture.FixtureBook.ToList();
         var fixtureCard = _fixture.FixtureCard.ToList();
         var request = (from book in fixtureBook
-                       join card in fixtureCard on book.Id equals card.BooksId
+                       join card in fixtureCard on book.Id equals card.BookId
                        orderby book.Name
                        group book by book.Id into b
                        select b).Count();

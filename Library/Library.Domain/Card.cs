@@ -32,7 +32,7 @@ public class Card
     /// BooksId stores book's id
     /// </summary>
     [Column("book_id")]
-    public int BooksId { set; get; }
+    public int BookId { set; get; }
     /// <summary>
     /// ReaderId stores reader's id
     /// </summary>

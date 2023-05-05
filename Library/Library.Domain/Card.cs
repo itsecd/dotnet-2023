@@ -1,40 +1,41 @@
-﻿namespace Library.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Library.Domain;
 
 /// <summary>
 /// Class Card is used to store info about the cards on the books
 /// </summary>
+[Table("card")]
 public class Card
 {
     /// <summary>
     /// Id stores card's id
     /// </summary>
+    [Column("id")]
     public int Id { set; get; }
     /// <summary>
     /// DateOfIssue stores date of taking the book
     /// </summary>
+    [Column("date_of_issue")]
     public DateTime DateOfIssue { set; get; }
     /// <summary>
     /// DateOfReturn stores date of returning the book
     /// </summary>
+    [Column("date_of_return")]
     public DateTime DateOfReturn { set; get; }
     /// <summary>
     /// DayCount stores the number of days for which the book was taken
     /// </summary>
+    [Column("day_count")]
     public int DayCount { set; get; }
     /// <summary>
     /// BooksId stores book's id
     /// </summary>
+    [Column("books_id")]
     public int BooksId { set; get; }
-    /// <summary>
-    /// Books stores list of books
-    /// </summary>
-    public List<Book> Books { set; get; } = new List<Book>();
     /// <summary>
     /// ReaderId stores reader's id
     /// </summary>
+    [Column("reader_id")]
     public int ReaderId { set; get; }
-    /// <summary>
-    /// Reader stores list of readers
-    /// </summary>
-    public List<Reader> Reader { set; get; } = new List<Reader>();
 }

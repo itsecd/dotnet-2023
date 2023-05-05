@@ -41,10 +41,11 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     [Fact]
     public void CountBooksTest()
     {
+        var fixtureBook = _fixture.FixtureBook.ToList();
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from department in fixtureDepartment
-                       from b in department.Books
-                       where b.Id == 3
+                       join book in fixtureBook on department.BooksId equals book.Id
+                       where book.Id == 3
                        select new { departments = department, count = department.Count }).ToList();
         Assert.Equal(2, request.Count());
         Assert.Equal(15, request.First(x => x.departments.Id == 3).count);
@@ -56,11 +57,13 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     [Fact]
     public void CountTypesTest()
     {
+        var fixtureBook = _fixture.FixtureBook.ToList();
+        var fixtureTypeEdition = _fixture.FixtureTypeEdition.ToList();
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from mass in
                        (from department in fixtureDepartment
-                        from book in department.Books
-                        from type in book.TypeEdition
+                        join book in fixtureBook on department.BooksId equals book.Id
+                        join type in fixtureTypeEdition on book.TypeEditionId equals type.Id
                         select new
                         {
                             types = type.Name,
@@ -83,9 +86,10 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     public void TopFiveTest()
     {
         var fixtureCard = _fixture.FixtureCard.ToList();
+        var fixtureReader = _fixture.FixtureReader.ToList();
         var date = new DateTime(2023, 3, 1);
         var numOfReaders = (from card in fixtureCard
-                            from reader in card.Reader
+                            join reader in fixtureReader on card.ReaderId equals reader.Id
                             where card.DateOfReturn < date
                             group card by reader.Id into g
                             select new
@@ -107,8 +111,9 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     public void DelayReadersTest()
     {
         var fixtureCard = _fixture.FixtureCard.ToList();
+        var fixtureReader = _fixture.FixtureReader.ToList();
         var maxDelay = (from card in fixtureCard
-                        from reader in card.Reader
+                        join reader in fixtureReader on card.ReaderId equals reader.Id
                         group card by reader.FullName into g
                         select new
                         {

@@ -1,4 +1,5 @@
-﻿using Library.Domain;
+﻿using AutoMapper;
+using Library.Server.Dto;
 using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,23 +20,29 @@ public class TypeEditionController : ControllerBase
     /// </summary>
     private readonly ILibraryRepository _librariesRepository;
     /// <summary>
+    /// Used to store map's object
+    /// </summary>
+    private readonly IMapper _mapper;
+    /// <summary>
     /// TypeEdition controller's constructor
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="librariesRepository"></param>
-    public TypeEditionController(ILogger<TypeEditionController> logger, ILibraryRepository librariesRepository)
+    /// <param name="mapper"></param>
+    public TypeEditionController(ILogger<TypeEditionController> logger, ILibraryRepository librariesRepository, IMapper mapper)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
+        _mapper = mapper;
     }
     /// <summary>
     /// Return list of all types of books
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeEdition> Get()
+    public IEnumerable<TypeEditionGetDto> Get()
     {
-        return _librariesRepository.BookTypes;
+        return _librariesRepository.BookTypes.Select(type => _mapper.Map<TypeEditionGetDto>(type));
     }
     /// <summary>
     /// Return info about type by id
@@ -43,7 +50,7 @@ public class TypeEditionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeEdition> Get(int id)
+    public ActionResult<TypeEditionGetDto> Get(int id)
     {
         var bookType = _librariesRepository.BookTypes.FirstOrDefault(type => type.Id == id);
         if (bookType == null)
@@ -53,7 +60,7 @@ public class TypeEditionController : ControllerBase
         }
         else
         {
-            return Ok(bookType);
+            return Ok(_mapper.Map<TypeEditionGetDto>(bookType));
         }
     }
 }

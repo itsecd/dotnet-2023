@@ -41,9 +41,9 @@ public class ReaderController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Reader> Get()
+    public IEnumerable<ReaderGetDto> Get()
     {
-        return _librariesRepository.Readers;
+        return _librariesRepository.Readers.Select(reader => _mapper.Map<ReaderGetDto>(reader));
     }
     /// <summary>
     /// Return info about reader by id
@@ -51,7 +51,7 @@ public class ReaderController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Reader> Get(int id)
+    public ActionResult<ReaderGetDto> Get(int id)
     {
         var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
         if (reader == null)
@@ -61,7 +61,7 @@ public class ReaderController : ControllerBase
         }
         else
         {
-            return Ok(reader);
+            return Ok(_mapper.Map<ReaderGetDto>(reader));
         }
     }
     /// <summary>

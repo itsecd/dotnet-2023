@@ -56,7 +56,7 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
         else
@@ -86,7 +86,7 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
         else
@@ -106,7 +106,7 @@ public class BookController : ControllerBase
         var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
         if (book == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
+            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
         else

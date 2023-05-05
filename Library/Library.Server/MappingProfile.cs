@@ -14,7 +14,10 @@ public class MappingProfile : Profile
         CreateMap<Card, CardPostDto>();
         CreateMap<Department, DepartmentGetDto>();
         CreateMap<Department, DepartmentPostDto>();
+        CreateMap<Reader, ReaderGetDto>();
         CreateMap<Reader, ReaderPostDto>();
+        CreateMap<TypeDepartment, TypeDepartmentGetDto>();
+        CreateMap<TypeEdition, TypeEditionGetDto>();
 
         CreateMap<BookPostDto, Book>();
         CreateMap<CardPostDto, Card>();

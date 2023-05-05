@@ -89,10 +89,10 @@ public class RequestController : ControllerBase
     public ActionResult<DepartmentGetDto> Get(int id)
     {
         _logger.LogInformation("Get info about availability of the selected book");
-        var request = (from dep in _librariesRepository.Departments
-                       from b in dep.Books
-                       where b.Id == id
-                       select new { department = dep.TypeDepartmentsId, count = dep.Count }).ToList();
+        var request = (from department in _librariesRepository.Departments
+                       join book in _librariesRepository.Books on department.BooksId equals book.Id
+                       where book.Id == id
+                       select new { department = department.TypeDepartmentsId, count = department.Count }).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found book: {id}", id);
@@ -113,8 +113,8 @@ public class RequestController : ControllerBase
         _logger.LogInformation("Get info about count of books for all types edition");
         var request = (from mass in
                        (from department in _librariesRepository.Departments
-                        from book in department.Books
-                        from type in book.TypeEdition
+                        join book in _librariesRepository.Books on department.BooksId equals book.Id
+                        join type in _librariesRepository.BookTypes on book.TypeEditionId equals type.Id
                         select new
                         {
                             types = type.Name,
@@ -146,7 +146,7 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get top five readers");
         var numOfReaders = (from card in _librariesRepository.Cards
-                            from reader in card.Reader
+                            join reader in _librariesRepository.Readers on card.ReaderId equals reader.Id
                             where card.DateOfReturn < date
                             group card by reader.FullName into g
                             select new
@@ -176,7 +176,7 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about readers who have delayed books for the longest period of time");
         var maxDelay = (from card in _librariesRepository.Cards
-                        from reader in card.Reader
+                        join reader in _librariesRepository.Readers on card.ReaderId equals reader.Id
                         group card by reader.FullName into g
                         select new
                         {

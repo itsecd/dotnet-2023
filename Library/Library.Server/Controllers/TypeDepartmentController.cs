@@ -1,4 +1,5 @@
-﻿using Library.Domain;
+﻿using AutoMapper;
+using Library.Server.Dto;
 using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,23 +20,29 @@ public class TypeDepartmentController : ControllerBase
     /// </summary>
     private readonly ILibraryRepository _librariesRepository;
     /// <summary>
+    /// Used to store map's object
+    /// </summary>
+    private readonly IMapper _mapper;
+    /// <summary>
     /// TypeDepartment controller's constructor
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="librariesRepository"></param>
-    public TypeDepartmentController(ILogger<TypeDepartmentController> logger, ILibraryRepository librariesRepository)
+    /// <param name="mapper"></param>
+    public TypeDepartmentController(ILogger<TypeDepartmentController> logger, ILibraryRepository librariesRepository, IMapper mapper)
     {
         _logger = logger;
         _librariesRepository = librariesRepository;
+        _mapper = mapper;
     }
     /// <summary>
     /// Return list of all types of departments
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeDepartment> Get()
+    public IEnumerable<TypeDepartmentGetDto> Get()
     {
-        return _librariesRepository.DepartmentTypes;
+        return _librariesRepository.DepartmentTypes.Select(type => _mapper.Map<TypeDepartmentGetDto>(type));
     }
     /// <summary>
     /// Return info about type by id
@@ -43,7 +50,7 @@ public class TypeDepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeDepartment> Get(int id)
+    public ActionResult<TypeDepartmentGetDto> Get(int id)
     {
         var departmentType = _librariesRepository.DepartmentTypes.FirstOrDefault(type => type.Id == id);
         if (departmentType == null)
@@ -53,7 +60,7 @@ public class TypeDepartmentController : ControllerBase
         }
         else
         {
-            return Ok(departmentType);
+            return Ok(_mapper.Map<TypeDepartmentGetDto>(departmentType));
         }
     }
 }

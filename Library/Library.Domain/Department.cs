@@ -21,8 +21,8 @@ public class Department
     /// <summary>
     /// BooksId stores book's id
     /// </summary>
-    [Column("books_id")]
-    public int BooksId { set; get; }
+    [Column("book_id")]
+    public int BookId { set; get; }
     /// <summary>
     /// TypeDepartmentsId stores department's id
     /// </summary>

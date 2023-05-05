@@ -46,7 +46,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureBook = _fixture.FixtureBook.ToList();
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from department in fixtureDepartment
-                       join book in fixtureBook on department.BooksId equals book.Id
+                       join book in fixtureBook on department.BookId equals book.Id
                        where book.Id == 3
                        select new { departments = department, count = department.Count }).ToList();
         Assert.Equal(2, request.Count());
@@ -64,7 +64,7 @@ public class LibraryTests : IClassFixture<LibraryFixture>
         var fixtureDepartment = _fixture.FixtureDepartment.ToList();
         var request = (from mass in
                        (from department in fixtureDepartment
-                        join book in fixtureBook on department.BooksId equals book.Id
+                        join book in fixtureBook on department.BookId equals book.Id
                         join type in fixtureTypeEdition on book.TypeEditionId equals type.Id
                         select new
                         {

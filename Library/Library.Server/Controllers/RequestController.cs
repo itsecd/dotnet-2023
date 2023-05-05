@@ -94,7 +94,7 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about availability of the selected book");
         var request = (from department in _librariesRepository.Departments
-                       join book in _librariesRepository.Books on department.BooksId equals book.Id
+                       join book in _librariesRepository.Books on department.BookId equals book.Id
                        where book.Id == id
                        select new { department = department.TypeDepartmentsId, count = department.Count }).ToList();
         if (request.Count == 0)
@@ -117,7 +117,7 @@ public class RequestController : ControllerBase
         _logger.LogInformation("Get info about count of books for all types edition");
         var request = (from mass in
                        (from department in _librariesRepository.Departments
-                        join book in _librariesRepository.Books on department.BooksId equals book.Id
+                        join book in _librariesRepository.Books on department.BookId equals book.Id
                         join type in _librariesRepository.BookTypes on book.TypeEditionId equals type.Id
                         select new
                         {

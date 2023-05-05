@@ -32,11 +32,11 @@ public class LibraryRepository : ILibraryRepository
 
         _departments = new List<Department>
         {
-            new Department{ Id = 0, TypeDepartmentsId = 1, BooksId = 0, Count = 40 },
-            new Department{ Id = 1, TypeDepartmentsId = 1, BooksId = 1, Count = 35 },
-            new Department{ Id = 2, TypeDepartmentsId = 1, BooksId = 2, Count = 33 },
-            new Department{ Id = 3, TypeDepartmentsId = 0, BooksId = 3, Count = 15 },
-            new Department{ Id = 4, TypeDepartmentsId = 1, BooksId = 3, Count = 20 },
+            new Department{ Id = 0, TypeDepartmentsId = 1, BookId = 0, Count = 40 },
+            new Department{ Id = 1, TypeDepartmentsId = 1, BookId = 1, Count = 35 },
+            new Department{ Id = 2, TypeDepartmentsId = 1, BookId = 2, Count = 33 },
+            new Department{ Id = 3, TypeDepartmentsId = 0, BookId = 3, Count = 15 },
+            new Department{ Id = 4, TypeDepartmentsId = 1, BookId = 3, Count = 20 },
         };
 
         _books = new List<Book>

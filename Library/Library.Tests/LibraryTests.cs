@@ -29,10 +29,12 @@ public class LibraryTests : IClassFixture<LibraryFixture>
     public void BooksTest()
     {
         var fixtureBook = _fixture.FixtureBook.ToList();
+        var fixtureCard = _fixture.FixtureCard.ToList();
         var request = (from book in fixtureBook
-                       where book.IsIssued
+                       join card in fixtureCard on book.Id equals card.BooksId
                        orderby book.Name
-                       select book).Count();
+                       group book by book.Id into b
+                       select b).Count();
         Assert.Equal(4, request);
     }
     /// <summary>

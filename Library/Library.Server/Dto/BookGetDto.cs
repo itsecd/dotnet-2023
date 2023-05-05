@@ -32,8 +32,4 @@ public class BookGetDto
     /// TypeEditionId stores id of type book
     /// </summary>
     public int TypeEditionId { set; get; }
-    /// <summary>
-    /// IsIssued stores information about whether a book has been issued
-    /// </summary>
-    public bool IsIssued { set; get; }
 }

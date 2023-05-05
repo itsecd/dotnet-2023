@@ -68,7 +68,6 @@ public class LibraryFixture
             firstBook.PlaceEdition = "Kuibyshev";
             firstBook.YearEdition = 1989;
             firstBook.TypeEditionId = 2;
-            firstBook.IsIssued = true;
             firstBook.Cards.Add(cards[0]);
             firstBook.Cards.Add(cards[7]);
             firstBook.Departments.Add(departments[0]);
@@ -81,7 +80,6 @@ public class LibraryFixture
             secondBook.PlaceEdition = "Kuibyshev";
             secondBook.YearEdition = 1988;
             secondBook.TypeEditionId = 2;
-            secondBook.IsIssued = true;
             secondBook.Cards.Add(cards[3]);
             secondBook.Cards.Add(cards[6]);
             secondBook.Departments.Add(departments[1]);
@@ -94,7 +92,6 @@ public class LibraryFixture
             thirdBook.PlaceEdition = "Samara";
             thirdBook.YearEdition = 2005;
             thirdBook.TypeEditionId = 0;
-            thirdBook.IsIssued = true;
             thirdBook.Cards.Add(cards[4]);
             thirdBook.Cards.Add(cards[5]);
             thirdBook.Departments.Add(departments[2]);
@@ -107,7 +104,6 @@ public class LibraryFixture
             fourthBook.PlaceEdition = "Samara";
             fourthBook.YearEdition = 2017;
             fourthBook.TypeEditionId = 1;
-            fourthBook.IsIssued = true;
             fourthBook.Cards.Add(cards[1]);
             fourthBook.Cards.Add(cards[2]);
             fourthBook.Departments.Add(departments[3]);

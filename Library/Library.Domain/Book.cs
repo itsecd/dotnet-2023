@@ -44,11 +44,6 @@ public class Book
     [Column("type_edition_id")]
     public int TypeEditionId { set; get; }
     /// <summary>
-    /// IsIssued stores information about whether a book has been issued
-    /// </summary>
-    [Column("is_issued")]
-    public bool IsIssued { set; get; }
-    /// <summary>
     /// Cards stores list of cards about the book
     /// </summary>
     public List<Card> Cards { set; get; } = new List<Card>();

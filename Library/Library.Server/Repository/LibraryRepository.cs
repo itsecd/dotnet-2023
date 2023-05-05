@@ -41,10 +41,10 @@ public class LibraryRepository : ILibraryRepository
 
         _books = new List<Book>
         {
-            new Book { Id = 0, Cipher = "5698/197b", Author = "Vasilev A.V.", Name = "Boolean algebra tutorial", PlaceEdition = "Kuibyshev", YearEdition = 1989, TypeEditionId = 2, IsIssued = true, Cards = new List<Card> { _cards[0], _cards[7] }, Departments = new List<Department> { _departments[0] } },
-            new Book { Id = 1, Cipher = "5696/197b", Author = "Vasilev A.V.", Name = "Mathematical analysis manual", PlaceEdition = "Kuibyshev", YearEdition = 1988, TypeEditionId = 2, IsIssued = true, Cards = new List < Card > { _cards[3], _cards[6] }, Departments = new List < Department > { _departments[1] }},
-            new Book { Id = 2, Cipher = "5832/198c", Author = "Merkulov D.A.", Name = "Computer science and computer engineering", PlaceEdition = "Samara", YearEdition = 2005, TypeEditionId =0, IsIssued = true, Cards = new List<Card> { _cards[4], _cards[5] }, Departments = new List<Department> { _departments[2] } },
-            new Book { Id = 3, Cipher = "7896/215a", Author = "Andropov I.S.", Name = "Nanoelectronics and medicine", PlaceEdition = "Samara", YearEdition = 2017, TypeEditionId = 1, IsIssued = true, Cards = new List<Card> { _cards[1], _cards[2] }, Departments = new List<Department> { _departments[3], _departments[4] } }
+            new Book { Id = 0, Cipher = "5698/197b", Author = "Vasilev A.V.", Name = "Boolean algebra tutorial", PlaceEdition = "Kuibyshev", YearEdition = 1989, TypeEditionId = 2, Cards = new List<Card> { _cards[0], _cards[7] }, Departments = new List<Department> { _departments[0] } },
+            new Book { Id = 1, Cipher = "5696/197b", Author = "Vasilev A.V.", Name = "Mathematical analysis manual", PlaceEdition = "Kuibyshev", YearEdition = 1988, TypeEditionId = 2, Cards = new List < Card > { _cards[3], _cards[6] }, Departments = new List < Department > { _departments[1] }},
+            new Book { Id = 2, Cipher = "5832/198c", Author = "Merkulov D.A.", Name = "Computer science and computer engineering", PlaceEdition = "Samara", YearEdition = 2005, TypeEditionId =0, Cards = new List<Card> { _cards[4], _cards[5] }, Departments = new List<Department> { _departments[2] } },
+            new Book { Id = 3, Cipher = "7896/215a", Author = "Andropov I.S.", Name = "Nanoelectronics and medicine", PlaceEdition = "Samara", YearEdition = 2017, TypeEditionId = 1, Cards = new List<Card> { _cards[1], _cards[2] }, Departments = new List<Department> { _departments[3], _departments[4] } }
         };
 
         _bookTypes = new List<TypeEdition>

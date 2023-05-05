@@ -67,9 +67,13 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about issued books");
         var request = (from book in _librariesRepository.Books
-                       where book.IsIssued
+                       join card in _librariesRepository.Cards on book.Id equals card.BooksId
                        orderby book.Name
-                       select _mapper.Map<Book, BookGetDto>(book)).ToList();
+                       group book by book into b
+                       select new
+                       {
+                           book = _mapper.Map<Book, BookGetDto>(b.Key)
+                       }).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found books");

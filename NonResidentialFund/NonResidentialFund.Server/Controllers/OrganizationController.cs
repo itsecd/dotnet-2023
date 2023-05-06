@@ -22,9 +22,6 @@ public class OrganizationController : ControllerBase
         _logger = logger;
         _organizationsRepository = organizationsRepository;
         _mapper = mapper;
-
-        using var ctx = _contextFactory.CreateDbContext();
-        Console.WriteLine(ctx.Organizations.Count());
     }
 
     /// <summary>
@@ -32,10 +29,11 @@ public class OrganizationController : ControllerBase
     /// </summary>
     /// <returns>List of organizations</returns>
     [HttpGet]
-    public IEnumerable<OrganizationGetDto> Get()
+    public async Task<IEnumerable<OrganizationGetDto>> Get()
     {
         _logger.LogInformation("Get all organization");
-        return _mapper.Map<IEnumerable<OrganizationGetDto>>(_organizationsRepository.Organizations);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        return _mapper.Map<IEnumerable<OrganizationGetDto>>(ctx.Organizations);
     }
 
     /// <summary>
@@ -44,9 +42,10 @@ public class OrganizationController : ControllerBase
     /// <param name="id">id of the organization</param>
     /// <returns>Result of operation and organization object</returns>
     [HttpGet("{id}")]
-    public ActionResult<OrganizationGetDto> Get(int id)
+    public async Task<ActionResult<OrganizationGetDto>> Get(int id)
     {
-        var organization = _organizationsRepository.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -64,9 +63,11 @@ public class OrganizationController : ControllerBase
     /// </summary>
     /// <param name="organization">Organization to be created</param>
     [HttpPost]
-    public void Post([FromBody] OrganizationPostDto organization)
+    public async void Post([FromBody] OrganizationPostDto organization)
     {
-        _organizationsRepository.Organizations.Add(_mapper.Map<Organization>(organization));
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Organizations.Add(_mapper.Map<Organization>(organization));
+        ctx.SaveChanges();
     }
 
     /// <summary>
@@ -76,9 +77,10 @@ public class OrganizationController : ControllerBase
     /// <param name="organizationToPut">New organization data</param>
     /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] OrganizationPostDto organizationToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] OrganizationPostDto organizationToPut)
     {
-        var organization = _organizationsRepository.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -86,7 +88,8 @@ public class OrganizationController : ControllerBase
         }
         else
         {
-            _mapper.Map(organizationToPut, organization);
+            ctx.Organizations.Update(_mapper.Map(organizationToPut, organization));
+            ctx.SaveChanges();
             return Ok();
         }
     }
@@ -97,9 +100,10 @@ public class OrganizationController : ControllerBase
     /// <param name="id">Id of the organization to be removed</param>
     /// <returns>Result of operation</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var organization = _organizationsRepository.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        using var ctx = await _contextFactory.CreateDbContextAsync();
+        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -107,7 +111,8 @@ public class OrganizationController : ControllerBase
         }
         else
         {
-            _organizationsRepository.Organizations.Remove(organization);
+            ctx.Organizations.Remove(organization);
+            ctx.SaveChanges();
             return Ok();
         }
     }

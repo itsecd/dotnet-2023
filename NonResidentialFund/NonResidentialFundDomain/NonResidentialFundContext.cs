@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NonResidentialFund.Domain;
-using System;
 
 namespace NonResidentialFund.Domain;
 public sealed class NonResidentialFundContext : DbContext
@@ -16,13 +14,7 @@ public sealed class NonResidentialFundContext : DbContext
 
     public NonResidentialFundContext(DbContextOptions options) : base(options)
     {
-        try
-        {
-            Database.EnsureCreated();
-        }
-        catch (MySql.Data.MySqlClient.MySqlException e)
-        {
-        }
+        Database.EnsureCreated();
     }
 
     private List<District> DistrictRepository
@@ -64,7 +56,8 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
-    private List<Organization> OrganizationRepository {
+    private List<Organization> OrganizationRepository
+    {
         get
         {
             return new List<Organization>{
@@ -507,27 +500,27 @@ public sealed class NonResidentialFundContext : DbContext
         {
             modelBuilder.Entity<Organization>().HasData(organization);
         }
-        foreach(var buyer in BuyerRepository)
+        foreach (var buyer in BuyerRepository)
         {
             modelBuilder.Entity<Buyer>().HasData(buyer);
         }
-        foreach(var building in BuildingRepository)
+        foreach (var building in BuildingRepository)
         {
             modelBuilder.Entity<Building>().HasData(building);
         }
-        foreach(var privatized in PrivatizedRepository)
+        foreach (var privatized in PrivatizedRepository)
         {
             modelBuilder.Entity<Privatized>().HasData(privatized);
         }
-        foreach(var auction in AuctionRepository)
+        foreach (var auction in AuctionRepository)
         {
             modelBuilder.Entity<Auction>().HasData(auction);
         }
-        foreach(var buildingAuctionConnection in BuildingAuctionConnectionRepository)
+        foreach (var buildingAuctionConnection in BuildingAuctionConnectionRepository)
         {
             modelBuilder.Entity<BuildingAuctionConnection>().HasData(buildingAuctionConnection);
         }
-        foreach(var buyerAuctionRepository in BuyerAuctionConnectionRepository)
+        foreach (var buyerAuctionRepository in BuyerAuctionConnectionRepository)
         {
             modelBuilder.Entity<BuyerAuctionConnection>().HasData(buyerAuctionRepository);
         }

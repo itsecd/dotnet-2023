@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NonResidentialFund.Domain;
@@ -18,7 +17,7 @@ public class BuildingAuctionConnection
     /// <summary>
     /// AuctionId - The id of auction
     /// </summary>
-    
+
     [ForeignKey(nameof(Auction))]
     public int AuctionId { get; set; }
     public BuildingAuctionConnection() { }

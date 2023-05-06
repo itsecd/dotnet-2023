@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
-using NonResidentialFund.Server.Repository;
 
 namespace NonResidentialFund.Server.Controllers;
 
@@ -13,15 +12,12 @@ public class AuctionController : ControllerBase
 {
     private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<AuctionController> _logger;
-    private readonly INonResidentialFundRepository _auctionsRepository;
     private readonly IMapper _mapper;
 
-    public AuctionController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<AuctionController> logger, 
-        INonResidentialFundRepository auctionsRepository, IMapper mapper)
+    public AuctionController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<AuctionController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _auctionsRepository = auctionsRepository;
         _mapper = mapper;
     }
 

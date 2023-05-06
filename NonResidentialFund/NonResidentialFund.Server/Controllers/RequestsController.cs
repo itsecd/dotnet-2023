@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
-using NonResidentialFund.Server.Repository;
 
 namespace NonResidentialFund.Server.Controllers;
 
@@ -13,15 +12,12 @@ public class RequestsController : ControllerBase
 {
     private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<RequestsController> _logger;
-    private readonly INonResidentialFundRepository _requestsRepository;
     private readonly IMapper _mapper;
 
-    public RequestsController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<RequestsController> logger, 
-        INonResidentialFundRepository requestsRepository, IMapper mapper)
+    public RequestsController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<RequestsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _requestsRepository = requestsRepository;
         _mapper = mapper;
     }
 

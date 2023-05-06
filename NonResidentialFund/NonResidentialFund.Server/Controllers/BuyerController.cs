@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
-using NonResidentialFund.Server.Repository;
 
 namespace NonResidentialFund.Server.Controllers;
 [Route("api/[controller]")]
@@ -12,15 +11,12 @@ public class BuyerController : ControllerBase
 {
     private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<BuyerController> _logger;
-    private readonly INonResidentialFundRepository _buyersRepository;
     private readonly IMapper _mapper;
 
-    public BuyerController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<BuyerController> logger, 
-        INonResidentialFundRepository buyersRepository, IMapper mapper)
+    public BuyerController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<BuyerController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _buyersRepository = buyersRepository;
         _mapper = mapper;
     }
 

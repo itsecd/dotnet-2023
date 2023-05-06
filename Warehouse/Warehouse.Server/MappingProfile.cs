@@ -14,12 +14,12 @@ public class MappingProfile : Profile
         CreateMap<WarehouseCells, WarehouseCellsDto>();
         CreateMap<WarehouseCellsDto, WarehouseCells>();
 
-        CreateMap<Supply, SupplyGetDto>();
-        CreateMap<Supply, SupplyPostDto>();
-        CreateMap<SupplyPostDto, Supply>();
+        CreateMap<Supplies, SuppliesGetDto>();
+        CreateMap<Supplies, SuppliesPostDto>();
+        CreateMap<SuppliesPostDto, Supplies>();
 
-        CreateMap<Goods, GoodsPostDto>();
-        CreateMap<Goods, GoodsGetDto>();
-        CreateMap<GoodsPostDto, Goods>();
+        CreateMap<Products, ProductsPostDto>();
+        CreateMap<Products, ProductsGetDto>();
+        CreateMap<ProductsPostDto, Products>();
     }
 }

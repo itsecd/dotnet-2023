@@ -3,60 +3,56 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
-using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
 
 /// <summary>
-///     Controller for goods table
+///     Controller for products table
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class GoodsController : ControllerBase
+public class ProductsController : ControllerBase
 {
-    private readonly ILogger<GoodsController> _logger;
-    private readonly IWarehouseRepository _warehouseRepository;
-    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
+    private readonly ILogger<ProductsController> _logger;
+    private readonly IDbContextFactory<WarehouseDbContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
-    ///     Constructor for GoodsController
+    ///     Constructor for ProductsController
     /// </summary>
     /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public GoodsController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public ProductsController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<ProductsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
-    ///     Get method for goods table
+    ///     Get method for products table
     /// </summary>
     /// <returns>
-    ///     Return all goods
+    ///     Return all products
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<GoodsGetDto>> Get()
+    public async Task<IEnumerable<ProductsGetDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get goods");
-        return _mapper.Map<IEnumerable<GoodsGetDto>>(await ctx.Products.ToListAsync());
+        _logger.LogInformation("Get products");
+        return _mapper.Map<IEnumerable<ProductsGetDto>>(await ctx.Products.ToListAsync());
     }
     /// <summary>
-    ///     Get by id method for goods table
+    ///     Get by id method for products table
     /// </summary>
     /// <returns>
-    ///     Return goods with specified id
+    ///     Return products with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<GoodsGetDto>> Get(int id)
+    public async Task<ActionResult<ProductsGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get goods with id {id}");
+        _logger.LogInformation($"Get products with id {id}");
         var product = ctx.Products.FirstOrDefault(product => product.Id == id);
         if (product == null)
         {
@@ -65,32 +61,32 @@ public class GoodsController : ControllerBase
         }
         else
         {
-            return Ok(_mapper.Map<GoodsGetDto>(product));
+            return Ok(_mapper.Map<ProductsGetDto>(product));
         }
     }
     /// <summary>
-    ///     Post method for goods table
+    ///     Post method for products table
     /// </summary>
-    /// <param name="product"> Goods class instance to insert to table </param>
+    /// <param name="product"> products class instance to insert to table </param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] GoodsPostDto product)
+    public async Task<IActionResult> Post([FromBody] ProductsPostDto product)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post product");
-        await ctx.Products.AddAsync(_mapper.Map<Goods>(product));
+        await ctx.Products.AddAsync(_mapper.Map<Products>(product));
         await ctx.SaveChangesAsync();
         return Ok();
     }
     /// <summary>
-    ///     Put method for goods table
+    ///     Put method for products table
     /// </summary>
     /// <param name="id"> An id of product which would be changed </param>
-    /// <param name="productToPut"> Goods class instance to insert to table </param>
+    /// <param name="productToPut"> products class instance to insert to table </param>
     /// <returns>
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] GoodsPostDto productToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ProductsPostDto productToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put product with id {0}", id);

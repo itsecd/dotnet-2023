@@ -4,7 +4,7 @@ namespace Warehouse.Server.Repository;
 
 public interface IWarehouseRepository
 {
-    List<Goods> Products { get; }
-    List<Supply> Supplies { get; }
+    List<Products> Products { get; }
+    List<Supplies> Supplies { get; }
     List<WarehouseCells> Cells { get; }
 }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
-using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
 
@@ -12,11 +11,10 @@ namespace Warehouse.Server.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class SupplyController : ControllerBase
+public class SuppliesController : ControllerBase
 {
-    private readonly ILogger<SupplyController> _logger;
-    private readonly IWarehouseRepository _warehouseRepository;
-    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
+    private readonly ILogger<SuppliesController> _logger;
+    private readonly IDbContextFactory<WarehouseDbContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
@@ -24,13 +22,11 @@ public class SupplyController : ControllerBase
     /// </summary>
     /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public SupplyController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<SupplyController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public SuppliesController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<SuppliesController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
@@ -40,11 +36,11 @@ public class SupplyController : ControllerBase
     ///     Return all supplies
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<SupplyGetDto>> Get()
+    public async Task<IEnumerable<SuppliesGetDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get supplies");
-        return _mapper.Map<IEnumerable<SupplyGetDto>>(await ctx.Supplies.ToListAsync());
+        return _mapper.Map<IEnumerable<SuppliesGetDto>>(await ctx.Supplies.ToListAsync());
     }
     /// <summary>
     ///     Get by id method for supply table
@@ -53,7 +49,7 @@ public class SupplyController : ControllerBase
     ///     Return supplies with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<SupplyGetDto>> Get(int id)
+    public async Task<ActionResult<SuppliesGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get supplies with id {id}");
@@ -65,7 +61,7 @@ public class SupplyController : ControllerBase
         }
         else
         {
-            return Ok(_mapper.Map<SupplyGetDto>(supply));
+            return Ok(_mapper.Map<SuppliesGetDto>(supply));
         }
     }
     /// <summary>
@@ -73,11 +69,11 @@ public class SupplyController : ControllerBase
     /// </summary>
     /// <param name="supply"> Supply class instance to insert to table </param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] SupplyPostDto supply)
+    public async Task<IActionResult> Post([FromBody] SuppliesPostDto supply)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post supply");
-        await ctx.Supplies.AddAsync(_mapper.Map<Supply>(supply));
+        await ctx.Supplies.AddAsync(_mapper.Map<Supplies>(supply));
         await ctx.SaveChangesAsync();
         return Ok();
     }
@@ -90,7 +86,7 @@ public class SupplyController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] SupplyPostDto supplyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SuppliesPostDto supplyToPut)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put supply with id {0}", id);

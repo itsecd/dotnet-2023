@@ -1,4 +1,7 @@
-﻿namespace Warehouse.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Warehouse.Domain;
 
 /// <summary>
 ///     Class WarehouseCells is used to store info about the warehouse cells
@@ -8,15 +11,20 @@ public class WarehouseCells
     /// <summary>
     ///     CellNumber - cell number 
     /// </summary>  
+    [Key]
+    [Column("cell_number")]
     public int CellNumber { set; get; }
     /// <summary>
     ///     Goods - product, what contain in cell 
     /// </summary>
-    public Goods Goods { set; get; }
-    public WarehouseCells(int cell, Goods goods)
+    public Products Product { set; get; }
+    [ForeignKey("Product")]
+    [Column("product_id")]
+    public int ProductId { set; get; }
+    public WarehouseCells(int cell, Products product)
     {
         CellNumber = cell;
-        Goods = goods;
+        Product = product;
     }
     public WarehouseCells() { }
 }

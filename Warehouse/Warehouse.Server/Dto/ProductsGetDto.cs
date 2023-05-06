@@ -3,7 +3,7 @@
 /// <summary>
 ///     Class GoodsGetDto is used to store info about the products
 /// </summary>
-public class GoodsGetDto
+public class ProductsGetDto
 {
     /// <summary>  
     ///     Id - shows the product's id

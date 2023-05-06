@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
 using Warehouse.Server.Dto;
-using Warehouse.Server.Repository;
 
 namespace Warehouse.Server.Controllers;
 
@@ -14,9 +13,8 @@ namespace Warehouse.Server.Controllers;
 [ApiController]
 public class WarehouseCellsController : ControllerBase
 {
-    private readonly ILogger<GoodsController> _logger;
-    private readonly IWarehouseRepository _warehouseRepository;
-    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
+    private readonly ILogger<ProductsController> _logger;
+    private readonly IDbContextFactory<WarehouseDbContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
@@ -26,11 +24,10 @@ public class WarehouseCellsController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public WarehouseCellsController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<GoodsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public WarehouseCellsController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<ProductsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _warehouseRepository = warehouseRepository;
         _mapper = mapper;
     }
     /// <summary>
@@ -54,7 +51,7 @@ public class WarehouseCellsController : ControllerBase
     /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<WarehouseCellsDto>> Get(int id)
-    {  
+    {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get cells with id {id}");
         var cell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);

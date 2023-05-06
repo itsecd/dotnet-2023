@@ -16,7 +16,7 @@ public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
     private readonly IWarehouseRepository _warehouseRepository;
-    private readonly IDbContextFactory<WarehouseContext> _contextFactory;
+    private readonly IDbContextFactory<WarehouseDbContext> _contextFactory;
     private readonly IMapper _mapper;
 
     /// <summary>
@@ -26,7 +26,7 @@ public class AnalyticsController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="warehouseRepository"></param>
     /// <param name="mapper"></param>
-    public AnalyticsController(IDbContextFactory<WarehouseContext> contextFactory, ILogger<AnalyticsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
+    public AnalyticsController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<AnalyticsController> logger, IWarehouseRepository warehouseRepository, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
@@ -37,15 +37,15 @@ public class AnalyticsController : ControllerBase
     ///     Get method which return information about the company's products, sorted by product name
     /// </summary>
     /// <returns>
-    ///     All goods
+    ///     All products
     /// </returns>
-    [HttpGet("all-goods")]
-    public async Task<ActionResult<IEnumerable<GoodsGetDto>>> GetAllGoods()
+    [HttpGet("all-products")]
+    public async Task<ActionResult<IEnumerable<ProductsGetDto>>> GetAllProducts()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get all goods");
-        var request = (from good in ctx.Products
-                       select _mapper.Map<GoodsGetDto>(good)).ToListAsync();
+        _logger.LogInformation("Get all products");
+        var request = (from product in ctx.Products
+                       select _mapper.Map<ProductsGetDto>(product)).ToListAsync();
         return Ok(request);
     }
     /// <summary>
@@ -54,16 +54,16 @@ public class AnalyticsController : ControllerBase
     /// <returns>
     ///     Supply with specific date
     /// </returns>
-    [HttpGet("goods-with-specific-date")]
-    public async Task<ActionResult<IEnumerable<SupplyGetDto>>> SupplyWithSpecificDate()
+    [HttpGet("supplies-by-specific-date")]
+    public async Task<ActionResult<IEnumerable<SuppliesGetDto>>> SuppliesBySpecificDate()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get supply with specific date");
-        var request = (from goods in ctx.Products
-                       from supply in goods.Supply
+        _logger.LogInformation("Get supplies with specific date");
+        var request = (from products in ctx.Products
+                       from supply in products.Supply
                        where supply.SupplyDate == new DateTime(2023, 02, 11)
-                       orderby supply.Goods
-                       select _mapper.Map<SupplyGetDto>(supply)).ToListAsync();
+                       orderby supply.Products
+                       select _mapper.Map<SuppliesGetDto>(supply)).ToListAsync();
         return Ok(request);
     }
     /// <summary>
@@ -77,10 +77,10 @@ public class AnalyticsController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Warehouse cells and their content");
-        var request = (from goods in ctx.Products
-                       from cell in goods.WarehouseCell
+        var request = (from products in ctx.Products
+                       from cell in products.WarehouseCell
                        orderby cell.CellNumber
-                       select _mapper.Map<WarehouseCellsDto>(new { number = cell.CellNumber, goodsTitle = goods.Name, goodsCount = goods.ProductCount})).ToListAsync();
+                       select _mapper.Map<WarehouseCellsDto>(new { number = cell.CellNumber, productsTitle = products.Name, productsQuantity = products.Quantity })).ToListAsync();
         return Ok(request);
     }
     /// <summary>
@@ -89,24 +89,24 @@ public class AnalyticsController : ControllerBase
     /// <returns>
     ///     Supplies by specific period
     /// </returns>
-    [HttpGet("supply-by-specific-period")]
-    public async Task<ActionResult<IEnumerable<SupplyGetDto>>> SupplyByPeriod()
+    [HttpGet("supplies-by-specific-period")]
+    public async Task<ActionResult<IEnumerable<SuppliesGetDto>>> SuppliesByPeriod()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Supply by specific period");
-        var request = (from goods in ctx.Products
-                       from supply in goods.Supply
+        _logger.LogInformation("Supplies by specific period");
+        var request = (from products in ctx.Products
+                       from supply in products.Supply
                        where supply.SupplyDate > new DateTime(2023, 02, 1) && supply.SupplyDate < new DateTime(2023, 03, 15)
                        group supply by new
                        {
                            supply.CompanyName,
                            supply.CompanyAddress
                        } into grp
-                       select _mapper.Map<SupplyGetDto>(new
+                       select _mapper.Map<SuppliesGetDto>(new
                        {
                            grp.Key.CompanyName,
                            grp.Key.CompanyAddress,
-                           goodsCount = grp.Sum(x => x.SupplyCount)
+                           quantity = grp.Sum(x => x.Quantity)
                        })).ToListAsync();
         return Ok(request);
     }
@@ -117,42 +117,42 @@ public class AnalyticsController : ControllerBase
     ///     Top 5 products
     /// </returns>
     [HttpGet("top-five-products")]
-    public async Task<ActionResult<IEnumerable<GoodsGetDto>>> TopFiveProducts()
+    public async Task<ActionResult<IEnumerable<ProductsGetDto>>> TopFiveProducts()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Top 5 products");
-        var request = (from goods in ctx.Products
-                       orderby goods.ProductCount descending
-                       select _mapper.Map<GoodsGetDto>(goods)).Take(5).ToListAsync();
+        var request = (from products in ctx.Products
+                       orderby products.Quantity descending
+                       select _mapper.Map<ProductsGetDto>(products)).Take(5).ToListAsync();
         return Ok(request);
     }
     /// <summary>
-    ///     Get method which return information about the quantity of delivered goods for each goods and each organization
+    ///     Get method which return information about the quantity of delivered products for each products and each organization
     /// </summary>
     /// <returns>
-    ///     Quantity of delivered goods
+    ///     Quantity of delivered products
     /// </returns>
-    [HttpGet("quantity-of-delivery-goods")]
-    public async Task<ActionResult<IEnumerable<SupplyGetDto>>> QuantityOfDeliverdGoods()
+    [HttpGet("quantity-of-delivery-products")]
+    public async Task<ActionResult<IEnumerable<SuppliesGetDto>>> QuantityOfDeliverdproducts()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Quantity of delivered goods");
-        var request = (from goods in ctx.Products
-                       from supply in goods.Supply
+        _logger.LogInformation("Quantity of delivered products");
+        var request = (from products in ctx.Products
+                       from supply in products.Supply
                        group supply by new
                        {
                            supply.CompanyName,
                            supply.CompanyAddress,
-                           goods.Id,
-                           goods.Name
+                           products.Id,
+                           products.Name
                        } into grp
-                       select _mapper.Map<SupplyGetDto>(new
+                       select _mapper.Map<SuppliesGetDto>(new
                        {
                            grp.Key.CompanyName,
                            grp.Key.CompanyAddress,
                            grp.Key.Id,
                            grp.Key.Name,
-                           quntity = grp.Sum(x => x.SupplyCount)
+                           quantity = grp.Sum(x => x.Quantity)
                        })).ToListAsync();
         return Ok(request);
     }

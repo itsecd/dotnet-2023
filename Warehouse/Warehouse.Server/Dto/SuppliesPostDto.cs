@@ -1,9 +1,9 @@
-﻿namespace Warehouse.Domain;
+﻿namespace Warehouse.Server.Dto;
 
 /// <summary>
-///     Class Supple is used to store info about the supplies
+///     Class SupplyPostDto is used to store info about the supplies
 /// </summary>
-public class Supply
+public class SuppliesPostDto
 {
     /// <summary>  
     ///     Id - shows the supply id
@@ -25,17 +25,4 @@ public class Supply
     ///     SupplyDate - shipment date
     /// </summary>
     public DateTime SupplyDate { get; set; } = DateTime.MinValue;
-    /// <summary>
-    ///     Goods - list of products, what shipment contains 
-    /// </summary>
-    public List<Goods> Goods { set; get; } = new List<Goods>();
-    public Supply(int id, string companyName, string companyAdress, DateTime supplyDate, int supplyCount)
-    {
-        Id = id;
-        CompanyName = companyName;
-        CompanyAddress = companyAdress;
-        SupplyDate = supplyDate;
-        SupplyCount = supplyCount;
-    }
-    public Supply() { }
 }

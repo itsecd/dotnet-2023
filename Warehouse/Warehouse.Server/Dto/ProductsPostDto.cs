@@ -3,7 +3,7 @@
 /// <summary>
 ///     Class GoodsPostDto is used to store info about the products
 /// </summary>
-public class GoodsPostDto
+public class ProductsPostDto
 {
     /// <summary>  
     ///     Id - shows the product's id

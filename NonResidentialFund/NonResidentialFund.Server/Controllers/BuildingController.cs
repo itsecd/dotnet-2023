@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
 using NonResidentialFund.Server.Repository;
@@ -9,17 +10,21 @@ namespace NonResidentialFund.Server.Controllers;
 [ApiController]
 public class BuildingController : ControllerBase
 {
+    private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<BuildingController> _logger;
-
     private readonly INonResidentialFundRepository _buildingsRepository;
-
     private readonly IMapper _mapper;
 
-    public BuildingController(ILogger<BuildingController> logger, INonResidentialFundRepository buildingsRepository, IMapper mapper)
+    public BuildingController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<BuildingController> logger, 
+        INonResidentialFundRepository buildingsRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _buildingsRepository = buildingsRepository;
         _mapper = mapper;
+
+        using var ctx = _contextFactory.CreateDbContext();
+        Console.WriteLine(ctx.Buildings.Count());
     }
 
     /// <summary>

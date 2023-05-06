@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
 using NonResidentialFund.Server.Repository;
@@ -9,17 +10,21 @@ namespace NonResidentialFund.Server.Controllers;
 [ApiController]
 public class OrganizationController : ControllerBase
 {
+    private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<OrganizationController> _logger;
-
     private readonly INonResidentialFundRepository _organizationsRepository;
-
     private readonly IMapper _mapper;
 
-    public OrganizationController(ILogger<OrganizationController> logger, INonResidentialFundRepository organizationsRepository, IMapper mapper)
+    public OrganizationController(IDbContextFactory<NonResidentialFundContext> contextFactory,
+        ILogger<OrganizationController> logger, INonResidentialFundRepository organizationsRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _organizationsRepository = organizationsRepository;
         _mapper = mapper;
+
+        using var ctx = _contextFactory.CreateDbContext();
+        Console.WriteLine(ctx.Organizations.Count());
     }
 
     /// <summary>

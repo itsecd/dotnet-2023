@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
 using NonResidentialFund.Server.Repository;
@@ -10,17 +11,21 @@ namespace NonResidentialFund.Server.Controllers;
 [ApiController]
 public class PrivatizedController : ControllerBase
 {
+    private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<PrivatizedController> _logger;
-
     private readonly INonResidentialFundRepository _privatizedRepository;
-
     private readonly IMapper _mapper;
 
-    public PrivatizedController(ILogger<PrivatizedController> logger, INonResidentialFundRepository privatizedRepository, IMapper mapper)
+    public PrivatizedController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<PrivatizedController> logger, 
+        INonResidentialFundRepository privatizedRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _privatizedRepository = privatizedRepository;
         _mapper = mapper;
+
+        using var ctx = _contextFactory.CreateDbContext();
+        Console.WriteLine(ctx.Privatized.Count());
     }
 
     /// <summary>

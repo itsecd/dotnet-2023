@@ -1,4 +1,7 @@
-﻿namespace NonResidentialFund.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace NonResidentialFund.Domain;
 /// <summary>
 /// Building - a class that describes characteristics of a building
 /// </summary>
@@ -7,6 +10,7 @@ public class Building
     /// <summary>
     /// RegistrationNumber - registration number of building
     /// </summary>
+    [Key]
     public int RegistrationNumber { get; set; }
     /// <summary>
     /// Address - a string that store address of building
@@ -15,11 +19,12 @@ public class Building
     /// <summary>
     /// DistrictId - id of the district in which the building is located
     /// </summary>
-    public int DistrictId { get; set; } = 0;
+    [ForeignKey(nameof(District))]
+    public int DistrictId { get; set; }
     /// <summary>
     /// Area - Building area
     /// </summary>
-    public double Area { get; set; } = 0.0;
+    public double Area { get; set; }
     /// <summary>
     /// FloorCount - count of floors in building
     /// </summary>
@@ -27,11 +32,11 @@ public class Building
     /// <summary>
     /// BuildDate - date of building construction
     /// </summary>
-    public DateTime BuildDate { get; set; } = new DateTime();
+    public DateTime BuildDate { get; set; }
     /// <summary>
     /// Auctions - list of auctions for which the building was offered
     /// </summary>
-    public List<BuildingAuctionConnection> Auctions = new();
+    public List<BuildingAuctionConnection> Auctions = null!;
     public Building() { }
     public Building(int regNum, string address, int districtId, double area, int flourCount, DateTime buildDate, List<BuildingAuctionConnection> auctions)
     {

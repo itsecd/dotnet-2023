@@ -1,4 +1,6 @@
-﻿namespace NonResidentialFund.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NonResidentialFund.Domain;
 /// <summary>
 /// Buyer - a class that describes characteristics of a buyer
 /// </summary>
@@ -7,6 +9,7 @@ public class Buyer
     /// <summary>
     /// BuyerId - the id of the buyer
     /// </summary>
+    [Key]
     public int BuyerId { get; set; } = 0;
     /// <summary>
     /// LastName - buyer's last name
@@ -35,7 +38,7 @@ public class Buyer
     /// <summary>
     /// Auctions - List of auctions in which the buyer participated
     /// </summary>
-    public List<BuyerAuctionConnection> Auctions = new();
+    public List<BuyerAuctionConnection> Auctions = null!;
 
     public Buyer() { }
     public Buyer(int buyerId, string lastName, string firstName, string middleName,

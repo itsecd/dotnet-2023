@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Domain;
 using NonResidentialFund.Server.Dto;
 using NonResidentialFund.Server.Repository;
@@ -9,17 +10,21 @@ namespace NonResidentialFund.Server.Controllers;
 [ApiController]
 public class DistrictController : ControllerBase
 {
+    private readonly IDbContextFactory<NonResidentialFundContext> _contextFactory;
     private readonly ILogger<DistrictController> _logger;
-
     private readonly INonResidentialFundRepository _districtsRepository;
-
     private readonly IMapper _mapper;
 
-    public DistrictController(ILogger<DistrictController> logger, INonResidentialFundRepository districtsRepository, IMapper mapper)
+    public DistrictController(IDbContextFactory<NonResidentialFundContext> contextFactory, ILogger<DistrictController> logger, 
+        INonResidentialFundRepository districtsRepository, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
         _districtsRepository = districtsRepository;
         _mapper = mapper;
+
+        using var ctx = _contextFactory.CreateDbContext();
+        Console.WriteLine(ctx.Districts.Count());
     }
 
     /// <summary>

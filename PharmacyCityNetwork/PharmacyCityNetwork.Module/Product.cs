@@ -6,6 +6,7 @@ namespace PharmacyCityNetwork;
 /// <summary>
 /// Class describing a product
 /// </summary>
+[Table("products")]
 public class Product
 {
     /// <summary>

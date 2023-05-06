@@ -6,6 +6,7 @@ namespace PharmacyCityNetwork;
 /// <summary>
 /// Class describing a pharmancy
 /// </summary>
+[Table("pharmacys")]
 public class Pharmacy
 {
     /// <summary>

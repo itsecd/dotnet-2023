@@ -6,6 +6,7 @@ namespace PharmacyCityNetwork;
 /// <summary>
 /// Class describing a group
 /// </summary>
+[Table("groups")]
 public class Group
 {
     /// <summary>

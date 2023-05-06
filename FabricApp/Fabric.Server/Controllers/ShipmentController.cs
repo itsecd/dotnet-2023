@@ -3,6 +3,7 @@ using Fabrics.Domain;
 using Fabrics.Server.Dto;
 using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
 /// <summary>
@@ -17,9 +18,9 @@ public class ShipmentController : ControllerBase
     /// </summary>
     private readonly ILogger<ShipmentController> _logger;
     /// <summary>
-    /// Used to store repository
+    /// Used to store DbContext
     /// </summary>
-    private readonly IFabricsRepository _fabricsRepository;
+    private readonly IDbContextFactory<FabricsDbContext> _contextFactory;
     /// <summary>
     /// Used to store map-object
     /// </summary>
@@ -27,21 +28,23 @@ public class ShipmentController : ControllerBase
     /// <summary>
     /// ShipmentController constructor
     /// </summary>
-    public ShipmentController(ILogger<ShipmentController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
+    public ShipmentController(ILogger<ShipmentController> logger, IDbContextFactory<FabricsDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _fabricsRepository = fabricsRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
     /// Get list of all shipments.
     /// </summary>
-    /// <returns>List of fabrics</returns>
+    /// <returns>List of shipments</returns>
     [HttpGet]
-    public IEnumerable<ShipmentGetDto> Get()
+    public async Task<IEnumerable<ShipmentGetDto>> Get()
     {
-        _logger.LogInformation("Get provider");
-        return _fabricsRepository.Shipments.Select(shipment => _mapper.Map<ShipmentGetDto>(shipment));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get shipment");
+        var shipments = await context.Shipments.ToListAsync();
+        return _mapper.Map<IEnumerable<ShipmentGetDto>>(shipments);
     }
     /// <summary>
     /// Get shipment by id
@@ -49,9 +52,10 @@ public class ShipmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Shipment</returns>
     [HttpGet("{id}")]
-    public ActionResult<ShipmentGetDto> Get(int id)
+    public async Task<ActionResult<ShipmentGetDto>> Get(int id)
     {
-        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var shipment = await context.Shipments.FirstOrDefaultAsync(shipment => shipment.Id == id);
         if (shipment == null)
         {
             _logger.LogInformation("Not found shipment:{id}", id);
@@ -67,9 +71,11 @@ public class ShipmentController : ControllerBase
     /// </summary>
     /// <param name="shipment"></param>
     [HttpPost]
-    public void Post([FromBody] ShipmentPostDto shipment)
+    public async void Post([FromBody] ShipmentPostDto shipment)
     {
-        _fabricsRepository.Shipments.Add(_mapper.Map<Shipment>(shipment));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Shipments.AddAsync(_mapper.Map<Shipment>(shipment));
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put shipment
@@ -78,9 +84,10 @@ public class ShipmentController : ControllerBase
     /// <param name="shipmentToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ShipmentPostDto shipmentToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ShipmentPostDto shipmentToPut)
     {
-        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var shipment = await context.Shipments.FirstOrDefaultAsync(shipment => shipment.Id == id);
         if (shipment == null)
         {
             _logger.LogInformation("Not found shipment:{id}", id);
@@ -88,7 +95,8 @@ public class ShipmentController : ControllerBase
         }
         else
         {
-            _mapper.Map(shipmentToPut, shipment);
+            context.Update(_mapper.Map(shipmentToPut, shipment));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -98,9 +106,10 @@ public class ShipmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var shipment = _fabricsRepository.Shipments.FirstOrDefault(shipment => shipment.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var shipment = await context.Shipments.FirstOrDefaultAsync(shipment => shipment.Id == id);
         if (shipment == null)
         {
             _logger.LogInformation("Not found shipment:{id}", id);
@@ -108,7 +117,8 @@ public class ShipmentController : ControllerBase
         }
         else
         {
-            _fabricsRepository.Shipments.Remove(shipment);
+            context.Shipments.Remove(shipment);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

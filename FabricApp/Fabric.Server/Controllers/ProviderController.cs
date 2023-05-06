@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Fabrics.Domain;
 using Fabrics.Server.Dto;
-using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
 /// <summary>
@@ -17,9 +17,9 @@ public class ProviderController : ControllerBase
     /// </summary>
     private readonly ILogger<ProviderController> _logger;
     /// <summary>
-    /// Used to store repository
+    /// Used to store DbContext
     /// </summary>
-    private readonly IFabricsRepository _fabricsRepository;
+    private readonly IDbContextFactory<FabricsDbContext> _contextFactory;
     /// <summary>
     /// Used to store map-object
     /// </summary>
@@ -28,12 +28,12 @@ public class ProviderController : ControllerBase
     /// ProviderController constructor
     /// </summary>
     /// <param name="logger">Logger</param>
-    /// <param name="fabricsRepository">Repository</param>
+    /// <param name="contextFactory">Repository</param>
     /// <param name="mapper">Map-object</param>
-    public ProviderController(ILogger<ProviderController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
+    public ProviderController(ILogger<ProviderController> logger, IDbContextFactory<FabricsDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _fabricsRepository = fabricsRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -41,10 +41,12 @@ public class ProviderController : ControllerBase
     /// </summary>
     /// <returns>List of providers</returns>
     [HttpGet]
-    public IEnumerable<ProviderGetDto> Get()
+    public async Task<IEnumerable<ProviderGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get provider");
-        return _fabricsRepository.Providers.Select(provider => _mapper.Map<ProviderGetDto>(provider));
+        var providers = await context.Providers.ToListAsync();
+        return _mapper.Map<IEnumerable<ProviderGetDto>>(providers);
     }
     /// <summary>
     /// Get provider by id
@@ -52,9 +54,10 @@ public class ProviderController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Provider</returns>
     [HttpGet("{id}")]
-    public ActionResult<ProviderGetDto> Get(int id)
+    public async Task<ActionResult<ProviderGetDto>> Get(int id)
     {
-        var provider = _fabricsRepository.Providers.FirstOrDefault(provider => provider.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var provider = await context.Providers.FirstOrDefaultAsync(provider => provider.Id == id);
         if (provider == null)
         {
             _logger.LogInformation("Not found provider:{id}", id);
@@ -70,9 +73,11 @@ public class ProviderController : ControllerBase
     /// </summary>
     /// <param name="provider"></param>
     [HttpPost]
-    public void Post([FromBody] ProviderPostDto provider)
+    public async void Post([FromBody] ProviderPostDto provider)
     {
-        _fabricsRepository.Providers.Add(_mapper.Map<Provider>(provider));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Providers.AddAsync(_mapper.Map<Provider>(provider));
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put provider
@@ -81,9 +86,10 @@ public class ProviderController : ControllerBase
     /// <param name="providerToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ProviderPostDto providerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ProviderPostDto providerToPut)
     {
-        var provider = _fabricsRepository.Providers.FirstOrDefault(provider => provider.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var provider = await context.Providers.FirstOrDefaultAsync(provider => provider.Id == id);
         if (provider == null)
         {
             _logger.LogInformation("Not found provider:{id}", id);
@@ -91,7 +97,8 @@ public class ProviderController : ControllerBase
         }
         else
         {
-            _mapper.Map(providerToPut, provider);
+            context.Update(_mapper.Map(providerToPut, provider));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -101,9 +108,10 @@ public class ProviderController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var provider = _fabricsRepository.Providers.FirstOrDefault(provider => provider.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var provider = await context.Providers.FirstOrDefaultAsync(provider => provider.Id == id);
         if (provider == null)
         {
             _logger.LogInformation("Not found provider:{id}", id);
@@ -111,7 +119,8 @@ public class ProviderController : ControllerBase
         }
         else
         {
-            _fabricsRepository.Providers.Remove(provider);
+            context.Providers.Remove(provider);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace Fabrics.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Fabrics.Domain;
 /// <summary>
 /// Class Shipment is used to store information about shipment from Providers to Fabrics.
 /// </summary>
@@ -7,6 +9,7 @@ public class Shipment
     /// <summary>
     /// Id is used to store the ID.
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// FabricId is used to store the ID of recipient.

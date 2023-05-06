@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Fabrics.Domain;
 using Fabrics.Server.Dto;
-using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
 /// <summary>
@@ -17,23 +17,23 @@ public class FabricController : ControllerBase
     /// </summary>
     private readonly ILogger<FabricController> _logger;
     /// <summary>
-    /// Used to store repository
+    /// Used to store DbContext
     /// </summary>
-    private readonly IFabricsRepository _fabricsRepository;
+    private readonly IDbContextFactory<FabricsDbContext> _contextFactory;
     /// <summary>
     /// Used to store map-object
     /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
-    /// 
+    /// FabricController constructor
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="fabricsRepository"></param>
+    /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public FabricController(ILogger<FabricController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
+    public FabricController(ILogger<FabricController> logger, IDbContextFactory<FabricsDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _fabricsRepository = fabricsRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -41,10 +41,12 @@ public class FabricController : ControllerBase
     /// </summary>
     /// <returns>List of fabrics</returns>
     [HttpGet]
-    public IEnumerable<FabricGetDto> Get()
+    public async Task<IEnumerable<FabricGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get fabric");
-        return _fabricsRepository.Fabrics.Select(fabric => _mapper.Map<FabricGetDto>(fabric));
+        var fabrics = await context.Fabrics.ToListAsync();
+        return _mapper.Map<IEnumerable<FabricGetDto>>(fabrics);
     }
     /// <summary>
     /// Get fabric by id
@@ -52,9 +54,10 @@ public class FabricController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Fabric</returns>
     [HttpGet("{id}")]
-    public ActionResult<FabricGetDto> Get(int id)
+    public async Task<ActionResult<FabricGetDto>> Get(int id)
     {
-        var fabric = _fabricsRepository.Fabrics.FirstOrDefault(fabric => fabric.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var fabric = await context.Fabrics.FirstOrDefaultAsync(fabric => fabric.Id == id);
         if (fabric == null)
         {
             _logger.LogInformation("Not found fabric:{id}", id);
@@ -70,9 +73,11 @@ public class FabricController : ControllerBase
     /// </summary>
     /// <param name="fabric"></param>
     [HttpPost]
-    public void Post([FromBody] FabricPostDto fabric)
+    public async void Post([FromBody] FabricPostDto fabric)
     {
-        _fabricsRepository.Fabrics.Add(_mapper.Map<Fabric>(fabric));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Fabrics.AddAsync(_mapper.Map<Fabric>(fabric));
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put fabric
@@ -81,9 +86,10 @@ public class FabricController : ControllerBase
     /// <param name="fabricToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] FabricPostDto fabricToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] FabricPostDto fabricToPut)
     {
-        var fabric = _fabricsRepository.Fabrics.FirstOrDefault(fabric => fabric.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var fabric = await context.Fabrics.FirstOrDefaultAsync(fabric => fabric.Id == id);
         if (fabric == null)
         {
             _logger.LogInformation("Not found fabric:{id}", id);
@@ -91,7 +97,8 @@ public class FabricController : ControllerBase
         }
         else
         {
-            _mapper.Map(fabricToPut, fabric);
+            context.Update(_mapper.Map(fabricToPut, fabric));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -101,9 +108,10 @@ public class FabricController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var fabric = _fabricsRepository.Fabrics.FirstOrDefault(fabric => fabric.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var fabric = await context.Fabrics.FirstOrDefaultAsync(fabric => fabric.Id == id);
         if (fabric == null)
         {
             _logger.LogInformation("Not found fabric:{id}", id);
@@ -111,7 +119,8 @@ public class FabricController : ControllerBase
         }
         else
         {
-            _fabricsRepository.Fabrics.Remove(fabric);
+            context.Fabrics.Remove(fabric);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

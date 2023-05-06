@@ -1,4 +1,6 @@
-﻿namespace Fabrics.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Fabrics.Domain;
 /// <summary>
 /// Class Fabric is used to store information of the fabric.
 /// </summary>
@@ -7,6 +9,7 @@ public class Fabric
     /// <summary>
     /// Id is used to store the ID.
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Type is used to store information about the Fabric category.

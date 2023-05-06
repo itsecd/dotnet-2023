@@ -1,4 +1,6 @@
-﻿namespace Fabrics.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Fabrics.Domain;
 /// <summary>
 /// Class Provider is used to store information of the provider.
 /// </summary>
@@ -7,6 +9,7 @@ public class Provider
     /// <summary>
     /// Id is used to store the ID.
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Name is used to store name of Provider.

@@ -13,7 +13,7 @@ builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<IFabricsRepository, FabricsRepository>();
 
-builder.Services.AddDbContext<FabricsDbContext>(options =>
+builder.Services.AddDbContextFactory<FabricsDbContext>(options =>
 options.UseMySQL(builder.Configuration.GetConnectionString("Fabric")!));
 
 builder.Services.AddControllers();

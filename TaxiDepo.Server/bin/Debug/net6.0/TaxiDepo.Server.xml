@@ -1,0 +1,486 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxiDepo.Server</name>
+    </assembly>
+    <members>
+        <member name="T:TaxiDepo.Server.Controllers.CarsController">
+            <summary>
+            CarsController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.CarsController._context">
+            <summary>
+            TaxiDepoDbContext class object
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.CarsController._mapper">
+            <summary>
+            Mapper for CarsController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.CarsController._logger">
+            <summary>
+            Logger for CarsController class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.CarsController})">
+            <summary>
+            Constructor with params of CarsController class 
+            </summary>
+            <param name="context">TaxiDepoDbContext class object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.GetCars">
+            <summary>
+            Get all cars from collection
+            </summary>
+            <returns>CarDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.GetCar(System.Int32)">
+            <summary>
+            Get car by id from collection
+            </summary>
+            <param name="id">Needed car id</param>
+            <returns>CarDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.PutCar(System.Int32,TaxiDepo.Server.Dto.CarDto)">
+            <summary>
+            Put car from collection
+            </summary>
+            <param name="id">Needed id to put</param>
+            <param name="car">Car to put</param>
+            <returns>No content</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.PostCar(TaxiDepo.Server.Dto.CarDto)">
+            <summary>
+            Post car to collection
+            </summary>
+            <param name="car">Car to post</param>
+            <returns>Created action</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.CarsController.DeleteCar(System.Int32)">
+            <summary>
+            Delete car from collection
+            </summary>
+            <param name="id">Needed id to delete</param>
+            <returns>No content</returns>
+        </member>
+        <member name="T:TaxiDepo.Server.Controllers.DriversController">
+            <summary>
+            DriversController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.DriversController._context">
+            <summary>
+            TaxiDepoDbContext class object
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.DriversController._mapper">
+            <summary>
+            Mapper for DriversController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.DriversController._logger">
+            <summary>
+            Logger for DriversController class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.DriversController})">
+            <summary>
+            Constructor with params of DriversController class 
+            </summary>
+            <param name="context">TaxiDepoDbContext class object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.GetDrivers">
+            <summary>
+            Get all drivers from collection
+            </summary>
+            <returns>DriverDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.GetDriver(System.Int32)">
+            <summary>
+            Get driver by id from collection
+            </summary>
+            <param name="id">Needed driver id</param>
+            <returns>DriverDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.PutDriver(System.Int32,TaxiDepo.Server.Dto.DriverDto)">
+            <summary>
+            Put driver from collection
+            </summary>
+            <param name="id">Needed id to put</param>
+            <param name="driver">Driver to put</param>
+            <returns>No content</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.PostDriver(TaxiDepo.Server.Dto.DriverDto)">
+            <summary>
+            Post driver to collection
+            </summary>
+            <param name="driver">Driver to post</param>
+            <returns>Created action</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.DriversController.DeleteDriver(System.Int32)">
+            <summary>
+            Delete driver from collection
+            </summary>
+            <param name="id">Needed id to delete</param>
+            <returns>No content</returns>
+        </member>
+        <member name="T:TaxiDepo.Server.Controllers.RequiredController">
+            <summary>
+            RequiredController class 
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RequiredController._logger">
+            <summary>
+            Logger for RequiredController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RequiredController._context">
+            <summary>
+            TaxiDepoDbContext class object
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RequiredController._mapper">
+            <summary>
+            Mapper for RequiredController class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RequiredController})">
+            <summary>
+            Constructor with params of RequiredController class
+            </summary>
+            <param name="context">TaxiDepoDbContext class object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetCarAndDriver(System.Int32)">
+            <summary>
+            Task 1 - Print info about driver, his car
+            </summary>
+            <returns>CarDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.DateTime,System.DateTime)">
+            <summary>
+            Task 2 - Print info about user who driven in date range sort by surname
+            </summary>
+            <param name="dateBefore">date before for filter</param>
+            <param name="dateAfter">date after for filter</param>
+            <returns>UserDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUserRides">
+            <summary>
+            Task 3 - Print user rides amount
+            </summary>
+            <returns>UserDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.TopFiveDrivers">
+            <summary>
+            Task 4 - Print top five drivers with max amount rides
+            </summary>
+            <returns>DriverDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.DriversTripTime">
+            <summary>
+            Task 5 - Print info about drivers, his trip time and max trip time
+            </summary>
+            <returns>DriversDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.UsesWithAmountRidesByDate(System.DateTime,System.DateTime)">
+            <summary>
+            Task 6 - Print info about users, with max amount of rides
+            </summary>
+            <returns>UserDto object</returns>
+        </member>
+        <member name="T:TaxiDepo.Server.Controllers.RidesController">
+            <summary>
+            RidesController class 
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RidesController._context">
+            <summary>
+            TaxiDepoDbContext class object
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RidesController._mapper">
+            <summary>
+            Mapper for RidesController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.RidesController._logger">
+            <summary>
+            Logger for RidesController class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.RidesController})">
+            <summary>
+            Constructor with params of RidesController class 
+            </summary>
+            <param name="context">TaxiDepoDbContext class object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.GetRides">
+            <summary>
+            Get all rides from collection
+            </summary>
+            <returns>RideDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.GetRide(System.Int32)">
+            <summary>
+            Get ride by id from collection
+            </summary>
+            <param name="id">Needed ride id</param>
+            <returns>RideDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.PutRide(System.Int32,TaxiDepo.Server.Dto.RideDto)">
+            <summary>
+            Put ride from collection
+            </summary>
+            <param name="id">Needed id to put</param>
+            <param name="ride">Ride to put</param>
+            <returns>No content</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.PostRide(TaxiDepo.Server.Dto.RideDto)">
+            <summary>
+            Post ride to collection
+            </summary>
+            <param name="ride">Ride to post</param>
+            <returns>Created action</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.RidesController.DeleteRide(System.Int32)">
+            <summary>
+            Delete ride from collection
+            </summary>
+            <param name="id">Needed id to delete</param>
+            <returns>No content</returns>
+        </member>
+        <member name="T:TaxiDepo.Server.Controllers.UsersController">
+            <summary>
+            UsersController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.UsersController._context">
+            <summary>
+            TaxiDepoDbContext class object
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.UsersController._mapper">
+            <summary>
+            Mapper for UsersController class
+            </summary>
+        </member>
+        <member name="F:TaxiDepo.Server.Controllers.UsersController._logger">
+            <summary>
+            Logger for UsersController class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.#ctor(TaxiDepo.Model.TaxiDepoDbContext,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{TaxiDepo.Server.Controllers.UsersController})">
+            <summary>
+            Constructor with params of UsersController class 
+            </summary>
+            <param name="context">TaxiDepoDbContext class object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.GetUsers">
+            <summary>
+            Get all users from collection
+            </summary>
+            <returns>UserDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Get user by id from collection
+            </summary>
+            <param name="id">Needed user id</param>
+            <returns>UserDto object</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.PutUser(System.Int32,TaxiDepo.Server.Dto.UserDto)">
+            <summary>
+            Put user from collection
+            </summary>
+            <param name="id">Needed id to put</param>
+            <param name="user">User to put</param>
+            <returns>No content</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.PostUser(TaxiDepo.Server.Dto.UserDto)">
+            <summary>
+            Post user to collection
+            </summary>
+            <param name="user">User to post</param>
+            <returns>Created action</returns>
+        </member>
+        <member name="M:TaxiDepo.Server.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Delete user from collection
+            </summary>
+            <param name="id">Needed id to delete</param>
+            <returns>No content</returns>
+        </member>
+        <member name="T:TaxiDepo.Server.Dto.CarDto">
+            <summary>
+            Dto car class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.Id">
+            <summary>
+            Car id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.CarNumber">
+            <summary>
+            Car government number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.CarModel">
+            <summary>
+            Car model
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.CarColor">
+            <summary>
+            Car color
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.DriverId">
+            <summary>
+            Assigned driver Id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CarDto.AssignedDriver">
+            <summary>
+            Assigned driver
+            </summary>
+        </member>
+        <member name="T:TaxiDepo.Server.Dto.DriverDto">
+            <summary>
+            Dto driver class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.Id">
+            <summary>
+            Driver id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverSurname">
+            <summary>
+            Driver surname
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverName">
+            <summary>
+            Driver name
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverPatronymic">
+            <summary>
+            Driver patronymic
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverPassportId">
+            <summary>
+            Driver passport ID
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverAddress">
+            <summary>
+            Driver address
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverPhoneNumber">
+            <summary>
+            Driver phone number
+            </summary>
+        </member>
+        <member name="T:TaxiDepo.Server.Dto.RideDto">
+            <summary>
+            Dto ride class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.Id">
+            <summary>
+            Ride id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.TripDeparturePlace">
+            <summary>
+            Departure place 
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.TripDestinationPlace">
+            <summary>
+            Destination place
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.TripDate">
+            <summary>
+            Trip date
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.TripTime">
+            <summary>
+            Trip time
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.TripPrice">
+            <summary>
+            Trip price
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.CarId">
+            <summary>
+            Trip car Id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.RideDto.UserId">
+            <summary>
+            Trip user Id
+            </summary>
+        </member>
+        <member name="T:TaxiDepo.Server.Dto.UserDto">
+            <summary>
+            Dto user class
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.Id">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.UserSurname">
+            <summary>
+            User surname
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.UserPatronymic">
+            <summary>
+            User patronymic
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.UserDto.UserPhoneNumber">
+            <summary>
+            User phone number
+            </summary>
+        </member>
+        <member name="T:TaxiDepo.Server.MappingProfile">
+            <summary>
+            MappingProfile class
+            </summary>
+        </member>
+        <member name="M:TaxiDepo.Server.MappingProfile.#ctor">
+            <summary>
+            Constructor without params
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,6 +1,9 @@
 ﻿namespace SelectionCommittee.Server.Repository;
 
+using Microsoft.EntityFrameworkCore;
 using SelectionCommittee.Domain;
+using SelectionCommittee.Model;
+using SocialNetwork.Data;
 
 /// <summary>
 /// Работа со списками сущностей приемной комиссии.
@@ -8,53 +11,32 @@ using SelectionCommittee.Domain;
 public class SelectionCommitteeRepository : ISelectionCommitteeRepository
 {
     /// <summary>
-    /// Список абитуриентов.
+    /// Контекст приемной комиссии.
     /// </summary>
-    private readonly List<Enrollee> _enrollees;
+    private readonly SelectionCommitteeContext _context;
 
-    /// <summary>
-    /// Список результатов экзамена.
-    /// </summary>
-    private readonly List<ExamResult> _examResults;
-
-    /// <summary>
-    /// Список факультетов.
-    /// </summary>
-    private readonly List<Faculty> _faculties;
-
-    /// <summary>
-    /// Список специальностей.
-    /// </summary>
-    private readonly List<Specialization> _specializations;
-
-    /// <summary>
-    /// Создание репозитория.
-    /// </summary>
-    public SelectionCommitteeRepository()
+    public SelectionCommitteeRepository(SelectionCommitteeContext context)
     {
-        _enrollees = new List<Enrollee>();
-        _examResults = new List<ExamResult>();
-        _faculties = new List<Faculty>();
-        _specializations = new List<Specialization>();
+        _context = context;
     }
 
     /// <summary>
     /// Получение списка абитуриентов.
     /// </summary>
-    public List<Enrollee> Enrollees => _enrollees;
+    public DbSet<EnrolleeDbModel> Enrollees =>  _context.Enrollees;
 
     /// <summary>
     /// Получение списка результатов экзамена.
     /// </summary>
-    public List<ExamResult> ExamResults => _examResults;
+    public DbSet<ExamResultDbModel> ExamResults => _context.ExamResults;
 
     /// <summary>
     /// Получение списка факультетов.
     /// </summary>
-    public List<Faculty> Faculties => _faculties;
+    public DbSet<FacultyDbModel> Faculties => _context.Faculties;
 
     /// <summary>
     /// Получение списка специальностей.
     /// </summary>
-    public List<Specialization> Specializations => _specializations;
+    public DbSet<SpecializationDbModel> Specializations => _context.Specializations;
 }

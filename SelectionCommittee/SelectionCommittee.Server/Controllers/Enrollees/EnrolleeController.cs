@@ -42,8 +42,8 @@ public class EnrolleeController : Controller
             BirthDate= x.BirthDate,
             Country= x.Country,
             City= x.City,
-            ExamResults= x.ExamResults,
-            Specializations= x.Specializations
+            //ExamResults= x.ExamResults,
+            //Specializations= x.Specializations
         });
     }
 
@@ -71,8 +71,8 @@ public class EnrolleeController : Controller
             BirthDate = enrollee.BirthDate,
             Country = enrollee.Country,
             City = enrollee.City,
-            ExamResults = enrollee.ExamResults,
-            Specializations = enrollee.Specializations
+            //ExamResults = enrollee.ExamResults,
+            //Specializations = enrollee.Specializations
         });
     }
 
@@ -83,17 +83,17 @@ public class EnrolleeController : Controller
     [HttpPost]
     public void AddEnrollee([FromBody] EnrolleeDtoPostOrPut enrollee)
     {
-        _selectionCommitteeRepository.Enrollees.Add(new Domain.Enrollee
-        {
-            Id = enrollee.Id,
-            FirstName = enrollee.FirstName,
-            LastName = enrollee.LastName,
-            Patronymic = enrollee.Patronymic,
-            Age = enrollee.Age,
-            BirthDate = enrollee.BirthDate,
-            Country = enrollee.Country,
-            City = enrollee.City
-        });
+        //_selectionCommitteeRepository.Enrollees.Add(new Domain.Enrollee
+        //{
+        //    Id = enrollee.Id,
+        //    FirstName = enrollee.FirstName,
+        //    LastName = enrollee.LastName,
+        //    Patronymic = enrollee.Patronymic,
+        //    Age = enrollee.Age,
+        //    BirthDate = enrollee.BirthDate,
+        //    Country = enrollee.Country,
+        //    City = enrollee.City
+        //});
     }
 
     /// <summary>

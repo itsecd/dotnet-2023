@@ -33,9 +33,11 @@ public class QueryController : Controller
     [HttpGet("GetEnrolleesByCity/{city}")]
     public List<Enrollee> GetEnrolleesByCity(string city)
     {
-        return _selectionCommitteeRepository.Enrollees
-            .Where(enrollee => enrollee.City == city)
-            .ToList();
+        //return _selectionCommitteeRepository.Enrollees
+        //    .Where(enrollee => enrollee.City == city)
+        //    .ToList();
+
+        return new List<Enrollee>();
     }
 
     /// <summary>
@@ -46,12 +48,14 @@ public class QueryController : Controller
     [HttpGet(" GetSortedEnrolleesByAge/{age}")]
     public List<Enrollee> GetSortedEnrolleesByAge(int age)
     {
-        return _selectionCommitteeRepository.Enrollees
-            .Where(enrollee => enrollee.Age > age)
-            .OrderBy(enrollee => enrollee.LastName)
-            .ThenBy(enrollee => enrollee.FirstName)
-            .ThenBy(enrollee => enrollee.Patronymic)
-            .ToList();
+        //return _selectionCommitteeRepository.Enrollees
+        //    .Where(enrollee => enrollee.Age > age)
+        //    .OrderBy(enrollee => enrollee.LastName)
+        //    .ThenBy(enrollee => enrollee.FirstName)
+        //    .ThenBy(enrollee => enrollee.Patronymic)
+        //    .ToList();
+
+        return new List<Enrollee>();
     }
 
     /// <summary>
@@ -63,10 +67,12 @@ public class QueryController : Controller
     [HttpGet("GetEnrolleesBySpecialization/{specialization}")]
     public List<Enrollee> GetEnrolleesBySpecialization(string specialization)
     {
-        return _selectionCommitteeRepository.Enrollees
-            .Where(enrollee => enrollee.Specializations![0].Name == specialization)
-            .OrderBy(enrollee => enrollee.ExamResults!.Sum(examResult => examResult.Points))
-            .ToList();
+        //return _selectionCommitteeRepository.Enrollees
+        //    .Where(enrollee => enrollee.Specializations![0].Name == specialization)
+        //    .OrderBy(enrollee => enrollee.ExamResults!.Sum(examResult => examResult.Points))
+        //    .ToList();
+
+        return new List<Enrollee>();
     }
 
     /// <summary>
@@ -78,10 +84,12 @@ public class QueryController : Controller
     [HttpGet("GetEnrolleesBySpecializationAndPriority/{specialization}")]
     public List<Enrollee> GetEnrolleesBySpecializationAndPriority(string specialization)
     {
-        return _selectionCommitteeRepository.Enrollees
-            .Where(enrollee => enrollee.Specializations![0].Name == specialization
-                && enrollee.Specializations![0].Priority == 1)
-            .ToList();
+        //return _selectionCommitteeRepository.Enrollees
+        //    .Where(enrollee => enrollee.Specializations![0].Name == specialization
+        //        && enrollee.Specializations![0].Priority == 1)
+        //    .ToList();
+
+        return new List<Enrollee>();
     }
 
     /// <summary>
@@ -91,10 +99,12 @@ public class QueryController : Controller
     [HttpGet("GetEnrollesByExamResult/{count}")]
     public List<Enrollee> GetEnrollesByExamResult(int count) 
     {
-        return _selectionCommitteeRepository.Enrollees
-            .OrderByDescending(enrollee =>
-                enrollee!.ExamResults!.Sum(examResult => examResult.Points))
-            .Take(count)
-            .ToList();
+        //return _selectionCommitteeRepository.Enrollees
+        //    .OrderByDescending(enrollee =>
+        //        enrollee!.ExamResults!.Sum(examResult => examResult.Points))
+        //    .Take(count)
+        //    .ToList();
+
+        return new List<Enrollee>();
     }
 }

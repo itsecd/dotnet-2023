@@ -37,8 +37,8 @@ public class SpecializationController : Controller
             Id = x.Id,
             Priority= x.Priority,
             Name = x.Name,
-            Faculty = x.Faculty,
-            Enrollees = x.Enrollees,
+            //Faculty = x.Faculty,
+            //Enrollees = x.Enrollees,
         });
     }
 
@@ -62,8 +62,8 @@ public class SpecializationController : Controller
             Id = specialization.Id,
             Priority = specialization.Priority,
             Name = specialization.Name,
-            Faculty = specialization.Faculty,
-            Enrollees = specialization.Enrollees,
+            //Faculty = specialization.Faculty,
+            //Enrollees = specialization.Enrollees,
         });
     }
 
@@ -74,13 +74,13 @@ public class SpecializationController : Controller
     [HttpPost]
     public void AddSpecialization([FromBody] SpecializationDtoPostOrPut specialization)
     {
-        _selectionCommitteeRepository.Specializations.Add(new Domain.Specialization
-        {
-            Id = specialization.Id,
-            Priority = specialization.Priority,
-            Name = specialization.Name,
-            FacultyId = specialization.FacultyId,
-        });
+        //_selectionCommitteeRepository.Specializations.Add(new Domain.Specialization
+        //{
+        //    Id = specialization.Id,
+        //    Priority = specialization.Priority,
+        //    Name = specialization.Name,
+        //    FacultyId = specialization.FacultyId,
+        //});
     }
 
     /// <summary>

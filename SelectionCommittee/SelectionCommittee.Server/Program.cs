@@ -1,8 +1,12 @@
 using SelectionCommittee.Server.Repository;
+using SocialNetwork.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<ISelectionCommitteeRepository, SelectionCommitteeRepository>();
+builder.Services.AddDbContextFactory<SelectionCommitteeContext>(optionsBuilder
+    => optionsBuilder.UseMySQL(builder.Configuration.GetConnectionString(nameof(SelectionCommittee))));
+
+builder.Services.AddScoped<ISelectionCommitteeRepository, SelectionCommitteeRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

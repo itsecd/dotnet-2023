@@ -1,4 +1,5 @@
-﻿using SelectionCommittee.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using SelectionCommittee.Model;
 
 namespace SelectionCommittee.Server.Repository;
 
@@ -7,11 +8,23 @@ namespace SelectionCommittee.Server.Repository;
 /// </summary>
 public interface ISelectionCommitteeRepository
 {
-    List<Enrollee> Enrollees { get; } 
+    /// <summary>
+    /// Список абитуриентов.
+    /// </summary>
+    public DbSet<EnrolleeDbModel> Enrollees { get; }
 
-    List<ExamResult> ExamResults { get; }
+    /// <summary>
+    /// Список результатов экзамена.
+    /// </summary>
+    public DbSet<ExamResultDbModel> ExamResults { get; }
 
-    List<Faculty> Faculties { get; }
+    /// <summary>
+    /// Список факультетов.
+    /// </summary>
+    public DbSet<FacultyDbModel> Faculties { get; }
 
-    List<Specialization> Specializations { get; }
+    /// <summary>
+    /// Список специальностей.
+    /// </summary>
+    public DbSet<SpecializationDbModel> Specializations { get; }
 }

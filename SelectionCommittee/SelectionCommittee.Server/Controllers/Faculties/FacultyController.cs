@@ -36,7 +36,7 @@ public class FacultyController : Controller
         {
             Id = x.Id,
             Name = x.Name,
-            Specializations = x.Specializations
+            //Specializations = x.Specializations
         });
     }
 
@@ -59,7 +59,7 @@ public class FacultyController : Controller
         {
             Id = faculty.Id,
             Name = faculty.Name,
-            Specializations = faculty.Specializations
+            //Specializations = faculty.Specializations
         });
     }
 
@@ -70,11 +70,11 @@ public class FacultyController : Controller
     [HttpPost]
     public void AddFaculty([FromBody] FacultyDtoPostOrPut faculty) 
     {
-        _selectionCommitteeRepository.Faculties.Add(new Domain.Faculty
-        {
-            Id = faculty.Id,
-            Name = faculty.Name,
-        });
+        //_selectionCommitteeRepository.Faculties.Add(new Domain.Faculty
+        //{
+        //    Id = faculty.Id,
+        //    Name = faculty.Name,
+        //});
     }
 
     /// <summary>

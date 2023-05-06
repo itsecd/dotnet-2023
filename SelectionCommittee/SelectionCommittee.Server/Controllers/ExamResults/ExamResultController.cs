@@ -37,7 +37,7 @@ public class ExamResultController : Controller
             Id = x.Id,
             SubjectName = x.SubjectName,
             Points= x.Points,
-            Enrollee = x.Enrollee,
+            //Enrollee = x.Enrollee,
         });
     }
 
@@ -61,7 +61,7 @@ public class ExamResultController : Controller
             Id = examResult.Id,
             SubjectName = examResult.SubjectName,
             Points = examResult.Points,
-            Enrollee = examResult.Enrollee,
+           // Enrollee = examResult.Enrollee,
         });
     }
 
@@ -72,13 +72,13 @@ public class ExamResultController : Controller
     [HttpPost]
     public void AddExamResult([FromBody] ExamResultDtoPostOrPut examResult)
     {
-        _selectionCommitteeRepository.ExamResults.Add(new Domain.ExamResult
-        {
-            Id = examResult.Id,
-            SubjectName = examResult.SubjectName,
-            Points = examResult.Points,
-            EnrolleeId = examResult.EnrolleeId,
-        });
+        //_selectionCommitteeRepository.ExamResults.Add(new Domain.ExamResult
+        //{
+        //    Id = examResult.Id,
+        //    SubjectName = examResult.SubjectName,
+        //    Points = examResult.Points,
+        //    EnrolleeId = examResult.EnrolleeId,
+        //});
     }
 
     /// <summary>

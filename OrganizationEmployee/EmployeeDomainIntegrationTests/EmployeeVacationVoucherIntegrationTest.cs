@@ -3,7 +3,7 @@ using OrganizationServer.Dto;
 using System.Text;
 using System.Text.Json;
 
-namespace EmployeeDomainIntergationTests;
+namespace EmployeeDomainIntegrationTests;
 /// <summary>
 /// EmployeeVacationVoucherIntegrationTest  - represents a integration test of EmployeeVacationVoucherController
 /// </summary>

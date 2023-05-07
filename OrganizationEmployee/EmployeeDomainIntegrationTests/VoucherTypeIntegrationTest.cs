@@ -2,7 +2,7 @@
 using OrganizationServer.Dto;
 using System.Text;
 using System.Text.Json;
-namespace EmployeeDomainIntergationTests;
+namespace EmployeeDomainIntegrationTests;
 /// <summary>
 /// VoucherTypeIntegrationTest  - represents a integration test of VoucherTypeController
 /// </summary>
@@ -97,7 +97,7 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     /// <param name="voucherTypeName">A new name of the voucher type</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(2, "Пионерский лагерь организации", true)]
+    [InlineData(3, "Пионерский лагерь организации", true)]
     [InlineData(155, "Путевка в Европу", false)]
     public async Task PutVoucherType(uint voucherTypeId, string voucherTypeName, bool isSuccess)
     {

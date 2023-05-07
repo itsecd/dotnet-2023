@@ -2,12 +2,12 @@
 using OrganizationServer.Dto;
 using System.Text;
 using System.Text.Json;
-namespace EmployeeDomainIntergationTests;
+namespace EmployeeDomainIntegrationTests;
 /// <summary>
-/// DepartmentIntegrationTest  - represents a integration test of DepartmentController
+/// OccupationIntegrationTest  - represents a integration test of OccupationController
 /// </summary>
 [Collection("Sequential")]
-public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
+public class OccupationIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     /// <summary>
@@ -15,55 +15,57 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// </summary>
     private readonly JsonSerializerOptions _serializeOptions;
     /// <summary>
-    /// A constructor of the DepartmentIntegrationTest
+    /// A constructor of the OccupationIntegrationTest
     /// </summary>
-    public DepartmentIntegrationTest(WebApplicationFactory<Program> factory)
+    public OccupationIntegrationTest(WebApplicationFactory<Program> factory)
     {
+        _factory = factory;
         _serializeOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true
         };
-        _factory = factory;
     }
     /// <summary>
     /// Tests the parameterless GET method
     /// </summary>
     [Fact]
-    public async Task GetDepartments()
+    public async Task GetOccupations()
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync("api/Department");
+
+        var response = await client.GetAsync("api/Occupation");
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
-        var departments = JsonSerializer.Deserialize<List<GetDepartmentDto>>(content, _serializeOptions);
-        Assert.NotNull(departments);
-        Assert.True(departments.Count >= 8);
+        var occupations = JsonSerializer.Deserialize<List<GetOccupationDto>>(content, _serializeOptions);
+        Assert.NotNull(occupations);
+        Assert.True(occupations.Count >= 3);
     }
     /// <summary>
     /// Tests the parameterized GET method
     /// </summary>
-    /// <param name="departmentId">ID of the Department</param>
-    /// <param name="departmentName">Correct Name of the Department</param>
+    /// <param name="occupationId">ID of the Occupation</param>
+    /// <param name="occupationName">Correct name of the Occupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(10, "Отдел снабжения и закупок", true)]
-    [InlineData(2, "Отдел программирования", true)]
-    [InlineData(9, "Отдел логистики", true)]
+    [InlineData(1, "Аналитик данных", true)]
+    [InlineData(2, "Программист", true)]
     [InlineData(1337, "", false)]
     [InlineData(555, "", false)]
-    public async Task GetDepartment(uint departmentId, string departmentName, bool isSuccess)
+    public async Task GetOccupation(uint occupationId, string occupationName, bool isSuccess)
     {
         var client = _factory.CreateClient();
-        var response = await client.GetAsync($"api/Department/{departmentId}");
+
+        var response = await client.GetAsync($"api/Occupation/{occupationId}");
+
         var content = await response.Content.ReadAsStringAsync();
-        var department = JsonSerializer.Deserialize<GetDepartmentDto>(content, _serializeOptions);
+        var occupation = JsonSerializer.Deserialize<GetOccupationDto>(content, _serializeOptions);
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);
-            Assert.NotNull(department);
-            Assert.Equal(departmentName, department.Name);
+            Assert.NotNull(occupation);
+            Assert.Equal(occupationName, occupation.Name);
         }
         else
         {
@@ -73,41 +75,41 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// <summary>
     /// Tests the POST method
     /// </summary>
-    /// <param name="departmentName">Name of the department that will be added</param>
+    /// <param name="occupationName">The name of the Occupation</param>
     [Theory]
-    [InlineData("Отдел техобслуживания")]
-    [InlineData("Отдел медицинской помощи")]
-    public async Task PostDepartment(string departmentName)
+    [InlineData("Дизайнер")]
+    [InlineData("Специалист по информационной безопасности")]
+    public async Task PostOccupation(string occupationName)
     {
-        var client = _factory.CreateClient();
-        var departmentDto = new PostDepartmentDto()
+        var occupationDto = new PostOccupationDto()
         {
-            Name = departmentName
+            Name = occupationName
         };
-        var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
+        var client = _factory.CreateClient();
+        var jsonObject = JsonSerializer.Serialize(occupationDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("api/Department", stringContent);
+        var response = await client.PostAsync("api/Occupation", stringContent);
         Assert.True(response.IsSuccessStatusCode);
     }
     /// <summary>
-    /// Tests the PUT method
+    /// Tests the POST method
     /// </summary>
-    /// <param name="departmentId">ID of the existing Department</param>
-    /// <param name="departmentName">New name of the Department</param>
+    /// <param name="occupationId">The ID of the existing occupation</param>
+    /// <param name="occupationName">The new name of the Occupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(4, "Отдел здравоохранения", true)]
+    [InlineData(3, "Специалист по компьютерной безопасности", true)]
     [InlineData(155, "Отдел здравоохранения", false)]
-    public async Task PutDepartment(uint departmentId, string departmentName, bool isSuccess)
+    public async Task PutOccupation(uint occupationId, string occupationName, bool isSuccess)
     {
-        var departmentDto = new PostDepartmentDto()
+        var departmentDto = new PostOccupationDto()
         {
-            Name = departmentName
+            Name = occupationName
         };
         var client = _factory.CreateClient();
         var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync($"api/Department/{departmentId}", stringContent);
+        var response = await client.PutAsync($"api/Occupation/{occupationId}", stringContent);
 
         var content = await response.Content.ReadAsStringAsync();
         if (isSuccess)
@@ -122,15 +124,16 @@ public class DepartmentIntegrationTest : IClassFixture<WebApplicationFactory<Pro
     /// <summary>
     /// Tests the DELETE method
     /// </summary>
-    /// <param name="departmentId">ID of the existing Department</param>
+    /// <param name="occupationId">The ID of the existing occupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(5, true)]
+    [InlineData(6, true)]
     [InlineData(133, false)]
-    public async Task DeleteDepartment(int departmentId, bool isSuccess)
+    public async Task DeleteOccupation(int occupationId, bool isSuccess)
     {
         var client = _factory.CreateClient();
-        var response = await client.DeleteAsync($"api/Department/{departmentId}");
+
+        var response = await client.DeleteAsync($"api/Occupation/{occupationId}");
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

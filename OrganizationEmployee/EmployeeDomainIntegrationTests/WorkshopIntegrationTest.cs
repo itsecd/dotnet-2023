@@ -2,7 +2,7 @@
 using OrganizationServer.Dto;
 using System.Text;
 using System.Text.Json;
-namespace EmployeeDomainIntergationTests;
+namespace EmployeeDomainIntegrationTests;
 /// <summary>
 /// WorkshopIntegrationTest  - represents a integration test of WorkshopController
 /// </summary>

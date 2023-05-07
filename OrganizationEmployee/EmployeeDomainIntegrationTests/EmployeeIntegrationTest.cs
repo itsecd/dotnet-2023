@@ -2,7 +2,7 @@
 using OrganizationServer.Dto;
 using System.Text;
 using System.Text.Json;
-namespace EmployeeDomainIntergationTests;
+namespace EmployeeDomainIntegrationTests;
 /// <summary>
 /// EmployeeIntegrationTest  - represents a integration test of EmployeeController
 /// </summary>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     private readonly ILogger<SpecialtyController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public SpecialtyController(ILogger<SpecialtyController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public SpecialtyController(ILogger<SpecialtyController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -36,10 +37,11 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Specialty> Get()
+    public async Task<IEnumerable<Specialty>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all specialties");
-        return _universityDataRepository.Specialties;
+        return ctx.Specialties;
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -47,9 +49,10 @@ public class SpecialtyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Specialty?> Get(int id)
+    public async Task<ActionResult<Specialty?>> Get(int id)
     {
-        var specialty = _universityDataRepository.Specialties.FirstOrDefault(specialty => specialty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
             _logger.LogInformation("Not found specialty with id: {0}", id);
@@ -66,10 +69,14 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <param name="specialty"></param>
     [HttpPost]
-    public void Post([FromBody] SpecialtyPostDto specialty)
+    public async Task<ActionResult>Post([FromBody] SpecialtyPostDto specialty)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Specialties.Add(_mapper.Map<Specialty>(specialty));
+        ctx.SaveChanges();
         _logger.LogInformation("Add new specialty");
-        _universityDataRepository.Specialties.Add(_mapper.Map<Specialty>(specialty));
+        return Ok();
+        
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -78,9 +85,10 @@ public class SpecialtyController : ControllerBase
     /// <param name="specialtyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SpecialtyPostDto specialtyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SpecialtyPostDto specialtyToPut)
     {
-        var specialty = _universityDataRepository.Specialties.FirstOrDefault(specialty => specialty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
             _logger.LogInformation($"Not found specialty with id: {id}");
@@ -89,6 +97,7 @@ public class SpecialtyController : ControllerBase
         else
         {
             _mapper.Map<SpecialtyPostDto, Specialty>(specialtyToPut, specialty);
+            ctx.SaveChanges();
             _logger.LogInformation("Update specialty with id: {0}", id);
             return Ok();
         }
@@ -99,9 +108,10 @@ public class SpecialtyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var specialty = _universityDataRepository.Specialties.FirstOrDefault(specialty => specialty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
             _logger.LogInformation($"Not found specialty with id: {id}");
@@ -109,7 +119,8 @@ public class SpecialtyController : ControllerBase
         }
         else
         {
-            _universityDataRepository.Specialties.Remove(specialty);
+            ctx.Specialties.Remove(specialty);
+            ctx.SaveChanges();
             _logger.LogInformation("Delete specialty with id: {0}", id);
             return Ok();
         }

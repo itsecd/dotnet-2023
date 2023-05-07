@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class SpecialtyTableNodeController : ControllerBase
     /// </summary>
     private readonly ILogger<SpecialtyTableNodeController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public SpecialtyTableNodeController(ILogger<SpecialtyTableNodeController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public SpecialtyTableNodeController(ILogger<SpecialtyTableNodeController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory= contextFactory;
         _mapper = mapper;
     }
 
@@ -36,10 +37,11 @@ public class SpecialtyTableNodeController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<SpecialtyTableNodeGetDto> Get()
+    public async Task<IEnumerable<SpecialtyTableNodeGetDto>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all specialtyTableNodes");
-        return _universityDataRepository.SpecialtyTableNodes.Select(specialtyTableNode => _mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
+        return ctx.SpecialtyTableNodes.Select(specialtyTableNode => _mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -47,9 +49,10 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<SpecialtyTableNodeGetDto?> Get(int id)
+    public async Task<ActionResult<SpecialtyTableNodeGetDto?>> Get(int id)
     {
-        var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
             _logger.LogInformation("Not found specialtyTableNode with id: {0}", id);
@@ -66,10 +69,14 @@ public class SpecialtyTableNodeController : ControllerBase
     /// </summary>
     /// <param name="specialtyTableNode"></param>
     [HttpPost]
-    public void Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
+    public async Task<ActionResult> Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNode>(specialtyTableNode));
+        ctx.SaveChanges();
         _logger.LogInformation("Add new specialtyTableNode");
-        _universityDataRepository.SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNode>(specialtyTableNode));
+        return Ok();
+        
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -78,9 +85,10 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <param name="specialtyTableNodeToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SpecialtyTableNodePostDto specialtyTableNodeToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SpecialtyTableNodePostDto specialtyTableNodeToPut)
     {
-        var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
             _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
@@ -89,6 +97,7 @@ public class SpecialtyTableNodeController : ControllerBase
         else
         {
             _mapper.Map<SpecialtyTableNodePostDto, SpecialtyTableNode>(specialtyTableNodeToPut, specialtyTableNode);
+            ctx.SaveChanges();
             _logger.LogInformation("Update specialtyTableNode with id: {0}", id);
             return Ok();
         }
@@ -99,9 +108,10 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var specialtyTableNode = _universityDataRepository.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
             _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
@@ -109,7 +119,8 @@ public class SpecialtyTableNodeController : ControllerBase
         }
         else
         {
-            _universityDataRepository.SpecialtyTableNodes.Remove(specialtyTableNode);
+            ctx.SpecialtyTableNodes.Remove(specialtyTableNode);
+            ctx.SaveChanges();
             _logger.LogInformation("Delete specialtyTableNode with id: {0}", id);
             return Ok();
         }

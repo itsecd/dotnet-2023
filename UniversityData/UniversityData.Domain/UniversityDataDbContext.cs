@@ -31,7 +31,7 @@ public class UniversityDataDbContext : DbContext
     /// <summary>
     /// Коллекция объектов класса SpecialtyTableNode
     /// </summary>
-    public DbSet<SpecialtyTableNode> SpecialtiesTableNodes { get; set; }
+    public DbSet<SpecialtyTableNode> SpecialtyTableNodes { get; set; }
     /// <summary>
     /// Коллекция объектов класса University
     /// </summary>

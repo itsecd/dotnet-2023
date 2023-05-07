@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class DepartmentController : ControllerBase
     /// </summary>
     private readonly ILogger<DepartmentController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public DepartmentController(ILogger<DepartmentController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public DepartmentController(ILogger<DepartmentController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -35,10 +36,11 @@ public class DepartmentController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Department> Get()
+    public async Task<IEnumerable<Department>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all departments");
-        return _universityDataRepository.Departments;
+        return ctx.Departments;
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -46,9 +48,10 @@ public class DepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Department?> Get(int id)
+    public async Task<ActionResult<Department?>> Get(int id)
     {
-        var department = _universityDataRepository.Departments.FirstOrDefault(department => department.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var department = ctx.Departments.FirstOrDefault(department => department.Id == id);
         if (department == null)
         {
             _logger.LogInformation("Not found department with id: {0}", id);
@@ -65,10 +68,14 @@ public class DepartmentController : ControllerBase
     /// </summary>
     /// <param name="department"></param>
     [HttpPost]
-    public void Post([FromBody] DepartmentPostDto department)
+    public async Task<ActionResult> Post([FromBody] DepartmentPostDto department)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Departments.Add(_mapper.Map<Department>(department));
+        ctx.SaveChanges();
         _logger.LogInformation("Add new department");
-        _universityDataRepository.Departments.Add(_mapper.Map<Department>(department));
+        return Ok();
+       
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -77,9 +84,10 @@ public class DepartmentController : ControllerBase
     /// <param name="departmentToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] DepartmentPostDto departmentToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] DepartmentPostDto departmentToPut)
     {
-        var department = _universityDataRepository.Departments.FirstOrDefault(department => department.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var department = ctx.Departments.FirstOrDefault(department => department.Id == id);
         if (department == null)
         {
             _logger.LogInformation("Not found department with id: {0}", id);
@@ -88,6 +96,7 @@ public class DepartmentController : ControllerBase
         else
         {
             _mapper.Map<DepartmentPostDto, Department>(departmentToPut, department);
+            ctx.SaveChanges();
             _logger.LogInformation("Update department with id: {0}", id);
             return Ok();
         }
@@ -98,9 +107,10 @@ public class DepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var department = _universityDataRepository.Departments.FirstOrDefault(department => department.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var department = ctx.Departments.FirstOrDefault(department => department.Id == id);
         if (department == null)
         {
             _logger.LogInformation("Not found department with id: {0}", id);
@@ -108,7 +118,8 @@ public class DepartmentController : ControllerBase
         }
         else
         {
-            _universityDataRepository.Departments.Remove(department);
+            ctx.Departments.Remove(department);
+            ctx.SaveChanges();
             _logger.LogInformation("Delete departments with id: {0}", id);
             return Ok();
         }

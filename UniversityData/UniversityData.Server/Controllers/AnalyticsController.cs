@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     private readonly ILogger<UniversityController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public AnalyticsController(ILogger<UniversityController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public AnalyticsController(ILogger<UniversityController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -37,9 +38,10 @@ public class AnalyticsController : ControllerBase
     /// <param name="number"></param>
     /// <returns></returns>
     [HttpGet("information_of_university{number}")]
-    public ActionResult<UniversityGetDto> GetInformationOfUniversity(string number)
+    public async Task<ActionResult<UniversityGetDto>> GetInformationOfUniversity(string number)
     {
-        var result = (from university in _universityDataRepository.Universities
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var result = (from university in ctx.Universities
                       where university.Number == number
                       select _mapper.Map<University, UniversityGetDto>(university)).ToList();
         if (result.Count == 0)
@@ -60,10 +62,11 @@ public class AnalyticsController : ControllerBase
     /// <param name="number"></param>
     /// <returns></returns>
     [HttpGet("information_of_structure_of_university{number}")]
-    public ActionResult<UniversityGetStructureDto> InformationOfStructure(string number)
+    public async Task<ActionResult<UniversityGetStructureDto>> InformationOfStructure(string number)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about university");
-        var universities = (from university in _universityDataRepository.Universities
+        var universities = (from university in ctx.Universities
                             where university.Number == number
                             select _mapper.Map<University, UniversityGetStructureDto>(university)).ToList();
         if (universities.Count == 0)
@@ -82,10 +85,11 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("top_five_specialties")]
-    public IEnumerable<object> InformationOfStructure()
+    public async Task<IEnumerable<object>> InformationOfStructure()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top five specialties");
-        return (from specialtyNode in _universityDataRepository.SpecialtyTableNodes
+        return (from specialtyNode in ctx.SpecialtyTableNodes
                 group specialtyNode by specialtyNode.Specialty.Code into specialtyGroup
                 orderby specialtyGroup.Count() descending
                 select new
@@ -99,11 +103,12 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("university_with_max_departments")]
-    public IEnumerable<UniversityGetDto> MaxCountDepartments()
+    public async Task<IEnumerable<UniversityGetDto>> MaxCountDepartments()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get universities with max count departments");
-        return (from university in _universityDataRepository.Universities
-                where university.DepartmentsData.Count == _universityDataRepository.Universities.Max(element => element.DepartmentsData.Count)
+        return (from university in ctx.Universities
+                where university.DepartmentsData.Count == ctx.Universities.Max(element => element.DepartmentsData.Count)
                 select _mapper.Map<University, UniversityGetDto>(university)).ToList();
     }
     /// <summary>
@@ -112,10 +117,11 @@ public class AnalyticsController : ControllerBase
     /// <param name="universityProperty"></param>
     /// <returns></returns>
     [HttpGet("university_with_target_property")]
-    public IEnumerable<object> UniversityWithProperty(string universityProperty)
+    public async Task<IEnumerable<object>> UniversityWithProperty(string universityProperty)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about universities with target property");
-        return (from university in _universityDataRepository.Universities
+        return (from university in ctx.Universities
                 where (university.UniversityProperty.NameUniversityProperty == universityProperty)
                 select new
                 {
@@ -133,10 +139,11 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("count_departments")]
-    public IEnumerable<object> CountDepartments()
+    public async Task<IEnumerable<object>> CountDepartments()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get counts of faculty, departments and specialties");
-        return (from university in _universityDataRepository.Universities
+        return (from university in ctx.Universities
                 group university by university.ConstructionProperty into universityConstGroup
                 from universityPropGroup in
                 (

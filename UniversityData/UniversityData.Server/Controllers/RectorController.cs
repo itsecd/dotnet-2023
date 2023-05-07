@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class RectorController : ControllerBase
     /// </summary>
     private readonly ILogger<RectorController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public RectorController(ILogger<RectorController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public RectorController(ILogger<RectorController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory =  contextFactory;
         _mapper = mapper;
     }
 
@@ -36,10 +37,11 @@ public class RectorController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Rector> Get()
+    public async Task<IEnumerable<Rector>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all rectors");
-        return _universityDataRepository.Rectors;
+        return ctx.Rectors;
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -47,9 +49,10 @@ public class RectorController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Rector?> Get(int id)
+    public async Task<ActionResult<Rector?>> Get(int id)
     {
-        var rector = _universityDataRepository.Rectors.FirstOrDefault(rector => rector.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
             _logger.LogInformation("Not found rector with id: {0}", id);
@@ -66,10 +69,14 @@ public class RectorController : ControllerBase
     /// </summary>
     /// <param name="rector"></param>
     [HttpPost]
-    public void Post([FromBody] RectorPostDto rector)
+    public async Task<ActionResult>Post([FromBody] RectorPostDto rector)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Rectors.Add(_mapper.Map<Rector>(rector));
+        ctx.SaveChanges();
         _logger.LogInformation("Add new rector");
-        _universityDataRepository.Rectors.Add(_mapper.Map<Rector>(rector));
+        return Ok();
+        
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -78,9 +85,10 @@ public class RectorController : ControllerBase
     /// <param name="rectorToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] RectorPostDto rectorToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] RectorPostDto rectorToPut)
     {
-        var rector = _universityDataRepository.Rectors.FirstOrDefault(rector => rector.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
             _logger.LogInformation($"Not found rector with id: {id}");
@@ -89,6 +97,7 @@ public class RectorController : ControllerBase
         else
         {
             _mapper.Map<RectorPostDto, Rector>(rectorToPut, rector);
+            ctx.SaveChanges();
             _logger.LogInformation("Update rector with id: {0}", id);
             return Ok();
         }
@@ -99,9 +108,10 @@ public class RectorController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var rector = _universityDataRepository.Rectors.FirstOrDefault(rector => rector.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
             _logger.LogInformation("Not found rector with id: {0}", id);
@@ -109,7 +119,8 @@ public class RectorController : ControllerBase
         }
         else
         {
-            _universityDataRepository.Rectors.Remove(rector);
+            ctx.Rectors.Remove(rector);
+            ctx.SaveChanges();
             _logger.LogInformation("Delete rector with id: {0}", id);
             return Ok();
         }

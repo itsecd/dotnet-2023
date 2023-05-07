@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -17,17 +18,17 @@ public class FacultyController : ControllerBase
     /// </summary>
     private readonly ILogger<FacultyController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFacroty
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public FacultyController(ILogger<FacultyController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public FacultyController(ILogger<FacultyController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -35,10 +36,11 @@ public class FacultyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Faculty> Get()
+    public async Task<IEnumerable<Faculty>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all faculties");
-        return _universityDataRepository.Faculties;
+        return ctx.Faculties;
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -46,9 +48,10 @@ public class FacultyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<Faculty?> Get(int id)
+    public async Task<ActionResult<Faculty?>> Get(int id)
     {
-        var faculty = _universityDataRepository.Faculties.FirstOrDefault(faculty => faculty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
             _logger.LogInformation("Not found faculty with id: {0}", id);
@@ -65,10 +68,13 @@ public class FacultyController : ControllerBase
     /// </summary>
     /// <param name="faculty"></param>
     [HttpPost]
-    public void Post([FromBody] FacultyPostDto faculty)
+    public async Task<ActionResult>Post([FromBody] FacultyPostDto faculty)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Faculties.Add(_mapper.Map<Faculty>(faculty));
+        ctx.SaveChanges();
         _logger.LogInformation("Add new faculty");
-        _universityDataRepository.Faculties.Add(_mapper.Map<Faculty>(faculty));
+        return Ok();
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -77,9 +83,10 @@ public class FacultyController : ControllerBase
     /// <param name="facultyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] FacultyPostDto facultyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] FacultyPostDto facultyToPut)
     {
-        var faculty = _universityDataRepository.Faculties.FirstOrDefault(faculty => faculty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
             _logger.LogInformation("Not found faculty with id: {0}", id);
@@ -88,6 +95,7 @@ public class FacultyController : ControllerBase
         else
         {
             _mapper.Map<FacultyPostDto, Faculty>(facultyToPut, faculty);
+            ctx.SaveChanges();
             _logger.LogInformation("Update faculty with id: {0}", id);
             return Ok();
         }
@@ -98,9 +106,10 @@ public class FacultyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var faculty = _universityDataRepository.Faculties.FirstOrDefault(faculty => faculty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
             _logger.LogInformation("Not found faculty with id: {0}", id);
@@ -108,7 +117,8 @@ public class FacultyController : ControllerBase
         }
         else
         {
-            _universityDataRepository.Faculties.Remove(faculty);
+            ctx.Faculties.Remove(faculty);
+            ctx.SaveChanges();
             _logger.LogInformation("Delete faculty with id: {0}", id);
             return Ok();
         }

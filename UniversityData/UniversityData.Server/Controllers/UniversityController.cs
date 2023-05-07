@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
@@ -19,15 +20,15 @@ public class UniversityController : ControllerBase
     /// <summary>
     /// Хранение репозитория
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public UniversityController(ILogger<UniversityController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public UniversityController(ILogger<UniversityController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory= contextFactory;
         _mapper = mapper;
     }
 
@@ -36,10 +37,11 @@ public class UniversityController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<UniversityGetDto> Get()
+    public async Task<IEnumerable<UniversityGetDto>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all universities");
-        return _universityDataRepository.Universities.Select(university => _mapper.Map<UniversityGetDto>(university));
+        return ctx.Universities.Select(university => _mapper.Map<UniversityGetDto>(university));
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -47,9 +49,10 @@ public class UniversityController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<UniversityGetDto?> Get(int id)
+    public async Task<ActionResult<UniversityGetDto?>> Get(int id)
     {
-        var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
             _logger.LogInformation("Not found university with id: {0}", id);
@@ -66,10 +69,13 @@ public class UniversityController : ControllerBase
     /// </summary>
     /// <param name="university"></param>
     [HttpPost]
-    public void Post([FromBody] UniversityPostDto university)
+    public async Task<ActionResult> Post([FromBody] UniversityPostDto university)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        ctx.Universities.Add(_mapper.Map<University>(university));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new university");
-        _universityDataRepository.Universities.Add(_mapper.Map<University>(university));
+        return Ok();
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -78,9 +84,10 @@ public class UniversityController : ControllerBase
     /// <param name="universityToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] UniversityPostDto universityToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] UniversityPostDto universityToPut)
     {
-        var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
             _logger.LogInformation("Not found university with id: {0}", id);
@@ -89,6 +96,7 @@ public class UniversityController : ControllerBase
         else
         {
             _mapper.Map<UniversityPostDto, University>(universityToPut, university);
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update university with id: {0}", id);
             return Ok();
         }
@@ -99,9 +107,10 @@ public class UniversityController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var university = _universityDataRepository.Universities.FirstOrDefault(university => university.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
             _logger.LogInformation("Not found university with id: {0}", id);
@@ -109,7 +118,8 @@ public class UniversityController : ControllerBase
         }
         else
         {
-            _universityDataRepository.Universities.Remove(university);
+            ctx.Universities.Remove(university);
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete university with id: {0}", id);
             return Ok();
         }

@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 using UniversityData.Server.Repository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -17,17 +20,17 @@ public class UniversityPropertyController : ControllerBase
     /// </summary>
     private readonly ILogger<FacultyController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
-    private readonly IUniversityDataRepository _universityDataRepository;
+    private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public UniversityPropertyController(ILogger<FacultyController> logger, IUniversityDataRepository universityDataRepository, IMapper mapper)
+    public UniversityPropertyController(ILogger<FacultyController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _universityDataRepository = universityDataRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -35,10 +38,11 @@ public class UniversityPropertyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<UniversityProperty> Get()
+    public async Task<IEnumerable<UniversityProperty>> Get()
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all university properties");
-        return _universityDataRepository.UniversityProperties;
+        return ctx.UniversityProperties;
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -46,9 +50,10 @@ public class UniversityPropertyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<UniversityProperty?> Get(int id)
+    public async Task<ActionResult<UniversityProperty?>> Get(int id)
     {
-        var universityProperty = _universityDataRepository.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
             _logger.LogInformation("Not found university property with id: {0}", id);
@@ -65,10 +70,13 @@ public class UniversityPropertyController : ControllerBase
     /// </summary>
     /// <param name="universityProperty"></param>
     [HttpPost]
-    public void Post([FromBody] UniversityPropertyDto universityProperty)
+    public async Task<ActionResult> Post([FromBody] UniversityPropertyDto universityProperty)
     {
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await ctx.UniversityProperties.AddAsync(_mapper.Map<UniversityProperty>(universityProperty));
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new university property");
-        _universityDataRepository.Faculties.Add(_mapper.Map<Faculty>(universityProperty));
+        return Ok();
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -77,9 +85,10 @@ public class UniversityPropertyController : ControllerBase
     /// <param name="universityPropertyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] UniversityPropertyDto universityPropertyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] UniversityPropertyDto universityPropertyToPut)
     {
-        var universityProperty = _universityDataRepository.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
             _logger.LogInformation("Not found university property with id: {0}", id);
@@ -88,6 +97,7 @@ public class UniversityPropertyController : ControllerBase
         else
         {
             _mapper.Map<UniversityPropertyDto, UniversityProperty>(universityPropertyToPut, universityProperty);
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update university property with id: {0}", id);
             return Ok();
         }
@@ -98,9 +108,10 @@ public class UniversityPropertyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var universityProperty = _universityDataRepository.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
+        await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
             _logger.LogInformation("Not found university property with id: {0}", id);
@@ -108,7 +119,8 @@ public class UniversityPropertyController : ControllerBase
         }
         else
         {
-            _universityDataRepository.UniversityProperties.Remove(universityProperty);
+            ctx.UniversityProperties.Remove(universityProperty);
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete university property with id: {0}", id);
             return Ok();
         }

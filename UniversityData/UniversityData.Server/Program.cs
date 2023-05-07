@@ -1,5 +1,7 @@
 using System.Reflection;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using UniversityData.Domain;
 using UniversityData.Server;
 using UniversityData.Server.Repository;
 
@@ -15,7 +17,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddSingleton(mapper);
-builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
+//builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
+
+builder.Services.AddDbContext<UniversityDataDbContext>(options => 
+    options.UseMySQL(builder.Configuration.GetConnectionString(nameof(UniversityData))!));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

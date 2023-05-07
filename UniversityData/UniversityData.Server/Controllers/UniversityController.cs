@@ -18,7 +18,7 @@ public class UniversityController : ControllerBase
     /// </summary>
     private readonly ILogger<UniversityController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение ContextFactory
     /// </summary>
     private readonly IDbContextFactory<UniversityDataDbContext> _contextFactory;
     /// <summary>

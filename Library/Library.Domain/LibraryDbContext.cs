@@ -69,7 +69,7 @@ public class LibraryDbContext : DbContext
             new() { Id = 4, Cipher = "7896/215a", Author = "Andropov I.S.", Name = "Nanoelectronics and medicine", PlaceEdition = "Samara", YearEdition = 2017, TypeEditionId = 2 }
         });
 
-        modelBuilder.Entity<Reader>().HasData(new List<Reader> 
+        modelBuilder.Entity<Reader>().HasData(new List<Reader>
         {
             new() { Id = 1, FullName = "Chernyi Vladislav Andreevich", Address = "Moscow highway 34", Phone = "89277668974", RegistrationDate = new DateTime(2022, 12, 25) },
             new() { Id = 2, FullName = "Kurakin Artem Sergeevich", Address = "Moscow highway 34", Phone = "89277668974", RegistrationDate = new DateTime(2022, 12, 25) },

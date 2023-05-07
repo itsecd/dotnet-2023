@@ -185,10 +185,8 @@ public class RequestController : ControllerBase
                                   Name = reader.FullName,
                                   MaxDelay = card.DateOfReturn.Subtract(card.DateOfIssue).TotalDays - card.DayCount
                               }).ToListAsync();
-        var orderBy = (from order in maxDelay
-                       orderby order.Name
-                       select order).ToList();
-        var request = (from readers in orderBy
+        var request = (from readers in maxDelay
+                       orderby readers.Name
                        where readers.MaxDelay == maxDelay.Max(x => x.MaxDelay)
                        select readers).ToList();
         if (request.Count == 0)

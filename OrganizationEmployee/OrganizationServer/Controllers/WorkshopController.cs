@@ -67,7 +67,7 @@ public class WorkshopController : ControllerBase
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Workshops.Add(mappedWorkshop);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(workshop);
     }
     /// <summary>
@@ -89,7 +89,7 @@ public class WorkshopController : ControllerBase
             return NotFound();
         }
         ctx.Workshops.Update(_mapper.Map(newWorkshop, workshop));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newWorkshop);
     }
     /// <summary>
@@ -109,7 +109,7 @@ public class WorkshopController : ControllerBase
             return NotFound();
         }
         ctx.Workshops.Remove(workshop);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

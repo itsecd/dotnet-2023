@@ -87,7 +87,7 @@ public class EmployeeVacationVoucherController : Controller
         mappedEmployeeVoucher.VacationVoucher = voucher;
         mappedEmployeeVoucher.Employee = employee;
         ctx.EmployeeVacationVouchers.Add(mappedEmployeeVoucher);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(employeeVoucher);
     }
     /// <summary>
@@ -128,7 +128,7 @@ public class EmployeeVacationVoucherController : Controller
             return NotFound("A vacation voucher with given id doesn't exist");
         }
         ctx.EmployeeVacationVouchers.Update(_mapper.Map(newEmployeeVoucher, employeeVoucher));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newEmployeeVoucher);
     }
     /// <summary>
@@ -149,7 +149,7 @@ public class EmployeeVacationVoucherController : Controller
             return NotFound();
         }
         ctx.EmployeeVacationVouchers.Remove(employeeVoucher);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

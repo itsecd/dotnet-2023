@@ -67,7 +67,7 @@ public class VoucherTypeController : Controller
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
         ctx.VacationVouchersTypes.Add(mappedVoucherType);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(voucherType);
     }
     /// <summary>
@@ -90,7 +90,7 @@ public class VoucherTypeController : Controller
             return NotFound();
         }
         ctx.VacationVouchersTypes.Update(_mapper.Map(newVoucherType, voucherType));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newVoucherType);
     }
     /// <summary>
@@ -112,7 +112,7 @@ public class VoucherTypeController : Controller
         ctx.VacationVouchersTypes.Remove(voucherType);
         try
         {
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
         }
         catch (DbUpdateException exception)
         {

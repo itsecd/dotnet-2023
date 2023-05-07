@@ -78,7 +78,7 @@ public class VacationVoucherController : Controller
         }
         ctx.VacationVouchers.Add(mappedVacationVoucher);
         voucherType.VacationVouchers.Add(mappedVacationVoucher);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(vacationVoucher);
     }
     /// <summary>
@@ -111,7 +111,7 @@ public class VacationVoucherController : Controller
             return NotFound("A voucher type with given id doesn't exist");
         }
         ctx.VacationVouchers.Update(_mapper.Map(newVacationVoucher, vacationVoucher));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newVacationVoucher);
     }
     /// <summary>
@@ -131,7 +131,7 @@ public class VacationVoucherController : Controller
             return NotFound();
         }
         ctx.VacationVouchers.Remove(vacationVoucher);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

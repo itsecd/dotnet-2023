@@ -87,7 +87,7 @@ public class EmployeeOccupationController : Controller
         mappedEmployeeOccupation.Occupation = occupation;
         mappedEmployeeOccupation.Employee = employee;
         ctx.EmployeeOccupations.Add(mappedEmployeeOccupation);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(employeeOccupation);
     }
     /// <summary>
@@ -126,7 +126,7 @@ public class EmployeeOccupationController : Controller
             return NotFound("An occupation with given id doesn't exist");
         }
         ctx.EmployeeOccupations.Update(_mapper.Map(newEmployeeOccupation, employeeOccupation));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newEmployeeOccupation);
     }
     /// <summary>
@@ -148,7 +148,7 @@ public class EmployeeOccupationController : Controller
             return NotFound();
         }
         ctx.EmployeeOccupations.Remove(employeeOccupation);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

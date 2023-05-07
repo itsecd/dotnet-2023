@@ -90,7 +90,7 @@ public class DepartmentEmployeeController : Controller
         mappedDepartmentEmployee.Department = department;
         mappedDepartmentEmployee.Employee = employee;
         ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(departmentEmployee);
     }
     /// <summary>
@@ -130,7 +130,7 @@ public class DepartmentEmployeeController : Controller
             return NotFound($"An department with given id={mappedDepartmentEmployee.DepartmentId} doesn't exist");
         }
         ctx.DepartmentEmployees.Update(_mapper.Map(newDepartmentEmployee, departmentEmployee));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newDepartmentEmployee);
     }
     /// <summary>
@@ -150,7 +150,7 @@ public class DepartmentEmployeeController : Controller
             return NotFound();
         }
         ctx.DepartmentEmployees.Remove(departmentEmployee);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

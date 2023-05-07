@@ -67,7 +67,7 @@ public class OccupationController : Controller
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
         ctx.Occupations.Add(mappedOccupation);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(occupation);
     }
     /// <summary>
@@ -89,7 +89,7 @@ public class OccupationController : Controller
             return NotFound("The occupation with given id is not found");
         }
         ctx.Occupations.Update(_mapper.Map(newOccupation, occupation));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok(newOccupation);
     }
     /// <summary>
@@ -109,7 +109,7 @@ public class OccupationController : Controller
             return NotFound("The occupation with given id is not found");
         }
         ctx.Occupations.Remove(occupation);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         return Ok();
     }
 }

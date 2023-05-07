@@ -1,14 +1,11 @@
 name: GitActionsForShopApp 
 on:
   commit_comment:
-    branches:
-      -main
+    branches: ["main"]
   push:
-    branches: 
-      -main
+    branches: ["main"]
   pull_request:
-    branches: 
-      -main
+    branches: ["main"]
 
 jobs:
   build:

@@ -34,8 +34,6 @@ public class VoucherTypeIntegrationTest : IClassFixture<WebApplicationFactory<Pr
     {
         var client = _factory.CreateClient();
         var response = await client.GetAsync("api/VoucherType");
-        // Debugger.Launch();
-        Console.Write(response);
         Assert.True(response.IsSuccessStatusCode);
 
         var content = await response.Content.ReadAsStringAsync();

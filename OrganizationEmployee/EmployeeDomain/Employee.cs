@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeDomain;
 /// <summary>
-/// Classs Employee represents an employee in organization, it contains personal information and
+/// Class Employee represents an employee in organization, it contains personal information and
 /// it has lists of other classes -  EmployeeOccupation, DepartmentEmployee, EmployeeVacationVoucher to represent many-to-many relationship.
 /// It also has a link to Workshop class for one-to-many relationship.
 /// </summary>

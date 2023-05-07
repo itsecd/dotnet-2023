@@ -12,7 +12,7 @@ public class Program
         builder.Services.AddDbContextFactory<EmployeeDbContext>(optionsBuilder =>
         {
             var connectionString = builder.Configuration.GetConnectionString(nameof(EmployeeDomain));
-            optionsBuilder.UseMySQL(connectionString);
+            optionsBuilder.UseMySQL(connectionString!);
         });
 
         builder.Services.AddSingleton<OrganizationRepository>();

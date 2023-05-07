@@ -110,8 +110,6 @@ public class WorkshopIntegrationTest : IClassFixture<WebApplicationFactory<Progr
         var jsonObject = JsonSerializer.Serialize(departmentDto, _serializeOptions);
         var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
         var response = await client.PutAsync($"api/Workshop/{workshopId}", stringContent);
-
-        var content = await response.Content.ReadAsStringAsync();
         if (isSuccess)
         {
             Assert.True(response.IsSuccessStatusCode);

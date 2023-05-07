@@ -3,7 +3,7 @@
 namespace Shops.Domain;
 
 /// <summary>
-/// Class ЫрщзыContext is used to work with database
+/// Class ShopsContext is used to work with database
 /// </summary>
 public class ShopsContext : DbContext
 {
@@ -20,7 +20,7 @@ public class ShopsContext : DbContext
     /// </summary>
     public DbSet<ProductGroup> ProductGroups { get; set; } = null!;
     /// <summary>
-    /// Used to store a collection of prorduct quantity
+    /// Used to store a collection of product quantity
     /// </summary>
     public DbSet<ProductQuantity> ProductQuantity { get; set; } = null!;
     /// <summary>

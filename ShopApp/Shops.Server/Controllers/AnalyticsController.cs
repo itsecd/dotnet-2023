@@ -46,9 +46,8 @@ public class AnalyticsController : ControllerBase
         if (foundShop == null)
             return NotFound();
         _logger.LogInformation("Get list of products in shop");
-        var fixtureShop = ctx.Shops;
         var query = await
-            (from shop in fixtureShop
+            (from shop in ctx.Shops
              where shop.Id == id
              select shop.Products).ToListAsync();
         if (query[0].Count == 0)
@@ -75,9 +74,8 @@ public class AnalyticsController : ControllerBase
         if (foundProduct == null)
             return NotFound();
         _logger.LogInformation("Get list of shop with product");
-        var fixtureShop = ctx.Shops;
         var query = await
-            (from shop in fixtureShop
+            (from shop in ctx.Shops
              from products in shop.Products
              where products.ProductId == id
              select shop).ToListAsync();
@@ -100,14 +98,14 @@ public class AnalyticsController : ControllerBase
         var fixtureShop = ctx.Shops;
         var productList = ctx.Products;
         var productInShop = await
-            (from shop in fixtureShop
+            (from shop in ctx.Shops
              from products in shop.Products
              select products).ToListAsync();
 
         var result =
             (from ps in productInShop
-             join p in productList on ps.ProductId equals p.Id
-             join s in fixtureShop on ps.ShopId equals s.Id
+             join p in ctx.Products on ps.ProductId equals p.Id
+             join s in ctx.Shops on ps.ShopId equals s.Id
              group new { p, s } by new { p.ProductGroupId, s.Id } into grp
              select new
              {
@@ -127,10 +125,8 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get list of top 5 purchases");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
-        var customer = ctx.Customers;
-        var fixtureShop = ctx.Shops;
         var topPurch = await
-            (from shop in fixtureShop
+            (from shop in ctx.Shops
              from pr in shop.PurchaseRecords
              orderby pr.Sum descending
              select pr
@@ -148,16 +144,14 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get list of product delay");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
-        var fixtureShop = ctx.Shops;
-        var productList = ctx.Products;
         var productInShop = await
-            (from shop in fixtureShop
+            (from shop in ctx.Shops
              from products in shop.Products
              select products).ToListAsync();
         var expiredProduct =
             (from ps in productInShop
-             join p in productList on ps.ProductId equals p.Id
-             join s in fixtureShop on ps.ShopId equals s.Id
+             join p in ctx.Products on ps.ProductId equals p.Id
+             join s in ctx.Shops on ps.ShopId equals s.Id
              where p.StorageLimitDate < DateTime.Now
              select new
              {
@@ -179,9 +173,8 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get list of stores in which goods were sold for a month in excess of the specified amount");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
-        var fixtureShop = ctx.Shops;
         var purchases = await
-           (from shop in fixtureShop
+           (from shop in ctx.Shops
             from pr in shop.PurchaseRecords
             select new
             {

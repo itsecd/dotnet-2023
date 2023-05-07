@@ -58,12 +58,12 @@ public class PurchaseRecordController : ControllerBase
         var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
-            _logger.LogInformation($"Not found purchase record with id = {id}");
+            _logger.LogInformation("Not found purchase record with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"purchase record with id = {id}");
+            _logger.LogInformation("purchase record with id = {id}", id);
             return Ok(_mapper.Map<PurchaseRecordGetDto>(record));
         }
     }
@@ -96,7 +96,7 @@ public class PurchaseRecordController : ControllerBase
         newRecord.Sum = record.Quantity * foundProduct.Price;
         await ctx.PurchaseRecords.AddAsync(newRecord);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post new purchase record, id = {newId}");
+        _logger.LogInformation("Post new purchase record, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -123,13 +123,13 @@ public class PurchaseRecordController : ControllerBase
         var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
-            _logger.LogInformation($"Not found purchase record with id = {id}");
+            _logger.LogInformation("Not found purchase record with id = {id}", id);
             return NotFound();
         }
         else
         {
 
-            _logger.LogInformation($"Update information purchase record with id = {id}");
+            _logger.LogInformation("Update information purchase record with id = {id}", id);
             _mapper.Map<PurchaseRecordPostDto, PurchaseRecord>(recordToPut, record);
             record.Sum = record.Quantity * foundProduct.Price;
             await ctx.SaveChangesAsync();
@@ -149,12 +149,12 @@ public class PurchaseRecordController : ControllerBase
         var record = await ctx.PurchaseRecords.FirstOrDefaultAsync(record => record.Id == id);
         if (record == null)
         {
-            _logger.LogInformation($"Not found purchase record with id = {id}");
+            _logger.LogInformation("Not found purchase record with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete purchase record with id = {id}");
+            _logger.LogInformation("Delete purchase record with id = {id}", id);
             ctx.PurchaseRecords.Remove(record);
             await ctx.SaveChangesAsync();
             return Ok();

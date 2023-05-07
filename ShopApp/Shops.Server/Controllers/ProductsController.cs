@@ -58,12 +58,12 @@ public class ProductsController : ControllerBase
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id = {id}");
+            _logger.LogInformation("Not found product with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Product with id = {id}");
+            _logger.LogInformation("Product with id = {id}", id);
             return Ok(_mapper.Map<ProductGetDto>(product));
         }
     }
@@ -87,7 +87,7 @@ public class ProductsController : ControllerBase
         newProduct.Id = newId;
         await ctx.Products.AddAsync(newProduct);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post product, id = {newId}");
+        _logger.LogInformation("Post product, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -106,12 +106,12 @@ public class ProductsController : ControllerBase
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id = {id}");
+            _logger.LogInformation("Not found product with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information product with id = {id}");
+            _logger.LogInformation("Update information product with id = {id}", id);
             _mapper.Map<ProductPostDto, Product>(productToPut, product);
             await ctx.SaveChangesAsync();
             return Ok();
@@ -131,12 +131,12 @@ public class ProductsController : ControllerBase
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id = {id}");
+            _logger.LogInformation("Not found product with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update storage limit date product with id = {id}");
+            _logger.LogInformation("Update storage limit date product with id = {id}", id);
             product.StorageLimitDate = newDateLimit;
             await ctx.SaveChangesAsync();
             return Ok();
@@ -155,12 +155,12 @@ public class ProductsController : ControllerBase
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id = {id}");
+            _logger.LogInformation("Not found product with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete product with id = {id}");
+            _logger.LogInformation("Delete product with id = {id}", id);
             ctx.Products.Remove(product);
             await ctx.SaveChangesAsync();
             return Ok();

@@ -58,12 +58,12 @@ public class ProductQuantityController : ControllerBase
         var product = await ctx.ProductQuantity.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not record of product quantity with id = {id}");
+            _logger.LogInformation("Not record of product quantity with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Record of product quantity with id = {id}");
+            _logger.LogInformation("Record of product quantity with id = {id}", id);
             return Ok(_mapper.Map<ProductQuantityGetDto>(product));
         }
     }
@@ -93,7 +93,7 @@ public class ProductQuantityController : ControllerBase
         newProduct.Id = newId;
         await ctx.ProductQuantity.AddAsync(newProduct);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post new record of product quantity, id = {newId}");
+        _logger.LogInformation("Post new record of product quantity, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -117,12 +117,12 @@ public class ProductQuantityController : ControllerBase
         var product = await ctx.ProductQuantity.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found record of product quantity with id = {id}");
+            _logger.LogInformation("Not found record of product quantity with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information record of product quantity with id = {id}");
+            _logger.LogInformation("Update information record of product quantity with id = {id}", id);
             _mapper.Map<ProductQuantityPostDto, ProductQuantity>(productToPut, product);
             await ctx.SaveChangesAsync();
             return Ok();
@@ -141,12 +141,12 @@ public class ProductQuantityController : ControllerBase
         var product = await ctx.ProductQuantity.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found record of product quantity with id = {id}");
+            _logger.LogInformation("Not found record of product quantity with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete record of product quantity with id = {id}");
+            _logger.LogInformation("Delete record of product quantity with id = {id}", id);
             ctx.ProductQuantity.Remove(product);
             await ctx.SaveChangesAsync();
             return Ok();

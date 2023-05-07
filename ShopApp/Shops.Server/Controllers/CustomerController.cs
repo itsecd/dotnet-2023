@@ -57,12 +57,12 @@ public class CustomerController : ControllerBase
         var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id = {id}");
+            _logger.LogInformation("Not found customer with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Customer with id = {id}");
+            _logger.LogInformation("Customer with id = {id}", id);
             return Ok(_mapper.Map<CustomersGetDto>(customer));
         }
     }
@@ -84,7 +84,7 @@ public class CustomerController : ControllerBase
         newCustomer.Id = newId;
         await ctx.Customers.AddAsync(newCustomer);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post customer, id = {newId}");
+        _logger.LogInformation("Post customer, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -101,12 +101,12 @@ public class CustomerController : ControllerBase
         var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id = {id}");
+            _logger.LogInformation("Not found customer with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information customer with id = {id}");
+            _logger.LogInformation("Update information customer with id = {id}", id);
             _mapper.Map<CustomerPostDto, Customer>(customerToPut, customer);
             await ctx.SaveChangesAsync();
             return Ok();
@@ -125,12 +125,12 @@ public class CustomerController : ControllerBase
         var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id = {id}");
+            _logger.LogInformation("Not found customer with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete customer with id = {id}");
+            _logger.LogInformation("Delete customer with id = {id}",(id));
             ctx.Customers.Remove(customer);
             await ctx.SaveChangesAsync();
             return Ok();

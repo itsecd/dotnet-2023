@@ -58,12 +58,12 @@ public class ProductGroupController : ControllerBase
         var productGroup = await ctx.ProductGroups.FirstOrDefaultAsync(productGroup => productGroup.Id == id);
         if (productGroup == null)
         {
-            _logger.LogInformation($"Not found product group with id = {id}");
+            _logger.LogInformation("Not found product group with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"product group with id = {id}");
+            _logger.LogInformation("Product group with id = {id}", id);
             return Ok(_mapper.Map<ProductGroupGetDto>(productGroup));
         }
     }
@@ -85,7 +85,7 @@ public class ProductGroupController : ControllerBase
         newProductGroup.Id = newId;
         await ctx.ProductGroups.AddAsync(newProductGroup);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post product group, id = {newId}");
+        _logger.LogInformation("Post product group, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -102,12 +102,12 @@ public class ProductGroupController : ControllerBase
         var productGroup = await ctx.ProductGroups.FirstOrDefaultAsync(productGroup => productGroup.Id == id);
         if (productGroup == null)
         {
-            _logger.LogInformation($"Not found product group with id = {id}");
+            _logger.LogInformation("Not found product group with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information product group with id = {id}");
+            _logger.LogInformation("Update information product group with id = {id}", id);
             _mapper.Map<ProductGroupPostDto, ProductGroup>(productGroupToPut, productGroup);
             await ctx.SaveChangesAsync();
             return Ok();
@@ -126,12 +126,12 @@ public class ProductGroupController : ControllerBase
         var productGroup = await ctx.ProductGroups.FirstOrDefaultAsync(productGroup => productGroup.Id == id);
         if (productGroup == null)
         {
-            _logger.LogInformation($"Not found product group with id = {id}");
+            _logger.LogInformation("Not found product group with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete product group with id = {id}");
+            _logger.LogInformation("Delete product group with id = {id}", id);
             ctx.ProductGroups.Remove(productGroup);
             await ctx.SaveChangesAsync();
             return Ok();

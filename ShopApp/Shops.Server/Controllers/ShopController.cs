@@ -42,7 +42,7 @@ public class ShopController : ControllerBase
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
-        _logger.LogInformation($"Get list of shop");
+        _logger.LogInformation("Get list of shop");
         return Ok(_mapper.Map<IEnumerable<ShopGetDto>>(ctx.Shops));
     }
     /// <summary>
@@ -58,12 +58,12 @@ public class ShopController : ControllerBase
         var shop = await ctx.Shops.FirstOrDefaultAsync(shop => shop.Id == id);
         if (shop == null)
         {
-            _logger.LogInformation($"Not found shop with id = {id}");
+            _logger.LogInformation("Not found shop with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Shop with id = {id}");
+            _logger.LogInformation("Shop with id = {id}", id);
             return Ok(_mapper.Map<ShopGetDto>(shop));
         }
     }
@@ -85,7 +85,7 @@ public class ShopController : ControllerBase
         newShop.Id = newId;
         await ctx.Shops.AddAsync(newShop);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation($"Post shop, id = {newId}");
+        _logger.LogInformation("Post shop, id = {newId}", newId);
         return Ok();
     }
     /// <summary>
@@ -102,12 +102,12 @@ public class ShopController : ControllerBase
         var shop = await ctx.Shops.FirstOrDefaultAsync(shop => shop.Id == id);
         if (shop == null)
         {
-            _logger.LogInformation($"Not found shop with id = {id}");
+            _logger.LogInformation("Not found shop with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information shop with id = {id}");
+            _logger.LogInformation("Update information shop with id = {id}", id);
             _mapper.Map<ShopPostDto, Shop>(shopToPut, shop);
             await ctx.SaveChangesAsync();
             return Ok();
@@ -126,12 +126,12 @@ public class ShopController : ControllerBase
         var shop = await ctx.Shops.FirstOrDefaultAsync(shop => shop.Id == id);
         if (shop == null)
         {
-            _logger.LogInformation($"Not found shop with id = {id}");
+            _logger.LogInformation("Not found shop with id = {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Delete shop with id = {id}");
+            _logger.LogInformation("Delete shop with id = {id}", id);
             ctx.Shops.Remove(shop);
             await ctx.SaveChangesAsync();
             return Ok();

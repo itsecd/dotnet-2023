@@ -43,8 +43,8 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about book");
         var request = await (from book in _context.Books
-                       where book.Cipher == cipher
-                       select _mapper.Map<Book, BookGetDto>(book)).ToListAsync();
+                             where book.Cipher == cipher
+                             select _mapper.Map<Book, BookGetDto>(book)).ToListAsync();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found book: {id}", cipher);
@@ -64,15 +64,15 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about issued books");
         var bookSelect = await (from book in _context.Books
-                       join card in _context.Cards on book.Id equals card.BookId
-                       group book by book into b
-                       select new
-                       {
-                           book = _mapper.Map<Book, BookGetDto>(b.Key)
-                       }).ToListAsync();
+                                join card in _context.Cards on book.Id equals card.BookId
+                                group book by book into b
+                                select new
+                                {
+                                    book = _mapper.Map<Book, BookGetDto>(b.Key)
+                                }).ToListAsync();
         var request = (from req in bookSelect
-                     orderby req.book.Name
-                     select req).ToList();
+                       orderby req.book.Name
+                       select req).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found books");
@@ -93,9 +93,9 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about availability of the selected book");
         var request = await (from department in _context.Departments
-                       join book in _context.Books on department.BookId equals book.Id
-                       where book.Id == id
-                       select new { department = department.TypeDepartmentId, count = department.Count }).ToListAsync();
+                             join book in _context.Books on department.BookId equals book.Id
+                             where book.Id == id
+                             select new { department = department.TypeDepartmentId, count = department.Count }).ToListAsync();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found book: {id}", id);
@@ -123,12 +123,12 @@ public class RequestController : ControllerBase
                             types = type.Name,
                             count = department.Count
                         })
-                       group mass by mass.types into gr
-                       select new
-                       {
-                           Count = gr.Sum(ret => ret.count),
-                           gr.Key
-                       }).ToListAsync();
+                             group mass by mass.types into gr
+                             select new
+                             {
+                                 Count = gr.Sum(ret => ret.count),
+                                 gr.Key
+                             }).ToListAsync();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found books");
@@ -149,14 +149,14 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get top five readers");
         var numOfReaders = await (from card in _context.Cards
-                            join reader in _context.Readers on card.ReaderId equals reader.Id
-                            where card.DateOfReturn < date
-                            group card by reader.FullName into g
-                            select new
-                            {
-                                name = g.Key,
-                                count = g.Count()
-                            }).ToListAsync();
+                                  join reader in _context.Readers on card.ReaderId equals reader.Id
+                                  where card.DateOfReturn < date
+                                  group card by reader.FullName into g
+                                  select new
+                                  {
+                                      name = g.Key,
+                                      count = g.Count()
+                                  }).ToListAsync();
         var request = (from reader in numOfReaders
                        orderby reader.count descending
                        select reader).Take(5).ToList();
@@ -187,9 +187,9 @@ public class RequestController : ControllerBase
                             MaxDelay = g.Select(x => (x.DateOfReturn - x.DateOfIssue).TotalDays - x.DayCount).Max()
                         });
         var request = await (from readers in maxDelay
-                       where (readers.MaxDelay == maxDelay.Max(x => x.MaxDelay))
-                       orderby readers.Name
-                       select readers).ToListAsync();
+                             where (readers.MaxDelay == maxDelay.Max(x => x.MaxDelay))
+                             orderby readers.Name
+                             select readers).ToListAsync();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found readers");

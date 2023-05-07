@@ -1,4 +1,5 @@
-﻿namespace TransportManagment.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+namespace TransportManagment.Classes;
 /// <summary>
 /// Class of transports
 /// </summary>
@@ -7,6 +8,7 @@ public class Transport
     /// <summary>
     /// Unique key of transport
     /// </summary>
+    [Key]
     public int TransportId { get; set; } = 0;
     /// <summary>
     /// type of transport
@@ -23,14 +25,13 @@ public class Transport
     /// <summary>
     /// List of routes for this transport
     /// </summary>
-    public List<int> Routes { get; set; } = new List<int>();
+    public List<Route> Routes { get; set; } = new List<Route>();
     public Transport() { }
-    public Transport(int transportId, string type, string model, DateTime dateMake, List<int> routes)
+    public Transport(int transportId, string type, string model, DateTime dateMake)
     {
         DateMake = dateMake;
         Type = type;
         Model = model;
         TransportId = transportId;
-        Routes = routes;
     }
 }

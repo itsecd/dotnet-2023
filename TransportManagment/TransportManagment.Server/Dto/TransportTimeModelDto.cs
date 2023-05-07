@@ -17,7 +17,7 @@ public class TransportTimeModelDto
     /// </summary>
     public string Model { get; set; } = string.Empty;
     /// <summary>
-    /// the time when the transport was on the trip
+    /// The time when the transport was on the trip
     /// </summary>
-    public long Time { get; set; } = 0;
+    public double Time { get; set; } = 0;
 }

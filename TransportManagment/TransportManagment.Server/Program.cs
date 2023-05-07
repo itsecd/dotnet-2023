@@ -1,8 +1,19 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json.Serialization;
+using TransportManagment.Classes;
 using TransportManagment.Server;
 using TransportManagment.Server.Repository;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TransportManagmentDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("TransportManagment")!)
+);
+builder.Services.AddControllers()
+    .AddJsonOptions(options => 
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);

@@ -15,9 +15,9 @@ public class DriverPropertiesRouteDto
     /// <summary>
     /// Total time in routes
     /// </summary>
-    public long SumTime { get; set; } = 0;
+    public double SumTime { get; set; } = 0;
     /// <summary>
     /// Maximum time in route
     /// </summary>
-    public long MaxTime { get; set; } = 0;
+    public double MaxTime { get; set; } = 0.0;
 }

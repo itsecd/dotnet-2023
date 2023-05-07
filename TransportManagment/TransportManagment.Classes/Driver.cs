@@ -1,4 +1,5 @@
-﻿namespace TransportManagment.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+namespace TransportManagment.Classes;
 /// <summary>
 /// Class of drivers
 /// </summary>
@@ -7,6 +8,7 @@ public class Driver
     /// <summary>
     /// Unique key of driver
     /// </summary>
+    [Key]
     public int DriverId { get; set; } = 0;
     /// <summary>
     /// First name of driver
@@ -35,9 +37,9 @@ public class Driver
     /// <summary>
     /// List of routes for this driver
     /// </summary>
-    public List<int> Routes { get; set; } = new List<int>();
+    public List<Route> Routes { get; set; } = new List<Route>();
     public Driver() { }
-    public Driver(int driverId, string firstName, string lastName, string patronymic, int passport, int driverCard, int number, List<int> routes)
+    public Driver(int driverId, string firstName, string lastName, string patronymic, int passport, int driverCard, int number)
     {
         DriverId = driverId;
         FirstName = firstName;
@@ -46,6 +48,5 @@ public class Driver
         Passport = passport;
         DriverCard = driverCard;
         Number = number;
-        Routes = routes;
     }
 }

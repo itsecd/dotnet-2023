@@ -1,4 +1,5 @@
-﻿namespace TransportManagment.Server.Dto;
+﻿using TransportManagment.Classes;
+namespace TransportManagment.Server.Dto;
 /// <summary>
 /// Class of routes for method Post
 /// </summary>
@@ -11,17 +12,17 @@ public class RoutePostDto
     /// <summary>
     /// Time when transport drive out of route
     /// </summary>
-    public DateTime TimeTo { get; set; } = new DateTime();
+    public TimeSpan TimeTo { get; set; } = new TimeSpan();
     /// <summary>
     /// Time when transport drive in of route
     /// </summary>
-    public DateTime TimeFrom { get; set; } = new DateTime();
+    public TimeSpan TimeFrom { get; set; } = new TimeSpan();
     /// <summary>
-    /// TransportId - Unique key of transport
+    /// TransportInRoute - Unique key of transport
     /// </summary>
-    public int TransportId { get; set; } = 0;
+    public Transport TransportInRoute { get; set; } = new();
     /// <summary>
     /// Driver - Unique key of driver
     /// </summary>
-    public int DriverId { get; set; } = 0;
+    public Driver DriverInRoute { get; set; } = new();
 }

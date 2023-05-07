@@ -11,9 +11,9 @@ public class DepartmentPostDto
     /// <summary>
     /// BooksId stores book's id
     /// </summary>
-    public int BooksId { set; get; }
+    public int BookId { set; get; }
     /// <summary>
     /// TypeDepartmentsId stores department's id
     /// </summary>
-    public int TypeDepartmentsId { set; get; }
+    public int TypeDepartmentId { set; get; }
 }

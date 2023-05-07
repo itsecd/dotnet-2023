@@ -19,7 +19,7 @@ public class CardPostDto
     /// <summary>
     /// BooksId stores book's id
     /// </summary>
-    public int BooksId { set; get; }
+    public int BookId { set; get; }
     /// <summary>
     /// ReaderId stores reader's id
     /// </summary>

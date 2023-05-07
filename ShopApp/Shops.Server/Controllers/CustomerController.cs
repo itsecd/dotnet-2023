@@ -130,7 +130,7 @@ public class CustomerController : ControllerBase
         }
         else
         {
-            _logger.LogInformation("Delete customer with id = {id}",(id));
+            _logger.LogInformation("Delete customer with id = {id}", (id));
             ctx.Customers.Remove(customer);
             await ctx.SaveChangesAsync();
             return Ok();

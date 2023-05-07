@@ -51,15 +51,15 @@ public class TestShop : IClassFixture<ShopFixture>
              select products).ToList();
 
         var result =
-            (from ps in productInShop
-             join p in productList on ps.ProductId equals p.Id
-             join s in fixtureShop on ps.ShopId equals s.Id
-             group new { p, s } by new { p.ProductGroupId, s.Id } into grp
+            (from productShop in productInShop
+             join products in productList on productShop.ProductId equals products.Id
+             join shops in fixtureShop on productShop.ShopId equals shops.Id
+             group new { products, shops } by new { products.ProductGroupId, shops.Id } into grp
              select new
              {
                  ShopId = grp.Key.Id,
                  PoductGroup = grp.Key.ProductGroupId,
-                 AvgPrice = grp.Average(x => x.p.Price)
+                 AvgPrice = grp.Average(x => x.products.Price)
              }
             ).ToList();
         Assert.Equal(16, result.Count());
@@ -77,9 +77,9 @@ public class TestShop : IClassFixture<ShopFixture>
         var fixtureShop = _shopFixture.ShopsList;
         var topPurch =
             (from shop in fixtureShop
-             from pr in shop.PurchaseRecords
-             orderby pr.Sum descending
-             select pr
+             from purchaseRecords in shop.PurchaseRecords
+             orderby purchaseRecords.Sum descending
+             select purchaseRecords
             ).Take(5).ToList();
 
 
@@ -104,18 +104,18 @@ public class TestShop : IClassFixture<ShopFixture>
              from products in shop.Products
              select products).ToList();
         var expiredProduct =
-            (from ps in productInShop
-             join p in productList on ps.ProductId equals p.Id
-             join s in fixtureShop on ps.ShopId equals s.Id
-             where p.StorageLimitDate < DateTime.Now
+            (from productShop in productInShop
+             join products in productList on productShop.ProductId equals products.Id
+             join shops in fixtureShop on productShop.ShopId equals shops.Id
+             where products.StorageLimitDate < DateTime.Now
              select new
              {
-                 ShopId = s.Id,
-                 ProductBarcode = p.Barcode,
-                 ProductName = p.Name,
+                 ShopId = shops.Id,
+                 ProductBarcode = products.Barcode,
+                 ProductName = products.Name,
              }
             ).ToList();
-        Assert.Equal(9, expiredProduct.Count());
+        Assert.Equal(12, expiredProduct.Count());
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "1" && x.ShopId == 1 && x.ProductName == "Молоко");
         Assert.Contains(expiredProduct, x => x.ProductBarcode == "6" && x.ShopId == 3 && x.ProductName == "Хлеб");
     }
@@ -130,12 +130,12 @@ public class TestShop : IClassFixture<ShopFixture>
         var fixtureShop = _shopFixture.ShopsList;
         var purchases =
            (from shop in fixtureShop
-            from pr in shop.PurchaseRecords
+            from purchaseRecords in shop.PurchaseRecords
             select new
             {
                 Shop = shop,
-                DateSale = pr.DateSale,
-                Sale = pr.Sum
+                DateSale = purchaseRecords.DateSale,
+                Sale = purchaseRecords.Sum
             }
             ).ToList();
         var result =

@@ -101,15 +101,15 @@ public class AnalyticsController : ControllerBase
              select products).ToListAsync();
 
         var result =
-            (from ps in productInShop
-             join p in ctx.Products on ps.ProductId equals p.Id
-             join s in ctx.Shops on ps.ShopId equals s.Id
-             group new { p, s } by new { p.ProductGroupId, s.Id } into grp
+            (from productShop in productInShop
+             join products in ctx.Products on productShop.ProductId equals products.Id
+             join shops in ctx.Shops on productShop.ShopId equals shops.Id
+             group new { products, shops } by new { products.ProductGroupId, shops.Id } into grp
              select new
              {
                  ShopId = grp.Key.Id,
                  PoductGroup = grp.Key.ProductGroupId,
-                 AvgPrice = grp.Average(x => x.p.Price)
+                 AvgPrice = grp.Average(x => x.products.Price)
              }
             ).ToList();
         return Ok(result);
@@ -125,9 +125,9 @@ public class AnalyticsController : ControllerBase
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var topPurch = await
             (from shop in ctx.Shops
-             from pr in shop.PurchaseRecords
-             orderby pr.Sum descending
-             select pr
+             from purchaseRecords in shop.PurchaseRecords
+             orderby purchaseRecords.Sum descending
+             select purchaseRecords
             ).Take(5).ToListAsync();
         var result = _mapper.Map<IEnumerable<PurchaseRecord>, IEnumerable<PurchaseRecordGetDto>>(topPurch);
 
@@ -147,15 +147,15 @@ public class AnalyticsController : ControllerBase
              from products in shop.Products
              select products).ToListAsync();
         var expiredProduct =
-            (from ps in productInShop
-             join p in ctx.Products on ps.ProductId equals p.Id
-             join s in ctx.Shops on ps.ShopId equals s.Id
-             where p.StorageLimitDate < DateTime.Now
+            (from productShop in productInShop
+             join products in ctx.Products on productShop.ProductId equals products.Id
+             join shops in ctx.Shops on productShop.ShopId equals shops.Id
+             where products.StorageLimitDate < DateTime.Now
              select new
              {
-                 ShopId = s.Id,
-                 ProductId = p.Id,
-                 StorageLimitDate = p.StorageLimitDate,
+                 ShopId = shops.Id,
+                 ProductId = products.Id,
+                 StorageLimitDate = products.StorageLimitDate,
              }
             ).ToList();
         return Ok(expiredProduct);
@@ -173,22 +173,22 @@ public class AnalyticsController : ControllerBase
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var purchases = await
            (from shop in ctx.Shops
-            from pr in shop.PurchaseRecords
+            from purchaseRecords in shop.PurchaseRecords
             select new
             {
                 Shop = shop,
-                DateSale = pr.DateSale,
-                Sale = pr.Sum
+                DateSale = purchaseRecords.DateSale,
+                Sale = purchaseRecords.Sum
             }
             ).ToListAsync();
         var result =
            (from purchase in purchases
             where purchase.DateSale >= beginDate && purchase.DateSale <= beginDate.AddMonths(1)
-            group purchase by purchase.Shop into sgrp
+            group purchase by purchase.Shop into shopGrp
             select new
             {
-                ShopId = sgrp.Key.Id,
-                SumSale = sgrp.Sum(purchase => purchase.Sale)
+                ShopId = shopGrp.Key.Id,
+                SumSale = shopGrp.Sum(purchase => purchase.Sale)
             } into shopSales
             where shopSales.SumSale >= amount
             select new

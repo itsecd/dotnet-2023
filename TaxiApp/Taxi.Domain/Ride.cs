@@ -35,14 +35,14 @@ public class Ride
     /// </summary>
     [Column("ride_date")]
     [Required]
-    public DateTime RideDate { get; set; } = new();
+    public DateTime RideDate { get; set; }
 
     /// <summary>
     ///     RideTime - duration of the ride
     /// </summary>
     [Column("ride_time")]
     [Required]
-    public TimeSpan RideTime { get; set; } = new();
+    public TimeSpan RideTime { get; set; }
 
     /// <summary>
     ///     Cost - cost of ride
@@ -55,15 +55,23 @@ public class Ride
     ///     PassengerId - passenger's unique identifier
     /// </summary>
     [Column("passenger_id")]
+    [ForeignKey("Passenger")]
     public ulong PassengerId { get; set; }
 
-    [ForeignKey("PassengerId")] public Passenger Passenger { get; set; } = null!;
+    /// <summary>
+    ///     Passenger - the navigation property is a link to the Passenger object
+    /// </summary>
+    public Passenger Passenger { get; set; } = null!;
 
     /// <summary>
     ///     VehicleId - vehicle's unique identifier
     /// </summary>
     [Column("vehicle_id")]
+    [ForeignKey("VehicleId")]
     public ulong VehicleId { get; set; }
 
-    [ForeignKey("VehicleId")] public Vehicle Vehicle { get; set; } = null!;
+    /// <summary>
+    ///     Vehicle - the navigation property is a link to the Vehicle object
+    /// </summary>
+    public Vehicle Vehicle { get; set; } = null!;
 }

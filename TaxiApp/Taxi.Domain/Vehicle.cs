@@ -36,15 +36,25 @@ public class Vehicle
     ///     VehicleClassificationId - id of the vehicle class to which the car belongs
     /// </summary>
     [Column("vehicle_classification_id")]
+    [ForeignKey("VehicleClassification")]
     public ulong VehicleClassificationId { get; set; }
+
+    /// <summary>
+    ///     VehicleClassification - the navigation property is a link to the VehicleClassification object
+    /// </summary>
+    public VehicleClassification VehicleClassification { get; set; } = null!;
 
     /// <summary>
     ///     DriverId - id of the driver who drives this vehicle
     /// </summary>
     [Column("driver_id")]
+    [ForeignKey("Driver")]
     public ulong DriverId { get; set; }
 
-    [ForeignKey("DriverId")] public Driver Driver { get; set; } = null!;
+    /// <summary>
+    ///     Driver - the navigation property is a link to the Driver object
+    /// </summary>
+    public Driver Driver { get; set; } = null!;
 
     /// <summary>
     ///     Rides - a list of the current vehicle`s rides

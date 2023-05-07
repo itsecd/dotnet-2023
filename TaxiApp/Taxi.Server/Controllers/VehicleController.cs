@@ -73,12 +73,27 @@ public class VehicleController : ControllerBase
         _logger.LogInformation("Post vehicle");
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
+        Driver? driverToPost = await ctx.Drivers.FindAsync(vehicleToPost.DriverId);
+        if (driverToPost == null)
+        {
+            _logger.LogInformation($"Not found driver with id={vehicleToPost.DriverId}");
+            return BadRequest();
+        }
+
+        VehicleClassification? vehicleClassificationToPost =
+            await ctx.VehicleClassifications.FindAsync(vehicleToPost.VehicleClassificationId);
+        if (vehicleClassificationToPost == null)
+        {
+            _logger.LogInformation($"Not found vehicle classification with id={vehicleToPost.VehicleClassificationId}");
+            return BadRequest();
+        }
+
         Vehicle? mappedVehicle = _mapper.Map<Vehicle>(vehicleToPost);
 
         await ctx.Vehicles.AddAsync(mappedVehicle);
         await ctx.SaveChangesAsync();
         return CreatedAtAction("Post", new { id = mappedVehicle.Id },
-            _mapper.Map<RideGetDto>(mappedVehicle));
+            _mapper.Map<VehicleGetDto>(mappedVehicle));
     }
 
     /// <summary>
@@ -93,6 +108,22 @@ public class VehicleController : ControllerBase
     public async Task<IActionResult> Put(ulong id, VehicleSetDto vehicleToPut)
     {
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        Driver? driverToPut = await ctx.Drivers.FindAsync(vehicleToPut.DriverId);
+        if (driverToPut == null)
+        {
+            _logger.LogInformation($"Not found driver with id={vehicleToPut.DriverId}");
+            return BadRequest();
+        }
+
+        VehicleClassification? vehicleClassificationToPut =
+            await ctx.VehicleClassifications.FindAsync(vehicleToPut.VehicleClassificationId);
+        if (vehicleClassificationToPut == null)
+        {
+            _logger.LogInformation($"Not found vehicle classification with id={vehicleToPut.VehicleClassificationId}");
+            return BadRequest();
+        }
+
         Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
@@ -102,6 +133,7 @@ public class VehicleController : ControllerBase
 
         _logger.LogInformation($"Put vehicle with id={id}", id);
         await ctx.SaveChangesAsync();
+        _mapper.Map(vehicleToPut, vehicle);
         return NoContent();
     }
 

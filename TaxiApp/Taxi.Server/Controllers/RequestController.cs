@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Taxi.Domain;
 using Taxi.Server.Dto;
-using Taxi.Server.Repository;
 
 namespace Taxi.Server.Controllers;
 
@@ -11,15 +11,16 @@ namespace Taxi.Server.Controllers;
 /// </summary>
 public class RequestController : ControllerBase
 {
+    private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<RequestController> _logger;
     private readonly IMapper _mapper;
-    private readonly ITaxiRepository _taxiRepository;
 
-    public RequestController(ILogger<RequestController> logger, ITaxiRepository taxiRepository, IMapper mapper)
+    public RequestController(IDbContextFactory<TaxiDbContext> contextFactory, IMapper mapper,
+        ILogger<RequestController> logger)
     {
-        _logger = logger;
-        _taxiRepository = taxiRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,26 +32,25 @@ public class RequestController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("vehicles_and_drivers/{id}")]
-    public IActionResult GetVehicleAndDriver(ulong id)
+    public async Task<IActionResult> GetVehicleAndDriver(ulong id)
     {
-        var query = (from vehicle in _taxiRepository.Vehicles
-            from vehicleClassification in _taxiRepository.VehicleClassifications
-            from driver in _taxiRepository.Drivers
-            where vehicleClassification.Id == vehicle.VehicleClassificationId &&
-                  driver.Id == vehicle.DriverId && driver.Id == id
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        var query = await (from vehicle in ctx.Vehicles
+            where vehicle.Driver.Id == id
             select new
             {
                 vehicle.RegistrationCarPlate,
                 vehicle.Colour,
-                driver.FirstName,
-                driver.LastName,
-                driver.Patronymic,
-                driver.PhoneNumber,
-                driver.Passport,
-                vehicleClassification.Brand,
-                vehicleClassification.Model,
-                vehicleClassification.Class
-            }).ToList();
+                vehicle.Driver.FirstName,
+                vehicle.Driver.LastName,
+                vehicle.Driver.Patronymic,
+                vehicle.Driver.PhoneNumber,
+                vehicle.Driver.Passport,
+                vehicle.VehicleClassification.Brand,
+                vehicle.VehicleClassification.Model,
+                vehicle.VehicleClassification.Class
+            }).ToListAsync();
 
         if (query.Count == 0)
         {
@@ -71,20 +71,21 @@ public class RequestController : ControllerBase
     ///     Return list of passengers
     /// </returns>
     [HttpGet("passengers_over_given_period")]
-    public ActionResult<IEnumerable<PassengerGetDto>> GetPassengerOverGivenPeriod(DateTime minDate, DateTime maxDate)
+    public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengerOverGivenPeriod(DateTime minDate,
+        DateTime maxDate)
     {
-        List<Passenger> passengers = _taxiRepository.Passengers;
-        List<Ride> rides = _taxiRepository.Rides;
-        foreach (Ride ride in rides)
-        {
-            passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
-        }
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
-        var query = (from passenger in passengers
-            from ride in passenger.Rides
-            where ride.RideDate <= maxDate && ride.RideDate >= minDate
-            orderby passenger.LastName, passenger.FirstName, passenger.Patronymic
-            select _mapper.Map<PassengerGetDto>(passenger)).ToList();
+        var query = await (from ride in ctx.Rides
+                where ride.RideDate <= maxDate && ride.RideDate >= minDate
+                select new
+                {
+                    ride.Passenger.LastName,
+                    ride.Passenger.FirstName,
+                    ride.Passenger.Patronymic
+                }).Distinct().OrderBy(fullname => fullname.LastName)
+            .ThenBy(fullname => fullname.FirstName)
+            .ThenBy(fullname => fullname.Patronymic).ToListAsync();
 
         if (query.Count == 0)
         {
@@ -104,23 +105,18 @@ public class RequestController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpGet("count_passenger_rides")]
-    public IActionResult GetCountPassengerRides()
+    public async Task<IActionResult> GetCountPassengerRides()
     {
-        List<Passenger> passengers = _taxiRepository.Passengers;
-        List<Ride> rides = _taxiRepository.Rides;
-        foreach (Ride ride in rides)
-        {
-            passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
-        }
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
-        var query = (from passenger in passengers
+        var query = await (from passenger in ctx.Passengers
             select new
             {
                 passenger.LastName,
                 passenger.FirstName,
                 passenger.Patronymic,
                 passenger.Rides.Count
-            }).ToList();
+            }).ToListAsync();
 
         if (query.Count == 0)
         {
@@ -139,21 +135,15 @@ public class RequestController : ControllerBase
     ///     Return list of drivers
     /// </returns>
     [HttpGet("count_top_driver_rides")]
-    public IEnumerable<Driver> GetTopDriver()
+    public async Task<IEnumerable<Driver>> GetTopDriver()
     {
-        List<Vehicle> vehicles = _taxiRepository.Vehicles;
-        List<Ride> rides = _taxiRepository.Rides;
-        List<Driver> drivers = _taxiRepository.Drivers;
-        foreach (Ride ride in rides)
-        {
-            vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
-        }
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
-        var query = (from vehicle in vehicles
-            from driver in drivers
+        List<Driver> query = await (from vehicle in ctx.Vehicles
+            from driver in ctx.Drivers
             where vehicle.DriverId == driver.Id
             orderby vehicle.Rides.Count
-            select driver).Take(2).ToList();
+            select driver).Take(2).ToListAsync();
 
         _logger.LogInformation("Get top 2 driver by count of rides");
         return query;
@@ -166,39 +156,31 @@ public class RequestController : ControllerBase
     ///     Return list of driver, rides count, average time, maximum time
     /// </returns>
     [HttpGet("infos_about_rides")]
-    public IActionResult GetInfosAboutRides()
+    public async Task<IActionResult> GetInfosAboutRides()
     {
-        List<Vehicle> vehicles = _taxiRepository.Vehicles;
-        List<Ride> rides = _taxiRepository.Rides;
-        List<Driver> drivers = _taxiRepository.Drivers;
-        foreach (Ride ride in rides)
-        {
-            vehicles[(int)ride.VehicleId - 1].Rides.Add(ride);
-        }
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
-        var query = (from ridesInfo in from ride in rides
+        var query = await (from ridesInfo in from ride in ctx.Rides
                 group ride by ride.VehicleId
                 into grp
                 select new
                 {
                     vehicleId = grp.Key,
                     count = grp.Count(),
-                    avg = grp.Average(ride =>
-                        ride.RideTime.Seconds + (60 * ride.RideTime.Minutes) + (3600 * ride.RideTime.Hours)),
-                    max = grp.Max(ride =>
-                        ride.RideTime.Seconds + (60 * ride.RideTime.Minutes) + (3600 * ride.RideTime.Hours))
+                    max = grp.Max(ride => ride.RideTime),
+                    rideTimesInSeconds = grp.Select(ride => ride.RideTime.TotalSeconds)
                 }
-            from driver in drivers
-            where driver.Id == ridesInfo.vehicleId
+            from vehicle in ctx.Vehicles
+            where ridesInfo.vehicleId == vehicle.Id
             select new
             {
-                driver.LastName,
-                driver.FirstName,
-                driver.Patronymic,
+                vehicle.Driver.LastName,
+                vehicle.Driver.FirstName,
+                vehicle.Driver.Patronymic,
                 ridesInfo.count,
-                ridesInfo.avg,
+                avg = TimeSpan.FromSeconds(ridesInfo.rideTimesInSeconds.Sum() / ridesInfo.count),
                 ridesInfo.max
-            }).ToList();
+            }).ToListAsync();
 
         _logger.LogInformation("Get infos about passengers rides");
         return Ok(query);
@@ -214,29 +196,23 @@ public class RequestController : ControllerBase
     ///     Return list of passengers
     /// </returns>
     [HttpGet("max_rides_of_passenger")]
-    public IActionResult GetMaxRidesOfPassenger(DateTime minDate, DateTime maxDate)
+    public async Task<IActionResult> GetMaxRidesOfPassenger(DateTime minDate, DateTime maxDate)
     {
-        List<Passenger> passengers = _taxiRepository.Passengers;
-        List<Ride> rides = _taxiRepository.Rides;
-        foreach (Ride ride in rides)
-        {
-            passengers[(int)ride.PassengerId - 1].Rides.Add(ride);
-        }
+        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
-        var subquery = (from passenger in passengers
+        var subquery = await (from passenger in ctx.Passengers
             from ride in passenger.Rides
             where ride.RideDate < maxDate && ride.RideDate > minDate
             group passenger.Id by passenger
             into grp
             select new
             {
-                grp.Key.Id,
                 grp.Key.LastName,
                 grp.Key.FirstName,
                 grp.Key.Patronymic,
                 grp.Key.PhoneNumber,
                 count = grp.Count()
-            }).ToList();
+            }).ToListAsync();
 
         if (subquery.Count == 0)
         {
@@ -250,7 +226,6 @@ public class RequestController : ControllerBase
             where sq.count == max
             select new
             {
-                sq.Id,
                 sq.LastName,
                 sq.FirstName,
                 sq.Patronymic,

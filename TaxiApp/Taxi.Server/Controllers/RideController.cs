@@ -73,6 +73,20 @@ public class RideController : ControllerBase
         _logger.LogInformation("Post ride");
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 
+        Vehicle? vehicleToPost = await ctx.Vehicles.FindAsync(rideToPost.VehicleId);
+        if (vehicleToPost == null)
+        {
+            _logger.LogInformation($"Not found vehicle with id={rideToPost.VehicleId}");
+            return BadRequest();
+        }
+
+        Passenger? passengerToPost = await ctx.Passengers.FindAsync(rideToPost.PassengerId);
+        if (passengerToPost == null)
+        {
+            _logger.LogInformation($"Not found passenger with id={rideToPost.PassengerId}");
+            return BadRequest();
+        }
+
         Ride? mappedRide = _mapper.Map<Ride>(rideToPost);
 
         await ctx.Rides.AddAsync(mappedRide);
@@ -93,6 +107,21 @@ public class RideController : ControllerBase
     public async Task<IActionResult> Put(ulong id, RideSetDto rideToPut)
     {
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+
+        Vehicle? vehicleToPut = await ctx.Vehicles.FindAsync(rideToPut.VehicleId);
+        if (vehicleToPut == null)
+        {
+            _logger.LogInformation($"Not found vehicle with id={rideToPut.VehicleId}");
+            return BadRequest();
+        }
+
+        Passenger? passengerToPut = await ctx.Passengers.FindAsync(rideToPut.PassengerId);
+        if (passengerToPut == null)
+        {
+            _logger.LogInformation($"Not found passenger with id={rideToPut.PassengerId}");
+            return BadRequest();
+        }
+
         Ride? ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {

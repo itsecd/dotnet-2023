@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Taxi.Domain;
 
+/// <summary>
+///     TaxiDbContext - сlass that represents the DbContext for the application
+/// </summary>
 public class TaxiDbContext : DbContext
 {
     public TaxiDbContext(DbContextOptions options) : base(options)
@@ -9,10 +12,29 @@ public class TaxiDbContext : DbContext
         Database.EnsureCreated();
     }
 
+    /// <summary>
+    ///     Drivers - collection of Driver objects in the database
+    /// </summary>
     public DbSet<Driver> Drivers { get; set; } = null!;
+
+    /// <summary>
+    ///     Passengers - collection of Passenger objects in the database
+    /// </summary>
     public DbSet<Passenger> Passengers { get; set; } = null!;
+
+    /// <summary>
+    ///     Rides - collection of Ride objects in the database
+    /// </summary>
     public DbSet<Ride> Rides { get; set; } = null!;
+
+    /// <summary>
+    ///     Vehicles - collection of Vehicle objects in the database
+    /// </summary>
     public DbSet<Vehicle> Vehicles { get; set; } = null!;
+
+    /// <summary>
+    ///     VehicleClassifications - collection of VehicleClassification objects in the database
+    /// </summary>
     public DbSet<VehicleClassification> VehicleClassifications { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

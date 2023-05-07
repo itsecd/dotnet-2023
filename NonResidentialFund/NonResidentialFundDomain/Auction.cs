@@ -24,12 +24,12 @@ public class Auction
     /// <summary>
     /// Buildings - List of buildings that were auctioned off
     /// </summary>
-    [NotMapped]
+    [InverseProperty("Auction")]
     public List<BuildingAuctionConnection> Buildings { get; set; } = null!;
     /// <summary>
     /// Buyers - List of buyers participating in the auction
     /// </summary>
-    [NotMapped]
+    [InverseProperty("Auction")]
     public List<BuyerAuctionConnection> Buyers { get; set; } = null!;
 
     public Auction() { }

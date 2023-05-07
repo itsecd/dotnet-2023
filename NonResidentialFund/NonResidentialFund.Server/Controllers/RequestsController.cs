@@ -53,7 +53,7 @@ public class RequestsController : ControllerBase
                                 countBought = privGroup.Count()
                             })
                             on auction.AuctionId equals countBoughtInAuction.AuctionId
-                      where countBoughtInAuction.countBought != ctx.BuildingAuctionConnections.Where(conn => conn.AuctionId == auction.AuctionId).Count()
+                      where countBoughtInAuction.countBought != auction.Buildings.Count
                       select auction).ToList();
 
         return _mapper.Map<IEnumerable<AuctionGetDto>>(result);
@@ -96,7 +96,7 @@ public class RequestsController : ControllerBase
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
         var result = from auction in ctx.Auctions
-                     from participant in ctx.BuyerAuctionConnections.Where(conn => conn.AuctionId == auction.AuctionId)
+                     from participant in auction.Buyers
                      join buyer in ctx.Buyers on participant.BuyerId equals buyer.BuyerId
                      where auction.Date == date
                      select buyer;

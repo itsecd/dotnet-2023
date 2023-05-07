@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NonResidentialFund.Domain;
 /// <summary>
@@ -38,7 +39,8 @@ public class Buyer
     /// <summary>
     /// Auctions - List of auctions in which the buyer participated
     /// </summary>
-    public List<BuyerAuctionConnection> Auctions = null!;
+    [InverseProperty("Buyer")]
+    public List<BuyerAuctionConnection> Auctions { get; set; } = null!;
 
     public Buyer() { }
     public Buyer(int buyerId, string lastName, string firstName, string middleName,

@@ -61,6 +61,7 @@ public class BuildingController : ControllerBase
     [HttpPost]
     public async void Post([FromBody] BuildingPostDto building)
     {
+        _logger.LogInformation("Created new building");
         using var ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Buildings.Add(_mapper.Map<Building>(building));
         ctx.SaveChanges();
@@ -84,6 +85,7 @@ public class BuildingController : ControllerBase
         }
         else
         {
+            _logger.LogInformation("Updated building with registration number {registrationNumber}", registrationNumber);
             ctx.Buildings.Update(_mapper.Map(buildingToPut, building));
             ctx.SaveChanges();
             return Ok();
@@ -107,6 +109,7 @@ public class BuildingController : ControllerBase
         }
         else
         {
+            _logger.LogInformation("Deleted building with registration number {registrationNumber}", registrationNumber);
             ctx.Buildings.Remove(building);
             ctx.SaveChanges();
             return Ok();
@@ -122,7 +125,7 @@ public class BuildingController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuildingAuctionConnectionForBuildingDto>>> GetAuctions(int registrationNumber)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        var building = ctx.Buildings.Include(building => building.Auctions).FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
         if (building == null)
         {
             _logger.LogInformation("Not found building with registrationNumber: {registrationNumber}", registrationNumber);
@@ -132,7 +135,7 @@ public class BuildingController : ControllerBase
         {
             _logger.LogInformation("Get auctions in which the building with registration number {registrationNumber} was put up for sale", registrationNumber);
             return Ok(_mapper.Map<IEnumerable<BuildingAuctionConnectionForBuildingDto>>(
-                ctx.BuildingAuctionConnections.Where(connection => connection.BuildingId == registrationNumber))
+                building.Auctions)
                 );
         }
     }
@@ -147,7 +150,7 @@ public class BuildingController : ControllerBase
     public async Task<IActionResult> PostAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        var building = ctx.Buildings.Include(building => building.Auctions).FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
         var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
         if (building == null)
         {
@@ -156,11 +159,12 @@ public class BuildingController : ControllerBase
         }
         else
         {
-            if (auction != null && ctx.BuildingAuctionConnections.FirstOrDefault(
-                conn => conn.AuctionId == connection.AuctionId && conn.BuildingId == registrationNumber) == null)
+            if (auction != null && building.Auctions.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId) == null)
             {
+                _logger.LogInformation("Added auction with id {connection.AuctionId} to the list of auctions in which the building with " +
+                    "registration number {registrationNumber} was put up for sale", connection.AuctionId,  registrationNumber);
                 var connectionToAdd = new BuildingAuctionConnection(registrationNumber, connection.AuctionId);
-                ctx.BuildingAuctionConnections.Add(connectionToAdd);
+                building.Auctions.Add(connectionToAdd);
                 ctx.SaveChanges();
                 return Ok();
             }
@@ -181,7 +185,7 @@ public class BuildingController : ControllerBase
     public async Task<IActionResult> DeleteAuction(int registrationNumber, [FromBody] BuildingAuctionConnectionForBuildingDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
+        var building = ctx.Buildings.Include(building => building.Auctions).FirstOrDefault(building => building.RegistrationNumber == registrationNumber);
         var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
         if (building == null)
         {
@@ -190,11 +194,12 @@ public class BuildingController : ControllerBase
         }
         else
         {
-            var connectionToDelete = ctx.BuildingAuctionConnections.FirstOrDefault(
-                conn => conn.AuctionId == connection.AuctionId && conn.BuildingId == registrationNumber);
+            _logger.LogInformation("Removed auction with id {connection.AuctionId} to the list of auctions in which the building with " +
+                    "registration number {registrationNumber} was put up for sale", connection.AuctionId, registrationNumber);
+            var connectionToDelete = building.Auctions.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId);
             if (connectionToDelete != null)
             {
-                ctx.BuildingAuctionConnections.Remove(connectionToDelete);
+                building.Auctions.Remove(connectionToDelete);
                 ctx.SaveChanges();
                 return Ok();
             }

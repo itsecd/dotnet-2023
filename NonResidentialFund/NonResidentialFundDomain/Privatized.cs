@@ -17,11 +17,15 @@ public class Privatized
     /// </summary>
     [ForeignKey(nameof(Building))]
     public int BuyerId { get; set; }
+
+    public Buyer Buyer { get; set; }
     /// <summary>
     /// AuctionId - The id of the auction at which the building was sold
     /// </summary>
     [ForeignKey(nameof(Auction))]
     public int AuctionId { get; set; }
+
+    public Auction Auction { get; set; }
     /// <summary>
     /// SaleDate - Date of sale of the building 
     /// </summary>

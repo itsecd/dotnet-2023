@@ -126,7 +126,7 @@ public class AuctionController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuildingAuctionConnectionForAuctionDto>>> GetBuildings(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -136,7 +136,7 @@ public class AuctionController : ControllerBase
         {
             _logger.LogInformation("Get building offered on auction with id: {id}", id);
             return Ok(_mapper.Map<IEnumerable<BuildingAuctionConnectionForAuctionDto>>(
-                ctx.BuildingAuctionConnections.Where(connection => connection.AuctionId == id))
+                auction.Buildings)
                 );
         }
     }
@@ -151,7 +151,7 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> PostBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
         var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
         if (auction == null)
         {
@@ -160,10 +160,10 @@ public class AuctionController : ControllerBase
         }
         else
         {
-            if (building != null && ctx.BuildingAuctionConnections.FirstOrDefault(conn => conn.BuildingId == connection.BuildingId && conn.AuctionId == id) == null)
+            if (building != null && auction.Buildings.FirstOrDefault(conn => conn.BuildingId == connection.BuildingId) == null)
             {
                 var connectionToAdd = new BuildingAuctionConnection(connection.BuildingId, id);
-                ctx.BuildingAuctionConnections.Add(connectionToAdd);
+                auction.Buildings.Add(connectionToAdd);
                 ctx.SaveChanges();
                 return Ok();
             }
@@ -184,7 +184,7 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> DeleteBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
         var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
         if (auction == null)
         {
@@ -193,10 +193,10 @@ public class AuctionController : ControllerBase
         }
         else
         {
-            var connectionToDelete = ctx.BuildingAuctionConnections.FirstOrDefault(conn => conn.BuildingId == connection.BuildingId);
+            var connectionToDelete = auction.Buildings.FirstOrDefault(conn => conn.BuildingId == connection.BuildingId);
             if (connectionToDelete != null)
             {
-                ctx.BuildingAuctionConnections.Remove(connectionToDelete);
+                auction.Buildings.Remove(connectionToDelete);
                 ctx.SaveChanges();
                 return Ok();
             }
@@ -216,7 +216,7 @@ public class AuctionController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuyerAuctionConnectionForAuctionDto>>> GetBuyers(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -226,7 +226,7 @@ public class AuctionController : ControllerBase
         {
             _logger.LogInformation("Get building offered on auction with id: {id}", id);
             return Ok(_mapper.Map<IEnumerable<BuyerAuctionConnectionForAuctionDto>>(
-                ctx.BuyerAuctionConnections.Where(connection => connection.AuctionId == id))
+                auction.Buyers)
                 );
         }
     }
@@ -241,7 +241,7 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> PostBuilding(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
         var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
         if (auction == null)
         {
@@ -250,10 +250,10 @@ public class AuctionController : ControllerBase
         }
         else
         {
-            if (buyer != null && ctx.BuyerAuctionConnections.FirstOrDefault(conn => conn.BuyerId == connection.BuyerId) == null)
+            if (buyer != null && auction.Buyers.FirstOrDefault(conn => conn.BuyerId == connection.BuyerId) == null)
             {
                 var connectionToAdd = new BuyerAuctionConnection(connection.BuyerId, id);
-                ctx.BuyerAuctionConnections.Add(connectionToAdd);
+                auction.Buyers.Add(connectionToAdd);
                 ctx.SaveChanges();
                 return Ok();
             }
@@ -274,7 +274,7 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> DeleteBuyer(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
         var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
         if (auction == null)
         {
@@ -283,10 +283,10 @@ public class AuctionController : ControllerBase
         }
         else
         {
-            var connectionToDelete = ctx.BuyerAuctionConnections.FirstOrDefault(conn => conn.BuyerId == connection.BuyerId);
+            var connectionToDelete = auction.Buyers.FirstOrDefault(conn => conn.BuyerId == connection.BuyerId);
             if (connectionToDelete != null)
             {
-                ctx.BuyerAuctionConnections.Remove(connectionToDelete);
+                auction.Buyers.Remove(connectionToDelete);
                 ctx.SaveChanges();
                 return Ok();
             }

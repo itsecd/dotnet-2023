@@ -14,7 +14,13 @@ public sealed class NonResidentialFundContext : DbContext
 
     public NonResidentialFundContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
+        try
+        {
+            Database.EnsureCreated();
+        }
+        catch (MySql.Data.MySqlClient.MySqlException e)
+        {
+        }
     }
 
     private List<District> DistrictRepository
@@ -427,16 +433,16 @@ public sealed class NonResidentialFundContext : DbContext
                 new BuildingAuctionConnection{Id = 1, BuildingId = 1, AuctionId = 1 },
                 new BuildingAuctionConnection{Id = 2, BuildingId = 2, AuctionId = 2 },
                 new BuildingAuctionConnection{Id = 3, BuildingId = 3, AuctionId = 3 },
-                new BuildingAuctionConnection{Id = 4, BuildingId = 4, AuctionId = 4 },
-                new BuildingAuctionConnection{Id = 5, BuildingId = 5, AuctionId = 5 },
-                new BuildingAuctionConnection{Id = 6, BuildingId = 5, AuctionId = 5 },
-                new BuildingAuctionConnection{Id = 7, BuildingId = 7, AuctionId = 7 },
-                new BuildingAuctionConnection{Id = 8, BuildingId = 8, AuctionId = 8 },
+                new BuildingAuctionConnection{Id = 4, BuildingId = 4, AuctionId = 5 },
+                new BuildingAuctionConnection{Id = 5, BuildingId = 5, AuctionId = 4 },
+                new BuildingAuctionConnection{Id = 6, BuildingId = 5, AuctionId = 10 },
+                new BuildingAuctionConnection{Id = 7, BuildingId = 7, AuctionId = 5 },
+                new BuildingAuctionConnection{Id = 8, BuildingId = 8, AuctionId = 6 },
                 new BuildingAuctionConnection{Id = 9,  BuildingId = 8, AuctionId = 8 },
-                new BuildingAuctionConnection{Id = 10,  BuildingId = 9, AuctionId = 9 },
-                new BuildingAuctionConnection{Id = 11,  BuildingId = 9, AuctionId = 9 },
-                new BuildingAuctionConnection{Id = 12,  BuildingId = 10, AuctionId = 10 },
-                new BuildingAuctionConnection{Id = 13,  BuildingId = 10, AuctionId = 10 }
+                new BuildingAuctionConnection{Id = 10,  BuildingId = 9, AuctionId = 1 },
+                new BuildingAuctionConnection{Id = 11,  BuildingId = 9, AuctionId = 7 },
+                new BuildingAuctionConnection{Id = 12,  BuildingId = 10, AuctionId = 4 },
+                new BuildingAuctionConnection{Id = 13,  BuildingId = 10, AuctionId = 9 }
             };
         }
     }
@@ -449,49 +455,51 @@ public sealed class NonResidentialFundContext : DbContext
             {
                 new BuyerAuctionConnection{Id = 1, BuyerId = 1, AuctionId = 1 },
                 new BuyerAuctionConnection{Id = 2, BuyerId = 1, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 3,  BuyerId = 1, AuctionId = 6 },
-                new BuyerAuctionConnection{Id = 4,  BuyerId = 1, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 5,  BuyerId = 1, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 6,  BuyerId = 1, AuctionId = 10 },
+                new BuyerAuctionConnection{Id = 3, BuyerId = 1, AuctionId = 6 },
+                new BuyerAuctionConnection{Id = 4, BuyerId = 1, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 5, BuyerId = 1, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 6, BuyerId = 1, AuctionId = 10},
                 new BuyerAuctionConnection{Id = 7, BuyerId = 2, AuctionId = 1 },
                 new BuyerAuctionConnection{Id = 8, BuyerId = 2, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 9,  BuyerId = 2, AuctionId = 6 },
-                new BuyerAuctionConnection{Id = 10,  BuyerId = 2, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 11,  BuyerId = 2, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 12,  BuyerId = 3, AuctionId = 4 },
-                new BuyerAuctionConnection{Id = 13,  BuyerId = 3, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 14,  BuyerId = 3, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 15,  BuyerId = 3, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 16,  BuyerId = 3, AuctionId = 9 },
-                new BuyerAuctionConnection{Id = 17,  BuyerId = 4, AuctionId = 2 },
-                new BuyerAuctionConnection{Id = 18,  BuyerId = 4, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 19,  BuyerId = 4, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 20,  BuyerId = 4, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 21,  BuyerId = 4, AuctionId = 10 },
-                new BuyerAuctionConnection{Id = 22,  BuyerId = 5, AuctionId = 2 },
-                new BuyerAuctionConnection{Id = 23,  BuyerId = 5, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 9, BuyerId = 2, AuctionId = 6 },
+                new BuyerAuctionConnection{Id = 10, BuyerId = 2, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 11, BuyerId = 2, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 12, BuyerId = 3, AuctionId = 4 },
+                new BuyerAuctionConnection{Id = 13, BuyerId = 3, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 14, BuyerId = 3, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 15, BuyerId = 3, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 16, BuyerId = 3, AuctionId = 9 },
+                new BuyerAuctionConnection{Id = 17, BuyerId = 4, AuctionId = 2 },
+                new BuyerAuctionConnection{Id = 18, BuyerId = 4, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 19, BuyerId = 4, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 20, BuyerId = 4, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 21, BuyerId = 4, AuctionId = 10 },
+                new BuyerAuctionConnection{Id = 22, BuyerId = 5, AuctionId = 2 },
+                new BuyerAuctionConnection{Id = 23, BuyerId = 5, AuctionId = 5 },
                 new BuyerAuctionConnection{Id = 24, BuyerId = 5, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 25,  BuyerId = 5, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 26,  BuyerId = 6, AuctionId = 4 },
-                new BuyerAuctionConnection{Id = 27,  BuyerId = 6, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 28,  BuyerId = 6, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 29,  BuyerId = 6, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 30,  BuyerId = 7, AuctionId = 3 },
-                new BuyerAuctionConnection{Id = 31,  BuyerId = 7, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 32,  BuyerId = 7, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 33,  BuyerId = 7, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 34,  BuyerId = 7, AuctionId = 9 },
-                new BuyerAuctionConnection{Id = 35,  BuyerId = 8, AuctionId = 3 },
-                new BuyerAuctionConnection{Id = 36,  BuyerId = 8, AuctionId = 5 },
-                new BuyerAuctionConnection{Id = 37,  BuyerId = 8, AuctionId = 7 },
-                new BuyerAuctionConnection{Id = 38,  BuyerId = 8, AuctionId = 8 },
-                new BuyerAuctionConnection{Id = 39,  BuyerId = 8, AuctionId = 10 }
+                new BuyerAuctionConnection{Id = 25, BuyerId = 5, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 26, BuyerId = 6, AuctionId = 4 },
+                new BuyerAuctionConnection{Id = 27, BuyerId = 6, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 28, BuyerId = 6, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 29, BuyerId = 6, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 30, BuyerId = 7, AuctionId = 3 },
+                new BuyerAuctionConnection{Id = 31, BuyerId = 7, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 32, BuyerId = 7, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 33, BuyerId = 7, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 34, BuyerId = 7, AuctionId = 9 },
+                new BuyerAuctionConnection{Id = 35, BuyerId = 8, AuctionId = 3 },
+                new BuyerAuctionConnection{Id = 36, BuyerId = 8, AuctionId = 5 },
+                new BuyerAuctionConnection{Id = 37, BuyerId = 8, AuctionId = 7 },
+                new BuyerAuctionConnection{Id = 38, BuyerId = 8, AuctionId = 8 },
+                new BuyerAuctionConnection{Id = 39, BuyerId = 8, AuctionId = 10 }
             };
         }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<BuildingAuctionConnection>().HasKey(connection => new { connection.BuildingId, connection.AuctionId });
+
         foreach (var district in DistrictRepository)
         {
             modelBuilder.Entity<District>().HasData(district);

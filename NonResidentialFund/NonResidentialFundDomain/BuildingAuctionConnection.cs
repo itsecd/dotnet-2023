@@ -14,12 +14,16 @@ public class BuildingAuctionConnection
     /// </summary>
     [ForeignKey(nameof(Building))]
     public int BuildingId { get; set; }
+
+    public Building Building { get; set; }
+    
     /// <summary>
     /// AuctionId - The id of auction
     /// </summary>
-
     [ForeignKey(nameof(Auction))]
     public int AuctionId { get; set; }
+    
+    public Auction Auction { get; set; }
     public BuildingAuctionConnection() { }
 
     public BuildingAuctionConnection(int buildingId, int auctionId)

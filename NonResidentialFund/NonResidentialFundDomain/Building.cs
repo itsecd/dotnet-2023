@@ -21,6 +21,8 @@ public class Building
     /// </summary>
     [ForeignKey(nameof(District))]
     public int DistrictId { get; set; }
+    
+    public District District { get; set; }
     /// <summary>
     /// Area - Building area
     /// </summary>
@@ -36,7 +38,8 @@ public class Building
     /// <summary>
     /// Auctions - list of auctions for which the building was offered
     /// </summary>
-    public List<BuildingAuctionConnection> Auctions = null!;
+    [InverseProperty(nameof(Building))]
+    public List<BuildingAuctionConnection> Auctions { get; set; } = null!;
     public Building() { }
     public Building(int regNum, string address, int districtId, double area, int flourCount, DateTime buildDate, List<BuildingAuctionConnection> auctions)
     {

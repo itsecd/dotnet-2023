@@ -49,7 +49,7 @@ public class BuyerController : ControllerBase
         }
         else
         {
-            _logger.LogInformation("Not found buyer with id: {id}", id);
+            _logger.LogInformation("Get buyer with id: {id}", id);
             return Ok(_mapper.Map<BuyerGetDto>(buyer));
         }
     }
@@ -61,6 +61,7 @@ public class BuyerController : ControllerBase
     [HttpPost]
     public async void Post([FromBody] BuyerPostDto buyer)
     {
+        _logger.LogInformation("Created new buyer");
         using var ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Buyers.Add(_mapper.Map<Buyer>(buyer));
         ctx.SaveChanges();
@@ -122,7 +123,7 @@ public class BuyerController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuyerAuctionConnectionForBuyerDto>>> GetAuctions(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
+        var buyer = ctx.Buyers.Include(buyer => buyer.Auctions).FirstOrDefault(buyer => buyer.BuyerId == id);
         if (buyer == null)
         {
             _logger.LogInformation("Not found buyer with id: {id}", id);
@@ -131,7 +132,7 @@ public class BuyerController : ControllerBase
         else
         {
             _logger.LogInformation("Get auctions in which the buyer with id {id} participated", id);
-            return Ok(_mapper.Map<IEnumerable<BuyerAuctionConnectionForBuyerDto>>(ctx.BuyerAuctionConnections.Where(connection => connection.BuyerId == id)));
+            return Ok(_mapper.Map<IEnumerable<BuyerAuctionConnectionForBuyerDto>>(buyer.Auctions));
         }
     }
 
@@ -145,7 +146,7 @@ public class BuyerController : ControllerBase
     public async Task<IActionResult> PostAuction(int id, [FromBody] BuyerAuctionConnectionForBuyerDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
+        var buyer = ctx.Buyers.Include(buyer => buyer.Auctions).FirstOrDefault(buyer => buyer.BuyerId == id);
         var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
         if (buyer == null)
         {
@@ -154,10 +155,10 @@ public class BuyerController : ControllerBase
         }
         else
         {
-            if (auction != null && ctx.BuyerAuctionConnections.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId && conn.BuyerId == id) == null)
+            if (auction != null && buyer.Auctions.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId) == null)
             {
                 var connectionToAdd = new BuyerAuctionConnection(id, connection.AuctionId);
-                ctx.BuyerAuctionConnections.Add(connectionToAdd);
+                buyer.Auctions.Add(connectionToAdd);
                 ctx.SaveChanges();
                 return Ok();
             }
@@ -178,7 +179,7 @@ public class BuyerController : ControllerBase
     public async Task<IActionResult> DeleteAuction(int id, [FromBody] BuyerAuctionConnectionForBuyerDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == id);
+        var buyer = ctx.Buyers.Include(buyer => buyer.Auctions).FirstOrDefault(buyer => buyer.BuyerId == id);
         var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == connection.AuctionId);
         if (buyer == null)
         {
@@ -187,10 +188,10 @@ public class BuyerController : ControllerBase
         }
         else
         {
-            var connectionToDelete = ctx.BuyerAuctionConnections.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId && conn.BuyerId == id);
+            var connectionToDelete = buyer.Auctions.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId);
             if (connectionToDelete != null)
             {
-                ctx.BuyerAuctionConnections.Remove(connectionToDelete);
+                buyer.Auctions.Remove(connectionToDelete);
                 ctx.SaveChanges();
                 return Ok();
             }

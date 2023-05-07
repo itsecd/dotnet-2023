@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NonResidentialFund.Domain;
+using NonResidentialFund.Model;
 using NonResidentialFund.Server.Dto;
 
 namespace NonResidentialFund.Server;

@@ -1,4 +1,4 @@
-﻿using NonResidentialFund.Domain;
+﻿using NonResidentialFund.Model;
 
 namespace NonResidentialFund.Server.Repository;
 public interface INonResidentialFundRepository

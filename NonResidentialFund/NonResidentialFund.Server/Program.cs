@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using NonResidentialFund.Domain;
+using NonResidentialFund.Model;
 using NonResidentialFund.Server;
 using NonResidentialFund.Server.Repository;
 using System.Reflection;

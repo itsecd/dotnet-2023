@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NonResidentialFundDomain\NonResidentialFund.Domain.csproj" />
+    <ProjectReference Include="..\NonResidentialFundModel\NonResidentialFund.Model.csproj" />
   </ItemGroup>
 
 </Project>

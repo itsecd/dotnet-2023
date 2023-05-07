@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NonResidentialFund.Domain;
+using NonResidentialFund.Model;
 using NonResidentialFund.Server.Dto;
 
 namespace NonResidentialFund.Server.Controllers;
@@ -162,7 +162,7 @@ public class BuildingController : ControllerBase
             if (auction != null && building.Auctions.FirstOrDefault(conn => conn.AuctionId == connection.AuctionId) == null)
             {
                 _logger.LogInformation("Added auction with id {connection.AuctionId} to the list of auctions in which the building with " +
-                    "registration number {registrationNumber} was put up for sale", connection.AuctionId,  registrationNumber);
+                    "registration number {registrationNumber} was put up for sale", connection.AuctionId, registrationNumber);
                 var connectionToAdd = new BuildingAuctionConnection(registrationNumber, connection.AuctionId);
                 building.Auctions.Add(connectionToAdd);
                 ctx.SaveChanges();

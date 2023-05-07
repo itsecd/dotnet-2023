@@ -1,28 +1,63 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NonResidentialFund.Domain;
+namespace NonResidentialFund.Model;
+/// <summary>
+/// NonResidentialFundContext - represents a DbContext for the application
+/// </summary>
 public sealed class NonResidentialFundContext : DbContext
 {
+    /// <summary>
+    /// Auctions - Represents a collection of Auction objects in the database
+    /// </summary>
     public DbSet<Auction> Auctions { get; set; }
+
+    /// <summary>
+    /// Buildings - Represents a collection of Building objects in the database
+    /// </summary>
     public DbSet<Building> Buildings { get; set; }
+
+    /// <summary>
+    /// BuildingAuctionConnections - Represents a collection of BuildingAuctionConnections objects in the database
+    /// </summary>
     public DbSet<BuildingAuctionConnection> BuildingAuctionConnections { get; set; }
+
+    /// <summary>
+    /// Buyers - Represents a collection of Buyer objects in the database
+    /// </summary>
     public DbSet<Buyer> Buyers { get; set; }
+
+    /// <summary>
+    /// BuyerAuctionConnections - Represents a collection of BuyerAuctionConnection objects in the database
+    /// </summary>
     public DbSet<BuyerAuctionConnection> BuyerAuctionConnections { get; set; }
+
+    /// <summary>
+    /// Districts - Represents a collection of District objects in the database
+    /// </summary>
     public DbSet<District> Districts { get; set; }
+
+    /// <summary>
+    /// Organizations - Represents a collection of Organizations objects in the database
+    /// </summary>
     public DbSet<Organization> Organizations { get; set; }
+
+    /// <summary>
+    /// Privatized - Represents a collection of Privatized buildings objects in the database
+    /// </summary>
     public DbSet<Privatized> Privatized { get; set; }
 
+    /// <summary>
+    /// Constructor of NonResidentialFundContext
+    /// </summary>
+    /// <param name="options">Parameter for NonResidentialFundContext</param>
     public NonResidentialFundContext(DbContextOptions options) : base(options)
     {
-        try
-        {
-            Database.EnsureCreated();
-        }
-        catch (MySql.Data.MySqlClient.MySqlException e)
-        {
-        }
+        Database.EnsureCreated();
     }
 
+    /// <summary>
+    /// DistrictRepository - collection of Distruct objects, which is used to be add into database when it created
+    /// </summary>
     private List<District> DistrictRepository
     {
         get
@@ -62,6 +97,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// OrganizationRepository - collection of Organization objects, which is used to be add into database when it created
+    /// </summary>
     private List<Organization> OrganizationRepository
     {
         get
@@ -101,6 +139,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// BuyerRepository - collection of Buyer objects, which is used to be add into database when it created
+    /// </summary>
     private List<Buyer> BuyerRepository
     {
         get
@@ -191,6 +232,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// BuildingRepository - collection of Building objects, which is used to be add into database when it created
+    /// </summary>
     private List<Building> BuildingRepository
     {
         get
@@ -290,6 +334,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// PrivatizedRepository - collection of Privatized building objects, which is used to be add into database when it created
+    /// </summary>
     private List<Privatized> PrivatizedRepository
     {
         get
@@ -354,6 +401,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// AuctionRepository - collection of Auction objects, which is used to be add into database when it created
+    /// </summary>
     private List<Auction> AuctionRepository
     {
         get
@@ -424,6 +474,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// BuildingAuctionConnectionRepository - collection of BuildingAuctionConnection objects, which is used to be add into database when it created
+    /// </summary>
     private List<BuildingAuctionConnection> BuildingAuctionConnectionRepository
     {
         get
@@ -447,6 +500,9 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// BuyerAuctionConnectionRepository - collection of BuyerAuctionConnection objects, which is used to be add into database when it created
+    /// </summary>
     private List<BuyerAuctionConnection> BuyerAuctionConnectionRepository
     {
         get
@@ -496,6 +552,11 @@ public sealed class NonResidentialFundContext : DbContext
         }
     }
 
+    /// <summary>
+    /// Configures structure of database
+    /// Inserts data into the database
+    /// </summary>
+    /// <param name="modelBuilder">Object for configuring the database</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BuildingAuctionConnection>().HasKey(connection => new { connection.BuildingId, connection.AuctionId });

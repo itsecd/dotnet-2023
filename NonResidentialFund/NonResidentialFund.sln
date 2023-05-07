@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Domain", "NonResidentialFundDomain\NonResidentialFund.Domain.csproj", "{B6C1A798-C91C-4A79-AAF8-A16DB862FA2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Model", "NonResidentialFundModel\NonResidentialFund.Model.csproj", "{B6C1A798-C91C-4A79-AAF8-A16DB862FA2F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Tests", "NonResidentialFundTests\NonResidentialFund.Tests.csproj", "{70020678-E560-4BF2-AB8B-159016C9E984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonResidentialFund.Server", "NonResidentialFund.Server\NonResidentialFund.Server.csproj", "{ED337685-6B71-4EEB-9950-3E083694B986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Server", "NonResidentialFund.Server\NonResidentialFund.Server.csproj", "{ED337685-6B71-4EEB-9950-3E083694B986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

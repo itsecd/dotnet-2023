@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NonResidentialFund.Domain;
+using NonResidentialFund.Model;
 using NonResidentialFund.Server.Dto;
 
 namespace NonResidentialFund.Server.Controllers;

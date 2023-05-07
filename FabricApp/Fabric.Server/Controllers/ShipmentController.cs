@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Fabrics.Domain;
 using Fabrics.Server.Dto;
-using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

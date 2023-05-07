@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Fabrics.Domain;
 using Fabrics.Server.Dto;
-using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,8 +47,8 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get fabric information");
         var result = await (from fabric in context.Fabrics
-                      where fabric.Id == id
-                      select _mapper.Map<Fabric, FabricGetDto>(fabric)).ToListAsync();
+                            where fabric.Id == id
+                            select _mapper.Map<Fabric, FabricGetDto>(fabric)).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("Not found fabric:{id}", id);
@@ -72,8 +71,8 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get providers who delivered goods during the given interval");
         var result = await (from shipment in context.Shipments
-                      where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
-                      select _mapper.Map<Shipment, ShipmentGetDto>(shipment)).ToListAsync();
+                            where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
+                            select _mapper.Map<Shipment, ShipmentGetDto>(shipment)).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No providers delivered goods during given inteval");
@@ -95,14 +94,14 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get number of fabrics that each providers works with.");
         var result = await (from provider in context.Providers
-                      join shipment in context.Shipments on provider.Id equals shipment.ProviderId
-                      join fabric in context.Providers on shipment.FabricId equals fabric.Id
-                      group fabric by provider into g
-                      select new
-                      {
-                          provider = _mapper.Map<Provider, ProviderGetDto>(g.Key),
-                          count = g.Count()
-                      }).ToListAsync();
+                            join shipment in context.Shipments on provider.Id equals shipment.ProviderId
+                            join fabric in context.Providers on shipment.FabricId equals fabric.Id
+                            group fabric by provider into g
+                            select new
+                            {
+                                provider = _mapper.Map<Provider, ProviderGetDto>(g.Key),
+                                count = g.Count()
+                            }).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("Providers don't have partners");
@@ -123,14 +122,14 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about the number of providers for each form of ownership of fabrics.");
         var result = await (from fabric in context.Fabrics
-                      join shipment in context.Shipments on fabric.Id equals shipment.FabricId
-                      join provider in context.Providers on shipment.ProviderId equals provider.Id
-                      group provider by fabric.FormOfOwnership into g
-                      select new
-                      {
-                          Form = g.Key,
-                          count = g.Count()
-                      }).ToListAsync();
+                            join shipment in context.Shipments on fabric.Id equals shipment.FabricId
+                            join provider in context.Providers on shipment.ProviderId equals provider.Id
+                            group provider by fabric.FormOfOwnership into g
+                            select new
+                            {
+                                Form = g.Key,
+                                count = g.Count()
+                            }).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No information found");
@@ -151,8 +150,8 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top 5 of providers by the number of shipments.");
         var result = await (from provider in context.Providers
-                      orderby provider.Shipments.Count descending
-                      select new Tuple<ProviderGetDto, int>(_mapper.Map<Provider, ProviderGetDto>(provider), provider.Shipments.Count)).Take(5).ToListAsync();
+                            orderby provider.Shipments.Count descending
+                            select new Tuple<ProviderGetDto, int>(_mapper.Map<Provider, ProviderGetDto>(provider), provider.Shipments.Count)).Take(5).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No information found");
@@ -176,13 +175,13 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get providers who delivered goods during the given interval");
         var shipmentsInInterval = await (from shipment in context.Shipments
-                                   where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
-                                   join provider in context.Providers on shipment.ProviderId equals provider.Id
-                                   select new
-                                   {
-                                       provider = _mapper.Map<Provider, ProviderGetDto>(provider),
-                                       number = shipment.NumberOfGoods
-                                   }).ToListAsync();
+                                         where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
+                                         join provider in context.Providers on shipment.ProviderId equals provider.Id
+                                         select new
+                                         {
+                                             provider = _mapper.Map<Provider, ProviderGetDto>(provider),
+                                             number = shipment.NumberOfGoods
+                                         }).ToListAsync();
         var result = (from prov in shipmentsInInterval
                       where prov.number == shipmentsInInterval.Max(x => x.number)
                       select prov).ToList();

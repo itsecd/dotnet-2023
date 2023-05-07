@@ -7,12 +7,11 @@ using Warehouse.Server;
 using Warehouse.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
-var mapper = mapperConfig.CreateMapper();
-
 builder.Services.AddDbContextFactory<WarehouseDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("Warehouse")!)
 );
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IWarehouseRepository, WarehouseRepository>();

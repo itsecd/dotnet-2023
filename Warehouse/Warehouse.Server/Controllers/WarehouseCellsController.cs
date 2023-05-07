@@ -20,10 +20,6 @@ public class WarehouseCellsController : ControllerBase
     /// <summary>
     ///     Constructor for GoodsController
     /// </summary>
-    /// <param name="contextFactory"></param>
-    /// <param name="logger"></param>
-    /// <param name="warehouseRepository"></param>
-    /// <param name="mapper"></param>
     public WarehouseCellsController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<ProductsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
@@ -39,29 +35,31 @@ public class WarehouseCellsController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<WarehouseCellsDto>> Get()
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get cells");
-        return _mapper.Map<IEnumerable<WarehouseCellsDto>>(await ctx.Cells.ToListAsync());
+        _logger.LogInformation("Get all cells");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var cells = await ctx.Cells.ToListAsync();
+        return _mapper.Map<IEnumerable<WarehouseCellsDto>>(cells);
     }
     /// <summary>
     ///     Get by id method for warehouse cells table
     /// </summary>
+    /// <param name="id"> Cell id </param>
     /// <returns>
     ///     Return cells with specified id
     /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<WarehouseCellsDto>> Get(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get cells with id {id}");
-        var cell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var cell = await ctx.Cells.FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (cell == null)
         {
-            _logger.LogInformation($"Not found cell with id {id}");
-            return NotFound();
+            _logger.LogInformation("Not found cell with id: {id}", id);
+            return NotFound($"Cell doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Get cells with id: {id}", id);
             return Ok(_mapper.Map<WarehouseCellsDto>(cell));
         }
     }
@@ -69,14 +67,16 @@ public class WarehouseCellsController : ControllerBase
     ///     Post method for warehouse cells table
     /// </summary>
     /// <param name="cell"> Warehouse cell class instance to insert to table </param>
+    /// <returns>
+    ///     Сreate cell
+    /// </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] WarehouseCellsDto cell)
+    public async Task Post([FromBody] WarehouseCellsDto cell)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post cell");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new cell");
         await ctx.Cells.AddAsync(_mapper.Map<WarehouseCells>(cell));
         await ctx.SaveChangesAsync();
-        return Ok();
     }
     /// <summary>
     ///     Put method for warehouse cells table
@@ -89,17 +89,18 @@ public class WarehouseCellsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] WarehouseCellsDto cellToPut)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put cell with id {0}", id);
-        var warehouseCell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var warehouseCell = await ctx.Cells.FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
-            _logger.LogInformation("Not found product with id {0}", id);
-            return NotFound();
+            _logger.LogInformation("Not found product with id: {id}", id);
+            return NotFound($"Cell doesn`t exist by this id: {id}");
         }
         else
         {
-            ctx.Update(_mapper.Map(cellToPut, warehouseCell));
+            _logger.LogInformation("Update cell with id {id}", id);
+            _mapper.Map(cellToPut, warehouseCell);
+            ctx.Cells.Update(_mapper.Map<WarehouseCells>(warehouseCell));
             await ctx.SaveChangesAsync();
             return Ok();
         }
@@ -114,16 +115,17 @@ public class WarehouseCellsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put cell with id ({id})");
-        var warehouseCell = ctx.Cells.FirstOrDefault(cell => cell.CellNumber == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var warehouseCell = await ctx.Cells.Include(cells => cells.Product)
+                                           .FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
-            _logger.LogInformation($"Not found cell with id ({id})");
-            return NotFound();
+            _logger.LogInformation("Not found cell with id: {id}", id);
+            return NotFound($"Cell doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Delete cell with id {id}", id);
             ctx.Cells.Remove(warehouseCell);
             await ctx.SaveChangesAsync();
             return Ok();

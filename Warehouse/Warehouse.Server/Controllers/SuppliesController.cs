@@ -20,9 +20,6 @@ public class SuppliesController : ControllerBase
     /// <summary>
     ///     Constructor for SupplyController
     /// </summary>
-    /// <param name="contextFactory"></param>
-    /// <param name="logger"></param>
-    /// <param name="mapper"></param>
     public SuppliesController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<SuppliesController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
@@ -38,29 +35,31 @@ public class SuppliesController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<SuppliesGetDto>> Get()
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get supplies");
-        return _mapper.Map<IEnumerable<SuppliesGetDto>>(await ctx.Supplies.ToListAsync());
+        _logger.LogInformation("Get all supplies");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var supplies = await ctx.Supplies.ToListAsync();
+        return _mapper.Map<IEnumerable<SuppliesGetDto>>(supplies);
     }
     /// <summary>
     ///     Get by id method for supply table
     /// </summary>
+    /// <param name="id"> Supply id </param>
     /// <returns>
     ///     Return supplies with specified id
     /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<SuppliesGetDto>> Get(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get supplies with id {id}");
-        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.Supplies.FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)
         {
-            _logger.LogInformation($"Not found supplies with id {id}");
-            return NotFound();
+            _logger.LogInformation("Not found supplies with id: {id}", id);
+            return NotFound($"Supply doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Get supplies with id: {id}", id);
             return Ok(_mapper.Map<SuppliesGetDto>(supply));
         }
     }
@@ -68,14 +67,16 @@ public class SuppliesController : ControllerBase
     ///     Post method for supply table
     /// </summary>
     /// <param name="supply"> Supply class instance to insert to table </param>
+    /// <returns>
+    ///     Create supply
+    /// </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] SuppliesPostDto supply)
+    public async Task Post([FromBody] SuppliesPostDto supply)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post supply");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new supply");
         await ctx.Supplies.AddAsync(_mapper.Map<Supplies>(supply));
         await ctx.SaveChangesAsync();
-        return Ok();
     }
     /// <summary>
     ///     Put method for supply table
@@ -88,17 +89,18 @@ public class SuppliesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] SuppliesPostDto supplyToPut)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put supply with id {0}", id);
-        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.Supplies.FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)
         {
-            _logger.LogInformation("Not found supply with id {0}", id);
-            return NotFound();
+            _logger.LogInformation("Not found supply with id: {id}", id);
+            return NotFound($"Supply doesn`t exist by this id: {id}");
         }
         else
         {
-            ctx.Update(_mapper.Map(supplyToPut, supply));
+            _logger.LogInformation("Update supply with id: {id}", id);
+            _mapper.Map(supplyToPut, supply);
+            ctx.Supplies.Update(_mapper.Map<Supplies>(supply));
             await ctx.SaveChangesAsync();
             return Ok();
         }
@@ -113,16 +115,17 @@ public class SuppliesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put supply with id ({id})");
-        var supply = ctx.Supplies.FirstOrDefault(supply => supply.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var supply = await ctx.Supplies.Include(supply => supply.Products)
+                                       .FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)
         {
-            _logger.LogInformation($"Not found supply with id ({id})");
-            return NotFound();
+            _logger.LogInformation("Not found supply with id: {id}", id);
+            return NotFound($"Supply doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Delete supply with id {id}", id);
             ctx.Supplies.Remove(supply);
             await ctx.SaveChangesAsync();
             return Ok();

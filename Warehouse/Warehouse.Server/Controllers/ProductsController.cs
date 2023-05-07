@@ -20,9 +20,6 @@ public class ProductsController : ControllerBase
     /// <summary>
     ///     Constructor for ProductsController
     /// </summary>
-    /// <param name="contextFactory"></param>
-    /// <param name="logger"></param>
-    /// <param name="mapper"></param>
     public ProductsController(IDbContextFactory<WarehouseDbContext> contextFactory, ILogger<ProductsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
@@ -36,69 +33,74 @@ public class ProductsController : ControllerBase
     ///     Return all products
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<ProductsGetDto>> Get()
+    public async Task<IEnumerable<ProductsGetDto>> GetProducts()
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Get products");
-        return _mapper.Map<IEnumerable<ProductsGetDto>>(await ctx.Products.ToListAsync());
+        _logger.LogInformation("Get all products");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var products = await ctx.Products.ToListAsync();
+        return _mapper.Map<IEnumerable<ProductsGetDto>>(products);
     }
     /// <summary>
     ///     Get by id method for products table
     /// </summary>
+    /// <param name="id"> Product id </param>
     /// <returns>
     ///     Return products with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductsGetDto>> Get(int id)
+    public async Task<ActionResult<ProductsGetDto>> GetProduct(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get products with id {id}");
-        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id {id}");
-            return NotFound();
+            _logger.LogInformation("Not found product with id: {id}", id);
+            return NotFound($"Product doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Get products with id: {id}", id);
             return Ok(_mapper.Map<ProductsGetDto>(product));
         }
     }
     /// <summary>
     ///     Post method for products table
     /// </summary>
-    /// <param name="product"> products class instance to insert to table </param>
+    /// <param name="product"> Products class instance to insert to table </param>
+    /// <returns>
+    ///     Create product
+    /// </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ProductsPostDto product)
+    public async Task PostProduct([FromBody] ProductsPostDto product)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post product");
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Create new product");
         await ctx.Products.AddAsync(_mapper.Map<Products>(product));
         await ctx.SaveChangesAsync();
-        return Ok();
     }
     /// <summary>
     ///     Put method for products table
     /// </summary>
     /// <param name="id"> An id of product which would be changed </param>
-    /// <param name="productToPut"> products class instance to insert to table </param>
+    /// <param name="productToPut"> Products class instance to insert to table </param>
     /// <returns>
     ///     Signalization of success or error
     /// </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ProductsPostDto productToPut)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Put product with id {0}", id);
-        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product with id {0}", id);
-            return NotFound();
+            _logger.LogInformation("Not found product with id: {id}", id);
+            return NotFound($"Product doesn`t exist by this id: {id}");
         }
         else
         {
-            ctx.Update(_mapper.Map(productToPut, product));
+            _logger.LogInformation("Update product with id: {id}", id);
+            _mapper.Map(productToPut, product);
+            ctx.Products.Update(_mapper.Map<Products>(product));
             await ctx.SaveChangesAsync();
             return Ok();
         }
@@ -111,18 +113,18 @@ public class ProductsController : ControllerBase
     ///     Signalization of success or error
     /// </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteProduct(int id)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Put product with id ({id})");
-        var product = ctx.Products.FirstOrDefault(product => product.Id == id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation($"Not found product with id ({id})");
-            return NotFound();
+            _logger.LogInformation("Not found product with id: {id}", id);
+            return NotFound($"Product doesn`t exist by this id: {id}");
         }
         else
         {
+            _logger.LogInformation("Delete product with id: {id}", id);
             ctx.Products.Remove(product);
             await ctx.SaveChangesAsync();
             return Ok();

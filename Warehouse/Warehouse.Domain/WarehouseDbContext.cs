@@ -3,13 +3,13 @@
 namespace Warehouse.Domain;
 
 /// <summary>
-/// Class represented a DbContext of Warehouse
+///     Class represented a DbContext of Warehouse
 /// </summary>
 public sealed class WarehouseDbContext : DbContext
 {
-    public DbSet<Products> Products { get; set; } = null!;
-    public DbSet<Supplies> Supplies { get; set; } = null!;
-    public DbSet<WarehouseCells> Cells { get; set; } = null!;
+    public DbSet<Products>? Products { get; set; }
+    public DbSet<Supplies>? Supplies { get; set; }
+    public DbSet<WarehouseCells>? Cells { get; set; }
     public WarehouseDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();

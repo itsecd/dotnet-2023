@@ -17,4 +17,8 @@ public class UniversityProperty
     /// </summary>
     [Column("name_university_property")]
     public string NameUniversityProperty { get; set; }
+    /// <summary>
+    /// Университеты с заданной собственностью
+    /// </summary>
+    public List<University> Universities { get; set; }
 }

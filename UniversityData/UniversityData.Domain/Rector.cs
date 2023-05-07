@@ -47,4 +47,8 @@ public class Rector
     /// </summary>
     [Column("university_id")]
     public int UniversityiId { get; set; }
+    /// <summary>
+    /// Университет
+    /// </summary>
+    public University? University { get; set; }
 }

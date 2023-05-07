@@ -22,4 +22,8 @@ public class Specialty
     /// </summary>
     [Column("code")]
     public string Code { get; set; }
+    /// <summary>
+    /// Записи в таблице связи
+    /// </summary>
+    public List<SpecialtyTableNode> SpecialtyTableNodes { get; set; }
 }

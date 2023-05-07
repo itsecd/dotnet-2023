@@ -32,4 +32,8 @@ public class Faculty
     /// </summary>
     [Column("university_id")] 
     public int UniversityId { get; set; }
+    /// <summary>
+    /// Университет
+    /// </summary>
+    public University? University { get; set; }
 }

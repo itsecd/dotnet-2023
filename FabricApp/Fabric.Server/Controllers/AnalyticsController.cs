@@ -3,6 +3,7 @@ using Fabrics.Domain;
 using Fabrics.Server.Dto;
 using Fabrics.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fabrics.Server.Controllers;
 /// <summary>
@@ -19,7 +20,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Used to store repository
     /// </summary>
-    private readonly IFabricsRepository _fabricsRepository;
+    private readonly IDbContextFactory<FabricsDbContext> _contextFactory;
     /// <summary>
     /// Used to store map-object
     /// </summary>
@@ -28,12 +29,12 @@ public class AnalyticsController : ControllerBase
     /// AnlyticsController constructor
     /// </summary>
     /// <param name="logger">Logger</param>
-    /// <param name="fabricsRepository">Repository</param>
+    /// <param name="contextFactory">DbContext</param>
     /// <param name="mapper">Map-object</param>
-    public AnalyticsController(ILogger<AnalyticsController> logger, IFabricsRepository fabricsRepository, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, IDbContextFactory<FabricsDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _fabricsRepository = fabricsRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -42,12 +43,13 @@ public class AnalyticsController : ControllerBase
     /// <param name="id"> Id of Fabric.</param>
     /// <returns>Fabric information</returns>
     [HttpGet("fabric-information")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get fabric information");
-        var result = (from fabric in _fabricsRepository.Fabrics
+        var result = await (from fabric in context.Fabrics
                       where fabric.Id == id
-                      select _mapper.Map<Fabric, FabricGetDto>(fabric)).ToList();
+                      select _mapper.Map<Fabric, FabricGetDto>(fabric)).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("Not found fabric:{id}", id);
@@ -65,12 +67,13 @@ public class AnalyticsController : ControllerBase
     /// <param name="secondDate">Bigger interval boundary</param>
     /// <returns>List of providers</returns>
     [HttpGet("providers-information-in-interval")]
-    public IActionResult GetProvidersInfoInInterval(DateTime firstDate, DateTime secondDate)
+    public async Task<IActionResult> GetProvidersInfoInInterval(DateTime firstDate, DateTime secondDate)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get providers who delivered goods during the given interval");
-        var result = (from shipment in _fabricsRepository.Shipments
+        var result = await (from shipment in context.Shipments
                       where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
-                      select _mapper.Map<Shipment, ShipmentGetDto>(shipment)).ToList();
+                      select _mapper.Map<Shipment, ShipmentGetDto>(shipment)).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No providers delivered goods during given inteval");
@@ -87,18 +90,19 @@ public class AnalyticsController : ControllerBase
     /// <returns>Pairs: providers - number of partners.</returns>
 
     [HttpGet("number-of-partners-of-providers")]
-    public IActionResult GetNumberOfPartners()
+    public async Task<IActionResult> GetNumberOfPartners()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get number of fabrics that each providers works with.");
-        var result = (from provider in _fabricsRepository.Providers
-                      join shipment in _fabricsRepository.Shipments on provider.Id equals shipment.ProviderId
-                      join fabric in _fabricsRepository.Providers on shipment.FabricId equals fabric.Id
+        var result = await (from provider in context.Providers
+                      join shipment in context.Shipments on provider.Id equals shipment.ProviderId
+                      join fabric in context.Providers on shipment.FabricId equals fabric.Id
                       group fabric by provider into g
                       select new
                       {
                           provider = _mapper.Map<Provider, ProviderGetDto>(g.Key),
                           count = g.Count()
-                      }).ToList();
+                      }).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("Providers don't have partners");
@@ -114,18 +118,19 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>List of pairs: form of ownership - number of providers.</returns>
     [HttpGet("number-of-providers-for-each-form")]
-    public IActionResult GetNumberOfProvidersForEachType()
+    public async Task<IActionResult> GetNumberOfProvidersForEachType()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about the number of providers for each form of ownership of fabrics.");
-        var result = (from fabric in _fabricsRepository.Fabrics
-                      join shipment in _fabricsRepository.Shipments on fabric.Id equals shipment.FabricId
-                      join provider in _fabricsRepository.Providers on shipment.ProviderId equals provider.Id
+        var result = await (from fabric in context.Fabrics
+                      join shipment in context.Shipments on fabric.Id equals shipment.FabricId
+                      join provider in context.Providers on shipment.ProviderId equals provider.Id
                       group provider by fabric.FormOfOwnership into g
                       select new
                       {
                           Form = g.Key,
                           count = g.Count()
-                      }).ToList();
+                      }).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No information found");
@@ -141,12 +146,13 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>List of pairs: id of provider - number of shipments.</returns>
     [HttpGet("top-5-providers")]
-    public IActionResult GetTopProviders()
+    public async Task<IActionResult> GetTopProviders()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top 5 of providers by the number of shipments.");
-        var result = (from provider in _fabricsRepository.Providers
+        var result = await (from provider in context.Providers
                       orderby provider.Shipments.Count descending
-                      select new Tuple<ProviderGetDto, int>(_mapper.Map<Provider, ProviderGetDto>(provider), provider.Shipments.Count)).Take(5).ToList();
+                      select new Tuple<ProviderGetDto, int>(_mapper.Map<Provider, ProviderGetDto>(provider), provider.Shipments.Count)).Take(5).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("No information found");
@@ -165,17 +171,18 @@ public class AnalyticsController : ControllerBase
     /// <param name="secondDate">Bigger interval boundary</param>
     /// <returns>List of providers</returns>
     [HttpGet("providers-information-in-interval-max")]
-    public IActionResult GetProvidersWithMaxQuantity(DateTime firstDate, DateTime secondDate)
+    public async Task<IActionResult> GetProvidersWithMaxQuantity(DateTime firstDate, DateTime secondDate)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get providers who delivered goods during the given interval");
-        var shipmentsInInterval = (from shipment in _fabricsRepository.Shipments
+        var shipmentsInInterval = await (from shipment in context.Shipments
                                    where shipment.Date.CompareTo(firstDate) > 0 && shipment.Date.CompareTo(secondDate) < 0
-                                   join provider in _fabricsRepository.Providers on shipment.ProviderId equals provider.Id
+                                   join provider in context.Providers on shipment.ProviderId equals provider.Id
                                    select new
                                    {
                                        provider = _mapper.Map<Provider, ProviderGetDto>(provider),
                                        number = shipment.NumberOfGoods
-                                   }).ToList();
+                                   }).ToListAsync();
         var result = (from prov in shipmentsInInterval
                       where prov.number == shipmentsInInterval.Max(x => x.number)
                       select prov).ToList();

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecruitmentTests", "Recruit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecruitmentAgencyServer", "RecruitmentAgencyServer\RecruitmentAgencyServer.csproj", "{B1AFDCEC-319E-4B07-9AA2-DB5AD4B846EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentAgency.Client", "RecruitmentAgency.Client\RecruitmentAgency.Client.csproj", "{FDA577C0-D4BE-4468-BF8C-00E972899918}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C4EADB1-93A6-4BB0-B001-E5EDBE8DD24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA577C0-D4BE-4468-BF8C-00E972899918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA577C0-D4BE-4468-BF8C-00E972899918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA577C0-D4BE-4468-BF8C-00E972899918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA577C0-D4BE-4468-BF8C-00E972899918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

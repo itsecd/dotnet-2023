@@ -28,36 +28,39 @@ public class PurchaseRecord
     /// <summary>
     /// Were bought
     /// </summary>
-    //[ForeignKey("Shop")]
+    [ForeignKey("Shop")]
     public int ShopId { get; set; }
     /// <summary>
     /// Who bought (id)
     /// </summary>
-    //[ForeignKey("Customer")]
+    [ForeignKey("Customer")]
     public int CustomerId { get; set; }
     /// <summary>
-    /// Who bought 
+    /// Customer is used to store information about the customer
     /// </summary>
-    public Customer? Customer { get; set; } 
+    public Customer? Customer { get; set; }
     /// <summary>
     /// What bought (barcode)
     /// </summary>
-    //[ForeignKey("Product")]
+    [ForeignKey("Product")]
     public int ProductId { get; set; }
     /// <summary>
-    /// What bought (barcode)
+    /// Product is used to store information about the product
     /// </summary>
     public Product? Product { get; set; }
     /// <summary>
     /// How much bought
     /// </summary>
+    [Required]
     public double Quantity { get; set; } = 0.0;
     /// <summary>
     /// When bought
     /// </summary>
+    [Required]
     public DateTime DateSale { get; set; }
     /// <summary>
     /// Purchase amount
     /// </summary>
+    [Required]
     public double Sum { get; set; } = 0.0;
 }

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Shops.Domain;
 using Shops.Server.Dto;
-using Shops.Server.Repository;
 
 namespace Shops.Server.Controllers;
 /// <summary>
@@ -14,8 +12,17 @@ namespace Shops.Server.Controllers;
 [ApiController]
 public class ProductQuantityController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<ProductQuantityController> _logger;
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
     private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
@@ -71,7 +78,7 @@ public class ProductQuantityController : ControllerBase
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
-        var foundProduct =  await ctx.Products.FirstOrDefaultAsync(fProduct => fProduct.Id == product.ProductId);
+        var foundProduct = await ctx.Products.FirstOrDefaultAsync(fProduct => fProduct.Id == product.ProductId);
         if (foundProduct == null)
             return NotFound();
         var foundShop = await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == product.ShopId);

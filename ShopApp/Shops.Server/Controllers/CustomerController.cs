@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
-using Shops.Server.Repository;
 
 namespace Shops.Server.Controllers;
 /// <summary>
@@ -13,8 +12,17 @@ namespace Shops.Server.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<CustomerController> _logger;
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
     private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 
@@ -46,7 +54,7 @@ public class CustomerController : ControllerBase
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
-        var customer = await  ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
+        var customer = await ctx.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
             _logger.LogInformation($"Not found customer with id = {id}");

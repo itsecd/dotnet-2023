@@ -14,10 +14,12 @@ public class Shop
     /// <summary>
     /// Shop name
     /// </summary>
+    [Required]
     public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Shop address
     /// </summary>
+    [Required]
     public string Address { get; set; } = string.Empty;
     /// <summary>
     /// Products in shop

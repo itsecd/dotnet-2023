@@ -1,18 +1,45 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Shops.Domain;
+
+/// <summary>
+/// Class ЫрщзыContext is used to work with database
+/// </summary>
 public class ShopsContext : DbContext
 {
-    public DbSet<Customer> Customers { get; set;} = null!;
+    /// <summary>
+    /// Used to store a collection of customers
+    /// </summary>
+    public DbSet<Customer> Customers { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of products
+    /// </summary>
     public DbSet<Product> Products { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of product groups
+    /// </summary>
     public DbSet<ProductGroup> ProductGroups { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of prorduct quantity
+    /// </summary>
     public DbSet<ProductQuantity> ProductQuantity { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of purchase records
+    /// </summary>
     public DbSet<PurchaseRecord> PurchaseRecords { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of shops
+    /// </summary>
     public DbSet<Shop> Shops { get; set; } = null!;
+
     public ShopsContext(DbContextOptions options) : base(options)
-    { 
+    {
         Database.EnsureCreated();
     }
+    /// <summary>
+    /// Writes values ​​to the database
+    /// </summary>
+    /// <param name="modelBuilder">Model builder</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -23,17 +23,24 @@ public class ProductQuantity
     /// <summary>
     /// Product barcode
     /// </summary>
-    //[ForeignKey("Product")]
+    [ForeignKey("Product")]
     public int ProductId { get; set; } = 0;
+    /// <summary>
+    /// Product is used to store information about the product
+    /// </summary>
     public Product? Product { get; set; }
     /// <summary>
     /// Shop id
     /// </summary>
-    //[ForeignKey("Shop")]
+    [ForeignKey("Shop")]
     public int ShopId { get; set; } = 0;
+    /// <summary>
+    /// Shop is used to store information about the shop
+    /// </summary>
     public Shop? Shop { get; set; }
     /// <summary>
     /// Product quantity
     /// </summary>
+    [Required]
     public double Quantity { get; set; } = 0.0;
 }

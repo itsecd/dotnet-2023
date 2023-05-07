@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
-using Shops.Server.Repository;
 
 /// <summary>
 /// Analytics controller
@@ -12,9 +11,19 @@ using Shops.Server.Repository;
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<AnalyticsController> _logger;
-    private readonly IMapper _mapper;
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
     private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
+    private readonly IMapper _mapper;
+
     /// <summary>
     /// Controller constructor 
     /// </summary>
@@ -33,7 +42,7 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult> Get(int id)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
-        var foundShop =  await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == id);
+        var foundShop = await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == id);
         if (foundShop == null)
             return NotFound();
         _logger.LogInformation("Get list of products in shop");
@@ -80,9 +89,9 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// Output information about the average cost of goods of each product group for each store
+    /// Output the average cost products groups in shops
     /// </summary>
-    /// <returns>Ok(information about the average cost products groups in shops)</returns>
+    /// <returns>Ok(the average cost products groups in shops)</returns>
     [HttpGet("average-price-product-groups")]
     public async Task<ActionResult> GetAvgPriceProductGroup()
     {
@@ -95,7 +104,7 @@ public class AnalyticsController : ControllerBase
              from products in shop.Products
              select products).ToListAsync();
 
-        var result = 
+        var result =
             (from ps in productInShop
              join p in productList on ps.ProductId equals p.Id
              join s in fixtureShop on ps.ShopId equals s.Id
@@ -110,17 +119,17 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// Output the top 5 purchases by the total amount of the sale.
+    /// Output the top 5 purchases.
     /// </summary>
-    /// <returns>Ok(information about top 5 purchases by the total amount of the sale)</returns>
+    /// <returns>Ok(information about top 5 purchases)</returns>
     [HttpGet("top-5-purchases")]
     public async Task<ActionResult> GetTop5Purchases()
     {
         _logger.LogInformation("Get list of top 5 purchases");
-        await using var ctx =  await _dbContextFactory.CreateDbContextAsync();
+        await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var customer = ctx.Customers;
         var fixtureShop = ctx.Shops;
-        var topPurch = await 
+        var topPurch = await
             (from shop in fixtureShop
              from pr in shop.PurchaseRecords
              orderby pr.Sum descending
@@ -131,7 +140,7 @@ public class AnalyticsController : ControllerBase
         return Ok(result);
     }
     /// <summary>
-    /// Display all information about goods exceeding the storage limit date,indicating the store.
+    /// Display all information about goods exceeding the storage limit date.
     /// </summary>
     /// <returns>Ok(information about goods exceeding the storage limit date)</returns>
     [HttpGet("product-delay")]
@@ -171,7 +180,7 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Get list of stores in which goods were sold for a month in excess of the specified amount");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var fixtureShop = ctx.Shops;
-        var purchases =await
+        var purchases = await
            (from shop in fixtureShop
             from pr in shop.PurchaseRecords
             select new

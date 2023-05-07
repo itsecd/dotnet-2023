@@ -20,5 +20,6 @@ public class ProductGroup
     /// <summary>
     /// Name product group
     /// </summary>
+    [Required]
     public string GroupName { get; set; } = string.Empty;
 }

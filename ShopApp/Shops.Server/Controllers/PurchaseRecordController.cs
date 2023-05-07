@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shops.Domain;
 using Shops.Server.Dto;
-using Shops.Server.Repository;
 
 namespace Shops.Server.Controllers;
 /// <summary>
@@ -13,8 +12,17 @@ namespace Shops.Server.Controllers;
 [ApiController]
 public class PurchaseRecordController : ControllerBase
 {
+    /// <summary>
+    /// Used to store logger
+    /// </summary>
     private readonly ILogger<PurchaseRecordController> _logger;
+    /// <summary>
+    /// Used to store factory context
+    /// </summary>
     private readonly IDbContextFactory<ShopsContext> _dbContextFactory;
+    /// <summary>
+    /// Used to store map-object
+    /// </summary>
     private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor 

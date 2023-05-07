@@ -1,5 +1,8 @@
 name: GitActionsForShopApp 
 on:
+  commit_comment:
+    branches:
+      -main
   push:
     branches: 
       -main

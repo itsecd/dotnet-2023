@@ -117,7 +117,7 @@ public class EmployeeController : Controller
 
         var employeeWithRegNumber = ctx.Employees.FirstOrDefault(
             employee => (employee.RegNumber == mappedEmployee.RegNumber
-                          && employee.Id != mappedEmployee.Id));
+                          && employee.Id != id));
         if (employeeWithRegNumber != null)
         {
             _logger.LogInformation("The employee with regNumber {regNumb} already exists", employee.RegNumber);

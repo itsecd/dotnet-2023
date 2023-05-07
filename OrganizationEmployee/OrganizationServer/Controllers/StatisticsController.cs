@@ -155,8 +155,9 @@ public class StatisticsController : Controller
         _logger.LogInformation("Get the info about employees, who received a vacation voucher in past year");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeeVacationVouchers = ctx.EmployeeVacationVouchers
-            .Include(emplVacationVoucher => emplVacationVoucher.VacationVoucher)
             .Include(emplVacationVoucher => emplVacationVoucher.Employee)
+            .Include(emplVacationVoucher => emplVacationVoucher.VacationVoucher)
+            .ThenInclude(vacationVoucher => vacationVoucher!.VoucherType)
             .ToList();
         var employeeLastYearVoucher =
             (from employeeVoucherItem in employeeVacationVouchers

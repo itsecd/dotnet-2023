@@ -48,7 +48,6 @@ public class EmployeeDbContext : DbContext
     /// <param name="options">Parameters for EmployeeDbContext</param>
     public EmployeeDbContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
     /// <summary>
@@ -448,6 +447,12 @@ public class EmployeeDbContext : DbContext
                     Id = 7,
                     DepartmentId = DepartmentRepository[1].Id,
                     EmployeeId = EmployeeRepository[3].Id
+                },
+                new DepartmentEmployee
+                {
+                    Id = 8,
+                    DepartmentId = DepartmentRepository[0].Id,
+                    EmployeeId = EmployeeRepository[0].Id
                 }
             };
         }
@@ -517,7 +522,15 @@ public class EmployeeDbContext : DbContext
                     DismissalDate = null,
                     EmployeeId = EmployeeRepository[3].Id,
                     OccupationId = OccupationRepository[4].Id
-                }
+                },
+                new EmployeeOccupation
+                {
+                    Id = 8,
+                    HireDate = new DateTime(2010, 5, 24),
+                    DismissalDate = new DateTime(2010, 5, 24),
+                    EmployeeId = EmployeeRepository[2].Id,
+                    OccupationId = OccupationRepository[1].Id
+                },
             };
         }
     }

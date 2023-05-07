@@ -161,7 +161,7 @@ public class EmployeeOccupationIntegrationTest : IClassFixture<WebApplicationFac
     /// <param name="employeeOccupationId">The ID of the existing EmployeeOccupation</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(3, true)]
+    [InlineData(8, true)]
     [InlineData(133, false)]
     public async Task DeleteEmployeeOccupationId(uint employeeOccupationId, bool isSuccess)
     {

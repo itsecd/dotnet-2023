@@ -140,7 +140,7 @@ public class DepartmentEmployeeIntegrationTest : IClassFixture<WebApplicationFac
     /// <param name="departmentEmployeeId">ID of existing DepartmentEmployee</param>
     /// <param name="isSuccess">Specifies the correct outcome (success/fail)</param>
     [Theory]
-    [InlineData(7, true)]
+    [InlineData(8, true)]
     [InlineData(133, false)]
     public async Task DeleteDepartmentEmployee(int departmentEmployeeId, bool isSuccess)
     {

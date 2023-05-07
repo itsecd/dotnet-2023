@@ -95,8 +95,6 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Get list of avg price ");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
-        var fixtureShop = ctx.Shops;
-        var productList = ctx.Products;
         var productInShop = await
             (from shop in ctx.Shops
              from products in shop.Products

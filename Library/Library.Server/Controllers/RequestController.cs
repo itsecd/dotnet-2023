@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Library.Domain;
 using Library.Server.Dto;
-using Library.Server.Repository;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
 /// <summary>
@@ -12,14 +12,11 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class RequestController : ControllerBase
 {
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<RequestController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -28,12 +25,12 @@ public class RequestController : ControllerBase
     /// Request controller's constructor
     /// </summary>
     /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public RequestController(ILogger<RequestController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public RequestController(LibraryDbContext context, ILogger<RequestController> logger, IMapper mapper)
     {
+        _context = context;
         _logger = logger;
-        _librariesRepository = librariesRepository;
         _mapper = mapper;
     }
     /// <summary>
@@ -45,7 +42,7 @@ public class RequestController : ControllerBase
     public ActionResult<BookGetDto> Get(string cipher)
     {
         _logger.LogInformation("Get info about book");
-        var request = (from book in _librariesRepository.Books
+        var request = (from book in _context.Books
                        where book.Cipher == cipher
                        select _mapper.Map<Book, BookGetDto>(book)).ToList();
         if (request.Count == 0)
@@ -66,8 +63,8 @@ public class RequestController : ControllerBase
     public ActionResult<BookGetDto> Get()
     {
         _logger.LogInformation("Get info about issued books");
-        var request = (from book in _librariesRepository.Books
-                       join card in _librariesRepository.Cards on book.Id equals card.BookId
+        var request = (from book in _context.Books
+                       join card in _context.Cards on book.Id equals card.BookId
                        orderby book.Name
                        group book by book into b
                        select new
@@ -93,8 +90,8 @@ public class RequestController : ControllerBase
     public ActionResult<DepartmentGetDto> Get(int id)
     {
         _logger.LogInformation("Get info about availability of the selected book");
-        var request = (from department in _librariesRepository.Departments
-                       join book in _librariesRepository.Books on department.BookId equals book.Id
+        var request = (from department in _context.Departments
+                       join book in _context.Books on department.BookId equals book.Id
                        where book.Id == id
                        select new { department = department.TypeDepartmentId, count = department.Count }).ToList();
         if (request.Count == 0)
@@ -116,9 +113,9 @@ public class RequestController : ControllerBase
     {
         _logger.LogInformation("Get info about count of books for all types edition");
         var request = (from mass in
-                       (from department in _librariesRepository.Departments
-                        join book in _librariesRepository.Books on department.BookId equals book.Id
-                        join type in _librariesRepository.BookTypes on book.TypeEditionId equals type.Id
+                       (from department in _context.Departments
+                        join book in _context.Books on department.BookId equals book.Id
+                        join type in _context.TypesEdition on book.TypeEditionId equals type.Id
                         select new
                         {
                             types = type.Name,
@@ -149,8 +146,8 @@ public class RequestController : ControllerBase
     public ActionResult<ReaderGetDto> GetTopReaders(DateTime date)
     {
         _logger.LogInformation("Get top five readers");
-        var numOfReaders = (from card in _librariesRepository.Cards
-                            join reader in _librariesRepository.Readers on card.ReaderId equals reader.Id
+        var numOfReaders = (from card in _context.Cards
+                            join reader in _context.Readers on card.ReaderId equals reader.Id
                             where card.DateOfReturn < date
                             group card by reader.FullName into g
                             select new
@@ -179,8 +176,8 @@ public class RequestController : ControllerBase
     public ActionResult<ReaderGetDto> GetDelayReaders()
     {
         _logger.LogInformation("Get info about readers who have delayed books for the longest period of time");
-        var maxDelay = (from card in _librariesRepository.Cards
-                        join reader in _librariesRepository.Readers on card.ReaderId equals reader.Id
+        var maxDelay = (from card in _context.Cards
+                        join reader in _context.Readers on card.ReaderId equals reader.Id
                         group card by reader.FullName into g
                         select new
                         {

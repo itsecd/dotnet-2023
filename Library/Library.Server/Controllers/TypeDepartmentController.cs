@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using Library.Server.Dto;
-using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Library.Domain;
+using Library.Server.Dto;
 
 namespace Library.Server.Controllers;
 /// <summary>
@@ -11,14 +12,7 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class TypeDepartmentController : ControllerBase
 {
-    /// <summary>
-    /// Used to store logger
-    /// </summary>
-    private readonly ILogger<TypeDepartmentController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -26,13 +20,11 @@ public class TypeDepartmentController : ControllerBase
     /// <summary>
     /// TypeDepartment controller's constructor
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public TypeDepartmentController(ILogger<TypeDepartmentController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public TypeDepartmentController(LibraryDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _librariesRepository = librariesRepository;
+        _context = context;
         _mapper = mapper;
     }
     /// <summary>
@@ -40,9 +32,13 @@ public class TypeDepartmentController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeDepartmentGetDto> Get()
+    public async Task<ActionResult<IEnumerable<TypeDepartmentGetDto>>> Get()
     {
-        return _librariesRepository.DepartmentTypes.Select(type => _mapper.Map<TypeDepartmentGetDto>(type));
+        if (_context.TypesDepartment == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<TypeDepartmentGetDto>(_context.TypesDepartment).ToListAsync();
     }
     /// <summary>
     /// Return info about type by id
@@ -50,17 +46,19 @@ public class TypeDepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeDepartmentGetDto> Get(int id)
+    public async Task<ActionResult<TypeDepartmentGetDto>> Get(int id)
     {
-        var departmentType = _librariesRepository.DepartmentTypes.FirstOrDefault(type => type.Id == id);
-        if (departmentType == null)
+        if (_context.TypesDepartment == null)
         {
-            _logger.LogInformation("Not found department type: {id}", id);
             return NotFound();
         }
-        else
+        var typeDepartment = await _context.TypesDepartment.FindAsync(id);
+
+        if (typeDepartment == null)
         {
-            return Ok(_mapper.Map<TypeDepartmentGetDto>(departmentType));
+            return NotFound();
         }
+
+        return _mapper.Map<TypeDepartmentGetDto>(typeDepartment);
     }
 }

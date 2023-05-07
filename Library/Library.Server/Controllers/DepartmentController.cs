@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Library.Domain;
 using Library.Server.Dto;
-using Library.Server.Repository;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
 /// <summary>
@@ -12,14 +12,7 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class DepartmentController : ControllerBase
 {
-    /// <summary>
-    /// Used to store logger
-    /// </summary>
-    private readonly ILogger<DepartmentController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -27,13 +20,11 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Department controller's constructor
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public DepartmentController(ILogger<DepartmentController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public DepartmentController(LibraryDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _librariesRepository = librariesRepository;
+        _context = context;
         _mapper = mapper;
     }
     /// <summary>
@@ -41,9 +32,13 @@ public class DepartmentController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<DepartmentGetDto> Get()
+    public async Task<ActionResult<IEnumerable<DepartmentGetDto>>> Get()
     {
-        return _librariesRepository.Departments.Select(department => _mapper.Map<DepartmentGetDto>(department)); ;
+        if (_context.Departments == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<DepartmentGetDto>(_context.Departments).ToListAsync();
     }
     /// <summary>
     /// Return info about department by id
@@ -51,66 +46,84 @@ public class DepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<DepartmentGetDto> Get(int id)
+    public async Task<ActionResult<DepartmentGetDto>> Get(int id)
     {
-        var department = _librariesRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null)
+        if (_context.Departments == null)
         {
-            _logger.LogInformation("Not found department: {id}", id);
             return NotFound();
         }
-        else
+        var department = await _context.Departments.FindAsync(id);
+
+        if (department == null)
         {
-            return Ok(_mapper.Map<DepartmentGetDto>(department));
+            return NotFound();
         }
+
+        return _mapper.Map<DepartmentGetDto>(department);
     }
     /// <summary>
     /// Add a new department
     /// </summary>
     /// <param name="department"></param>
     [HttpPost]
-    public void Post([FromBody] DepartmentPostDto department)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<DepartmentGetDto>> PostCard(DepartmentPostDto department)
     {
-        _librariesRepository.Departments.Add(_mapper.Map<Department>(department));
-        _logger.LogInformation("Added");
+        if (_context.Departments == null)
+        {
+            return Problem("Entity set 'LibraryDbContext.Departments'  is null.");
+        }
+        var mappedDepartment = _mapper.Map<Department>(department);
+
+        _context.Departments.Add(mappedDepartment);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostDepartment", new { id = mappedDepartment.Id }, _mapper.Map<DepartmentGetDto>(mappedDepartment));
     }
     /// <summary>
     /// Сhange info of selected department
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="departmentToPut"></param>
+    /// <param name="department"></param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] DepartmentPostDto departmentToPut)
+    public async Task<IActionResult> Put(int id, DepartmentPostDto department)
     {
-        var department = _librariesRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null)
+        if (_context.Departments == null)
         {
-            _logger.LogInformation("Not found department: {id}", id);
             return NotFound();
         }
-        else
+        var departmentToModify = await _context.Departments.FindAsync(id);
+        if (departmentToModify == null)
         {
-            _mapper.Map(departmentToPut, department);
-            return Ok();
+            return NotFound();
         }
+
+        _mapper.Map(department, departmentToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
     /// <summary>
     /// Delete department by id
     /// </summary>
     /// <param name="id"></param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var department = _librariesRepository.Departments.FirstOrDefault(department => department.Id == id);
-        if (department == null)
+        if (_context.Departments == null)
         {
-            _logger.LogInformation("Not found department: {id}", id);
             return NotFound();
         }
-        else
+        var department = await _context.Departments.FindAsync(id);
+        if (department == null)
         {
-            _librariesRepository.Departments.Remove(department);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Departments.Remove(department);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

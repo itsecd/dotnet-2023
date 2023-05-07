@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Library.Domain;
 using Library.Server.Dto;
-using Library.Server.Repository;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
+
 /// <summary>
 /// Book controller
 /// </summary>
@@ -12,14 +13,7 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class BookController : ControllerBase
 {
-    /// <summary>
-    /// Used to store logger
-    /// </summary>
-    private readonly ILogger<BookController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -27,13 +21,11 @@ public class BookController : ControllerBase
     /// <summary>
     /// Book controller's constructor
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public BookController(ILogger<BookController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public BookController(LibraryDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _librariesRepository = librariesRepository;
+        _context = context;
         _mapper = mapper;
     }
     /// <summary>
@@ -41,9 +33,13 @@ public class BookController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<BookGetDto> Get()
+    public async Task<ActionResult<IEnumerable<BookGetDto>>> GetBooks()
     {
-        return _librariesRepository.Books.Select(book => _mapper.Map<BookGetDto>(book));
+        if (_context.Books == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<BookGetDto>(_context.Books).ToListAsync();
     }
     /// <summary>
     /// Return info about book by id
@@ -51,49 +47,65 @@ public class BookController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<BookGetDto> Get(int id)
+    public async Task<ActionResult<BookGetDto>> GetBook(int id)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        if (_context.Books == null)
         {
-            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
-        else
+        var book = await _context.Books.FindAsync(id);
+
+        if (book == null)
         {
-            return Ok(_mapper.Map<BookGetDto>(book));
+            return NotFound();
         }
+
+        return _mapper.Map<BookGetDto>(book);
     }
     /// <summary>
     /// Add a new book
     /// </summary>
     /// <param name="book"></param>
+    /// <returns></returns>
     [HttpPost]
-    public void Post([FromBody] BookPostDto book)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<BookGetDto>> PostBook(BookPostDto book)
     {
-        _librariesRepository.Books.Add(_mapper.Map<Book>(book));
-        _logger.LogInformation("Added");
+        if (_context.Books == null)
+        {
+            return Problem("Entity set 'LibraryDbContext.Books'  is null.");
+        }
+        var mappedBook = _mapper.Map<Book>(book);
+
+        _context.Books.Add(mappedBook);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostBook", new { id = mappedBook.Id }, _mapper.Map<BookGetDto>(mappedBook));
     }
     /// <summary>
     /// Сhange info of selected book
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="bookToPut"></param>
+    /// <param name="book"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BookPostDto bookToPut)
+    public async Task<IActionResult> PutBook(int id, BookPostDto book)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        if (_context.Books == null)
         {
-            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
-        else
+        var bookToModify = await _context.Books.FindAsync(id);
+        if (bookToModify == null)
         {
-            _mapper.Map(bookToPut, book);
-            return Ok();
+            return NotFound();
         }
+
+        _mapper.Map(book, bookToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
     /// <summary>
     /// Delete book by id
@@ -101,18 +113,21 @@ public class BookController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = _librariesRepository.Books.FirstOrDefault(book => book.Id == id);
-        if (book == null)
+        if (_context.Books == null)
         {
-            _logger.LogInformation("Not found book: {id}", id);
             return NotFound();
         }
-        else
+        var book = await _context.Books.FindAsync(id);
+        if (book == null)
         {
-            _librariesRepository.Books.Remove(book);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

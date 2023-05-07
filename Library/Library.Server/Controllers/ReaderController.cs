@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Library.Domain;
 using Library.Server.Dto;
-using Library.Server.Repository;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Server.Controllers;
 /// <summary>
@@ -12,14 +12,7 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class ReaderController : ControllerBase
 {
-    /// <summary>
-    /// Used to store logger
-    /// </summary>
-    private readonly ILogger<ReaderController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -27,13 +20,11 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Reader controller's constructor
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public ReaderController(ILogger<ReaderController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public ReaderController(LibraryDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _librariesRepository = librariesRepository;
+        _context = context;
         _mapper = mapper;
     }
     /// <summary>
@@ -41,9 +32,13 @@ public class ReaderController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<ReaderGetDto> Get()
+    public async Task<ActionResult<IEnumerable<ReaderGetDto>>> Get()
     {
-        return _librariesRepository.Readers.Select(reader => _mapper.Map<ReaderGetDto>(reader));
+        if (_context.Readers == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<ReaderGetDto>(_context.Readers).ToListAsync();
     }
     /// <summary>
     /// Return info about reader by id
@@ -51,66 +46,84 @@ public class ReaderController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<ReaderGetDto> Get(int id)
+    public async Task<ActionResult<ReaderGetDto>> Get(int id)
     {
-        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
-        if (reader == null)
+        if (_context.Readers == null)
         {
-            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
-        else
+        var reader = await _context.Readers.FindAsync(id);
+
+        if (reader == null)
         {
-            return Ok(_mapper.Map<ReaderGetDto>(reader));
+            return NotFound();
         }
+
+        return _mapper.Map<ReaderGetDto>(reader);
     }
     /// <summary>
     /// Add a new reader
     /// </summary>
     /// <param name="reader"></param>
     [HttpPost]
-    public void Post([FromBody] ReaderPostDto reader)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ReaderGetDto>> PostCard(ReaderPostDto reader)
     {
-        _librariesRepository.Readers.Add(_mapper.Map<Reader>(reader));
-        _logger.LogInformation("Added");
+        if (_context.Readers == null)
+        {
+            return Problem("Entity set 'LibraryDbContext.Readers'  is null.");
+        }
+        var mappedReader = _mapper.Map<Reader>(reader);
+
+        _context.Readers.Add(mappedReader);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostReader", new { id = mappedReader.Id }, _mapper.Map<ReaderGetDto>(mappedReader));
     }
     /// <summary>
     /// Сhange info of selected reader
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="readerToPut"></param>
+    /// <param name="reader"></param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ReaderPostDto readerToPut)
+    public async Task<IActionResult> Put(int id, ReaderPostDto reader)
     {
-        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
-        if (reader == null)
+        if (_context.Readers == null)
         {
-            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
-        else
+        var readerToModify = await _context.Readers.FindAsync(id);
+        if (readerToModify == null)
         {
-            _mapper.Map(readerToPut, reader);
-            return Ok();
+            return NotFound();
         }
+
+        _mapper.Map(reader, readerToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
     /// <summary>
     /// Delete reader by id
     /// </summary>
     /// <param name="id"></param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var reader = _librariesRepository.Readers.FirstOrDefault(reader => reader.Id == id);
-        if (reader == null)
+        if (_context.Readers == null)
         {
-            _logger.LogInformation("Not found reader: {id}", id);
             return NotFound();
         }
-        else
+        var reader = await _context.Readers.FindAsync(id);
+        if (reader == null)
         {
-            _librariesRepository.Readers.Remove(reader);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Readers.Remove(reader);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

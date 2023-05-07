@@ -1,15 +1,18 @@
 using AutoMapper;
+using Library.Domain;
 using Library.Server;
-using Library.Server.Repository;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<LibraryDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("Library")!)
+);
+
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
-
-builder.Services.AddSingleton<ILibraryRepository, LibraryRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

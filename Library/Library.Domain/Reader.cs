@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Domain;
 
@@ -12,26 +13,31 @@ public class Reader
     /// Id stores reader's id
     /// </summary>
     [Column("id")]
+    [Key]
     public int Id { set; get; }
     /// <summary>
     /// FullName stores reader's fullname
     /// </summary>
     [Column("full_name")]
+    [Required]
     public string FullName { set; get; } = string.Empty;
     /// <summary>
     /// Address stores reader's address
     /// </summary>
     [Column("address")]
+    [Required]
     public string Address { set; get; } = string.Empty;
     /// <summary>
     /// Phone stores reader's phone number
     /// </summary>
     [Column("phone")]
+    [Required]
     public string Phone { set; get; } = string.Empty;
     /// <summary>
     /// RegistrationDate stores reader's registration date
     /// </summary>
     [Column("registration_date")]
+    [Required]
     public DateTime RegistrationDate { set; get; }
     /// <summary>
     /// Cards stores list of cards

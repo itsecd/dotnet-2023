@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Domain;
 
@@ -12,11 +13,13 @@ public class TypeDepartment
     /// Id stores department's id
     /// </summary>
     [Column("id")]
+    [Key]
     public int Id { set; get; }
     /// <summary>
     /// Name stores name of the department
     /// </summary>
     [Column("name")]
+    [Required]
     public string Name { set; get; } = string.Empty;
     /// <summary>
     /// Departments stores list of departments

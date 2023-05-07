@@ -20,7 +20,7 @@ public class LibraryRepository : ILibraryRepository
     {
         _cards = new List<Card>
         {
-            new Card { Id = 0, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BookId = 0, },
+            new Card { Id = 0, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BookId = 0 },
             new Card { Id = 1, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 0, BookId = 3 },
             new Card { Id = 2, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BookId = 3 },
             new Card { Id = 3, DateOfIssue = new DateTime(2022, 12, 29), DateOfReturn = new DateTime(2023, 1, 28), DayCount = 31, ReaderId = 1, BookId = 1 },

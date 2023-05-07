@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using Library.Server.Dto;
-using Library.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Library.Domain;
+using Library.Server.Dto;
 
 namespace Library.Server.Controllers;
 /// <summary>
@@ -11,14 +12,7 @@ namespace Library.Server.Controllers;
 [ApiController]
 public class TypeEditionController : ControllerBase
 {
-    /// <summary>
-    /// Used to store logger
-    /// </summary>
-    private readonly ILogger<TypeEditionController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ILibraryRepository _librariesRepository;
+    private readonly LibraryDbContext _context;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -26,13 +20,11 @@ public class TypeEditionController : ControllerBase
     /// <summary>
     /// TypeEdition controller's constructor
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="librariesRepository"></param>
+    /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public TypeEditionController(ILogger<TypeEditionController> logger, ILibraryRepository librariesRepository, IMapper mapper)
+    public TypeEditionController(LibraryDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _librariesRepository = librariesRepository;
+        _context = context;
         _mapper = mapper;
     }
     /// <summary>
@@ -40,9 +32,13 @@ public class TypeEditionController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<TypeEditionGetDto> Get()
+    public async Task<ActionResult<IEnumerable<TypeEditionGetDto>>> Get()
     {
-        return _librariesRepository.BookTypes.Select(type => _mapper.Map<TypeEditionGetDto>(type));
+        if (_context.TypesEdition == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<TypeEditionGetDto>(_context.TypesEdition).ToListAsync();
     }
     /// <summary>
     /// Return info about type by id
@@ -50,17 +46,19 @@ public class TypeEditionController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public ActionResult<TypeEditionGetDto> Get(int id)
+    public async Task<ActionResult<TypeEditionGetDto>> Get(int id)
     {
-        var bookType = _librariesRepository.BookTypes.FirstOrDefault(type => type.Id == id);
-        if (bookType == null)
+        if (_context.TypesEdition == null)
         {
-            _logger.LogInformation("Not found book type: {id}", id);
             return NotFound();
         }
-        else
+        var typeEdition = await _context.TypesEdition.FindAsync(id);
+
+        if (typeEdition == null)
         {
-            return Ok(_mapper.Map<TypeEditionGetDto>(bookType));
+            return NotFound();
         }
+
+        return _mapper.Map<TypeEditionGetDto>(typeEdition);
     }
 }

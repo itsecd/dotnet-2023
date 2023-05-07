@@ -6,23 +6,42 @@ namespace Library.Domain;
 /// </summary>
 public class LibraryDbContext : DbContext
 {
+    /// <summary>
+    /// Books is used to store collection of books
+    /// </summary>
     public DbSet<Book>? Books { get; set; } = null!;
-
+    /// <summary>
+    /// Cards is used to store collection of cards
+    /// </summary>
     public DbSet<Card>? Cards { get; set; } = null!;
-
+    /// <summary>
+    /// Departments is used to store collection of departments
+    /// </summary>
     public DbSet<Department>? Departments { get; set; } = null!;
-
+    /// <summary>
+    /// Readers is used to store collection of readers
+    /// </summary>
     public DbSet<Reader>? Readers { get; set; } = null!;
-
+    /// <summary>
+    /// TypesDepartment is used to store collection of types departments
+    /// </summary>
     public DbSet<TypeDepartment>? TypesDepartment { get; set; } = null!;
-
+    /// <summary>
+    /// TypesEdition is used to store collection of types editions
+    /// </summary>
     public DbSet<TypeEdition>? TypesEdition { get; set; } = null!;
-
+    /// <summary>
+    /// Library's DbContext constructor
+    /// </summary>
+    /// <param name="options"></param>
     public LibraryDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
-
+    /// <summary>
+    /// Method for insert data into database
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

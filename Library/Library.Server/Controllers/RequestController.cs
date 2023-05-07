@@ -187,7 +187,7 @@ public class RequestController : ControllerBase
                               }).ToListAsync();
         var request = (from readers in maxDelay
                        orderby readers.Name
-                       where readers.MaxDelay == maxDelay.Max(x => x.MaxDelay)
+                       where readers.MaxDelay == maxDelay.Max(delay => delay.MaxDelay)
                        select readers).ToList();
         if (request.Count == 0)
         {

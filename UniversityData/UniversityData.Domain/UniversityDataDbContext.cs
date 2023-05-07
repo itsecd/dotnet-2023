@@ -1,10 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace UniversityData.Domain;
-internal class UniversityDataDbContext
+public class UniversityDataDbContext : DbContext
 {
+    public UniversityDataDbContext(DbContextOptions options)
+    {
+        Database.EnsureCreated();
+    }
+    /// <summary>
+    /// Коллекция объектов класса ConstructionProperty
+    /// </summary>
+    public DbSet<ConstructionProperty> ConstructionProperties { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса Departments
+    /// </summary>
+    public DbSet<Department> Departments { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса Faculty
+    /// </summary>
+    public DbSet<Faculty> Faculties { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса Rector
+    /// </summary>
+    public DbSet<Rector> Rectors { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса Specialty
+    /// </summary>
+    public DbSet<Specialty> Specialties { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса SpecialtyTableNode
+    /// </summary>
+    public DbSet<SpecialtyTableNode> SpecialtiesTableNodes { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса University
+    /// </summary>
+    public DbSet<University> Universities { get; set; }
+    /// <summary>
+    /// Коллекция объектов класса UniversityProperty
+    /// </summary>
+    public DbSet<UniversityProperty> UniversityProperties { get; set; }
 }

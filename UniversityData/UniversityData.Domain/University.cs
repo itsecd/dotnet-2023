@@ -1,29 +1,47 @@
-﻿namespace UniversityData.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UniversityData.Domain;
 /// <summary>
 /// Информация об университете
 /// </summary>
+[Table("university")]
 public class University
 {
     /// <summary>
     /// ID
     /// </summary>
+    [Column("id")]
     public int Id { get; set; }
     /// <summary>
     /// Регистрационный номер
     /// </summary>
+    [Column("number")]
     public string Number { get; set; }
     /// <summary>
     /// Название университета
     /// </summary>
+    [Column("name")]
     public string Name { get; set; }
     /// <summary>
     /// Адрес университета
     /// </summary>
+    [Column("address")]
     public string Address { get; set; }
     /// <summary>
     /// ID ректора
     /// </summary>
+    [Column("rector_id")]
     public int RectorId { get; set; }
+    /// <summary>
+    /// ID собственности зданий университета
+    /// </summary>
+    [Column("construction_property_id")]
+    public int ConstructionPropertyId { get; set; }
+    /// <summary>
+    /// ID собственности университета
+    /// </summary>
+    [Column("university_property_id")]
+    public int UniversityPropertyId { get; set; }
     /// <summary>
     /// Сведения о ректоре 
     /// </summary>

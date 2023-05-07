@@ -178,18 +178,19 @@ public class RequestController : ControllerBase
     public async Task<ActionResult<ReaderGetDto>> GetDelayReaders()
     {
         _logger.LogInformation("Get info about readers who have delayed books for the longest period of time");
-        var maxDelay = (from card in _context.Cards
-                        join reader in _context.Readers on card.ReaderId equals reader.Id
-                        group card by reader.FullName into g
-                        select new
-                        {
-                            Name = g.Key,
-                            MaxDelay = g.Select(x => (x.DateOfReturn - x.DateOfIssue).TotalDays - x.DayCount).Max()
-                        });
-        var request = await (from readers in maxDelay
-                             where (readers.MaxDelay == maxDelay.Max(x => x.MaxDelay))
-                             orderby readers.Name
-                             select readers).ToListAsync();
+        var maxDelay = await (from card in _context.Cards
+                              join reader in _context.Readers on card.ReaderId equals reader.Id
+                              select new
+                              {
+                                  Name = reader.FullName,
+                                  MaxDelay = card.DateOfReturn.Subtract(card.DateOfIssue).TotalDays - card.DayCount
+                              }).ToListAsync();
+        var orderBy = (from order in maxDelay
+                       orderby order.Name
+                       select order).ToList();
+        var request = (from readers in orderBy
+                       where readers.MaxDelay == maxDelay.Max(x => x.MaxDelay)
+                       select readers).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Not found readers");

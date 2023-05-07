@@ -1,4 +1,4 @@
-using StoreApp.Domain;
+using StoreApp.Model;
 namespace StoreApp.Tests;
 
 public class StoreTest

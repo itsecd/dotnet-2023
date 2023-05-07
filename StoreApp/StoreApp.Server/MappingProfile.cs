@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StoreApp.Domain;
+using StoreApp.Model;
 using StoreApp.Server.Dto;
 
 namespace StoreApp.Server;

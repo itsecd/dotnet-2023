@@ -1,4 +1,4 @@
-﻿using StoreApp.Domain;
+﻿using StoreApp.Model;
 
 namespace StoreApp.Server.Repository;
 public interface IStoreAppRepository

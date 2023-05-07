@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace StoreApp.Domain;
+namespace StoreApp.Model;
 
 /// <summary>
 /// Relationship between a product, a sale, and the quantity of that product

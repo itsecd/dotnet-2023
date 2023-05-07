@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using StoreApp.Domain;
+using StoreApp.Model;
 using StoreApp.Server.Dto;
 
 namespace StoreApp.Server.Controllers;

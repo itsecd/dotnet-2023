@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace StoreApp.Domain;
+namespace StoreApp.Model;
 
 /// <summary>
 /// Product - Class describing the product

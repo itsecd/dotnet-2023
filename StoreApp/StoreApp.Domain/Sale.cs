@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace StoreApp.Domain;
+namespace StoreApp.Model;
 
 /// <summary>
 /// The class describing the sale

@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using StoreApp.Domain;
+using StoreApp.Model;
 using StoreApp.Server;
 using StoreApp.Server.Repository;
 using System.Reflection;

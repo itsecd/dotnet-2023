@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace StoreApp.Domain;
+namespace StoreApp.Model;
 
 /// <summary>
 /// Class for storing instances of database entities

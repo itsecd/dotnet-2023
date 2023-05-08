@@ -50,5 +50,42 @@ public class Building
     /// <summary>
     /// List of all privatized buildings
     /// </summary>
-    public List<PrivatizedBuilding> PrivatizedBuilding { get; set; }
+    public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
+
+    /// <summary>
+    /// Constructor for Building
+    /// </summary>
+    public Building() { }
+    /// <summary>
+    /// Constructor for Building with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="registNum"></param>
+    /// <param name="district"></param>
+    /// <param name="street"></param>
+    /// <param name="houseNumber"></param>
+    /// <param name="area"></param>
+    /// <param name="floors"></param>
+    /// <param name="dateOfBuild"></param>
+    /// <param name="privatizedBuilding"></param>
+    public Building(int id, string registNum, string district, string street, int houseNumber, int area, int floors, DateTime dateOfBuild, List<PrivatizedBuilding> privatizedBuilding)
+    {
+        Id = id;
+        RegistNum = registNum;
+        District = district;
+        Street = street;
+        HouseNumber = houseNumber;
+        Area = area;
+        Floors = floors;
+        DateOfBuild = dateOfBuild;
+        PrivatizedBuilding = privatizedBuilding;
+    }
+    /// <summary>
+    /// GetAddress used for getting full address of the building
+    /// </summary>
+    /// <returns>Address</returns>
+    public string GetAddress()
+    {
+        return $"р-н {District}, ул. {Street}, {HouseNumber}";
+    }
 }

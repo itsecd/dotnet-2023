@@ -30,5 +30,24 @@ public class Customer
     /// <summary>
     /// List of all purchased buildings
     /// </summary>
-    public List<PrivatizedBuilding> PrivatizedBuilding { get; set; }
+    public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
+
+    /// <summary>
+    /// Constructor for Customer
+    /// </summary>
+    public Customer() { }
+    /// <summary>
+    /// Constructor for Customer with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="passport"></param>
+    /// <param name="fio"></param>
+    /// <param name="address"></param>
+    public Customer(int id, string passport, string fio, string address)
+    {
+        Id = id;
+        Passport = passport;
+        Fio = fio;
+        Address = address;
+    }
 }

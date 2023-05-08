@@ -24,5 +24,24 @@ public class Auction
     /// <summary>
     /// List of all buildings on auction (lots)
     /// </summary>
-    public List<PrivatizedBuilding> PrivatizedBuilding { get; set; }
+    public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
+
+    /// <summary>
+    /// Constructor for Auction
+    /// </summary>
+    public Auction() { }
+    /// <summary>
+    /// Constructor for Auction with parameters
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="date"></param>
+    /// <param name="organizer"></param>
+    /// <param name="privatizedBuilding"></param>
+    public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
+    {
+        Id = id;
+        Date = date;
+        Organizer = organizer;
+        PrivatizedBuilding = privatizedBuilding;
+    }
 }

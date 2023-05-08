@@ -14,19 +14,24 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,*">
+	<Window.Styles>
+		<StyleInclude Source="/LibraryStyles.axaml"/>
+	</Window.Styles>
+	
+    <Grid Classes="MainGrid" RowDefinitions="Auto,*">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button>
-				Add
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-add.png"/>
 			</Button>
-			<Button>
-				Edit
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-edit.png"/>
 			</Button>
-			<Button>
-				Delete
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-delete.png"/>
 			</Button>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="True">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="True"
+				  Items="{Binding Books}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Name"/>
 			</DataGrid.Columns>

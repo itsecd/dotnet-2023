@@ -1,0 +1,1457 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Library.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Book": {
+      "get": {
+        "tags": [
+          "Book"
+        ],
+        "summary": "Return list of all books",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Book"
+        ],
+        "summary": "Add a new book",
+        "requestBody": {
+          "description": "New books object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Book/{id}": {
+      "get": {
+        "tags": [
+          "Book"
+        ],
+        "summary": "Return info about book by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Book's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Book"
+        ],
+        "summary": "Сhange info of selected book",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Book's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New books object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Book"
+        ],
+        "summary": "Delete book by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Book's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Card": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Return list of all cards",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CardGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CardGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CardGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Add a new card",
+        "requestBody": {
+          "description": "New cards object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/{id}": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Return info about card by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Card's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Сhange info of selected card",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Card's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New cards object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Delete card by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Card's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Department": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Return list of all departments",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Add a new department",
+        "requestBody": {
+          "description": "New departments object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Department/{id}": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Return info about department by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Сhange info of selected department",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New departments object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Delete department by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Reader": {
+      "get": {
+        "tags": [
+          "Reader"
+        ],
+        "summary": "Return list of all readers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReaderGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReaderGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReaderGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reader"
+        ],
+        "summary": "Add a new reader",
+        "requestBody": {
+          "description": "New readers object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reader/{id}": {
+      "get": {
+        "tags": [
+          "Reader"
+        ],
+        "summary": "Return info about reader by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reader's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reader"
+        ],
+        "summary": "Сhange info of selected reader",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reader's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New readers object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReaderPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reader"
+        ],
+        "summary": "Delete reader by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reader's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Request/info_about_book": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "First request - give info about book by the cipher",
+        "parameters": [
+          {
+            "name": "cipher",
+            "in": "query",
+            "description": "Book's cipher",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Request/issued_books": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Second request - give info about all books issued order by book's name",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Request/availability_book": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Third request - give info on the availability of the selected book in different departments and their quantity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Book's id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Request/count_types_book": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Fourth request - give info about count of books in each department for each type edition",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Request/top_readers": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Fifth request - give info about top 5 readers who have read the most books in a given period",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Period before that date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Request/delay_readers": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Sixth request - give info about readers who have delayed books for the longest period of time, ordered by full name",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReaderGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TypeDepartment": {
+      "get": {
+        "tags": [
+          "TypeDepartment"
+        ],
+        "summary": "Return list of all types of departments",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TypeDepartment/{id}": {
+      "get": {
+        "tags": [
+          "TypeDepartment"
+        ],
+        "summary": "Return info about type by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "TypeDepartment's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeDepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TypeEdition": {
+      "get": {
+        "tags": [
+          "TypeEdition"
+        ],
+        "summary": "Return list of all types of books",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeEditionGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeEditionGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeEditionGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TypeEdition/{id}": {
+      "get": {
+        "tags": [
+          "TypeEdition"
+        ],
+        "summary": "Return info about type by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "TypeEdition's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeEditionGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeEditionGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeEditionGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BookGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores book's id",
+            "format": "int32"
+          },
+          "cipher": {
+            "type": "string",
+            "description": "Cipher stores cipher of the book",
+            "nullable": true
+          },
+          "author": {
+            "type": "string",
+            "description": "Author stores last name and initials of the author",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name stores name of the book",
+            "nullable": true
+          },
+          "placeEdition": {
+            "type": "string",
+            "description": "PlaceEdition stores place where book was published",
+            "nullable": true
+          },
+          "yearEdition": {
+            "type": "integer",
+            "description": "YearEdition stores year of book's publication",
+            "format": "int32"
+          },
+          "typeEditionId": {
+            "type": "integer",
+            "description": "TypeEditionId stores id of type book",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class BookGetDto is used to store info about the books"
+      },
+      "BookPostDto": {
+        "type": "object",
+        "properties": {
+          "cipher": {
+            "type": "string",
+            "description": "Cipher stores cipher of the book",
+            "nullable": true
+          },
+          "author": {
+            "type": "string",
+            "description": "Author stores last name and initials of the author",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name stores name of the book",
+            "nullable": true
+          },
+          "placeEdition": {
+            "type": "string",
+            "description": "PlaceEdition stores place where book was published",
+            "nullable": true
+          },
+          "yearEdition": {
+            "type": "integer",
+            "description": "YearEdition stores year of book's publication",
+            "format": "int32"
+          },
+          "typeEditionId": {
+            "type": "integer",
+            "description": "TypeEditionId stores id of type book",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class BookPostDto is used to store info about the books"
+      },
+      "CardGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores card's id",
+            "format": "int32"
+          },
+          "dateOfIssue": {
+            "type": "string",
+            "description": "DateOfIssue stores date of taking the book",
+            "format": "date-time"
+          },
+          "dateOfReturn": {
+            "type": "string",
+            "description": "DateOfReturn stores date of returning the book",
+            "format": "date-time"
+          },
+          "dayCount": {
+            "type": "integer",
+            "description": "DayCount stores the number of days for which the book was taken",
+            "format": "int32"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "BooksId stores book's id",
+            "format": "int32"
+          },
+          "readerId": {
+            "type": "integer",
+            "description": "ReaderId stores reader's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class CardGetDto is used to store info about the cards on the books"
+      },
+      "CardPostDto": {
+        "type": "object",
+        "properties": {
+          "dateOfIssue": {
+            "type": "string",
+            "description": "DateOfIssue stores date of taking the book",
+            "format": "date-time"
+          },
+          "dateOfReturn": {
+            "type": "string",
+            "description": "DateOfReturn stores date of returning the book",
+            "format": "date-time"
+          },
+          "dayCount": {
+            "type": "integer",
+            "description": "DayCount stores the number of days for which the book was taken",
+            "format": "int32"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "BooksId stores book's id",
+            "format": "int32"
+          },
+          "readerId": {
+            "type": "integer",
+            "description": "ReaderId stores reader's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class CardPostDto is used to store info about the cards on the books"
+      },
+      "DepartmentGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores department's id",
+            "format": "int32"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count stores count of books in department",
+            "format": "int32"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "BooksId stores book's id",
+            "format": "int32"
+          },
+          "typeDepartmentId": {
+            "type": "integer",
+            "description": "TypeDepartmentsId stores department's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class DepartmentGetDto is used to store info about departments"
+      },
+      "DepartmentPostDto": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Count stores count of books in department",
+            "format": "int32"
+          },
+          "bookId": {
+            "type": "integer",
+            "description": "BooksId stores book's id",
+            "format": "int32"
+          },
+          "typeDepartmentId": {
+            "type": "integer",
+            "description": "TypeDepartmentsId stores department's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class DepartmentPostDto is used to store info about departments"
+      },
+      "ReaderGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores reader's id",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "FullName stores reader's fullname",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address stores reader's address",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone stores reader's phone number",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "description": "RegistrationDate stores reader's registration date",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ReaderGetDto is used to store info about readers"
+      },
+      "ReaderPostDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "FullName stores reader's fullname",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address stores reader's address",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone stores reader's phone number",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "description": "RegistrationDate stores reader's registration date",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ReaderPostDto is used to store info about readers"
+      },
+      "TypeDepartmentGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores department's id",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name stores name of the department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class TypeDepartmentGetDto is used to store info about types of departments"
+      },
+      "TypeEditionGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id stores type's id",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name stores name of the type",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class TypeEditionGetDto is used to store info about types of books"
+      }
+    }
+  }
+}

@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using Library.Client.ViewModels;
 using ReactiveUI;

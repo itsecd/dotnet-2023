@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;

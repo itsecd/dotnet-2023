@@ -1,4 +1,6 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
+using System.Reactive;
 
 namespace Library.Client.ViewModels;
 public class BookViewModel : ViewModelBase
@@ -11,6 +13,7 @@ public class BookViewModel : ViewModelBase
     }
 
     private string _cipher = string.Empty;
+    [Required]
     public string Cipher 
     { 
         set => this.RaiseAndSetIfChanged(ref _cipher, value);
@@ -18,6 +21,7 @@ public class BookViewModel : ViewModelBase
     }
 
     private string _author = string.Empty;
+    [Required]
     public string Author 
     { 
         set => this.RaiseAndSetIfChanged(ref _author, value);
@@ -25,6 +29,7 @@ public class BookViewModel : ViewModelBase
     } 
 
     private string _name = string.Empty;
+    [Required]
     public string Name 
     { 
         set => this.RaiseAndSetIfChanged(ref _name, value);
@@ -32,6 +37,7 @@ public class BookViewModel : ViewModelBase
     } 
 
     private string _placeEdition = string.Empty;
+    [Required]
     public string PlaceEdition 
     { 
         set => this.RaiseAndSetIfChanged(ref _placeEdition, value);
@@ -39,6 +45,7 @@ public class BookViewModel : ViewModelBase
     }
 
     private int _yearEdition;
+    [Required]
     public int YearEdition 
     { 
         set => this.RaiseAndSetIfChanged(ref _yearEdition, value);
@@ -46,9 +53,17 @@ public class BookViewModel : ViewModelBase
     }
 
     private int _typeEditionId;
+    [Required]
     public int TypeEditionId 
     { 
         set => this.RaiseAndSetIfChanged(ref _typeEditionId, value);
         get => _typeEditionId;
+    }
+
+    public ReactiveCommand<Unit, BookViewModel> OnSubmitCommand { get; }
+
+    public BookViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

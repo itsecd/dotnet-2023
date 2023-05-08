@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Library.Client.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/library.png"
         Title="Library.Client">
 
     <Design.DataContext>
@@ -20,20 +20,26 @@
 	
     <Grid Classes="MainGrid" RowDefinitions="Auto,*">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
 				<Image Source="/Assets/task-add.png"/>
 			</Button>
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnEditCommand}">
 				<Image Source="/Assets/task-edit.png"/>
 			</Button>
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
 				<Image Source="/Assets/task-delete.png"/>
 			</Button>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="True"
-				  Items="{Binding Books}">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+				  Items="{Binding Books}"
+				  SelectedItem="{Binding SelectedBook}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Name"/>
+				<DataGridTextColumn Header="Cipher" Binding="{Binding Cipher}"/>
+				<DataGridTextColumn Header="Author" Binding="{Binding Author}"/>
+				<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="PlaceEdition" Binding="{Binding PlaceEdition}"/>
+				<DataGridTextColumn Header="YearEdition" Binding="{Binding YearEdition}"/>
+				<DataGridTextColumn Header="TypeEditionId" Binding="{Binding TypeEditionId}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

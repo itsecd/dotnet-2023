@@ -1,27 +1,40 @@
 ﻿namespace BikeRental.Domain;
 
 /// <summary>
-/// Class Bike has the info about bikes
+/// Class RentRecord has the info about a bike rent: client info, rented bike info, rent time
 /// </summary>
-public class Bike
+public class RentRecord
 {
     /// <summary>
-    /// Serial number of a bike
+    /// Id of a rent record
     /// </summary>
-    public int SerialNumber { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
-    /// Model info of a bike
+    /// A client who rented a bike
     /// </summary>
-    public string Model { get; set; } = string.Empty;
+    public Client Client { get; set; } = new();
 
     /// <summary>
-    /// Color info of a bike
+    /// Full name of a client who rented a bike
     /// </summary>
-    public string Color { get; set; } = string.Empty;
+    public string ClientName { get; set; } = string.Empty;
+
+
+    public Bike Bike { get; set; } = new();
+    /// <summary>
+    /// Serial number of a rented bike
+    /// </summary>
+    public int BikeSerialNumber { get; set; }
 
     /// <summary>
-    /// Type of a rented bike
+    /// Date and time of the start of the rent
     /// </summary>
-    public BikeType Type { get; set; } = new();
+    public DateTime RentStartTime { get; set; } = DateTime.MinValue;
+
+    /// <summary>
+    /// Date and time when whe client must return a bike
+    /// </summary>
+    public DateTime RentEndTime { get; set; } = DateTime.MinValue;
+
 }

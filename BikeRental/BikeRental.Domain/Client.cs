@@ -1,27 +1,27 @@
 ﻿namespace BikeRental.Domain;
 
 /// <summary>
-/// Class Bike has the info about bikes
+/// Class CLient has the info about a client who rented bikes
 /// </summary>
-public class Bike
+public class Client
 {
     /// <summary>
-    /// Serial number of a bike
+    /// Id of a client
     /// </summary>
-    public int SerialNumber { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
-    /// Model info of a bike
+    /// A full name of a client
     /// </summary>
-    public string Model { get; set; } = string.Empty;
+    public string FullName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Color info of a bike
+    /// Client's year of birth
     /// </summary>
-    public string Color { get; set; } = string.Empty;
+    public int BirthYear { get; set; }
 
     /// <summary>
-    /// Type of a rented bike
+    /// Client's phone number
     /// </summary>
-    public BikeType Type { get; set; } = new();
+    public string PhoneNumber { get; set; } = string.Empty;
 }

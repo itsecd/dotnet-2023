@@ -83,21 +83,18 @@ public class UniversityDataRepository : IUniversityDataRepository
         _rectors[0].Degree = "Доктор экономических наук";
         _rectors[0].Title = "Профессор";
         _rectors[0].Position = "Ректор";
-        _rectors[0].UniversityiId = 0;
         _rectors[1].Name = "Дмитрий";
         _rectors[1].Surname = "Быков";
         _rectors[1].Patronymic = "Евгеньевич";
         _rectors[1].Degree = "Доктор технических наук";
         _rectors[1].Title = "Профессор";
         _rectors[1].Position = "Ректор";
-        _rectors[1].UniversityiId = 1;
         _rectors[2].Name = "Вадим";
         _rectors[2].Surname = "Ружников";
         _rectors[2].Patronymic = "Александрович";
         _rectors[2].Degree = "Кандидат технических наук";
         _rectors[2].Title = "Доцент";
         _rectors[2].Position = "Ректор";
-        _rectors[2].UniversityiId = 2;
 
         _faculties = new List<Faculty>();
         for (var i = 0; i < 6; ++i)

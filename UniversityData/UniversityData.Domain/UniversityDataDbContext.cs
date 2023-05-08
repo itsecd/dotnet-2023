@@ -153,8 +153,7 @@ public class UniversityDataDbContext : DbContext
                 Patronymic = "Дмитриевич",
                 Degree = "Доктор экономических наук",
                 Title = "Профессор",
-                Position = "Ректор",
-                UniversityiId = 1
+                Position = "Ректор"
             },
             new Rector
             {
@@ -164,8 +163,8 @@ public class UniversityDataDbContext : DbContext
                 Patronymic = "Евгеньевич",
                 Degree = "Доктор технических наук",
                 Title = "Профессор",
-                Position = "Ректор",
-                UniversityiId = 2
+                Position = "Ректор"
+
             },
             new Rector
             {
@@ -175,8 +174,7 @@ public class UniversityDataDbContext : DbContext
                 Patronymic = "Александрович",
                 Degree = "Кандидат технических наук",
                 Title = "Доцент",
-                Position = "Ректор",
-                UniversityiId = 3
+                Position = "Ректор"
             });
 
         modelBuilder.Entity<Faculty>().HasData(

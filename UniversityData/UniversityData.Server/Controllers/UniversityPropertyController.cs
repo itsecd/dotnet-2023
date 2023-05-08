@@ -38,11 +38,12 @@ public class UniversityPropertyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<UniversityProperty>> Get()
+    public async Task<IEnumerable<UniversityPropertyGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var universityProperties = await ctx.UniversityProperties.ToArrayAsync();
         _logger.LogInformation("Get all university properties");
-        return ctx.UniversityProperties;
+        return _mapper.Map<IEnumerable<UniversityPropertyGetDto>>(universityProperties);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -50,7 +51,7 @@ public class UniversityPropertyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<UniversityProperty?>> Get(int id)
+    public async Task<ActionResult<UniversityPropertyGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
@@ -62,7 +63,7 @@ public class UniversityPropertyController : ControllerBase
         else
         {
             _logger.LogInformation("Get university property with id {0}", id);
-            return Ok(universityProperty);
+            return Ok(_mapper.Map<UniversityPropertyGetDto>(universityProperty));
         }
     }
     /// <summary>
@@ -70,7 +71,7 @@ public class UniversityPropertyController : ControllerBase
     /// </summary>
     /// <param name="universityProperty"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] UniversityPropertyDto universityProperty)
+    public async Task<ActionResult> Post([FromBody] UniversityPropertyPostDto universityProperty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.UniversityProperties.AddAsync(_mapper.Map<UniversityProperty>(universityProperty));
@@ -85,7 +86,7 @@ public class UniversityPropertyController : ControllerBase
     /// <param name="universityPropertyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] UniversityPropertyDto universityPropertyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] UniversityPropertyPostDto universityPropertyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
@@ -96,7 +97,7 @@ public class UniversityPropertyController : ControllerBase
         }
         else
         {
-            _mapper.Map<UniversityPropertyDto, UniversityProperty>(universityPropertyToPut, universityProperty);
+            _mapper.Map<UniversityPropertyPostDto, UniversityProperty>(universityPropertyToPut, universityProperty);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update university property with id: {0}", id);
             return Ok();

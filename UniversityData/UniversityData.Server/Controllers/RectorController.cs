@@ -37,11 +37,12 @@ public class RectorController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Rector>> Get()
+    public async Task<IEnumerable<RectorGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var rectors = await ctx.Rectors.ToArrayAsync();
         _logger.LogInformation("Get all rectors");
-        return ctx.Rectors;
+        return _mapper.Map<IEnumerable<RectorGetDto>>(rectors);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -49,7 +50,7 @@ public class RectorController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Rector?>> Get(int id)
+    public async Task<ActionResult<RectorGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
@@ -61,7 +62,7 @@ public class RectorController : ControllerBase
         else
         {
             _logger.LogInformation("Get rector with id {0}", id);
-            return Ok(rector);
+            return Ok(_mapper.Map<RectorGetDto>(rector));
         }
     }
     /// <summary>

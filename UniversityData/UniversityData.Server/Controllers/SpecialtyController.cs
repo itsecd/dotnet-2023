@@ -37,11 +37,12 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Specialty>> Get()
+    public async Task<IEnumerable<SpecialtyGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialties = await ctx.Specialties.ToArrayAsync();
         _logger.LogInformation("Get all specialties");
-        return ctx.Specialties;
+        return _mapper.Map<IEnumerable<SpecialtyGetDto>>(specialties);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -49,7 +50,7 @@ public class SpecialtyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Specialty?>> Get(int id)
+    public async Task<ActionResult<SpecialtyGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
@@ -61,7 +62,7 @@ public class SpecialtyController : ControllerBase
         else
         {
             _logger.LogInformation("Get specialty with id {0}", id);
-            return Ok(specialty);
+            return Ok(_mapper.Map<SpecialtyGetDto>(specialty));
         }
     }
     /// <summary>

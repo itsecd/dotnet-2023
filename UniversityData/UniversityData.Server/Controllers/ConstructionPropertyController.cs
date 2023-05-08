@@ -49,7 +49,7 @@ public class ConstructionPropertyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ConstructionProperty?>> Get(int id)
+    public async Task<ActionResult<ConstructionPropertyGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
@@ -61,7 +61,7 @@ public class ConstructionPropertyController : ControllerBase
         else
         {
             _logger.LogInformation("Get construction property with id: {0}", id);
-            return Ok(constructionProperty);
+            return Ok(_mapper.Map<ConstructionPropertyGetDto>(constructionProperty));
         }
     }
     /// <summary>
@@ -69,7 +69,7 @@ public class ConstructionPropertyController : ControllerBase
     /// </summary>
     /// <param name="constructionProperty"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] ConstructionPropertyDto constructionProperty)
+    public async Task<ActionResult> Post([FromBody] ConstructionPropertyPostDto constructionProperty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.ConstructionProperties.Add(_mapper.Map<ConstructionProperty>(constructionProperty));
@@ -84,7 +84,7 @@ public class ConstructionPropertyController : ControllerBase
     /// <param name="constructionPropertyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] ConstructionPropertyDto constructionPropertyToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ConstructionPropertyPostDto constructionPropertyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
@@ -95,7 +95,7 @@ public class ConstructionPropertyController : ControllerBase
         }
         else
         {
-            _mapper.Map<ConstructionPropertyDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
+            _mapper.Map<ConstructionPropertyPostDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
             ctx.SaveChanges();
             _logger.LogInformation("Update construction property with id: {0}", id);
             return Ok();

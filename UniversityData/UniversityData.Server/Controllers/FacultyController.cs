@@ -36,11 +36,12 @@ public class FacultyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Faculty>> Get()
+    public async Task<IEnumerable<FacultyGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var faculties = await ctx.Faculties.ToArrayAsync();
         _logger.LogInformation("Get all faculties");
-        return ctx.Faculties;
+        return _mapper.Map<IEnumerable<FacultyGetDto>>(faculties);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -48,7 +49,7 @@ public class FacultyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Faculty?>> Get(int id)
+    public async Task<ActionResult<FacultyGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
@@ -60,7 +61,7 @@ public class FacultyController : ControllerBase
         else
         {
             _logger.LogInformation("Get faculty with id {0}", id);
-            return Ok(faculty);
+            return Ok(_mapper.Map<FacultyGetDto>(faculty));
         }
     }
     /// <summary>

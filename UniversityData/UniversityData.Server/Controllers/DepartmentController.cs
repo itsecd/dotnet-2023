@@ -36,11 +36,12 @@ public class DepartmentController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<Department>> Get()
+    public async Task<IEnumerable<DepartmentGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var departments = await ctx.Departments.ToArrayAsync();
         _logger.LogInformation("Get all departments");
-        return ctx.Departments;
+        return _mapper.Map<IEnumerable<DepartmentGetDto>>(departments);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
@@ -48,7 +49,7 @@ public class DepartmentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Department?>> Get(int id)
+    public async Task<ActionResult<DepartmentGetDto?>> Get(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var department = ctx.Departments.FirstOrDefault(department => department.Id == id);
@@ -60,7 +61,7 @@ public class DepartmentController : ControllerBase
         else
         {
             _logger.LogInformation("Get department with id: {0}", id);
-            return Ok(department);
+            return Ok(_mapper.Map<DepartmentGetDto>(department));
         }
     }
     /// <summary>

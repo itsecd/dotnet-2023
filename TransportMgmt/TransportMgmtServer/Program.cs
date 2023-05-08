@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TransportMgmt.Domain;
 using TransportMgmtServer;
 using TransportMgmtServer.Repository;
 
@@ -10,8 +12,12 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<ITransportMgmtRepository, TransportMgmtRepository>();
-
 builder.Services.AddControllers();
+builder.Services.AddDbContextFactory<TransportMgmtContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(TransportMgmt));
+    optionsBuilder.UseMySQL(connectionString);
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

@@ -27,9 +27,9 @@ public class UniversityGetDto
     /// <summary>
     /// Сведения о ректоре 
     /// </summary>
-    public string UniversityProperty { get; set; }
+    public int UniversityPropertyId { get; set; }
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public string ConstructionProperty { get; set; }
+    public int ConstructionPropertyId  { get; set; }
 }

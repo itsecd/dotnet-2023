@@ -21,11 +21,11 @@ public class UniversityPostDto
     /// </summary>
     public int RectorId { get; set; }
     /// <summary>
-    /// Собственность учреждения
+    /// ID собственности учреждения
     /// </summary>
-    public string UniversityProperty { get; set; }
+    public int UniversityPropertyId { get; set; }
     /// <summary>
-    /// Собственность здания университета
+    /// ID собственности зданий университета
     /// </summary>
-    public string ConstructionProperty { get; set; }
+    public int ConstructionPropertyId { get; set; }
 }

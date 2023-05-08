@@ -1,9 +1,16 @@
-﻿namespace UniversityData.Server.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using UniversityData.Domain;
+
+namespace UniversityData.Server.Dto;
 /// <summary>
 /// Информация о ректоре
 /// </summary>
-public class RectorPostDto
+public class RectorGetDto
 {
+    /// <summary>
+    /// ID
+    /// </summary>
+    public int Id { get; set; }
     /// <summary>
     /// Имя ректора
     /// </summary>
@@ -28,4 +35,8 @@ public class RectorPostDto
     /// Должность ректора
     /// </summary>
     public string Position { get; set; }
+    /// <summary>
+    /// ID университета
+    /// </summary>
+    public int UniversityiId { get; set; }
 }

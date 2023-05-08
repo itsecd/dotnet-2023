@@ -36,11 +36,12 @@ public class ConstructionPropertyController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IEnumerable<ConstructionProperty>> Get()
+    public async Task<IEnumerable<ConstructionPropertyGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var constructionProperties = await ctx.ConstructionProperties.ToArrayAsync();
         _logger.LogInformation("Get all construction properties");
-        return ctx.ConstructionProperties;
+        return _mapper.Map<IEnumerable<ConstructionPropertyGetDto>>(constructionProperties);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID

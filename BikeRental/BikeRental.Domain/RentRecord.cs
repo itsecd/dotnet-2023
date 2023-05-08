@@ -13,7 +13,7 @@ public class RentRecord
     /// <summary>
     /// A client who rented a bike
     /// </summary>
-    public Client Client { get; set; } = new();
+    public Client? Client { get; set; }
 
     /// <summary>
     /// Full name of a client who rented a bike
@@ -23,7 +23,7 @@ public class RentRecord
     /// <summary>
     /// A bike that was rented
     /// </summary>
-    public Bike Bike { get; set; } = new();
+    public Bike? Bike { get; set; }
 
     /// <summary>
     /// Serial number of a rented bike

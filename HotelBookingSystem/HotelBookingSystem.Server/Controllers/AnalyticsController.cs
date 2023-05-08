@@ -4,6 +4,8 @@ using HotelBookingSystem.Server.Dto;
 using HotelBookingSystem.Server.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HotelBookingSystem.Server.Controllers;
 [ApiController]
@@ -12,14 +14,14 @@ public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
 
-    private readonly IHotelBookingSystemRepository _repos;
+    private readonly HotelBookingSystemDbContext _context;
 
     private readonly IMapper _mapper;
 
-    public AnalyticsController(ILogger<AnalyticsController> logger, IHotelBookingSystemRepository repos, IMapper mapper)
+    public AnalyticsController(ILogger<AnalyticsController> logger, HotelBookingSystemDbContext context, IMapper mapper)
     {
         _logger = logger;
-        _repos = repos;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -27,10 +29,14 @@ public class AnalyticsController : ControllerBase
     /// Task 1 - Display information about all hotels.
     /// </summary>
     [HttpGet("InfoHotels")]
-    public IEnumerable<HotelGetDto> InfoHotels()
+    public async Task<ActionResult<IEnumerable<HotelGetDto>>> InfoHotels()
     {
-        _logger.LogInformation("Test 1");
-        return _repos.ListOfHotels.Select(hotel => _mapper.Map<HotelGetDto>(hotel));
+        _logger.LogInformation("InfoHotels");
+        if (_context.Hotels == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<HotelGetDto>(_context.Hotels).ToListAsync();
     }
 
     /// <summary>
@@ -38,13 +44,17 @@ public class AnalyticsController : ControllerBase
     /// staying at the specified hotel, arrange by full name.
     /// </summary>
     [HttpGet("InfoClientsInHotels")]
-    public IEnumerable<LodgerGetDto> InfoClientsInHotels(string name)
+    public async Task<ActionResult<IEnumerable<LodgerGetDto>>> InfoClientsInHotels(string name)
     {
-        _logger.LogInformation("Test 2");
-        var brooms = _repos.ListOfBookedRooms;
-        var result = (from broom in brooms
+        _logger.LogInformation("InfoClientsInHotels");
+        if (_context.Brooms == null)
+        {
+            return NotFound();
+        }
+        var brooms = _context.Brooms;
+        var result = await (from broom in brooms
                       where broom.BookedRoom.Placement.Name == name
-                      select broom.Client).Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToList();
+                      select broom.Client).Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToListAsync();
         return result;
     }
 
@@ -53,16 +63,20 @@ public class AnalyticsController : ControllerBase
     /// hotels with the largest number of bookings.
     /// </summary>
     [HttpGet("Top5MostBooked")]
-    public IEnumerable<HotelGetDto> Top5MostBooked()
+    public async Task<ActionResult<IEnumerable<HotelGetDto>>> Top5MostBooked()
     {
-        _logger.LogInformation("Test 3");
-        var brooms = _repos.ListOfBookedRooms;
-        var result = brooms.GroupBy(x => x.BookedRoom.Placement)
+        _logger.LogInformation("Top5MostBooked");
+        if (_context.Brooms == null)
+        {
+            return NotFound();
+        }
+        var brooms = _context.Brooms;
+        var result = await brooms.GroupBy(x => x.BookedRoom.Placement)
             .OrderByDescending(g => g.Count())
             .Select(y => y.Key)
             .Take(5)
             .Select(hotel => _mapper.Map<HotelGetDto>(hotel))
-            .ToList();
+            .ToListAsync();
         return result;
     }
 
@@ -71,17 +85,22 @@ public class AnalyticsController : ControllerBase
     /// rooms in all hotels of the selected city.
     /// </summary>
     [HttpGet("AvailableRooms")]
-    public IEnumerable<RoomGetDto> AvailableRooms(string city)
+    public async Task<ActionResult<IEnumerable<RoomGetDto>>> AvailableRooms(string city)
     {
-        var rooms = _repos.ListOfRooms;
-        var brooms = _repos.ListOfBookedRooms;
+        _logger.LogInformation("AvailableRooms");
+        if (_context.Brooms == null || _context.Rooms == null)
+        {
+            return NotFound();
+        }
+        var rooms = _context.Rooms;
+        var brooms = _context.Brooms;
         var tmp = (from broom in brooms
                    select broom.BookedRoom).ToList();
-        var result = (from room in rooms
+        var result = await (from room in rooms
                       where !tmp.Contains(room) && room.Placement.City == city
                       select room)
                       .Select(room => _mapper.Map<RoomGetDto>(room))
-                      .ToList();
+                      .ToListAsync();
         return result;
     }
 
@@ -90,13 +109,18 @@ public class AnalyticsController : ControllerBase
     /// who have rented rooms for the largest number of days.
     /// </summary>
     [HttpGet("ClientsWithMostDays")]
-    public IEnumerable<LodgerGetDto> ClientsWithMostDays()
+    public async Task<ActionResult<IEnumerable<LodgerGetDto>>> ClientsWithMostDays()
     {
-        var brooms = _repos.ListOfBookedRooms;
-        var result = (from broom in brooms
-                      orderby (broom.BookingTerm - broom.EntryDate).Days descending
+        _logger.LogInformation("ClientsWithMostDays");
+        if (_context.Brooms == null)
+        {
+            return NotFound();
+        }
+        var brooms = _context.Brooms;
+        var result = await (from broom in brooms
+                      orderby (broom.BookingTerm - broom.EntryDate) descending
                       select broom.Client)
-                      .Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToList();
+                      .Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToListAsync();
         return result;
     }
 
@@ -105,18 +129,22 @@ public class AnalyticsController : ControllerBase
     /// and maximum room cost in each hotel.
     /// </summary>
     [HttpGet("MinMaxCost")]
-    public IActionResult MinMaxCost()
+    public async Task<ActionResult> MinMaxCost()
     {
-        var rooms = _repos.ListOfRooms;
-        var min = (from room in rooms
-                   group room by room.Placement into minres
-                   select minres.Min(x => x.Cost)).ToList();
-
-        var max = (from room in rooms
-                   group room by room.Placement into maxres
-                   select maxres.Max(x => x.Cost)).ToList();
-
-        return Ok(new { Name = _repos.ListOfHotels.Select(hotel => hotel.Name), Min = min, Max = max });
+        _logger.LogInformation("MinMaxCost");
+        if (_context.Rooms == null)
+        {
+            return NotFound();
+        }
+        var rooms = _context.Rooms;
+        var result = await rooms.GroupBy(b => b.Placement)
+        .Select(g => new
+        {
+            hotel = g.First().Placement.Name,
+            min = g.Min(b => b.Cost),
+            max = g.Max(b => b.Cost),
+        }).ToListAsync();
+        return Ok(result);
     }
 }
 

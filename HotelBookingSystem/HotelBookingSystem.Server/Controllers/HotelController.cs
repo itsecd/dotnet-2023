@@ -1,92 +1,105 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using HotelBookingSystem.Classes;
 using HotelBookingSystem.Server.Dto;
-using HotelBookingSystem.Server.Repository;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace HotelBookingSystem.Server.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public class HotelController : ControllerBase
 {
     private readonly ILogger<HotelController> _logger;
-
-    private readonly IHotelBookingSystemRepository _repos;
-
+    private readonly HotelBookingSystemDbContext _context;
     private readonly IMapper _mapper;
 
-    public HotelController(ILogger<HotelController> logger, IHotelBookingSystemRepository repos, IMapper mapper)
+    public HotelController(ILogger<HotelController> logger, HotelBookingSystemDbContext context, IMapper mapper)
     {
         _logger = logger;
-        _repos = repos;
+        _context = context;
         _mapper = mapper;
     }
 
     [HttpGet]
-    public IEnumerable<HotelGetDto> Get()
+    public async Task<ActionResult<IEnumerable<HotelGetDto>>> GetHotels()
     {
-        _logger.LogInformation("Get ListOfHotels");
-        return _repos.ListOfHotels.Select(hotel => _mapper.Map<HotelGetDto>(hotel));
+        _logger.LogInformation("GetHotels");
+        if (_context.Hotels == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<HotelGetDto>(_context.Hotels).ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<HotelGetDto> Get(int id) 
+    public async Task<ActionResult<HotelGetDto>> GetHotel(int id)
     {
-        _logger.LogInformation($"Get Hotel {id}");
-        var tmp = _repos.ListOfHotels.FirstOrDefault(x => x.Id == id);
-        if (tmp != null) 
+        _logger.LogInformation("GetHotel");
+        if (_context.Hotels == null)
         {
-            _logger.LogInformation("Success");
-            return Ok(_mapper.Map<HotelGetDto>(tmp));
-        }
-        else
-        {
-            _logger.LogInformation("Failure: Not found");
             return NotFound();
         }
-    }
+        var hotel = await _context.Hotels.FindAsync(id);
 
-    [HttpPost]
-    public IActionResult Post([FromBody] HotelPostDto hotel) 
-    {
-        _logger.LogInformation("Post Hotel");
-        _repos.ListOfHotels.Add(_mapper.Map<Hotel>(hotel));
-        return Ok();
+        if (hotel == null)
+        {
+            return NotFound();
+        }
+
+        return _mapper.Map<HotelGetDto>(hotel);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] HotelPostDto hotel) 
+    public async Task<IActionResult> PutHotel(int id, HotelPostDto hotel)
     {
-        _logger.LogInformation($"Put Hotel {id}");
-        var tmp = _repos.ListOfHotels.FirstOrDefault(x => x.Id == id);
-        if (tmp != null)
+        _logger.LogInformation("PutHotel");
+        if (_context.Hotels == null)
         {
-            _logger.LogInformation("Success");
-            _mapper.Map(hotel, tmp);
-            return Ok();
-        }
-        else
-        {
-            _logger.LogInformation("Failure: Not found");
             return NotFound();
         }
+        var temp = await _context.Hotels.FindAsync(id);
+        if (temp == null)
+        {
+            return NotFound();
+        }
+        _mapper.Map(hotel, temp);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<HotelGetDto>> PostHotel(HotelPostDto hotel)
+    {
+        _logger.LogInformation("PostHotel");
+        if (_context.Hotels == null)
+        {
+            return Problem("Entity set 'HotelBookingSystemDbContext.Hotels'  is null.");
+        }
+        var temp = _mapper.Map<Hotel>(hotel);
+        _context.Hotels.Add(temp);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction("PostHotel", new { id = temp.Id }, _mapper.Map<HotelGetDto>(temp));
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id) 
+    public async Task<IActionResult> DeleteHotel(int id)
     {
-        _logger.LogInformation($"Delete Hotel {id}");
-        var tmp = _repos.ListOfHotels.FirstOrDefault(x => x.Id == id);
-        if (tmp != null)
+        _logger.LogInformation("DeleteHotel");
+        if (_context.Hotels == null)
         {
-            _repos.ListOfHotels.Remove(tmp);
-            return Ok();
-        }
-        else
-        {
-            _logger.LogInformation("Failure: Not found");
             return NotFound();
         }
+        var hotel = await _context.Hotels.FindAsync(id);
+        if (hotel == null)
+        {
+            return NotFound();
+        }
+
+        _context.Hotels.Remove(hotel);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

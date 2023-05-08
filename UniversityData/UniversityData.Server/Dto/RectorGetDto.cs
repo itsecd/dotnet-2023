@@ -35,8 +35,4 @@ public class RectorGetDto
     /// Должность ректора
     /// </summary>
     public string Position { get; set; }
-    /// <summary>
-    /// ID университета
-    /// </summary>
-    public int UniversityiId { get; set; }
 }

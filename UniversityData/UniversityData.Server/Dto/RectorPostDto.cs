@@ -1,4 +1,6 @@
-﻿namespace UniversityData.Server.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UniversityData.Server.Dto;
 /// <summary>
 /// Информация о ректоре
 /// </summary>

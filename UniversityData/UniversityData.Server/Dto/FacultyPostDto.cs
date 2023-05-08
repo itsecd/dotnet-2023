@@ -1,4 +1,6 @@
-﻿namespace UniversityData.Server.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UniversityData.Server.Dto;
 /// <summary>
 /// Информация о факультете
 /// </summary>
@@ -16,4 +18,8 @@ public class FacultyPostDto
     /// Количество студентов факультета
     /// </summary>
     public int StudentsCount { get; set; }
+    /// <summary>
+    /// ID университета
+    /// </summary>
+    public int UniversityId { get; set; }
 }

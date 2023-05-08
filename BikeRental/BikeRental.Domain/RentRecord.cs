@@ -20,8 +20,11 @@ public class RentRecord
     /// </summary>
     public string ClientName { get; set; } = string.Empty;
 
-
+    /// <summary>
+    /// A bike that was rented
+    /// </summary>
     public Bike Bike { get; set; } = new();
+
     /// <summary>
     /// Serial number of a rented bike
     /// </summary>

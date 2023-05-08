@@ -8,24 +8,22 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Department, DepartmentPostDto>();
-        CreateMap<Faculty, FacultyPostDto>();
-        CreateMap<Rector, RectorPostDto>();
-        CreateMap<Specialty, SpecialtyPostDto>();
-        CreateMap<University, UniversityPostDto>();
-        CreateMap<University, UniversityGetDto>();
-        CreateMap<SpecialtyTableNode, SpecialtyTableNodePostDto>();
-        CreateMap<SpecialtyTableNode, SpecialtyTableNodeGetDto>();
         CreateMap<DepartmentPostDto, Department>();
+        CreateMap<Department, DepartmentGetDto>();
         CreateMap<FacultyPostDto, Faculty>();
+        CreateMap<Faculty, FacultyGetDto>();
         CreateMap<RectorPostDto, Rector>();
+        CreateMap<Rector, RectorGetDto>();
         CreateMap<SpecialtyPostDto, Specialty>();
+        CreateMap<Specialty, SpecialtyGetDto>();
         CreateMap<UniversityPostDto, University>();
+        CreateMap<University, UniversityGetDto>();
         CreateMap<SpecialtyTableNodePostDto, SpecialtyTableNode>();
+        CreateMap<SpecialtyTableNode, SpecialtyTableNodeGetDto>();
         CreateMap<University, UniversityGetStructureDto>();
-        CreateMap<UniversityProperty, UniversityPropertyDto>();
-        CreateMap<UniversityPropertyDto, UniversityProperty>();
-        CreateMap<ConstructionProperty, ConstructionPropertyDto>();
-        CreateMap<ConstructionPropertyDto, ConstructionProperty>();
+        CreateMap<UniversityPropertyPostDto, UniversityProperty>();
+        CreateMap<UniversityProperty, UniversityPropertyGetDto>();
+        CreateMap<ConstructionPropertyPostDto, ConstructionProperty>();
+        CreateMap<ConstructionProperty, ConstructionPropertyGetDto>();
     }
 }

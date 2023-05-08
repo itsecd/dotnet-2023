@@ -76,14 +76,14 @@ public class RideController : ControllerBase
         Vehicle? vehicleToPost = await ctx.Vehicles.FindAsync(rideToPost.VehicleId);
         if (vehicleToPost == null)
         {
-            _logger.LogInformation($"Not found vehicle with id={rideToPost.VehicleId}");
+            _logger.LogInformation("Not found vehicle with id={rideToPost.VehicleId}", rideToPost.VehicleId);
             return BadRequest();
         }
 
         Passenger? passengerToPost = await ctx.Passengers.FindAsync(rideToPost.PassengerId);
         if (passengerToPost == null)
         {
-            _logger.LogInformation($"Not found passenger with id={rideToPost.PassengerId}");
+            _logger.LogInformation("Not found passenger with id={rideToPost.PassengerId}", rideToPost.PassengerId);
             return BadRequest();
         }
 
@@ -111,14 +111,14 @@ public class RideController : ControllerBase
         Vehicle? vehicleToPut = await ctx.Vehicles.FindAsync(rideToPut.VehicleId);
         if (vehicleToPut == null)
         {
-            _logger.LogInformation($"Not found vehicle with id={rideToPut.VehicleId}");
+            _logger.LogInformation("Not found vehicle with id={rideToPut.VehicleId}", rideToPut.VehicleId);
             return BadRequest();
         }
 
         Passenger? passengerToPut = await ctx.Passengers.FindAsync(rideToPut.PassengerId);
         if (passengerToPut == null)
         {
-            _logger.LogInformation($"Not found passenger with id={rideToPut.PassengerId}");
+            _logger.LogInformation("Not found passenger with id={rideToPut.PassengerId}", rideToPut.PassengerId);
             return BadRequest();
         }
 

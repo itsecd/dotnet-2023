@@ -53,11 +53,11 @@ public class VehicleController : ControllerBase
         Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
-            _logger.LogInformation($"Not found vehicle with id={id}");
+            _logger.LogInformation("Not found vehicle with id={id}", id);
             return NotFound();
         }
 
-        _logger.LogInformation($"Get vehicle with id={id}");
+        _logger.LogInformation("Get vehicle with id={id}", id);
         return Ok(_mapper.Map<VehicleGetDto>(vehicle));
     }
 
@@ -76,7 +76,7 @@ public class VehicleController : ControllerBase
         Driver? driverToPost = await ctx.Drivers.FindAsync(vehicleToPost.DriverId);
         if (driverToPost == null)
         {
-            _logger.LogInformation($"Not found driver with id={vehicleToPost.DriverId}");
+            _logger.LogInformation("Not found driver with id={vehicleToPost.DriverId}", vehicleToPost.DriverId);
             return BadRequest();
         }
 
@@ -84,7 +84,8 @@ public class VehicleController : ControllerBase
             await ctx.VehicleClassifications.FindAsync(vehicleToPost.VehicleClassificationId);
         if (vehicleClassificationToPost == null)
         {
-            _logger.LogInformation($"Not found vehicle classification with id={vehicleToPost.VehicleClassificationId}");
+            _logger.LogInformation("Not found vehicle classification with id={vehicleToPost.VehicleClassificationId}",
+                vehicleToPost.VehicleClassificationId);
             return BadRequest();
         }
 
@@ -112,7 +113,7 @@ public class VehicleController : ControllerBase
         Driver? driverToPut = await ctx.Drivers.FindAsync(vehicleToPut.DriverId);
         if (driverToPut == null)
         {
-            _logger.LogInformation($"Not found driver with id={vehicleToPut.DriverId}");
+            _logger.LogInformation("Not found driver with id={vehicleToPut.DriverId}", vehicleToPut.DriverId);
             return BadRequest();
         }
 
@@ -120,18 +121,19 @@ public class VehicleController : ControllerBase
             await ctx.VehicleClassifications.FindAsync(vehicleToPut.VehicleClassificationId);
         if (vehicleClassificationToPut == null)
         {
-            _logger.LogInformation($"Not found vehicle classification with id={vehicleToPut.VehicleClassificationId}");
+            _logger.LogInformation("Not found vehicle classification with id={vehicleToPut.VehicleClassificationId}",
+                vehicleToPut.VehicleClassificationId);
             return BadRequest();
         }
 
         Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
-            _logger.LogInformation($"Not found vehicle with id={id}", id);
+            _logger.LogInformation("Not found vehicle with id={id}", id);
             return NotFound();
         }
 
-        _logger.LogInformation($"Put vehicle with id={id}", id);
+        _logger.LogInformation("Put vehicle with id={id}", id);
         await ctx.SaveChangesAsync();
         _mapper.Map(vehicleToPut, vehicle);
         return NoContent();

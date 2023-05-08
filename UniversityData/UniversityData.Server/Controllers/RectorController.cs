@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -28,7 +27,7 @@ public class RectorController : ControllerBase
     public RectorController(ILogger<RectorController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _contextFactory =  contextFactory;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -70,14 +69,14 @@ public class RectorController : ControllerBase
     /// </summary>
     /// <param name="rector"></param>
     [HttpPost]
-    public async Task<ActionResult>Post([FromBody] RectorPostDto rector)
+    public async Task<ActionResult> Post([FromBody] RectorPostDto rector)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Rectors.Add(_mapper.Map<Rector>(rector));
         ctx.SaveChanges();
         _logger.LogInformation("Add new rector");
         return Ok();
-        
+
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

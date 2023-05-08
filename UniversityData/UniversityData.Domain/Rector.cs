@@ -15,7 +15,7 @@ public class Rector
     /// <summary>
     /// Имя ректора
     /// </summary>
-    [Column("name")] 
+    [Column("name")]
     public string Name { get; set; }
     /// <summary>
     /// Фамилия ректора

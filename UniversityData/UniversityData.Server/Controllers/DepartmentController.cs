@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -76,7 +75,7 @@ public class DepartmentController : ControllerBase
         ctx.SaveChanges();
         _logger.LogInformation("Add new department");
         return Ok();
-       
+
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

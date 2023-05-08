@@ -31,5 +31,5 @@ public class UniversityGetDto
     /// <summary>
     /// Собственность здания университета
     /// </summary>
-    public int ConstructionPropertyId  { get; set; }
+    public int ConstructionPropertyId { get; set; }
 }

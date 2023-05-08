@@ -30,7 +30,7 @@ public class Faculty
     /// <summary>
     /// ID университета
     /// </summary>
-    [Column("university_id")] 
+    [Column("university_id")]
     public int UniversityId { get; set; }
     /// <summary>
     /// Университет

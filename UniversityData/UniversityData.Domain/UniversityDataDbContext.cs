@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace UniversityData.Domain;
 public class UniversityDataDbContext : DbContext
@@ -49,7 +48,7 @@ public class UniversityDataDbContext : DbContext
             {
                 Id = 1,
                 NameUniversityProperty = "муниципальная",
-                Universities= new List<University>()
+                Universities = new List<University>()
             },
             new UniversityProperty
             {
@@ -348,6 +347,6 @@ public class UniversityDataDbContext : DbContext
                DepartmentsData = new List<Department>(),
                FacultiesData = new List<Faculty>(),
                SpecialtyTable = new List<SpecialtyTableNode>()
-           }) ;
+           });
     }
 }

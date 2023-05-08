@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -70,14 +69,14 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <param name="specialty"></param>
     [HttpPost]
-    public async Task<ActionResult>Post([FromBody] SpecialtyPostDto specialty)
+    public async Task<ActionResult> Post([FromBody] SpecialtyPostDto specialty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Specialties.Add(_mapper.Map<Specialty>(specialty));
         ctx.SaveChanges();
         _logger.LogInformation("Add new specialty");
         return Ok();
-        
+
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

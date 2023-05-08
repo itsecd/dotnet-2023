@@ -1,6 +1,5 @@
 namespace UniversityData.Tests;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using UniversityData.Domain;
 
 public class UnitFixture

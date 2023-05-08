@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>

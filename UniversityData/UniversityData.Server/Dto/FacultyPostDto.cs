@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace UniversityData.Server.Dto;
+﻿namespace UniversityData.Server.Dto;
 /// <summary>
 /// Информация о факультете
 /// </summary>

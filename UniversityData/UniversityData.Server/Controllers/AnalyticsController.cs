@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -149,7 +148,7 @@ public class AnalyticsController : ControllerBase
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get counts of faculty, departments and specialties");
         return (from university in ctx.Universities
-                group university by new {university.UniversityProperty.Id, university.ConstructionPropertyId} into universityConstGroup
+                group university by new { university.UniversityProperty.Id, university.ConstructionPropertyId } into universityConstGroup
                 select new
                 {
                     ConstProp = universityConstGroup.Key.ConstructionPropertyId,

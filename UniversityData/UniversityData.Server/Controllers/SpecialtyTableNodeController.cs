@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
-using UniversityData.Server.Repository;
 namespace UniversityData.Server.Controllers;
 
 /// <summary>
@@ -28,7 +27,7 @@ public class SpecialtyTableNodeController : ControllerBase
     public SpecialtyTableNodeController(ILogger<SpecialtyTableNodeController> logger, IDbContextFactory<UniversityDataDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _contextFactory= contextFactory;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -76,7 +75,7 @@ public class SpecialtyTableNodeController : ControllerBase
         ctx.SaveChanges();
         _logger.LogInformation("Add new specialtyTableNode");
         return Ok();
-        
+
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

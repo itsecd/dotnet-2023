@@ -17,4 +17,16 @@ public class PrivatizedBuildingPostDto
     /// SecondCost is a final cost
     /// </summary>
     public int SecondCost { get; set; }
+    /// <summary>
+    /// Information about customer (only id)
+    /// </summary>
+    public int? CustomerId { get; set; }
+    /// <summary>
+    /// Information about auction (only id)
+    /// </summary>
+    public int? AuctionId { get; set; }
+    /// <summary>
+    /// Information about building (only id)
+    /// </summary>
+    public int? BuildingId { get; set; }
 }

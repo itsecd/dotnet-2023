@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PonrfDomain;
 /// <summary>
@@ -23,31 +22,7 @@ public class Auction
     [Required]
     public string Organizer { get; set; } = string.Empty;
     /// <summary>
-    /// List of all privatized buildings (lots)
+    /// List of all buildings on auction (lots)
     /// </summary>
-    public List<PrivatizedBuilding>? PrivatizedBuilding { get; set; }
-    /// <summary>
-    /// Id of privatized building for foreign key
-    /// </summary>
-    [ForeignKey("PrivatizedBuildingId")]
-    public int? PrivatizedBuildingId { get; set; } = 0;
-
-    ///// <summary>
-    ///// Constructor for Auction
-    ///// </summary>
-    //public Auction() { }
-    ///// <summary>
-    ///// Constructor for Auction with parameters
-    ///// </summary>
-    ///// <param name="id"></param>
-    ///// <param name="date"></param>
-    ///// <param name="organizer"></param>
-    ///// <param name="privatizedBuilding"></param>
-    //public Auction(int id, DateTime date, string organizer, List<PrivatizedBuilding> privatizedBuilding)
-    //{
-    //    Id = id;
-    //    Date = date;
-    //    Organizer = organizer;
-    //    PrivatizedBuilding = privatizedBuilding;
-    //}
+    public List<PrivatizedBuilding> PrivatizedBuilding { get; set; }
 }

@@ -28,21 +28,7 @@ public class Customer
     [Required]
     public string Address { get; set; } = string.Empty;
     /// <summary>
-    /// Constructor for Customer
+    /// List of all purchased buildings
     /// </summary>
-    public Customer() { }
-    /// <summary>
-    /// Constructor for Customer with parameters
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="passport"></param>
-    /// <param name="fio"></param>
-    /// <param name="address"></param>
-    public Customer(int id, string passport, string fio, string address)
-    {
-        Id = id;
-        Passport = passport;
-        Fio = fio;
-        Address = address;
-    }
+    public List<PrivatizedBuilding> PrivatizedBuilding { get; set; }
 }

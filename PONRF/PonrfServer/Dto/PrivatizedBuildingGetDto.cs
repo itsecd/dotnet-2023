@@ -22,15 +22,15 @@ public class PrivatizedBuildingGetDto
     /// </summary>
     public int SecondCost { get; set; }
     /// <summary>
-    /// Information about customer
+    /// Information about customer (only id)
     /// </summary>
-    public CustomerGetDto? Customer { get; set; }
+    public int? CustomerId { get; set; }
     /// <summary>
-    /// Information about auction
+    /// Information about auction (only id)
     /// </summary>
-    public AuctionGetDto? Auction { get; set; }
+    public int? AuctionId { get; set; }
     /// <summary>
-    /// Information about building
+    /// Information about building (only id)
     /// </summary>
-    public BuildingGetDto? Building { get; set; }
+    public int? BuildingId { get; set; }
 }

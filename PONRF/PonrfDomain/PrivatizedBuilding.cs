@@ -53,29 +53,4 @@ public class PrivatizedBuilding
     /// </summary>
     [ForeignKey("BuildingId")]
     public int? BuildingId { get; set; } = 0;
-
-    ///// <summary>
-    ///// Constructor for PrivatizedBuilding
-    ///// </summary>
-    //public PrivatizedBuilding() { }
-    ///// <summary>
-    ///// Constructor for PrivatizedBuilding with parameters
-    ///// </summary>
-    ///// <param name="id"></param>
-    ///// <param name="dateOfSale"></param>
-    ///// <param name="firstCost"></param>
-    ///// <param name="secondCost"></param>
-    ///// <param name="customer"></param>
-    ///// <param name="auction"></param>
-    ///// <param name="building"></param>
-    //public PrivatizedBuilding(int id, DateTime dateOfSale, int firstCost, int secondCost, Customer? customer, Auction? auction, Building? building)
-    //{
-    //    Id = id;
-    //    DateOfSale = dateOfSale;
-    //    FirstCost = firstCost;
-    //    SecondCost = secondCost;
-    //    Customer = customer;
-    //    Auction = auction;
-    //    Building = building;
-    //}
 }

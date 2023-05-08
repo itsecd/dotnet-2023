@@ -5,6 +5,11 @@
 public class BikeType
 {
     /// <summary>
+    /// Id of a bike type
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
     /// Name of a bike type
     /// </summary>
     public string TypeName { get; set; } = string.Empty; 

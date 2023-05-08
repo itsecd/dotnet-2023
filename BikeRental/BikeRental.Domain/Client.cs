@@ -6,11 +6,6 @@
 public class Bike
 {
     /// <summary>
-    /// Id of a bike
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
     /// Serial number of a bike
     /// </summary>
     public int SerialNumber { get; set; }

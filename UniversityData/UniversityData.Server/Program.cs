@@ -7,6 +7,10 @@ using UniversityData.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContextFactory<UniversityDataDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("UniversityData")!)
+);
+
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 
@@ -17,10 +21,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddSingleton(mapper);
-//builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
-
-builder.Services.AddDbContext<UniversityDataDbContext>(options => 
-    options.UseMySQL(builder.Configuration.GetConnectionString(nameof(UniversityData))!));
+builder.Services.AddSingleton<IUniversityDataRepository, UniversityDataRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

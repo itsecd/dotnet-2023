@@ -9,19 +9,25 @@
         Title="RecruitmentAgency.Client">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+		<vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid RowDefinitions="Auto,*">
-		<DataGrid AutoGenerateColumns ="True">
+	<Window.Styles>
+		<StyleInclude Source="/RecruitmentAgencyStyles.axaml" />
+	</Window.Styles>
+
+	<Grid Classes="Main" RowDefinitions="Auto, *">
+		<StackPanel Grid.Row="0" Orientation ="Horizontal">
+			<Button Classes="ToolButton">
+			</Button>
+			<Button Classes="ToolButton"/>
+			<Button Classes="ToolButton"/>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="True">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Name" />
+				<DataGridTextColumn Header="Наименование"/>
 			</DataGrid.Columns>
-		</DataGrid>
+		</DataGrid> 
 	</Grid>
-	
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 </Window>

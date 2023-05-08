@@ -1,0 +1,1377 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "RecruitmentAgencyServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Company": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Returns a list of all companies",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Post method that adding a new company",
+        "requestBody": {
+          "description": "Company data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Company/{id}": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get method that returns a company with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Put method which allows change the data of a company with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Company data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Delete method which allows delete a company with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/CompanyApplication": {
+      "get": {
+        "tags": [
+          "CompanyApplication"
+        ],
+        "summary": "Returns a list of all companies applications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyApplication"
+        ],
+        "summary": "Post method that adding a new company application",
+        "requestBody": {
+          "description": "Company application data to post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/CompanyApplication/{id}": {
+      "get": {
+        "tags": [
+          "CompanyApplication"
+        ],
+        "summary": "Get method that returns company application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyApplication"
+        ],
+        "summary": "Put method which allows change the data of company application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Company application data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CompanyApplication"
+        ],
+        "summary": "Delete method which allows delete a company application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Employee": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Returns a list of all employees",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Post method that adding a new employee",
+        "requestBody": {
+          "description": "Employee data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Employee/{id}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get method that returns an employee with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Put method which allows change the data of an employee with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Employee data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete method which allows delete an employee with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobApplication": {
+      "get": {
+        "tags": [
+          "JobApplication"
+        ],
+        "summary": "Returns a list of all job applications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "JobApplication"
+        ],
+        "summary": "Post method that adding a new job application",
+        "requestBody": {
+          "description": "Job application data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/JobApplication/{id}": {
+      "get": {
+        "tags": [
+          "JobApplication"
+        ],
+        "summary": "Get method that returns a job Application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job Application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "JobApplication"
+        ],
+        "summary": "Put method which allows change the data of a job application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Job application data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "JobApplication"
+        ],
+        "summary": "Delete method which allows delete a job application with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/applicants_requests/{jobTitle}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Display information about all applicants looking for a job in a given position, sorted by full name.",
+        "parameters": [
+          {
+            "name": "jobTitle",
+            "in": "path",
+            "description": "Job title",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/applicants_over_given_period": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output all applicants who left applications during the specified period.",
+        "parameters": [
+          {
+            "name": "minDate",
+            "in": "query",
+            "description": "Start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "maxDate",
+            "in": "query",
+            "description": "End date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/applicants_matches/{id}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Display information about applicants that match a specific company application.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/applications_number": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output information about the number of applications for each section and position.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/the_most_popular_companies": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output information about the most popular companies",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/the_highest_wage": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output information about the company that pays the highest wages",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Title": {
+      "get": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Returns a list of all titles",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TitleGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TitleGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TitleGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Post method that adding a new title",
+        "requestBody": {
+          "description": "Title data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Title/{id}": {
+      "get": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Get method that returns a title with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Title id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Put method which allows change the data of a title with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Title id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Title data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TitlePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Delete method which allows delete a title with a specific id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Title id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CompanyApplicationGetDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date - date of application",
+            "format": "date-time"
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience - shows the required work experience in years",
+            "format": "int32"
+          },
+          "salary": {
+            "type": "integer",
+            "description": "Salary - shows the wages which the company will pay",
+            "format": "int32"
+          },
+          "education": {
+            "type": "string",
+            "description": "Title - shows the job id",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "id - shows the company's application id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "CompanyApplication - a class that describes the company application"
+      },
+      "CompanyApplicationPostDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date - date of application",
+            "format": "date-time"
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience - shows the required work experience in years",
+            "format": "int32"
+          },
+          "salary": {
+            "type": "integer",
+            "description": "Salary - shows the wages which the company will pay",
+            "format": "int32"
+          },
+          "education": {
+            "type": "string",
+            "description": "Education - shows the level of education",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "integer",
+            "description": "CompanyId - contains company id",
+            "format": "int32",
+            "nullable": true
+          },
+          "titleId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "CompanyApplication - a class that describes the company application"
+      },
+      "CompanyGetDto": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "CompanyName - a string that stores the company name",
+            "nullable": true
+          },
+          "contactName": {
+            "type": "string",
+            "description": "ContactName - the string responsible for the name of the company representative",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telephone - a string that stores the phone number",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "id - shows the company's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Company - a class that describes the company representative"
+      },
+      "CompanyPostDto": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "CompanyName - a string that stores the company name",
+            "nullable": true
+          },
+          "contactName": {
+            "type": "string",
+            "description": "ContactName - the string responsible for the name of the company representative",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telephone - a string that stores the phone number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Company - a class that describes the company representative"
+      },
+      "EmployeeGetDto": {
+        "type": "object",
+        "properties": {
+          "personalName": {
+            "type": "string",
+            "description": "PersonalName - a string for name, second_name and surname",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telephone - a string that stores the phone number",
+            "nullable": true
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience - shows the number of years a person has worked",
+            "format": "int32"
+          },
+          "education": {
+            "type": "string",
+            "description": "Education - shows what kind of education the worker has",
+            "nullable": true
+          },
+          "salary": {
+            "type": "integer",
+            "description": "Salary - shows the desired salary",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "description": "id - shows the employee's id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Employee - a class that describes the characteristics of a worker"
+      },
+      "EmployeePostDto": {
+        "type": "object",
+        "properties": {
+          "personalName": {
+            "type": "string",
+            "description": "PersonalName - a string for name, second_name and surname",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telephone - a string that stores the phone number",
+            "nullable": true
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience - shows the number of years a person has worked",
+            "format": "int32"
+          },
+          "education": {
+            "type": "string",
+            "description": "Education - shows what kind of education the worker has",
+            "nullable": true
+          },
+          "salary": {
+            "type": "integer",
+            "description": "Salary - shows the desired salary",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Employee - a class that describes the characteristics of a worker"
+      },
+      "JobApplicationGetDto": {
+        "type": "object",
+        "properties": {
+          "employee": {
+            "$ref": "#/components/schemas/EmployeePostDto"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date - date of application",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title - responsible for the job title",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "id - shows the JobApplication id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "JobApplication - a class that describes the employee's application"
+      },
+      "JobApplicationPostDto": {
+        "type": "object",
+        "properties": {
+          "employeeId": {
+            "type": "integer",
+            "description": "Employee - contains employee id",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date - date of application",
+            "format": "date-time"
+          },
+          "titleId": {
+            "type": "integer",
+            "description": "Title - responsible for the job title id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "JobApplication - a class that describes the employee's application"
+      },
+      "TitleGetDto": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "Section - a string that stores section, for example: IT, Finance, etc...",
+            "nullable": true
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "JobTitle - the string responsible for the title. For example: Programmer, Designer, etc...",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "id - shows the title's",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Title - a class that describes the field of work and position"
+      },
+      "TitlePostDto": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "Section - a string that stores section, for example: IT, Finance, etc...",
+            "nullable": true
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "JobTitle - the string responsible for the title. For example: Programmer, Designer, etc...",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Title - a class that describes the field of work and position"
+      }
+    }
+  }
+}

@@ -72,7 +72,7 @@ public class ConstructionPropertyController : ControllerBase
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.ConstructionProperties.Add(_mapper.Map<ConstructionProperty>(constructionProperty));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new construction property");
         return Ok();
     }
@@ -95,7 +95,7 @@ public class ConstructionPropertyController : ControllerBase
         else
         {
             _mapper.Map<ConstructionPropertyPostDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update construction property with id: {0}", id);
             return Ok();
         }
@@ -118,7 +118,7 @@ public class ConstructionPropertyController : ControllerBase
         else
         {
             ctx.ConstructionProperties.Remove(constructionProperty);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete construction property with id: {0}", id);
             return Ok();
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 namespace UniversityData.Server.Controllers;
@@ -43,7 +44,7 @@ public class AnalyticsController : ControllerBase
         var result = await (from university in ctx.Universities
                             where university.Number == number
                             select _mapper.Map<University, UniversityGetDto>(university)).ToListAsync();
-        if (result.Count() == 0)
+        if (result.Any())
         {
             _logger.LogInformation("Not found university with number: {0}", number);
             return NotFound();
@@ -73,7 +74,7 @@ public class AnalyticsController : ControllerBase
                                       faculties = _mapper.Map<IEnumerable<FacultyGetDto>>(university.FacultiesData),
                                       specialties = _mapper.Map<IEnumerable<SpecialtyTableNodeGetDto>>(university.SpecialtyTable),
                                   }).ToListAsync();
-        if (universities.Count == 0)
+        if (universities.Any())
         {
             _logger.LogInformation("Not found university with number: {0}", number);
             return NotFound();

@@ -72,7 +72,7 @@ public class FacultyController : ControllerBase
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Faculties.Add(_mapper.Map<Faculty>(faculty));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new faculty");
         return Ok();
     }
@@ -95,7 +95,7 @@ public class FacultyController : ControllerBase
         else
         {
             _mapper.Map<FacultyPostDto, Faculty>(facultyToPut, faculty);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update faculty with id: {0}", id);
             return Ok();
         }
@@ -118,7 +118,7 @@ public class FacultyController : ControllerBase
         else
         {
             ctx.Faculties.Remove(faculty);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete faculty with id: {0}", id);
             return Ok();
         }

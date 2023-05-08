@@ -72,7 +72,7 @@ public class SpecialtyTableNodeController : ControllerBase
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNode>(specialtyTableNode));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new specialtyTableNode");
         return Ok();
 
@@ -96,7 +96,7 @@ public class SpecialtyTableNodeController : ControllerBase
         else
         {
             _mapper.Map<SpecialtyTableNodePostDto, SpecialtyTableNode>(specialtyTableNodeToPut, specialtyTableNode);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update specialtyTableNode with id: {0}", id);
             return Ok();
         }
@@ -119,7 +119,7 @@ public class SpecialtyTableNodeController : ControllerBase
         else
         {
             ctx.SpecialtyTableNodes.Remove(specialtyTableNode);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete specialtyTableNode with id: {0}", id);
             return Ok();
         }

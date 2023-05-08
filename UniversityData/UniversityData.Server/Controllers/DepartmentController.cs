@@ -72,7 +72,7 @@ public class DepartmentController : ControllerBase
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Departments.Add(_mapper.Map<Department>(department));
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new department");
         return Ok();
 
@@ -96,7 +96,7 @@ public class DepartmentController : ControllerBase
         else
         {
             _mapper.Map<DepartmentPostDto, Department>(departmentToPut, department);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Update department with id: {0}", id);
             return Ok();
         }
@@ -119,7 +119,7 @@ public class DepartmentController : ControllerBase
         else
         {
             ctx.Departments.Remove(department);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             _logger.LogInformation("Delete departments with id: {0}", id);
             return Ok();
         }

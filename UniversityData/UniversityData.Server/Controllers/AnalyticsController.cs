@@ -62,13 +62,18 @@ public class AnalyticsController : ControllerBase
     /// <param name="number"></param>
     /// <returns></returns>
     [HttpGet("information_of_structure_of_university{number}")]
-    public async Task<ActionResult<UniversityGetStructureDto>> InformationOfStructure(string number)
+    public async Task<ActionResult<object>> InformationOfStructure(string number)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about university");
         var universities = (from university in ctx.Universities
                             where university.Number == number
-                            select _mapper.Map<University, UniversityGetStructureDto>(university)).ToList();
+                            select new
+                            {
+                                departments = _mapper.Map<IEnumerable<DepartmentGetDto>>(university.DepartmentsData),
+                                faculties = _mapper.Map<IEnumerable<FacultyGetDto>>(university.FacultiesData),
+                                specialties = _mapper.Map<IEnumerable<SpecialtyTableNodeGetDto>>(university.SpecialtyTable),
+                            }).ToList();
         if (universities.Count == 0)
         {
             _logger.LogInformation("Not found university with number: {0}", number);
@@ -114,15 +119,15 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.
     /// </summary>
-    /// <param name="universityProperty"></param>
+    /// <param name="universityPropertyId"></param>
     /// <returns></returns>
     [HttpGet("university_with_target_property")]
-    public async Task<IEnumerable<object>> UniversityWithProperty(string universityProperty)
+    public async Task<IEnumerable<object>> UniversityWithProperty(int universityPropertyId)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about universities with target property");
         return (from university in ctx.Universities
-                where (university.UniversityProperty.NameUniversityProperty == universityProperty)
+                where (university.UniversityProperty.Id == universityPropertyId)
                 select new
                 {
                     university.Id,
@@ -144,20 +149,11 @@ public class AnalyticsController : ControllerBase
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get counts of faculty, departments and specialties");
         return (from university in ctx.Universities
-                group university by university.ConstructionProperty into universityConstGroup
-                from universityPropGroup in
-                (
-                    from university in universityConstGroup
-                    group university by university.UniversityProperty into universityPropGroup
-                    select new
-                    {
-                        UnivesityProp = universityPropGroup.Key
-                    }
-                )
+                group university by new {university.UniversityProperty.Id, university.ConstructionPropertyId} into universityConstGroup
                 select new
                 {
-                    ConstProp = universityConstGroup.Key,
-                    UniversityProp = universityPropGroup.UnivesityProp,
+                    ConstProp = universityConstGroup.Key.ConstructionPropertyId,
+                    UniversityProp = universityConstGroup.Key.Id,
                     Faculties = universityConstGroup.Sum(university => university.FacultiesData.Count),
                     Departments = universityConstGroup.Sum(university => university.DepartmentsData.Count),
                     Specialities = universityConstGroup.Sum(university => university.SpecialtyTable.Count)

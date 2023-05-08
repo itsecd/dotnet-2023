@@ -30,9 +30,9 @@ public class CardController : ControllerBase
     /// <summary>
     /// Return list of all cards
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all cards </returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CardGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<CardGetDto>>> GetCards()
     {
         if (_context.Cards == null)
         {
@@ -43,10 +43,10 @@ public class CardController : ControllerBase
     /// <summary>
     /// Return info about card by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Card's id </param>
+    /// <returns> Card by id </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<CardGetDto>> Get(int id)
+    public async Task<ActionResult<CardGetDto>> GetCard(int id)
     {
         if (_context.Cards == null)
         {
@@ -64,7 +64,8 @@ public class CardController : ControllerBase
     /// <summary>
     /// Add a new card
     /// </summary>
-    /// <param name="card"></param>
+    /// <param name="card"> New cards object </param>
+    /// <returns> Inserted card </returns>
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<CardGetDto>> PostCard(CardPostDto card)
@@ -83,10 +84,11 @@ public class CardController : ControllerBase
     /// <summary>
     /// Сhange info of selected card
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="card"></param>
+    /// <param name="id"> Card's id </param>
+    /// <param name="card"> New cards object </param>
+    /// <returns> NoContent </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, CardPostDto card)
+    public async Task<IActionResult> PutCard(int id, CardPostDto card)
     {
         if (_context.Cards == null)
         {
@@ -107,9 +109,10 @@ public class CardController : ControllerBase
     /// <summary>
     /// Delete card by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id"> Card's id </param>
+    /// <returns> NoContent </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteCard(int id)
     {
         if (_context.Cards == null)
         {

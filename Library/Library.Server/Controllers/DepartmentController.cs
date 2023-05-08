@@ -30,9 +30,9 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Return list of all departments
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all departments </returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DepartmentGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<DepartmentGetDto>>> GetDepartments()
     {
         if (_context.Departments == null)
         {
@@ -43,10 +43,10 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Return info about department by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Department's id </param>
+    /// <returns> Department by id </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<DepartmentGetDto>> Get(int id)
+    public async Task<ActionResult<DepartmentGetDto>> GetDepartment(int id)
     {
         if (_context.Departments == null)
         {
@@ -64,10 +64,11 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Add a new department
     /// </summary>
-    /// <param name="department"></param>
+    /// <param name="department"> New departments object </param>
+    /// <returns> Inserted department </returns>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<DepartmentGetDto>> PostCard(DepartmentPostDto department)
+    public async Task<ActionResult<DepartmentGetDto>> PostDepartment(DepartmentPostDto department)
     {
         if (_context.Departments == null)
         {
@@ -83,10 +84,11 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Сhange info of selected department
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="department"></param>
+    /// <param name="id"> Department's id </param>
+    /// <param name="department"> New departments object </param>
+    /// <returns> NoContent </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, DepartmentPostDto department)
+    public async Task<IActionResult> PutDepartment(int id, DepartmentPostDto department)
     {
         if (_context.Departments == null)
         {
@@ -107,9 +109,10 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// Delete department by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id"> Department's id </param>
+    /// <returns> NoContent </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteDepartment(int id)
     {
         if (_context.Departments == null)
         {

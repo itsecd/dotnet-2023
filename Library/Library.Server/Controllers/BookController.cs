@@ -31,7 +31,7 @@ public class BookController : ControllerBase
     /// <summary>
     /// Return list of all books
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all books </returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BookGetDto>>> GetBooks()
     {
@@ -44,8 +44,8 @@ public class BookController : ControllerBase
     /// <summary>
     /// Return info about book by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Book's id </param>
+    /// <returns> Book by id </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<BookGetDto>> GetBook(int id)
     {
@@ -65,8 +65,8 @@ public class BookController : ControllerBase
     /// <summary>
     /// Add a new book
     /// </summary>
-    /// <param name="book"></param>
-    /// <returns></returns>
+    /// <param name="book"> New books object </param>
+    /// <returns> Inserted book </returns>
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<BookGetDto>> PostBook(BookPostDto book)
@@ -85,9 +85,9 @@ public class BookController : ControllerBase
     /// <summary>
     /// Сhange info of selected book
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="book"></param>
-    /// <returns></returns>
+    /// <param name="id"> Book's id </param>
+    /// <param name="book"> New books object </param>
+    /// <returns> NoContent </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutBook(int id, BookPostDto book)
     {
@@ -110,8 +110,8 @@ public class BookController : ControllerBase
     /// <summary>
     /// Delete book by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Book's id </param>
+    /// <returns> NoContent </returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {

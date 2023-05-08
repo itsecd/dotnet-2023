@@ -30,9 +30,9 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Return list of all readers
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all readers </returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ReaderGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<ReaderGetDto>>> GetReaders()
     {
         if (_context.Readers == null)
         {
@@ -43,10 +43,10 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Return info about reader by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> Reader's id </param>
+    /// <returns> Reader by id </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ReaderGetDto>> Get(int id)
+    public async Task<ActionResult<ReaderGetDto>> GetReader(int id)
     {
         if (_context.Readers == null)
         {
@@ -64,10 +64,11 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Add a new reader
     /// </summary>
-    /// <param name="reader"></param>
+    /// <param name="reader"> New readers object </param>
+    /// <returns> Inserted reader </returns>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<ReaderGetDto>> PostCard(ReaderPostDto reader)
+    public async Task<ActionResult<ReaderGetDto>> PostReader(ReaderPostDto reader)
     {
         if (_context.Readers == null)
         {
@@ -83,10 +84,11 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Сhange info of selected reader
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="reader"></param>
+    /// <param name="id"> Reader's id </param>
+    /// <param name="reader"> New readers object </param>
+    /// <returns> NoContent </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, ReaderPostDto reader)
+    public async Task<IActionResult> PutReader(int id, ReaderPostDto reader)
     {
         if (_context.Readers == null)
         {
@@ -107,9 +109,10 @@ public class ReaderController : ControllerBase
     /// <summary>
     /// Delete reader by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id"> Reader's id </param>
+    /// <returns> NoContent </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteReader(int id)
     {
         if (_context.Readers == null)
         {

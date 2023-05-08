@@ -30,9 +30,9 @@ public class TypeEditionController : ControllerBase
     /// <summary>
     /// Return list of all types of books
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all types of books </returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TypeEditionGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<TypeEditionGetDto>>> GetTypesEdition()
     {
         if (_context.TypesEdition == null)
         {
@@ -43,10 +43,10 @@ public class TypeEditionController : ControllerBase
     /// <summary>
     /// Return info about type by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> TypeEdition's id </param>
+    /// <returns> TypeEdition by id </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<TypeEditionGetDto>> Get(int id)
+    public async Task<ActionResult<TypeEditionGetDto>> GetTypeEdition(int id)
     {
         if (_context.TypesEdition == null)
         {

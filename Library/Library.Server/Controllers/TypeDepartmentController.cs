@@ -30,9 +30,9 @@ public class TypeDepartmentController : ControllerBase
     /// <summary>
     /// Return list of all types of departments
     /// </summary>
-    /// <returns></returns>
+    /// <returns> List of all types of departments </returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TypeDepartmentGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<TypeDepartmentGetDto>>> GetTypesDepartment()
     {
         if (_context.TypesDepartment == null)
         {
@@ -43,10 +43,10 @@ public class TypeDepartmentController : ControllerBase
     /// <summary>
     /// Return info about type by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id"> TypeDepartment's id </param>
+    /// <returns> TypeDepartment by id </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<TypeDepartmentGetDto>> Get(int id)
+    public async Task<ActionResult<TypeDepartmentGetDto>> GetTypeDepartment(int id)
     {
         if (_context.TypesDepartment == null)
         {

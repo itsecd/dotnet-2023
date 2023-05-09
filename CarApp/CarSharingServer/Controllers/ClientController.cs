@@ -35,12 +35,15 @@ public class ClientController : ControllerBase
     /// List of all clients
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<ClientGetDto>> Get()
+    public async Task<ActionResult<IEnumerable<ClientGetDto>>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Clients ==null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get the clients");
-        var clients = await ctx.Clients.ToArrayAsync();
-        return _mapper.Map<IEnumerable<ClientGetDto>>(clients);
+        return await _mapper.ProjectTo<ClientGetDto>(ctx.Clients).ToListAsync();
     }
     /// <summary>
     /// Get client info by id
@@ -75,12 +78,17 @@ public class ClientController : ControllerBase
     /// Info about client you want to post
     /// </param>
     [HttpPost]
-    public async Task Post([FromBody] ClientPostDto client)
+    public async Task <IActionResult> Post([FromBody] ClientPostDto client)
     {
         _logger.LogInformation("Post a new client");
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Clients == null)
+        {
+            return NotFound();
+        }
         await ctx.Clients.AddAsync(_mapper.Map<Client>(client));
         await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     /// Put a client

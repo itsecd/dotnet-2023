@@ -35,12 +35,15 @@ public class CarController : ControllerBase
     /// List of all cars
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<CarGetDto>> GetCars()
+    public async Task<ActionResult<IEnumerable<CarGetDto>>> GetCars()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get the cars");
-        var cars = await ctx.Cars.ToArrayAsync();
-        return _mapper.Map<IEnumerable<CarGetDto>>(cars);
+        return await _mapper.ProjectTo<CarGetDto>(ctx.Cars).ToListAsync();
     }
     /// <summary>
     /// Get car info by id
@@ -74,12 +77,17 @@ public class CarController : ControllerBase
     /// Info about car which you want to post
     /// </param>
     [HttpPost]
-    public async Task Post([FromBody] CarPostDto car)
+    public async Task <IActionResult> Post([FromBody] CarPostDto car)
     {
         _logger.LogInformation("Post a new car");
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
+        {
+            return NotFound();
+        }
         await ctx.Cars.AddAsync(_mapper.Map<Car>(car));
         await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     /// Put car

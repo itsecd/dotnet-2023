@@ -35,12 +35,15 @@ public class RentedCarController : ControllerBase
     /// List of all rented cars
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<RentedCarGetDto>> Get()
+    public async Task<ActionResult<IEnumerable<RentedCarGetDto>>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get the rented cars");
-        var rentedCars = await ctx.RentedCars.ToArrayAsync();
-        return _mapper.Map<IEnumerable<RentedCarGetDto>>(rentedCars);
+        return await _mapper.ProjectTo<RentedCarGetDto>(ctx.RentedCars).ToListAsync();
     }
     /// <summary>
     /// Get rented car by id
@@ -74,12 +77,17 @@ public class RentedCarController : ControllerBase
     /// Info about new rented car you want to add
     /// </param>
     [HttpPost]
-    public async Task Post([FromBody] RentedCarPostDto rentedCar)
+    public async Task <IActionResult>Post([FromBody] RentedCarPostDto rentedCar)
     {
         _logger.LogInformation("Post a new rented car");
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         await ctx.RentedCars.AddAsync(_mapper.Map<RentedCar>(rentedCar));
         await ctx.SaveChangesAsync();
+        return Ok();
     }
     /// <summary>
     /// Put a rented car

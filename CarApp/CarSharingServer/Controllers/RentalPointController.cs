@@ -34,12 +34,15 @@ public class RentalPointController : ControllerBase
     /// List of all rental points
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<RentalPointPostDto>> Get()
+    public async Task<ActionResult<IEnumerable<RentalPointPostDto>>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentalPoints== null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get the rental points");
-        var rentalPoints = await ctx.RentalPoints.ToArrayAsync();
-        return _mapper.Map<IEnumerable<RentalPointPostDto>>(rentalPoints);
+        return await _mapper.ProjectTo<RentalPointPostDto>(ctx.RentalPoints).ToListAsync();
     }
     /// <summary>
     /// Get rental point by id
@@ -74,12 +77,17 @@ public class RentalPointController : ControllerBase
     /// Info about new rental point you ant to add
     /// </param>
     [HttpPost]
-    public async Task Post([FromBody] RentalPointPostDto rentalPoint)
+    public async Task <IActionResult> Post([FromBody] RentalPointPostDto rentalPoint)
     {
         _logger.LogInformation("Post a new rental point");
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentalPoints!= null)
+        {
+            return NotFound();
+        }
         await ctx.RentalPoints.AddAsync(_mapper.Map<RentalPoint>(rentalPoint));
         await ctx.SaveChangesAsync();
+        return Ok();
     }
 
     /// <summary>

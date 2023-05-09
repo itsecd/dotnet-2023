@@ -36,13 +36,17 @@ public class AnalyticsController : ControllerBase
     /// List of all cars
     /// </returns>
     [HttpGet("all_cars")]
-    public async Task<List<CarGetDto>> GetAllCars()
+    public async Task<ActionResult<CarGetDto>> GetAllCars()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get info about all cars");
         var result = await (from car in ctx.Cars
                             select _mapper.Map<CarGetDto>(car)).ToListAsync();
-        return result;
+        return Ok(result);
     }
     /// <summary>
     ///Get info about clients who rented car by id

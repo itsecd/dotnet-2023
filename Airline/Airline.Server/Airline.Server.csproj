@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Airline.Classes\AirlineClasses.csproj" />
+    <ProjectReference Include="..\Airline.Classes\Airline.Model.csproj" />
     <ProjectReference Include="..\Airline.Tests\Airline.Tests.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace Policlinic;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Policlinic;
 /// <summary>
 /// Reception describes a reception
 /// </summary>
@@ -7,6 +9,7 @@ public class Reception
     /// <summary>
     /// Id is an int typed value of the reception's id
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// DateAndTime is a datetime value of the reception's date and time

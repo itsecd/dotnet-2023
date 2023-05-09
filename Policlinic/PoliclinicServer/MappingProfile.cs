@@ -10,7 +10,8 @@ public class MappingProfile : Profile
     /// <summary>
     /// Constructor for MappingProfile
     /// </summary>
-    public MappingProfile() {
+    public MappingProfile()
+    {
         CreateMap<Doctor, DoctorGetDto>();
         CreateMap<Doctor, DoctorPostDto>();
         CreateMap<DoctorPostDto, Doctor>();
@@ -19,5 +20,7 @@ public class MappingProfile : Profile
         CreateMap<PatientPostDto, Patient>();
         CreateMap<Reception, ReceptionDto>();
         CreateMap<ReceptionDto, Reception>();
+        CreateMap<Specialization, SpecializationDto>();
+        CreateMap<SpecializationDto, Specialization>();
     }
 }

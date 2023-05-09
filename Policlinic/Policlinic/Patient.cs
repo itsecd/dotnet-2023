@@ -1,4 +1,5 @@
-﻿namespace Policlinic;
+﻿using System.ComponentModel.DataAnnotations;
+namespace Policlinic;
 
 /// <summary>
 /// Patient describes a patient
@@ -8,6 +9,7 @@ public class Patient
     /// <summary>
     /// Id is an int typed value of the patient's id
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Passport is a long int typed value of the passport series and number
@@ -30,10 +32,6 @@ public class Patient
     /// </summary>
     public List<Reception> Receptions { get; set; } = new List<Reception>();
     /// <summary>
-    /// ReceptionId is an int typed value for storing the id of a reception
-    /// </summary>
-    public int ReceptionId { get; set; }
-    /// <summary>
     /// Default Constructor
     /// </summary>
     public Patient() { }
@@ -46,8 +44,7 @@ public class Patient
     /// <param name="birthDate">Patient's birth date</param>
     /// <param name="address">Patient's address</param>
     /// <param name="receptions">Receptions</param>
-    /// <param name="receptionId">Reception's id</param>
-    public Patient(int id, long passport, string fio, DateTime birthDate, string address, List<Reception> receptions, int receptionId)
+    public Patient(int id, long passport, string fio, DateTime birthDate, string address, List<Reception> receptions)
     {
         Id = id;
         Passport = passport;
@@ -55,7 +52,6 @@ public class Patient
         BirthDate = birthDate;
         Address = address;
         Receptions = receptions;
-        ReceptionId = receptionId;
     }
     /// <summary>
     /// Redefined comparison function
@@ -66,8 +62,8 @@ public class Patient
     {
         if (obj is not Patient param)
             return false;
-        return Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate && 
-            Address == param.Address && Receptions == param.Receptions && ReceptionId == param.ReceptionId;
+        return Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate &&
+            Address == param.Address && Receptions == param.Receptions; //&& ReceptionId == param.ReceptionId;
     }
     /// <summary>
     /// Redefined hash function

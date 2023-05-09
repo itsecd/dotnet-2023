@@ -25,9 +25,4 @@ public class DoctorPostDto
     /// SpecializationId is an int typed value for storing the id of a specialization
     /// </summary>
     public int SpecializationId { get; set; }
-
-    /// <summary>
-    /// ReceptionId is an int typed value for storing the id of a reception
-    /// </summary>
-    public int ReceptionId { get; set; }
 }

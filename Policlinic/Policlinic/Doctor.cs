@@ -1,4 +1,6 @@
-﻿namespace Policlinic;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Policlinic;
 /// <summary>
 /// Doctor describes a doctor
 /// </summary>
@@ -7,6 +9,7 @@ public class Doctor
     /// <summary>
     /// Id is an int typed value of the doctor's id
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Fio is a string typed value for storing the name, surname and patronymic of the doctor
@@ -25,17 +28,9 @@ public class Doctor
     /// </summary>
     public int SpecializationId { get; set; }
     /// <summary>
-    /// ReceptionId is an int typed value for storing the id of a reception
-    /// </summary>
-    public int ReceptionId { get; set; }
-    /// <summary>
     /// Passport is a long int typed value of the passport series and number
     /// </summary>
     public long Passport { get; set; }
-    /// <summary>
-    /// Specializations is a specialization :)
-    /// </summary>
-    public Specialization Specializations { get; set; } = new Specialization();
     /// <summary>
     /// Receptions is a list of receptions :)
     /// </summary>
@@ -51,21 +46,17 @@ public class Doctor
     /// <param name="fio">Doctor's FIO</param>
     /// <param name="birthDate">Doctor's birth date</param>
     /// <param name="workExperience">Doctor's work experience</param>
-    /// <param name="specializationId">Specialization's id</param>
-    /// <param name="receptionId">Reception's id</param>
+    /// <param name="specializationsId">Specialization's id</param>
     /// <param name="passport">Doctor's number of passport</param>
-    /// <param name="specializations">Specialization</param>
     /// <param name="receptions">Receptions</param>
-    public Doctor(int id, string fio, DateTime birthDate, int workExperience, int specializationId, int receptionId, long passport, Specialization specializations, List<Reception> receptions)
+    public Doctor(int id, string fio, DateTime birthDate, int workExperience, long passport, List<Reception> receptions, int specializationsId)
     {
         Id = id;
         Fio = fio;
         BirthDate = birthDate;
         WorkExperience = workExperience;
-        SpecializationId = specializationId;
-        ReceptionId = receptionId;
+        SpecializationId = specializationsId;
         Passport = passport;
-        Specializations = specializations;
         Receptions = receptions;
     }
     /// <summary>
@@ -78,8 +69,9 @@ public class Doctor
         if (obj is not Doctor param)
             return false;
         return Id == param.Id && Passport == param.Passport && Fio == param.Fio && BirthDate == param.BirthDate &&
-            WorkExperience == param.WorkExperience && Specializations == param.Specializations && SpecializationId == param.SpecializationId && 
-            Receptions == param.Receptions && ReceptionId == param.ReceptionId;
+            WorkExperience == param.WorkExperience && //Specializations == param.Specializations && 
+            SpecializationId == param.SpecializationId &&
+            Receptions == param.Receptions; //&& ReceptionId == param.ReceptionId;
     }
     /// <summary>
     /// Redefined hash function

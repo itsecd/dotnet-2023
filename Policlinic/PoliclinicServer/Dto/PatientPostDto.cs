@@ -20,8 +20,4 @@ public class PatientPostDto
     /// Address is a string typed value of the patient's address
     /// </summary>
     public string Address { get; set; } = string.Empty;
-    /// <summary>
-    /// ReceptionId is an int typed value for storing the id of a reception
-    /// </summary>
-    public int ReceptionId { get; set; }
 }

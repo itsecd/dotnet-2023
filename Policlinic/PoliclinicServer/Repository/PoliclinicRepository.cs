@@ -31,16 +31,16 @@ public class PoliclinicRepository : IPoliclinicRepository
         };
         _doctors = new List<Doctor>()
         {
-            new Doctor(1, "Ivanov Ivan Ivanovich", new DateTime(1975, 12, 1), 7, 1, 100, 1234567890, _specializations[0], new List < Reception >() { _receptions[0], _receptions[1] }),
-            new Doctor(2, "Petrov Peter Petrovich", new DateTime(1960, 10, 10), 15, 2, 120, 4321567890, _specializations[1],new List<Reception>(){_receptions[2], _receptions[4] }),
-            new Doctor(3, "Smirnov Alexander Alexandrovich", new DateTime(1980, 1, 1), 3, 1, 130, 2341567890, _specializations[0], new List < Reception >() { _receptions[3] })
+            new Doctor(1, "Ivanov Ivan Ivanovich", new DateTime(1975, 12, 1), 7, 1234567890, new List < Reception >() { _receptions[0], _receptions[1] }, 1),
+            new Doctor(2, "Petrov Peter Petrovich", new DateTime(1960, 10, 10), 15, 4321567890, new List<Reception>(){_receptions[2], _receptions[4] }, 2),
+            new Doctor(3, "Smirnov Alexander Alexandrovich", new DateTime(1980, 1, 1), 3, 2341567890, new List < Reception >() { _receptions[3] }, 1)
         };
         _patients = new List<Patient>()
         {
-            new Patient(1000, 4231123456, "Ivanov Pyotr Vladimirovich", new DateTime(2000, 2, 2), "Moskovskoe highway 34b", new List<Reception>(){ _receptions[0] }, 100),
-            new Patient(1001, 1234123456, "Belov Evgeny Maksimovich", new DateTime(1990, 7, 6), "231 Kirov Street", new List<Reception>(){ _receptions[1], _receptions[4] }, 110),
-            new Patient(1002, 1423123456, "Kirov Lukas Markovich", new DateTime(1993, 8, 8), "Michurina Street 15", new List<Reception>(){_receptions[2] }, 120),
-            new Patient(1003, 4321123456, "Krylov Vladimir Petrovich", new DateTime(1985, 1, 1), "17 Banykin Street", new List<Reception>(){ _receptions[3]}, 130)
+            new Patient(1000, 4231123456, "Ivanov Pyotr Vladimirovich", new DateTime(2000, 2, 2), "Moskovskoe highway 34b", new List<Reception>(){ _receptions[0] }),
+            new Patient(1001, 1234123456, "Belov Evgeny Maksimovich", new DateTime(1990, 7, 6), "231 Kirov Street", new List<Reception>(){ _receptions[1], _receptions[4] }),
+            new Patient(1002, 1423123456, "Kirov Lukas Markovich", new DateTime(1993, 8, 8), "Michurina Street 15", new List<Reception>(){_receptions[2] }),
+            new Patient(1003, 4321123456, "Krylov Vladimir Petrovich", new DateTime(1985, 1, 1), "17 Banykin Street", new List<Reception>(){ _receptions[3]})
         };
     }
 

@@ -1,4 +1,5 @@
-﻿namespace Policlinic;
+﻿using System.ComponentModel.DataAnnotations;
+namespace Policlinic;
 
 /// <summary>
 /// Specialization describes specializations of doctors
@@ -8,11 +9,16 @@ public class Specialization
     /// <summary>
     /// Id is an int typed value for storing Id of the specialization
     /// </summary>
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// NameSpecialization is a string typed value representing the name of specialization
     /// </summary>
     public string NameSpecialization { get; set; } = string.Empty;
+    /// <summary>
+    /// Doctors is a list of doctors
+    /// </summary>
+    public List<Doctor>? Doctors { get; set; }
     /// <summary>
     /// Default Constructor
     /// </summary>

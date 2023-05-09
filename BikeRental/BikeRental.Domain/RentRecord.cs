@@ -11,19 +11,9 @@ public class RentRecord
     public int Id { get; set; }
 
     /// <summary>
-    /// A client who rented a bike
-    /// </summary>
-    public Client? Client { get; set; }
-
-    /// <summary>
     /// Full name of a client who rented a bike
     /// </summary>
     public string ClientName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// A bike that was rented
-    /// </summary>
-    public Bike? Bike { get; set; }
 
     /// <summary>
     /// Serial number of a rented bike

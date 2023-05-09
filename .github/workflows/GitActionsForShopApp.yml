@@ -26,6 +26,6 @@ jobs:
         dotnet add ShopApp/ShopServer package Microsoft.EntityFrameworkCore --version 6.0.10
         dotnet add ShopApp/ShopServer package Swashbuckle.AspNetCore --version 6.2.3
     - name: Build with dotnet
-      run: dotnet build ShopApp\ShopServer
+      run: dotnet build ShopApp/ShopServer
     - name: Test with dotnet
       run: dotnet test ShopApp

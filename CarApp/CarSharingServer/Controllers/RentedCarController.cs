@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using CarSharingDomain;
 using CarSharingServer.Dto;
-using AutoMapper;
-using CarSharingServer.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;

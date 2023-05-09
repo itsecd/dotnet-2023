@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CarSharingDomain;
 using CarSharingServer.Dto;
-using CarSharingServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,10 +18,12 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Constructor for AnalyticsController
     /// </summary>
-    /// <param name="contextFactory"></param>
-    /// <param name="logger"></param>
+    /// <param name="contextFactory">
+    /// </param>
+    /// <param name="logger">
+    /// </param>
     /// <param name="mapper"></param>
-    public AnalyticsController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<AnalyticsController> logger,  IMapper mapper)
+    public AnalyticsController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<AnalyticsController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
@@ -37,7 +38,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("all_cars")]
     public async Task<List<CarGetDto>> GetAllCars()
     {
-       await using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about all cars");
         var result = await (from car in ctx.Cars
                             select _mapper.Map<CarGetDto>(car)).ToListAsync();
@@ -95,13 +96,13 @@ public class AnalyticsController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about top five rented cars");
-        var counter = await(from car in ctx.RentedCars
-                       group car by car.Car.Model into carGroup
-                       select new
-                       {
-                           carmodel = carGroup.Key,
-                           count = carGroup.Count()
-                       }).ToListAsync();
+        var counter = await (from car in ctx.RentedCars
+                             group car by car.Car.Model into carGroup
+                             select new
+                             {
+                                 carmodel = carGroup.Key,
+                                 count = carGroup.Count()
+                             }).ToListAsync();
         var result = (from rents in counter orderby rents.count descending select rents).Take(5).ToList();
         return Ok(result);
     }
@@ -115,13 +116,13 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetNumOfRents()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var result = await(from rent in ctx.RentedCars
-                      group rent by rent.Car.Model into carGroup
-                      select new
-                      {
-                          model = carGroup.Key,
-                          counter = carGroup.Distinct().Count()
-                      }).ToListAsync();
+        var result = await (from rent in ctx.RentedCars
+                            group rent by rent.Car.Model into carGroup
+                            select new
+                            {
+                                model = carGroup.Key,
+                                counter = carGroup.Distinct().Count()
+                            }).ToListAsync();
         return Ok(result);
     }
     /// <summary>
@@ -135,12 +136,12 @@ public class AnalyticsController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var counter = await (from rentalPoint in ctx.RentedCars
-                       group rentalPoint by rentalPoint.Point.PointName into rentalPointGroup
-                       select new
-                       {
-                           name = rentalPointGroup.Key,
-                           counter = rentalPointGroup.Distinct().Count()
-                       }).ToListAsync();
+                             group rentalPoint by rentalPoint.Point.PointName into rentalPointGroup
+                             select new
+                             {
+                                 name = rentalPointGroup.Key,
+                                 counter = rentalPointGroup.Distinct().Count()
+                             }).ToListAsync();
         var result = (from rentNum in counter where (rentNum.counter == counter.Max(point => point.counter)) select rentNum.name).ToList();
         return Ok(result);
     }

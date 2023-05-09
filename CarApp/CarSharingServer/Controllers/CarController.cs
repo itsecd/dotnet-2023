@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using CarSharingDomain;
 using CarSharingServer.Dto;
-using AutoMapper;
-using CarSharingServer.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
@@ -62,7 +61,8 @@ public class CarController : ControllerBase
             return NotFound();
         }
         var car = await ctx.Cars.FindAsync(id);
-        if (car == null) {
+        if (car == null)
+        {
             return NotFound();
         }
         return _mapper.Map<CarGetDto>(car);
@@ -77,7 +77,7 @@ public class CarController : ControllerBase
     public async Task Post([FromBody] CarPostDto car)
     {
         _logger.LogInformation("Post a new car");
-        var ctx =await _contextFactory.CreateDbContextAsync();
+        var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.Cars.AddAsync(_mapper.Map<Car>(car));
         await ctx.SaveChangesAsync();
     }

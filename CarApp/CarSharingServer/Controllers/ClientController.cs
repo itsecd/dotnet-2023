@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using CarSharingDomain;
 using CarSharingServer.Dto;
-using AutoMapper;
-using CarSharingServer.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarSharingServer.Controllers;
@@ -22,7 +21,7 @@ public class ClientController : ControllerBase
     /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
     /// <param name="mapper"></param>
-    public ClientController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<ClientController> logger,  IMapper mapper)
+    public ClientController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<ClientController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
@@ -68,7 +67,7 @@ public class ClientController : ControllerBase
         }
         return _mapper.Map<ClientGetDto>(client);
     }
-   
+
     /// <summary>
     /// Post a new client
     /// </summary>

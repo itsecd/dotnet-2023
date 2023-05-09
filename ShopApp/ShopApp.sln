@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shops.Test", "Shop.Test\Shops.Test.csproj", "{4370BD16-177F-465D-8AC6-EECEBB2CF497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopsTest", "Shop.Test\ShopsTest.csproj", "{4370BD16-177F-465D-8AC6-EECEBB2CF497}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shops.Domain", "Shop.Domain\Shops.Domain.csproj", "{32AAD18D-7A00-4C47-AFF2-41D56F58E79F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopsDomain", "Shop.Domain\ShopsDomain.csproj", "{32AAD18D-7A00-4C47-AFF2-41D56F58E79F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shops.Server", "Shops.Server\Shops.Server.csproj", "{1B5A9270-4916-4DB7-920F-0834A1BC8403}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopsServer", "Shops.Server\ShopsServer.csproj", "{1B5A9270-4916-4DB7-920F-0834A1BC8403}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

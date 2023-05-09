@@ -12,18 +12,15 @@ namespace TransportManagment.Server.Controllers;
 [ApiController]
 public class RequestsController : ControllerBase
 {
-    private readonly ILogger<RequestsController> _logger;
     private readonly TransportManagmentDbContext _context;
     private readonly IMapper _mapper;
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="logger"></param>
     /// <param name="context"></param>
     /// <param name="mapper"></param>
-    public RequestsController(ILogger<RequestsController> logger, TransportManagmentDbContext context, IMapper mapper)
+    public RequestsController(TransportManagmentDbContext context, IMapper mapper)
     {
-        _logger = logger;
         _context = context;
         _mapper = mapper;
     }
@@ -35,9 +32,9 @@ public class RequestsController : ControllerBase
     [HttpGet("GetAllTransportInfo")]
     public async Task<IEnumerable<TransportGetDto>> GetAllTransportInfoAsync(int id)
     {
-        var result = (from transport in _context.Transports
-                      where transport.TransportId == id
-                      select transport);
+        var result = from transport in _context.Transports
+                     where transport.TransportId == id
+                     select transport;
         return await _mapper.ProjectTo<TransportGetDto>(result).ToListAsync();
     }
     /// <summary>
@@ -49,10 +46,10 @@ public class RequestsController : ControllerBase
     [HttpGet("GetAllDriversWithSpecificDate")]
     public async Task<IEnumerable<DriverGetDto>> GetAllDriversWithSpecificDateAsync(DateTime firstDateTime, DateTime secondDateTime)
     {
-        var result = (from driver in _context.Drivers
-                      orderby driver.LastName
-                      where driver.Routes.First().Date < secondDateTime && driver.Routes.First().Date > firstDateTime
-                      select driver);
+        var result = from driver in _context.Drivers
+                     orderby driver.LastName
+                     where driver.Routes.First().Date < secondDateTime && driver.Routes.First().Date > firstDateTime
+                     select driver;
         return await _mapper.ProjectTo<DriverGetDto>(result).ToListAsync();
     }
     /// <summary>
@@ -62,30 +59,39 @@ public class RequestsController : ControllerBase
     [HttpGet("GetTotalTimeTravelEveryTypeAndModel")]
     public async Task<IEnumerable<TransportTimeModelDto>> GetTotalTimeTravelEveryTypeAndModelAsync()
     {
-        var result = (from transport in _context.Transports
-                      group transport by new { transport.Model, transport.Type } into res
-                      select new TransportTimeModelDto
-                      {
-                          TransportId = res.First().TransportId,
-                          Type = res.First().Type,
-                          Model = res.First().Model,
-                          Time = (from route in _context.Routes
-                                  where route.TransportId == res.Single().TransportId
-                                  select (route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes)).ToImmutableList().Sum(),
-                      }).ToListAsync();
-        return await result;
+        var result = from transport in _context.Transports
+                     group transport by new { transport.Model, transport.Type } into res
+                     select new TransportTimeModelDto
+                     {
+                         TransportId = res.First().TransportId,
+                         Type = res.First().Type,
+                         Model = res.First().Model,
+                         Time = (from route in _context.Routes
+                                 where route.TransportId == res.Single().TransportId
+                                 select route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes).ToImmutableList().Sum(),
+                     };
+        return await result.ToListAsync();
     }
     /// <summary>
     /// Task 4 - Output the top 5 drivers by the number of trips made.
     /// </summary>
     /// <returns></returns>
     [HttpGet("TopFiveDrivers")]
-    public async Task<IEnumerable<DriverGetDto>> TopFiveDriversAsync()
+    public async Task<IEnumerable<TopDriversDto>> TopFiveDriversAsync()
     {
-        var result = (from driver in _context.Drivers
-                      orderby driver.Routes.Count() descending
-                      select driver).Take(5);
-        return await _mapper.ProjectTo<DriverGetDto>(result).ToListAsync();
+        var result = from driver in _context.Drivers
+                     orderby driver.Routes.Count() descending
+                     select new TopDriversDto 
+                     {
+                         FirstName = driver.FirstName,
+                         LastName = driver.LastName,
+                         Patronymic = driver.Patronymic,
+                         Passport = driver.Passport,
+                         DriverCard = driver.DriverCard,
+                         Number = driver.Number,
+                         Count = driver.Routes.Count(),
+                     };
+        return await result.Take(5).ToListAsync();
     }
     /// <summary>
     /// Task 5 - Display information about the number of trips, average time and maximum travel time for each driver.
@@ -117,12 +123,18 @@ public class RequestsController : ControllerBase
     /// <param name="secondDateTime"></param>
     /// <returns></returns>
     [HttpGet("GetTransportInfoWithMaxCountForSpecificDate")]
-    public async Task<IEnumerable<TransportGetDto>> GetTransportInfoWithMaxCountForSpecificDateAsync(DateTime firstDateTime, DateTime secondDateTime)
+    public async Task<IEnumerable<TransportInfoDto>> GetTransportInfoWithMaxCountForSpecificDateAsync(DateTime firstDateTime, DateTime secondDateTime)
     {
         var result = (from transport in _context.Transports
                       orderby transport.Routes.Count()
                       where transport.Routes.First().Date < secondDateTime && transport.Routes.First().Date > firstDateTime && transport.Routes.Count() == 2
-                      select transport);
-        return await _mapper.ProjectTo<TransportGetDto>(result).ToListAsync();
+                      select new TransportInfoDto 
+                      {
+                            Type = transport.Type,
+                            Model = transport.Model,
+                            DateMake = transport.DateMake,
+                            Count = transport.Routes.Count()
+                      });
+        return await result.ToListAsync();
     }
 }

@@ -23,7 +23,7 @@ jobs:
         dotnet add ShopApp\Shop.Server package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.15
         dotnet add ShopApp\Shop.Server package Microsoft.EntityFrameworkCore.Tools --version 6.0.15
         dotnet add ShopApp\Shop.Server package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.13        
-        dotnet add ShopApp\Shop.Server package Microsoft.EntityFrameworkCore --version 6.0.16
+        dotnet add ShopApp\Shop.Server package Microsoft.EntityFrameworkCore --version 6.0.10
         dotnet add ShopApp\Shop.Server package Swashbuckle.AspNetCore --version 6.2.3
     - name: Build with dotnet
       run: dotnet build ShopApp\Shop.Server

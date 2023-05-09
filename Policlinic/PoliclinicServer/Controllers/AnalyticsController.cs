@@ -53,8 +53,8 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Patients who have made an appointment with the specified doctor");
         var requestPatientList = await (from patient in context.Patients
-                                        join reception in context.Receptions on patient.Id equals reception.PatientId
-                                        join doctor in context.Doctors on reception.DoctorId equals doctor.Id
+                                        join reception in context.Receptions! on patient.Id equals reception.PatientId
+                                        join doctor in context.Doctors! on reception.DoctorId equals doctor.Id
                                         where reception.DoctorId == id
                                         orderby patient.Fio
                                         select patient.Fio).ToListAsync();
@@ -70,7 +70,7 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Currently healthy patients");
         var requestHealthyPatientList = await (from patient in context.Patients
-                                               join reception in context.Receptions on patient.Id equals reception.PatientId
+                                               join reception in context.Receptions! on patient.Id equals reception.PatientId
                                                where reception.Status == "Healthy"
                                                select patient).Distinct().ToListAsync();
         return Ok(requestHealthyPatientList);
@@ -85,7 +85,7 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Information about the number of patient appointments by doctors for the last month");
         var requestCountReceptionsInOneMonth = await (from doctor in context.Doctors
-                                                      join reception in context.Receptions on doctor.Id equals reception.DoctorId
+                                                      join reception in context.Receptions! on doctor.Id equals reception.DoctorId
                                                       where reception.DateAndTime > new DateTime(2023, 1, 31) && reception.DateAndTime < new DateTime(2023, 3, 1)
                                                       orderby doctor.Receptions.Count descending
                                                       select new
@@ -120,7 +120,7 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Information patients over the age of 30 who have an appointment with several doctors, arrange by date of birth");
         var requestPatientsAndSeveralDoctors = await (from patient in context.Patients
-                                                      join reception in context.Receptions on patient.Id equals reception.PatientId
+                                                      join reception in context.Receptions! on patient.Id equals reception.PatientId
                                                       where patient.Receptions.Count > 1
                                                       select new
                                                       {

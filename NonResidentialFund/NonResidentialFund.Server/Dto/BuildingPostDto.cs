@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// BuildingPostDto - used to get information about the Building object in the post-request to create it in the database.
+/// </summary>
 public class BuildingPostDto
 {
     /// <summary>
@@ -13,11 +15,11 @@ public class BuildingPostDto
     /// <summary>
     /// DistrictId - id of the district in which the building is located
     /// </summary>
-    public int DistrictId { get; set; } = 0;
+    public int DistrictId { get; set; }
     /// <summary>
     /// Area - Building area
     /// </summary>
-    public double Area { get; set; } = 0.0;
+    public double Area { get; set; }
     /// <summary>
     /// FloorCount - count of floors in building
     /// </summary>

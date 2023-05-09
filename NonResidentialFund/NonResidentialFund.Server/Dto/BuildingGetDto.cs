@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// BuildingGetDto - used to represent the Building object in the get-request.
+/// </summary>
 public class BuildingGetDto
 {
     /// <summary>
@@ -13,11 +15,11 @@ public class BuildingGetDto
     /// <summary>
     /// DistrictId - id of the district in which the building is located
     /// </summary>
-    public int DistrictId { get; set; } = 0;
+    public int DistrictId { get; set; }
     /// <summary>
     /// Area - Building area
     /// </summary>
-    public double Area { get; set; } = 0.0;
+    public double Area { get; set; }
     /// <summary>
     /// FloorCount - count of floors in building
     /// </summary>

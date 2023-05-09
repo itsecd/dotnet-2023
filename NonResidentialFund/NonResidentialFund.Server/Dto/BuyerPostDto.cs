@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// BuyerPostDto - used to get information about the Buyer object in the post-request to create it in the database.
+/// </summary>
 public class BuyerPostDto
 {
     /// <summary>

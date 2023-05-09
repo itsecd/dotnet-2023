@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// AuctionPostDto - used to get information about the Auction object in the post-request to create it in the database.
+/// </summary>
 public class AuctionPostDto
 {
     /// <summary>
@@ -9,5 +11,5 @@ public class AuctionPostDto
     /// <summary>
     /// OrganizationId - the id of the organization that organized the auction
     /// </summary>
-    public int OrganizationId { get; set; } = 0;
+    public int OrganizationId { get; set; }
 }

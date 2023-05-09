@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// DistrictGetDto - used to represent the District object in the get-request.
+/// </summary>
 public class DistrictGetDto
 {
     /// <summary>

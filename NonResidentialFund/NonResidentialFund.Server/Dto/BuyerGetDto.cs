@@ -1,11 +1,13 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// BuyerGetDto - used to represent the Buyer object in the get-request.
+/// </summary>
 public class BuyerGetDto
 {
     /// <summary>
     /// BuyerId - the id of the buyer
     /// </summary>
-    public int BuyerId { get; set; } = 0;
+    public int BuyerId { get; set; }
     /// <summary>
     /// LastName - buyer's last name
     /// </summary>

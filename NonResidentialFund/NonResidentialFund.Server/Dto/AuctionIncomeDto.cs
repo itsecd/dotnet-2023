@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// AuctionIncomeDto - used to provide information about the id of the auction and its income.
+/// </summary>
 public class AuctionIncomeDto
 {
     /// <summary>

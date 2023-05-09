@@ -1,5 +1,7 @@
 ﻿namespace NonResidentialFund.Server.Dto;
-
+/// <summary>
+/// AuctionGetDto - used to represent the Auction object in the get-request.
+/// </summary>
 public class AuctionGetDto
 {
     /// <summary>
@@ -13,5 +15,5 @@ public class AuctionGetDto
     /// <summary>
     /// OrganizationId - the id of the organization that organized the auction
     /// </summary>
-    public int OrganizationId { get; set; } = 0;
+    public int OrganizationId { get; set; }
 }

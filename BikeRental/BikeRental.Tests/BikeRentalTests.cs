@@ -63,7 +63,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
                  time = BikeTypeGroup.Sum(x => (x.RentEndTime - x.RentStartTime).TotalMinutes)
              }).ToList();
 
-        Assert.Equal(3, request.Count());
+        Assert.Equal(3, request.Count);
         Assert.Equal(180, request[0].time);
         Assert.Equal(120, request[1].time);
         Assert.Equal(183, request[2].time);

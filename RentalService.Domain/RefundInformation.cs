@@ -19,7 +19,7 @@ public class RefundInformation
     /// </summary>
     [Column("rental_point_id")]
     public ulong RentalPointId { get; set; }
-    
+
     //public RentalPoint RentalPoint { get; set; }
 
     /// <summary>

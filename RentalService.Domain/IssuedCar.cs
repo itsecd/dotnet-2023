@@ -35,6 +35,7 @@ public class IssuedCar
     /// </summary>
     [Column("rental_information_id")]
     public ulong RentalInformationId { get; set; }
+    //public RentalInformation RentalInformationN { get; set; }
     
 
     /// <summary>
@@ -42,5 +43,6 @@ public class IssuedCar
     /// </summary>
     [Column("refund_information_id")]
     public ulong? RefundInformationId { get; set; }
+    //public RefundInformation? RefundInformationN { get; set; }
     
 }

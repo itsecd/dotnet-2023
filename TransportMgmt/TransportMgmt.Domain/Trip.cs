@@ -30,30 +30,30 @@ public class Trip
     /// <summary>
     /// Trip route id
     /// </summary>
-    [ForeignKey("RouteId")]
-    public int RouteId { get; set; }
+    [ForeignKey("Route")]
+    public int RouteId { get; set; } = 0;
     /// <summary>
     /// Trip route
     /// </summary>
-    public Routes Route { get; set; } = null!;
+    public Routes? Route { get; set; } = null!;
     /// <summary>
     /// Transport id for the trip
     /// </summary>
-    [ForeignKey("TransportId")]
-    public int TransportId { get; set; }
+    [ForeignKey("Transport")]
+    public int TransportId { get; set; } = 0;
     /// <summary>
     /// Transport for the trip
     /// </summary>
-    public Transport Transport { get; set; } = new Transport();
+    public Transport? Transport { get; set; } = null!;//new Transport();
     /// <summary>
     /// Driver id for a trip
     /// </summary>
-    [ForeignKey("DriverId")]
-    public int DriverId { get; set; }
+    [ForeignKey("Driver")]
+    public int DriverId { get; set; } = 0;
     /// <summary>
     /// Driver for a trip
     /// </summary>
-    public Driver Driver { get; set; } = new Driver();
+    public Driver? Driver { get; set; } = null!;//new Driver();
     public Trip() { }
     public Trip(int id, DateTime date, DateTime timeOn, DateTime timeOff, int routeId, Routes route, int transportId, Transport transport, int driverId, Driver driver)
     {
@@ -67,5 +67,15 @@ public class Trip
         Transport = transport;
         DriverId = driverId;
         Driver = driver;
+    }
+    public Trip(int id, DateTime date, DateTime timeOn, DateTime timeOff, int routeId, int transportId, int driverId)
+    {
+        Id = id;
+        Date = date;
+        TimeOn = timeOn;
+        TimeOff = timeOff;
+        RouteId = routeId;
+        TransportId = transportId;
+        DriverId = driverId;
     }
 }

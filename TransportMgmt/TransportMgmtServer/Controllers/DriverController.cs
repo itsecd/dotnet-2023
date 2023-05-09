@@ -16,15 +16,14 @@ namespace TransportMgmtServer.Controllers;
 [ApiController]
 public class DriverController : ControllerBase
 {
+    /// <summary>
+    /// Used to store factory contex
+    /// </summary>
     private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
     /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<DriverController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ITransportMgmtRepository _transportRepository;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -36,21 +35,18 @@ public class DriverController : ControllerBase
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _transportRepository = transportRepository;
         _mapper = mapper;
-
-        using var ctx = _contextFactory.CreateDbContext();
-        Console.WriteLine(ctx.Drivers.Count());
     }
     /// <summary>
     /// Returns a list of all drivers
     /// </summary>
     /// <returns> Returns a list of all drivers </returns>
     [HttpGet]
-    public IEnumerable<DriverGetDto> Get()
+    public async Task<IEnumerable<DriverGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get drivers");
-        return _transportRepository.Drivers.Select(driver => _mapper.Map<DriverGetDto>(driver));
+        return _mapper.Map<IEnumerable<DriverGetDto>>(context.Drivers);
     }
     /// <summary>
     /// Get method that returns driver with a specific id
@@ -58,10 +54,11 @@ public class DriverController : ControllerBase
     /// <param name="id"> Driver id </param>
     /// <returns> Driver with required id </returns>
     [HttpGet("{id}")]
-    public ActionResult<DriverGetDto> Get(int id)
+    public async Task<ActionResult<DriverGetDto>> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get driver with id= {id}", id);
-        var driver = _transportRepository.Drivers.FirstOrDefault(driver => driver.Id == id);
+        var driver = await context.Drivers.FirstOrDefaultAsync(driver => driver.Id == id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id= {id} ", id);
@@ -74,10 +71,12 @@ public class DriverController : ControllerBase
     /// </summary>
     /// <param name="driver"> Added driver </param>
     [HttpPost]
-    public void Post([FromBody] DriverPostDto driver)
+    public async Task Post([FromBody] DriverPostDto driver)
     {
-        _transportRepository.Drivers.Add(_mapper.Map<Driver>(driver));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Drivers.AddAsync(_mapper.Map<Driver>(driver));
         _logger.LogInformation("Successfully added");
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put method which allows change the data of driver with a specific id
@@ -85,9 +84,10 @@ public class DriverController : ControllerBase
     /// <param name="id"> Driver id whose data will change </param>
     /// <param name="driverToPut"> New driver data </param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] DriverPostDto driverToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] DriverPostDto driverToPut)
     {
-        var driver = _transportRepository.Drivers.FirstOrDefault(driver => driver.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var driver = await context.Drivers.FirstOrDefaultAsync(driver => driver.Id == id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id= {id} ", id);
@@ -97,6 +97,7 @@ public class DriverController : ControllerBase
         {
             _mapper.Map(driverToPut, driver);
             _logger.LogInformation("Successfully updates");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -105,9 +106,10 @@ public class DriverController : ControllerBase
     /// </summary>
     /// <param name="id"> Driver id </param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var driver = _transportRepository.Drivers.FirstOrDefault(driver => driver.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var driver = await context.Drivers.FirstOrDefaultAsync(driver => driver.Id == id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id= {id} ", id);
@@ -115,8 +117,9 @@ public class DriverController : ControllerBase
         }
         else
         {
-            _transportRepository.Drivers.Remove(driver);
+            context.Drivers.Remove(driver);
             _logger.LogInformation("Successfully removed");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

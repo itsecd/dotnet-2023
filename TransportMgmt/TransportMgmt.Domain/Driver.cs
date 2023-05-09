@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TransportMgmt.Domain;
 /// <summary>
@@ -10,6 +11,7 @@ public class Driver
     /// Unique key of driver
     /// </summary>
     [Key]
+    [ForeignKey("Driver")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// First name of driver

@@ -11,6 +11,7 @@ public class Transport
     /// Unique key of transport
     /// </summary>
     [Key]
+    [ForeignKey("Transport")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Transport state number
@@ -20,22 +21,22 @@ public class Transport
     /// <summary>
     /// Transport type id
     /// </summary>
-    [ForeignKey("TransportTypeId")]
-    public int TypeId { get; set; }
+    [ForeignKey("TransportType")]
+    public int TypeId { get; set; } = 0;
     /// <summary>
     /// Transport type
     /// </summary>
-    public TransportType Type { get; set; } = null!;
+    public TransportType? Type { get; set; } = null!;
     /// <summary>
     /// Transport model id
     /// </summary>
-    [ForeignKey("ModelId")]
-    public int ModelId { get; set; }
+    [ForeignKey("Model")]
+    public int ModelId { get; set; } = 0;
     /// <summary>
     /// Transport model
     /// </summary>
     [Required]
-    public Model Model { get; set; } = new Model();
+    public Model? Model { get; set; } = null!;
     /// <summary>
     /// Transport production date
     /// </summary>
@@ -50,6 +51,14 @@ public class Transport
         Type = type;
         ModelId = modelId;
         Model = model;
+        DateMake = dateMake;
+    }
+    public Transport(int transportId, string stateNumber, int typeId, int modelId, DateTime dateMake)
+    {
+        Id = transportId;
+        StateNumber = stateNumber;
+        TypeId = typeId;
+        ModelId = modelId;
         DateMake = dateMake;
     }
 }

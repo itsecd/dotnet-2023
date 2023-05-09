@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TransportMgmt.Domain;
 /// <summary>
@@ -10,6 +11,7 @@ public class TransportType
     /// Unique key of transport type
     /// </summary>
     [Key]
+    [ForeignKey("TransportType")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Name type of trasport

@@ -17,8 +17,12 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Install dependencies
-      run: dotnet restore Policlinic
+      run: |
+        dotnet add Policlinic\PoliclinicServer package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.0
+        dotnet add Policlinic\PoliclinicServer package Swashbuckle.AspNetCore --version 6.2.3
+        dotnet add Policlinic\Policlinic package Microsoft.EntityFrameworkCore --version 6.0.16
+        dotnet add Policlinic\Policlinic package MySql.EntityFrameworkCore --version 7.0.2
     - name: Build with dotnet
       run: dotnet build Policlinic\PoliclinicServer
     - name: Test with dotnet
-      run: dotnet test Policlinic\PoliclinicServer
+      run: dotnet test Policlinic

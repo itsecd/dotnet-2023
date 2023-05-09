@@ -2,9 +2,11 @@ name: GitActionsForShopApp
 on: 
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: 
+      -main
   pull_request:
-    branches: ["main"]
+    branches: 
+      -main
 jobs:
   build:
     runs-on: windows-latest
@@ -18,6 +20,8 @@ jobs:
       run: 
         dotnet add ShopApp\Shop.Server package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.0
         dotnet add ShopApp\Shop.Server package Swashbuckle.AspNetCore --version 6.2.3
+        dotnet add PONRF\PonrfDomain package Microsoft.EntityFrameworkCore --version 6.0.16
+        dotnet add PONRF\PonrfDomain package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0.8
     - name: Build with dotnet
       run: dotnet build ShopApp\Shop.Server
     - name: Test with dotnet

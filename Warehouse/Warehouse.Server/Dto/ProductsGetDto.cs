@@ -10,9 +10,9 @@ public class ProductsGetDto
     /// </summary>  
     public int Id { set; get; } = 0;
     /// <summary>
-    ///     ProductCount - shows amount of product
+    ///     Quantity - shows amount of product
     /// </summary>  
-    public int ProductCount { set; get; } = 0;
+    public int Quantity { set; get; } = 0;
     /// <summary>
     ///     Name - a string that stores product name 
     /// </summary>

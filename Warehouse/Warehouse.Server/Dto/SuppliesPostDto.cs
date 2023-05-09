@@ -10,9 +10,9 @@ public class SuppliesPostDto
     /// </summary>  
     public int Id { set; get; } = 0;
     /// <summary>
-    ///     SupplyCount - shows amount of product
+    ///     Quantity - shows amount of product
     /// </summary>  
-    public int SupplyCount { set; get; } = 0;
+    public int Quantity { set; get; } = 0;
     /// <summary>
     ///     CompanyName - contain name of company what get supply
     /// </summary>

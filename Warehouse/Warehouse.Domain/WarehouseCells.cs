@@ -15,7 +15,7 @@ public class WarehouseCells
     [Column("cell_number")]
     public int CellNumber { set; get; }
     /// <summary>
-    ///     Goods - product, what contain in cell 
+    ///     Product - product, what contain in cell 
     /// </summary>
     public Products Product { set; get; }
     [ForeignKey("Product")]

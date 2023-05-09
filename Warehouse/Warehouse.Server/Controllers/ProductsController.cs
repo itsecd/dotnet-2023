@@ -36,7 +36,7 @@ public class ProductsController : ControllerBase
     public async Task<IEnumerable<ProductsGetDto>> GetProducts()
     {
         _logger.LogInformation("Get all products");
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var products = await ctx.Products.ToListAsync();
         return _mapper.Map<IEnumerable<ProductsGetDto>>(products);
     }
@@ -50,7 +50,7 @@ public class ProductsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductsGetDto>> GetProduct(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
@@ -73,7 +73,7 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task PostProduct([FromBody] ProductsPostDto product)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new product");
         await ctx.Products.AddAsync(_mapper.Map<Products>(product));
         await ctx.SaveChangesAsync();
@@ -89,7 +89,7 @@ public class ProductsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ProductsPostDto productToPut)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
@@ -115,7 +115,7 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var product = await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {

@@ -36,7 +36,7 @@ public class WarehouseCellsController : ControllerBase
     public async Task<IEnumerable<WarehouseCellsDto>> Get()
     {
         _logger.LogInformation("Get all cells");
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var cells = await ctx.Cells.ToListAsync();
         return _mapper.Map<IEnumerable<WarehouseCellsDto>>(cells);
     }
@@ -50,7 +50,7 @@ public class WarehouseCellsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<WarehouseCellsDto>> Get(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var cell = await ctx.Cells.FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (cell == null)
         {
@@ -73,7 +73,7 @@ public class WarehouseCellsController : ControllerBase
     [HttpPost]
     public async Task Post([FromBody] WarehouseCellsDto cell)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new cell");
         await ctx.Cells.AddAsync(_mapper.Map<WarehouseCells>(cell));
         await ctx.SaveChangesAsync();
@@ -89,7 +89,7 @@ public class WarehouseCellsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] WarehouseCellsDto cellToPut)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var warehouseCell = await ctx.Cells.FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (warehouseCell == null)
         {
@@ -115,7 +115,7 @@ public class WarehouseCellsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var warehouseCell = await ctx.Cells.Include(cells => cells.Product)
                                            .FirstOrDefaultAsync(cell => cell.CellNumber == id);
         if (warehouseCell == null)

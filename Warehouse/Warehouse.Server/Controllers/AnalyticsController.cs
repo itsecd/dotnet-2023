@@ -35,7 +35,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("all-products")]
     public async Task<ActionResult<List<ProductsGetDto>>> GetAllProducts()
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get all products");
         var request = await (from product in ctx.Products
                              select _mapper.Map<ProductsGetDto>(product)).ToListAsync();
@@ -51,7 +51,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("supplies-by-specific-date")]
     public async Task<ActionResult<List<SuppliesGetDto>>> SuppliesBySpecificDate(DateTime supplyDate)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get supplies with specific date");
         var request = await (from products in ctx.Products
                              from supply in products.Supply
@@ -76,14 +76,18 @@ public class AnalyticsController : ControllerBase
     ///     Return warehouse cells and their content
     /// </returns>
     [HttpGet("warehouse-cells-and-their-content")]
-    public async Task<ActionResult<List<WarehouseCellsDto>>> WarehouseCellsAndTheirContent()
+    public async Task<ActionResult<List<object>>> WarehouseCellsAndTheirContent()
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Warehouse cells and their content");
         var request = await (from products in ctx.Products
-                             from cell in products.WarehouseCell
-                             orderby cell.CellNumber
-                             select _mapper.Map<WarehouseCellsDto>(new { number = cell.CellNumber, productsTitle = products.Name, productsQuantity = products.Quantity })).ToListAsync();
+                             from cells in products.WarehouseCell
+                             orderby cells.CellNumber
+                             select new { 
+                                 cells.CellNumber, 
+                                 products.Name,
+                                 products.Id
+                             }).ToListAsync();
         return Ok(request);
     }
     /// <summary>
@@ -97,18 +101,16 @@ public class AnalyticsController : ControllerBase
     [HttpGet("supplies-by-specific-period")]
     public async Task<ActionResult<List<SuppliesGetDto>>> SuppliesByPeriod(DateTime minDate, DateTime maxDate)
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Supplies by specific period");
         var request = await (from products in ctx.Products
                              from supply in products.Supply
                              where supply.SupplyDate > minDate && supply.SupplyDate < maxDate
-                             group supply by new
-                             {
+                             group supply by new {
                                  supply.CompanyName,
                                  supply.CompanyAddress
                              } into grp
-                             select _mapper.Map<SuppliesGetDto>(new
-                             {
+                             select _mapper.Map<SuppliesGetDto>(new {
                                  grp.Key.CompanyName,
                                  grp.Key.CompanyAddress,
                                  quantity = grp.Sum(x => x.Quantity)
@@ -124,7 +126,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("top-five-products")]
     public async Task<ActionResult<List<ProductsGetDto>>> TopFiveProducts()
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Top 5 products");
         var request = await (from products in ctx.Products
                              orderby products.Quantity descending
@@ -138,27 +140,19 @@ public class AnalyticsController : ControllerBase
     ///     Return quantity of delivered products
     /// </returns>
     [HttpGet("quantity-of-delivery-products")]
-    public async Task<ActionResult<List<SuppliesGetDto>>> QuantityOfDeliverdproducts()
+    public async Task<ActionResult<List<object>>> QuantityOfDeliverdproducts()
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Quantity of delivered products");
         var request = await (from products in ctx.Products
                              from supply in products.Supply
-                             group supply by new
-                             {
-                                 supply.CompanyName,
+                             select new {
+                                 supply.CompanyName, 
                                  supply.CompanyAddress,
+                                 products.Name,
                                  products.Id,
-                                 products.Name
-                             } into grp
-                             select _mapper.Map<SuppliesGetDto>(new
-                             {
-                                 grp.Key.CompanyName,
-                                 grp.Key.CompanyAddress,
-                                 grp.Key.Id,
-                                 grp.Key.Name,
-                                 quantity = grp.Sum(x => x.Quantity)
-                             })).ToListAsync();
+                                 supply.Quantity
+                             }).ToListAsync();
         return Ok(request);
     }
 }

@@ -10,9 +10,9 @@ public class ProductsPostDto
     /// </summary>  
     public int Id { set; get; }
     /// <summary>
-    ///     ProductCount - shows amount of product
+    ///     Quantity - shows amount of product
     /// </summary>  
-    public int ProductCount { set; get; }
+    public int Quantity { set; get; }
     /// <summary>
     ///     Name - a string that stores product name 
     /// </summary>

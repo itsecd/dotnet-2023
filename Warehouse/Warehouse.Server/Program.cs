@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Text.Json.Serialization;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
@@ -7,18 +6,18 @@ using Warehouse.Server;
 using Warehouse.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContextFactory<WarehouseDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("Warehouse")!)
 );
+
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IWarehouseRepository, WarehouseRepository>();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

@@ -36,7 +36,7 @@ public class SuppliesController : ControllerBase
     public async Task<IEnumerable<SuppliesGetDto>> Get()
     {
         _logger.LogInformation("Get all supplies");
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var supplies = await ctx.Supplies.ToListAsync();
         return _mapper.Map<IEnumerable<SuppliesGetDto>>(supplies);
     }
@@ -50,7 +50,7 @@ public class SuppliesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<SuppliesGetDto>> Get(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var supply = await ctx.Supplies.FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)
         {
@@ -73,7 +73,7 @@ public class SuppliesController : ControllerBase
     [HttpPost]
     public async Task Post([FromBody] SuppliesPostDto supply)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Create new supply");
         await ctx.Supplies.AddAsync(_mapper.Map<Supplies>(supply));
         await ctx.SaveChangesAsync();
@@ -89,7 +89,7 @@ public class SuppliesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] SuppliesPostDto supplyToPut)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var supply = await ctx.Supplies.FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)
         {
@@ -115,7 +115,7 @@ public class SuppliesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var ctx = await _contextFactory.CreateDbContextAsync();
+        await using WarehouseDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var supply = await ctx.Supplies.Include(supply => supply.Products)
                                        .FirstOrDefaultAsync(supply => supply.Id == id);
         if (supply == null)

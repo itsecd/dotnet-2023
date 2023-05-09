@@ -1,4 +1,4 @@
-using AutoMapper;
+/*using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RentalService.Domain;
 using RentalService.Server.Dto;
@@ -13,15 +13,12 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class RequestController : ControllerBase
 {
-    private readonly ILogger<RequestController> _logger;
     private readonly IMapper _mapper;
-    private readonly IRentalServiceRepository _rentalServiceRepository;
+    private readonly RentalServiceDbContext _context;
 
-    public RequestController(ILogger<RequestController> logger, IRentalServiceRepository rentalServiceRepository,
-        IMapper mapper)
+    public RequestController(RentalServiceDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _rentalServiceRepository = rentalServiceRepository;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -237,4 +234,4 @@ public class RequestController : ControllerBase
         _logger.LogInformation("Get rental points");
         return Ok(query);
     }
-}
+}*/

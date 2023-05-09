@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
 using RentalService.Server.Repository;
@@ -13,15 +14,12 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class RefundInformationController : ControllerBase
 {
-    private readonly ILogger<RefundInformationController> _logger;
     private readonly IMapper _mapper;
-    private readonly IRentalServiceRepository _rentalServiceRepository;
+    private readonly RentalServiceDbContext _context;
 
-    public RefundInformationController(ILogger<RefundInformationController> logger,
-        IRentalServiceRepository rentalServiceRepository, IMapper mapper)
+    public RefundInformationController(RentalServiceDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _rentalServiceRepository = rentalServiceRepository;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -29,22 +27,38 @@ public class RefundInformationController : ControllerBase
     ///     Get method which returns all refund information
     /// </summary>
     [HttpGet]
-    public IEnumerable<RefundInformation> Get()
+    public async Task<ActionResult<IEnumerable<RefundInformation>>> Get()
     {
-        return _rentalServiceRepository.RefundInformations;
+        if (_context.RefundInformations == null)
+        {
+            return NotFound();
+        }
+        return await _context.RefundInformations.ToListAsync();
     }
 
     /// <summary>
     ///     Get method which returns refund information by id
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<RefundInformation> Get(ulong id)
+    public async Task<ActionResult<RefundInformation>> Get(ulong id)
     {
-        RefundInformation? refundInformation =
+        /*RefundInformation? refundInformation =
             _rentalServiceRepository.RefundInformations.FirstOrDefault(refundInformation => refundInformation.Id == id);
         if (refundInformation == null)
         {
             _logger.LogInformation($"Not found refundInformation: {id}");
+            return NotFound();
+        }
+
+        return Ok(refundInformation);*/
+        if (_context.RefundInformations == null)
+        {
+            return NotFound();
+        }
+        var refundInformation = await _context.RefundInformations.FindAsync(id);
+
+        if (refundInformation == null)
+        {
             return NotFound();
         }
 
@@ -55,18 +69,30 @@ public class RefundInformationController : ControllerBase
     ///     Post method which add new refund information
     /// </summary>
     [HttpPost]
-    public void Post([FromBody] RefundInformationPostDto refundInformation)
+    public async Task<ActionResult<RefundInformation>> Post([FromBody] RefundInformationPostDto refundInformation)
     {
-        _rentalServiceRepository.RefundInformations.Add(_mapper.Map<RefundInformation>(refundInformation));
+        //_rentalServiceRepository.RefundInformations.Add(_mapper.Map<RefundInformation>(refundInformation));
+        if (_context.RefundInformations == null)
+        {
+            return Problem("Entity set 'DataBaseContext.RefundInformations'  is null.");
+        }
+
+        var mappedRefundInformation = _mapper.Map<RefundInformation>(refundInformation);
+        
+        _context.RefundInformations.Add(mappedRefundInformation);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("Post", new { id = mappedRefundInformation.Id },
+            _mapper.Map<RefundInformation>(mappedRefundInformation));
     }
 
     /// <summary>
     ///     Put method for changing data in the refund information table
     /// </summary>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] RefundInformationPostDto refundInformationToPut)
+    public async Task<IActionResult> Put(ulong id, [FromBody] RefundInformationPostDto refundInformationToPut)
     {
-        RefundInformation? refundInformation =
+        /*RefundInformation? refundInformation =
             _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
         if (refundInformation == null)
         {
@@ -75,16 +101,32 @@ public class RefundInformationController : ControllerBase
         }
 
         _mapper.Map(refundInformationToPut, refundInformation);
-        return Ok();
+        return Ok();*/
+        if (_context.RefundInformations == null)
+        {
+            return NotFound();
+        }
+        
+        var refundInformationToModify = await _context.RefundInformations.FindAsync(id);
+
+        if (refundInformationToModify == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(refundInformationToPut, refundInformationToModify);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
     ///     Delete method for deleting a refund information
     /// </summary>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public  async Task<IActionResult> Delete(ulong id)
     {
-        RefundInformation? refundInformation =
+        /*RefundInformation? refundInformation =
             _rentalServiceRepository.RefundInformations.FirstOrDefault(information => information.Id == id);
         if (refundInformation == null)
         {
@@ -93,6 +135,20 @@ public class RefundInformationController : ControllerBase
         }
 
         _rentalServiceRepository.RefundInformations.Remove(refundInformation);
-        return Ok();
+        return Ok();*/
+        if (_context.RefundInformations == null)
+        {
+            return NotFound();
+        }
+        var refundInformation = await _context.RefundInformations.FindAsync(id);
+        if (refundInformation == null)
+        {
+            return NotFound();
+        }
+
+        _context.RefundInformations.Remove(refundInformation);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

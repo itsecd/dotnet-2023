@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
 using RentalService.Server.Repository;
@@ -13,17 +14,12 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class VehicleController : ControllerBase
 {
-    private readonly ILogger<VehicleController> _logger;
-
     private readonly IMapper _mapper;
+    private readonly RentalServiceDbContext _context;
 
-    private readonly IRentalServiceRepository _rentalServiceRepository;
-
-    public VehicleController(ILogger<VehicleController> logger, IRentalServiceRepository rentalServiceRepository,
-        IMapper mapper)
+    public VehicleController(RentalServiceDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _rentalServiceRepository = rentalServiceRepository;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -31,21 +27,38 @@ public class VehicleController : ControllerBase
     ///     Get method which returns all vehicles
     /// </summary>
     [HttpGet]
-    public IEnumerable<VehicleGetDto> Get()
+    public async Task<ActionResult<IEnumerable<VehicleGetDto>>> Get()
     {
-        return _rentalServiceRepository.Vehicles.Select(vehicle => _mapper.Map<VehicleGetDto>(vehicle));
+        //return _rentalServiceRepository.Vehicles.Select(vehicle => _mapper.Map<VehicleGetDto>(vehicle));
+        if (_context.Vehicles == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<VehicleGetDto>(_context.Vehicles).ToListAsync();
     }
 
     /// <summary>
     ///     Get method which returns vehicle by id
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<VehicleGetDto> Get(ulong id)
+    public async Task<ActionResult<VehicleGetDto>> Get(ulong id)
     {
-        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle: {id}");
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<VehicleGetDto>(vehicle));*/
+        if (_context.Vehicles == null)
+        {
+            return NotFound();
+        }
+        var vehicle = await _context.Vehicles.FindAsync(id);
+
+        if (vehicle == null)
+        {
             return NotFound();
         }
 
@@ -56,18 +69,29 @@ public class VehicleController : ControllerBase
     ///     Post method which add new vehicle
     /// </summary>
     [HttpPost]
-    public void Post([FromBody] VehiclePostDto vehicle)
+    public async Task<ActionResult<VehicleGetDto>> Post([FromBody] VehiclePostDto vehicle)
     {
-        _rentalServiceRepository.Vehicles.Add(_mapper.Map<Vehicle>(vehicle));
+        //_rentalServiceRepository.Vehicles.Add(_mapper.Map<Vehicle>(vehicle));
+        if (_context.Vehicles == null)
+        {
+            return Problem("Entity set 'DataBaseContext.Vehicles'  is null.");
+        }
+
+        var mappedVehicle = _mapper.Map<Vehicle>(vehicle);
+        
+        _context.Vehicles.Add(mappedVehicle);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("Post", new { id = mappedVehicle.Id }, _mapper.Map<VehicleGetDto>(mappedVehicle));
     }
 
     /// <summary>
     ///     Put method for changing data in the vehicle table
     /// </summary>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] VehiclePostDto vehicleToPut)
+    public async Task<IActionResult> Put(ulong id, [FromBody] VehiclePostDto vehicleToPut)
     {
-        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle: {id}", id);
@@ -76,16 +100,32 @@ public class VehicleController : ControllerBase
 
         _mapper.Map(vehicleToPut, vehicle);
 
-        return Ok();
+        return Ok();*/
+        if (_context.Vehicles == null)
+        {
+            return NotFound();
+        }
+        
+        var vehicleToModify = await _context.Vehicles.FindAsync(id);
+
+        if (vehicleToModify == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(vehicleToPut, vehicleToModify);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
     ///     Delete method for deleting a vehicle
     /// </summary>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
-        Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
+        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
         if (vehicle == null)
         {
             _logger.LogInformation($"Not found vehicle: {id}");
@@ -93,6 +133,20 @@ public class VehicleController : ControllerBase
         }
 
         _rentalServiceRepository.Vehicles.Remove(vehicle);
-        return Ok();
+        return Ok();*/
+        if (_context.Vehicles == null)
+        {
+            return NotFound();
+        }
+        var vehicle = await _context.Vehicles.FindAsync(id);
+        if (vehicle == null)
+        {
+            return NotFound();
+        }
+
+        _context.Vehicles.Remove(vehicle);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

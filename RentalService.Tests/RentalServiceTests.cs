@@ -30,7 +30,7 @@ public class RentalServiceTests : IClassFixture<RentalServiceFixture>
             {
                 vehicle.Id,
                 vehicle.Number,
-                vehicle.ModelId,
+                ModelId = vehicle.VehicleModelId,
                 vehicle.Colour
             }).ToList();
 
@@ -58,7 +58,7 @@ public class RentalServiceTests : IClassFixture<RentalServiceFixture>
         var query = (from client in clients
             join issuedCar in issuedCars on client.Id equals issuedCar.ClientId
             join vehicle in vehicles on issuedCar.VehicleId equals vehicle.Id
-            where vehicle.ModelId == 1
+            where vehicle.VehicleModelId == 1
             orderby client.LastName, client.FirstName, client.Patronymic
             select new
             {
@@ -97,7 +97,7 @@ public class RentalServiceTests : IClassFixture<RentalServiceFixture>
             select new
             {
                 number = vehicle.Number,
-                modelId = vehicle.ModelId,
+                modelId = vehicle.VehicleModelId,
                 colour = vehicle.Colour
             }).ToList();
 
@@ -129,7 +129,7 @@ public class RentalServiceTests : IClassFixture<RentalServiceFixture>
             select new
             {
                 number = vehicle.Number,
-                modelId = vehicle.ModelId,
+                modelId = vehicle.VehicleModelId,
                 colour = vehicle.Colour,
                 count = vehicle.RentalCases.Count
             }).Take(5).ToList();
@@ -155,7 +155,7 @@ public class RentalServiceTests : IClassFixture<RentalServiceFixture>
             select new
             {
                 number = vehicle.Number,
-                modelId = vehicle.ModelId,
+                modelId = vehicle.VehicleModelId,
                 colour = vehicle.Colour,
                 rentalCasesCount = vehicle.RentalCases.Count
             }).ToList();

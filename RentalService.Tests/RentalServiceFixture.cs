@@ -158,35 +158,35 @@ public class RentalServiceFixture
             {
                 Id = 1,
                 Number = "К622КА39",
-                ModelId = 1,
+                VehicleModelId = 1,
                 Colour = "Тёмно-синий"
             };
             var secondVehicle = new Vehicle
             {
                 Id = 2,
                 Number = "Х547ХМ18",
-                ModelId = 3,
+                VehicleModelId = 3,
                 Colour = "Серо-зелёный"
             };
             var thirdVehicle = new Vehicle
             {
                 Id = 3,
                 Number = "М018ЕС73",
-                ModelId = 3,
+                VehicleModelId = 3,
                 Colour = "Серебристо-серо-зеленоватый"
             };
             var fourthVehicle = new Vehicle
             {
                 Id = 4,
                 Number = "Н728МН81",
-                ModelId = 2,
+                VehicleModelId = 2,
                 Colour = "Цвет морской волны"
             };
             var fifthVehicle = new Vehicle
             {
                 Id = 5,
                 Number = "Н818ОО35",
-                ModelId = 5,
+                VehicleModelId = 5,
                 Colour = "Зелёный"
             };
             return new List<Vehicle>

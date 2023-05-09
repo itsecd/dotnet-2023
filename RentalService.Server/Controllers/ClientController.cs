@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
 using RentalService.Server.Repository;
@@ -13,15 +15,12 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class ClientController : ControllerBase
 {
-    private readonly ILogger<ClientController> _logger;
     private readonly IMapper _mapper;
-    private readonly IRentalServiceRepository _rentalServiceRepository;
+    private readonly RentalServiceDbContext _context;
 
-    public ClientController(ILogger<ClientController> logger, IRentalServiceRepository rentalServiceRepository,
-        IMapper mapper)
+    public ClientController(RentalServiceDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _rentalServiceRepository = rentalServiceRepository;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -29,21 +28,43 @@ public class ClientController : ControllerBase
     ///     Get method which returns all clients
     /// </summary>
     [HttpGet]
-    public IEnumerable<ClientGetDto> Get()
+    public async Task<ActionResult<IEnumerable<ClientGetDto>>> Get()
     {
-        return _rentalServiceRepository.Clients.Select(client => _mapper.Map<ClientGetDto>(client));
+        /*await using RentalServiceDbContext ctx = await _context.CreateDbContextAsync();
+        return ctx.Clients.Select(client => _mapper.Map<ClientGetDto>(client));*/
+        
+        if (_context.Clients == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<ClientGetDto>(_context.Clients).ToListAsync();
     }
 
     /// <summary>
     ///     Get method which returns clients by id
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<ClientGetDto> Get(ulong id)
+    public async Task<ActionResult<ClientGetDto>> Get(ulong id)
     {
+        /*await using DataBaseContext ctx = await _contextFactory.CreateDbContextAsync();
+        
         Client? client = _rentalServiceRepository.Clients.FirstOrDefault(client => client.Id == id);
         if (client == null)
         {
             _logger.LogInformation($"Not found client: {id}");
+            return NotFound();
+        }*/
+
+        /*return Ok(_mapper.Map<ClientGetDto>(client));*/
+        
+        if (_context.Clients == null)
+        {
+            return NotFound();
+        }
+        var client = await _context.Clients.FindAsync(id);
+
+        if (client == null)
+        {
             return NotFound();
         }
 
@@ -54,35 +75,55 @@ public class ClientController : ControllerBase
     ///     Post method which add new client
     /// </summary>
     [HttpPost]
-    public void Post([FromBody] ClientPostDto client)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ClientGetDto>>  Post(ClientPostDto client)
     {
-        _rentalServiceRepository.Clients.Add(_mapper.Map<Client>(client));
+        /*await using DataBaseContext ctx = await _contextFactory.CreateDbContextAsync();
+        _rentalServiceRepository.Clients.Add(_mapper.Map<Client>(client));*/
+        if (_context.Clients == null)
+        {
+            return Problem("Entity set 'DataBaseContext.Clients'  is null.");
+        }
+
+        var mappedClient = _mapper.Map<Client>(client);
+        
+        _context.Clients.Add(mappedClient);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("Post", new { id = mappedClient.Id }, _mapper.Map<ClientGetDto>(mappedClient));
     }
 
     /// <summary>
     ///     Put method for changing data in the client table
     /// </summary>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] ClientPostDto clientToPut)
+    public async Task<IActionResult> Put(ulong id, [FromBody] ClientPostDto clientToPut)
     {
-        Client? client = _rentalServiceRepository.Clients.FirstOrDefault(client => client.Id == id);
-        if (client == null)
+        if (_context.Clients == null)
         {
-            _logger.LogInformation("Not found client: {id}", id);
+            return NotFound();
+        }
+        
+        var clientToModify = await _context.Clients.FindAsync(id);
+
+        if (clientToModify == null)
+        {
             return NotFound();
         }
 
-        _mapper.Map(clientToPut, client);
+        _mapper.Map(clientToPut, clientToModify);
+        await _context.SaveChangesAsync();
 
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>
     ///     Delete method for deleting a client
     /// </summary>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
+        /*await using DataBaseContext ctx = await _contextFactory.CreateDbContextAsync();
         Client? client = _rentalServiceRepository.Clients.FirstOrDefault(client => client.Id == id);
         if (client == null)
         {
@@ -91,6 +132,20 @@ public class ClientController : ControllerBase
         }
 
         _rentalServiceRepository.Clients.Remove(client);
-        return Ok();
+        return Ok();*/
+        if (_context.Clients == null)
+        {
+            return NotFound();
+        }
+        var client = await _context.Clients.FindAsync(id);
+        if (client == null)
+        {
+            return NotFound();
+        }
+
+        _context.Clients.Remove(client);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

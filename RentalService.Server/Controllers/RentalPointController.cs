@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
 using RentalService.Server.Repository;
@@ -13,17 +14,12 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class RentalPointController : ControllerBase
 {
-    private readonly ILogger<RentalPointController> _logger;
-
     private readonly IMapper _mapper;
+    private readonly RentalServiceDbContext _context;
 
-    private readonly IRentalServiceRepository _rentalServiceRepository;
-
-    public RentalPointController(ILogger<RentalPointController> logger,
-        IRentalServiceRepository rentalServiceRepository, IMapper mapper)
+    public RentalPointController(RentalServiceDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _rentalServiceRepository = rentalServiceRepository;
+        _context = context;
         _mapper = mapper;
     }
 
@@ -31,22 +27,39 @@ public class RentalPointController : ControllerBase
     ///     Get method which returns all rental points
     /// </summary>
     [HttpGet]
-    public IEnumerable<RentalPointGetDto> Get()
+    public async Task<ActionResult<IEnumerable<RentalPointGetDto>>> Get()
     {
-        return _rentalServiceRepository.RentalPoints.Select(point => _mapper.Map<RentalPointGetDto>(point));
+        //return _rentalServiceRepository.RentalPoints.Select(point => _mapper.Map<RentalPointGetDto>(point));
+        if (_context.RentalPoints == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<RentalPointGetDto>(_context.RentalPoints).ToListAsync();
     }
 
     /// <summary>
     ///     Get method which returns rental point by id
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<RentalPointGetDto> Get(ulong id)
+    public async Task<ActionResult<RentalPointGetDto>> Get(ulong id)
     {
-        RentalPoint? rentalPoint =
+        /*RentalPoint? rentalPoint =
             _rentalServiceRepository.RentalPoints.FirstOrDefault(rentalPoint => rentalPoint.Id == id);
         if (rentalPoint == null)
         {
             _logger.LogInformation($"Not found rentalPoint: {id}");
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<RentalPointGetDto>(rentalPoint));*/
+        if (_context.RentalPoints == null)
+        {
+            return NotFound();
+        }
+        var rentalPoint = await _context.RentalPoints.FindAsync(id);
+
+        if (rentalPoint == null)
+        {
             return NotFound();
         }
 
@@ -57,18 +70,29 @@ public class RentalPointController : ControllerBase
     ///     Post method which add new rental point
     /// </summary>
     [HttpPost]
-    public void Post([FromBody] RentalPointPostDto rentalPoint)
+    public async Task<ActionResult<RentalPointGetDto>> Post([FromBody] RentalPointPostDto rentalPoint)
     {
-        _rentalServiceRepository.RentalPoints.Add(_mapper.Map<RentalPoint>(rentalPoint));
+        //_rentalServiceRepository.RentalPoints.Add(_mapper.Map<RentalPoint>(rentalPoint));
+        if (_context.RentalPoints == null)
+        {
+            return Problem("Entity set 'DataBaseContext.RentalPoints'  is null.");
+        }
+
+        var mappedRentalPoint = _mapper.Map<RentalPoint>(rentalPoint);
+        
+        _context.RentalPoints.Add(mappedRentalPoint);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("Post", new { id = mappedRentalPoint.Id }, _mapper.Map<RentalPointGetDto>(mappedRentalPoint));
     }
 
     /// <summary>
     ///     Put method for changing data in the rental point table
     /// </summary>
     [HttpPut("{id}")]
-    public IActionResult Put(ulong id, [FromBody] RentalPointPostDto rentalPointToPut)
+    public async Task<IActionResult> Put(ulong id, [FromBody] RentalPointPostDto rentalPointToPut)
     {
-        RentalPoint? rentalPoint =
+        /*RentalPoint? rentalPoint =
             _rentalServiceRepository.RentalPoints.FirstOrDefault(rentalPoint => rentalPoint.Id == id);
         if (rentalPoint == null)
         {
@@ -78,16 +102,32 @@ public class RentalPointController : ControllerBase
 
         _mapper.Map(rentalPointToPut, rentalPoint);
 
-        return Ok();
+        return Ok();*/
+        if (_context.RentalPoints == null)
+        {
+            return NotFound();
+        }
+        
+        var rentalPointToModify = await _context.RentalPoints.FindAsync(id);
+
+        if (rentalPointToModify == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(rentalPointToPut, rentalPointToModify);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
     ///     Delete method for deleting a rental point
     /// </summary>
     [HttpDelete("{id}")]
-    public IActionResult Delete(ulong id)
+    public async Task<IActionResult> Delete(ulong id)
     {
-        RentalPoint? rentalPoint =
+        /*RentalPoint? rentalPoint =
             _rentalServiceRepository.RentalPoints.FirstOrDefault(rentalPoint => rentalPoint.Id == id);
         if (rentalPoint == null)
         {
@@ -96,6 +136,20 @@ public class RentalPointController : ControllerBase
         }
 
         _rentalServiceRepository.RentalPoints.Remove(rentalPoint);
-        return Ok();
+        return Ok();*/
+        if (_context.RentalPoints == null)
+        {
+            return NotFound();
+        }
+        var rentalPoint = await _context.RentalPoints.FindAsync(id);
+        if (rentalPoint == null)
+        {
+            return NotFound();
+        }
+
+        _context.RentalPoints.Remove(rentalPoint);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

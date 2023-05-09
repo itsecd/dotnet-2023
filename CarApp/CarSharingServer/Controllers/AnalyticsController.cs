@@ -57,6 +57,10 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetClientsRentedCar(uint id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get info about clients rented the car with id");
         var result = await (from client in ctx.RentedCars where client.Car.Id == id select client.Client.LastName).ToListAsync();
         if (result.Count == 0)
@@ -76,6 +80,10 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetAllCarsInRent()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get info about cars in rent");
         var result = await (from car in ctx.RentedCars where car.TimeOfReturn > DateTime.Now select car.Car.Model).ToListAsync();
         if (result.Count == 0)
@@ -95,6 +103,10 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetTopFiveCars()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get info about top five rented cars");
         var counter = await (from car in ctx.RentedCars
                              group car by car.Car.Model into carGroup
@@ -116,6 +128,10 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetNumOfRents()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         var result = await (from rent in ctx.RentedCars
                             group rent by rent.Car.Model into carGroup
                             select new
@@ -135,6 +151,10 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GetRentalPointsStatistics()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         var counter = await (from rentalPoint in ctx.RentedCars
                              group rentalPoint by rentalPoint.Point.PointName into rentalPointGroup
                              select new

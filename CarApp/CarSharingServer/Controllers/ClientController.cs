@@ -98,6 +98,10 @@ public class ClientController : ControllerBase
     public async Task<IActionResult> Put(uint id, [FromBody] ClientPostDto clientToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Clients == null)
+        {
+            return NotFound();
+        }
         var client = await ctx.Clients.FindAsync(id);
         if (client == null)
         {
@@ -126,6 +130,10 @@ public class ClientController : ControllerBase
     public async Task<IActionResult> Delete(uint id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Clients == null)
+        {
+            return NotFound();
+        }
         var client = await ctx.Clients.FindAsync(id);
         if (client == null)
         {

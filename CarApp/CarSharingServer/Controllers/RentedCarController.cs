@@ -97,6 +97,10 @@ public class RentedCarController : ControllerBase
     public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentedCarToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         var rentedCar = await ctx.RentedCars.FindAsync(id);
         if (rentedCar == null)
         {
@@ -125,6 +129,10 @@ public class RentedCarController : ControllerBase
     public async Task<IActionResult> Delete(uint id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
+        {
+            return NotFound();
+        }
         var rentedCar = await ctx.RentedCars.FindAsync(id);
         if (rentedCar == null)
         {

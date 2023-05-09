@@ -97,6 +97,10 @@ public class CarController : ControllerBase
     public async Task<IActionResult> Put(uint id, [FromBody] CarPostDto carToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
+        {
+            return NotFound();
+        }
         var car = await ctx.Cars.FindAsync(id);
         if (car == null)
         {
@@ -125,6 +129,10 @@ public class CarController : ControllerBase
     public async Task<IActionResult> Delete(uint id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
+        {
+            return NotFound();
+        }
         var car = await ctx.Cars.FindAsync(id);
         if (car == null)
         {

@@ -26,13 +26,14 @@ public class AnalyticsController : ControllerBase
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        
         _mapper = mapper;
     }
     /// <summary>
     ///Get info about all cars
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of all cars
+    /// </returns>
     [HttpGet("all_cars")]
     public async Task<List<CarGetDto>> GetAllCars()
     {
@@ -45,8 +46,12 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get info about clients who rented car by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of car
+    /// </param>
+    /// <returns>
+    /// List of clients who ever rented a car by id
+    /// </returns>
     [HttpGet("clients_who_rented_model_by_id")]
     public async Task<IActionResult> GetClientsRentedCar(uint id)
     {
@@ -63,7 +68,9 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get info about all cars which are now in rent
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of cars which are now in rent
+    /// </returns>
     [HttpGet("all_cars_in_rent")]
     public async Task<IActionResult> GetAllCarsInRent()
     {
@@ -80,14 +87,16 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get top five cars by the number of rents
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of five most popular car models ordered by number of rents
+    /// </returns>
     [HttpGet("top_five_rented_cars")]
     public async Task<IActionResult> GetTopFiveCars()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get info about top five rented cars");
         var counter = await(from car in ctx.RentedCars
-                       group car by car.Car.Id into carGroup
+                       group car by car.Car.Model into carGroup
                        select new
                        {
                            carmodel = carGroup.Key,
@@ -99,7 +108,9 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get info about how much each car was rented
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of cars and number of rents for each model
+    /// </returns>
     [HttpGet("number_of_rents_for_each_car")]
     public async Task<IActionResult> GetNumOfRents()
     {
@@ -116,7 +127,9 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     ///Get info about rental point where max number of cars were rented
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Rental point with max number of rented cars ever
+    /// </returns>
     [HttpGet("rental_points_with_max_number_of_clients")]
     public async Task<IActionResult> GetRentalPointsStatistics()
     {

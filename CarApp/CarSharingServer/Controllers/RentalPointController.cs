@@ -31,7 +31,9 @@ public class RentalPointController : ControllerBase
     /// <summary>
     /// Get info about all rental points
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of all rental points
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<RentalPointPostDto>> Get()
     {
@@ -43,17 +45,21 @@ public class RentalPointController : ControllerBase
     /// <summary>
     /// Get rental point by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of required rental point
+    /// </param>
+    /// <returns>
+    /// Rental point by id
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<RentalPointPostDto>> Get(uint id)
     {
-        if (_contextFactory == null)
+        _logger.LogInformation("Get the rental point with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentalPoints == null)
         {
             return NotFound();
         }
-        _logger.LogInformation("Get the rental point with id {id} ", id);
-        var ctx = await _contextFactory.CreateDbContextAsync();
         var rentalPoint = await ctx.RentalPoints.FindAsync(id);
         if (rentalPoint == null)
         {
@@ -65,7 +71,9 @@ public class RentalPointController : ControllerBase
     /// <summary>
     /// Post a new rental point
     /// </summary>
-    /// <param name="rentalPoint"></param>
+    /// <param name="rentalPoint">
+    /// Info about new rental point you ant to add
+    /// </param>
     [HttpPost]
     public async Task Post([FromBody] RentalPointPostDto rentalPoint)
     {
@@ -74,13 +82,19 @@ public class RentalPointController : ControllerBase
         await ctx.RentalPoints.AddAsync(_mapper.Map<RentalPoint>(rentalPoint));
         await ctx.SaveChangesAsync();
     }
-   
+
     /// <summary>
     /// Put a rental point
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="rentalPointToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of rental point which should be edited
+    /// </param>
+    /// <param name="rentalPointToPut">
+    /// Info about rental point which should be edited
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentalPointToPut)
     {
@@ -100,12 +114,16 @@ public class RentalPointController : ControllerBase
             return Ok();
         }
     }
-    
+
     /// <summary>
     /// Delete a rental point
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of rental point which should be deleted
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(uint id)
     {

@@ -14,27 +14,27 @@ namespace CarSharingServer.Controllers;
 public class RentedCarController : ControllerBase
 {
     private readonly ILogger<RentedCarController> _logger;
-    private readonly ICarSharingRepository _carRepository;
     private readonly IDbContextFactory<CarSharingDbContext> _contextFactory;
     private readonly IMapper _mapper;
     /// <summary>
     /// Constructor for RentedCarController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
-    /// <param name="carRepository"></param>
     /// <param name="mapper"></param>
-    public RentedCarController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<RentedCarController> logger, ICarSharingRepository carRepository, IMapper mapper)
+    public RentedCarController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<RentedCarController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;
-        _carRepository = carRepository;
         _mapper = mapper;
     }
 
     /// <summary>
     /// Get info about all rented cars
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of all rented cars
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<RentedCarGetDto>> Get()
     {
@@ -46,17 +46,21 @@ public class RentedCarController : ControllerBase
     /// <summary>
     /// Get rented car by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of required rented car
+    /// </param>
+    /// <returns>
+    /// Rented car by id
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<RentedCarGetDto>> Get(uint id)
     {
-        if (_contextFactory == null)
+        _logger.LogInformation("Get the rented car with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.RentedCars == null)
         {
             return NotFound();
         }
-        _logger.LogInformation("Get the rented car with id {id} ", id);
-        var ctx = await _contextFactory.CreateDbContextAsync();
         var rentedCar = await ctx.RentedCars.FindAsync(id);
         if (rentedCar == null)
         {
@@ -67,7 +71,9 @@ public class RentedCarController : ControllerBase
     /// <summary>
     /// Post a new rented car
     /// </summary>
-    /// <param name="rentedCar"></param>
+    /// <param name="rentedCar">
+    /// Info about new rented car you want to add
+    /// </param>
     [HttpPost]
     public async Task Post([FromBody] RentedCarPostDto rentedCar)
     {
@@ -79,9 +85,15 @@ public class RentedCarController : ControllerBase
     /// <summary>
     /// Put a rented car
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="rentedCarToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of rented car which should be edited
+    /// </param>
+    /// <param name="rentedCarToPut">
+    /// Info about new rented car which should be edited 
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentedCarToPut)
     {
@@ -104,8 +116,12 @@ public class RentedCarController : ControllerBase
     /// <summary>
     /// Delete rented car
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of rented car which should be deleted
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(uint id)
     {

@@ -19,6 +19,7 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Constructor for ClientController
     /// </summary>
+    /// <param name="contextFactory"></param>
     /// <param name="logger"></param>
     /// <param name="mapper"></param>
     public ClientController(IDbContextFactory<CarSharingDbContext> contextFactory, ILogger<ClientController> logger,  IMapper mapper)
@@ -31,7 +32,9 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Get info about all clients
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of all clients
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<ClientGetDto>> Get()
     {
@@ -43,17 +46,21 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Get client info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of required client
+    /// </param>
+    /// <returns>
+    /// Client by id 
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ClientGetDto>> Get(uint id)
     {
-        if (_contextFactory == null)
+        _logger.LogInformation("Get the client with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Clients == null)
         {
             return NotFound();
         }
-        _logger.LogInformation("Get the client with id {id} ", id);
-        var ctx = await _contextFactory.CreateDbContextAsync();
         var client = await ctx.Clients.FindAsync(id);
         if (client == null)
         {
@@ -65,7 +72,9 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Post a new client
     /// </summary>
-    /// <param name="client"></param>
+    /// <param name="client">
+    /// Info about client you want to post
+    /// </param>
     [HttpPost]
     public async Task Post([FromBody] ClientPostDto client)
     {
@@ -77,9 +86,15 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Put a client
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="clientToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of client which should be edited
+    /// </param>
+    /// <param name="clientToPut">
+    /// Info about a client which should be edited
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(uint id, [FromBody] ClientPostDto clientToPut)
     {
@@ -102,8 +117,12 @@ public class ClientController : ControllerBase
     /// <summary>
     /// Delete a client
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of client which should be deleted
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(uint id)
     {

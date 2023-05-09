@@ -32,7 +32,9 @@ public class CarController : ControllerBase
     /// <summary>
     /// Get info about all cars
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// List of all cars
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<CarGetDto>> GetCars()
     {
@@ -44,17 +46,21 @@ public class CarController : ControllerBase
     /// <summary>
     /// Get car info by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of car
+    /// </param>
+    /// <returns>
+    /// Car with required id
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<CarGetDto>> Get(uint id)
     {
-        if (_contextFactory==null)
+        _logger.LogInformation("Get the car with id {id} ", id);
+        var ctx = await _contextFactory.CreateDbContextAsync();
+        if (ctx.Cars == null)
         {
             return NotFound();
         }
-        _logger.LogInformation("Get the car with id {id} ", id);
-        var ctx = await _contextFactory.CreateDbContextAsync();
         var car = await ctx.Cars.FindAsync(id);
         if (car == null) {
             return NotFound();
@@ -64,7 +70,9 @@ public class CarController : ControllerBase
     /// <summary>
     /// Post a new car
     /// </summary>
-    /// <param name="car"></param>
+    /// <param name="car">
+    /// Info about car which you want to post
+    /// </param>
     [HttpPost]
     public async Task Post([FromBody] CarPostDto car)
     {
@@ -76,9 +84,15 @@ public class CarController : ControllerBase
     /// <summary>
     /// Put car
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="carToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of car which should be edited
+    /// </param>
+    /// <param name="carToPut">
+    /// Info about car which should be edited
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(uint id, [FromBody] CarPostDto carToPut)
     {
@@ -101,8 +115,12 @@ public class CarController : ControllerBase
     /// <summary>
     /// Delete a car
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">
+    /// Identification number of car which should be deleted
+    /// </param>
+    /// <returns>
+    /// Success or error code
+    /// </returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(uint id)
     {

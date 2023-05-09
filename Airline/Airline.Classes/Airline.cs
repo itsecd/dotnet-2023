@@ -1,19 +1,22 @@
-﻿namespace AirLine.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AirLine.Model;
 public class Airline
 {
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// List airplanes in airline
     /// </summary>
-    public List<Airplane> Airplanes { get; set; } = new List<Airplane>();
+    [Required]    public List<Airplane> Airplanes { get; set; } = new List<Airplane>();
     /// <summary>
     /// List flights in airline
     /// </summary>
-    public List<Flight> Flights { get; set; } = new List<Flight>();
+    [Required] public List<Flight> Flights { get; set; } = new List<Flight>();
     /// <summary>
     /// List passengers in airline
     /// </summary>
-    public List<Passenger> Passengers { get; set; } = new List<Passenger>();
+    [Required] public List<Passenger> Passengers { get; set; } = new List<Passenger>();
 
     public Airline() { }
     public Airline(int id, List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers)

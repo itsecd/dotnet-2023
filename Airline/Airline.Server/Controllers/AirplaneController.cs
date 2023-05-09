@@ -1,8 +1,9 @@
-﻿using AirLine.Domain;
-using Airline.Server.Dto;
-using Airline.Server.Repository;
+﻿using Airline.Server.Dto;
+using AirLine.Model;
+using AirlineClasses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Server.Controllers;
 
@@ -13,14 +14,14 @@ namespace Airlines.Server.Controllers;
 [ApiController]
 public class AirplaneController : ControllerBase
 {
+    private readonly IDbContextFactory<AirlineContext> _contextFactory;
     private readonly ILogger<AirplaneController> _logger;
-    private readonly IAirlineRepository _airlineRepository;
     private readonly IMapper _mapper;
 
-    public AirplaneController(ILogger<AirplaneController> logger, IAirlineRepository airlineRepository, IMapper mapper)
+    public AirplaneController(IDbContextFactory<AirlineContext> contextFactory, ILogger<AirplaneController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _airlineRepository = airlineRepository;
         _mapper = mapper;
     }
 
@@ -31,11 +32,13 @@ public class AirplaneController : ControllerBase
     /// Return all airplanes
     /// </returns>
     [HttpGet]
-    public IEnumerable<AirplaneGetDto> Get()
+    public async Task<IEnumerable<AirplaneGetDto>> Get()
     {
-        _logger.LogInformation("Get airplaes");
-        return _airlineRepository.Airplanes.Select(airplane => _mapper.Map<AirplaneGetDto>(airplane));
+        using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get airplanes");
+        return _mapper.Map<IEnumerable<AirplaneGetDto>>(context.Airplanes);
     }
+
 
     /// <summary>
     /// Get airplane by id
@@ -44,10 +47,11 @@ public class AirplaneController : ControllerBase
     /// Return airplane with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public ActionResult<AirplaneGetDto> Get(int id)
+    public async Task<ActionResult<AirplaneGetDto>> Get(int id)
     {
+        using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get airplane: id ({id})");
-        var airplane = _airlineRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
+        var airplane = context.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
             _logger.LogInformation($"Not found airplane: id ({id})");
@@ -64,10 +68,13 @@ public class AirplaneController : ControllerBase
     /// </summary>
     /// <param name="airplane"> Airplane class for insert in table</param>
     [HttpPost]
-    public void Post([FromBody] AirplanePostDto airplane)
+    public async Task<IActionResult> Post([FromBody] AirplanePostDto airplane)
     {
+        using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post airplane");
-        _airlineRepository.Airplanes.Add(_mapper.Map<Airplane>(airplane));
+        context.Airplanes.Add(_mapper.Map<Airplane>(airplane));
+        context.SaveChanges();
+        return Ok();
     }
 
     /// <summary>
@@ -77,10 +84,11 @@ public class AirplaneController : ControllerBase
     /// <param name="airplaneToPut">Airplane class for insert in table</param>
     /// <returns>Triggered of success and error</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AirplanePostDto airplaneToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] AirplanePostDto airplaneToPut)
     {
+        using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put airplane: id {0}", id);
-        var airplane = _airlineRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
+        var airplane = context.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
             _logger.LogInformation("Not found airplane: id {0}", id);
@@ -89,6 +97,7 @@ public class AirplaneController : ControllerBase
         else
         {
             _mapper.Map(airplaneToPut, airplane);
+            context.SaveChanges();
             return Ok();
         }
     }
@@ -99,10 +108,11 @@ public class AirplaneController : ControllerBase
     /// <param name="id">Airplane id for deleting</param>
     /// <returns>Triggered of success and error</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
+        using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put airplane: id ({id})");
-        var airplane = _airlineRepository.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
+        var airplane = context.Airplanes.FirstOrDefault(airplane => airplane.Id == id);
         if (airplane == null)
         {
             _logger.LogInformation($"Not found airplane: id ({id})");
@@ -110,7 +120,8 @@ public class AirplaneController : ControllerBase
         }
         else
         {
-            _airlineRepository.Airplanes.Remove(airplane);
+            context.Airplanes.Remove(airplane);
+            context.SaveChanges();
             return Ok();
         }
     }

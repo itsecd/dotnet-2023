@@ -1,48 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirLine.Domain;
+namespace AirLine.Model;
 
 public class Flight
 {
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Cipher of flight
     /// </summary>
-    public string Cipher { get; set; } = string.Empty;
+    [Required] public string Cipher { get; set; } = string.Empty;
     /// <summary>
     /// Field departure place 
     /// </summary>
-    public string DeparturePlace { get; set; } = string.Empty;
+    [Required] public string DeparturePlace { get; set; } = string.Empty;
     /// <summary>
     /// Field destination
     /// </summary>
-    public string Destination { get; set; } = string.Empty;
+    [Required] public string Destination { get; set; } = string.Empty;
     /// <summary>
     /// Field date of departure
     /// </summary>
-    public DateTime? DepartureDate { get; set; }
+    [Required] public DateTime? DepartureDate { get; set; }
     /// <summary>
     /// Field date of arrival
     /// </summary>
-    public DateTime? ArrivalDate { get; set; }
+    [Required] public DateTime? ArrivalDate { get; set; }
     /// <summary>
     /// Flight time
     /// </summary>
     public TimeSpan FlightTime { get; set; }
-    /// <summary>
-    /// type airplane on flight
-    /// </summary>
-    public Airplane? Airplane { get; set; }
-    /// <summary>
-    /// List of tickets on flight
-    /// </summary>
-    public List<Ticket>? Tickets { get; set; }
-    public Flight() {}
-    public Flight(int id, string cipher, string departurePlace, string destination, DateTime? departureDate, DateTime arrivalDate, Airplane airplane, List<Ticket> tickets)
+    public Flight() { }
+    public Flight(int id, string cipher, string departurePlace, string destination, DateTime? departureDate, DateTime arrivalDate)
     {
         Id = id;
         Cipher = cipher;
@@ -50,9 +39,7 @@ public class Flight
         Destination = destination;
         DepartureDate = departureDate;
         ArrivalDate = arrivalDate;
-        FlightTime = ArrivalDate.Value-DepartureDate.Value;
-        Airplane = airplane;
-        Tickets = tickets;
+        FlightTime = ArrivalDate.Value - DepartureDate.Value;
     }
 
     public override bool Equals(object? obj)
@@ -64,9 +51,7 @@ public class Flight
                DeparturePlace == param.DeparturePlace &&
                Destination == param.Destination &&
                DepartureDate == param.DepartureDate &&
-               ArrivalDate == param.ArrivalDate &&
-               Airplane == param.Airplane &&
-               Tickets == param.Tickets;
+               ArrivalDate == param.ArrivalDate;
     }
 
     public override int GetHashCode()

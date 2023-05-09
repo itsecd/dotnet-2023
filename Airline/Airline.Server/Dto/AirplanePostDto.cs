@@ -4,7 +4,7 @@
 /// Class for post airplane
 /// </summary>
 public class AirplanePostDto
-{                            
+{
     /// <summary>
     /// Airplane model
     /// </summary>

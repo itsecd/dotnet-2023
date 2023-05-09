@@ -4,7 +4,7 @@
 /// Class for get airplane
 /// </summary>
 public class AirplaneGetDto
-{       
+{
     public int Id { get; set; }
     /// <summary>
     /// Airplane model

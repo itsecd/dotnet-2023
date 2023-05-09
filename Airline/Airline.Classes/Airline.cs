@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AirLine.Domain;
+﻿namespace AirLine.Model;
 public class Airline
 {
     public int Id { get; set; }
@@ -21,14 +15,14 @@ public class Airline
     /// </summary>
     public List<Passenger> Passengers { get; set; } = new List<Passenger>();
 
-    public Airline() {}
+    public Airline() { }
     public Airline(int id, List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers)
     {
         Id = id;
         Airplanes = airplanes;
         Flights = flights;
         Passengers = passengers;
-    }    
+    }
 
     /// <summary>
     /// Method for adding airplane in airline

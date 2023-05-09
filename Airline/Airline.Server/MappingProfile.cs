@@ -1,5 +1,6 @@
-﻿using AirLine.Domain;
-using Airline.Server.Dto;
+﻿using Airline.Server.Dto;
+using AirLine.Model;
+using AirlineClasses;
 using AutoMapper;
 
 namespace Airline.Server;
@@ -22,5 +23,8 @@ public class MappingProfile : Profile
 
         CreateMap<Airplane, AirplaneGetDto>();
         CreateMap<AirplanePostDto, Airplane>();
+
+        CreateMap<FlightAirplaneTicket, FlightAirplaneTicketGetDto>();
+        CreateMap<FlightAirplaneTicketPostDto, FlightAirplaneTicket>();
     }
 }

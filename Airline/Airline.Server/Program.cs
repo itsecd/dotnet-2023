@@ -1,6 +1,8 @@
 using Airline.Server;
 using Airline.Server.Repository;
+using AirlineClasses;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IAirlineRepository, AirlineRepository>();
 builder.Services.AddControllers();
+builder.Services.AddDbContextFactory<AirlineContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString(nameof(Airline));
+    optionsBuilder.UseMySQL(connectionString);
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

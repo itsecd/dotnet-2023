@@ -3,7 +3,7 @@
 /// <summary>
 /// Class for post ticket
 /// </summary>
-public class TicketPostDto
+public class FlightAirplaneTicketPostDto
 {
     /// <summary>
     /// Represent ticket number

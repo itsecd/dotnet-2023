@@ -1,5 +1,4 @@
-﻿using AirLine.Domain;
-namespace Airline.Server.Dto;
+﻿namespace Airline.Server.Dto;
 
 /// <summary>
 /// Class for post flight
@@ -30,12 +29,4 @@ public class FlightPostDto
     /// Flight time
     /// </summary>
     public TimeSpan FlightTime { get; set; }
-    /// <summary>
-    /// type airplane on flight
-    /// </summary>
-    public Airplane? Airplane { get; set; }
-    /// <summary>
-    /// List of tickets on flight
-    /// </summary>
-    public List<Ticket>? Tickets { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using AirLine.Domain;
+﻿using AirLine.Model;
 
 namespace Airline.Server.Repository;
 public interface IAirlineRepository

@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirLine.Domain;
+namespace AirLine.Model;
 public class Passenger
 {
+    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Passenger passport ID
     /// </summary>
+    [Required]
     public int PassportNumber { get; set; } = 0;
     /// <summary>
     /// Passenger name
     /// </summary>
+    [Required]
     public string Name { get; set; } = string.Empty;
-    /// <summary>
-    /// List of tickets for passenger
-    /// </summary>
-    public List<Ticket>? Tickets { get; set; }
     /// <summary>
     /// Create default passenger object
     /// </summary>
-    public Passenger() {}
+    public Passenger() { }
 
     /// <summary>
     /// Create passenger object by name and passport ID
@@ -43,25 +38,8 @@ public class Passenger
         this.Id = id;
         PassportNumber = passport_number;
         this.Name = name;
-        Tickets = tickets;
     }
 
-    /// <summary>
-    /// add ticket to ticket list
-    /// </summary>
-    /// <param name="ticket"></param>
-    public void Add_ticket(Ticket ticket)
-    {
-        Tickets.Add(ticket);
-    }
-    /// <summary>
-    /// add ticket list to ticket list
-    /// </summary>
-    /// <param name="tickets"></param>
-    public void Add_ticket(List<Ticket> tickets)
-    {
-        Tickets.AddRange(tickets);
-    }
 
     public override bool Equals(object? obj)
     {
@@ -69,8 +47,7 @@ public class Passenger
             return false;
 
         return PassportNumber == param.PassportNumber &&
-               Name == param.Name &&
-               Tickets == param.Tickets;
+               Name == param.Name;
     }
 
     public override int GetHashCode()

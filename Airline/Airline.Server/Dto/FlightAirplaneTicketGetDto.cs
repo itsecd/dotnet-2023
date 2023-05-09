@@ -3,8 +3,9 @@
 /// <summary>
 /// Class for post ticket
 /// </summary>
-public class TicketPostDto
+public class FlightAirplaneTicketGetDto
 {
+    public int Id { get; set; }
     /// <summary>
     /// Represent ticket number
     /// </summary>

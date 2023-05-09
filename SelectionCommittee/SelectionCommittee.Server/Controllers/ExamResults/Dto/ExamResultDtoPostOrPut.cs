@@ -6,11 +6,6 @@
 public class ExamResultDtoPostOrPut
 {
     /// <summary>
-    /// Идентификатор.
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
     /// Название предмета.
     /// </summary>
     public string SubjectName { get; set; }

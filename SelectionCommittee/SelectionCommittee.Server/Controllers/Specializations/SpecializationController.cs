@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SelectionCommittee.Domain;
 using SelectionCommittee.Server.Controllers.Specializations.Dto;
 using SelectionCommittee.Server.Repository;
 
 namespace SelectionCommittee.Server.Controllers.Specializations;
 
-///
-/// Выполнение CRUD операций для специализации.
-///
+/// <summary>
+/// Выполнение CRUD операций для специальности.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class SpecializationController : Controller
@@ -30,16 +31,16 @@ public class SpecializationController : Controller
     /// </summary>
     /// <returns>Список специальностей.</returns>
     [HttpGet]
-    public IEnumerable<SpecializationDtoGet> GetSpecializations() 
+    public async Task<IEnumerable<SpecializationDtoGet>> GetSpecializations()
     {
-        return _selectionCommitteeRepository.Specializations.Select(x => new SpecializationDtoGet
-        {
-            Id = x.Id,
-            Priority= x.Priority,
-            Name = x.Name,
-            //Faculty = x.Faculty,
-            //Enrollees = x.Enrollees,
-        });
+        return (await _selectionCommitteeRepository.GetSpecializations())
+            .Select(specialization => new SpecializationDtoGet
+            {
+                Id = specialization.Id,
+                Priority = specialization.Priority,
+                Name = specialization.Name,
+                FacultyId = specialization.FacultyId
+            });
     }
 
     /// <summary>
@@ -48,13 +49,13 @@ public class SpecializationController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <returns>Факультет.</returns>
     [HttpGet("{id}")]
-    public ActionResult<SpecializationDtoGet> GetSpecialization(int id)
+    public async Task<ActionResult<SpecializationDtoGet>> GetSpecialization(int id)
     {
-        var specialization = _selectionCommitteeRepository.Specializations.FirstOrDefault(e => e.Id == id);
+        var specialization = await _selectionCommitteeRepository.GetSpecialization(id);
 
         if (specialization == null)
         {
-            return NotFound();
+            return NotFound("Специальность с указанным идентификатором не найдена!");
         }
 
         return Ok(new SpecializationDtoGet
@@ -62,8 +63,7 @@ public class SpecializationController : Controller
             Id = specialization.Id,
             Priority = specialization.Priority,
             Name = specialization.Name,
-            //Faculty = specialization.Faculty,
-            //Enrollees = specialization.Enrollees,
+            FacultyId = specialization.FacultyId
         });
     }
 
@@ -72,15 +72,19 @@ public class SpecializationController : Controller
     /// </summary>
     /// <param name="specialization">Специальность.</param>
     [HttpPost]
-    public void AddSpecialization([FromBody] SpecializationDtoPostOrPut specialization)
+    public async Task<ActionResult<int>> AddSpecialization([FromBody] SpecializationDtoPostOrPut specialization)
     {
-        //_selectionCommitteeRepository.Specializations.Add(new Domain.Specialization
-        //{
-        //    Id = specialization.Id,
-        //    Priority = specialization.Priority,
-        //    Name = specialization.Name,
-        //    FacultyId = specialization.FacultyId,
-        //});
+        if (await _selectionCommitteeRepository.GetFaculty(specialization.FacultyId) == null)
+        {
+            return BadRequest("Факультет с указанным идентификатором не найден!");
+        }
+
+        return Ok(await _selectionCommitteeRepository.AddSpecialization(new Specialization
+        {
+            Priority = specialization.Priority,
+            Name = specialization.Name,
+            FacultyId = specialization.FacultyId,
+        }));
     }
 
     /// <summary>
@@ -89,19 +93,27 @@ public class SpecializationController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <param name="specializationDtoPostOrPut">Содержит новые данные для специальности.</param>
     /// <returns>Результат обновления.</returns>
-    [HttpPut("{id}")] 
-    public IActionResult UpdateSpecialization(int id, [FromBody] SpecializationDtoPostOrPut specializationDtoPostOrPut)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateSpecialization(int id, [FromBody] SpecializationDtoPostOrPut specializationDtoPostOrPut)
     {
-        var specialization = _selectionCommitteeRepository.Specializations.FirstOrDefault(e => e.Id == id);
+        var specialization = await _selectionCommitteeRepository.GetSpecialization(id);
 
         if (specialization == null)
         {
-            return NotFound();
+            return NotFound("Специальность с указанным идентификатором не найдена!");
         }
 
-        specialization.Priority = specializationDtoPostOrPut.Priority;
-        specialization.Name = specializationDtoPostOrPut.Name;
-        specialization.FacultyId = specializationDtoPostOrPut.FacultyId;
+        if (await _selectionCommitteeRepository.GetFaculty(specializationDtoPostOrPut.FacultyId) == null)
+        {
+            return BadRequest("Факультет с указанным идентификатором не найден!");
+        }
+
+        await _selectionCommitteeRepository.UpdateSpecialization(id, new Specialization
+        {
+            Priority = specializationDtoPostOrPut.Priority,
+            Name = specializationDtoPostOrPut.Name,
+            FacultyId = specializationDtoPostOrPut.FacultyId
+        });
 
         return Ok();
     }
@@ -112,16 +124,16 @@ public class SpecializationController : Controller
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
     [HttpDelete("{id}")]
-    public IActionResult DeleteSpecialization(int id)
+    public async Task<IActionResult> DeleteSpecialization(int id)
     {
-        var specialization = _selectionCommitteeRepository.Specializations.FirstOrDefault(specialization => specialization.Id == id);
+        var specialization = await _selectionCommitteeRepository.GetSpecialization(id);
 
         if (specialization == null)
         {
-            return NotFound();
+            return NotFound("Специальность с указанным идентификатором не найден!");
         }
 
-        _selectionCommitteeRepository.Specializations.Remove(specialization);
+        await _selectionCommitteeRepository.DeleteSpecialization(id);
 
         return Ok();
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SelectionCommittee.Domain;
+using SelectionCommittee.Server.Controllers.Enrollees.Dto;
 using SelectionCommittee.Server.Repository;
 
 namespace SelectionCommittee.Server.Controllers;
@@ -20,7 +21,7 @@ public class QueryController : Controller
     /// Создание контроллера с помощью указанных параметров.
     /// </summary>
     /// <param name="selectionCommitteeRepository">Репозиторий сущностей приемной комиссии.</param>
-    public QueryController(ISelectionCommitteeRepository selectionCommitteeRepository) 
+    public QueryController(ISelectionCommitteeRepository selectionCommitteeRepository)
     {
         _selectionCommitteeRepository = selectionCommitteeRepository;
     }
@@ -31,13 +32,23 @@ public class QueryController : Controller
     /// <param name="city">Город.</param>
     /// <returns>Список абитуриентов.</returns>
     [HttpGet("GetEnrolleesByCity/{city}")]
-    public List<Enrollee> GetEnrolleesByCity(string city)
+    public async Task<List<EnrolleeDtoGet>> GetEnrolleesByCity(string city)
     {
-        //return _selectionCommitteeRepository.Enrollees
-        //    .Where(enrollee => enrollee.City == city)
-        //    .ToList();
-
-        return new List<Enrollee>();
+        return (await _selectionCommitteeRepository.GetEnrollees())
+            .Where(enrollee => enrollee.City == city)
+            .Select(enrollee => new EnrolleeDtoGet
+            {
+                Id = enrollee.Id,
+                FirstName = enrollee.FirstName,
+                LastName = enrollee.LastName,
+                Patronymic = enrollee.Patronymic,
+                Age = enrollee.Age,
+                BirthDate = enrollee.BirthDate,
+                Country = enrollee.Country,
+                City = enrollee.City,
+                SpecializationId = enrollee.SpecializationId
+            })
+            .ToList();
     }
 
     /// <summary>
@@ -45,17 +56,27 @@ public class QueryController : Controller
     /// </summary>
     /// <param name="age">Возраст.</param>
     /// <returns>Список абитуриентов.</returns>
-    [HttpGet(" GetSortedEnrolleesByAge/{age}")]
-    public List<Enrollee> GetSortedEnrolleesByAge(int age)
+    [HttpGet("GetSortedEnrolleesByAge/{age}")]
+    public async Task<List<EnrolleeDtoGet>> GetSortedEnrolleesByAge(int age)
     {
-        //return _selectionCommitteeRepository.Enrollees
-        //    .Where(enrollee => enrollee.Age > age)
-        //    .OrderBy(enrollee => enrollee.LastName)
-        //    .ThenBy(enrollee => enrollee.FirstName)
-        //    .ThenBy(enrollee => enrollee.Patronymic)
-        //    .ToList();
-
-        return new List<Enrollee>();
+        return (await _selectionCommitteeRepository.GetEnrollees())
+            .Where(enrollee => enrollee.Age > age)
+            .OrderBy(enrollee => enrollee.LastName)
+            .ThenBy(enrollee => enrollee.FirstName)
+            .ThenBy(enrollee => enrollee.Patronymic)
+            .Select(enrollee => new EnrolleeDtoGet
+            {
+                Id = enrollee.Id,
+                FirstName = enrollee.FirstName,
+                LastName = enrollee.LastName,
+                Patronymic = enrollee.Patronymic,
+                Age = enrollee.Age,
+                BirthDate = enrollee.BirthDate,
+                Country = enrollee.Country,
+                City = enrollee.City,
+                SpecializationId = enrollee.SpecializationId
+            })
+            .ToList();
     }
 
     /// <summary>
@@ -65,14 +86,31 @@ public class QueryController : Controller
     /// <param name="specialization">Специальность.</param>
     /// <returns>Список абитуриентов.</returns>
     [HttpGet("GetEnrolleesBySpecialization/{specialization}")]
-    public List<Enrollee> GetEnrolleesBySpecialization(string specialization)
+    public async Task<ActionResult<List<EnrolleeDtoGet>>> GetEnrolleesBySpecialization(string specialization)
     {
-        //return _selectionCommitteeRepository.Enrollees
-        //    .Where(enrollee => enrollee.Specializations![0].Name == specialization)
-        //    .OrderBy(enrollee => enrollee.ExamResults!.Sum(examResult => examResult.Points))
-        //    .ToList();
+        var entity = (await _selectionCommitteeRepository.GetSpecializations())
+            .FirstOrDefault(specializationObject => specializationObject.Name == specialization);
 
-        return new List<Enrollee>();
+        if (entity == null)
+        {
+            return NotFound("Указанная специальность не найдена!");
+        }
+
+        return Ok((await _selectionCommitteeRepository.GetEnrollees())
+            .Where(enrollee => enrollee.SpecializationId == entity.Id)
+            .Select(enrollee => new EnrolleeDtoGet
+            {
+                Id = enrollee.Id,
+                FirstName = enrollee.FirstName,
+                LastName = enrollee.LastName,
+                Patronymic = enrollee.Patronymic,
+                Age = enrollee.Age,
+                BirthDate = enrollee.BirthDate,
+                Country = enrollee.Country,
+                City = enrollee.City,
+                SpecializationId = enrollee.SpecializationId
+            })
+            .ToList());
     }
 
     /// <summary>
@@ -82,14 +120,31 @@ public class QueryController : Controller
     /// <param name="specialization">Специальность.</param>
     /// <returns>Список абитуриентов.</returns>
     [HttpGet("GetEnrolleesBySpecializationAndPriority/{specialization}")]
-    public List<Enrollee> GetEnrolleesBySpecializationAndPriority(string specialization)
+    public async Task<ActionResult<List<Enrollee>>> GetEnrolleesBySpecializationAndPriority(string specialization, int priority)
     {
-        //return _selectionCommitteeRepository.Enrollees
-        //    .Where(enrollee => enrollee.Specializations![0].Name == specialization
-        //        && enrollee.Specializations![0].Priority == 1)
-        //    .ToList();
+        var entity = (await _selectionCommitteeRepository.GetSpecializations())
+            .FirstOrDefault(specializationObject => specializationObject.Name == specialization && specializationObject.Priority == priority);
 
-        return new List<Enrollee>();
+        if (entity == null)
+        {
+            return NotFound("Указанная специальность не найдена!");
+        }
+
+        return Ok((await _selectionCommitteeRepository.GetEnrollees())
+            .Where(enrollee => enrollee.SpecializationId == entity.Id)
+            .Select(enrollee => new EnrolleeDtoGet
+            {
+                Id = enrollee.Id,
+                FirstName = enrollee.FirstName,
+                LastName = enrollee.LastName,
+                Patronymic = enrollee.Patronymic,
+                Age = enrollee.Age,
+                BirthDate = enrollee.BirthDate,
+                Country = enrollee.Country,
+                City = enrollee.City,
+                SpecializationId = enrollee.SpecializationId
+            })
+            .ToList());
     }
 
     /// <summary>
@@ -97,14 +152,30 @@ public class QueryController : Controller
     /// <param name="count">Количество.</param>
     /// </summary>
     [HttpGet("GetEnrollesByExamResult/{count}")]
-    public List<Enrollee> GetEnrollesByExamResult(int count) 
+    public async Task<ActionResult<List<EnrolleeDtoGet>>> GetEnrollesByExamResult(int count)
     {
-        //return _selectionCommitteeRepository.Enrollees
-        //    .OrderByDescending(enrollee =>
-        //        enrollee!.ExamResults!.Sum(examResult => examResult.Points))
-        //    .Take(count)
-        //    .ToList();
+        if (count <= 0)
+        {
+            return BadRequest("Количество абитуриентов должно быть положительным числом!");
+        }
 
-        return new List<Enrollee>();
+        var examResults = await _selectionCommitteeRepository.GetExamResults();
+
+        return (await _selectionCommitteeRepository.GetEnrollees())
+            .OrderByDescending(enrollee => examResults.Where(result => result.EnrolleeId == enrollee.Id).Sum(result => result.Points))
+            .Take(count)
+            .Select(enrollee => new EnrolleeDtoGet
+            {
+                Id = enrollee.Id,
+                FirstName = enrollee.FirstName,
+                LastName = enrollee.LastName,
+                Patronymic = enrollee.Patronymic,
+                Age = enrollee.Age,
+                BirthDate = enrollee.BirthDate,
+                Country = enrollee.Country,
+                City = enrollee.City,
+                SpecializationId = enrollee.SpecializationId
+            })
+            .ToList();
     }
 }

@@ -29,5 +29,4 @@ public class ExamResult
     /// Абитуриент.
     /// </summary>
     public Enrollee? Enrollee { get; set; }
-
 }

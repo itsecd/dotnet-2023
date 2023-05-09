@@ -1,6 +1,4 @@
-﻿using SelectionCommittee.Domain;
-
-namespace SelectionCommittee.Server.Controllers.Enrollees.Dto;
+﻿namespace SelectionCommittee.Server.Controllers.Enrollees.Dto;
 
 /// <summary>
 /// Dto для Get операций сущности абитуриента.
@@ -48,12 +46,7 @@ public class EnrolleeDtoGet
     public string City { get; set; }
 
     /// <summary>
-    /// Результаты экзаменов.
+    /// Идентификатор специальности.
     /// </summary>
-    public List<ExamResult>? ExamResults { get; set; }
-
-    /// <summary>
-    /// Специальности.
-    /// </summary>
-    public List<Specialization>? Specializations { get; set; }
+    public int SpecializationId { get; set; }
 }

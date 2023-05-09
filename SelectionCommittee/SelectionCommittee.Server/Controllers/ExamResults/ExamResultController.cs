@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SelectionCommittee.Domain;
 using SelectionCommittee.Server.Controllers.ExamResults.Dto;
 using SelectionCommittee.Server.Repository;
 
 namespace SelectionCommittee.Server.Controllers.ExamResults;
 
-///
+/// <summary>
 /// Выполнение CRUD операций для результатов экзамена.
-///
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ExamResultController : Controller
@@ -30,15 +31,16 @@ public class ExamResultController : Controller
     /// </summary>
     /// <returns>Список результатов экзамена.</returns>
     [HttpGet]
-    public IEnumerable<ExamResultDtoGet> GetExamResults() 
+    public async Task<IEnumerable<ExamResultDtoGet>> GetExamResults()
     {
-        return _selectionCommitteeRepository.ExamResults.Select(x => new ExamResultDtoGet
-        {
-            Id = x.Id,
-            SubjectName = x.SubjectName,
-            Points= x.Points,
-            //Enrollee = x.Enrollee,
-        });
+        return (await _selectionCommitteeRepository.GetExamResults())
+            .Select(examResult => new ExamResultDtoGet
+            {
+                Id = examResult.Id,
+                SubjectName = examResult.SubjectName,
+                Points = examResult.Points,
+                EnrolleeId = examResult.EnrolleeId
+            });
     }
 
     /// <summary>
@@ -47,13 +49,13 @@ public class ExamResultController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <returns>Результат экзамена.</returns>
     [HttpGet("{id}")]
-    public ActionResult<ExamResultDtoGet> GetExamResult(int id)
+    public async Task<ActionResult<ExamResultDtoGet>> GetExamResult(int id)
     {
-        var examResult = _selectionCommitteeRepository.ExamResults.FirstOrDefault(e => e.Id == id);
+        var examResult = await _selectionCommitteeRepository.GetExamResult(id);
 
         if (examResult == null)
         {
-            return NotFound();
+            return NotFound("Результат экзамена с указанным идентификатором не найден!");
         }
 
         return Ok(new ExamResultDtoGet
@@ -61,7 +63,7 @@ public class ExamResultController : Controller
             Id = examResult.Id,
             SubjectName = examResult.SubjectName,
             Points = examResult.Points,
-           // Enrollee = examResult.Enrollee,
+            EnrolleeId = examResult.EnrolleeId
         });
     }
 
@@ -70,15 +72,19 @@ public class ExamResultController : Controller
     /// </summary>
     /// <param name="examResult">Абитуриент.</param>
     [HttpPost]
-    public void AddExamResult([FromBody] ExamResultDtoPostOrPut examResult)
+    public async Task<ActionResult<int>> AddExamResult([FromBody] ExamResultDtoPostOrPut examResult)
     {
-        //_selectionCommitteeRepository.ExamResults.Add(new Domain.ExamResult
-        //{
-        //    Id = examResult.Id,
-        //    SubjectName = examResult.SubjectName,
-        //    Points = examResult.Points,
-        //    EnrolleeId = examResult.EnrolleeId,
-        //});
+        if (await _selectionCommitteeRepository.GetEnrollee(examResult.EnrolleeId) == null)
+        {
+            return BadRequest("Абитуриент с указанным идентификатором не найден!");
+        }
+
+        return Ok(await _selectionCommitteeRepository.AddExamResult(new ExamResult
+        {
+            SubjectName = examResult.SubjectName,
+            Points = examResult.Points,
+            EnrolleeId = examResult.EnrolleeId
+        }));
     }
 
     /// <summary>
@@ -88,18 +94,24 @@ public class ExamResultController : Controller
     /// <param name="examResultDtoPostOrPut">Содержит новые данные для результата экзамена</param>
     /// <returns>Результат обновления.</returns>
     [HttpPut("{id}")]
-    public IActionResult UpdateExamResult(int id, [FromBody] ExamResultDtoPostOrPut examResultDtoPostOrPut)
+    public async Task<IActionResult> UpdateExamResult(int id, [FromBody] ExamResultDtoPostOrPut examResultDtoPostOrPut)
     {
-        var examResult = _selectionCommitteeRepository.ExamResults.FirstOrDefault(e => e.Id == id);
-
-        if (examResult == null)
+        if (await _selectionCommitteeRepository.GetExamResult(id) == null)
         {
-            return NotFound();
+            return NotFound("Результат экзамена с указанным идентификатором не найден!");
         }
 
-        examResult.SubjectName = examResultDtoPostOrPut.SubjectName;
-        examResult.Points = examResultDtoPostOrPut.Points;
-        examResult.EnrolleeId = examResultDtoPostOrPut.EnrolleeId;
+        if (await _selectionCommitteeRepository.GetEnrollee(examResultDtoPostOrPut.EnrolleeId) == null)
+        {
+            return BadRequest("Абитуриент с указанным идентификатором не найден!");
+        }
+
+        await _selectionCommitteeRepository.UpdateExamResult(id, new ExamResult
+        {
+            SubjectName = examResultDtoPostOrPut.SubjectName,
+            Points = examResultDtoPostOrPut.Points,
+            EnrolleeId = examResultDtoPostOrPut.EnrolleeId
+        });
 
         return Ok();
     }
@@ -110,16 +122,16 @@ public class ExamResultController : Controller
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
     [HttpDelete("{id}")]
-    public IActionResult DeleteExamResult(int id)
+    public async Task<IActionResult> DeleteExamResult(int id)
     {
-        var examResult = _selectionCommitteeRepository.ExamResults.FirstOrDefault(examResult => examResult.Id == id);
+        var examResult = await _selectionCommitteeRepository.GetExamResult(id);
 
         if (examResult == null)
         {
-            return NotFound();
+            return NotFound("Результат экзамена с указанным идентификатором не найден!");
         }
 
-        _selectionCommitteeRepository.ExamResults.Remove(examResult);
+        await _selectionCommitteeRepository.DeleteExamResult(id);
 
         return Ok();
     }

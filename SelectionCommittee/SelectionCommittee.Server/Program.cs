@@ -1,10 +1,12 @@
+using SelectionCommittee.Model;
 using SelectionCommittee.Server.Repository;
-using SocialNetwork.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContextFactory<SelectionCommitteeContext>(optionsBuilder
     => optionsBuilder.UseMySQL(builder.Configuration.GetConnectionString(nameof(SelectionCommittee))));
+
 
 builder.Services.AddScoped<ISelectionCommitteeRepository, SelectionCommitteeRepository>();
 

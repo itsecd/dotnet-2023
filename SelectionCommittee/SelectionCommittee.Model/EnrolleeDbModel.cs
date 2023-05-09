@@ -64,4 +64,17 @@ public class EnrolleeDbModel
     [Column("city")]
     [Required]
     public string City { get; set; }
+
+    /// <summary>
+    /// Идентификатор специальности.
+    /// </summary>
+    [Column("specialization_id")]
+    [Required]
+    public int SpecializationId { get; set; }
+
+    /// <summary>
+    /// Специальность.
+    /// </summary>
+    public SpecializationDbModel Specialization { get; set; }
+
 }

@@ -1,6 +1,4 @@
-﻿using SelectionCommittee.Domain;
-
-namespace SelectionCommittee.Server.Controllers.Specializations.Dto;
+﻿namespace SelectionCommittee.Server.Controllers.Specializations.Dto;
 
 /// <summary>
 /// Dto для Get операций сущности специальности.
@@ -23,12 +21,7 @@ public class SpecializationDtoGet
     public string Name { get; set; }
 
     /// <summary>
-    /// Факультет.
+    /// Идентификатор факультета.
     /// </summary>
-    public Faculty? Faculty { get; set; }
-
-    /// <summary>
-    /// Абитуриенты.
-    /// </summary>
-    public List<Enrollee>? Enrollees { get; set; }
+    public int FacultyId { get; set; }
 }

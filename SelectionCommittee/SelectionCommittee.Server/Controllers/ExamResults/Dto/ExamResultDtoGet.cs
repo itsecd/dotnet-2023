@@ -23,7 +23,7 @@ public class ExamResultDtoGet
     public int Points { get; set; }
 
     /// <summary>
-    /// Абитуриент.
+    /// Идентификатор абитуриента.
     /// </summary>
-    public Enrollee? Enrollee { get; set; }
+    public int EnrolleeId { get; set; }
 }

@@ -7,11 +7,6 @@ namespace SelectionCommittee.Server.Controllers.Specializations.Dto;
 public class SpecializationDtoPostOrPut
 {
     /// <summary>
-    /// Идентификатор.
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
     /// Приоритет.
     /// </summary>
     public int Priority { get; set; }

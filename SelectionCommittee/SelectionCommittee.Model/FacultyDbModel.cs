@@ -20,6 +20,6 @@ public class FacultyDbModel
     /// Название.
     /// </summary>
     [Column("name")]
-    [Key]
+    [Required]
     public string Name { get; set; }
 }

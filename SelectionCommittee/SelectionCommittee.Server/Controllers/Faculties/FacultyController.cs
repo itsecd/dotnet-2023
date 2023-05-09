@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SelectionCommittee.Domain;
 using SelectionCommittee.Server.Controllers.Faculties.Dto;
 using SelectionCommittee.Server.Repository;
 
 namespace SelectionCommittee.Server.Controllers.Faculties;
 
-///
+/// <summary>
 /// Выполнение CRUD операций для факультета.
-///
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class FacultyController : Controller
@@ -20,7 +21,7 @@ public class FacultyController : Controller
     /// Создание контроллера с помощью указанных параметров.
     /// </summary>
     /// <param name="selectionCommitteeRepository">Репозиторий сущностей приемной комиссии.</param>
-    public FacultyController(ISelectionCommitteeRepository selectionCommitteeRepository) 
+    public FacultyController(ISelectionCommitteeRepository selectionCommitteeRepository)
     {
         _selectionCommitteeRepository = selectionCommitteeRepository;
     }
@@ -30,14 +31,14 @@ public class FacultyController : Controller
     /// </summary>
     /// <returns>Список факультетов.</returns>
     [HttpGet]
-    public IEnumerable<FacultyDtoGet> GetFaculties() 
+    public async Task<IEnumerable<FacultyDtoGet>> GetFaculties()
     {
-        return _selectionCommitteeRepository.Faculties.Select(x => new FacultyDtoGet
-        {
-            Id = x.Id,
-            Name = x.Name,
-            //Specializations = x.Specializations
-        });
+        return (await _selectionCommitteeRepository.GetFaculties())
+            .Select(faculty => new FacultyDtoGet
+            {
+                Id = faculty.Id,
+                Name = faculty.Name
+            });
     }
 
     /// <summary>
@@ -46,20 +47,19 @@ public class FacultyController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <returns>Факультет.</returns>
     [HttpGet("{id}")]
-    public ActionResult<FacultyDtoGet> GetFaculty(int id)
+    public async Task<ActionResult<FacultyDtoGet>> GetFaculty(int id)
     {
-        var faculty = _selectionCommitteeRepository.Faculties.FirstOrDefault(e => e.Id == id);
+        var faculty = await _selectionCommitteeRepository.GetFaculty(id);
 
         if (faculty == null)
         {
-            return NotFound();
+            return NotFound("Факультет с указанным идентификатором не найден!");
         }
 
         return Ok(new FacultyDtoGet
         {
             Id = faculty.Id,
-            Name = faculty.Name,
-            //Specializations = faculty.Specializations
+            Name = faculty.Name
         });
     }
 
@@ -68,13 +68,12 @@ public class FacultyController : Controller
     /// </summary>
     /// <param name="faculty">Факультет.</param>
     [HttpPost]
-    public void AddFaculty([FromBody] FacultyDtoPostOrPut faculty) 
+    public async Task<ActionResult<int>> AddFaculty([FromBody] FacultyDtoPostOrPut faculty)
     {
-        //_selectionCommitteeRepository.Faculties.Add(new Domain.Faculty
-        //{
-        //    Id = faculty.Id,
-        //    Name = faculty.Name,
-        //});
+        return Ok(await _selectionCommitteeRepository.AddFaculty(new Faculty
+        {
+            Name = faculty.Name
+        }));
     }
 
     /// <summary>
@@ -84,16 +83,19 @@ public class FacultyController : Controller
     /// <param name="facultyDtoPostOrPut">Содержит новые данные для факультета.</param>
     /// <returns>Результат обновления.</returns>
     [HttpPut("{id}")]
-    public IActionResult UpdateFaculty(int id, [FromBody] FacultyDtoPostOrPut facultyDtoPostOrPut) 
+    public async Task<IActionResult> UpdateFaculty(int id, [FromBody] FacultyDtoPostOrPut facultyDtoPostOrPut)
     {
-        var faculty = _selectionCommitteeRepository.Faculties.FirstOrDefault(e => e.Id == id);
+        var faculty = await _selectionCommitteeRepository.GetFaculty(id);
 
         if (faculty == null)
         {
-            return NotFound();
+            return NotFound("Факультут с указанным идентификатором не найден!");
         }
 
-        faculty.Name = facultyDtoPostOrPut.Name;
+        await _selectionCommitteeRepository.UpdateFaculty(id, new Faculty
+        {
+            Name = facultyDtoPostOrPut.Name
+        });
 
         return Ok();
     }
@@ -104,16 +106,16 @@ public class FacultyController : Controller
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
     [HttpDelete("{id}")]
-    public IActionResult DeleteFaculty(int id)
+    public async Task<IActionResult> DeleteFaculty(int id)
     {
-        var faculty = _selectionCommitteeRepository.Faculties.FirstOrDefault(examResult => examResult.Id == id);
+        var faculty = await _selectionCommitteeRepository.GetFaculty(id);
 
         if (faculty == null)
         {
-            return NotFound();
+            return NotFound("Факультет с указанным идентификатором не найден!");
         }
 
-        _selectionCommitteeRepository.Faculties.Remove(faculty);
+        await _selectionCommitteeRepository.DeleteFaculty(id);
 
         return Ok();
     }

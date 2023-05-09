@@ -51,6 +51,11 @@ public class Enrollee
     public List<ExamResult>? ExamResults { get; set; }
 
     /// <summary>
+    /// Идентификатор специальности.
+    /// </summary>
+    public int SpecializationId { get; set; }
+
+    /// <summary>
     /// Специальности.
     /// </summary>
     public List<Specialization>? Specializations { get; set; }

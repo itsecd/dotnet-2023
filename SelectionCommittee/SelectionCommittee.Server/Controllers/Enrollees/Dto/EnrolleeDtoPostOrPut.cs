@@ -6,11 +6,6 @@
 public class EnrolleeDtoPostOrPut
 {
     /// <summary>
-    /// Идентификатор.
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
     /// Имя.
     /// </summary>
     public string FirstName { get; set; }
@@ -44,4 +39,9 @@ public class EnrolleeDtoPostOrPut
     /// Город.
     /// </summary>
     public string City { get; set; }
+
+    /// <summary>
+    /// Идентификатор специальности.
+    /// </summary>
+    public int SpecializationId { get; set; }
 }

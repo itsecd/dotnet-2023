@@ -47,8 +47,8 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Get a customer by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Customer</returns>
+    /// <param name="id">Customer's id</param>
+    /// <returns>Customer with required id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<CustomerGetDto?>> Get(int id)
     {
@@ -69,7 +69,8 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Post a new customer
     /// </summary>
-    /// <param name="customer"></param>
+    /// <param name="customer">New customer</param>
+    /// <returns>Ok (success code)</returns>
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] CustomerPostDto customer)
     {
@@ -83,9 +84,9 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Put a customer
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="customerToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Customer's id</param>
+    /// <param name="customerToPut">New customer</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] CustomerPostDto customerToPut)
     {
@@ -108,8 +109,8 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Delete a customer by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Customer's id</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -46,8 +46,8 @@ public class BuildingController : ControllerBase
     /// <summary>
     /// Get a building by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Building</returns>
+    /// <param name="id">Building's id</param>
+    /// <returns>Building with required id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<BuildingGetDto?>> Get(int id)
     {
@@ -68,7 +68,8 @@ public class BuildingController : ControllerBase
     /// <summary>
     /// Post a new building
     /// </summary>
-    /// <param name="building"></param>
+    /// <param name="building">New building</param>
+    /// <returns>Ok (success code)</returns>
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] BuildingPostDto building)
     {
@@ -82,9 +83,9 @@ public class BuildingController : ControllerBase
     /// <summary>
     /// Put a building
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="buildingToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Building's id</param>
+    /// <param name="buildingToPut">New building</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] BuildingPostDto buildingToPut)
     {
@@ -107,8 +108,8 @@ public class BuildingController : ControllerBase
     /// <summary>
     /// Delete a building by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Building's id</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

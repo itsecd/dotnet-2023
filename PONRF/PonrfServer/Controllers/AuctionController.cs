@@ -47,8 +47,8 @@ public class AuctionController : ControllerBase
     /// <summary>
     /// Get an auction by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>AuctionGetDto</returns>
+    /// <param name="id">Auction's id</param>
+    /// <returns>Auction with required id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<AuctionGetDto?>> Get(int id)
     {
@@ -69,7 +69,8 @@ public class AuctionController : ControllerBase
     /// <summary>
     /// Post a new auction
     /// </summary>
-    /// <param name="auction"></param>
+    /// <param name="auction">New auction</param>
+    /// <returns>Ok (success code)</returns>
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] AuctionPostDto auction)
     {
@@ -83,9 +84,9 @@ public class AuctionController : ControllerBase
     /// <summary>
     /// Put an auction
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="auctionToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Auction's id</param>
+    /// <param name="auctionToPut">New auction</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] AuctionPostDto auctionToPut)
     {
@@ -108,8 +109,8 @@ public class AuctionController : ControllerBase
     /// <summary>
     /// Delete an auction by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Auction's id</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

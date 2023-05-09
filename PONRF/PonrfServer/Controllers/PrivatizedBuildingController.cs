@@ -47,8 +47,8 @@ public class PrivatizedBuildingController : ControllerBase
     /// <summary>
     /// Get a privatized building by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Privatized building</returns>
+    /// <param name="id">Privatized building's id</param>
+    /// <returns>Privatized building with required id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<PrivatizedBuildingGetDto?>> Get(int id)
     {
@@ -69,7 +69,8 @@ public class PrivatizedBuildingController : ControllerBase
     /// <summary>
     /// Post a new privatized building
     /// </summary>
-    /// <param name="privatizedBuilding"></param>
+    /// <param name="privatizedBuilding">New privatized building</param>
+    /// <returns>Ok (success code)</returns>
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] PrivatizedBuildingPostDto privatizedBuilding)
     {
@@ -83,9 +84,9 @@ public class PrivatizedBuildingController : ControllerBase
     /// <summary>
     /// Put a privatized building
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="privatizedBuildingToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Privatized building's id</param>
+    /// <param name="privatizedBuildingToPut">New privatized building</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] PrivatizedBuildingPostDto privatizedBuildingToPut)
     {
@@ -108,8 +109,8 @@ public class PrivatizedBuildingController : ControllerBase
     /// <summary>
     /// Delete a privatized building by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Privatized building's id</param>
+    /// <returns>Ok (success code) or NotFound (error code)</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

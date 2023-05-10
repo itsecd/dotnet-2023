@@ -2,102 +2,154 @@
 using SchoolServer.Dto;
 using SchoolServer.Repository;
 using Microsoft.AspNetCore.Mvc;
+using School.Classes;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolServer.Controllers;
 
 /// <summary>
-/// Контроллер запросов
+/// Задания по варианту
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class RequestsController : ControllerBase
 {
-    private readonly ISchoolRepository _diaryRepository;
+    private readonly SchoolDbContext _context;
 
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор контроллера
+    /// Конструктор класса RequestController
     /// </summary>
-    public RequestsController(ISchoolRepository diaryRepository, IMapper mapper)
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public RequestsController(SchoolDbContext context, IMapper mapper)
     {
-        _diaryRepository = diaryRepository;
+        _context = context;
         _mapper = mapper;
     }
 
+
     /// <summary>
-    ///  Вывести информацию обо всех предметах
+    /// Выведите информацию обо всех элементах. Проверьте количество элементов
     /// </summary>
+    /// <returns>Список предметов</returns>
     [HttpGet("GetAllSubject")]
-    public IEnumerable<GradeGetDto> GetAllSubject()
+    public async Task<ActionResult<IEnumerable<SubjectGetDto>>> GetAllSubject()
     {
-        return _diaryRepository.Grades.Select(grade => _mapper.Map<GradeGetDto>(grade));
+        if (_context.Subjects == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<SubjectGetDto>(_context.Subjects).ToListAsync();
     }
 
     /// <summary>
-    /// Вывести информацию обо всех учениках в указанном классе, упорядочить по ФИО
+    /// Отобразить информацию обо всех учащихся в указанном классе, отсортировать по имени.
     /// </summary>
-    /// <param name="id">id класса</param>
-    [HttpGet("GetAllStudentByClassId/{id}")]
-    public IEnumerable<StudentGetDto> GetAllStudentByClassId(int id)
+    /// <param name="ClassId">Class id</param>
+    /// <returns></returns>
+    [HttpGet("GetAllStudentByClassId/{ClassId}")]
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int ClassId)
     {
-        var needStudents = (from student in _diaryRepository.Students
-                            where student.Class != null && student.Class.Id.Equals(id)
+        if (_context.Students == null)
+        {
+            return NotFound();
+        }
+        var allStudents = await _context.Students.ToListAsync();
+
+        var needStudents = (from student in allStudents
+                            where student.ClassId.Equals(ClassId)
                             orderby student.LastName, student.FirstName, student.Patronymic
                             select student).ToList();
-        return _mapper.Map<IEnumerable<StudentGetDto>>(needStudents);
+
+        var needStudentsDto = needStudents.Select(_mapper.Map<Student, StudentGetDto>);
+
+        return Ok(needStudentsDto);
+
     }
 
-     /// <summary>
-     ///  Вывести информацию обо всех учениках, получивших оценки в указанный день
-     /// </summary>
-     /// <param name="date">День выставления оценки</param>
-     [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
-    public IEnumerable<StudentGetDto> StudentsGetsGradesByDay(DateTime date)
-    {
-        var infoStudent = (from grade in _diaryRepository.Grades
-                           where grade.Date == date
-                           select grade.Student).ToList();
-        return _mapper.Map<IEnumerable<StudentGetDto>>(infoStudent);
-    }
 
     /// <summary>
-    /// Вывести топ 5 учеников по среднему баллу
+    /// Выведите информацию обо всех учащихся, получивших оценки в указанный день.
     /// </summary>
-    [HttpGet("Top5StudentsAvrMark")]
-    public IEnumerable<StudentGetDto> Top5StudentsAvrMark()
+    /// <param name="date">День выставления оценки</param>
+    /// <returns>Список студентов</returns>
+    [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> StudentsGetsGradesByDay(DateTime date)
     {
-        var topFive = (from grade in _diaryRepository.Grades
-                       group grade by grade.Student into g
+        if (_context.Grades == null || _context.Students == null)
+        {
+            return NotFound();
+        }
+        var allGrades = await _context.Grades.ToListAsync();
+
+        var infoStudent = (from grade in allGrades
+                           where grade.Date == date
+                           select grade.StudentId).ToList();
+        //16 April 2022
+        var allStudents = await _context.Students.ToListAsync();
+
+        var needStudents = allStudents.Where(x => infoStudent.Contains(x.Id)).ToList().Select(_mapper.Map<Student, StudentGetDto>);
+
+        return Ok(needStudents);
+    }
+
+
+    /// <summary>
+    /// Выделите 5 лучших студентов по среднему баллу
+    /// </summary>
+    /// <returns>Результат операции</returns>
+    [HttpGet("Top5StudentsAvrMark")]
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> Top5StudentsAvrMark()
+    {
+        if (_context.Grades == null || _context.Students == null)
+        {
+            return NotFound();
+        }
+        var allGrades = await _context.Grades.ToListAsync();
+
+
+        var topFive = (from grade in allGrades
+                       group grade by grade.StudentId into g
                        select new
                        {
-                           Student = g.Key,
+                           StudentId = g.Key,
                            Marks = g.Average(s => s.Mark)
-                       }).OrderByDescending(s => s.Marks).ThenBy(s => s.Student.FirstName).Take(5).ToList();
+                       }).OrderByDescending(s => s.Marks).Take(5).ToList();
 
-        var students = topFive.Select(x => x.Student);
+        var allStudents = await _context.Students.ToListAsync();
 
-        return _mapper.Map<IEnumerable<StudentGetDto>>(students);
+        var needStudents = allStudents.IntersectBy(topFive.Select(x => x.StudentId), o => o.Id).ToList().Select(_mapper.Map<Student, StudentGetDto>); //Where(x => infoStudent.Contains(x.Id)).ToList().Select(_mapper.Map<Student, StudentGetDto>);
+
+        return Ok(needStudents);
     }
 
     /// <summary>
-    /// Вывести учеников с максимальным средним баллом за указанный период
+    /// Вывод студентов с максимальным средним баллом за указанный период
     /// </summary>
+    /// <returns></returns>
     [HttpGet("MaxAvrGradeStudentsByPeriod")]
-    public ActionResult<IEnumerable<StudentGetDto>> MaxAvrGradeStudentsByPeriod(DateTime first, DateTime second)
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> MaxAvrGradeStudentsByPeriod(DateTime first, DateTime second)
     {
         if (first > second)
         {
             return StatusCode(412);
         }
 
+        if (_context.Grades == null || _context.Students == null)
+        {
+            return NotFound();
+        }
+        var allGrades = await _context.Grades.ToListAsync();
+
         var averageMarks =
-            (from grade in _diaryRepository.Grades
+            (from grade in allGrades
              where grade.Date >= first && grade.Date <= second
-             group grade by grade.Student into g
+             group grade by grade.StudentId into g
              select new
              {
-                 Student = g.Key,
+                 StudentId = g.Key,
                  Marks = g.Average(s => s.Mark)
              }).ToList();
 
@@ -105,25 +157,38 @@ public class RequestsController : ControllerBase
             return NotFound();
 
         var maxMark = averageMarks.Max(x => x.Marks);
-        var students = averageMarks.Where(x => x.Marks.Equals(maxMark)).Select(s => s.Student);
+        var studentsId = averageMarks.Where(x => x.Marks.Equals(maxMark)).Select(s => s.StudentId);
 
-        return Ok(_mapper.Map<IEnumerable<StudentGetDto>>(students));
+        var allStudents = await _context.Students.ToListAsync();
+
+        var needStudents = allStudents.Where(x => studentsId.Contains(x.Id)).ToList().Select(_mapper.Map<Student, StudentGetDto>);
+
+        return Ok(needStudents);
     }
 
+
     /// <summary>
-    /// Вывести информацию о минимальном, среднем и максимальном балле по каждому предмету.
+    /// Выведите информацию о минимальном, среднем и максимальном балле по каждому предмету
     /// </summary>
+    /// <returns></returns>
     [HttpGet("StatisticSubjects")]
-    public dynamic MinMaxAvrGradeBySubject()
+    public async Task<dynamic> MinMaxAvrGradeBySubject()
     {
-        return (from grade in _diaryRepository.Grades
-                group grade by grade.Subject into g
+        if (_context.Grades == null)
+        {
+            return NotFound();
+        }
+        var allGrades = await _context.Grades.ToListAsync();
+
+        return (from grade in allGrades
+                group grade by grade.SubjectId into g
                 select new
                 {
-                    Id = g.Select(x => x.Subject.Id).FirstOrDefault(),
+                    Id = g.Select(x => x.SubjectId).FirstOrDefault(),
                     Min = g.Min(s => s.Mark),
                     Max = g.Max(s => s.Mark),
                     Average = g.Average(s => s.Mark)
                 });
     }
 }
+

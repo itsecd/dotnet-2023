@@ -2,114 +2,137 @@
 using SchoolServer.Dto;
 using SchoolServer.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using School.Classes;
 
 namespace SchoolServer.Controllers;
 
 /// <summary>
-/// Контроллер класса
+/// Классы
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClassController : ControllerBase
 {
-    private readonly ILogger<ClassController> _logger;
-
-    private readonly ISchoolRepository _diaryRepository;
+    private readonly SchoolDbContext _context;
 
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор контроллера 
+    /// Конструктор ClassesController
     /// </summary>
-    public ClassController(ILogger<ClassController> logger, ISchoolRepository diaryRepository, IMapper mapper)
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public ClassController(SchoolDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _diaryRepository = diaryRepository;
+        _context = context;
         _mapper = mapper;
     }
 
     /// <summary>
-    /// Метод получения данных всей коллекции для классов
+    /// Получение всех классов
     /// </summary>
-    /// <returns>Коллекция классов</returns>
+    /// <returns>Список всех классов</returns>
     [HttpGet]
-    public IEnumerable<ClassGetDto> Get()
-    { 
-        return _diaryRepository.Classes.Select(obj => _mapper.Map<ClassGetDto>(obj));
+    public async Task<ActionResult<IEnumerable<ClassGetDto>>> GetClasses()
+    {
+        if (_context.Classes == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<ClassGetDto>(_context.Classes).ToListAsync();
     }
 
     /// <summary>
-    /// Метод получения класса по id 
+    /// Получение класса по id
     /// </summary>
-    /// <param name="id">id класса</param>
-    /// <returns>Найденный класс по id</returns>
+    /// <param name="id">Идентификатор класса</param>
+    /// <returns>Класс</returns>
     [HttpGet("{id}")]
-    public ActionResult<Class> Get(int id)
+    public async Task<ActionResult<ClassGetDto>> GetClass(int id)
     {
-        var diaryClass = _diaryRepository.Classes.FirstOrDefault(obj => obj.Id == id);
-        if (diaryClass == null) 
+        if (_context.Classes == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var @class = await _context.Classes.FindAsync(id);
+
+        if (@class == null)
         {
-            return Ok(diaryClass);
+            return NotFound();
         }
+
+        return _mapper.Map<ClassGetDto>(@class);
+    }
+    /// <summary>
+    /// Изменение данных о классе
+    /// </summary>
+    /// <param name="id">Идентификатор класса</param>
+    /// <param name="class">Изменяемый класс</param>
+    /// <returns>Результат выполнения операции</returns>
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutClass(int id, ClassPostDto @class)
+    {
+        if (_context.Classes == null)
+        {
+            return NotFound();
+        }
+
+        var classToModify = await _context.Classes.FindAsync(id);
+        if (classToModify == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(@class, classToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
-    /// Метод добавления элементов в коллекцию с помощью json
+    /// Добавление нового класса
     /// </summary>
-    /// <param name="class">объект класса ClassGetDto</param>
+    /// <param name="class">класс</param>
+    /// <returns>Созданный класс</returns>
     [HttpPost]
-    public void Post([FromBody] ClassGetDto @class)
+    public async Task<ActionResult<ClassGetDto>> PostClass(ClassPostDto @class)
     {
-        _diaryRepository.Classes.Add(_mapper.Map<Class>(@class));
-    }
-    
-    /// <summary>
-    /// Метод обновления данных по id
-    /// </summary>
-    /// <param name="id">id объекта</param>
-    /// <param name="class">Объект, данные которого будут изменены</param>
-    /// <returns>Обновленный по id элемент</returns>
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ClassPostDto @class)
-    {
-        var diaryClass = _diaryRepository.Classes.FirstOrDefault(obj => obj.Id == id);
-        if (diaryClass == null)
+        if (_context.Classes == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
-            return NotFound();
+            return Problem("Entity set 'SchoolDbContext.Class'  is null.");
         }
-        else
-        {
-            _mapper.Map(@class, diaryClass);
-            return Ok();
-        }
+        var mappedClass = _mapper.Map<Class>(@class);
+
+        _context.Classes.Add(mappedClass);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostClass", new { id = mappedClass.Id }, _mapper.Map<ClassGetDto>(mappedClass));
     }
-    
+
     /// <summary>
-    /// Метод удаления элемента по id
+    /// Удаление класса
     /// </summary>
-    /// <param name="id">id объекта</param>
-    /// <returns>Успех или ошибка удаления</returns>
+    /// <param name="id">Идентификатор удаляемого класса</param>
+    /// <returns>Результат выполнения операции</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> DeleteClass(int id)
     {
-        var diaryClass = _diaryRepository.Classes.FirstOrDefault(obj => obj.Id == id);
-        if (diaryClass == null)
+        if (_context.Classes == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var @class = await _context.Classes.FindAsync(id);
+        if (@class == null)
         {
-            _diaryRepository.Classes.Remove(diaryClass);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Classes.Remove(@class);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
-    
 }
+

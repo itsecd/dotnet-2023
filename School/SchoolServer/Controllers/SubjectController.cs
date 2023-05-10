@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using School.Classes;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
@@ -13,81 +14,125 @@ namespace SchoolServer.Controllers;
 [ApiController]
 public class SubjectController : ControllerBase
 {
-    private readonly ILogger<SubjectController> _logger;
-
-    private readonly ISchoolRepository _diaryRepository;
+    private readonly SchoolDbContext _context;
 
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор контроллера
+    /// Конструктор SubjectController
     /// </summary>
-    public SubjectController(ILogger<SubjectController> logger, ISchoolRepository diaryRepository, IMapper mapper)
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public SubjectController(SchoolDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _diaryRepository = diaryRepository;
+        _context = context;
         _mapper = mapper;
     }
 
     /// <summary>
-    /// Метод получения данных всей коллекции для предметов
+    /// Получение всех предметов
     /// </summary>
-    /// <returns>Коллекция предметов</returns>
+    /// <returns>Список всех предметов</returns>
     [HttpGet]
-    public IEnumerable<SubjectGetDto> Get()
+    public async Task<ActionResult<IEnumerable<SubjectGetDto>>> GetSubjects()
     {
-        return _diaryRepository.Subjects.Select(subject => _mapper.Map<SubjectGetDto>(subject));
+        if (_context.Subjects == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<SubjectGetDto>(_context.Subjects).ToListAsync();
     }
 
     /// <summary>
-    ///  Метод получения предметов по id
+    /// Получение предмета по id
     /// </summary>
-    /// <param name="id">id предмета</param>
-    /// <returns>Предмет согласно id</returns>
+    /// <param name="id">Идентификатор предмета</param>
+    /// <returns>Школьный предмет</returns>
     [HttpGet("{id}")]
-    public ActionResult<SubjectGetDto> Get(int id)
+    public async Task<ActionResult<SubjectGetDto>> GetSubject(int id)
     {
-        var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
-        if (diarySubject == null)
+        if (_context.Subjects == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var subject = await _context.Subjects.FindAsync(id);
+
+        if (subject == null)
         {
-            return Ok(_mapper.Map<SubjectGetDto>(diarySubject));
+            return NotFound();
         }
+
+        return _mapper.Map<SubjectGetDto>(subject);
     }
 
     /// <summary>
-    /// Метод добавления предмета с помощью json
+    /// Изменение данных о школьном предмете
     /// </summary>
-    /// <param name="subject">Параметр добавления элемента</param>
+    /// <param name="id">Идентификатор предмета</param>
+    /// <param name="subject">Изменяемый предмет</param>
+    /// <returns>Результат выполнения операции</returns>
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutSubject(int id, SubjectPostDto subject)
+    {
+        if (_context.Subjects == null)
+        {
+            return NotFound();
+        }
+
+        var subjectToModify = await _context.Subjects.FindAsync(id);
+        if (subjectToModify == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(subject, subjectToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Добавление нового предмета
+    /// </summary>
+    /// <param name="subject">предмет</param>
+    /// <returns>Созданный предмет</returns>
     [HttpPost]
-    public void Post([FromBody] SubjectGetDto subject)
+    public async Task<ActionResult<SubjectGetDto>> PostSubject(SubjectPostDto subject)
     {
-        _diaryRepository.Subjects.Add(_mapper.Map<Subject>(subject));
+        if (_context.Subjects == null)
+        {
+            return Problem("Entity set 'DiaryDomainDbContext.Subjects'  is null.");
+        }
+        var mappedSubject = _mapper.Map<Subject>(subject);
+
+        _context.Subjects.Add(mappedSubject);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostSubject", new { id = mappedSubject.Id }, _mapper.Map<SubjectGetDto>(mappedSubject));
     }
 
-
     /// <summary>
-    /// Метод удаления предмета по id
+    /// Удаление предмета
     /// </summary>
-    /// <param name="id">id для удаления предмета</param>
-    /// <returns>Успех или ошибка удаления</returns>
+    /// <param name="id">Идентификатор удаляемого предмета</param>
+    /// <returns>Результат выполнения операции</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> DeleteSubject(int id)
     {
-        var diarySubject = _diaryRepository.Subjects.FirstOrDefault(subject => subject.Id == id);
-        if (diarySubject == null)
+        if (_context.Subjects == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var subject = await _context.Subjects.FindAsync(id);
+        if (subject == null)
         {
-            _diaryRepository.Subjects.Remove(diarySubject);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Subjects.Remove(subject);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

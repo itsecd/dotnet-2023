@@ -1,115 +1,145 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using School.Classes;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolServer.Controllers;
 
 /// <summary>
-/// Контроллер студента
+/// Студенты
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class StudentController : ControllerBase
 {
-    private readonly ILogger<StudentController> _logger;
-
-    private readonly ISchoolRepository _diaryRepository;
+    private readonly SchoolDbContext _context;
 
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор контроллера
+    /// Конструктор класса StudentsController
     /// </summary>
-    public StudentController(ILogger<StudentController> logger, ISchoolRepository diaryRepository, IMapper mapper)
-    {   
-        _logger = logger;
-        _diaryRepository = diaryRepository;
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public StudentController(SchoolDbContext context, IMapper mapper)
+    {
+        _context = context;
         _mapper = mapper;
     }
 
     /// <summary>
-    ///  Метод получения данных всей коллекции для студентов
+    /// Получение всех студентов
     /// </summary>
-    /// <returns>Коллекция студентов</returns>
+    /// <returns>Список всех студентов</returns>
     [HttpGet]
-    public IEnumerable<StudentGetDto> Get()
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetStudents()
     {
-        return _diaryRepository.Students.Select(student => _mapper.Map<StudentGetDto>(student));
+        if (_context.Students == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<StudentGetDto>(_context.Students).ToListAsync();
     }
 
     /// <summary>
-    /// Метод получения студента по id
+    /// Получение студента по id
     /// </summary>
-    /// <param name="id">id студента</param>
-    /// <returns>Студент по id</returns>
+    /// <param name="id">Идентификатор студента</param>
+    /// <returns>Студент</returns>
     [HttpGet("{id}")]
-    public ActionResult<StudentGetDto> Get(int id)
+    public async Task<ActionResult<StudentGetDto>> GetStudent(int id)
     {
-        var diaryStudent = _diaryRepository.Students.FirstOrDefault(subject => subject.Id == id);
-        if (diaryStudent == null)
+        if (_context.Students == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var student = await _context.Students.FindAsync(id);
+
+        if (student == null)
         {
-            return Ok(_mapper.Map<StudentGetDto>(diaryStudent));
+            return NotFound();
         }
+
+        return _mapper.Map<StudentGetDto>(student);
     }
 
     /// <summary>
-    /// Метод добавления студента с помощью json
+    /// Изменение данных выбранного студента
     /// </summary>
-    /// <param name="student">параметр добавления</param>
-    [HttpPost]
-    public void Post([FromBody] StudentGetDto student)
-    {
-        _diaryRepository.Students.Add(_mapper.Map<Student>(student));
-    }
-
-    /// <summary>
-    /// Метод обновления студента по id 
-    /// </summary>
-    /// <param name="id">id студента</param>
-    /// <param name="student">Объект класса Student</param>
-    /// <returns>Обновленное значение по id</returns>
+    /// <param name="id">Идентификатор студента</param>
+    /// <param name="student">Студент, данные которого нужно изменить</param>
+    /// <returns>Результат выполнения операции</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] StudentGetDto student)
+    public async Task<IActionResult> PutStudent(int id, StudentPostDto student)
     {
-        var diaryStudent = _diaryRepository.Students.FirstOrDefault(stud => stud.Id == id);
-        if (diaryStudent == null)
+        if (_context.Students == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+
+        var studentToModify = await _context.Students.FindAsync(id);
+        if (studentToModify == null)
         {
-            _mapper.Map(student, diaryStudent);
-            return Ok();
+            return NotFound();
         }
+
+        _mapper.Map(student, studentToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
-    /// Метод удаления студента по id
+    /// Добавление нового студента
     /// </summary>
-    /// <param name="id">id студента</param>
-    /// <returns>Успех или ошибка удаления</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <param name="student">студент</param>
+    /// <returns>Добавленный студент</returns>
+    [HttpPost]
+    public async Task<ActionResult<StudentGetDto>> PostStudent(StudentPostDto student)
     {
-        var diaryStudent = _diaryRepository.Students.FirstOrDefault(subject => subject.Id == id);
-        if (diaryStudent == null)
+        if (_context.Students == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
+            return Problem("Entity set 'DiaryDomainDbContext.Students'  is null.");
+        }
+
+        var mappedStudent = _mapper.Map<Student>(student);
+
+        _context.Students.Add(mappedStudent);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostStudent", new { id = mappedStudent.Id }, _mapper.Map<StudentGetDto>(mappedStudent));
+    }
+
+    /// <summary>
+    /// Удаление студента
+    /// </summary>
+    /// <param name="id">Идентификатор студента </param>
+    /// <returns>Результат выполнения операции</returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteStudent(int id)
+    {
+        if (_context.Students == null)
+        {
             return NotFound();
         }
-        else
+        var student = await _context.Students.FindAsync(id);
+        if (student == null)
         {
-            _diaryRepository.Students.Remove(diaryStudent);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Students.Remove(student);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
 }

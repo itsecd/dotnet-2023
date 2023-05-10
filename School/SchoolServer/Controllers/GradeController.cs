@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using School.Classes;
 using SchoolServer.Dto;
 using SchoolServer.Repository;
@@ -7,107 +8,131 @@ using SchoolServer.Repository;
 namespace SchoolServer.Controllers;
 
 /// <summary>
-/// Контроллер оценок
+/// Оценки
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class GradeController : ControllerBase
 {
-    private readonly ILogger<GradeController> _logger;
-
-    private readonly ISchoolRepository _diaryRepository;
+    private readonly SchoolDbContext _context;
 
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор контроллера
+    /// Конструктор класса GradeController
     /// </summary>
-    public GradeController(ILogger<GradeController> logger, ISchoolRepository diaryRepository, IMapper mapper)
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public GradeController(SchoolDbContext context, IMapper mapper)
     {
-        _logger = logger;
-        _diaryRepository = diaryRepository;
+        _context = context;
         _mapper = mapper;
     }
 
     /// <summary>
-    /// Метод получения данных всей коллекции для оценок
+    /// Получение всех оценок
     /// </summary>
-    /// <returns>Коллекция оценок учеников</returns>
+    /// <returns>Список всех оценок</returns>
     [HttpGet]
-    public IEnumerable<GradeGetDto> Get()
+    public async Task<ActionResult<IEnumerable<GradeGetDto>>> GetGrades()
     {
-        return _diaryRepository.Grades.Select(grade => _mapper.Map<GradeGetDto>(grade));
+        if (_context.Grades == null)
+        {
+            return NotFound();
+        }
+        return await _mapper.ProjectTo<GradeGetDto>(_context.Grades).ToListAsync();
     }
 
     /// <summary>
-    /// Метод получения оценок по id
+    /// Получение оценки по id
     /// </summary>
-    /// <param name="id">id объекта(оценки)</param>
-    /// <returns>Оценку и параметры согласно id</returns>
+    /// <param name="id">Идентификатор оценки</param>
+    /// <returns>Оценка</returns>
     [HttpGet("{id}")]
-    public ActionResult<GradeGetDto> Get(int id)
+    public async Task<ActionResult<GradeGetDto>> GetGrade(int id)
     {
-        var diaryGrade = _diaryRepository.Grades.FirstOrDefault(grade => grade.Id == id);
-        if (diaryGrade == null)
+        if (_context.Grades == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+        var grade = await _context.Grades.FindAsync(id);
+
+        if (grade == null)
         {
-            return Ok(_mapper.Map<GradeGetDto>(diaryGrade));
+            return NotFound();
         }
+
+        return _mapper.Map<GradeGetDto>(grade);
     }
 
     /// <summary>
-    /// Метод добавления элементов в коллекцию с помощью json
+    /// Измененеие данных об оценке
     /// </summary>
-    /// <param name="grade">Параметр добавления</param>
-    [HttpPost]
-    public void Post([FromBody] GradeGetDto grade)
-    {
-        _diaryRepository.Grades.Add(_mapper.Map<Grade>(grade));
-    }
-
-    /// <summary>
-    /// Метод обновления данных по id
-    /// </summary>
-    /// <param name="id">Параметр по которому происходит изменение</param>
-    /// <param name="grade">Параметр изменения</param>
-    /// <returns>Обновленные данные по id</returns>
+    /// <param name="id">Идентификатор класса</param>
+    /// <param name="grade">Изменяемая оценка</param>
+    /// <returns>Результат выполнения операции</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] GradeGetDto grade)
+    public async Task<IActionResult> PutGrade(int id, GradePostDto grade)
     {
-        var diaryGrade = _diaryRepository.Grades.FirstOrDefault(grade => grade.Id == id);
-        if (diaryGrade == null)
+        if (_context.Grades == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
             return NotFound();
         }
-        else
+
+        var gradeToModify = await _context.Grades.FindAsync(id);
+        if (gradeToModify == null)
         {
-            _mapper.Map(grade, diaryGrade);
-            return Ok();
+            return NotFound();
         }
+
+        _mapper.Map(grade, gradeToModify);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     /// <summary>
-    /// Метод удаления данных по id
+    /// Добавление новой оценки
     /// </summary>
-    /// <returns>Успех или ошибка удаления</returns>
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    /// <param name="grade">оценка</param>
+    /// <returns>Созданная оценка</returns>
+    [HttpPost]
+    public async Task<ActionResult<GradeGetDto>> PostGrade(GradePostDto grade)
     {
-        var diaryGrade = _diaryRepository.Grades.FirstOrDefault(grade => grade.Id == id);
-        if (diaryGrade == null)
+        if (_context.Grades == null)
         {
-            _logger.LogInformation("Not Found class with id = {id}", id);
+            return Problem("Entity set 'DiaryDomainDbContext.Grades'  is null.");
+        }
+        var mappedGrade = _mapper.Map<Grade>(grade);
+
+        _context.Grades.Add(mappedGrade);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("PostGrade", new { id = mappedGrade.Id }, _mapper.Map<GradeGetDto>(mappedGrade));
+    }
+
+    /// <summary>
+    /// Удаление оценки
+    /// </summary>
+    /// <param name="id">Идентификатор удаляемой оценки</param>
+    /// <returns>Результат выполнения операции</returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteGrade(int id)
+    {
+        if (_context.Grades == null)
+        {
             return NotFound();
         }
-        else
+        var grade = await _context.Grades.FindAsync(id);
+        if (grade == null)
         {
-            _diaryRepository.Grades.Remove(diaryGrade);
-            return Ok();
+            return NotFound();
         }
+
+        _context.Grades.Remove(grade);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

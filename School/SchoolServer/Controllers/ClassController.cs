@@ -19,7 +19,7 @@ public class ClassController : ControllerBase
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор ClassesController
+    /// Конструктор ClassController
     /// </summary>
     /// <param name="context"></param>
     /// <param name="mapper"></param>

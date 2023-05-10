@@ -1,30 +1,57 @@
-﻿namespace School.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace School.Classes;
+
+/// <summary>
+/// Класс содержащий информацию об оценке
+/// </summary>
+[Table("grades")]
 public class Grade
 {
     /// <summary>
-    /// ID
+    /// Идентификатор
     /// </summary>
+    [Column("id")]
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
-    /// Subject
+    /// Идентификатор предмета
     /// </summary>
-    public Subject? Subject { get; set; }
+    [Column("subject_id")]
+    public int SubjectId { get; set; }
 
     /// <summary>
-    /// Student
+    /// Предмет для внешнего ключа
     /// </summary>
-    public Student? Student { get; set; }
+    [ForeignKey("SubjectId")]
+    public Subject Subject { get; set; } = null;
 
     /// <summary>
-    /// Mark
+    /// Идентификатор студента с данной оценкой
     /// </summary>
+    [Column("student_id")]
+    public int StudentId { set; get; }
+
+    /// <summary>
+    /// Студент для внешнего ключа
+    /// </summary>
+    [ForeignKey("StudentId")]
+    public Student Student { get; set; } = null;
+
+    /// <summary>
+    /// Оценка
+    /// </summary>
+    [Column("mark")]
+    [Required]
     public int Mark { get; set; }
 
     /// <summary>
-    /// Date of assessment
+    /// Дата выставления оценки
     /// </summary>
+    [Column("date")]
+    [Required]
     public DateTime Date { get; set; }
 
     public Grade() { }

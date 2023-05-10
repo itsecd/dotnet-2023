@@ -1,24 +1,37 @@
-﻿namespace School.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace School.Classes;
+
+/// <summary>
+/// Класс учебного заведения
+/// </summary>
+[Table("classes")]
 public class Class
 {
     /// <summary>
-    /// Class ID
-    /// </summary>
+    /// Идентификатор класса
+    /// </summary> 
+    [Column("id")]
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
-    /// Number of class
+    /// Номер класса
     /// </summary>
+    [Column("number")]
+    [Required]
     public int Number { get; set; }
 
     /// <summary>
-    /// Class letter
+    /// Литера класса
     /// </summary>
+    [Column("letter")]
+    [Required]
     public char Letter { get; set; }
 
     /// <summary>
-    /// List of students in this class
+    /// Список студентов в данном классе
     /// </summary>
     public List<Student>? Students { get; set; }
 

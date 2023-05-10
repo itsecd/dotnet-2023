@@ -1,24 +1,38 @@
-﻿namespace School.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+
+namespace School.Classes;
+
+/// <summary>
+/// Предметы
+/// </summary>
+[Table("subjects")]
 public class Subject
 {
     /// <summary>
-    /// ID
+    /// Идентификатор
     /// </summary>
+    [Column("id")]
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
-    /// Name of the subject
+    /// Наименование предмета
     /// </summary>
+    [Column("name")]
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Year of study
+    /// Год обучения
     /// </summary>
+    [Column("year")]
+    [Required]
     public int Year { get; set; }
 
     /// <summary>
-    /// List of grades in this subject
+    /// Список оценок по данному предмету
     /// </summary>
     public List<Grade>? Grades { get; set; }
 

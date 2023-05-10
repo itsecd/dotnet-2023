@@ -1,44 +1,70 @@
-﻿namespace School.Classes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace School.Classes;
+
+/// <summary>
+/// Класс Студент
+/// </summary>
+[Table("students")]
 public class Student
 {
     /// <summary>
-    /// ID
+    /// Идентификатор
     /// </summary>
+    [Column("id")]
+    [Key]
     public int Id { get; set; }
 
     /// <summary>	
-    /// Name
+    /// Имя
     /// </summary>	
+    [Column("first_name")]
+    [Required]
     public string FirstName { get; set; } = string.Empty;
 
     /// <summary>	
-    /// Surname	
+    /// Фамилия	
     /// </summary>	
+    [Column("last_name")]
+    [Required]
     public string LastName { get; set; } = string.Empty;
 
     /// <summary>	
-    /// Patronymic
+    /// Отчество
     /// </summary>
+    [Column("patronymic")]
     public string Patronymic { get; set; } = string.Empty;
 
     /// <summary>
-    /// Passport data
+    /// Паспортные данные
     /// </summary>
+    [Column("passport")]
+    [Required]
     public string Passport { get; set; } = string.Empty;
 
     /// <summary>
-    /// Student class
+    /// Класс студента
     /// </summary>
-    public Class? Class { get; set; }
+    [Column("class_id")]
+    [Required]
+    public int ClassId { get; set; }
 
     /// <summary>
-    /// Date of birth
+    /// Класс для внешнего ключа
     /// </summary>
+    [ForeignKey("ClassId")]
+    public Class Class { get; set; }
+
+    /// <summary>
+    /// Дата рождения
+    /// </summary>
+    [Column("date_birth")]
+    [Required]
     public DateTime BirthDate { get; set; }
 
     /// <summary>
-    /// List of student's grades
+    /// Список оценок у студента
     /// </summary>
     public List<Grade>? Grades { get; set; }
 

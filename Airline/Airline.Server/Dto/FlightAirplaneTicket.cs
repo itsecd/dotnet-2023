@@ -6,15 +6,19 @@
 public class FlightAirplaneTicketPostDto
 {
     /// <summary>
-    /// Represent ticket number
+    /// Represent id
     /// </summary>
-    public int? Number { get; set; }
+    public int? Id { get; set; }
     /// <summary>
-    /// Represent seat number
+    /// Represent Flight id
     /// </summary>
-    public string SeatNumber { get; set; }
+    public string FlightId { get; set; }
     /// <summary>
-    /// Represent baggage weight
+    /// Represent Airplane id
     /// </summary>
-    public double BaggageWeight { get; set; }
+    public double AirplaneId { get; set; }
+    /// <summary>
+    /// Represent Ticket id
+    /// </summary>
+    public double TicketId { get; set; }
 }

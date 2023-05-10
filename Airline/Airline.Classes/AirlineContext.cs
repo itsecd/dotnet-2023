@@ -2,26 +2,50 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineClasses;
+
+/// <summary>
+/// Class AirlineContext connecting with database
+/// </summary>
 public class AirlineContext : DbContext
 {
+    /// <summary>
+    /// Ticket data set
+    /// </summary>
     public DbSet<Ticket>? Tickets;
-
+    /// <summary>
+    /// Passenger data set
+    /// </summary>
     public DbSet<Passenger>? Passengers;
-
+    /// <summary>
+    /// Flight data set
+    /// </summary>
     public DbSet<Flight>? Flights;
-
+    /// <summary>
+    /// Airplane data set
+    /// </summary>
     public DbSet<Airplane>? Airplanes;
-
+    /// <summary>
+    /// Airline data set
+    /// </summary>
     public DbSet<Airline>? Airlines;
-
+    /// <summary>
+    /// FlightAirplaneTicket data set
+    /// </summary>
     public DbSet<FlightAirplaneTicket>? FlightAirplaneTickets;
 
-
+    /// <summary>
+    /// Database creating
+    /// </summary>
+    /// <param name="options"></param>
     public AirlineContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
 
+    /// <summary>
+    /// Values to the database
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 

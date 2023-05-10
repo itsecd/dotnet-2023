@@ -85,7 +85,7 @@ public class EnrolleeController : Controller
     {
         if (await _selectionCommitteeRepository.GetSpecialization(enrollee.SpecializationId) == null)
         {
-            return BadRequest("Специальность с указанным идентифиатором не найдена!");
+            return BadRequest("Специальность с указанным идентификатором не найдена!");
         }
 
         return Ok(await _selectionCommitteeRepository.AddEnrollee(new Enrollee
@@ -117,7 +117,7 @@ public class EnrolleeController : Controller
 
         if (await _selectionCommitteeRepository.GetSpecialization(enrolleeDtoPostOrPut.SpecializationId) == null)
         {
-            return BadRequest("Специальность с указанным идентифиатором не найдена!");
+            return BadRequest("Специальность с указанным идентификатором не найдена!");
         }
 
         await _selectionCommitteeRepository.UpdateEnrollee(id, new Enrollee

@@ -130,7 +130,7 @@ public class SpecializationController : Controller
 
         if (specialization == null)
         {
-            return NotFound("Специальность с указанным идентификатором не найден!");
+            return NotFound("Специальность с указанным идентификатором не найдена!");
         }
 
         await _selectionCommitteeRepository.DeleteSpecialization(id);

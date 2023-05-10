@@ -1,5 +1,4 @@
-﻿
-namespace SelectionCommittee.Server.Controllers.Specializations.Dto;
+﻿namespace SelectionCommittee.Server.Controllers.Specializations.Dto;
 
 /// <summary>
 /// Dto для Post и Put операций сущности специальности.

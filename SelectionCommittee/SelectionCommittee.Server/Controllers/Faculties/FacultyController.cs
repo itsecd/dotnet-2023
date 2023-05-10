@@ -89,7 +89,7 @@ public class FacultyController : Controller
 
         if (faculty == null)
         {
-            return NotFound("Факультут с указанным идентификатором не найден!");
+            return NotFound("Факультет с указанным идентификатором не найден!");
         }
 
         await _selectionCommitteeRepository.UpdateFaculty(id, new Faculty

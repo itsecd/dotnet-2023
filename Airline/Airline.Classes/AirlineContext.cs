@@ -11,27 +11,27 @@ public class AirlineContext : DbContext
     /// <summary>
     /// Ticket data set
     /// </summary>
-    public DbSet<Ticket>? Tickets;
+    public DbSet<Ticket> Tickets;
     /// <summary>
     /// Passenger data set
     /// </summary>
-    public DbSet<Passenger>? Passengers;
+    public DbSet<Passenger> Passengers;
     /// <summary>
     /// Flight data set
     /// </summary>
-    public DbSet<Flight>? Flights;
+    public DbSet<Flight> Flights;
     /// <summary>
     /// Airplane data set
     /// </summary>
-    public DbSet<Airplane>? Airplanes;
+    public DbSet<Airplane> Airplanes;
     /// <summary>
     /// Airline data set
     /// </summary>
-    public DbSet<Airline>? Airlines;
+    public DbSet<Airline> Airlines;
     /// <summary>
     /// FlightAirplaneTicket data set
     /// </summary>
-    public DbSet<FlightAirplaneTicket>? FlightAirplaneTickets;
+    public DbSet<FlightAirplaneTicket> FlightAirplaneTickets;
 
     /// <summary>
     /// Database creating
@@ -48,6 +48,7 @@ public class AirlineContext : DbContext
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Airplane>().HasData(
             new Airplane(1, "Tu-134", 100, 50, 70),

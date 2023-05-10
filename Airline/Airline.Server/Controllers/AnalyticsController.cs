@@ -75,7 +75,7 @@ public class AnalyticsController : ControllerBase
 
         var result = await (from flight in context.Flights
                             where flight.DeparturePlace == source && flight.Destination == destination
-                            select _mapper.Map<FlightGetDto>(flight)).ToListAsync(); ;
+                            select _mapper.Map<FlightGetDto>(flight)).ToListAsync(); 
 
         return Ok(result);
     }

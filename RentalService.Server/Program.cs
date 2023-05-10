@@ -6,7 +6,7 @@ using RentalService.Server.Repository;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<RentalServiceDbContext>(options => 
+builder.Services.AddDbContext<RentalServiceDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("RentalService")!));
 
 builder.Services.AddSingleton<IRentalServiceRepository, RentalServiceRepository>();

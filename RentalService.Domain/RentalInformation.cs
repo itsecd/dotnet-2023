@@ -21,12 +21,6 @@ public class RentalInformation
     public ulong RentalPointId { get; set; }
 
     /// <summary>
-    ///     RentalPoint - connection with the rental point
-    /// </summary>
-    public RentalPoint RentalPoint { get; set; }
-
-
-    /// <summary>
     ///     RentalDate - when the car was rented
     /// </summary>
     [Column("rental_date")]

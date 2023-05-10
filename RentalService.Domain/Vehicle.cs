@@ -23,7 +23,7 @@ public class Vehicle
     /// <summary>
     ///     Model - contains the identifier of the car model
     /// </summary>
-    [Column("model_id")]
+    [Column("vehicle_model_id")]
     public ulong VehicleModelId { get; set; }
 
     /// <summary>

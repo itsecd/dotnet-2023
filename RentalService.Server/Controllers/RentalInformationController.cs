@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
-using RentalService.Server.Repository;
 
 namespace RentalService.Server.Controllers;
 
@@ -14,8 +13,8 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class RentalInformationController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly RentalServiceDbContext _context;
+    private readonly IMapper _mapper;
 
     public RentalInformationController(RentalServiceDbContext context, IMapper mapper)
     {
@@ -29,11 +28,11 @@ public class RentalInformationController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RentalInformation>>> Get()
     {
-        //return _rentalServiceRepository.RentalInformations;
         if (_context.RentalInformations == null)
         {
             return NotFound();
         }
+
         return await _context.RentalInformations.ToListAsync();
     }
 
@@ -43,20 +42,12 @@ public class RentalInformationController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<RentalInformation>> Get(ulong id)
     {
-        /*RentalInformation? rentalInformation =
-            _rentalServiceRepository.RentalInformations.FirstOrDefault(rentalInformation => rentalInformation.Id == id);
-        if (rentalInformation == null)
-        {
-            _logger.LogInformation($"Not found rentalInformation: {id}");
-            return NotFound();
-        }
-
-        return Ok(rentalInformation);*/
         if (_context.RentalInformations == null)
         {
             return NotFound();
         }
-        var rentalInformation = await _context.RentalInformations.FindAsync(id);
+
+        RentalInformation? rentalInformation = await _context.RentalInformations.FindAsync(id);
 
         if (rentalInformation == null)
         {
@@ -70,16 +61,15 @@ public class RentalInformationController : ControllerBase
     ///     Post method which add new rental information
     /// </summary>
     [HttpPost]
-    public async  Task<ActionResult<RentalInformation>> Post([FromBody] RentalInformationPostDto rentalInformation)
+    public async Task<ActionResult<RentalInformation>> Post([FromBody] RentalInformationPostDto rentalInformation)
     {
-        //_rentalServiceRepository.RentalInformations.Add(_mapper.Map<RentalInformation>(rentalInformation));
         if (_context.RentalInformations == null)
         {
             return Problem("Entity set 'DataBaseContext.RentalInformations'  is null.");
         }
 
-        var mappedRentalInformation = _mapper.Map<RentalInformation>(rentalInformation);
-        
+        RentalInformation? mappedRentalInformation = _mapper.Map<RentalInformation>(rentalInformation);
+
         _context.RentalInformations.Add(mappedRentalInformation);
         await _context.SaveChangesAsync();
 
@@ -93,22 +83,12 @@ public class RentalInformationController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, [FromBody] RentalInformationPostDto rentalInformationToPut)
     {
-        /*RentalInformation? rentalInformation =
-            _rentalServiceRepository.RentalInformations.FirstOrDefault(rentalInformation => rentalInformation.Id == id);
-        if (rentalInformation == null)
-        {
-            _logger.LogInformation("Not found rentalInformation: {id}", id);
-            return NotFound();
-        }
-
-        _mapper.Map(rentalInformationToPut, rentalInformation);
-        return Ok();*/
         if (_context.RentalInformations == null)
         {
             return NotFound();
         }
-        
-        var rentalInformationToModify = await _context.RentalInformations.FindAsync(id);
+
+        RentalInformation? rentalInformationToModify = await _context.RentalInformations.FindAsync(id);
 
         if (rentalInformationToModify == null)
         {
@@ -127,21 +107,12 @@ public class RentalInformationController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        /*RentalInformation? rentalInformation =
-            _rentalServiceRepository.RentalInformations.FirstOrDefault(rentalInformation => rentalInformation.Id == id);
-        if (rentalInformation == null)
-        {
-            _logger.LogInformation($"Not found rentalInformation: {id}");
-            return NotFound();
-        }
-
-        _rentalServiceRepository.RentalInformations.Remove(rentalInformation);
-        return Ok();*/
         if (_context.RentalInformations == null)
         {
             return NotFound();
         }
-        var rentalInformation = await _context.RentalInformations.FindAsync(id);
+
+        RentalInformation? rentalInformation = await _context.RentalInformations.FindAsync(id);
         if (rentalInformation == null)
         {
             return NotFound();

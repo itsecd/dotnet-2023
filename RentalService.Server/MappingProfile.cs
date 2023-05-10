@@ -12,15 +12,16 @@ public class MappingProfile : Profile
         CreateMap<VehiclePostDto, Vehicle>().ReverseMap();
 
         CreateMap<RentalPoint, RentalPointGetDto>();
-        CreateMap<RentalPointPostDto, RentalPoint>().ReverseMap();;
+        CreateMap<RentalPointPostDto, RentalPoint>().ReverseMap();
+        ;
 
         CreateMap<Client, ClientGetDto>();
         CreateMap<ClientPostDto, Client>().ReverseMap();
-        
+
         CreateMap<RefundInformationPostDto, RefundInformation>().ReverseMap();
-        
+
         CreateMap<RentalInformationPostDto, RentalInformation>().ReverseMap();
-        
+
         CreateMap<IssuedCarPostDto, IssuedCar>().ReverseMap();
 
         CreateMap<VehicleModel, VehicleModelGetDto>();

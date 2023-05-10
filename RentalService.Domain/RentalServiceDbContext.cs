@@ -307,10 +307,10 @@ public class RentalServiceDbContext : DbContext
             new()
             {
                 Id = 6,
-                ClientId = 5,
-                VehicleId = 5,
+                ClientId = 2,
+                VehicleId = 1,
                 RefundInformationId = null,
-                RentalInformationId = 5
+                RentalInformationId = 2
             }
         });
     }

@@ -21,11 +21,6 @@ public class RefundInformation
     public ulong RentalPointId { get; set; }
 
     /// <summary>
-    ///     RentalPoint - connection with the rental point
-    /// </summary>
-    public RentalPoint RentalPoint { get; set; }
-
-    /// <summary>
     ///     RefundDate - when the car was rented
     /// </summary>
     [Column("refund_date")]

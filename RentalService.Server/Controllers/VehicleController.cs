@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
-using RentalService.Server.Repository;
 
 namespace RentalService.Server.Controllers;
 
@@ -14,8 +13,8 @@ namespace RentalService.Server.Controllers;
 [ApiController]
 public class VehicleController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly RentalServiceDbContext _context;
+    private readonly IMapper _mapper;
 
     public VehicleController(RentalServiceDbContext context, IMapper mapper)
     {
@@ -29,11 +28,11 @@ public class VehicleController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<VehicleGetDto>>> Get()
     {
-        //return _rentalServiceRepository.Vehicles.Select(vehicle => _mapper.Map<VehicleGetDto>(vehicle));
         if (_context.Vehicles == null)
         {
             return NotFound();
         }
+
         return await _mapper.ProjectTo<VehicleGetDto>(_context.Vehicles).ToListAsync();
     }
 
@@ -43,19 +42,12 @@ public class VehicleController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<VehicleGetDto>> Get(ulong id)
     {
-        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
-        if (vehicle == null)
-        {
-            _logger.LogInformation($"Not found vehicle: {id}");
-            return NotFound();
-        }
-
-        return Ok(_mapper.Map<VehicleGetDto>(vehicle));*/
         if (_context.Vehicles == null)
         {
             return NotFound();
         }
-        var vehicle = await _context.Vehicles.FindAsync(id);
+
+        Vehicle? vehicle = await _context.Vehicles.FindAsync(id);
 
         if (vehicle == null)
         {
@@ -71,14 +63,13 @@ public class VehicleController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<VehicleGetDto>> Post([FromBody] VehiclePostDto vehicle)
     {
-        //_rentalServiceRepository.Vehicles.Add(_mapper.Map<Vehicle>(vehicle));
         if (_context.Vehicles == null)
         {
             return Problem("Entity set 'DataBaseContext.Vehicles'  is null.");
         }
 
-        var mappedVehicle = _mapper.Map<Vehicle>(vehicle);
-        
+        Vehicle? mappedVehicle = _mapper.Map<Vehicle>(vehicle);
+
         _context.Vehicles.Add(mappedVehicle);
         await _context.SaveChangesAsync();
 
@@ -91,22 +82,12 @@ public class VehicleController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, [FromBody] VehiclePostDto vehicleToPut)
     {
-        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
-        if (vehicle == null)
-        {
-            _logger.LogInformation("Not found vehicle: {id}", id);
-            return NotFound();
-        }
-
-        _mapper.Map(vehicleToPut, vehicle);
-
-        return Ok();*/
         if (_context.Vehicles == null)
         {
             return NotFound();
         }
-        
-        var vehicleToModify = await _context.Vehicles.FindAsync(id);
+
+        Vehicle? vehicleToModify = await _context.Vehicles.FindAsync(id);
 
         if (vehicleToModify == null)
         {
@@ -125,20 +106,12 @@ public class VehicleController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        /*Vehicle? vehicle = _rentalServiceRepository.Vehicles.FirstOrDefault(vehicle => vehicle.Id == id);
-        if (vehicle == null)
-        {
-            _logger.LogInformation($"Not found vehicle: {id}");
-            return NotFound();
-        }
-
-        _rentalServiceRepository.Vehicles.Remove(vehicle);
-        return Ok();*/
         if (_context.Vehicles == null)
         {
             return NotFound();
         }
-        var vehicle = await _context.Vehicles.FindAsync(id);
+
+        Vehicle? vehicle = await _context.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             return NotFound();

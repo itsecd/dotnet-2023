@@ -25,9 +25,11 @@ public class Vehicle
     /// </summary>
     [Column("model_id")]
     public ulong VehicleModelId { get; set; }
-    
-    //public VehicleModel VehicleModel { get; set; }
 
+    /// <summary>
+    ///     VehicleModel - connection with the car model
+    /// </summary>
+    public VehicleModel VehicleModel { get; set; }
 
     /// <summary>
     ///     Colour - car colour

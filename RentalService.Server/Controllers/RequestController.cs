@@ -1,5 +1,6 @@
-/*using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentalService.Domain;
 using RentalService.Server.Dto;
 using RentalService.Server.Repository;
@@ -15,11 +16,13 @@ public class RequestController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly RentalServiceDbContext _context;
+    private readonly ILogger<ClientController> _logger;
 
-    public RequestController(RentalServiceDbContext context, IMapper mapper)
+    public RequestController(RentalServiceDbContext context, IMapper mapper, ILogger<ClientController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -29,20 +32,24 @@ public class RequestController : ControllerBase
     ///     Return list of vehicles
     /// </returns>
     [HttpGet("vehicles")]
-    public IActionResult GetVehicles()
+    public async Task<ActionResult<IEnumerable<VehicleGetDto>>> GetVehicles()
     {
-        List<Vehicle> vehicles = _rentalServiceRepository.Vehicles;
-
-        var query = (from vehicle in vehicles
-            select _mapper.Map<VehicleGetDto>(vehicle)).ToList();
+        var query = await ((from vehicle in _context.Vehicles
+            select new
+            {
+                vehicle.Id,
+                vehicle.Colour,
+                vehicle.VehicleModel.Model,
+                vehicle.VehicleModel.Brand,
+                vehicle.Number
+            }).ToListAsync());
 
         if (query.Count == 0)
         {
             _logger.LogInformation("Not found vehicles");
             return NotFound();
         }
-
-        _logger.LogInformation("Get vehicles");
+        
         return Ok(query);
     }
 
@@ -53,29 +60,24 @@ public class RequestController : ControllerBase
     ///     List of clients
     /// </returns>
     [HttpGet("clients_by_model_id/{id}")]
-    public IActionResult GetClientsByModelId(ulong id)
+    public async Task<IActionResult> GetClientsByModelId(ulong id)
     {
-        List<Client> clients = _rentalServiceRepository.Clients;
-        List<IssuedCar> issuedCars = _rentalServiceRepository.IssuedCars;
-        List<Vehicle> vehicles = _rentalServiceRepository.Vehicles;
 
-        var query = (from client in clients
-            join issuedCar in issuedCars on client.Id equals issuedCar.ClientId
-            join vehicle in vehicles on issuedCar.VehicleId equals vehicle.Id
-            where vehicle.ModelId == id
+        var query = await ((from client in _context.Clients
+            join issuedCar in _context.IssuedCars on client.Id equals issuedCar.ClientId
+            join vehicle in _context.Vehicles on issuedCar.VehicleId equals vehicle.Id
+            where vehicle.VehicleModel.Id == id
             orderby client.LastName, client.FirstName, client.Patronymic
-            select _mapper.Map<ClientGetDto>(client)).ToList();
+            select _mapper.Map<ClientGetDto>(client)).ToListAsync());
 
         if (query.Count == 0)
         {
             _logger.LogInformation("Not found clients with this id");
             return NotFound();
         }
-
-        _logger.LogInformation("Get clients with this id");
-        return Ok(query);
+        else return Ok(query);
     }
-
+    
     /// <summary>
     ///     Get information about cars that are rented
     /// </summary>
@@ -83,26 +85,31 @@ public class RequestController : ControllerBase
     ///     List of vehicles
     /// </returns>
     [HttpGet("cars_for_rent")]
-    public IActionResult GetCarsForRent()
+    public async Task<IActionResult> GetCarsForRent()
     {
-        List<IssuedCar> issuedCars = _rentalServiceRepository.IssuedCars;
-        List<Vehicle> vehicles = _rentalServiceRepository.Vehicles;
 
-        var query = (from issuedCar in issuedCars
-            join vehicle in vehicles on issuedCar.VehicleId equals vehicle.Id
+
+        var query = await ((from issuedCar in _context.IssuedCars
+            join vehicle in _context.Vehicles on issuedCar.VehicleId equals vehicle.Id
             where issuedCar.RefundInformationId == null
-            select _mapper.Map<VehicleGetDto>(vehicle)).ToList();
+            select new
+            {
+                vehicle.Id,
+                vehicle.Colour,
+                vehicle.VehicleModel.Model,
+                vehicle.VehicleModel.Brand,
+                vehicle.Number
+            }).ToListAsync());
 
         if (query.Count == 0)
         {
             _logger.LogInformation("Not found cars for rent");
             return NotFound();
         }
-
-        _logger.LogInformation("Get cars for rent");
-        return Ok(query);
+        else return Ok(query);
     }
 
+    
     /// <summary>
     ///     Get information about the top 5 most frequently rented cars
     /// </summary>
@@ -110,31 +117,22 @@ public class RequestController : ControllerBase
     ///     List of vehicles
     /// </returns>
     [HttpGet("top_five_frequently_rented_vehicles")]
-    public IActionResult GetTopFiveFrequentlyRentedVehicles()
+    public async Task<IActionResult> GetTopFiveFrequentlyRentedVehicles()
     {
-        List<IssuedCar> issuedCars = _rentalServiceRepository.IssuedCars;
-        List<Vehicle> vehicles = _rentalServiceRepository.Vehicles;
+        
 
-        foreach (Vehicle vehicle in vehicles)
-        {
-            vehicle.RentalCases.Clear();
-        }
-
-        foreach (IssuedCar issuedCar in issuedCars)
-        {
-            vehicles[(int)issuedCar.VehicleId - 1].RentalCases.Add(issuedCar);
-        }
-
-        var query = (from issuedCar in issuedCars
-            join vehicle in vehicles on issuedCar.VehicleId equals vehicle.Id
+        var query = await ((from issuedCar in _context.IssuedCars
+            join vehicle in _context.Vehicles on issuedCar.VehicleId equals vehicle.Id
             orderby vehicle.RentalCases.Count
             select new
             {
-                number = vehicle.Number,
-                modelId = vehicle.ModelId,
-                colour = vehicle.Colour,
-                count = vehicle.RentalCases.Count
-            }).Take(5).Reverse().ToList();
+                vehicle.Id,
+                vehicle.Number,
+                vehicle.VehicleModel.Model,
+                vehicle.VehicleModel.Brand,
+                vehicle.Colour,
+                vehicle.RentalCases.Count
+            }).Take(5).Reverse().ToListAsync());
 
         if (query.Count == 0)
         {
@@ -146,6 +144,7 @@ public class RequestController : ControllerBase
         return Ok(query);
     }
 
+    
     /// <summary>
     ///     Get the number of leases for each car
     /// </summary>
@@ -153,29 +152,19 @@ public class RequestController : ControllerBase
     ///     List of vehicles and rentals count
     /// </returns>
     [HttpGet("number_of_leases_for_each_car")]
-    public IActionResult GetNumberOfCarRentals()
+    public async Task<IActionResult> GetNumberOfCarRentals()
     {
-        List<IssuedCar> issuedCars = _rentalServiceRepository.IssuedCars;
-        List<Vehicle> vehicles = _rentalServiceRepository.Vehicles;
+        
 
-        foreach (Vehicle vehicle in vehicles)
-        {
-            vehicle.RentalCases.Clear();
-        }
-
-        foreach (IssuedCar issuedCar in issuedCars)
-        {
-            vehicles[(int)issuedCar.VehicleId - 1].RentalCases.Add(issuedCar);
-        }
-
-        var query = (from vehicle in vehicles
+        var query = await ((from vehicle in _context.Vehicles
             select new
             {
                 number = vehicle.Number,
-                modelId = vehicle.ModelId,
+                modelId = vehicle.VehicleModel.Model,
+                vehicle.VehicleModel.Brand,
                 colour = vehicle.Colour,
                 rentalCasesCount = vehicle.RentalCases.Count
-            }).ToList();
+            }).ToListAsync());
 
         if (query.Count == 0)
         {
@@ -187,6 +176,7 @@ public class RequestController : ControllerBase
         return Ok(query);
     }
 
+    
     /// <summary>
     ///     Get information about rental locations where cars have been rented the maximum number of times,
     ///     arrange by name
@@ -195,15 +185,13 @@ public class RequestController : ControllerBase
     ///     List of rental points
     /// </returns>
     [HttpGet("top_car_rental_locations")]
-    public IActionResult GetTopCarRentalLocations()
+    public async Task<IActionResult> GetTopCarRentalLocations()
     {
-        List<IssuedCar> issuedCars = _rentalServiceRepository.IssuedCars;
-        List<RentalInformation> rentalInformations = _rentalServiceRepository.RentalInformations;
-        List<RentalPoint> rentalPoints = _rentalServiceRepository.RentalPoints;
+        
 
-        var subquery = (from issuedCar in issuedCars
-            join rentalInformation in rentalInformations on issuedCar.RentalInformationId equals rentalInformation.Id
-            join rentalPoint in rentalPoints on rentalInformation.RentalPointId equals rentalPoint.Id
+        var subquery = await ((from issuedCar in _context.IssuedCars
+            join rentalInformation in _context.RentalInformations on issuedCar.RentalInformationId equals rentalInformation.Id
+            join rentalPoint in _context.RentalPoints on rentalInformation.RentalPointId equals rentalPoint.Id
             group rentalPoint.Id by rentalPoint
             into grp
             select new
@@ -211,7 +199,7 @@ public class RequestController : ControllerBase
                 grp.Key.Title,
                 grp.Key.Address,
                 countOfLeases = grp.Count()
-            }).ToList();
+            }).ToListAsync());
 
         if (subquery.Count == 0)
         {
@@ -234,4 +222,4 @@ public class RequestController : ControllerBase
         _logger.LogInformation("Get rental points");
         return Ok(query);
     }
-}*/
+}

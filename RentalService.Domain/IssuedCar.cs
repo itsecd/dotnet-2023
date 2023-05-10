@@ -19,30 +19,43 @@ public class IssuedCar
     /// </summary>
     [Column("vehicle_id")]
     public ulong VehicleId { get; set; }
-    
-    //public Vehicle Vehicle{ get; set; }
+
+    /// <summary>
+    ///     Vehicle - connection with the vehicle
+    /// </summary>
+    public Vehicle Vehicle { get; set; }
 
     /// <summary>
     ///     ClientId - identifier  of the client
     /// </summary>
     [Column("client_id")]
     public ulong ClientId { get; set; }
-    
-    //public Client Client{ get; set; }
+
+    /// <summary>
+    ///     Client - connection with the client
+    /// </summary>
+    public Client Client { get; set; }
 
     /// <summary>
     ///     RentalInformationId - identifier of the rental information
     /// </summary>
     [Column("rental_information_id")]
     public ulong RentalInformationId { get; set; }
-    //public RentalInformation RentalInformationN { get; set; }
-    
+
+    /*/// <summary>
+    /// RentalInformation - connection with the rental information
+    /// </summary>
+    public RentalInformation RentalInformationConnect { get; set; }*/
+
 
     /// <summary>
     ///     RefundInformationId - identifier of the refund information
     /// </summary>
     [Column("refund_information_id")]
     public ulong? RefundInformationId { get; set; }
-    //public RefundInformation? RefundInformationN { get; set; }
-    
+
+    /*/// <summary>
+    /// RefundInformation - connection with the refund information
+    /// </summary>
+    public RefundInformation? RefundInformation { get; set; }*/
 }

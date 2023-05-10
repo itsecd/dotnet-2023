@@ -8,7 +8,7 @@ public class RentalServiceContextFactory : IDesignTimeDbContextFactory<RentalSer
     public RentalServiceDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<RentalServiceDbContext>();
-        optionsBuilder.UseMySQL("Server=localhost;Uid=root;DataBase=RentalService;Pwd=123");
+        optionsBuilder.UseMySQL("Server=localhost;Uid=root;DataBase=RentalService;Pwd=");
         return new RentalServiceDbContext(optionsBuilder.Options);
     }
 }

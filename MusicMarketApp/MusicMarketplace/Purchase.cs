@@ -11,9 +11,14 @@ public class Purchase
     public int Id;
 
     /// <summary>
-    /// Список товаров.
+    /// ID Товара.
     /// </summary>
-    public List<Product> Products = new();
+    public int IdProduct;
+
+    /// <summary>
+    /// ID Покупателя.
+    /// </summary>
+    public int IdCustomer;
 
     /// <summary>
     /// Дата совершения покупки.
@@ -28,10 +33,11 @@ public class Purchase
     /// <summary>
     /// Конструктор с параметрами. 
     /// </summary>
-    public Purchase(int id, List<Product> products, DateTime date, string customerName)
+    public Purchase(int id, int product, DateTime date, int customer)
     {
         Id = id;
-        Products = products;
+        IdProduct = product;
+        IdCustomer = customer;
         Date = date;
 
     }

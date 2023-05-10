@@ -28,7 +28,7 @@ public class Seller
     /// <summary>
     /// Список товаров.
     /// </summary>
-    public List<Product> Products = new();
+    public List<Product> Products = null!;
 
     /// <summary>
     /// Конструктор по умолчанию. 

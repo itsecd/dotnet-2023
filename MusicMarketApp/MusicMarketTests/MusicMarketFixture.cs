@@ -114,14 +114,14 @@ public class MusicMarketFixture
             product6.Status = "sold";
             product7.Status = "sold";
 
-            product0.Seller = new Seller(0, "Muzzona", "Russia", 300);
-            product1.Seller = new Seller(1, "Muzzona", "Russia", 300);
-            product2.Seller = new Seller(2, "Muzzona", "Russia", 300);
-            product3.Seller = new Seller(3, "Muzzona", "Russia", 300);
-            product4.Seller = new Seller(4, "Skifmusic", "UK", 750);
-            product5.Seller = new Seller(5, "StopRobot", "USA", 680);
-            product6.Seller = new Seller(6, "StopRobot", "USA", 680);
-            product7.Seller = new Seller(7, "StopRobot", "USA", 680);
+            product0.IdSeller = 1;
+            product1.IdSeller = 1;
+            product2.IdSeller = 1;
+            product3.IdSeller = 1;
+            product4.IdSeller = 2;
+            product5.IdSeller = 3;
+            product6.IdSeller = 3;
+            product7.IdSeller = 3;
 
             products.Add(product0);
             products.Add(product1);
@@ -203,11 +203,11 @@ public class MusicMarketFixture
             purchase4.Id = 4;
 
 
-            purchase0.Products.Add(products[7]);
-            purchase1.Products.Add(products[3]);
-            purchase2.Products.Add(products[4]);
-            purchase3.Products.Add(products[5]);
-            purchase4.Products.Add(products[6]);
+            purchase0.IdProduct=7;
+            purchase1.IdProduct=3;
+            purchase2.IdProduct = 4;
+            purchase3.IdProduct = 5;
+            purchase4.IdProduct = 6;
 
             purchase0.Date = DateTime.Parse("2023/03/22");
             purchase1.Date = DateTime.Parse("2023/04/4");

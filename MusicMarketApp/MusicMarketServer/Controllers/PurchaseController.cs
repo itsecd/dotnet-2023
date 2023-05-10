@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Repository;
+using Microsoft.EntityFrameworkCore;
+using MusicMarketplace;
 
 namespace MusicMarketServer.Controllers;
 
@@ -19,17 +20,24 @@ public class PurchaseController : ControllerBase
     private readonly ILogger<PurchaseController> _logger;
 
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение DbContext
     /// </summary>
-    private readonly IMusicMarketRepository _purchasesRepository;
+    private readonly IDbContextFactory<MusicMarketDbContext> _contextFactory;
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public PurchaseController(ILogger<PurchaseController> logger, IMusicMarketRepository purchasesRepository, IMapper mapper)
+
+    /// <summary>
+    /// Конструктор контроллера purchase
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="contextFactory"></param>
+    /// <param name="mapper"></param>
+    public PurchaseController(ILogger<PurchaseController> logger, IDbContextFactory<MusicMarketDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _purchasesRepository = purchasesRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -38,10 +46,12 @@ public class PurchaseController : ControllerBase
     /// </summary>
     /// <returns>list of purchases</returns>
     [HttpGet]
-    public IEnumerable<PurchaseGetDto> Get()
+    public async Task<IEnumerable<PurchaseGetDto>> Get()
     {
-        _logger.LogInformation("Get list of purchase");
-        return _purchasesRepository.Purchases.Select(purchase => _mapper.Map<PurchaseGetDto>(purchase));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get purchases");
+        var purchases = await context.Purchases.ToListAsync();
+        return _mapper.Map<IEnumerable<PurchaseGetDto>>(purchases);
     }
 
     /// <summary>
@@ -50,18 +60,18 @@ public class PurchaseController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Ok(found purchase with input id)</returns>
     [HttpGet("{id}")]
-    public ActionResult<PurchaseGetDto> Get(int id)
+    public async Task<ActionResult<PurchaseGetDto>> Get(int id)
     {
-        var purchaseById = _purchasesRepository.Purchases.FirstOrDefault(purchaseById => purchaseById.Id == id);
-        if (purchaseById == null)
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
+        if (purchase == null)
         {
-            _logger.LogInformation($"Not found purchase with id :{id}");
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get purchase with id :{id}");
-            return Ok(_mapper.Map<ProductGetDto>(purchaseById));
+            return Ok(_mapper.Map<PurchaseGetDto>(purchase));
         }
     }
 
@@ -70,10 +80,11 @@ public class PurchaseController : ControllerBase
     /// </summary>
     /// <param name="purchase"></param>
     [HttpPost]
-    public void Post([FromBody] PurchasePostDto purchase)
+    public async void Post([FromBody] PurchasePostDto purchase)
     {
-        _logger.LogInformation("Add new purchase");
-        _purchasesRepository.Purchases.Add(_mapper.Map<Purchase>(purchase));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Purchases.AddAsync(_mapper.Map<Purchase>(purchase));
+        await context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -83,18 +94,19 @@ public class PurchaseController : ControllerBase
     /// <param name="purchaseToPut"></param>
     /// <returns></returns> 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] PurchasePostDto purchaseToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] PurchasePostDto purchaseToPut)
     {
-        var purchase = _purchasesRepository.Purchases.FirstOrDefault(purchase => purchase.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation($"Not found purchase with id = {id}");
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information purchase with id = {id}");
-            _mapper.Map<PurchasePostDto, Purchase>(purchaseToPut, purchase);
+            context.Update(_mapper.Map(purchaseToPut, purchase));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -105,18 +117,19 @@ public class PurchaseController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var purchase = _purchasesRepository.Purchases.FirstOrDefault(purchase => purchase.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation($"Not found purchase with id: {id}");
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else
         {
-            _purchasesRepository.Purchases.Remove(purchase);
-            _logger.LogInformation($"Delete purchase with id: {id}");
+            context.Purchases.Remove(purchase);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

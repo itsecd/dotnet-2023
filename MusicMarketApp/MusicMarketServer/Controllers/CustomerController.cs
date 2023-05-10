@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Repository;
+using Microsoft.EntityFrameworkCore;
+
+using MusicMarketplace;
 
 namespace MusicMarketServer.Controllers;
 
@@ -18,20 +20,27 @@ public class CustomerController : ControllerBase
     /// </summary>
     private readonly ILogger<CustomerController> _logger;
 
+
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение DbContext
     /// </summary>
-    private readonly IMusicMarketRepository _customersRepository;
+    private readonly IDbContextFactory<MusicMarketDbContext> _contextFactory;
 
     /// <summary>
     /// Хранение маппера
     /// </summary>
-    /// 
     private readonly IMapper _mapper;
-    public CustomerController(ILogger<CustomerController> logger, IMusicMarketRepository сustomersRepository, IMapper mapper)
+
+    /// <summary>
+    /// Конструктор контроллера customer
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="contextFactory"></param>
+    /// <param name="mapper"></param>
+    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory <MusicMarketDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _customersRepository = сustomersRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -40,10 +49,12 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<CustomerGetDto> Get()
+    public async Task <IEnumerable<CustomerGetDto>> Get()
     {
-        _logger.LogInformation("Get list of customers");
-        return _customersRepository.Customers.Select(customer => _mapper.Map<CustomerGetDto>(customer));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get customers");
+        var customers = await context.Customers.ToListAsync();
+        return _mapper.Map<IEnumerable<CustomerGetDto>>(customers);
     }
 
     /// <summary>
@@ -52,19 +63,20 @@ public class CustomerController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Customer found by specified id</returns>
     [HttpGet("{id}")]
-    public ActionResult<CustomerGetDto> Get(int id)
+    public async Task<ActionResult<CustomerGetDto>> Get(int id)
     {
-        var customerById = _customersRepository.Customers.FirstOrDefault(customer => customer.Id == id);
-        if (customerById == null)
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
+        if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id = {id}");
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Customer with id = {id}");
-            return Ok(_mapper.Map<CustomerGetDto>(customerById));
+            return Ok(_mapper.Map<CustomerGetDto>(customer));
         }
+
     }
 
     /// <summary>
@@ -73,10 +85,12 @@ public class CustomerController : ControllerBase
     /// <param name="customer"></param>
     /// <returns>Add new customer </returns>
     [HttpPost]
-    public void Post([FromBody] CustomerPostDto customer)
+    public async void Post([FromBody] CustomerPostDto customer)
     {
-        _logger.LogInformation("Add new customer");
-        _customersRepository.Customers.Add(_mapper.Map<Customer>(customer));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Customers.AddAsync(_mapper.Map<Customer>(customer));
+        await context.SaveChangesAsync();
+
     }
 
 
@@ -88,18 +102,19 @@ public class CustomerController : ControllerBase
     /// <returns>Update customer by id or NotFound</returns>
     /// 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] CustomerPostDto customerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] CustomerPostDto customerToPut)
     {
-        var customer = _customersRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id = {id}");
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information customer with id = {id}");
-            _mapper.Map<CustomerPostDto, Customer>(customerToPut, customer);
+            context.Update(_mapper.Map(customerToPut, customer));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -110,18 +125,19 @@ public class CustomerController : ControllerBase
     /// <param name="id"></param>
     /// <returns>DELETE element</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var customer = _customersRepository.Customers.FirstOrDefault(customer => customer.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation($"Not found customer with id: {id}");
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else
         {
-            _customersRepository.Customers.Remove(customer);
-            _logger.LogInformation($"Delete customer with id: {id}");
+            context.Customers.Remove(customer);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

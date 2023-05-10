@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicMarket;
 using MusicMarketServer.Dto;
-using MusicMarketServer.Repository;
+using Microsoft.EntityFrameworkCore;
+using MusicMarketplace;
 
 namespace MusicMarketServer.Controllers;
 
@@ -18,18 +19,25 @@ public class SellerController : ControllerBase
     /// </summary>
     private readonly ILogger<SellerController> _logger;
     /// <summary>
-    /// Хранение репозитория
+    /// Хранение DbContext
     /// </summary>
-    private readonly IMusicMarketRepository _sellersRepository;
+    private readonly IDbContextFactory<MusicMarketDbContext> _contextFactory;
 
     /// <summary>
     /// Хранение маппера
     /// </summary>
     private readonly IMapper _mapper;
-    public SellerController(ILogger<SellerController> logger, IMusicMarketRepository sellersRepository, IMapper mapper)
+
+    /// <summary>
+    /// Конструктор контроллера seller
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="contextFactory"></param>
+    /// <param name="mapper"></param>
+    public SellerController(ILogger<SellerController> logger, IDbContextFactory<MusicMarketDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _sellersRepository = sellersRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
 
@@ -38,10 +46,12 @@ public class SellerController : ControllerBase
     /// </summary>
     /// <returns>list of sellers</returns>
     [HttpGet]
-    public IEnumerable<SellerGetDto> Get()
+    public async Task<IEnumerable<SellerGetDto>> Get()
     {
-        _logger.LogInformation("Get list of sellers");
-        return _sellersRepository.Sellers.Select(seller => _mapper.Map<SellerGetDto>(seller));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get sellers");
+        var sellers = await context.Sellers.ToListAsync();
+        return _mapper.Map<IEnumerable<SellerGetDto>>(sellers);
     }
 
 
@@ -51,18 +61,18 @@ public class SellerController : ControllerBase
     /// <param name="id"></param>
     /// <returns>seller by id</returns>
     [HttpGet("{id}")]
-    public ActionResult<SellerGetDto> Get(int id)
+    public async Task<ActionResult<SellerGetDto>> Get(int id)
     {
-        var sellerById = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
-        if (sellerById == null)
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
+        if (seller == null)
         {
-            _logger.LogInformation($"Not found seller with id: {id}");
+            _logger.LogInformation("Not found seller:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Get seller with id: {id}");
-            return Ok(_mapper.Map<SellerGetDto>(sellerById));
+            return Ok(_mapper.Map<SellerGetDto>(seller));
         }
     }
 
@@ -72,10 +82,11 @@ public class SellerController : ControllerBase
     /// </summary>
     /// <param name="seller"></param>
     [HttpPost]
-    public void Post([FromBody] SellerPostDto seller)
+    public async void Post([FromBody] SellerPostDto seller)
     {
-        _logger.LogInformation("Add new seller");
-        _sellersRepository.Sellers.Add(_mapper.Map<Seller>(seller));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Sellers.AddAsync(_mapper.Map<Seller>(seller));
+        await context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -85,18 +96,19 @@ public class SellerController : ControllerBase
     /// <param name="sellerToPut"></param>
     /// <returns>Ok()</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] SellerPostDto sellerToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] SellerPostDto sellerToPut)
     {
-        var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation($"Not found seller with id {id}");
+            _logger.LogInformation("Not found seller:{id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation($"Update information seller with id = {id}");
-            _mapper.Map<SellerPostDto, Seller>(sellerToPut, seller);
+            context.Update(_mapper.Map(sellerToPut, seller));
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -107,18 +119,19 @@ public class SellerController : ControllerBase
     /// <param name="id"></param>
     /// <returns>Ok()</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var seller = _sellersRepository.Sellers.FirstOrDefault(seller => seller.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation($"Not found seller with id: {id}");
+            _logger.LogInformation("Not found seller:{id}", id);
             return NotFound();
         }
         else
         {
-            _sellersRepository.Sellers.Remove(seller);
-            _logger.LogInformation($"Delete seller with id: {id}");
+            context.Sellers.Remove(seller);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

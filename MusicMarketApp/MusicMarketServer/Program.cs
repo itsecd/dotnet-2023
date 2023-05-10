@@ -1,4 +1,6 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using MusicMarketplace;
 using MusicMarketServer;
 using MusicMarketServer.Repository;
 using System.Reflection;
@@ -10,6 +12,9 @@ var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IMusicMarketRepository, MusicMarketRepository>();
+
+builder.Services.AddDbContextFactory <MusicMarketDbContext>(options =>
+options.UseMySQL(builder.Configuration.GetConnectionString("MusicMarket")!));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

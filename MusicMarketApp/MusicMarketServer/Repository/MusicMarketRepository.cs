@@ -101,23 +101,23 @@ public class MusicMarketRepository : IMusicMarketRepository
         _products[6].Status = "sold";
         _products[7].Status = "sold";
 
-        _products[0].Seller = new Seller(0, "Muzzona", "Russia", 300);
-        _products[1].Seller = new Seller(1, "Muzzona", "Russia", 300);
-        _products[2].Seller = new Seller(2, "Muzzona", "Russia", 300);
-        _products[3].Seller = new Seller(3, "Muzzona", "Russia", 300);
-        _products[4].Seller = new Seller(4, "Skifmusic", "UK", 750);
-        _products[5].Seller = new Seller(5, "StopRobot", "USA", 680);
-        _products[6].Seller = new Seller(6, "StopRobot", "USA", 680);
-        _products[7].Seller = new Seller(7, "StopRobot", "USA", 680);
+        _products[0].IdSeller = 1;
+        _products[1].IdSeller = 1;
+        _products[2].IdSeller = 1;
+        _products[3].IdSeller = 1;
+        _products[4].IdSeller = 2;
+        _products[5].IdSeller = 3;
+        _products[6].IdSeller = 3;
+        _products[7].IdSeller = 3;
 
-        _products[0].SellerId = 0;
-        _products[1].SellerId = 0;
-        _products[2].SellerId = 0;
-        _products[3].SellerId = 0;
-        _products[4].SellerId = 1;
-        _products[5].SellerId = 2;
-        _products[6].SellerId = 2;
-        _products[7].SellerId = 2;
+        _products[0].IdSeller = 0;
+        _products[1].IdSeller = 0;
+        _products[2].IdSeller = 0;
+        _products[3].IdSeller = 0;
+        _products[4].IdSeller = 1;
+        _products[5].IdSeller = 2;
+        _products[6].IdSeller = 2;
+        _products[7].IdSeller = 2;
 
 
         _sellers = new List<Seller>();
@@ -157,11 +157,11 @@ public class MusicMarketRepository : IMusicMarketRepository
             _purchases[i].Id = i;
         }
 
-        _purchases[0].Products.Add(_products[7]);
-        _purchases[1].Products.Add(_products[3]);
-        _purchases[2].Products.Add(_products[4]);
-        _purchases[3].Products.Add(_products[5]);
-        _purchases[4].Products.Add(_products[6]);
+        _purchases[0].IdProduct=7;
+        _purchases[1].IdProduct=3;
+        _purchases[2].IdProduct = 4;
+        _purchases[3].IdProduct = 5;
+        _purchases[4].IdProduct = 6;
 
         _purchases[0].Date = DateTime.Parse("2023/04/11");
         _purchases[1].Date = DateTime.Parse("2023/04/4");

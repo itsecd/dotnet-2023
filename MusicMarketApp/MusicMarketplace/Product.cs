@@ -58,12 +58,12 @@ public class Product
     /// <summary>
     /// ID Продавца.
     /// </summary>
-    public int SellerId { get; set; }
+    public int IdSeller { get; set; }
 
-    /// <summary>
-    /// Продавец
-    /// </summary>
-    public Seller? Seller { get; set; }
+    ///// <summary>
+    ///// Продавец
+    ///// </summary>
+    //public Seller? Seller { get; set; }
 
     /// <summary>
     /// Конструктор по умолчанию. 
@@ -74,7 +74,7 @@ public class Product
     /// Конструктор с параметрами. 
     /// </summary>
     public Product(int id, string typeOfCarrier, string publicationType, string creator, string name, string madeIn,
-        string mediaStatus, string packagingCondition, double price, string status, Seller seller)
+        string mediaStatus, string packagingCondition, double price, string status, int seller)
     {
         Id = id;
         TypeOfCarrier = typeOfCarrier;
@@ -86,7 +86,7 @@ public class Product
         PackagingCondition = packagingCondition;
         Price = price;
         Status = status;
-        Seller = seller;
+        IdSeller = seller;
     }
 }
 

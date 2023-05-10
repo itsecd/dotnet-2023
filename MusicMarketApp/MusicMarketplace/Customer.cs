@@ -28,7 +28,7 @@ public class Customer
     /// <summary>
     /// История заказов. 
     /// </summary>
-    public List<Purchase> Purchases = new();
+    public List<Purchase> Purchases = null!;
 
     /// <summary>
     /// Конструктор по умолчанию. 

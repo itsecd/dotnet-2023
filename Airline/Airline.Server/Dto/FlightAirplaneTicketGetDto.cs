@@ -3,7 +3,7 @@
 /// <summary>
 /// Class for get flightAirplaneTicket
 /// </summary>
-public class FlightAirplaneTicketPostDto
+public class FlightAirplaneTicketGetDto
 {
     /// <summary>
     /// Represent Flight id

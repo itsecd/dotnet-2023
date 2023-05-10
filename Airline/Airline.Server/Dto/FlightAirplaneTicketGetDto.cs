@@ -5,6 +5,11 @@
 /// </summary>
 public class FlightAirplaneTicketGetDto
 {
+
+    /// <summary>
+    /// Represent id
+    /// </summary>
+    public int Id { get; set; }
     /// <summary>
     /// Represent Flight id
     /// </summary>

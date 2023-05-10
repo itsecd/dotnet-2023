@@ -6,10 +6,6 @@
 public class FlightAirplaneTicketPostDto
 {
     /// <summary>
-    /// Represent id
-    /// </summary>
-    public int? Id { get; set; }
-    /// <summary>
     /// Represent Flight id
     /// </summary>
     public string FlightId { get; set; }

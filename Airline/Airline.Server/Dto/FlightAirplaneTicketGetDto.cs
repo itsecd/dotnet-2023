@@ -1,21 +1,20 @@
 ﻿namespace Airline.Server.Dto;
 
 /// <summary>
-/// Class for post ticket
+/// Class for get flightAirplaneTicket
 /// </summary>
-public class FlightAirplaneTicketGetDto
+public class FlightAirplaneTicketPostDto
 {
-    public int Id { get; set; }
     /// <summary>
-    /// Represent ticket number
+    /// Represent Flight id
     /// </summary>
-    public int? Number { get; set; }
+    public string FlightId { get; set; }
     /// <summary>
-    /// Represent seat number
+    /// Represent Airplane id
     /// </summary>
-    public string SeatNumber { get; set; }
+    public double AirplaneId { get; set; }
     /// <summary>
-    /// Represent baggage weight
+    /// Represent Ticket id
     /// </summary>
-    public double BaggageWeight { get; set; }
+    public double TicketId { get; set; }
 }

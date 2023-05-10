@@ -1,7 +1,7 @@
 ﻿namespace Airline.Server.Dto;
 
 /// <summary>
-/// Class for post ticket
+/// Class for post flightAirplaneTicket
 /// </summary>
 public class FlightAirplaneTicketPostDto
 {

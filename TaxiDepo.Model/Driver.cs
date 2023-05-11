@@ -1,43 +1,65 @@
-﻿namespace TaxiDepo.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TaxiDepo.Model;
 
 /// <summary>
 /// Driver class
 /// </summary>
+[Table("drivers")]
 public class Driver
 {
     /// <summary>
     /// Driver id
     /// </summary>
+    [Column("Id")]
+    [Key]
     public int Id { get; set; } = 0;
 
     /// <summary>
     /// Driver surname
     /// </summary>
+    [Column("DriverSurname")]
+    [Required]
+    [MaxLength(45)]
     public string DriverSurname { get; set; } = string.Empty;
 
     /// <summary>
     /// Driver name
     /// </summary>
+    [Column("DriverName")]
+    [Required]
+    [MaxLength(45)]
     public string DriverName { get; set; } = string.Empty;
 
     /// <summary>
     /// Driver patronymic
     /// </summary>
+    [Column("DriverPatronymic")]
+    [Required]
+    [MaxLength(45)]
     public string DriverPatronymic { get; set; } = string.Empty;
 
     /// <summary>
     /// Driver passport ID
     /// </summary>
+    [Column("DriverPassportId")]
+    [Required]
     public int DriverPassportId { get; set; } = 0;
 
     /// <summary>
     /// Driver address
     /// </summary>
+    [Column("DriverAddress")]
+    [Required]
+    [MaxLength(45)]
     public string DriverAddress { get; set; } = string.Empty;
 
     /// <summary>
     /// Driver phone number
     /// </summary>
+    [Column("DriverPhoneNumber")]
+    [Required]
     public string DriverPhoneNumber { get; set; } = string.Empty;
 
     /// <summary>

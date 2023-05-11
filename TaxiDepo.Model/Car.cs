@@ -1,33 +1,50 @@
-﻿namespace TaxiDepo.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TaxiDepo.Model;
 
 /// <summary>
 /// Class car
 /// </summary>
+[Table("cars")]
 public class Car
 {
     /// <summary>
     /// Car id
     /// </summary>
+    [Column("Id")]
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
     /// Car government number
     /// </summary>
+    [Column("CarNumber")]
+    [Required]
+    [MaxLength(45)]
     public string CarNumber { get; set; } = string.Empty;
 
     /// <summary>
     /// Car model
     /// </summary>
+    [Column("CarModel")]
+    [Required]
+    [MaxLength(45)]
     public string CarModel { get; set; } = string.Empty;
 
     /// <summary>
     /// Car color
     /// </summary>
+    [Column("CarColor")]
+    [Required]
+    [MaxLength(45)]
     public string CarColor { get; set; } = string.Empty;
 
     /// <summary>
     /// Assigned driver Id
     /// </summary>
+    [Column("DriverId")]
+    [ForeignKey("Driver")]
     public int DriverId { get; set; }
 
     /// <summary>

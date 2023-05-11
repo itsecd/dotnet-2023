@@ -11467,32 +11467,39 @@
     ]
   },
   "packageFolders": {
-    "/Users/vladimirskobcov/.nuget/packages/": {}
+    "C:\\Users\\1\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vladimirskobcov/Projects2/dotnet-2023/TaxiDepo.Server/TaxiDepo.Server.csproj",
+      "projectUniqueName": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
       "projectName": "TaxiDepo.Server",
-      "projectPath": "/Users/vladimirskobcov/Projects2/dotnet-2023/TaxiDepo.Server/TaxiDepo.Server.csproj",
-      "packagesPath": "/Users/vladimirskobcov/.nuget/packages/",
-      "outputPath": "/Users/vladimirskobcov/Projects2/dotnet-2023/TaxiDepo.Server/obj/",
+      "projectPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
+      "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/vladimirskobcov/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/vladimirskobcov/Projects2/dotnet-2023/TaxiDepo.Model/TaxiDepo.Model.csproj": {
-              "projectPath": "/Users/vladimirskobcov/Projects2/dotnet-2023/TaxiDepo.Model/TaxiDepo.Model.csproj"
+            "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj": {
+              "projectPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj"
             }
           }
         }
@@ -11558,7 +11565,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -11570,7 +11578,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

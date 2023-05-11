@@ -1,48 +1,70 @@
-﻿namespace TaxiDepo.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TaxiDepo.Model;
 
 /// <summary>
 /// Ride class
 /// </summary>
+[Table("rides")]
 public class Ride
 {
     /// <summary>
     /// Ride id
     /// </summary>
+    [Column("Id")]
+    [Key]
     public int Id { get; set; } = 0;
 
     /// <summary>
     /// Departure place 
     /// </summary>
+    [Column("TripDeparturePlace")]
+    [Required]
+    [MaxLength(45)]
     public string TripDeparturePlace { get; set; } = string.Empty;
 
     /// <summary>
     /// Destination place
     /// </summary>
+    [Column("TripDestinationPlace")]
+    [Required]
+    [MaxLength(45)]
     public string TripDestinationPlace { get; set; } = string.Empty;
 
     /// <summary>
     /// Trip date
     /// </summary>
+    [Column("TripDate")]
+    [Required]
     public DateTime TripDate { get; set; }
 
     /// <summary>
     /// Trip time
     /// </summary>
+    [Column("TripTime")]
+    [Required]
     public TimeSpan TripTime { get; set; }
 
     /// <summary>
     /// Trip price
     /// </summary>
+    [Column("TripPrice")]
+    [Required]
     public double TripPrice { get; set; } = 0.0;
 
     /// <summary>
     /// Trip car Id 
     /// </summary>
+    [Column("CarId")]
+    [ForeignKey("Car")]
     public int CarId { get; set; }
 
     /// <summary>
     /// Trip user Id 
     /// </summary>
+    [Column("UserId")]
+    [ForeignKey("User")]
     public int UserId { get; set; }
 
     /// <summary>

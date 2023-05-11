@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PonrfClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PonrfClient.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="PonrfClient">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/Add.png" />
+			</Button>
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/Change.png" />
+			</Button>
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/Delete.png" />
+			</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="True"
+				  Items="{Binding	Customer}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Наименование"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+
+	<Window.Styles>
+		<StyleInclude Source="/PonrfStyles.axaml" />
+	</Window.Styles>
+
+</Window>

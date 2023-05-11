@@ -352,11 +352,6 @@
             Assigned driver Id
             </summary>
         </member>
-        <member name="P:TaxiDepo.Server.Dto.CarDto.AssignedDriver">
-            <summary>
-            Assigned driver
-            </summary>
-        </member>
         <member name="T:TaxiDepo.Server.Dto.DriverDto">
             <summary>
             Dto driver class

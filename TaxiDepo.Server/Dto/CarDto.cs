@@ -31,11 +31,6 @@ public class CarDto
     /// Assigned driver Id
     /// </summary>
     public int DriverId { get; set; }
-
-    /// <summary>
-    /// Assigned driver
-    /// </summary>
-    public Driver? AssignedDriver { get; set; }
 }
 
 

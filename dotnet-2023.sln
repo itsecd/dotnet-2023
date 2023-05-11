@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1705.4
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepo.Model", "TaxiDepo.Model\TaxiDepo.Model.csproj", "{760CE3C8-1447-45F4-816E-92538B2B6B9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiDepo.Model", "TaxiDepo.Model\TaxiDepo.Model.csproj", "{760CE3C8-1447-45F4-816E-92538B2B6B9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepo.Server", "TaxiDepo.Server\TaxiDepo.Server.csproj", "{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiDepo.Server", "TaxiDepo.Server\TaxiDepo.Server.csproj", "{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiDepo.Client", "TaxiDepo.Client\TaxiDepo.Client.csproj", "{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

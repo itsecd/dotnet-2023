@@ -1,0 +1,1176 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Custom TaxiDepo server with basic CRUD-operations",
+    "description": "Url: https://localhost:7185/index.html",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Cars/GetAllCars": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Get all cars from collection",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cars/GetCarBy{id}": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Get car by id from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed car id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cars/PutCarBy{id}": {
+      "put": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Put car from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to put",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Car to put",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Cars/PostCar": {
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Post car to collection",
+        "requestBody": {
+          "description": "Car to post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cars/DeleteCarBy{id}": {
+      "delete": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Delete car from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Drivers/GetAllDrivers": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get all drivers from collection",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Drivers/GetDriverBy{id}": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get driver by id from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed driver id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Drivers/PutDriverBy{id}": {
+      "put": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Put driver from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to put",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Driver to put",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Drivers/PostDriver": {
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Post driver to collection",
+        "requestBody": {
+          "description": "Driver to post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Drivers/DeleteDriverBy{id}": {
+      "delete": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Delete driver from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Required/GetCarAndDriver": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 1 - Print info about driver, his car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Required/GetUsersByDate": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 2 - Print info about user who driven in date range sort by surname",
+        "parameters": [
+          {
+            "name": "dateBefore",
+            "in": "query",
+            "description": "date before for filter",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateAfter",
+            "in": "query",
+            "description": "date after for filter",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Required/GetUserRides": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 3 - Print user rides amount",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Required/TopFiveDrivers": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 4 - Print top five drivers with max amount rides",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Required/DriversTripTime": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 5 - Print info about drivers, his trip time and max trip time",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Required/UserWithAmountRidesByDate": {
+      "get": {
+        "tags": [
+          "Required"
+        ],
+        "summary": "Task 6 - Print info about users, with max amount of rides",
+        "parameters": [
+          {
+            "name": "dateBefore",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateAfter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Rides/GetAllRides": {
+      "get": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Get all rides from collection",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rides/GetRideBy{id}": {
+      "get": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Get ride by id from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed ride id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rides/PutRideBy{id}": {
+      "put": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Put ride from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to put",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ride to put",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Rides/PostRide": {
+      "post": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Post ride to collection",
+        "requestBody": {
+          "description": "Ride to post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rides/DeleteRideBy{id}": {
+      "delete": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Delete ride from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Users/GetAllUsers": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users from collection",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/GetUserBy{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user by id from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed user id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/PutUserBy{id}": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Put user from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to put",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User to put",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Users/PostUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Post user to collection",
+        "requestBody": {
+          "description": "User to post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/DeleteUserBy{id}": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete user from collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Needed id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CarDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Car id",
+            "format": "int32"
+          },
+          "carNumber": {
+            "type": "string",
+            "description": "Car government number",
+            "nullable": true
+          },
+          "carModel": {
+            "type": "string",
+            "description": "Car model",
+            "nullable": true
+          },
+          "carColor": {
+            "type": "string",
+            "description": "Car color",
+            "nullable": true
+          },
+          "driverId": {
+            "type": "integer",
+            "description": "Assigned driver Id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto car class"
+      },
+      "DriverDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Driver id",
+            "format": "int32"
+          },
+          "driverSurname": {
+            "type": "string",
+            "description": "Driver surname",
+            "nullable": true
+          },
+          "driverName": {
+            "type": "string",
+            "description": "Driver name",
+            "nullable": true
+          },
+          "driverPatronymic": {
+            "type": "string",
+            "description": "Driver patronymic",
+            "nullable": true
+          },
+          "driverPassportId": {
+            "type": "integer",
+            "description": "Driver passport ID",
+            "format": "int32"
+          },
+          "driverAddress": {
+            "type": "string",
+            "description": "Driver address",
+            "nullable": true
+          },
+          "driverPhoneNumber": {
+            "type": "string",
+            "description": "Driver phone number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto driver class"
+      },
+      "RideDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Ride id",
+            "format": "int32"
+          },
+          "tripDeparturePlace": {
+            "type": "string",
+            "description": "Departure place",
+            "nullable": true
+          },
+          "tripDestinationPlace": {
+            "type": "string",
+            "description": "Destination place",
+            "nullable": true
+          },
+          "tripDate": {
+            "type": "string",
+            "description": "Trip date",
+            "format": "date-time"
+          },
+          "tripTime": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "tripPrice": {
+            "type": "number",
+            "description": "Trip price",
+            "format": "double"
+          },
+          "carId": {
+            "type": "integer",
+            "description": "Trip car Id",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "Trip user Id",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto ride class"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "User id",
+            "format": "int32"
+          },
+          "userSurname": {
+            "type": "string",
+            "description": "User surname",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "description": "User name",
+            "nullable": true
+          },
+          "userPatronymic": {
+            "type": "string",
+            "description": "User patronymic",
+            "nullable": true
+          },
+          "userPhoneNumber": {
+            "type": "string",
+            "description": "User phone number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto user class"
+      }
+    }
+  }
+}

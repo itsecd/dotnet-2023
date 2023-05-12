@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RentalService.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RentalService.Client.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RentalService.Client">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+    </Window.Styles>
+    
+    <Grid RowDefinitions="Auto,*">
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Classes="ToolButton">
+                    <Image Source="/Assets/add.png"/>
+                </Button>
+                <Button Classes="ToolButton">
+                    <Image Source="/Assets/edit.png"/>
+                </Button>
+                <Button Classes="ToolButton">
+                    <Image Source="/Assets/del.png"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="True" Items="{Binding Clients}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование"></DataGridTextColumn>
+            </DataGrid.Columns> 
+        </DataGrid>
+    </Grid>
+        
+    
+
+</Window>

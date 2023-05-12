@@ -11,7 +11,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2"/>
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.19" />
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2" />
+        <PackageReference Include="NSwag.ApiDescription.Client" Version="13.19.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
 </Project>

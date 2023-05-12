@@ -12,21 +12,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="12.0.1"/>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.16"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16"/>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.19" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13"/>
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2" />
+        <PackageReference Include="NSwag.ApiDescription.Client" Version="13.19.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RentalService.Domain\RentalService.Domain.csproj"/>
+        <ProjectReference Include="..\RentalService.Domain\RentalService.Domain.csproj" />
     </ItemGroup>
 
 </Project>

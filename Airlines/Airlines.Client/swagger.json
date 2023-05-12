@@ -1,0 +1,1225 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Airlines.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Airplane": {
+      "get": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Get method for airplane table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Post method for airplane table",
+        "requestBody": {
+          "description": "Airplane class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Airplane/{id}": {
+      "get": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Get by id method for airplane table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Put method for airplane table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of airplane which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Airplane class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of airplane which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/passengers-without-baggage": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return a passengers without baggage",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flights-with-specified-source-and-destination": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return a flights with specified source and destination",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flights-at-specified-period": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return a flights at specified period",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flights-with-max-count-of-passengers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return a flights with max count of passengers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/max-and-avg-baggage-amount-from-specified-source": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return max and average baggage amount from specified source",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flights-with-min-flight-duration": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return flights with minimal flight duration",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Flight": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Get method for flight table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Post method for flight table",
+        "requestBody": {
+          "description": "Flight class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Flight/{id}": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Get by id method for flight table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Put method for flight table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of flight which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Flight class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of flight which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Passenger": {
+      "get": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Get method for passenger table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Post method for passenger table",
+        "requestBody": {
+          "description": "Passenger class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Passenger/{id}": {
+      "get": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Get by id method for passenger table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Put method for passenger table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of passenger which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Passenger class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of passenger which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ticket": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Get method for ticket table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Post method for ticket table",
+        "requestBody": {
+          "description": "Ticket class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ticket/{id}": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Get by id method for ticket table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Put method for ticket table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of ticket which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of ticket which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AirplaneGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Represent an unique Id of Airplane",
+            "format": "int32"
+          },
+          "model": {
+            "type": "string",
+            "description": "Represent a model of airplane",
+            "nullable": true
+          },
+          "carryingCapacity": {
+            "type": "integer",
+            "description": "Represent a max value of carrying capacity",
+            "format": "int32"
+          },
+          "capability": {
+            "type": "integer",
+            "description": "Represent a max value of capability",
+            "format": "int32"
+          },
+          "seatingCapacity": {
+            "type": "integer",
+            "description": "Represent a max count of seats",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for get method of airplane table"
+      },
+      "AirplanePostDto": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Represent a model of Airplane",
+            "nullable": true
+          },
+          "carryingCapacity": {
+            "type": "integer",
+            "description": "Represent a max value of carrying capacity",
+            "format": "int32"
+          },
+          "capability": {
+            "type": "integer",
+            "description": "Represent a max value of capability",
+            "format": "int32"
+          },
+          "seatingCapacity": {
+            "type": "integer",
+            "description": "Represent a max count of seats",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for post method of airplane table"
+      },
+      "FlightGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Represent a unique Id of flight",
+            "format": "int32"
+          },
+          "airplaneId": {
+            "type": "integer",
+            "description": "Represent a unique Id of airplane",
+            "format": "int32"
+          },
+          "flightCode": {
+            "type": "string",
+            "description": "Represent a number of flight",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "description": "Represent a point of departure",
+            "nullable": true
+          },
+          "destination": {
+            "type": "string",
+            "description": "Represent a point of arrival",
+            "nullable": true
+          },
+          "departureDate": {
+            "type": "string",
+            "description": "Represent a departure date",
+            "format": "date-time"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "description": "Represent a arrival date",
+            "format": "date-time"
+          },
+          "flightDuration": {
+            "type": "number",
+            "description": "Represent a flight duration",
+            "format": "double"
+          },
+          "airplaneType": {
+            "type": "string",
+            "description": "Represent a type of airplane",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for get method of flight table"
+      },
+      "FlightPostDto": {
+        "type": "object",
+        "properties": {
+          "airplaneId": {
+            "type": "integer",
+            "description": "Represent a unique Id of airplane",
+            "format": "int32"
+          },
+          "flightCode": {
+            "type": "string",
+            "description": "Represent a number of flight",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "description": "Represent a point of departure",
+            "nullable": true
+          },
+          "destination": {
+            "type": "string",
+            "description": "Represent a point of arrival",
+            "nullable": true
+          },
+          "departureDate": {
+            "type": "string",
+            "description": "Represent a departure date",
+            "format": "date-time"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "description": "Represent a arrival date",
+            "format": "date-time"
+          },
+          "flightDuration": {
+            "type": "number",
+            "description": "Represent a flight duration",
+            "format": "double"
+          },
+          "airplaneType": {
+            "type": "string",
+            "description": "Represent a type of airplane",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for post method of flight table"
+      },
+      "PassengerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Represent a unique Id of passanger",
+            "format": "int32"
+          },
+          "passportNumber": {
+            "type": "string",
+            "description": "Represent a passport number",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Represent a passenger name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for get method of passenger table"
+      },
+      "PassengerPostDto": {
+        "type": "object",
+        "properties": {
+          "passportNumber": {
+            "type": "string",
+            "description": "Represent a passport number",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Represent a passenger name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for post method of passenger table"
+      },
+      "Ticket": {
+        "required": [
+          "baggageWeight",
+          "seatNumber",
+          "ticketNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passengerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "flightId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seatNumber": {
+            "type": "string"
+          },
+          "baggageWeight": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketPostDto": {
+        "type": "object",
+        "properties": {
+          "passengerId": {
+            "type": "integer",
+            "description": "Represent a unique Id of passenger",
+            "format": "int32"
+          },
+          "flightId": {
+            "type": "integer",
+            "description": "Represent a unique Id of flight",
+            "format": "int32"
+          },
+          "ticketNumber": {
+            "type": "integer",
+            "description": "Represent a number of ticket",
+            "format": "int32",
+            "nullable": true
+          },
+          "seatNumber": {
+            "type": "string",
+            "description": "Represent a seat number of ticket",
+            "nullable": true
+          },
+          "baggageWeight": {
+            "type": "integer",
+            "description": "Represent a baggage weight, which passenger can move",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for post method of ticket table"
+      }
+    }
+  }
+}

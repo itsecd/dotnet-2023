@@ -104,30 +104,9 @@ public class MainWindowViewModel : ViewModelBase
 
             if (carViewModel != null)
             {
-                try
-                {
-                    var newCar = await _apiClient.AddCarAsync(_mapper.Map<CarDto>(carViewModel));
-                    Cars.Add(carViewModel);
-                    /*
-                    if (Roles.FirstOrDefault(role => role.Name == "Админ") == null)
-                    {
-                        Roles.Add(new RoleViewModel
-                        {
-                            Id = await _apiClient.CreateRole(new RoleDtoPostOrPut
-                            {
-                                Name = "Админ"
-                            }),
-                            Name = "Админ"
-                        });
-                    }
-                    
-                    LoadGroupsWithMaxNotesCount();
-                    ClearExceptionsValues();*/
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
+
+                var newCar = await _apiClient.AddCarAsync(_mapper.Map<CarDto>(carViewModel));
+                Cars.Add(carViewModel);
             }
         });
 
@@ -137,18 +116,11 @@ public class MainWindowViewModel : ViewModelBase
 
             if (carViewModel != null)
             {
-                try
-                {
+
                     await _apiClient.UpdateCarAsync(SelectedCar!.Id,
                         _mapper.Map<CarDto>(carViewModel));
                     _mapper.Map(carViewModel, SelectedCar);
-                    //LoadGroupsWithMaxNotesCount();
-                    //ClearExceptionsValues();
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
+
 
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedCar)
@@ -156,17 +128,9 @@ public class MainWindowViewModel : ViewModelBase
 
         OnDeleteCarCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            try
-            {
+
                 await _apiClient.DeleteCarAsync(SelectedCar!.Id);
                 Cars.Remove(SelectedCar!);
-                //LoadGroupsWithMaxNotesCount();
-                //ClearExceptionsValues();
-            }
-            catch (Exception ex)
-            {
-                //GroupExceptionValue = ex.Message;
-            }
 
         }, this.WhenAnyValue(viewModel => viewModel.SelectedCar)
             .Select(selectCar => selectCar != null));
@@ -179,30 +143,10 @@ public class MainWindowViewModel : ViewModelBase
 
             if (driverViewModel != null)
             {
-                try
-                {
+               
                     var newDriver = await _apiClient.AddDriverAsync(_mapper.Map<DriverDto>(driverViewModel));
                     Drivers.Add(driverViewModel);
-                    /*
-                    if (Roles.FirstOrDefault(role => role.Name == "Админ") == null)
-                    {
-                        Roles.Add(new RoleViewModel
-                        {
-                            Id = await _apiClient.CreateRole(new RoleDtoPostOrPut
-                            {
-                                Name = "Админ"
-                            }),
-                            Name = "Админ"
-                        });
-                    }
-                    
-                    LoadGroupsWithMaxNotesCount();
-                    ClearExceptionsValues();*/
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
+                 
             }
         });
 
@@ -212,36 +156,19 @@ public class MainWindowViewModel : ViewModelBase
 
             if (driverViewModel != null)
             {
-                try
-                {
+                
                     await _apiClient.UpdateDriverAsync(SelectedDriver!.Id,
                         _mapper.Map<DriverDto>(driverViewModel));
                     _mapper.Map(driverViewModel, SelectedDriver);
-                    //LoadGroupsWithMaxNotesCount();
-                    //ClearExceptionsValues();
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
-
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDriver)
             .Select(selectDriver => selectDriver != null));
 
         OnDeleteDriverCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            try
-            {
+           
                 await _apiClient.DeleteDriverAsync(SelectedDriver!.Id);
                 Drivers.Remove(SelectedDriver!);
-                //LoadGroupsWithMaxNotesCount();
-                //ClearExceptionsValues();
-            }
-            catch (Exception ex)
-            {
-                //GroupExceptionValue = ex.Message;
-            }
 
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDriver)
             .Select(selectDriver => selectDriver != null));
@@ -253,30 +180,10 @@ public class MainWindowViewModel : ViewModelBase
 
             if (rideViewModel != null)
             {
-                try
-                {
+               
                     var newRide = await _apiClient.AddRideAsync(_mapper.Map<RideDto>(rideViewModel));
                     Rides.Add(SelectedRide!);
-                    /*
-                    if (Roles.FirstOrDefault(role => role.Name == "Админ") == null)
-                    {
-                        Roles.Add(new RoleViewModel
-                        {
-                            Id = await _apiClient.CreateRole(new RoleDtoPostOrPut
-                            {
-                                Name = "Админ"
-                            }),
-                            Name = "Админ"
-                        });
-                    }
-                    
-                    LoadGroupsWithMaxNotesCount();
-                    ClearExceptionsValues();*/
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
+                  
             }
         });
 
@@ -286,37 +193,21 @@ public class MainWindowViewModel : ViewModelBase
 
             if (rideViewModel != null)
             {
-                try
-                {
+               
                     await _apiClient.UpdateRideAsync(SelectedRide!.Id,
                         _mapper.Map<RideDto>(rideViewModel));
                     _mapper.Map(rideViewModel, SelectedRide);
-                    //LoadGroupsWithMaxNotesCount();
-                    //ClearExceptionsValues();
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
-
+                   
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedRide)
             .Select(selectRide => selectRide != null));
 
         OnDeleteRideCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            try
-            {
+           
                 await _apiClient.DeleteRideAsync(SelectedRide!.Id);
                 Rides.Remove(SelectedRide!);
-                //LoadGroupsWithMaxNotesCount();
-                //ClearExceptionsValues();
-            }
-            catch (Exception ex)
-            {
-                //GroupExceptionValue = ex.Message;
-            }
-
+           
         }, this.WhenAnyValue(viewModel => viewModel.SelectedRide)
             .Select(selectRide => selectRide != null));
 
@@ -327,30 +218,10 @@ public class MainWindowViewModel : ViewModelBase
 
             if (userViewModel != null)
             {
-                try
-                {
+                
                     var newUser = await _apiClient.AddUserAsync(_mapper.Map<UserDto>(userViewModel));
                     Users.Add(userViewModel);
-                    /*
-                    if (Roles.FirstOrDefault(role => role.Name == "Админ") == null)
-                    {
-                        Roles.Add(new RoleViewModel
-                        {
-                            Id = await _apiClient.CreateRole(new RoleDtoPostOrPut
-                            {
-                                Name = "Админ"
-                            }),
-                            Name = "Админ"
-                        });
-                    }
-                    
-                    LoadGroupsWithMaxNotesCount();
-                    ClearExceptionsValues();*/
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
+                  
             }
         });
 
@@ -360,37 +231,21 @@ public class MainWindowViewModel : ViewModelBase
 
             if (userViewModel != null)
             {
-                try
-                {
+                
                     await _apiClient.UpdateUserAsync(SelectedUser!.Id,
                         _mapper.Map<UserDto>(userViewModel));
                     _mapper.Map(userViewModel, SelectedUser);
-                    //LoadGroupsWithMaxNotesCount();
-                    //ClearExceptionsValues();
-                }
-                catch (Exception ex)
-                {
-                    //GroupExceptionValue = ex.Message;
-                }
-
+                
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
             .Select(selectUser => selectUser != null));
 
         OnDeleteUserCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            try
-            {
+           
                 await _apiClient.DeleteUserAsync(SelectedUser!.Id);
                 Users.Remove(SelectedUser!);
-                //LoadGroupsWithMaxNotesCount();
-                //ClearExceptionsValues();
-            }
-            catch (Exception ex)
-            {
-                //GroupExceptionValue = ex.Message;
-            }
-
+             
         }, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
             .Select(selectUser => selectUser != null));
     }

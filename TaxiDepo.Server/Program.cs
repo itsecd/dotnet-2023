@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using TaxiDepo.Server;
 using Microsoft.OpenApi.Models;
 using TaxiDepo.Model;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Sqlite;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TaxiDepoDbContext>(options =>
@@ -14,7 +12,8 @@ builder.Services.AddDbContext<TaxiDepoDbContext>(options =>
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 
-builder.Services.AddSingleton(mapper);
+builder.Services.AddScoped<ITaxiDepoRepository, TaxiDepoRepository>();
+builder.Services.AddScoped<ITaxiDepoService, TaxiDepoService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

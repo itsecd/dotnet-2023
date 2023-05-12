@@ -7,7 +7,7 @@
 	xmlns:vm="using:Airlines.Client.ViewModels"
 	Title="Редактирование пассажира"
 	MaxWidth="500"
-	SizeToContent="Height">
+	SizeToContent="WidthAndHeight">
 
 	<Design.DataContext>
 		<vm:PassengerViewModel/>
@@ -17,11 +17,12 @@
 		<StyleInclude Source="/AirlinesStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto, *" ColumnDefinitions="Auto,Auto, *">
 			<Label  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
-
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+		<Label  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Номер паспорта</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PassportNumber}"/>
+		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
 			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>

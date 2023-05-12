@@ -7,7 +7,7 @@
 	xmlns:vm="using:Airlines.Client.ViewModels"
 	Title="Редактирование билета"
 	MaxWidth="500"
-	SizeToContent="Height">
+	SizeToContent="WidthAndHeight">
 
 	<Design.DataContext>
 		<vm:PassengerViewModel/>
@@ -17,14 +17,18 @@
 		<StyleInclude Source="/AirlinesStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" ColumnDefinitions="100,1.5*,4*" RowDefinitions="Auto,Auto,Auto"  Margin="4">
+	<Grid Classes="MainGrid" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"  Margin="4">
 			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Номер билета</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TicketNumber}"/>
 		<Label  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Id Полета</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FlightId}"/>
 		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Id Пассажира</Label>
 		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PassengerId}"/>
-		<StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2"
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Номер места</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SeatNumber}"/>
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Вес багажа</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding BaggageWeight}"/>
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
 			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>

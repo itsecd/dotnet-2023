@@ -11,14 +11,12 @@ public class PassengerViewModel : ViewModelBase
         set=>this.RaiseAndSetIfChanged(ref _id,value); 
     }
     private string _passportNumber=string.Empty;
-    [Required]
     public string? PassportNumber
     {
         get => _passportNumber;
         set => this.RaiseAndSetIfChanged(ref _passportNumber, value);
     }
     private string _name = string.Empty;
-    [Required]
     public string? Name
     {
         get => _name;

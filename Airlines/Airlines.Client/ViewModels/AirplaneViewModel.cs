@@ -9,14 +9,12 @@ public class AirplaneViewModel : ViewModelBase
 {
 
     private int _id;
-    [Required]
     public int Id { 
         get=>_id; 
         set=>this.RaiseAndSetIfChanged(ref _id,value); 
     }
 
     private string _model = string.Empty;
-    [Required]
     public string? Model
     {
         get => _model;
@@ -24,21 +22,18 @@ public class AirplaneViewModel : ViewModelBase
     }
 
     private int _carryingCapacity;
-    [Required]
     public int CarryingCapacity
     {
         get => _carryingCapacity;
         set => this.RaiseAndSetIfChanged(ref _carryingCapacity, value);
     }
     private int _capability;
-    [Required]
     public int Capability
     {
         get => _capability;
         set => this.RaiseAndSetIfChanged(ref _capability, value);
     }
     private int _seatingCapacity;
-    [Required]
     public int SeatingCapacity
     {
         get => _capability;

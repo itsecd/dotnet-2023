@@ -6,7 +6,6 @@ using System.Reactive;
 namespace Airlines.Client.ViewModels;
 public class TicketViewModel : ViewModelBase
 {
-    [Required]
     private int _id;
     public int Id { 
         get=>_id; 
@@ -27,21 +26,19 @@ public class TicketViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _flightId, value);
     }
     private int _ticketNumber;
-    [Required]
     public int TicketNumber
     {
         get => _ticketNumber;
         set => this.RaiseAndSetIfChanged(ref _ticketNumber, value);
     }
     private string _seatNumber=string.Empty;
-    [Required]
     public string? SeatNumber
     {
         get => _seatNumber;
         set => this.RaiseAndSetIfChanged(ref _seatNumber, value);
     }
     private int _baggageWeight;
-    [Required]
+
     public int BaggageWeight
     {
         get => _baggageWeight;

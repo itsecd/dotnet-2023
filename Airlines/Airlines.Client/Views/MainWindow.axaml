@@ -34,6 +34,10 @@ Title="Airlines.Client">
 						  SelectedItem="{Binding SelectedTicket}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Номер билета" Binding="{Binding TicketNumber}"/>
+						<DataGridTextColumn Header="Id Полета" Binding="{Binding FlightId}"/>
+						<DataGridTextColumn Header="Id Пассажира" Binding="{Binding PassengerId}"/>
+						<DataGridTextColumn Header="Номер места" Binding="{Binding SeatNumber}"/>
+						<DataGridTextColumn Header="Вес багажа" Binding="{Binding BaggageWeight}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -56,6 +60,7 @@ Title="Airlines.Client">
 						  SelectedItem="{Binding SelectedPassenger}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Номер паспорта" Binding="{Binding PassportNumber}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -78,6 +83,9 @@ Title="Airlines.Client">
 						  SelectedItem="{Binding SelectedAirplane}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+						<DataGridTextColumn Header="Грузоподъемность" Binding="{Binding CarryingCapacity}"/>
+						<DataGridTextColumn Header="Производительность" Binding="{Binding Capability}"/>
+						<DataGridTextColumn Header="Вместимость" Binding="{Binding SeatingCapacity}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

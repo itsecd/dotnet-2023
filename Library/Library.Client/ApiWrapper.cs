@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -20,23 +21,123 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public Task<ICollection<BookGetDto>> GetBooksAsync()
+    public async Task<ICollection<BookGetDto>> GetBooksAsync()
     {
-        return _client.BookAllAsync();
+        return await _client.BookAllAsync();
     }
 
-    public Task<BookGetDto> AddBookAsync(BookPostDto book)
+    public async Task<BookGetDto> AddBookAsync(BookPostDto book)
     {
-        return _client.BookAsync(book);
+        return await _client.BookAsync(book);
     }
 
-    public Task UpdateBookAsync(int id, BookPostDto book)
+    public async Task UpdateBookAsync(int id, BookPostDto book)
     {
-        return _client.Book3Async(id, book);
+        await _client.Book3Async(id, book);
     }
 
-    public Task DeleteBookAsync(int id)
+    public async Task DeleteBookAsync(int id)
     {
-        return _client.Book4Async(id);
+        await _client.Book4Async(id);
+    }
+
+    public async Task<ICollection<CardGetDto>> GetCardsAsync()
+    {
+        return await _client.CardAllAsync();
+    }
+
+    public async Task<CardGetDto> AddCardAsync(CardPostDto card)
+    {
+        return await _client.CardAsync(card);
+    }
+
+    public async Task UpdateCardAsync(int id, CardPostDto card)
+    {
+        await _client.Card3Async(id, card);
+    }
+
+    public async Task DeleteCardAsync(int id)
+    {
+        await _client.Card4Async(id);
+    }
+
+    public async Task<ICollection<DepartmentGetDto>> GetDepartmentsAsync()
+    {
+        return await _client.DepartmentAllAsync();
+    }
+
+    public async Task<DepartmentGetDto> AddDepartmentAsync(DepartmentPostDto department)
+    {
+        return await _client.DepartmentAsync(department);
+    }
+
+    public async Task UpdateDepartmentAsync(int id, DepartmentPostDto department)
+    {
+        await _client.Department3Async(id, department);
+    }
+
+    public async Task DeleteDepartmentAsync(int id)
+    {
+        await _client.Department4Async(id);
+    }
+
+    public async Task<ICollection<ReaderGetDto>> GetReadersAsync()
+    {
+        return await _client.ReaderAllAsync();
+    }
+
+    public async Task<ReaderGetDto> AddReaderAsync(ReaderPostDto reader)
+    {
+        return await _client.ReaderAsync(reader);
+    }
+
+    public async Task UpdateReaderAsync(int id, ReaderPostDto reader)
+    {
+        await _client.Reader3Async(id, reader);
+    }
+
+    public async Task DeleteReaderAsync(int id)
+    {
+        await _client.Reader4Async(id);
+    }
+
+    public async Task<ICollection<TypeEditionGetDto>> GetTypeEditionsAsync()
+    {
+        return await _client.TypeEditionAllAsync();
+    }
+
+    public async Task<ICollection<TypeDepartmentGetDto>> GetTypeDepartmentsAsync()
+    {
+        return await _client.TypeDepartmentAllAsync();
+    }
+
+    public async Task<BookGetDto> GetBookByCipherAsync(string cipher)
+    {
+        return await _client.BookByCipherAsync(cipher);
+    }
+
+    public async Task<BookGetDto> GetAllBooksAsync()
+    {
+        return await _client.AllBooksAsync();
+    }
+
+    public async Task<DepartmentGetDto> GetAvailabilityBooks(int id)
+    {
+        return await _client.AvailabilityBookAsync(id);
+    }
+
+    public async Task<DepartmentGetDto> GetBooksEachDepartment()
+    {
+        return await _client.BooksEachDepartmentAsync();
+    }
+
+    public async Task<ReaderGetDto> GetTopReaders(DateTime date)
+    {
+        return await _client.TopReadersAsync(date);
+    }
+
+    public async Task<ReaderGetDto> GetDelayReaders()
+    {
+        return await _client.DelayReadersAsync();
     }
 }

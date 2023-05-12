@@ -21,13 +21,13 @@
 	
     <Grid Classes="MainGrid" RowDefinitions="Auto,*">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnAddBookCommand}">
 				<Image Source="/Assets/task-add.png"/>
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnEditCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnEditBookCommand}">
 				<Image Source="/Assets/task-edit.png"/>
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteBookCommand}">
 				<Image Source="/Assets/task-delete.png"/>
 			</Button>
 		</StackPanel>

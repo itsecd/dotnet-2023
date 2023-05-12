@@ -18,7 +18,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             var config = new MapperConfiguration(configuration =>
             {
                 configuration.CreateMap<CarDto, CarViewModel>().ReverseMap();
@@ -26,7 +25,8 @@ public partial class App : Application
                 configuration.CreateMap<RideDto, RideViewModel>().ReverseMap();
                 configuration.CreateMap<UserDto, UserViewModel>().ReverseMap();
             });
-            Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
+            Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
+            Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));///////
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),

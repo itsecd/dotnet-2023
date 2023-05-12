@@ -3,9 +3,9 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-	x:Class="Airlines.Client.Views.PassengerWindow"
+	x:Class="Airlines.Client.Views.AirplaneWindow"
 	xmlns:vm="using:Airlines.Client.ViewModels"
-	Title="Редактирование пассажира"
+	Title="Редактирование самолета"
 	MaxWidth="500"
 	SizeToContent="Height">
 
@@ -18,8 +18,8 @@
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-			<Label  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+		<Label VerticalAlignment="Center">Модель</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Model}"/>
 
 		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">

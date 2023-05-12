@@ -3,9 +3,9 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-	x:Class="Airlines.Client.Views.PassengerWindow"
+	x:Class="Airlines.Client.Views.TicketWindow"
 	xmlns:vm="using:Airlines.Client.ViewModels"
-	Title="Редактирование пассажира"
+	Title="Редактирование билета"
 	MaxWidth="500"
 	SizeToContent="Height">
 
@@ -17,11 +17,14 @@
 		<StyleInclude Source="/AirlinesStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-			<Label  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
-
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+	<Grid Classes="MainGrid" ColumnDefinitions="100,1.5*,4*" RowDefinitions="Auto,Auto,Auto"  Margin="4">
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Номер билета</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TicketNumber}"/>
+		<Label  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Id Полета</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FlightId}"/>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Id Пассажира</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PassengerId}"/>
+		<StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
 			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Airlines.Domain;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -19,24 +20,69 @@ public class ApiWrapper
 
         _client = new ApiClient(serverUrl, new HttpClient());
     }
-
     public async Task<ICollection<PassengerGetDto>> GetPassengersAsync()
     {
             return await _client.PassengerAllAsync();
     }
+    public async Task AddPassengerAsync(PassengerPostDto passenger)
+    {
+        await _client.PassengerAsync(passenger);
+    }
+    public async Task UpdatePassengerAsync(int id, PassengerPostDto passenger)
+    {
+        await _client.Passenger3Async(id, passenger);
+    }
+    public async Task DeletePassengerAsync(int id)
+    {
+        await _client.Passenger4Async(id);
+    }
+    public async Task<ICollection<TicketGetDto>> GetTicketsAsync()
+    {
+        return await _client.TicketAllAsync();
+    }
+    public async Task AddTicketAsync(TicketPostDto ticket)
+    {
+        await _client.TicketAsync(ticket);
+    }
+    public async Task UpdateTicketAsync(int id, TicketPostDto ticket)
+    {
+        await _client.Ticket3Async(id, ticket);
+    }
+    public async Task DeleteTicketAsync(int id)
+    {
+        await _client.Ticket4Async(id);
+    }
+    public async Task<ICollection<FlightGetDto>> GetFlightsAsync()
+    {
+        return await _client.FlightAllAsync();
+    }
+    public async Task AddFlightAsync(FlightPostDto flight)
+    {
+        await _client.FlightAsync(flight);
+    }
+    public async Task UpdateFlightAsync(int id, FlightPostDto flight)
+    {
+        await _client.Flight3Async(id, flight);
+    }
 
-public async Task AddPassengerAsync(PassengerPostDto passenger)
-{
-    await _client.PassengerAsync(passenger);
-}
-
-public async Task UpdatePassengerAsync(int id, PassengerPostDto passenger)
-{
-    await _client.Passenger3Async(id, passenger);
-}
-
-public async Task DeletePassengerAsync(int id)
-{
-    await _client.Passenger4Async(id);
-}
+    public async Task DeleteFlightAsync(int id)
+    {
+        await _client.Flight4Async(id);
+    }
+    public async Task<ICollection<AirplaneGetDto>> GetAirplanesAsync()
+    {
+        return await _client.AirplaneAllAsync();
+    }
+    public async Task AddAirplaneAsync(AirplanePostDto airplane)
+    {
+        await _client.AirplaneAsync(airplane);
+    }
+    public async Task UpdateAirplaneAsync(int id, AirplanePostDto airplane)
+    {
+        await _client.Airplane3Async(id, airplane);
+    }
+    public async Task DeleteAirplaneAsync(int id)
+    {
+        await _client.Airplane4Async(id);
+    }
 }

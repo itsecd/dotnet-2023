@@ -18,6 +18,7 @@ public class MappingProfile : Profile
         CreateMap<Flight, FlightPostDto>();
         CreateMap<FlightPostDto, Flight>();
         CreateMap<Ticket, TicketPostDto>();
+        CreateMap<Ticket, TicketGetDto>();
         CreateMap<TicketPostDto, Ticket>();
         CreateMap<Airplane, AirplaneGetDto>();
         CreateMap<Airplane, AirplanePostDto>();

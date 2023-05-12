@@ -31,11 +31,11 @@ public class TicketController : ControllerBase
     /// Return all tickets
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<Ticket>> Get()
+    public async Task<IEnumerable<TicketGetDto>> Get()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get tickets");
-        return await ctx.Tickets.ToListAsync();
+        return _mapper.Map<IEnumerable<TicketGetDto>>(await ctx.Tickets.ToListAsync());
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public class TicketController : ControllerBase
     /// Return ticket with specified id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Ticket>> Get(int id)
+    public async Task<ActionResult<TicketGetDto>> Get(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get ticket with id ({id})", id);

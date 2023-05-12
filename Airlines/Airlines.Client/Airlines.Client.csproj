@@ -53,6 +53,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Airlines.Server\Airlines.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

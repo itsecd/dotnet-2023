@@ -1,19 +1,101 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:TaxiDepo.Client.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TaxiDepo.Client.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="TaxiDepo.Client">
+        Title="TaxiDepo">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/TaxiDepoStyles.axaml"/>
+	</Window.Styles>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+
+			<StackPanel Grid.Row="0" Orientation="Vertical">
+				<Label>Cars</Label>
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Command="{Binding OnAddCarCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeCarCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteCarCommand}">Удалить</Button>
+				</StackPanel>
+			</StackPanel>
+
+			<DataGrid Classes="ResultTable" Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Cars}"
+					SelectedItem="{Binding SelectedCar}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Model" Binding="{Binding CarModel}"/>
+					<DataGridTextColumn Header="Color" Binding="{Binding CarColor}"/>
+					<DataGridTextColumn Header="Number" Binding="{Binding CarNumber}"/>
+					<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="2" Orientation="Vertical">
+				<Label>Drivers</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddDriverCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeDriverCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteDriverCommand}">Удалить</Button>
+				</StackPanel>
+			</StackPanel>
+
+			<DataGrid Classes="ResultTable" Grid.Row="3" AutoGenerateColumns="False" Items="{Binding Drivers}"
+					  SelectedItem="{Binding SelectedDriver}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Surname" Binding="{Binding DriverSurname}"/>
+					<DataGridTextColumn Header="Name" Binding="{Binding DriverName}"/>
+					<DataGridTextColumn Header="Patronymic" Binding="{Binding DriverPatronymic}"/>
+					<DataGridTextColumn Header="PassportId" Binding="{Binding DriverPassportId}"/>
+					<DataGridTextColumn Header="Address" Binding="{Binding DriverAddress}"/>
+					<DataGridTextColumn Header="PhoneNumber" Binding="{Binding DriverPhoneNumber}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="4" Orientation="Vertical">
+				<Label>Rides</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddRideCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeRideCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteRideCommand}">Удалить</Button>
+				</StackPanel>
+			</StackPanel>
+
+			<DataGrid Classes="ResultTable" Grid.Row="5" AutoGenerateColumns="False" Items="{Binding Rides}"
+					  SelectedItem="{Binding SelectedRide}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="DeparturePlace" Binding="{Binding TripDeparturePlace}"/>
+					<DataGridTextColumn Header="DestinationPlace" Binding="{Binding TripDestinationPlace}"/>
+					<DataGridTextColumn Header="TripDate" Binding="{Binding TripDate}"/>
+					<DataGridTextColumn Header="TripTime" Binding="{Binding TripTime}"/>
+					<DataGridTextColumn Header="TripPrice" Binding="{Binding TripPrice}"/>
+					<DataGridTextColumn Header="CarId" Binding="{Binding CarId}"/>
+					<DataGridTextColumn Header="UserId" Binding="{Binding UserId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="6" Orientation="Vertical">
+				<Label>Users</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddUserCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeUserCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteUserCommand}">Удалить</Button>
+				</StackPanel>
+			</StackPanel>
+
+			<DataGrid Classes="ResultTable" Grid.Row="7" AutoGenerateColumns="False" Items="{Binding Users}"
+					  SelectedItem="{Binding SelectedUser}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Surname" Binding="{Binding UserSurname}"/>
+					<DataGridTextColumn Header="Name" Binding="{Binding UserName}"/>
+					<DataGridTextColumn Header="Patronymic" Binding="{Binding UserPatronymic}"/>
+					<DataGridTextColumn Header="PhoneNumber" Binding="{Binding UserPhoneNumber}"/>
+					<DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
 </Window>

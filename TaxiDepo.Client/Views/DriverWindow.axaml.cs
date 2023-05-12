@@ -1,12 +1,24 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
+using System;
+using TaxiDepo.Client.ViewModels;
 
-namespace TaxiDepo.Client.Views
+namespace TaxiDepo.Client.Views;
+public partial class DriverWindow : ReactiveWindow<DriverViewModel>
 {
-    public partial class DriverWindow : Window
+
+    public DriverWindow()
     {
-        public DriverWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        this.WhenActivated(disposableElement
+            => disposableElement(ViewModel!.OnSubmitCommand.Subscribe(Close)));
+    }
+
+    public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Close();
     }
 }

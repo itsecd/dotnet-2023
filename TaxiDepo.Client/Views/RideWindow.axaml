@@ -4,6 +4,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TaxiDepo.Client.Views.RideWindow"
-        Title="RideWindow">
-  Welcome to Avalonia!
+		xmlns:vm="using:TaxiDepo.Client.ViewModels"
+        Title="Редактирование группы"
+		SizeToContent="Height"
+		MaxWidth="1000">
+	<Design.DataContext>
+		<vm:RideViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/TaxiDepoStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+		<Label Grid.Row="0" Grid.Column="0">Id</Label>
+		<Label Grid.Row="0" Grid.Column="1">DeparturePlace</Label>
+		<Label Grid.Row="0" Grid.Column="2">DestinationPlace</Label>
+		<Label Grid.Row="0" Grid.Column="3">TripDate</Label>
+		<Label Grid.Row="0" Grid.Column="4">TripTime</Label>
+		<Label Grid.Row="0" Grid.Column="5">TripPrice</Label>
+		<Label Grid.Row="0" Grid.Column="6">Carid</Label>
+		<Label Grid.Row="0" Grid.Column="7">Userid</Label>
+		
+		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Id}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TripDeparturePlace}"/>
+		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding TripDestinationPlace}"/>
+		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TripDate}"/>
+		<TextBox Grid.Row="1" Grid.Column="4" Text="{Binding TripTime}"/>
+		<TextBox Grid.Row="1" Grid.Column="5" Text="{Binding TripPrice}"/>
+		<TextBox Grid.Row="1" Grid.Column="6" Text="{Binding CarId}"/>
+		<TextBox Grid.Row="1" Grid.Column="7" Text="{Binding UserId}"/>
+
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+
+
 </Window>

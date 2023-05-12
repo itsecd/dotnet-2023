@@ -1,12 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReactiveUI;
+using System;
+using System.Reactive;
 
-namespace TaxiDepo.Client.ViewModels
+namespace TaxiDepo.Client.ViewModels;
+
+public class RideViewModel : ViewModelBase
 {
-    internal class RideViewModel
+    private int _id;
+
+    public int Id
     {
+        get => _id;
+        set => this.RaiseAndSetIfChanged(ref _id, value);
+    }
+
+    private string _tripDeparturePlace = string.Empty;
+
+    public string TripDeparturePlace
+    {
+        get => _tripDeparturePlace;
+        set => this.RaiseAndSetIfChanged(ref _tripDeparturePlace, value);
+    }
+
+    private string _tripDestinationPlace = string.Empty;
+
+    public string TripDestinationPlace
+    {
+        get => _tripDestinationPlace;
+        set => this.RaiseAndSetIfChanged(ref _tripDestinationPlace, value);
+    }
+
+    private DateTime? _tripDate;
+
+    public DateTime? TripDate
+    {
+        get => _tripDate;
+        set => this.RaiseAndSetIfChanged(ref _tripDate, value);
+    }
+
+    private TimeSpan? _tripTime;
+
+    public TimeSpan? TripTime
+    {
+        get => _tripTime;
+        set => this.RaiseAndSetIfChanged(ref _tripTime, value);
+    }
+
+    private double _tripPrice;
+
+    public double TripPrice
+    {
+        get => _tripPrice;
+        set => this.RaiseAndSetIfChanged(ref _tripPrice, value);
+    }
+
+    private int _carId;
+
+    public int CarId
+    {
+        get => _carId;
+        set => this.RaiseAndSetIfChanged(ref _carId, value);
+    }
+
+    private int _userId;
+
+    public int UserId
+    {
+        get => _userId;
+        set => this.RaiseAndSetIfChanged(ref _userId, value);
+    }
+
+    public ReactiveCommand<Unit, RideViewModel> OnSubmitCommand { get; set; }
+
+    public RideViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

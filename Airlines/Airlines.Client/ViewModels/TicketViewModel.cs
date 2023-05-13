@@ -1,15 +1,15 @@
 ﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Reactive;
 
 namespace Airlines.Client.ViewModels;
 public class TicketViewModel : ViewModelBase
 {
     private int _id;
-    public int Id { 
-        get=>_id; 
-        set=>this.RaiseAndSetIfChanged(ref _id,value); 
+    public int Id
+    {
+        get => _id;
+        set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private int _passengerId;
     [Required]
@@ -31,7 +31,7 @@ public class TicketViewModel : ViewModelBase
         get => _ticketNumber;
         set => this.RaiseAndSetIfChanged(ref _ticketNumber, value);
     }
-    private string _seatNumber=string.Empty;
+    private string _seatNumber = string.Empty;
     public string? SeatNumber
     {
         get => _seatNumber;

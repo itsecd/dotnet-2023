@@ -1,16 +1,16 @@
 ﻿using ReactiveUI;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace Airlines.Client.ViewModels;
 public class PassengerViewModel : ViewModelBase
 {
     private int _id;
-    public int Id { 
-        get=>_id; 
-        set=>this.RaiseAndSetIfChanged(ref _id,value); 
+    public int Id
+    {
+        get => _id;
+        set => this.RaiseAndSetIfChanged(ref _id, value);
     }
-    private string _passportNumber=string.Empty;
+    private string _passportNumber = string.Empty;
     public string? PassportNumber
     {
         get => _passportNumber;

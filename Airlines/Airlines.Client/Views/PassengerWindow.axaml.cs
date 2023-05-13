@@ -1,9 +1,8 @@
 using Airlines.Client.ViewModels;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using System;
 using ReactiveUI;
+using System;
 
 namespace Airlines.Client.Views;
 public partial class PassengerWindow : ReactiveWindow<PassengerViewModel>

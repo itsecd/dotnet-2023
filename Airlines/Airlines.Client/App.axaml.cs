@@ -1,9 +1,9 @@
+using Airlines.Client.ViewModels;
+using Airlines.Client.Views;
 using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Airlines.Client.ViewModels;
-using Airlines.Client.Views;
 using Splat;
 
 namespace Airlines.Client;
@@ -24,8 +24,6 @@ public partial class App : Application
                 cfg.CreateMap<PassengerViewModel, PassengerPostDto>();
                 cfg.CreateMap<TicketGetDto, TicketViewModel>();
                 cfg.CreateMap<TicketViewModel, TicketPostDto>();
-                cfg.CreateMap<FlightGetDto, FlightViewModel>();
-                cfg.CreateMap<FlightViewModel, FlightPostDto>();
                 cfg.CreateMap<AirplaneGetDto, AirplaneViewModel>();
                 cfg.CreateMap<AirplaneViewModel, AirplanePostDto>();
             });

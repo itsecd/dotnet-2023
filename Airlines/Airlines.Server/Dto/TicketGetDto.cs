@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Airlines.Domain;
+﻿namespace Airlines.Domain;
 
 /// <summary>
 /// Class describing a ticket

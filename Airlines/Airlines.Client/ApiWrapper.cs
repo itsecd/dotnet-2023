@@ -1,5 +1,4 @@
-﻿using Airlines.Domain;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -22,7 +21,7 @@ public class ApiWrapper
     }
     public async Task<ICollection<PassengerGetDto>> GetPassengersAsync()
     {
-            return await _client.PassengerAllAsync();
+        return await _client.PassengerAllAsync();
     }
     public async Task AddPassengerAsync(PassengerPostDto passenger)
     {
@@ -51,23 +50,6 @@ public class ApiWrapper
     public async Task DeleteTicketAsync(int id)
     {
         await _client.Ticket4Async(id);
-    }
-    public async Task<ICollection<FlightGetDto>> GetFlightsAsync()
-    {
-        return await _client.FlightAllAsync();
-    }
-    public async Task AddFlightAsync(FlightPostDto flight)
-    {
-        await _client.FlightAsync(flight);
-    }
-    public async Task UpdateFlightAsync(int id, FlightPostDto flight)
-    {
-        await _client.Flight3Async(id, flight);
-    }
-
-    public async Task DeleteFlightAsync(int id)
-    {
-        await _client.Flight4Async(id);
     }
     public async Task<ICollection<AirplaneGetDto>> GetAirplanesAsync()
     {

@@ -1,5 +1,4 @@
 using Airlines.Client.ViewModels;
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using System.Threading.Tasks;

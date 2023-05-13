@@ -82,6 +82,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newArtist = _mapper.Map<ArtistPostDto>(artistViewModel);
                 await _apiClient.AddArtistAsync(newArtist);
                 Artists.Add(artistViewModel);
+                RxApp.MainThreadScheduler.Schedule(LoadArtistsAsync);
             }
         });
 
@@ -99,6 +100,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             await _apiClient.DeleteArtistAsync(SelectedArtist!.Id);
             Artists.Remove(SelectedArtist);
+
         }, this.WhenAnyValue(vm => vm.SelectedArtist).Select(selectArtist => selectArtist != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadArtistsAsync);
@@ -113,6 +115,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newAlbum = _mapper.Map<AlbumPostDto>(albumViewModel);
                 await _apiClient.AddAlbumAsync(newAlbum);
                 Albums.Add(albumViewModel);
+                RxApp.MainThreadScheduler.Schedule(LoadAlbumsAsync);
             }
         });
 
@@ -144,6 +147,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newGenre = _mapper.Map<GenrePostDto>(genreViewModel);
                 await _apiClient.AddGenreAsync(newGenre);
                 Genres.Add(genreViewModel);
+                RxApp.MainThreadScheduler.Schedule(LoadGenresAsync);
             }
         });
 
@@ -168,6 +172,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadArtistsAsync()
     {
+        Artists.Clear();
         var artists = await _apiClient.GetArtistsAsync();
         foreach(var artist in artists) 
         {
@@ -177,6 +182,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadAlbumsAsync()
     {
+        Albums.Clear();
         var albums = await _apiClient.GetAlbumsAsync();
         foreach (var album in albums)
         {
@@ -186,6 +192,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadGenresAsync()
     {
+        Genres.Clear();
         var genres = await _apiClient.GetGenresAsync();
         foreach (var genre in genres)
         {

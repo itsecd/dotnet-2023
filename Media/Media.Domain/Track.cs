@@ -12,6 +12,7 @@ public class Track
     /// Id is used to store a unique identifier
     /// </summary>
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     /// <summary>

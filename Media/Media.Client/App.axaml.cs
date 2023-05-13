@@ -22,6 +22,10 @@ public partial class App : Application
             {
                 cfg.CreateMap<ArtistGetDto, ArtistViewModel>();
                 cfg.CreateMap<ArtistViewModel, ArtistPostDto>();
+                cfg.CreateMap<AlbumGetDto, AlbumViewModel>();
+                cfg.CreateMap<AlbumViewModel, AlbumPostDto>();
+                cfg.CreateMap<Genre, GenreViewModel>();
+                cfg.CreateMap<GenreViewModel, GenrePostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

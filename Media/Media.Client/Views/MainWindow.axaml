@@ -15,25 +15,76 @@
 	<Window.Styles>
 		<StyleInclude Source="/MediaStyles.axaml"/>
 	</Window.Styles>
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
-				<Image Source="/Assets/add.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
-				<Image Source="/Assets/change.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
-				<Image Source="/Assets/delete.png"/>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-					Items="{Binding Artists}"
-					SelectedItem="{Binding SelectedArtist}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-				<DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+	<TabControl>
+		<TabItem Header="Artist" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddArtistCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeArtistCommand}">
+						<Image Source="/Assets/change.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteArtistCommand}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Artists}"
+							SelectedItem="{Binding SelectedArtist}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Album" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddAlbumCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeAlbumCommand}">
+						<Image Source="/Assets/change.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteAlbumCommand}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Albums}"
+							SelectedItem="{Binding SelectedAlbum}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Год" Binding="{Binding Year}"/>
+						<DataGridTextColumn Header="Id Артиста" Binding="{Binding ArtistId}"/>
+						<DataGridTextColumn Header="Id Жанра" Binding="{Binding GenreId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Genre" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddGenreCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeGenreCommand}">
+						<Image Source="/Assets/change.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteGenreCommand}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Genres}"
+							SelectedItem="{Binding SelectedGenre}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
 </Window>

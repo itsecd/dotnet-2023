@@ -39,4 +39,44 @@ public class ApiWrapper
     {
         await _client.Artist4Async(id);
     }
+
+    public async Task<ICollection<AlbumGetDto>> GetAlbumsAsync()
+    {
+        return await _client.AlbumAllAsync();
+    }
+
+    public async Task AddAlbumAsync(AlbumPostDto album)
+    {
+        await _client.AlbumAsync(album);
+    }
+
+    public async Task UpdateAlbumAsync(int id, AlbumPostDto album)
+    {
+        await _client.Album3Async(id, album);
+    }
+
+    public async Task DeleteAlbumAsync(int id)
+    {
+        await _client.Album4Async(id);
+    }
+
+    public async Task<ICollection<Genre>> GetGenresAsync()
+    {
+        return await _client.GenreAllAsync();
+    }
+
+    public async Task AddGenreAsync(GenrePostDto genre)
+    {
+        await _client.GenreAsync(genre);
+    }
+
+    public async Task UpdateGenreAsync(int id, GenrePostDto genre)
+    {
+        await _client.Genre3Async(id, genre);
+    }
+
+    public async Task DeleteGenreAsync(int id)
+    {
+        await _client.Genre4Async(id);
+    }
 }

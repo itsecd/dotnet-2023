@@ -1,21 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace TransportMgmt.Domain;
-
+/// <summary>
+/// Class TransportMgmtContext is used to work with database
+/// </summary>
 public class TransportMgmtContext : DbContext
 {
+    /// <summary>
+    /// Used to store a collection of drivers
+    /// </summary>
     public DbSet<Driver> Drivers { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of models
+    /// </summary>
     public DbSet<Model> Models { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of routes
+    /// </summary>
     public DbSet<Routes> Routes { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of transports
+    /// </summary>
     public DbSet<Transport> Transports { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of transport types
+    /// </summary>
     public DbSet<TransportType> TransportTypes { get; set; } = null!;
+    /// <summary>
+    /// Used to store a collection of trips
+    /// </summary>
     public DbSet<Trip> Trips { get; set; } = null!;
 
     public TransportMgmtContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
-
+    /// <summary>
+    /// Writes values ​​to the database
+    /// </summary>
+    /// <param name="modelBuilder">Model builder</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

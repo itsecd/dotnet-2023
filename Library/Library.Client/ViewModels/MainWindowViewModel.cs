@@ -193,7 +193,6 @@ public class MainWindowViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadReadersAsync);
         RxApp.MainThreadScheduler.Schedule(LoadTypesEditionsAsync);
         RxApp.MainThreadScheduler.Schedule(LoadTypesDepartmentsAsync);
-
         RxApp.MainThreadScheduler.Schedule(LoadAllBooksAsync);
     }
 

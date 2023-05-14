@@ -3,7 +3,7 @@
         xmlns:vm="using:Library.Client.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="Library.Client.Views.MainWindow"
         Icon="/Assets/library.ico"
 		MinHeight="400" MinWidth="400"
@@ -15,7 +15,7 @@
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
-			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 			
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 				<Label>Books</Label>
@@ -144,7 +144,22 @@
 					<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 				</DataGrid.Columns>
 			</DataGrid>
-			
+
+			<StackPanel Grid.Row="16" Orientation="Horizontal">
+				<Label>All issued books orderred by name</Label>
+			</StackPanel>
+
+			<DataGrid Grid.Row="17" AutoGenerateColumns="False"
+					  Items="{Binding AllBooks}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Cipher" Binding="{Binding Cipher}"/>
+					<DataGridTextColumn Header="Author" Binding="{Binding Author}"/>
+					<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="PlaceEdition" Binding="{Binding PlaceEdition}"/>
+					<DataGridTextColumn Header="YearEdition" Binding="{Binding YearEdition}"/>
+					<DataGridTextColumn Header="TypeEditionId" Binding="{Binding TypeEditionId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
 		</Grid>
 	</ScrollViewer>
 </Window>

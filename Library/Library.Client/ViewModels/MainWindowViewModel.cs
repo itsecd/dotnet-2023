@@ -2,6 +2,7 @@
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -21,12 +22,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ReaderViewModel> Readers { get; } = new();
     public ObservableCollection<TypeEditionViewModel> TypesEditions { get; } = new();
     public ObservableCollection<TypeDepartmentViewModel> TypesDepartments { get; } = new();
-    public ObservableCollection<BookViewModel> BooksByCipher { get; } = new();
     public ObservableCollection<BookViewModel> AllBooks { get; } = new();
-    public ObservableCollection<DepartmentViewModel> AvailabilityBooks { get; } = new();
-    public ObservableCollection<DepartmentViewModel> BooksEachDepartment { get; } = new();
-    public ObservableCollection<ReaderViewModel> TopReaders { get; } = new();
-    public ObservableCollection<ReaderViewModel> DelayReaders { get; } = new();
 
     private BookViewModel? _selectedBook;
     public BookViewModel? SelectedBook
@@ -197,6 +193,18 @@ public class MainWindowViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadReadersAsync);
         RxApp.MainThreadScheduler.Schedule(LoadTypesEditionsAsync);
         RxApp.MainThreadScheduler.Schedule(LoadTypesDepartmentsAsync);
+
+        RxApp.MainThreadScheduler.Schedule(LoadAllBooksAsync);
+    }
+
+    private async void LoadAllBooksAsync()
+    {
+        AllBooks.Clear();
+        var books = await _apiClient.GetAllBooksAsync();
+        foreach (var book in books)
+        {
+            AllBooks.Add(_mapper.Map<BookViewModel>(book));
+        }
     }
 
     private async void LoadBooksAsync()

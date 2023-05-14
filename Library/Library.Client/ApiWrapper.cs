@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -111,33 +110,8 @@ public class ApiWrapper
         return await _client.TypeDepartmentAllAsync();
     }
 
-    public async Task<BookGetDto> GetBookByCipherAsync(string cipher)
-    {
-        return await _client.BookByCipherAsync(cipher);
-    }
-
-    public async Task<BookGetDto> GetAllBooksAsync()
+    public async Task<ICollection<BookGetDto>> GetAllBooksAsync()
     {
         return await _client.AllBooksAsync();
-    }
-
-    public async Task<DepartmentGetDto> GetAvailabilityBooks(int id)
-    {
-        return await _client.AvailabilityBookAsync(id);
-    }
-
-    public async Task<DepartmentGetDto> GetBooksEachDepartment()
-    {
-        return await _client.BooksEachDepartmentAsync();
-    }
-
-    public async Task<ReaderGetDto> GetTopReaders(DateTime date)
-    {
-        return await _client.TopReadersAsync(date);
-    }
-
-    public async Task<ReaderGetDto> GetDelayReaders()
-    {
-        return await _client.DelayReadersAsync();
     }
 }

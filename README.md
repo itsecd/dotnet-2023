@@ -14,5 +14,4 @@
 
 ## Клиент
 
-![Стартовое окно](Library/Library.Images/MainWindow1.jpg)
-!(Library/Library.Images/MainWindow2.jpg)
+![Стартовое окно](Library/Library.Images/MainWindow1.jpg)(Library/Library.Images/MainWindow2.jpg)

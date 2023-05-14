@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace TransportMgmt.Domain;
 
@@ -27,7 +26,7 @@ public class TransportMgmtContext : DbContext
             new TransportType { Id = 2, TypeName = "троллейбус" },
             new TransportType { Id = 3, TypeName = "трамвай" }
         };
-           modelBuilder.Entity<TransportType>().HasData(transportTypes);
+        modelBuilder.Entity<TransportType>().HasData(transportTypes);
 
         var models = new List<Model>
             {
@@ -78,7 +77,7 @@ public class TransportMgmtContext : DbContext
                 new Transport(5, "A005AA163", transportTypes[1].Id, models[4].Id, new DateTime(2015, 12, 09)),
                 new Transport(6, "A006AA163", transportTypes[2].Id, models[5].Id, new DateTime(2007, 08, 12)),
                 new Transport(7, "A007AA163", transportTypes[1].Id, models[6].Id, new DateTime(2009, 06, 07))
-            };                                
+            };
         modelBuilder.Entity<Transport>().HasData(transports);
 
         var trips = new List<Trip>

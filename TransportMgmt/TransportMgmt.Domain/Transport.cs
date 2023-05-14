@@ -11,12 +11,11 @@ public class Transport
     /// Unique key of transport
     /// </summary>
     [Key]
-    [ForeignKey("Transport")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Transport state number
     /// </summary>
-    [Required] 
+    [Required]
     public string StateNumber { get; set; } = string.Empty;
     /// <summary>
     /// Transport type id
@@ -40,14 +39,14 @@ public class Transport
     /// <summary>
     /// Transport production date
     /// </summary>
-    [Required] 
+    [Required]
     public DateTime DateMake { get; set; } = new DateTime();
     public Transport() { }
-    public Transport(int transportId, string stateNumber,int typeId, TransportType type, int modelId, Model model, DateTime dateMake)
+    public Transport(int transportId, string stateNumber, int typeId, TransportType type, int modelId, Model model, DateTime dateMake)
     {
         Id = transportId;
         StateNumber = stateNumber;
-        TypeId= typeId;
+        TypeId = typeId;
         Type = type;
         ModelId = modelId;
         Model = model;

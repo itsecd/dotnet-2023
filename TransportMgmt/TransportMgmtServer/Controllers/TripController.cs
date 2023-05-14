@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TransportMgmt.Domain;
 using TransportMgmtServer.Dto;
-using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 
@@ -14,13 +14,13 @@ namespace TransportMgmtServer.Controllers;
 public class TripController : ControllerBase
 {
     /// <summary>
+    /// Used to store factory contex
+    /// </summary>
+    private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
+    /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<TripController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ITransportMgmtRepository _transportRepository;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -28,10 +28,10 @@ public class TripController : ControllerBase
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public TripController(ILogger<TripController> logger, ITransportMgmtRepository transportRepository, IMapper mapper)
+    public TripController(ILogger<TripController> logger, IDbContextFactory<TransportMgmtContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _transportRepository = transportRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -39,10 +39,11 @@ public class TripController : ControllerBase
     /// </summary>
     /// <returns> Returns a list of all trips </returns>
     [HttpGet]
-    public IEnumerable<TripGetDto> Get()
+    public async Task<IEnumerable<TripGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get trips");
-        return _transportRepository.Trips.Select(trip => _mapper.Map<TripGetDto>(trip));
+        return _mapper.Map<IEnumerable<TripGetDto>>(context.Trips);
     }
     /// <summary>
     /// Get method that returns trip with a specific id
@@ -50,10 +51,11 @@ public class TripController : ControllerBase
     /// <param name="id"> Trip id </param>
     /// <returns> Transports with required id </returns>
     [HttpGet("{id}")]
-    public ActionResult<TripGetDto> Get(int id)
+    public async Task<ActionResult<TripGetDto>> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get trip with id= {id}", id);
-        var trip = _transportRepository.Trips.FirstOrDefault(trip => trip.Id == id);
+        var trip = await context.Trips.FirstOrDefaultAsync(trip => trip.Id == id);
         if (trip == null)
         {
             _logger.LogInformation("Not found trip with id= {id} ", id);
@@ -66,10 +68,12 @@ public class TripController : ControllerBase
     /// </summary>
     /// <param name="trip"> Added trip </param>
     [HttpPost]
-    public void Post([FromBody] TripPostDto trip)
+    public async Task Post([FromBody] TripPostDto trip)
     {
-        _transportRepository.Trips.Add(_mapper.Map<Trip>(trip));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Trips.AddAsync(_mapper.Map<Trip>(trip));
         _logger.LogInformation("Successfully added");
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put method which allows change the data of trip with a specific id
@@ -77,9 +81,10 @@ public class TripController : ControllerBase
     /// <param name="id"> Trip id whose data will change </param>
     /// <param name="tripToPut"> New trip data </param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TripPostDto tripToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] TripPostDto tripToPut)
     {
-        var trip = _transportRepository.Trips.FirstOrDefault(trip => trip.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var trip = await context.Trips.FirstOrDefaultAsync(trip => trip.Id == id);
         if (trip == null)
         {
             _logger.LogInformation("Not found trip with id= {id} ", id);
@@ -89,6 +94,7 @@ public class TripController : ControllerBase
         {
             _mapper.Map(tripToPut, trip);
             _logger.LogInformation("Successfully updates");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,9 +103,10 @@ public class TripController : ControllerBase
     /// </summary>
     /// <param name="id"> Trip id </param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var trip = _transportRepository.Trips.FirstOrDefault(trip => trip.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var trip = await context.Trips.FirstOrDefaultAsync(trip => trip.Id == id);
         if (trip == null)
         {
             _logger.LogInformation("Not found trip with id= {id} ", id);
@@ -107,8 +114,9 @@ public class TripController : ControllerBase
         }
         else
         {
-            _transportRepository.Trips.Remove(trip);
+            context.Trips.Remove(trip);
             _logger.LogInformation("Successfully removed");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

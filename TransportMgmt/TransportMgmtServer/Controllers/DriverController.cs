@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Drawing.Text;
 using TransportMgmt.Domain;
 using TransportMgmtServer.Dto;
-using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 
@@ -31,7 +28,7 @@ public class DriverController : ControllerBase
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public DriverController(IDbContextFactory<TransportMgmtContext> contextFactory, ILogger<DriverController> logger, ITransportMgmtRepository transportRepository, IMapper mapper)
+    public DriverController(IDbContextFactory<TransportMgmtContext> contextFactory, ILogger<DriverController> logger, IMapper mapper)
     {
         _contextFactory = contextFactory;
         _logger = logger;

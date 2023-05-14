@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TransportMgmt.Domain;
 /// <summary>
@@ -11,7 +10,6 @@ public class Model
     /// Unique key of model
     /// </summary>
     [Key]
-    [ForeignKey("Model")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// Transport model name
@@ -21,12 +19,12 @@ public class Model
     /// <summary>
     /// Transport model floor level
     /// </summary>
-    [Required] 
+    [Required]
     public string FloorLevel { get; set; } = string.Empty;
     /// <summary>
     /// Maximum capacity of transport model
     /// </summary>
-    [Required] 
+    [Required]
     public int MaxCapacity { get; set; } = 0;
     public Model() { }
     public Model(int modelId, string modelName, string floorLevel, int maxCapacity)

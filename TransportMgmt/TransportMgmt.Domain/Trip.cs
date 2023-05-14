@@ -15,17 +15,17 @@ public class Trip
     /// <summary>
     /// Trip date
     /// </summary>  
-    [Required] 
+    [Required]
     public DateTime Date { get; set; } = new DateTime();
     /// <summary>
     /// Trip start time
     /// </summary>
-    [Required] 
+    [Required]
     public DateTime TimeOn { get; set; } = new DateTime();
     /// <summary>
     /// Trip end time
     /// </summary>
-    [Required] 
+    [Required]
     public DateTime TimeOff { get; set; } = new DateTime();
     /// <summary>
     /// Trip route id

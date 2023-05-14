@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TransportMgmt.Domain;
 /// <summary>
@@ -11,7 +10,6 @@ public class Driver
     /// Unique key of driver
     /// </summary>
     [Key]
-    [ForeignKey("Driver")]
     public int Id { get; set; } = 0;
     /// <summary>
     /// First name of driver
@@ -26,7 +24,7 @@ public class Driver
     /// <summary>
     /// Middle name of driver
     /// </summary>
-    [Required] 
+    [Required]
     public string MiddleName { get; set; } = string.Empty;
     /// <summary>
     /// Driver's passport number
@@ -41,12 +39,12 @@ public class Driver
     /// <summary>
     /// Driver's address
     /// </summary>
-    [Required] 
+    [Required]
     public string Address { get; set; } = string.Empty;
     /// <summary>
     /// Driver's phone number
     /// </summary>
-    [Required] 
+    [Required]
     public string PhoneNumber { get; set; } = string.Empty;
     public Driver() { }
     public Driver(int driverId, string firstName, string lastName, string middleName, int passport, int driverLicense, string address, string phoneNumber)

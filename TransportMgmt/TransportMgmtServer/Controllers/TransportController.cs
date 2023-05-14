@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TransportMgmt.Domain;
 using TransportMgmtServer.Dto;
-using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 
@@ -14,13 +14,13 @@ namespace TransportMgmtServer.Controllers;
 public class TransportController : ControllerBase
 {
     /// <summary>
+    /// Used to store factory contex
+    /// </summary>
+    private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
+    /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<TransportController> _logger;
-    /// <summary> 
-    /// Used to store repository
-    /// </summary>
-    private readonly ITransportMgmtRepository _transportRepository;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -28,10 +28,10 @@ public class TransportController : ControllerBase
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public TransportController(ILogger<TransportController> logger, ITransportMgmtRepository transportRepository, IMapper mapper)
+    public TransportController(ILogger<TransportController> logger, IDbContextFactory<TransportMgmtContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
-        _transportRepository = transportRepository;
+        _contextFactory = contextFactory;
         _mapper = mapper;
     }
     /// <summary>
@@ -39,10 +39,11 @@ public class TransportController : ControllerBase
     /// </summary>
     /// <returns> Returns a list of all transports </returns>
     [HttpGet]
-    public IEnumerable<TransportGetDto> Get()
+    public async Task<IEnumerable<TransportGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get transports");
-        return _transportRepository.Transports.Select(transport => _mapper.Map<TransportGetDto>(transport));
+        return _mapper.Map<IEnumerable<TransportGetDto>>(context.Transports);
     }
     /// <summary>
     /// Get method that returns transport with a specific id
@@ -50,10 +51,11 @@ public class TransportController : ControllerBase
     /// <param name="id"> Transports id </param>
     /// <returns> Transports with required id </returns>
     [HttpGet("{id}")]
-    public ActionResult<TransportGetDto> Get(int id)
+    public async Task<ActionResult<TransportGetDto>> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get transport with id= {id}", id);
-        var transport = _transportRepository.Transports.FirstOrDefault(transport => transport.Id == id);
+        var transport = await context.Transports.FirstOrDefaultAsync(transport => transport.Id == id);
         if (transport == null)
         {
             _logger.LogInformation("Not found transport with id= {id} ", id);
@@ -66,10 +68,12 @@ public class TransportController : ControllerBase
     /// </summary>
     /// <param name="transport"> Added transport </param>
     [HttpPost]
-    public void Post([FromBody] TransportPostDto transport)
+    public async Task Post([FromBody] TransportPostDto transport)
     {
-        _transportRepository.Transports.Add(_mapper.Map<Transport>(transport));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Transports.AddAsync(_mapper.Map<Transport>(transport));
         _logger.LogInformation("Successfully added");
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put method which allows change the data of transport with a specific id
@@ -77,9 +81,10 @@ public class TransportController : ControllerBase
     /// <param name="id"> Transport id whose data will change </param>
     /// <param name="transportToPut"> New transport data </param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] TransportPostDto transportToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] TransportPostDto transportToPut)
     {
-        var transport = _transportRepository.Transports.FirstOrDefault(transport => transport.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var transport = await context.Transports.FirstOrDefaultAsync(transport => transport.Id == id);
         if (transport == null)
         {
             _logger.LogInformation("Not found transport with id= {id} ", id);
@@ -89,6 +94,7 @@ public class TransportController : ControllerBase
         {
             _mapper.Map(transportToPut, transport);
             _logger.LogInformation("Successfully updates");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,9 +103,10 @@ public class TransportController : ControllerBase
     /// </summary>
     /// <param name="id"> Transport id </param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var transport = _transportRepository.Transports.FirstOrDefault(transport => transport.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var transport = await context.Transports.FirstOrDefaultAsync(transport => transport.Id == id);
         if (transport == null)
         {
             _logger.LogInformation("Not found transport with id= {id} ", id);
@@ -107,8 +114,9 @@ public class TransportController : ControllerBase
         }
         else
         {
-            _transportRepository.Transports.Remove(transport);
+            context.Transports.Remove(transport);
             _logger.LogInformation("Successfully removed");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

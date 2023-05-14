@@ -32,5 +32,9 @@ public class MappingProfile : Profile
         CreateMap<Trip, TripPostDto>();
 
         CreateMap<TripPostDto, Trip>();
+
+        CreateMap<Routes, RoutesGetDto>();
+
+        CreateMap<TransportType, TransportTypesGetDto>();
     }
 }

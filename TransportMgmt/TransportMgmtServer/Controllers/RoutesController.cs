@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TransportMgmt.Domain;
-using TransportMgmtServer.Repository;
+using TransportMgmtServer.Dto;
 
 namespace TransportMgmtServer.Controllers;
 
@@ -12,30 +14,36 @@ namespace TransportMgmtServer.Controllers;
 public class RoutesController : Controller
 {
     /// <summary>
+    /// Used to store factory contex
+    /// </summary>
+    private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
+    /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<RoutesController> _logger;
     /// <summary>
-    /// Used to store repository
+    /// Used to store map's object
     /// </summary>
-    private readonly ITransportMgmtRepository _transportRepository;
+    private readonly IMapper _mapper;
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public RoutesController(ILogger<RoutesController> logger, ITransportMgmtRepository transportRepository)
+    public RoutesController(ILogger<RoutesController> logger, IDbContextFactory<TransportMgmtContext> contextFactory, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _transportRepository = transportRepository;
+        _mapper = mapper;
     }
     /// <summary>
     /// Returns a list of all routes
     /// </summary>
     /// <returns> Returns a list of all routes </returns>
     [HttpGet]
-    public IEnumerable<Routes> Get()
+    public async Task<IEnumerable<RoutesGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get routes");
-        return _transportRepository.Routes;
+        return _mapper.Map<IEnumerable<RoutesGetDto>>(context.Routes);
     }
     /// <summary>
     /// Get method that returns route with a specific id
@@ -43,15 +51,16 @@ public class RoutesController : Controller
     /// <param name="id"> Route id </param>
     /// <returns> Route with required id </returns>
     [HttpGet("{id}")]
-    public ActionResult<Routes> Get(int id)
+    public async Task<ActionResult<RoutesGetDto>> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get route with id= {id}", id);
-        var route = _transportRepository.Routes.FirstOrDefault(route => route.Id == id);
+        var route = await context.Routes.FirstOrDefaultAsync(route => route.Id == id);
         if (route == null)
         {
             _logger.LogInformation("Not found route with id= {id}", id);
             return NotFound();
         }
-        else return Ok(route);
+        else return Ok(_mapper.Map<RoutesGetDto>(route));
     }
 }

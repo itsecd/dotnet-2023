@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TransportMgmt.Domain;
 using TransportMgmtServer.Dto;
-using TransportMgmtServer.Repository;
 
 namespace TransportMgmtServer.Controllers;
 
@@ -14,13 +14,13 @@ namespace TransportMgmtServer.Controllers;
 public class ModelController : ControllerBase
 {
     /// <summary>
+    /// Used to store factory contex
+    /// </summary>
+    private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
+    /// <summary>
     /// Used to store logger
     /// </summary>
     private readonly ILogger<ModelController> _logger;
-    /// <summary>
-    /// Used to store repository
-    /// </summary>
-    private readonly ITransportMgmtRepository _transportRepository;
     /// <summary>
     /// Used to store map's object
     /// </summary>
@@ -28,10 +28,10 @@ public class ModelController : ControllerBase
     /// <summary>
     /// Controller constructor
     /// </summary>
-    public ModelController(ILogger<ModelController> logger, ITransportMgmtRepository transportRepository, IMapper mapper)
+    public ModelController(IDbContextFactory<TransportMgmtContext> contextFactory, ILogger<ModelController> logger, IMapper mapper)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
-        _transportRepository = transportRepository;
         _mapper = mapper;
     }
     /// <summary>
@@ -39,10 +39,11 @@ public class ModelController : ControllerBase
     /// </summary>
     /// <returns> Returns a list of all models </returns>
     [HttpGet]
-    public IEnumerable<ModelGetDto> Get()
+    public async Task<IEnumerable<ModelGetDto>> Get()
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get models");
-        return _transportRepository.Models.Select(model => _mapper.Map<ModelGetDto>(model));
+        return _mapper.Map<IEnumerable<ModelGetDto>>(context.Models);
     }
     /// <summary>
     /// Get method that returns model with a specific id
@@ -50,10 +51,11 @@ public class ModelController : ControllerBase
     /// <param name="id"> Model id </param>
     /// <returns> Model with required id </returns>
     [HttpGet("{id}")]
-    public ActionResult<ModelGetDto> Get(int id)
+    public async Task<ActionResult<ModelGetDto>> Get(int id)
     {
+        await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get model with id= {id}", id);
-        var model = _transportRepository.Models.FirstOrDefault(model => model.Id == id);
+        var model = await context.Models.FirstOrDefaultAsync(model => model.Id == id);
         if (model == null)
         {
             _logger.LogInformation("Not found model with id= {id} ", id);
@@ -66,10 +68,12 @@ public class ModelController : ControllerBase
     /// </summary>
     /// <param name="model"> Added model </param>
     [HttpPost]
-    public void Post([FromBody] ModelPostDto model)
+    public async Task Post([FromBody] ModelPostDto model)
     {
-        _transportRepository.Models.Add(_mapper.Map<Model>(model));
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await context.Models.AddAsync(_mapper.Map<Model>(model));
         _logger.LogInformation("Successfully added");
+        await context.SaveChangesAsync();
     }
     /// <summary>
     /// Put method which allows change the data of model with a specific id
@@ -77,9 +81,10 @@ public class ModelController : ControllerBase
     /// <param name="id"> Model id whose data will change </param>
     /// <param name="modelToPut"> New model data </param>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ModelPostDto modelToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ModelPostDto modelToPut)
     {
-        var model = _transportRepository.Models.FirstOrDefault(model => model.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var model = await context.Models.FirstOrDefaultAsync(model => model.Id == id);
         if (model == null)
         {
             _logger.LogInformation("Not found model with id= {id} ", id);
@@ -89,6 +94,7 @@ public class ModelController : ControllerBase
         {
             _mapper.Map(modelToPut, model);
             _logger.LogInformation("Successfully updates");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -97,9 +103,10 @@ public class ModelController : ControllerBase
     /// </summary>
     /// <param name="id"> Model id </param>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var model = _transportRepository.Models.FirstOrDefault(model => model.Id == id);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        var model = await context.Models.FirstOrDefaultAsync(model => model.Id == id);
         if (model == null)
         {
             _logger.LogInformation("Not found model with id= {id} ", id);
@@ -107,8 +114,9 @@ public class ModelController : ControllerBase
         }
         else
         {
-            _transportRepository.Models.Remove(model);
+            context.Models.Remove(model);
             _logger.LogInformation("Successfully removed");
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

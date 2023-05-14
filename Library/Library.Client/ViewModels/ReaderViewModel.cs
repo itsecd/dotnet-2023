@@ -37,15 +37,14 @@ public class ReaderViewModel : ViewModelBase
         get => _phone;
     }
 
-    private DateTime _registrationDate;
-    [Required]
-    public DateTime RegistrationDate
+    private string? _registrationDate;
+    public string? RegistrationDate
     {
         set => this.RaiseAndSetIfChanged(ref _registrationDate, value);
         get => _registrationDate;
     }
 
-    public ReactiveCommand<Unit, ReaderViewModel> OnSubmitCommand { get; }
+    public ReactiveCommand<Unit, ReaderViewModel> OnSubmitCommand { get; set; }
 
     public ReaderViewModel()
     {

@@ -36,7 +36,7 @@ public class LibraryDbContext : DbContext
     /// <param name="options"></param>
     public LibraryDbContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
+        Database.EnsureCreatedAsync();
     }
     /// <summary>
     /// Method for insert data into database

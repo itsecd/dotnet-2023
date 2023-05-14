@@ -192,11 +192,11 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedReader).Select(selectReader => selectReader != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadBooksAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadCardsAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadDepartmentsAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadReadersAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadTypesEditionsAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadTypesDepartmentsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadCardsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadDepartmentsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadReadersAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadTypesEditionsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadTypesDepartmentsAsync);
     }
 
     private async void LoadBooksAsync()

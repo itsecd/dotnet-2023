@@ -23,5 +23,5 @@ public class ReaderGetDto
     /// <summary>
     /// RegistrationDate stores reader's registration date
     /// </summary>
-    public DateTime RegistrationDate { set; get; }
+    public DateTime? RegistrationDate { set; get; }
 }

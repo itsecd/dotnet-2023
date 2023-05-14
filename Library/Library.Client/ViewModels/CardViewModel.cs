@@ -13,17 +13,17 @@ public class CardViewModel : ViewModelBase
         get => _id;
     }
 
-    private DateTime _dateOfIssue;
+    private string? _dateOfIssue;
     [Required]
-    public DateTime DateOfIssue
+    public string? DateOfIssue
     {
         set => this.RaiseAndSetIfChanged(ref _dateOfIssue, value);
         get => _dateOfIssue;
     }
 
-    private DateTime _dateOfReturn;
+    private string? _dateOfReturn;
     [Required]
-    public DateTime DateOfReturn
+    public string? DateOfReturn
     {
         set => this.RaiseAndSetIfChanged(ref _dateOfReturn, value);
         get => _dateOfReturn;

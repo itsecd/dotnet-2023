@@ -10,16 +10,27 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         InitializeComponent();
 
-        this.WhenActivated(d => d(ViewModel!.ShowBookDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowBookDialog.RegisterHandler(ShowBookDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowCardDialog.RegisterHandler(ShowCardDialogAsync)));
     }
 
-    private async Task ShowDialogAsync(InteractionContext<BookViewModel, BookViewModel?> interaction)
+    private async Task ShowBookDialogAsync(InteractionContext<BookViewModel, BookViewModel?> interaction)
     {
         var dialog = new BookWindow
         {
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<BookViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowCardDialogAsync(InteractionContext<CardViewModel, CardViewModel?> interaction)
+    {
+        var dialog = new CardWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<CardViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

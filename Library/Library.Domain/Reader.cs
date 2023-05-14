@@ -37,8 +37,7 @@ public class Reader
     /// RegistrationDate stores reader's registration date
     /// </summary>
     [Column("registration_date")]
-    [Required]
-    public DateTime RegistrationDate { set; get; }
+    public DateTime? RegistrationDate { set; get; }
     /// <summary>
     /// Cards stores list of cards
     /// </summary>

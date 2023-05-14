@@ -6,7 +6,7 @@
         x:Class="Library.Client.Views.BookWindow"
 		xmlns:vm="using:Library.Client.ViewModels"
 		Icon="/Assets/library.ico"
-        Title="Add book"
+        Title="Add/Edit book"
 		MinHeight="350" MinWidth="350"
 		MaxHeight="350" MaxWidth="350"
 		SizeToContent="Height">

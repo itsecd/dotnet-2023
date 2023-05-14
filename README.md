@@ -14,4 +14,13 @@
 
 ## Клиент
 
-![Стартовое окно](Library/Library.Images/MainWindow1.jpg)(Library/Library.Images/MainWindow2.jpg)
+![Стартовое окно](Library/Library.Images/MainWindow1.jpg)
+![Стартовое окно](Library/Library.Images/MainWindow2.jpg)
+![Окно добавления книги](Library/Library.Images/AddBook.jpg)
+![Окно редактирования книги](Library/Library.Images/EditBook.jpg)
+![Окно добавления карточки](Library/Library.Images/AddCard.jpg)
+![Окно редактирования карточки](Library/Library.Images/EditCard.jpg)
+![Окно добавления отдела](Library/Library.Images/AddDepartment.jpg)
+![Окно редактирования отдела](Library/Library.Images/EditDepartment.jpg)
+![Окно добавления читателя](Library/Library.Images/AddReader.jpg)
+![Окно редактирования читателя](Library/Library.Images/EditReader.jpg)

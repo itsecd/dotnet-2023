@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirplaneBookingSystem.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirplaneBookingSystem.Server", "AirplaneBookingSystem.Server\AirplaneBookingSystem.Server.csproj", "{A01FD420-A289-46AA-BFDE-26643E05284A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirplaneBookingSystem.Client", "AirplaneBookingSystem.Client\AirplaneBookingSystem.Client.csproj", "{AEA5F524-4CDE-40E4-9BA0-21B7F1B1BEDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A01FD420-A289-46AA-BFDE-26643E05284A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A01FD420-A289-46AA-BFDE-26643E05284A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A01FD420-A289-46AA-BFDE-26643E05284A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA5F524-4CDE-40E4-9BA0-21B7F1B1BEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA5F524-4CDE-40E4-9BA0-21B7F1B1BEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA5F524-4CDE-40E4-9BA0-21B7F1B1BEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA5F524-4CDE-40E4-9BA0-21B7F1B1BEDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

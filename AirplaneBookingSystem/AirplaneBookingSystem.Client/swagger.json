@@ -1,0 +1,1200 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AirplaneBookingSystem.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Airplane": {
+      "get": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Get method for airplane table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirplaneGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Post method for airplane table",
+        "requestBody": {
+          "description": "Airplane class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Airplane/{idAirplane}": {
+      "get": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Get by id method for airplane table",
+        "parameters": [
+          {
+            "name": "idAirplane",
+            "in": "path",
+            "description": "id airplane",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirplaneGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Put method for airplane table",
+        "parameters": [
+          {
+            "name": "idAirplane",
+            "in": "path",
+            "description": "An id of airplane which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Airplane class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirplanePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airplane"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "idAirplane",
+            "in": "path",
+            "description": "An id of airplane which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/all-flight": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return all flight",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/clients-with-specific-flight": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return clients with specific flight",
+        "parameters": [
+          {
+            "name": "numberOfFlight",
+            "in": "query",
+            "description": "Number of flight",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flight-with-specific-departure-city-and-data": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return flight with specific departure city and data",
+        "parameters": [
+          {
+            "name": "departureCity",
+            "in": "query",
+            "description": "Departure city",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "departureData",
+            "in": "query",
+            "description": "Departure date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/top-five-flight": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return top five flight",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/flight-with-max-amount-of-clients": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return flight with max amount of clients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/clients-statistics-from-flights-with-specific-departure-city": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get method which return clients statistics from flights with specific departure city",
+        "parameters": [
+          {
+            "name": "departureCity",
+            "in": "query",
+            "description": "Departure city",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client": {
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Get method for client table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Post method for client table",
+        "requestBody": {
+          "description": "Client class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Client/{idClient}": {
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Get by id method for client table",
+        "parameters": [
+          {
+            "name": "idClient",
+            "in": "path",
+            "description": "id client",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Put method for client table",
+        "parameters": [
+          {
+            "name": "idClient",
+            "in": "path",
+            "description": "An id of client which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Client class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "idClient",
+            "in": "path",
+            "description": "An id of client which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Flight": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Get method for flight table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Post method for flight table",
+        "requestBody": {
+          "description": "Flight class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Flight/{idFlight}": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Get by id method for flight table",
+        "parameters": [
+          {
+            "name": "idFlight",
+            "in": "path",
+            "description": "id flight",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Put method for flight table",
+        "parameters": [
+          {
+            "name": "idFlight",
+            "in": "path",
+            "description": "An id of flight which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Flight class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "idFlight",
+            "in": "path",
+            "description": "An id of flight which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ticket": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Get method for ticket table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Post method for ticket table",
+        "requestBody": {
+          "description": "Ticket class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ticket/{idTicket}": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Get by id method for ticket table",
+        "parameters": [
+          {
+            "name": "idTicket",
+            "in": "path",
+            "description": "id ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Put method for ticket table",
+        "parameters": [
+          {
+            "name": "idTicket",
+            "in": "path",
+            "description": "An id of ticket which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "idTicket",
+            "in": "path",
+            "description": "An id of ticket which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AirplaneGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique Id of Airplane",
+            "format": "int32"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of Airplane",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AirplanePostDto": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Model of Airplane",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique Id of client",
+            "format": "int32"
+          },
+          "passportNumber": {
+            "type": "string",
+            "description": "Client`s passport number",
+            "nullable": true
+          },
+          "birthdayData": {
+            "type": "string",
+            "description": "Client`s birthday",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Client`s name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientPostDto": {
+        "type": "object",
+        "properties": {
+          "passportNumber": {
+            "type": "string",
+            "description": "Client`s passport number",
+            "nullable": true
+          },
+          "birthdayData": {
+            "type": "string",
+            "description": "Client`s birthday",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Client`s name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FlightGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique Id of flight",
+            "format": "int32"
+          },
+          "numberOfFlight": {
+            "type": "integer",
+            "description": "Number of flight",
+            "format": "int32"
+          },
+          "departureCity": {
+            "type": "string",
+            "description": "Departure city",
+            "nullable": true
+          },
+          "arrivalCity": {
+            "type": "string",
+            "description": "Arrival city",
+            "nullable": true
+          },
+          "departureDate": {
+            "type": "string",
+            "description": "Departure date",
+            "format": "date-time"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "description": "Arrival date",
+            "format": "date-time"
+          },
+          "airplaneId": {
+            "type": "integer",
+            "description": "Airplane`s id of flight",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FlightPostDto": {
+        "type": "object",
+        "properties": {
+          "numberOfFlight": {
+            "type": "integer",
+            "description": "Number of flight",
+            "format": "int32"
+          },
+          "departureCity": {
+            "type": "string",
+            "description": "Departure city",
+            "nullable": true
+          },
+          "arrivalCity": {
+            "type": "string",
+            "description": "Arrival city",
+            "nullable": true
+          },
+          "departureDate": {
+            "type": "string",
+            "description": "Departure date",
+            "format": "date-time"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "description": "Arrival date",
+            "format": "date-time"
+          },
+          "airplaneId": {
+            "type": "integer",
+            "description": "Airplane`s id of flight",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique Id of ticket",
+            "format": "int32"
+          },
+          "ticketNumber": {
+            "type": "integer",
+            "description": "Number of ticket",
+            "format": "int32"
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "Сlient who owns the ticket",
+            "format": "int32"
+          },
+          "flightId": {
+            "type": "integer",
+            "description": "Flight for which the ticket is registered",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketPostDto": {
+        "type": "object",
+        "properties": {
+          "ticketNumber": {
+            "type": "integer",
+            "description": "Number of ticket",
+            "format": "int32"
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "Сlient who owns the ticket",
+            "format": "int32"
+          },
+          "flightId": {
+            "type": "integer",
+            "description": "Flight for which the ticket is registered",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

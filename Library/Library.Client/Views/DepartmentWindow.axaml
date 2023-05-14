@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="350"
+        x:Class="Library.Client.Views.DepartmentWindow"
+		xmlns:vm="using:Library.Client.ViewModels"
+		Icon="/Assets/library.ico"
+        Title="Add department"
+		MinHeight="350" MinWidth="350"
+		MaxHeight="350" MaxWidth="350"
+		SizeToContent="Height">
+
+	<Design.DataContext>
+		<vm:DepartmentViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/LibraryStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Count</Label>
+		<Label Grid.Row="1" Grid.Column="0">BookId</Label>
+		<Label Grid.Row="2" Grid.Column="0">TypeDepartmentId</Label>
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Count}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BookId}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TypeDepartmentId}"/>
+
+		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

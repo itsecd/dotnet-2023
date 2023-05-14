@@ -38,6 +38,7 @@ public class ReaderViewModel : ViewModelBase
     }
 
     private string? _registrationDate;
+    [Required]
     public string? RegistrationDate
     {
         set => this.RaiseAndSetIfChanged(ref _registrationDate, value);

@@ -4,5 +4,8 @@ namespace RecruitmentAgency.Client.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    //public ObservableCollection<>
+    public ObservableCollection<CompanyViewModel> Companies { get; } = new();
+    public MainWindowViewModel() {
+        
+    }
 }

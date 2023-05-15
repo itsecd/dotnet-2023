@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using RecruitmentAgency.Client.ViewModels;
 using RecruitmentAgency.Client.Views;
+using Splat;
 
 namespace RecruitmentAgency.Client;
 public partial class App : Application
@@ -16,6 +17,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            Locator.CurrentMutable.RegisterConstant(new ApiClient());
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),

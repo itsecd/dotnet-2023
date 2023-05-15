@@ -23,7 +23,7 @@
 			<Button Classes="ToolButton"/>
 			<Button Classes="ToolButton"/>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="True">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="True" Items="{Binding CompanyViewModel}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Наименование"/>
 			</DataGrid.Columns>

@@ -14,7 +14,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowTicketDialog.RegisterHandler(ShowTicketDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowAirplaneDialog.RegisterHandler(ShowAirplaneDialogAsync)));
     }
-
     private async Task ShowPassengerDialogAsync(InteractionContext<PassengerViewModel, PassengerViewModel?> interaction)
     {
         var dialogPassenger = new PassengerWindow

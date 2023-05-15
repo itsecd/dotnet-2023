@@ -90,6 +90,21 @@ Title="Airlines.Client">
 				</DataGrid>
 			</Grid>
 		</TabItem>
-
+		<TabItem Header="Passenger without baggage" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding ShowPassengersWithoutBaggage}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding PassengersWithoutBaggage}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Номер паспорта" Binding="{Binding PassportNumber}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 	</TabControl>
 </Window>

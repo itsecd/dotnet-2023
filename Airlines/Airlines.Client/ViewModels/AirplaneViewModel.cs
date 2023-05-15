@@ -4,21 +4,18 @@ using System.Reactive;
 namespace Airlines.Client.ViewModels;
 public class AirplaneViewModel : ViewModelBase
 {
-
     private int _id;
     public int Id
     {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
-
     private string _model = string.Empty;
-    public string? Model
+    public string Model
     {
         get => _model;
         set => this.RaiseAndSetIfChanged(ref _model, value);
     }
-
     private int _carryingCapacity;
     public int CarryingCapacity
     {
@@ -38,10 +35,8 @@ public class AirplaneViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _seatingCapacity, value);
     }
     public ReactiveCommand<Unit, AirplaneViewModel> OnSubmitCommand { get; }
-
     public AirplaneViewModel()
     {
         OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
-
 }

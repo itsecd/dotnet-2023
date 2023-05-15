@@ -32,20 +32,18 @@ public class TicketViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _ticketNumber, value);
     }
     private string _seatNumber = string.Empty;
-    public string? SeatNumber
+    public string SeatNumber
     {
         get => _seatNumber;
         set => this.RaiseAndSetIfChanged(ref _seatNumber, value);
     }
     private int _baggageWeight;
-
     public int BaggageWeight
     {
         get => _baggageWeight;
         set => this.RaiseAndSetIfChanged(ref _baggageWeight, value);
     }
     public ReactiveCommand<Unit, TicketViewModel> OnSubmitCommand { get; }
-
     public TicketViewModel()
     {
         OnSubmitCommand = ReactiveCommand.Create(() => this);

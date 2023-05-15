@@ -11,7 +11,7 @@ public class PassengerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private string _passportNumber = string.Empty;
-    public string? PassportNumber
+    public string PassportNumber
     {
         get => _passportNumber;
         set => this.RaiseAndSetIfChanged(ref _passportNumber, value);
@@ -23,7 +23,6 @@ public class PassengerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _name, value);
     }
     public ReactiveCommand<Unit, PassengerViewModel> OnSubmitCommand { get; }
-
     public PassengerViewModel()
     {
         OnSubmitCommand = ReactiveCommand.Create(() => this);

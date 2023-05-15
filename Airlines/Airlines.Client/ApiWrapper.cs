@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -66,5 +67,9 @@ public class ApiWrapper
     public async Task DeleteAirplaneAsync(int id)
     {
         await _client.Airplane4Async(id);
+    }
+    public async Task<ICollection<PassengerGetDto>> PassengersWithoutBaggage()
+    {
+        return await _client.PassengersWithoutBaggageAsync();
     }
 }

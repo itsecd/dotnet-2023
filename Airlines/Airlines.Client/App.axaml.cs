@@ -13,7 +13,6 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
     }
-
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

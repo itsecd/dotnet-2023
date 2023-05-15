@@ -13,7 +13,6 @@ public partial class AirplaneWindow : ReactiveWindow<AirplaneViewModel>
 
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
-
     public void CancelButtonOnClick(object? sender, RoutedEventArgs eventArgs)
     {
         Close();

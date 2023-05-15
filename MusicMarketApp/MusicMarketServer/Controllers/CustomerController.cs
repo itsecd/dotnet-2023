@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MusicMarket;
-using MusicMarketServer.Dto;
 using Microsoft.EntityFrameworkCore;
-
+using MusicMarket;
 using MusicMarketplace;
+using MusicMarketServer.Dto;
 
 namespace MusicMarketServer.Controllers;
 
@@ -37,7 +36,7 @@ public class CustomerController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory <MusicMarketDbContext> contextFactory, IMapper mapper)
+    public CustomerController(ILogger<CustomerController> logger, IDbContextFactory<MusicMarketDbContext> contextFactory, IMapper mapper)
     {
         _logger = logger;
         _contextFactory = contextFactory;
@@ -49,7 +48,7 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task <IEnumerable<CustomerGetDto>> Get()
+    public async Task<IEnumerable<CustomerGetDto>> Get()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get customers");

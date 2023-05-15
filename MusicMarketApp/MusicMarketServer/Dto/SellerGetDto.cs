@@ -1,4 +1,6 @@
-﻿namespace MusicMarketServer.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicMarketServer.Dto;
 /// <summary>
 /// Информация о продавце
 /// </summary>
@@ -7,6 +9,7 @@ public class SellerGetDto
     /// <summary>
     /// ID Продавца.
     /// </summary>
+    [Key]
     public int Id;
 
     /// <summary>

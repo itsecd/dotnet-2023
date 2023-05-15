@@ -1,4 +1,7 @@
-﻿namespace MusicMarket;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MusicMarket;
 
 /// <summary>
 /// Товар.
@@ -8,62 +11,69 @@ public class Product
     /// <summary>
     /// ID Товара.
     /// </summary>
-    public int Id;
+    [Key]
+    public int Id { get; set; } = 0;
 
     /// <summary>
     /// Тип аудионосителя: диск|кассета|виниловая пластинка.
     /// </summary>
+    [Required]
     public string TypeOfCarrier { get; set; } = string.Empty;
 
     /// <summary>
     /// Тип издания: альбом|сингл.
     /// </summary>
+    [Required]
     public string PublicationType { get; set; } = string.Empty;
 
     /// <summary>
     /// Исполнитель
     /// </summary>
+    [Required]
     public string Creator { get; set; } = string.Empty;
 
     /// <summary>
     /// Название 
     /// </summary>
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Страна издания.
     /// </summary>
+    [Required]
     public string MadeIn { get; set; } = string.Empty;
 
     /// <summary>
     /// Cостояние аудионосителя: новое || отличное || хорошее || удовлетворительное || плохое.
     /// </summary>
+    [Required]
     public string MediaStatus { get; set; } = string.Empty;
 
     /// <summary>
     /// Cостояние упаковки: новое || отличное || хорошее || удовлетворительное || плохое.
     /// </summary>
+    [Required]
     public string PackagingCondition { get; set; } = string.Empty;
 
     /// <summary>
     /// Цена
     /// </summary>
+    [Required]
     public double Price { get; set; }
 
     /// <summary>
     /// Cтатус: в продаже || продан. 
     /// </summary>
+    [Required]
     public string Status { get; set; } = string.Empty;
 
     /// <summary>
     /// ID Продавца.
     /// </summary>
+    [ForeignKey("IdSeller")]
     public int IdSeller { get; set; }
 
-    ///// <summary>
-    ///// Продавец
-    ///// </summary>
-    //public Seller? Seller { get; set; }
 
     /// <summary>
     /// Конструктор по умолчанию. 

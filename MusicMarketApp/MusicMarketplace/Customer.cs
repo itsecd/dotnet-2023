@@ -1,4 +1,6 @@
-﻿namespace MusicMarket;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicMarket;
 
 /// <summary>
 /// Покупатель.
@@ -8,27 +10,26 @@ public class Customer
     /// <summary>
     /// ID Покупателя.
     /// </summary>
-    public int Id;
+    [Key]
+    public int Id { get; set; } = 0;
 
     /// <summary>
     /// Ф.И.О.
     /// </summary>
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Страна проживания.
     /// </summary>
+    [Required]
     public string Country { get; set; } = string.Empty;
 
     /// <summary>
     /// Адрес.
     /// </summary>
+    [Required]
     public string Address { get; set; } = string.Empty;
-
-    /// <summary>
-    /// История заказов. 
-    /// </summary>
-    public List<Purchase> Purchases = null!;
 
     /// <summary>
     /// Конструктор по умолчанию. 
@@ -37,12 +38,11 @@ public class Customer
     /// <summary>
     /// Конструктор с параметрами. 
     /// </summary>
-    public Customer(int id, string name, string country, string address, List<Purchase> purchases)
+    public Customer(int id, string name, string country, string address)
     {
         Id = id;
         Name = name;
         Country = country;
         Address = address;
-        Purchases = purchases;
     }
-}   
+}

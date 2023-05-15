@@ -1,4 +1,6 @@
-﻿namespace MusicMarket;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicMarket;
 
 /// <summary>
 /// Продавец.
@@ -8,27 +10,25 @@ public class Seller
     /// <summary>
     /// ID Продавца.
     /// </summary>
-    public int Id;
+    [Key] 
+    public int Id { get; set; } = 0;
 
     /// <summary>
     /// Название магазина.
     /// </summary>
+    [Required]
     public string ShopName { get; set; } = string.Empty;
 
     /// <summary>
     /// Страна доставки.
     /// </summary>
+    [Required]
     public string CountryOfDelivery { get; set; } = string.Empty;
-
     /// <summary>
     /// Стоимость доставки за 1 товар.
     /// </summary>
+    [Required]
     public double Price { get; set; }
-
-    /// <summary>
-    /// Список товаров.
-    /// </summary>
-    public List<Product> Products = null!;
 
     /// <summary>
     /// Конструктор по умолчанию. 

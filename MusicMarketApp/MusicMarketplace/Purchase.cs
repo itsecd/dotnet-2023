@@ -1,4 +1,7 @@
-﻿namespace MusicMarket;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MusicMarket;
 
 /// <summary>
 /// Покупка.
@@ -8,21 +11,25 @@ public class Purchase
     /// <summary>
     /// ID Покупки.
     /// </summary>
-    public int Id;
+    [Key]
+    public int Id { get; set; } = 0;
 
     /// <summary>
     /// ID Товара.
     /// </summary>
+    [ForeignKey("IdProduct")]
     public int IdProduct;
 
     /// <summary>
     /// ID Покупателя.
     /// </summary>
+    [ForeignKey("IdCustomer")]
     public int IdCustomer;
 
     /// <summary>
     /// Дата совершения покупки.
     /// </summary>
+    [Required]
     public DateTime Date { get; set; }
 
     /// <summary>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MusicMarket;
 
 namespace MusicMarketplace;
@@ -47,20 +42,20 @@ public class MusicMarketDbContext : DbContext
 
         modelBuilder.Entity<Purchase>().HasData(new List<Purchase>
         {
-            new Purchase { Id = 1, IdProduct = 8,IdCustomer = 1, Date = DateTime.Parse("2023/04/11")},
-            new Purchase { Id = 2, IdProduct = 4,IdCustomer= 2, Date = DateTime.Parse("2023/04/4") },
-            new Purchase { Id = 3, IdProduct = 5,IdCustomer = 3, Date = DateTime.Parse("2023/04/4") },
-            new Purchase { Id = 4, IdProduct = 6,IdCustomer = 4, Date = DateTime.Parse("2023/04/4") },
-            new Purchase { Id = 5, IdProduct = 7,IdCustomer = 5, Date = DateTime.Parse("2023/04/4") }
+            new Purchase { Id = 1, IdProduct = 8,IdCustomer = 1, Date = DateTime.Parse("2023/05/11")},
+            new Purchase { Id = 2, IdProduct = 4,IdCustomer= 2, Date = DateTime.Parse("2023/05/4") },
+            new Purchase { Id = 3, IdProduct = 5,IdCustomer = 3, Date = DateTime.Parse("2023/05/7") },
+            new Purchase { Id = 4, IdProduct = 6,IdCustomer = 4, Date = DateTime.Parse("2023/05/8") },
+            new Purchase { Id = 5, IdProduct = 7,IdCustomer = 5, Date = DateTime.Parse("2023/05/14") }
         });
 
         modelBuilder.Entity<Customer>().HasData(new List<Customer>
         {
-            new Customer { Id = 1, Name = "Tikhonov Mark Sergeevich", Country = "Switzerland", Address = "Aubonnestr. 18c 2672 Sembrancher", },
-            new Customer { Id = 2, Name = "Klimova Sofya Dmitrievna", Country = "Russia", Address = "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94", },
-            new Customer { Id = 3, Name = "Jason Knight", Country = "USA", Address = "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851", },
-            new Customer { Id = 4, Name = "David Bush", Country = "France", Address = "8, avenue de Coste 24798 Costa", },
-            new Customer { Id = 5, Name = "Vasiliev Yaroslav Olegovich", Country = "Russia", Address = "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23", }
+            new Customer ( 1, "Tikhonov Mark Sergeevich", "Switzerland", "Aubonnestr. 18c 2672 Sembrancher"),
+            new Customer ( 2, "Klimova Sofya Dmitrievna", "Russia", "522625, Kaliningrad region, the city of Pavlovsky Posad, Domodedovo str., 94"),
+            new Customer ( 3, "Jason Knight", "USA", "9297 Graham Spur Apt. 585 Gaylordbury, LA 91851"),
+            new Customer ( 4, "David Bush", "France", "8, avenue de Coste 24798 Costa"),
+            new Customer ( 5, "Vasiliev Yaroslav Olegovich", "Russia", "179817, Ulyanovsk region, Krasnogorsk, Lenin Square, 23")
         });
 
 

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MusicMarket;
-using MusicMarketServer.Dto;
-
 using Microsoft.EntityFrameworkCore;
+using MusicMarket;
 using MusicMarketplace;
+using MusicMarketServer.Dto;
+using MySqlX.XDevAPI.Relational;
+using System.Security.Cryptography.Xml;
+using System.Text.RegularExpressions;
 
 namespace MusicMarketServer.Controllers;
 
@@ -56,7 +58,7 @@ public class AnalyticsController : ControllerBase
 
         var result = await (from product in context.Products
                             where product.TypeOfCarrier == "vinyl record" && product.Status == "sold"
-                      select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
+                            select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
         if (result.Count == 0)
         {
             _logger.LogInformation("Not found sold vinyl records");
@@ -80,9 +82,9 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get information about products with seller id {id}");
         var products = await (from product in context.Products
-                        where product.IdSeller == id
-                        orderby product.Price
-                        select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
+                              where product.IdSeller == id
+                              orderby product.Price
+                              select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
         if (products.Count == 0)
         {
             _logger.LogInformation("Not found product");
@@ -107,11 +109,11 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get good disks");
         var products = await (from product in context.Products
-                        where product.Creator != null && product.Creator == name && product.TypeOfCarrier == "disc" && product.Status == "sale"
-                        && product.PublicationType == "album"
-                        && (product.MediaStatus == "new" || product.MediaStatus == "excellent" || product.MediaStatus == "good")
-                        orderby product.Price
-                        select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
+                              where product.Creator != null && product.Creator == name && product.TypeOfCarrier == "disc" && product.Status == "sale"
+                              && product.PublicationType == "album"
+                              && (product.MediaStatus == "new" || product.MediaStatus == "excellent" || product.MediaStatus == "good")
+                              orderby product.Price
+                              select _mapper.Map<Product, ProductGetDto>(product)).ToListAsync();
         if (products.Count == 0)
         {
             _logger.LogInformation("Not found disks with this creator");
@@ -134,13 +136,13 @@ public class AnalyticsController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get count of sold audio carriers each type");
         var result = await (from product in context.Products
-                      where (product.Status == "sold")
-                      group product by product.TypeOfCarrier into carrierGroup
-                      select new
-                      {
-                          carrier = carrierGroup.Key,
-                          number = carrierGroup.Count()
-                      }).ToListAsync();
+                            where (product.Status == "sold")
+                            group product by product.TypeOfCarrier into carrierGroup
+                            select new
+                            {
+                                carrier = carrierGroup.Key,
+                                number = carrierGroup.Count()
+                            }).ToListAsync();
         return Ok(result);
     }
 
@@ -154,13 +156,9 @@ public class AnalyticsController : ControllerBase
     //{
     //    await using var context = await _contextFactory.CreateDbContextAsync();
     //    _logger.LogInformation("Get top 5 customers");
-    //    var customers = context.Customers;
-    //    var purchases = context.Purchases;
-    //    var products = context.Products;
-    //    var sellers = context.Sellers;
 
     //    var customerPurchases =
-    //        from customer in customers
+    //        from customer in context.Customers
     //        from purchase in customer.Purchases
     //        //from product in purchase.IdProduct
     //        select new
@@ -193,34 +191,54 @@ public class AnalyticsController : ControllerBase
     /// Запрос 6 - Вывести информацию о количестве проданных товаров каждым продавцом за последние две недели.
     /// </summary>
     /// <returns> Information about sold products in two weeks</returns>
-    //[HttpGet("sold_products")]
-    //public async Task<IActionResult> SoldProductsInTwoWeeks()
-    //{
-    //    await using var context = await _contextFactory.CreateDbContextAsync();
-    //    _logger.LogInformation("Get information about sold products in two weeks");
-    //    var now = DateTime.Now;
+    [HttpGet("sold_products")]
+    public async Task<IActionResult> SoldProductsInTwoWeeks()
+    {
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get information about sold products in two weeks");
+        //var now = DateTime.Now;
 
-    //    var purchases = context.Purchases;
-    //    var products = context.Products;
+        var request = await (from purchases in context.Purchases
+                             join products in context.Products on purchases.IdProduct equals products.Id
+                             join sellers in context.Sellers on products.IdSeller equals sellers.Id
+                             select new
+                             {
+                                 products.IdSeller,
+                                 purchases.IdProduct,
+                                 purchases.Date
 
-    //    var request = await (from purchase in purchases
-    //                   where purchase.Date >= now.AddDays(-14)
-    //                   select new
-    //                   {
-    //                       seller = purchase.IdProducts[0].Seller,
-    //                       count = purchase.Products.Count
-    //                   }).ToListAsync();
+                             }).ToListAsync();
+        var selCount = (from sel in request
+                       where sel.Date >= DateTime.Now.AddDays(-14)
+                       group sel by sel.IdSeller into g
+                       select new { sellerid = g.Key, count = g.Sum(x => x.IdProduct) 
+                       }).ToList();
 
-    //    var selCount = await (from sel in request group sel by sel.seller.ShopName into g select new { seller = g.Key, count = g.Sum(x => x.count) }).ToListAsync();
-        
-    //    if (selCount.Count == 0)
-    //    {
-    //        _logger.LogInformation("No information found");
-    //        return NotFound();
-    //    }
-    //    else
-    //    {
-    //        return Ok(selCount);
-    //    }
-    //}
+        if (selCount.Count == 0)    
+        {
+            _logger.LogInformation("No information found");
+            return NotFound();
+        }
+        else
+        {
+            return Ok(selCount);
+        }
+    }
 }
+//var request = await(from purchase in context.Purchases
+//                    join product in context.Product on purchase.IdProduct equals product.Id
+//                    join seller in context.Seller on product.IdSeller equals seller.Id
+//                    where purchase.Date >= now.AddDays(-14)
+//                    select new
+//                    {
+//                        seller = product.IdSeller,
+//                        proucts = product.Id,
+//                        date = purchase.Date,
+//                    }).ToListAsync();
+
+//SELECT DISTINCT idSeller, COUNT(product.idProduct) as count
+//FROM lr3.purchase
+//JOIN lr3.product
+//ON product.idProduct = purchase.idProduct && Date('2023-04-25') - Date(purchase.Date) <= 14
+//GROUP BY idSeller #, product.idProduct, Date 
+//ORDER BY count;

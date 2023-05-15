@@ -78,7 +78,7 @@ public class TrackController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var trackAlbum = await context.Albums.FirstOrDefaultAsync(album => album.Id == postTrack.AlbumId);
-        if(trackAlbum == null)
+        if (trackAlbum == null)
             return StatusCode(422, $"Not found album with Id = {postTrack.AlbumId}");
         _logger.LogInformation("Post new track");
         await context.Tracks.AddAsync(_mapper.Map<TrackPostDto, Track>(postTrack));

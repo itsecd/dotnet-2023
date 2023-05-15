@@ -4,9 +4,7 @@ using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
-using System.Runtime.Intrinsics.Arm;
 using System.Reactive.Linq;
-using DynamicData;
 
 namespace Media.Client.ViewModels;
 
@@ -18,7 +16,7 @@ public class MainWindowViewModel : ViewModelBase
     public ArtistViewModel? SelectedArtist
     {
         get => _selectedArtist;
-        set =>  this.RaiseAndSetIfChanged(ref _selectedArtist, value);
+        set => this.RaiseAndSetIfChanged(ref _selectedArtist, value);
     }
 
     public ObservableCollection<AlbumViewModel> Albums { get; } = new();
@@ -38,6 +36,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedGenre;
         set => this.RaiseAndSetIfChanged(ref _selectedGenre, value);
     }
+    public ObservableCollection<AlbumViewModel> TopAlbumsList { get; } = new();
 
     private readonly ApiWrapper _apiClient;
 
@@ -72,12 +71,12 @@ public class MainWindowViewModel : ViewModelBase
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
-        ShowArtistDialog = new Interaction<ArtistViewModel, ArtistViewModel?> ();
+        ShowArtistDialog = new Interaction<ArtistViewModel, ArtistViewModel?>();
 
         OnAddArtistCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var artistViewModel = await ShowArtistDialog.Handle(new ArtistViewModel());
-            if(artistViewModel != null) 
+            if (artistViewModel != null)
             {
                 var newArtist = _mapper.Map<ArtistPostDto>(artistViewModel);
                 await _apiClient.AddArtistAsync(newArtist);
@@ -168,13 +167,15 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedGenre).Select(selectGenre => selectGenre != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadGenresAsync);
+
+        RxApp.MainThreadScheduler.Schedule(LoadTopAlbumsAsync);
     }
 
     private async void LoadArtistsAsync()
     {
         Artists.Clear();
         var artists = await _apiClient.GetArtistsAsync();
-        foreach(var artist in artists) 
+        foreach (var artist in artists)
         {
             Artists.Add(_mapper.Map<ArtistViewModel>(artist));
         }
@@ -197,6 +198,16 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var genre in genres)
         {
             Genres.Add(_mapper.Map<GenreViewModel>(genre));
+        }
+    }
+
+    private async void LoadTopAlbumsAsync()
+    {
+        TopAlbumsList.Clear();
+        var albums = await _apiClient.GetTopAlbumsAsync();
+        foreach (var album in albums)
+        {
+            TopAlbumsList.Add(_mapper.Map<AlbumViewModel>(album));
         }
     }
 }

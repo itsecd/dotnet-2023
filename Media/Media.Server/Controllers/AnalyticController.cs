@@ -45,7 +45,7 @@ public class AnalyticController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get artist information");
         return await (from artist in context.Artists
-                select _mapper.Map<Artist, ArtistGetDto>(artist)).ToListAsync();
+                      select _mapper.Map<Artist, ArtistGetDto>(artist)).ToListAsync();
     }
 
     /// <summary>
@@ -58,10 +58,10 @@ public class AnalyticController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var resultList = await (from album in context.Albums.Include(album => album.Tracks)
-                          where album.Name == albumName
-                          from track in album.Tracks
-                          orderby track.Number
-                          select track).ToListAsync();
+                                where album.Name == albumName
+                                from track in album.Tracks
+                                orderby track.Number
+                                select track).ToListAsync();
         if (resultList.Count == 0)
         {
             _logger.LogInformation("Get album information by name: There are no albums named {albumName}", albumName);
@@ -81,8 +81,8 @@ public class AnalyticController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var resultList = await (from album in context.Albums.Include(album => album.Tracks)
-                          where album.Year == year
-                          select new Tuple<AlbumGetDto, int>(_mapper.Map<Album, AlbumGetDto>(album), album.Tracks.Count)).ToListAsync();
+                                where album.Year == year
+                                select new Tuple<AlbumGetDto, int>(_mapper.Map<Album, AlbumGetDto>(album), album.Tracks.Count)).ToListAsync();
         if (resultList.Count == 0)
         {
             _logger.LogInformation("Get album information by year: There are no album released in {year}", year);
@@ -102,8 +102,8 @@ public class AnalyticController : ControllerBase
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top-5 longest album");
         return await (from album in context.Albums.Include(album => album.Tracks)
-                orderby album.Tracks.Sum(track => track.Duration) descending
-                select _mapper.Map<Album, AlbumGetDto>(album)).Take(5).ToListAsync();
+                      orderby album.Tracks.Sum(track => track.Duration) descending
+                      select _mapper.Map<Album, AlbumGetDto>(album)).Take(5).ToListAsync();
     }
 
     /// <summary>
@@ -117,8 +117,8 @@ public class AnalyticController : ControllerBase
         _logger.LogInformation("Get the artists with the most albums");
         var maxCount = await context.Artists.MaxAsync(artist => artist.Albums.Count);
         return await (from artist in context.Artists.Include(artist => artist.Albums)
-                where artist.Albums.Count == maxCount
-                select _mapper.Map<Artist, ArtistGetDto>(artist)).ToListAsync();
+                      where artist.Albums.Count == maxCount
+                      select _mapper.Map<Artist, ArtistGetDto>(artist)).ToListAsync();
     }
 
     /// <summary>

@@ -6,15 +6,16 @@ namespace Media.Client.ViewModels;
 public class ArtistViewModel : ViewModelBase
 {
     private int _id;
-    public int Id 
+    public int Id
     {
-        get => _id; 
+        get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
     private string _name = string.Empty;
     [Required]
-    public string Name { 
+    public string Name
+    {
         get => _name;
         set => this.RaiseAndSetIfChanged(ref _name, value);
     }

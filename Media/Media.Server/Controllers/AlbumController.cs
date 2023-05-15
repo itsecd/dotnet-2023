@@ -78,12 +78,12 @@ public class AlbumController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var albumGenre = await context.Genres.FirstOrDefaultAsync(genre => genre.Id == album.GenreId);
-        if(albumGenre == null)
+        if (albumGenre == null)
             return StatusCode(422, $"Not found genre with Id = {album.GenreId}");
         var albumArtist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == album.ArtistId);
         if (albumArtist == null)
             return StatusCode(422, $"Not found artist with Id = {album.ArtistId}");
-        await context.Albums.AddAsync(_mapper.Map<AlbumPostDto, Album>(album) );
+        await context.Albums.AddAsync(_mapper.Map<AlbumPostDto, Album>(album));
         await context.SaveChangesAsync();
         _logger.LogInformation("Post new album");
         return Ok();

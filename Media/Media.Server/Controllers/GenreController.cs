@@ -75,7 +75,7 @@ public class GenreController : ControllerBase
     /// <param name="genre">Genre name</param>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] GenrePostDto genre)
-    { 
+    {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post new genre");
         await context.Genres.AddAsync(_mapper.Map<GenrePostDto, Genre>(genre));

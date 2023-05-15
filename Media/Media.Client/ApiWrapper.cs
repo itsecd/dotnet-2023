@@ -79,4 +79,9 @@ public class ApiWrapper
     {
         await _client.Genre4Async(id);
     }
+
+    public async Task<ICollection<AlbumGetDto>> GetTopAlbumsAsync()
+    {
+        return await _client.Top5AlbumsAsync();
+    }
 }

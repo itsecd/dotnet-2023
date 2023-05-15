@@ -119,7 +119,7 @@ public class ArtistController : ControllerBase
         var artist = await context.Artists.FirstOrDefaultAsync(artist => artist.Id == id);
         if (artist != null)
         {
-            context.Artists.Remove(artist); 
+            context.Artists.Remove(artist);
             _logger.LogInformation("DELETE: Delete artist with id = {id}", id);
             await context.SaveChangesAsync();
             return Ok();

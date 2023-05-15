@@ -5,7 +5,7 @@ namespace Media.Domain;
 /// <summary>
 /// Class MediaContext is used to work with database
 /// </summary>
-public sealed class MediaContext: DbContext
+public sealed class MediaContext : DbContext
 {
     /// <summary>
     /// Used to store a collection of albums
@@ -26,7 +26,7 @@ public sealed class MediaContext: DbContext
     /// Used to store a collection of tracks
     /// </summary>
     public DbSet<Track> Tracks { get; set; } = null!;
-    
+
     public MediaContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
@@ -38,7 +38,7 @@ public sealed class MediaContext: DbContext
 	/// <param name="modelBuilder">Model Builder</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Genre>().HasData(new Genre 
+        modelBuilder.Entity<Genre>().HasData(new Genre
         {
             Id = 1,
             Name = "Genre #1",

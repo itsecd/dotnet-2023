@@ -19,7 +19,7 @@ public class Album
     /// Name is used to store a name of Album
     /// </summary>
     [Required]
-    public string Name{ get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Year is used to store the year the Album was created

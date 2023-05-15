@@ -1,6 +1,6 @@
 using AutoMapper;
-using Media.Server;
 using Media.Domain;
+using Media.Server;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

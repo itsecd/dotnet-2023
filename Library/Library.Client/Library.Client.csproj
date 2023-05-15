@@ -14,11 +14,6 @@
     <None Remove="Assets\free-icon-font-add-3914248.png" />
     <None Remove="Assets\free-icon-font-pencil-3917376.png" />
     <None Remove="Assets\free-icon-font-trash-3917242.png" />
-    <None Remove="swagger.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="Library.Client" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,5 +49,6 @@
     <None Update="appsettings.json" ClassName="ApiClient">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swagger.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

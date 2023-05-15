@@ -20,7 +20,6 @@ public class ClientViewModel : ViewModelBase
     }
     
     private string _firstName = String.Empty;
-
     public string FirstName
     {
         get => _firstName;
@@ -28,7 +27,6 @@ public class ClientViewModel : ViewModelBase
     }
     
     private string _patronymic = String.Empty;
-
     public string Patronymic
     {
         get => _patronymic;
@@ -36,7 +34,6 @@ public class ClientViewModel : ViewModelBase
     }
     
     private DateTime _birthDate = DateTime.MinValue;
-
     public DateTime BirthDate
     {
         get => _birthDate;
@@ -44,7 +41,6 @@ public class ClientViewModel : ViewModelBase
     }
     
     private string _passport = String.Empty;
-
     public string Passport
     {
         get => _passport;

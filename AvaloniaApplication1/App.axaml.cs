@@ -1,13 +1,10 @@
-using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using RentalService.Client.ViewModels;
-using RentalService.Client.Views;
-using RentalService.Server.Dto;
-using Splat;
+using AvaloniaApplication1.ViewModels;
+using AvaloniaApplication1.Views;
 
-namespace RentalService.Client;
+namespace AvaloniaApplication1;
 
 public partial class App : Application
 {
@@ -20,13 +17,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<ApiClient.ClientGetDto, ClientViewModel>();
-                cfg.CreateMap<ClientViewModel, ApiClient.ClientGetDto>();
-            });
-            Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),

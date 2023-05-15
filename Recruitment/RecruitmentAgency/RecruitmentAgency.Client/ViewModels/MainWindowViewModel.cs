@@ -1,6 +1,8 @@
-﻿namespace RecruitmentAgency.Client.ViewModels;
+﻿using System.Collections.ObjectModel;
+
+namespace RecruitmentAgency.Client.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public string Greeting => "Welcome to Avalonia!";
+    //public ObservableCollection<>
 }

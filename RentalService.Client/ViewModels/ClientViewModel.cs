@@ -1,4 +1,5 @@
 using System;
+using System.Reactive;
 using ReactiveUI;
 
 namespace RentalService.Client.ViewModels;
@@ -33,12 +34,12 @@ public class ClientViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _patronymic, value);
     }
     
-    private DateTime _birthDate = DateTime.MinValue;
+    /*private DateTime _birthDate = DateTime.MinValue;
     public DateTime BirthDate
     {
         get => _birthDate;
         set => this.RaiseAndSetIfChanged(ref _birthDate, value);
-    }
+    }*/
     
     private string _passport = String.Empty;
     public string Passport
@@ -46,4 +47,12 @@ public class ClientViewModel : ViewModelBase
         get => _passport;
         set => this.RaiseAndSetIfChanged(ref _passport, value);
     }
+    
+    public ReactiveCommand<Unit, ClientViewModel> OkButtonOnClick { get; }
+
+    public ClientViewModel()
+    {
+        OkButtonOnClick = ReactiveCommand.Create(() => this);
+    }
+    
 }

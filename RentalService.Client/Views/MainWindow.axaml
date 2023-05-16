@@ -21,21 +21,24 @@
     
     <Grid RowDefinitions="Auto,*">
         <StackPanel Grid.Row="0" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Button>
-                    Кнопочка
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Classes="ToolButton" Command="{Binding OnAddClientCommand}">
+                    <Image Source="/Assets/add.png"/>
                 </Button>
-                <Button>
-                    Кнопочка2
+                <Button Classes="ToolButton">
+                    <Image Source="/Assets/edit.png"/>
                 </Button>
-                <Button>
-                    Кнопочка3
+                <Button Classes="ToolButton">
+                    <Image Source="/Assets/del.png"/>
                 </Button>
             </StackPanel>
         </StackPanel>
-        <DataGrid Grid.Row="1" AutoGenerateColumns="True" Items="{Binding Clients}">
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Clients}" SelectedItem="{Binding SelectedClient}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Наименование"></DataGridTextColumn>
+                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+                <DataGridTextColumn Header="Passport" Binding="{Binding Passport}"/>
             </DataGrid.Columns> 
         </DataGrid>
     </Grid>

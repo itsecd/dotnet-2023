@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
-using RentalService.Server.Dto;
 
 namespace RentalService.Client;
 
@@ -27,9 +26,9 @@ public class ApiWrapper
         return await _client.ClientAllAsync();
     }
     
-    public async Task AddClientsAsync(ClientPostDto client)
+    public async Task<ClientGetDto> AddClientsAsync(ClientPostDto client)
     {
-        await _client.ClientPOSTAsync(client);
+        return await _client.ClientPOSTAsync(client);
     }
     
     public async Task UpdateClientsAsync(long id, ClientPostDto client)

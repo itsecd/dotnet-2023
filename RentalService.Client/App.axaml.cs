@@ -23,6 +23,9 @@ public class App : Application
             {
                 cfg.CreateMap<ClientGetDto, ClientViewModel>();
                 cfg.CreateMap<ClientViewModel, ClientGetDto>();
+                cfg.CreateMap<ClientPostDto, ClientViewModel>();
+                cfg.CreateMap<ClientViewModel, ClientPostDto>();
+                
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

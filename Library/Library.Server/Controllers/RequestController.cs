@@ -72,15 +72,15 @@ public class RequestController : ControllerBase
                                 }).ToListAsync();
         var request = (from req in bookSelect
                        orderby req.book.Name
-                       select req).Select(b => new BookGetDto
+                       select req).Select(book => new BookGetDto
                        {
-                           Id = b.book.Id,
-                           Author = b.book.Author,
-                           Cipher = b.book.Cipher,
-                           Name = b.book.Name,
-                           PlaceEdition = b.book.PlaceEdition,
-                           YearEdition = b.book.YearEdition,
-                           TypeEditionId = b.book.TypeEditionId,
+                           Id = book.book.Id,
+                           Author = book.book.Author,
+                           Cipher = book.book.Cipher,
+                           Name = book.book.Name,
+                           PlaceEdition = book.book.PlaceEdition,
+                           YearEdition = book.book.YearEdition,
+                           TypeEditionId = book.book.TypeEditionId,
                        }).ToList();
         if (request.Count == 0)
         {

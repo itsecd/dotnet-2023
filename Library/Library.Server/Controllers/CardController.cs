@@ -70,10 +70,6 @@ public class CardController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<CardGetDto>> PostCard(CardPostDto card)
     {
-        if (_context.Cards == null)
-        {
-            return Problem("Entity set 'LibraryDbContext.Cards'  is null.");
-        }
         var mappedCard = _mapper.Map<Card>(card);
 
         _context.Cards.Add(mappedCard);

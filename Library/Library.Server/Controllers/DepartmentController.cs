@@ -70,10 +70,6 @@ public class DepartmentController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<DepartmentGetDto>> PostDepartment(DepartmentPostDto department)
     {
-        if (_context.Departments == null)
-        {
-            return Problem("Entity set 'LibraryDbContext.Departments'  is null.");
-        }
         var mappedDepartment = _mapper.Map<Department>(department);
 
         _context.Departments.Add(mappedDepartment);

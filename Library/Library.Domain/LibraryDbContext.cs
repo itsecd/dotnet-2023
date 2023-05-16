@@ -9,27 +9,27 @@ public class LibraryDbContext : DbContext
     /// <summary>
     /// Books is used to store collection of books
     /// </summary>
-    public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<Book> Books { get; set; }
     /// <summary>
     /// Cards is used to store collection of cards
     /// </summary>
-    public DbSet<Card> Cards { get; set; } = null!;
+    public DbSet<Card> Cards { get; set; }
     /// <summary>
     /// Departments is used to store collection of departments
     /// </summary>
-    public DbSet<Department> Departments { get; set; } = null!;
+    public DbSet<Department> Departments { get; set; }
     /// <summary>
     /// Readers is used to store collection of readers
     /// </summary>
-    public DbSet<Reader> Readers { get; set; } = null!;
+    public DbSet<Reader> Readers { get; set; }
     /// <summary>
     /// TypesDepartment is used to store collection of types departments
     /// </summary>
-    public DbSet<TypeDepartment> TypesDepartment { get; set; } = null!;
+    public DbSet<TypeDepartment> TypesDepartment { get; set; }
     /// <summary>
     /// TypesEdition is used to store collection of types editions
     /// </summary>
-    public DbSet<TypeEdition> TypesEdition { get; set; } = null!;
+    public DbSet<TypeEdition> TypesEdition { get; set; }
     /// <summary>
     /// Library's DbContext constructor
     /// </summary>

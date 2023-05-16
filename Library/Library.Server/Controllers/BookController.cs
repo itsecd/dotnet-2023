@@ -71,10 +71,6 @@ public class BookController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<BookGetDto>> PostBook(BookPostDto book)
     {
-        if (_context.Books == null)
-        {
-            return Problem("Entity set 'LibraryDbContext.Books'  is null.");
-        }
         var mappedBook = _mapper.Map<Book>(book);
 
         _context.Books.Add(mappedBook);

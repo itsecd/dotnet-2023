@@ -70,10 +70,6 @@ public class ReaderController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<ReaderGetDto>> PostReader(ReaderPostDto reader)
     {
-        if (_context.Readers == null)
-        {
-            return Problem("Entity set 'LibraryDbContext.Readers'  is null.");
-        }
         var mappedReader = _mapper.Map<Reader>(reader);
 
         _context.Readers.Add(mappedReader);

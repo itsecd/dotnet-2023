@@ -1,6 +1,6 @@
 using Airline.Server;
 using Airline.Server.Repository;
-using AirlineClasses;
+using AirlineModel;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

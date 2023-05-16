@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AirlineClasses;
+namespace AirlineModel;
 public class FlightAirplaneTicket
 {   /// <summary>
     /// Id

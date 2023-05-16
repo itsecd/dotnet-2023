@@ -1,7 +1,7 @@
 ﻿using AirLine.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace AirlineClasses;
+namespace AirlineModel;
 
 /// <summary>
 /// Class AirlineContext connecting with database

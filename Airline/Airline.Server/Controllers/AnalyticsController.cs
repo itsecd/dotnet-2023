@@ -1,5 +1,5 @@
 ﻿using Airline.Server.Dto;
-using AirlineClasses;
+using AirlineModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

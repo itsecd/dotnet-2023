@@ -1,6 +1,6 @@
 ﻿using Airline.Server.Dto;
 using AirLine.Model;
-using AirlineClasses;
+using AirlineModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
 ﻿using AirLine.Model;
-using AirlineClasses;
+using AirlineModel;
 
 namespace Airline.Server.Repository;
 public interface IAirlineRepository

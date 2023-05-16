@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace AirlineClasses.Tests;
+namespace AirlineModel.Tests;
 
 public class AirlineTest
 {

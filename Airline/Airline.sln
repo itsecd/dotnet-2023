@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Model", "Airline.Classes\Airline.Model.csproj", "{4E72C214-C5D4-4B0F-BC6B-0C0268D85FBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Model", "Airline.Model\Airline.Model.csproj", "{4E72C214-C5D4-4B0F-BC6B-0C0268D85FBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Tests", "Airline.Tests\Airline.Tests.csproj", "{E2D98F49-6BC3-4387-9143-F6137CAB83E6}"
 EndProject

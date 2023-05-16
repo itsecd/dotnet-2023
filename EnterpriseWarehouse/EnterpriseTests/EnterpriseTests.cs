@@ -34,7 +34,7 @@ public class EnterpriseTestsClass
     {
         var query = (from invoice in EnterpriseFixture.InvoiceFixture
                      from infoProduct in invoice.Products
-                     where invoice.ShipmentDate == new DateOnly(2023, 02, 11)
+                     where invoice.ShipmentDate == new DateTime(2023, 2, 11)
                      join product in EnterpriseFixture.ProductFixture on infoProduct.Key equals product.ItemNumber
                      select product).ToList();
         Assert.Equal(2, query.Count);
@@ -85,15 +85,15 @@ public class EnterpriseTestsClass
     {
         var query = (from invoice in EnterpriseFixture.InvoiceFixture
                      from product in invoice.Products
-                     where invoice.ShipmentDate > new DateOnly(2023, 02, 1) && invoice.ShipmentDate < new DateOnly(2023, 02, 15)
+                     where invoice.ShipmentDate > new DateTime(2023, 2, 1) && invoice.ShipmentDate < new DateTime(2023, 2, 15)
                      group invoice by new
                      {
-                         invoice.NameOrganizationn,
+                         invoice.NameOrganization,
                          invoice.AdressOrganization
                      } into grp
                      select new
                      {
-                         grp.Key.NameOrganizationn,
+                         grp.Key.NameOrganization,
                          grp.Key.AdressOrganization,
                          quantity = grp.Sum(x => x.Products.Sum(x => x.Value))
                      }).ToList();
@@ -102,7 +102,7 @@ public class EnterpriseTestsClass
         {
             if (q.quantity == max)
             {
-                Assert.Equal("Посуда Центр", q.NameOrganizationn);
+                Assert.Equal("Посуда Центр", q.NameOrganization);
                 Assert.Equal("г. Самара, ул. Партизанская, 17.", q.AdressOrganization);
             }
         }
@@ -137,14 +137,14 @@ public class EnterpriseTestsClass
                      join product in EnterpriseFixture.ProductFixture on listProduct.Key equals product.ItemNumber
                      group invoice by new
                      {
-                         invoice.NameOrganizationn,
+                         invoice.NameOrganization,
                          invoice.AdressOrganization,
                          listProduct.Key,
                          product.Title
                      } into grp
                      select new
                      {
-                         grp.Key.NameOrganizationn,
+                         grp.Key.NameOrganization,
                          grp.Key.AdressOrganization,
                          grp.Key.Key,
                          grp.Key.Title,
@@ -157,8 +157,8 @@ public class EnterpriseTestsClass
         Assert.Contains(query, queryElem => queryElem.Key == 103700);
         Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Партизанская, 17.");
         Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Луцкая, 16.");
-        Assert.Contains(query, queryElem => queryElem.NameOrganizationn == "СамараПласт");
-        Assert.Contains(query, queryElem => queryElem.NameOrganizationn == "Посуда Центр");
+        Assert.Contains(query, queryElem => queryElem.NameOrganization == "СамараПласт");
+        Assert.Contains(query, queryElem => queryElem.NameOrganization == "Посуда Центр");
         Assert.DoesNotContain(query, queryElem => queryElem.Title == "Кастрюля алюм. с крышкой 5л");
         Assert.DoesNotContain(query, queryElem => queryElem.Key == 106302);
         Assert.DoesNotContain(query, queryElem => queryElem.Title == "Чайная ложка из нерж. стали");

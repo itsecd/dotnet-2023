@@ -26,7 +26,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Get method which return a passengers without baggage from specific flight
     /// </summary>
-    /// <param name="chipher"> Chipher specific flight</param>
+    /// <param name="cipher"> Chipher specific flight</param>
     /// <returns>Passengers without baggage</returns>
     [HttpGet("PassengersWithoutWaggage")]
     public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengersWithoutBaggage(string cipher)

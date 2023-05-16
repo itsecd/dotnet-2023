@@ -1,5 +1,6 @@
 ﻿using Enterprise.Data;
 using EnterpriseWarehouseServer.Dto;
+using EnterpriseWarehouseServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,8 +11,8 @@ public class InvoiceController : ControllerBase
 {
     private readonly ILogger<InvoiceController> _logger;
 
-    private readonly InvoiceRepository _invoiceRepository;
-    public InvoiceController(ILogger<InvoiceController> logger, InvoiceRepository invoiceRepository)
+    private readonly IInvoiceRepository _invoiceRepository;
+    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceRepository invoiceRepository)
     {
         _logger = logger;
         _invoiceRepository = invoiceRepository;

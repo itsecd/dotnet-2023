@@ -1,8 +1,11 @@
 ﻿using Enterprise.Data;
 
-namespace EnterpriseWarehouseServer;
+namespace EnterpriseWarehouseServer.Repositories;
 
-public class InvoiceRepository
+/// <summary>
+///     InvoceRepository - create list of element of the Invoce
+/// </summary>
+public class InvoiceRepository : IInvoiceRepository
 {
     private readonly List<Invoice> _invoices;
 

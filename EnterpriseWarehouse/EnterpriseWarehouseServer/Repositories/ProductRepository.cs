@@ -1,8 +1,12 @@
 ﻿using Enterprise.Data;
+using EnterpriseWarehouseServer.Repositories;
 
 namespace EnterpriseWarehouseServer;
 
-public class ProductRepository
+/// <summary>
+///     ProductRepository - create list of element of the Product
+/// </summary>
+public class ProductRepository : IProductRepository
 {
     private readonly List<Product> _products;
 

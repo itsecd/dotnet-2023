@@ -1,5 +1,6 @@
 ﻿using Enterprise.Data;
 using EnterpriseWarehouseServer.Dto;
+using EnterpriseWarehouseServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnterpriseWarehouseServer.Controllers;
@@ -9,8 +10,8 @@ public class StorageCellController : ControllerBase
 {
     private readonly ILogger<StorageCellController> _logger;
 
-    private readonly StorageCellRepository _storageCellRepository;
-    public StorageCellController(ILogger<StorageCellController> logger, StorageCellRepository storageCellRepository)
+    private readonly IStorageCellRepository _storageCellRepository;
+    public StorageCellController(ILogger<StorageCellController> logger, IStorageCellRepository storageCellRepository)
     {
         _logger = logger;
         _storageCellRepository = storageCellRepository;

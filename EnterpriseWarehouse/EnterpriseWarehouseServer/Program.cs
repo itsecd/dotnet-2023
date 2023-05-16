@@ -1,14 +1,13 @@
 using EnterpriseWarehouseServer;
+using EnterpriseWarehouseServer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddSingleton<ProductRepository>();
-builder.Services.AddSingleton<StorageCellRepository>();
-builder.Services.AddSingleton<InvoiceRepository>();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IStorageCellRepository, StorageCellRepository>();
+builder.Services.AddSingleton<IInvoiceRepository, InvoiceRepository>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

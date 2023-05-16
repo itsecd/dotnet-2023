@@ -1,8 +1,11 @@
 ﻿using Enterprise.Data;
 
-namespace EnterpriseWarehouseServer;
+namespace EnterpriseWarehouseServer.Repositories;
 
-public class StorageCellRepository
+/// <summary>
+///     StorageCellRepository - create list of element of the Storage Cell
+/// </summary>
+public class StorageCellRepository : IStorageCellRepository
 {
 
     private readonly List<StorageCell> _storageCells;

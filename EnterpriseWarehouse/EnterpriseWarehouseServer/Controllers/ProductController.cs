@@ -1,8 +1,7 @@
 ﻿using Enterprise.Data;
 using EnterpriseWarehouseServer.Dto;
+using EnterpriseWarehouseServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EnterpriseWarehouseServer.Controllers;
 [Route("api/[controller]")]
@@ -11,8 +10,8 @@ public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
 
-    private readonly ProductRepository _productRepository;
-    public ProductController(ILogger<ProductController> logger, ProductRepository productRepository)
+    private readonly IProductRepository _productRepository;
+    public ProductController(ILogger<ProductController> logger, IProductRepository productRepository)
     {
         _logger = logger;
         _productRepository = productRepository;

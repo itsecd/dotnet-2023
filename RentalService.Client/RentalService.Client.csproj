@@ -18,11 +18,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <OpenApiReference Include="swagger.json">
-            <CodeGenerator>NSwagCSharp</CodeGenerator>
-            <Namespace>RentalService.Client</Namespace>
-            <ClassName>ApiClient</ClassName>
-        </OpenApiReference>
+        <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="RentalService.Client" ClassName="ApiClient" />
     </ItemGroup>
     
     

@@ -23,13 +23,13 @@
         <StackPanel Grid.Row="0" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <Button>
-                    Пиздец
+                    Кнопочка
                 </Button>
                 <Button>
-                    Пиздец
+                    Кнопочка2
                 </Button>
                 <Button>
-                    Пиздец
+                    Кнопочка3
                 </Button>
             </StackPanel>
         </StackPanel>

@@ -22,17 +22,17 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public async Task<ICollection<ApiClient.ClientGetDto>> GetClientsAsync()
+    public async Task<ICollection<ClientGetDto>> GetClientsAsync()
     {
         return await _client.ClientAllAsync();
     }
     
-    public async Task AddClientsAsync(ApiClient.ClientPostDto client)
+    public async Task AddClientsAsync(ClientPostDto client)
     {
         await _client.ClientPOSTAsync(client);
     }
     
-    public async Task UpdateClientsAsync(long id, ApiClient.ClientPostDto client)
+    public async Task UpdateClientsAsync(long id, ClientPostDto client)
     {
         await _client.ClientPUTAsync(id, client);
     }

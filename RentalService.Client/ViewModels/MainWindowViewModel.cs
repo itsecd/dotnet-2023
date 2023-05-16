@@ -22,9 +22,9 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadClientAsync()
     {
-        Clients.Clear();
-        var clients = await _apiClient.GetClientsAsync();
-        foreach (var client in clients)
+        /*Clients.Clear();
+        var clients = await _apiClient.GetClientsAsync();*/
+        foreach (var client in await _apiClient.GetClientsAsync())
         {
             Clients.Add(_mapper.Map<ClientViewModel>(client));
         }

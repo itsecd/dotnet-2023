@@ -8,7 +8,7 @@ public class Airline
     /// <summary>
     /// List airplanes in airline
     /// </summary>
-    [Required]    public List<Airplane> Airplanes { get; set; } = new List<Airplane>();
+    [Required] public List<Airplane> Airplanes { get; set; } = new List<Airplane>();
     /// <summary>
     /// List flights in airline
     /// </summary>

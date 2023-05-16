@@ -196,11 +196,11 @@ public class AirlineTest
     [Fact]
     public void TopFiveFlights()
     {
-       /* Airline air = CreateDefaultAirline();
-        var request = (from flight in air.Flights
-                       where flight != null
-                       select flight.Tickets.Count).Take(5).Count();
-        Assert.Equal(5, request);      */
+        /* Airline air = CreateDefaultAirline();
+         var request = (from flight in air.Flights
+                        where flight != null
+                        select flight.Tickets.Count).Take(5).Count();
+         Assert.Equal(5, request);      */
     }
 
 
@@ -211,13 +211,13 @@ public class AirlineTest
     public void FlightWithMinFlightTime()
     {
         Airline air = CreateDefaultAirline();
-       /* var min_time = (from flight in air.Flights
-                        orderby flight.FlightTime
-                        select flight.FlightTime).Min();
-        var request = (from flight in air.Flights
-                       where flight.FlightTime == min_time
-                       select flight.Cipher).Count();
-        Assert.Equal(1, request);    */
+        /* var min_time = (from flight in air.Flights
+                         orderby flight.FlightTime
+                         select flight.FlightTime).Min();
+         var request = (from flight in air.Flights
+                        where flight.FlightTime == min_time
+                        select flight.Cipher).Count();
+         Assert.Equal(1, request);    */
     }
 
 
@@ -227,14 +227,14 @@ public class AirlineTest
     [Fact]
     public void MaxAverageBaggageWeight()
     {
-       /* Airline air = CreateDefaultAirline();
-        var request = (from flight in air.Flights
-                       from ticket in flight.Tickets
-                       where flight.DeparturePlace == "Moscow"
-                       select ticket.BaggageWeight).ToList();
-        var max = request.Max();
-        var avg = request.Average();
-        Assert.Equal(7.5, max);
-        Assert.Equal(4.9, avg);   */
+        /* Airline air = CreateDefaultAirline();
+         var request = (from flight in air.Flights
+                        from ticket in flight.Tickets
+                        where flight.DeparturePlace == "Moscow"
+                        select ticket.BaggageWeight).ToList();
+         var max = request.Max();
+         var avg = request.Average();
+         Assert.Equal(7.5, max);
+         Assert.Equal(4.9, avg);   */
     }
 }

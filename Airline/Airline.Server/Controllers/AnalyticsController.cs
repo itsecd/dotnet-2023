@@ -33,12 +33,6 @@ public class AnalyticsController : ControllerBase
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get passengers without baggage");
-        /* var request = await (from passenger in context.Passengers
-                              join ticket in context.Tickets on passenger.Id equals ticket.PassengerId
-                              join flightAirplaneTicket in context.FlightAirplaneTickets on ticket.Id equals flightAirplaneTicket.TicketId
-                              join flight in context.Flights on flight.Id equals flightAirplaneTicket.FlightId
-                              where flight.Cipher == "BD-1120" && Ticket.BaggageWeight == 0
-                              select _mapper.Map<PassengerGetDto>(passenger)).ToListAsync();*/
 
         var result = await (from passenger in context.Passengers
                             join ticket in context.Tickets on passenger.Id equals ticket.PassengerId
@@ -65,17 +59,15 @@ public class AnalyticsController : ControllerBase
     /// <param name="destination">Destination</param>
     /// <returns>Flights with specified source and destination</returns>
     [HttpGet("FlightsWithSpecifiedSourceAndDestination")]
+
     public async Task<ActionResult<IEnumerable<FlightGetDto>>> GetFlightsWithSpecifiedSourceAndDestination(string source, string destination)
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with specified source and destination");
-        /*var result = await (from flight in context.Flights
-                       where (flight.DeparturePlace == source) && (flight.Destination == destination)
-                       select _mapper.Map<FlightGetDto>(flight)).ToListAsync();     */
 
         var result = await (from flight in context.Flights
                             where flight.DeparturePlace == source && flight.Destination == destination
-                            select _mapper.Map<FlightGetDto>(flight)).ToListAsync(); 
+                            select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
 
         return Ok(result);
     }
@@ -92,12 +84,6 @@ public class AnalyticsController : ControllerBase
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights at specified period");
-        /*var result = await (from flight in context.Flights
-                       where (flight.Airplane.Model.Equals(airplaneType)) &&
-                       (flight.DepartureDate >= start) &&
-                       (flight.DepartureDate <= finish)
-                       select _mapper.Map<FlightGetDto>(flight)).ToListAsync();
-        return Ok(result); */
 
         var result = await (from flight in context.Flights
                             join airplane in context.Airplanes on flight.Id equals airplane.Id
@@ -124,10 +110,6 @@ public class AnalyticsController : ControllerBase
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with max count of passengers");
-        /*var result = await (from flight in context.Flights
-                       where flight != null
-                       orderby flight.Tickets.Count descending
-                       select flight.Tickets.Count).Take(5).ToListAsync();*/
 
         var result = await (from flight in context.Flights
                             join flightAirplaneTicket in context.FlightAirplaneTickets on flight.Id equals flightAirplaneTicket.FlightId
@@ -152,11 +134,6 @@ public class AnalyticsController : ControllerBase
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get max and average baggage amount from specified source");
-        /*var tickets = (from flight in context.Flights
-                       from ticket in flight.Tickets
-                       where flight.DeparturePlace == source
-                       select ticket.BaggageWeight).ToList();
-        var result = new List<string>() { $"max: {tickets.Max()}", $"avg: {tickets.Average()}" };*/
 
         var result = await (from flight in context.Flights
                             join flightAirplaneTicket in context.FlightAirplaneTickets on flight.Id equals flightAirplaneTicket.FlightId
@@ -182,12 +159,6 @@ public class AnalyticsController : ControllerBase
     {
         var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get flights with minimal flight duration");
-        /*var min_time = (from flight in context.Flights
-                        orderby flight.FlightTime
-                        select flight.FlightTime).Min();
-        var result = await (from flight in context.Flights
-               where flight.FlightTime == min_time
-               select _mapper.Map<FlightGetDto>(flight)).ToListAsync();         */
 
         var minFlightTime = context.Flights.Min(f => f.FlightTime);
         var result = await (from flight in context.Flights

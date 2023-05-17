@@ -1,0 +1,117 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+		xmlns:vm="using:LibrarySchool.Desktop.ViewModels"
+		Width="900"
+		Height="500"
+		CanResize="False"
+		WindowStartupLocation="CenterScreen" 
+        x:Class="LibrarySchool.Desktop.Views.WindowQueryView"
+        Title="WindowQueryView">
+	<Design.DataContext>
+		<vm:QueryViewModel/>
+	</Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/LibrarySchoolStyle.axaml"/>
+	</Window.Styles>
+	<Grid RowDefinitions="Auto,*">
+		<StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Spacing="10">
+			<Button Classes="QueryButtonTool" 
+					Command="{Binding OnGetListStudentInClass}"
+					Content="Student in class"/>
+			<Button Classes="QueryButtonTool" 
+					Command="{Binding OnGetListTopFiveStudent}"
+					Content="Top 5 student"/>
+			<Button Classes="QueryButtonTool"
+					Command="{Binding OnGetListTopFiveStudentInPeriod}"
+					Content="Top 5 in period"/>
+			<Button Classes="QueryButtonTool"
+					Command="{Binding OnGetInformationAllSubject}"
+					Content="All subject"/>
+			<Button Classes="QueryButtonTool"
+					Command="{Binding OnGetMaxMinAverage}"
+					Content="Max min average"/>
+		</StackPanel>
+		<DataGrid Classes="MainGrid" 
+				  IsVisible="{Binding VisibleStudentInClass}"
+				  Items="{Binding ListStudentInClass}"
+				  IsReadOnly="True"
+				  Grid.Row="1">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Student Id" Binding="{Binding StudentId}" Width="100"/>
+				<DataGridTextColumn Header="Student name" Binding="{Binding StudentName}" Width="200"/>
+				<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" Width="100"/>
+				<DataGridTextColumn Header="Class number" Binding="{Binding ClassNumber}" Width="120"/>
+				<DataGridTextColumn Header="Class letter" Binding="{Binding ClassLetter}" Width="120"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<DataGrid Items="{Binding ListTopFiveStudent}"
+				  IsVisible="{Binding VisibleTopFiveStudent}"
+				  Classes="MainGrid" 
+				  Grid.Row="1"
+			      IsReadOnly="True">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Student Id" Binding="{Binding StudentId}" Width="100"/>
+						<DataGridTextColumn Header="Student name" Binding="{Binding StudentName}" Width="200"/>
+						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" Width="100"/>
+						<DataGridTextColumn Header="Average mark" Binding="{Binding AverageMark}" Width="100"/>
+					</DataGrid.Columns>
+		</DataGrid>
+
+		<DataGrid Items="{Binding ListMaxMinAverageMark}"
+				  Classes="MainGrid"
+				  IsVisible="{Binding VisibleMaxMinAverageMark}"
+				  IsReadOnly="True"
+				  Grid.Row="1"
+				  AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Subject Id" Binding="{Binding SubjectId}" Width="100"/>
+				<DataGridTextColumn Header="Subject name" Binding="{Binding SubjectName}" Width="200"/>
+				<DataGridTextColumn Header="Min" Binding="{Binding Min}" Width="100"/>
+				<DataGridTextColumn Header="Average" Binding="{Binding Average, StringFormat={}{0:F2}}" Width="100"/>
+				<DataGridTextColumn Header="Max" Binding="{Binding Max}" Width="100"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Grid Grid.Row="1" IsVisible="{Binding VisibleTopFiveStudentInPeriod}">
+			<DataGrid Items="{Binding ListTopFiveStudentInPeriod}" 
+					  Height="380"
+					  Margin="10"
+					  VerticalAlignment="Top"
+					  IsVisible="{Binding VisibleTopFiveStudentInPeriod}"
+					  IsReadOnly="True">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Student Id" Binding="{Binding StudentId}" Width="100"/>
+					<DataGridTextColumn Header="Student name" Binding="{Binding StudentName}" Width="200"/>
+					<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" Width="100"/>
+					<DataGridTextColumn Header="Average mark" Binding="{Binding AverageMark}" Width="100"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<StackPanel Orientation="Vertical" 
+						VerticalAlignment="Bottom"
+						Margin="10"
+						HorizontalAlignment="Left">
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+					<TextBlock Text="Start period" Width="100" Height="20"></TextBlock>
+					<TextBlock Text="{Binding LastSettedPeriod.SettedStartPeriod, StringFormat={}{0:dd/MM/yyyy}}" Height="20"></TextBlock>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+					<TextBlock Text="End period" Width="100" Height="20"></TextBlock>
+					<TextBlock Text="{Binding LastSettedPeriod.SettedEndPeriod, StringFormat={}{0:dd/MM/yyyy}}" Height="20"></TextBlock>
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+		<DataGrid Items="{Binding ListInformationAllSubject}"
+				  IsVisible="{Binding VisibleAllSubject}"
+				  Classes="MainGrid"
+				  Grid.Row="1"
+			      IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Subject Id" Binding="{Binding SubjectId}" Width="100"/>
+				<DataGridTextColumn Header="Subject name" Binding="{Binding SubjectName}" Width="200"/>
+				<DataGridTextColumn Header="Year study" Binding="{Binding YearStudy}" Width="100"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>

@@ -1,0 +1,1312 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LibrarySchool.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/ClassType": {
+      "get": {
+        "tags": [
+          "ClassType"
+        ],
+        "summary": "Get list Class",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassTypeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassTypeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassTypeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ClassType"
+        ],
+        "summary": "Create new class",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ClassType/{id}": {
+      "get": {
+        "tags": [
+          "ClassType"
+        ],
+        "summary": "Get class by certain Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassTypeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassTypeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassTypeGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ClassType"
+        ],
+        "summary": "Change information of class by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassTypePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ClassType"
+        ],
+        "summary": "Delete class by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Mark": {
+      "get": {
+        "tags": [
+          "Mark"
+        ],
+        "summary": "Get list mark",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarkGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarkGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarkGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Mark"
+        ],
+        "summary": "Add new mark to respository",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Mark/{id}": {
+      "get": {
+        "tags": [
+          "Mark"
+        ],
+        "summary": "Get mark with certain id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mark"
+        ],
+        "summary": "Change information of mark with certain Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mark"
+        ],
+        "summary": "Delete a mark with certain Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Query/StudentInClass/{classId}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display information about all students in the specified class, sort by full name.",
+        "parameters": [
+          {
+            "name": "classId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/ListStudentInDay/{day}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display information about all students who received grades on the specified day.",
+        "parameters": [
+          {
+            "name": "day",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetInDayDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetInDayDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetInDayDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/InformationAllsubject": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display information about all subjects",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/CountMaxMinAverage/{idSubject}": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display information about the maximum, minimum, average mark for subject by Id",
+        "parameters": [
+          {
+            "name": "idSubject",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaxMinAverageMarkDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaxMinAverageMarkDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaxMinAverageMarkDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/Top5InPeriod": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display the top 5 students by GPA in period",
+        "parameters": [
+          {
+            "name": "beginPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Query/ListTop5Student": {
+      "get": {
+        "tags": [
+          "Query"
+        ],
+        "summary": "Display the top 5 students by GPA.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetAverageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Student": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Get list student",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Add new student",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Delete student by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Change information student by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Student/{id}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Get Students by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Subject": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Get list subject",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Create new Subjects",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Subject/{id}": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Get subject with certain Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Change information of a Subjects by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Delete a subject by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ClassTypeGetDto": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "description": "ClassId - Id class",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Number - number of class, example: 6312,...",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Letter - letter of speciality, example: 10-05-03D,...",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "GetDto type of class ClassTypes"
+      },
+      "ClassTypePostDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "description": "Number - number of class, example: 6312,...",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Letter - letter of speciality, example: 10-05-03D,...",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "GetDto type of class ClassTypes"
+      },
+      "MarkGetDto": {
+        "type": "object",
+        "properties": {
+          "markId": {
+            "type": "integer",
+            "description": "MarkId - Id mark",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "description": "StudentId - Id student",
+            "format": "int32"
+          },
+          "markValue": {
+            "type": "integer",
+            "description": "MarkValue - value of mark student received",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "SubjectId - Id subject",
+            "format": "int32"
+          },
+          "timeReceive": {
+            "type": "string",
+            "description": "TimeReceive - time when student receive mark",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostDto type of class Marks"
+      },
+      "MarkInStudentDto": {
+        "type": "object",
+        "properties": {
+          "markValue": {
+            "type": "integer",
+            "description": "MarkValue - value of mark student received",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "SubjectId - Id subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto type of class Marks"
+      },
+      "MarkPostDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "description": "StudentId - Id student",
+            "format": "int32"
+          },
+          "markValue": {
+            "type": "integer",
+            "description": "MarkValue - value of mark student received",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "SubjectId - Id subject",
+            "format": "int32"
+          },
+          "timeReceive": {
+            "type": "string",
+            "description": "TimeReceive - time when student receive mark",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostDto type of class Marks"
+      },
+      "MaxMinAverageMarkDto": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "type": "number",
+            "description": "Max of mark value in subject",
+            "format": "double"
+          },
+          "min": {
+            "type": "number",
+            "description": "Min of mark value in subject",
+            "format": "double"
+          },
+          "average": {
+            "type": "number",
+            "description": "Average of mark value in subject",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class result querry for Max, Min, Average mark for certain subject"
+      },
+      "StudentGetAverageDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "description": "StudentId - guid typed value for storing Id of the student",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - string type number passport of the student",
+            "nullable": true
+          },
+          "studentName": {
+            "type": "string",
+            "description": "StudentName - string type name of the student",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "DateOfBirth - student's date of birth",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "ClassId - Id of the class where student studing",
+            "format": "int32"
+          },
+          "averageMark": {
+            "type": "number",
+            "description": "GPA - average mark that student received",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DtoType to get average mark of student"
+      },
+      "StudentGetDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "description": "StudentId - guid typed value for storing Id of the student",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - string type number passport of the student",
+            "nullable": true
+          },
+          "studentName": {
+            "type": "string",
+            "description": "StudentName - string type name of the student",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "DateOfBirth - student's date of birth",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "ClassId - Id of the class where student studing",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "GetDto type of class student"
+      },
+      "StudentGetInDayDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "description": "StudentId - guid typed value for storing Id of the student",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - string type number passport of the student",
+            "nullable": true
+          },
+          "studentName": {
+            "type": "string",
+            "description": "StudentName - string type name of the student",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "DateOfBirth - student's date of birth",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "ClassId - Id of the class where student studing",
+            "format": "int32"
+          },
+          "marks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarkInStudentDto"
+            },
+            "description": "Marks - list mark that student received",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Create seeding data for testing controller"
+      },
+      "StudentPostDto": {
+        "type": "object",
+        "properties": {
+          "passport": {
+            "type": "string",
+            "description": "Passport - string type number passport of the student",
+            "nullable": true
+          },
+          "studentName": {
+            "type": "string",
+            "description": "StudentName - string type name of the student",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "DateOfBirth - student's date of birth",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "ClassId - Id of the class where student studing",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostDto type of student"
+      },
+      "SubjectGetDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "SubjectId - Id of subject",
+            "format": "int32"
+          },
+          "subjectName": {
+            "type": "string",
+            "description": "SubjectName - Name of the subject",
+            "nullable": true
+          },
+          "yearStudy": {
+            "type": "integer",
+            "description": "YearStudy - the year when start study subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Subjects - Class type the subject"
+      },
+      "SubjectPostDto": {
+        "type": "object",
+        "properties": {
+          "subjectName": {
+            "type": "string",
+            "description": "SubjectName - Name of the subject",
+            "nullable": true
+          },
+          "yearStudy": {
+            "type": "integer",
+            "description": "YearStudy - the year when start study subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DtoPostType of class Subjects"
+      }
+    }
+  }
+}

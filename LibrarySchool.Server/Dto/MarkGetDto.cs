@@ -25,4 +25,9 @@ public class MarkGetDto
     /// SubjectId - Id subject
     ///</summary>
     public int SubjectId { get; set; }
+
+    ///<summary>
+    /// TimeReceive - time when student receive mark
+    ///</summary>
+    public DateTime TimeReceive { get; set; }
 }

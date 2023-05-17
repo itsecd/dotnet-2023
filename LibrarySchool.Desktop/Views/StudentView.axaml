@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
+		xmlns:vm="using:LibrarySchool.Desktop.ViewModels"
+		Width="450"
+		Height="260"
+		SizeToContent="WidthAndHeight"
+		WindowStartupLocation="CenterScreen"
+        x:Class="LibrarySchool.Desktop.Views.StudentView"
+        Title="StudentView">
+	<Design.DataContext>
+		<vm:StudentViewModel/>
+	</Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/LibrarySchoolStyle.axaml"/>
+	</Window.Styles>
+	<Grid>
+		<StackPanel Orientation="Vertical" Margin="10" Spacing="10">
+			<StackPanel Orientation="Horizontal">
+				<Label Width="120" Content="Student name"></Label>
+				<TextBox Width="300" Text="{Binding StudentName}"></TextBox>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Width="120" Content="Passport"></Label>
+				<TextBox Width="300" Text="{Binding Passport}"></TextBox>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Width="120" Content="Date of birth"></Label>
+				<DatePicker Width="300" SelectedDate="{Binding DateOfBirth}"></DatePicker>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Width="120" Content="Class Id"></Label>
+				<TextBox Width="300" Text="{Binding ClassId}"></TextBox>
+			</StackPanel>
+			<StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="10" Spacing="10">
+				<Button Classes="SizeTool" Content="Set" Command="{Binding OnSubmitCommand}"></Button>
+				<Button Classes="SizeTool" Content="Cancel" Click="BtnCloseWindow"></Button>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Window>

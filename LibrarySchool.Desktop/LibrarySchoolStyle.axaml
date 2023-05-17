@@ -1,0 +1,28 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+        </Border>
+    </Design.PreviewWith>
+	<Style Selector="DataGrid.MainGrid">
+		<Setter Property="Margin" Value="10"/>	
+	</Style>
+	
+	<Style Selector="Button.ToolButton">
+		<Setter Property="Width" Value="40"/>
+		<Setter Property="Height" Value="40"/>
+		<Setter Property="Margin" Value="10,10,0,0"/>
+	</Style>
+	<Style Selector="Button.QueryButtonTool">
+		<Setter Property="Width" Value="150"/>
+		<Setter Property="Margin" Value="0,10,10,0"/>
+	</Style>
+	
+	<Style Selector="Button.SizeTool">
+		<Setter Property="Width" Value="100"></Setter>
+	</Style>
+	<Style Selector="Button.GetListTool">
+		<Setter Property="Width" Value="120"></Setter>
+	</Style>
+	
+</Styles>

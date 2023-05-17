@@ -1,0 +1,105 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:LibrarySchool.Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="450"
+        x:Class="LibrarySchool.Desktop.Views.MainWindow"
+		Width="850"
+		WindowStartupLocation="CenterScreen"
+		Height="550"
+        Icon="/Assets/avalonia-logo.ico"
+		x:Name="MainWindowView"
+        Title="LibrarySchool.Desktop">
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/LibrarySchoolStyle.axaml"/>
+	</Window.Styles>
+	<Grid RowDefinitions="Auto,*" >
+		<StackPanel Orientation="Horizontal" Grid.Row="0">
+			<Button Classes="ToolButton"
+					Command="{Binding OnAddCommand}">
+				<Image Source="/Assets/add.png" Stretch="Uniform" />
+			</Button>
+			<Button Classes="ToolButton"
+					Command="{Binding OnUpdateCommand}">
+				<Image Source="/Assets/update.png"/>
+			</Button>
+			<Button Classes="ToolButton"
+			   Command="{Binding OnDeleteCommand}">
+				<Image Source="/Assets/delete.png" Stretch="Uniform"></Image>
+			</Button>
+			<Button Classes="ToolButton"
+					Command="{Binding OnQueryCommand}">
+				<Image Source="/Assets/query.jpg" Stretch="Uniform"></Image>
+			</Button>
+		</StackPanel>
+
+		<Grid Grid.Row="1">
+			<Grid.ContextMenu>
+				<ContextMenu>
+					<MenuItem Header="Add" Command="{Binding OnAddCommand}"/>
+					<MenuItem Header="Update" Command="{Binding OnUpdateCommand}"/>
+					<MenuItem Header="Delete" Command="{Binding OnDeleteCommand}"/>
+				</ContextMenu>
+			</Grid.ContextMenu>
+			<TabControl SelectedIndex="{Binding SelectionHeader}">
+				<TabItem Header="Students">
+					<DataGrid Classes="MainGrid"
+						  Items="{Binding ListStudent}"
+						  IsReadOnly="True"
+						  SelectedItem="{Binding SelectedStudent, Mode=TwoWay}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Student Id" Width="100" Binding="{Binding StudentId}"/>
+							<DataGridTextColumn Header="Student name" Width="200" Binding="{Binding StudentName}"/>
+							<DataGridTextColumn Header="Passport" Width="100" Binding="{Binding Passport}"/>
+							<DataGridTextColumn Header="Date of birth" Width="130" Binding="{Binding DateOfBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+							<DataGridTextColumn Header="Class ID" Width="100" Binding="{Binding ClassId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</TabItem>
+				<TabItem Header="Classes">
+					<DataGrid Classes="MainGrid"
+						  Items="{Binding ListClass}"
+						  IsReadOnly="True"
+						  SelectedItem="{Binding SelectedClassType, Mode=TwoWay}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Class Id" Width="100" Binding="{Binding ClassId}"/>
+							<DataGridTextColumn Header="Class number" Width="200" Binding="{Binding Number}"/>
+							<DataGridTextColumn Header="Letter" Width="100" Binding="{Binding Letter}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</TabItem>
+				<TabItem Header="Subjects">
+					<DataGrid Classes="MainGrid"
+					  Items="{Binding ListSubject}"
+					  IsReadOnly="True"
+					  SelectedItem="{Binding SelectedSubject, Mode=TwoWay}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Subject Id" Width="100" Binding="{Binding SubjectId}"/>
+							<DataGridTextColumn Header="Subject name" Width="200" Binding="{Binding SubjectName}"/>
+							<DataGridTextColumn Header="Year study" Width="100" Binding="{Binding YearStudy}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</TabItem>
+				<TabItem Header="Marks">
+					<DataGrid Classes="MainGrid"
+					  Items="{Binding ListMark}"
+					  IsReadOnly="True"
+					  SelectedItem="{Binding SelectedMark, Mode=TwoWay}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Mark Id" Width="100" Binding="{Binding MarkId}"/>
+							<DataGridTextColumn Header="Student Id" Width="100" Binding="{Binding StudentId}"/>
+							<DataGridTextColumn Header="Mark value" Width="100" Binding="{Binding MarkValue}"/>
+							<DataGridTextColumn Header="Subject Id" Width="100" Binding="{Binding SubjectId}"/>
+							<DataGridTextColumn Header="Time receive" Width="120" Binding="{Binding TimeReceive, StringFormat={}{0:dd/MM/yyyy}}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</Grid>
+</Window>
+

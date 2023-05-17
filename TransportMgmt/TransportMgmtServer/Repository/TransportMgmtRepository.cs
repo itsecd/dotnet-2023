@@ -64,28 +64,28 @@ public class TransportMgmtRepository : ITransportMgmtRepository
 
         _transport = new List<Transport>()
             {
-                new Transport(1, "A001AA163", _transportType[0].Id, _transportType[0], _models[0].Id, _models[0], new DateTime(1990, 10, 23)),
-                new Transport(2, "A002AA163", _transportType[1].Id,_transportType[1], _models[1].Id, _models[1], new DateTime(1992, 04, 18)),
-                new Transport(3, "A003AA163", _transportType[2].Id,_transportType[2], _models[2].Id, _models[2], new DateTime(1985, 10, 15)),
-                new Transport(4, "A004AA163", _transportType[0].Id,_transportType[0], _models[3].Id, _models[3], new DateTime(2010, 11, 13)),
-                new Transport(5, "A005AA163", _transportType[1].Id,_transportType[1], _models[4].Id, _models[4], new DateTime(2015, 12, 09)),
-                new Transport(6, "A006AA163", _transportType[2].Id,_transportType[2], _models[5].Id, _models[5], new DateTime(2007, 08, 12)),
-                new Transport(7, "A007AA163", _transportType[1].Id,_transportType[1], _models[6].Id, _models[6], new DateTime(2009, 06, 07))
+                new Transport(1, "A001AA163",  _transportType[0], _models[0], new DateTime(1990, 10, 23)),
+                new Transport(2, "A002AA163", _transportType[1], _models[1], new DateTime(1992, 04, 18)),
+                new Transport(3, "A003AA163", _transportType[2], _models[2], new DateTime(1985, 10, 15)),
+                new Transport(4, "A004AA163", _transportType[0], _models[3], new DateTime(2010, 11, 13)),
+                new Transport(5, "A005AA163", _transportType[1], _models[4], new DateTime(2015, 12, 09)),
+                new Transport(6, "A006AA163", _transportType[2], _models[5], new DateTime(2007, 08, 12)),
+                new Transport(7, "A007AA163", _transportType[1], _models[6], new DateTime(2009, 06, 07))
             };
 
         _trips = new List<Trip>()
             {
-                new Trip(1, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[0].Id, _routes[0], _transport[0].Id, _transport[0], _drivers[0].Id, _drivers[0]),
-                new Trip(2, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[1].Id, _routes[1], _transport[1].Id, _transport[1], _drivers[1].Id, _drivers[1]),
-                new Trip(3, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[2].Id, _routes[2], _transport[2].Id, _transport[2], _drivers[2].Id, _drivers[2]),
-                new Trip(4, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[3].Id, _routes[3], _transport[3].Id, _transport[3], _drivers[3].Id, _drivers[3]),
-                new Trip(5, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[4].Id, _routes[4], _transport[4].Id, _transport[4], _drivers[4].Id, _drivers[4]),
-                new Trip(6, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[5].Id, _routes[5], _transport[5].Id, _transport[5], _drivers[2].Id, _drivers[2]),
-                new Trip(7, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 19, 30, 00), _routes[5].Id, _routes[5], _transport[0].Id, _transport[0], _drivers[0].Id, _drivers[0]),
-                new Trip(8, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 19, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[3].Id, _routes[3], _transport[2].Id, _transport[2], _drivers[0].Id, _drivers[0]),
-                new Trip(4, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[4].Id, _routes[4], _transport[1].Id, _transport[1], _drivers[3].Id, _drivers[3]),
-                new Trip(9, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[2].Id, _routes[2], _transport[6].Id, _transport[6], _drivers[2].Id, _drivers[2]),
-                new Trip(10, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), _routes[0].Id, _routes[0], _transport[5].Id, _transport[5], _drivers[0].Id, _drivers[0])
+                new Trip(1, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[0], _transport[0], _drivers[0]),
+                new Trip(2, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[1], _transport[1], _drivers[1]),
+                new Trip(3, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[2], _transport[2], _drivers[2]),
+                new Trip(4, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[3], _transport[3], _drivers[3]),
+                new Trip(5, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[4], _transport[4], _drivers[4]),
+                new Trip(6, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[5], _transport[5], _drivers[2]),
+                new Trip(7, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 19, 30, 00), _routes[5], _transport[0], _drivers[0]),
+                new Trip(8, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 19, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[3], _transport[2], _drivers[0]),
+                new Trip(4, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 17, 30, 00), new DateTime(2023, 03, 19, 21, 00, 00), _routes[4], _transport[1], _drivers[3]),
+                new Trip(9, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 08, 00, 00), new DateTime(2023, 03, 19, 17, 30, 00), _routes[2], _transport[6], _drivers[2]),
+                new Trip(10, new DateTime(2023, 03, 19), new DateTime(2023, 03, 19, 21, 00, 00), new DateTime(2023, 03, 19, 21, 30, 00), _routes[0], _transport[5], _drivers[0])
             };
     }
     /// <summary>

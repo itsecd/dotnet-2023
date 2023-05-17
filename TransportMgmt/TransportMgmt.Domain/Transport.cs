@@ -42,13 +42,11 @@ public class Transport
     [Required]
     public DateTime DateMake { get; set; } = new DateTime();
     public Transport() { }
-    public Transport(int transportId, string stateNumber, int typeId, TransportType type, int modelId, Model model, DateTime dateMake)
+    public Transport(int transportId, string stateNumber, TransportType type, Model model, DateTime dateMake)
     {
         Id = transportId;
         StateNumber = stateNumber;
-        TypeId = typeId;
         Type = type;
-        ModelId = modelId;
         Model = model;
         DateMake = dateMake;
     }

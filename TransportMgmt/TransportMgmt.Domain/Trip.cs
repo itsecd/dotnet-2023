@@ -55,17 +55,14 @@ public class Trip
     /// </summary>
     public Driver? Driver { get; set; } = null!;//new Driver();
     public Trip() { }
-    public Trip(int id, DateTime date, DateTime timeOn, DateTime timeOff, int routeId, Routes route, int transportId, Transport transport, int driverId, Driver driver)
+    public Trip(int id, DateTime date, DateTime timeOn, DateTime timeOff, Routes route, Transport transport, Driver driver)
     {
         Id = id;
         Date = date;
         TimeOn = timeOn;
         TimeOff = timeOff;
-        RouteId = routeId;
         Route = route;
-        TransportId = transportId;
         Transport = transport;
-        DriverId = driverId;
         Driver = driver;
     }
     public Trip(int id, DateTime date, DateTime timeOn, DateTime timeOff, int routeId, int transportId, int driverId)

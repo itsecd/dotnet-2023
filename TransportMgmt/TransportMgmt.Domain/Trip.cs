@@ -12,7 +12,7 @@ public class Trip
     /// </summary>
     [Key]
     public int Id { get; set; } = 0;
-    /// <summary>
+    /// <summary> 
     /// Trip date
     /// </summary>  
     [Required]

@@ -34,10 +34,6 @@ public class CardController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CardGetDto>>> GetCards()
     {
-        if (_context.Cards == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<CardGetDto>(_context.Cards).ToListAsync();
     }
     /// <summary>
@@ -48,10 +44,6 @@ public class CardController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<CardGetDto>> GetCard(int id)
     {
-        if (_context.Cards == null)
-        {
-            return NotFound();
-        }
         var card = await _context.Cards.FindAsync(id);
 
         if (card == null)
@@ -86,10 +78,6 @@ public class CardController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCard(int id, CardPostDto card)
     {
-        if (_context.Cards == null)
-        {
-            return NotFound();
-        }
         var cardToModify = await _context.Cards.FindAsync(id);
         if (cardToModify == null)
         {
@@ -110,10 +98,6 @@ public class CardController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCard(int id)
     {
-        if (_context.Cards == null)
-        {
-            return NotFound();
-        }
         var card = await _context.Cards.FindAsync(id);
         if (card == null)
         {

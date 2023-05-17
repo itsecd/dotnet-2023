@@ -34,10 +34,6 @@ public class TypeEditionController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TypeEditionGetDto>>> GetTypesEdition()
     {
-        if (_context.TypesEdition == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<TypeEditionGetDto>(_context.TypesEdition).ToListAsync();
     }
     /// <summary>
@@ -48,10 +44,6 @@ public class TypeEditionController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<TypeEditionGetDto>> GetTypeEdition(int id)
     {
-        if (_context.TypesEdition == null)
-        {
-            return NotFound();
-        }
         var typeEdition = await _context.TypesEdition.FindAsync(id);
 
         if (typeEdition == null)

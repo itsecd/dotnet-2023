@@ -35,10 +35,6 @@ public class BookController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BookGetDto>>> GetBooks()
     {
-        if (_context.Books == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<BookGetDto>(_context.Books).ToListAsync();
     }
     /// <summary>
@@ -49,10 +45,6 @@ public class BookController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<BookGetDto>> GetBook(int id)
     {
-        if (_context.Books == null)
-        {
-            return NotFound();
-        }
         var book = await _context.Books.FindAsync(id);
 
         if (book == null)
@@ -87,10 +79,6 @@ public class BookController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutBook(int id, BookPostDto book)
     {
-        if (_context.Books == null)
-        {
-            return NotFound();
-        }
         var bookToModify = await _context.Books.FindAsync(id);
         if (bookToModify == null)
         {
@@ -111,10 +99,6 @@ public class BookController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        if (_context.Books == null)
-        {
-            return NotFound();
-        }
         var book = await _context.Books.FindAsync(id);
         if (book == null)
         {

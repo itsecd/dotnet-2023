@@ -34,10 +34,6 @@ public class DepartmentController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DepartmentGetDto>>> GetDepartments()
     {
-        if (_context.Departments == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<DepartmentGetDto>(_context.Departments).ToListAsync();
     }
     /// <summary>
@@ -48,10 +44,6 @@ public class DepartmentController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<DepartmentGetDto>> GetDepartment(int id)
     {
-        if (_context.Departments == null)
-        {
-            return NotFound();
-        }
         var department = await _context.Departments.FindAsync(id);
 
         if (department == null)
@@ -86,10 +78,6 @@ public class DepartmentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutDepartment(int id, DepartmentPostDto department)
     {
-        if (_context.Departments == null)
-        {
-            return NotFound();
-        }
         var departmentToModify = await _context.Departments.FindAsync(id);
         if (departmentToModify == null)
         {
@@ -110,10 +98,6 @@ public class DepartmentController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDepartment(int id)
     {
-        if (_context.Departments == null)
-        {
-            return NotFound();
-        }
         var department = await _context.Departments.FindAsync(id);
         if (department == null)
         {

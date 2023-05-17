@@ -34,10 +34,6 @@ public class TypeDepartmentController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TypeDepartmentGetDto>>> GetTypesDepartment()
     {
-        if (_context.TypesDepartment == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<TypeDepartmentGetDto>(_context.TypesDepartment).ToListAsync();
     }
     /// <summary>
@@ -48,10 +44,6 @@ public class TypeDepartmentController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<TypeDepartmentGetDto>> GetTypeDepartment(int id)
     {
-        if (_context.TypesDepartment == null)
-        {
-            return NotFound();
-        }
         var typeDepartment = await _context.TypesDepartment.FindAsync(id);
 
         if (typeDepartment == null)

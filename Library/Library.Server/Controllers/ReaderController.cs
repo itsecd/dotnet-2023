@@ -34,10 +34,6 @@ public class ReaderController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ReaderGetDto>>> GetReaders()
     {
-        if (_context.Readers == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<ReaderGetDto>(_context.Readers).ToListAsync();
     }
     /// <summary>
@@ -48,10 +44,6 @@ public class ReaderController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ReaderGetDto>> GetReader(int id)
     {
-        if (_context.Readers == null)
-        {
-            return NotFound();
-        }
         var reader = await _context.Readers.FindAsync(id);
 
         if (reader == null)
@@ -86,10 +78,6 @@ public class ReaderController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutReader(int id, ReaderPostDto reader)
     {
-        if (_context.Readers == null)
-        {
-            return NotFound();
-        }
         var readerToModify = await _context.Readers.FindAsync(id);
         if (readerToModify == null)
         {
@@ -110,10 +98,6 @@ public class ReaderController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteReader(int id)
     {
-        if (_context.Readers == null)
-        {
-            return NotFound();
-        }
         var reader = await _context.Readers.FindAsync(id);
         if (reader == null)
         {

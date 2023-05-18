@@ -23,7 +23,7 @@ public class RideDto
     /// <summary>
     /// Trip date
     /// </summary>
-    public string TripDate { get; set; }
+    public string? TripDate { get; set; }
 
     /// <summary>
     /// Trip time

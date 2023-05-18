@@ -101,7 +101,6 @@
 					<DataGridTextColumn Header="Name" Binding="{Binding UserName}"/>
 					<DataGridTextColumn Header="Patronymic" Binding="{Binding UserPatronymic}"/>
 					<DataGridTextColumn Header="PhoneNumber" Binding="{Binding UserPhoneNumber}"/>
-					<DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>

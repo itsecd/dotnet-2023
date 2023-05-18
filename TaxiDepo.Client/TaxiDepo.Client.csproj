@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="TaxiDepo.Client" ClassName="ApiClient" />
   </ItemGroup>
 

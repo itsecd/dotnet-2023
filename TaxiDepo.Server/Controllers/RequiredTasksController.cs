@@ -78,7 +78,6 @@ public class RequiredController : ControllerBase
         _logger.LogInformation("Get user by date of trip");
 
         var users = await (from rides in _context.Rides
-                           //where (rides.TripDate > dateBefore && rides.TripDate < dateAfter)
                            group rides by rides.UserId
             into newobj
                            select new
@@ -181,11 +180,7 @@ public class RequiredController : ControllerBase
                                  driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
                                  MaxTime = (from rides in _context.Rides
                                             where rides.TripCar.AssignedDriver.Id == newobj.Key
-                                            select rides.TripTime).Max(),
-                                /* AverageTime =
-                                      (from rides in _context.Rides
-                                      where rides.TripCar.AssignedDriver.Id == newobj.Key
-                                      select rides.TripTime.TotalMinutes).Take(1).Single() / newobj.Count() / 60*/
+                                            select rides.TripTime).Max()
                              }).ToListAsync();
         return request;
     }
@@ -211,15 +206,14 @@ public class RequiredController : ControllerBase
 
         _logger.LogInformation("Get user with max amount of rides by date");
         var userAmountRides = await (from rides in _context.Rides
-                                     orderby rides.UserInfo.AmountRides descending
-                                    // where (rides.TripDate < dateAfter && rides.TripDate > dateBefore)
-                                     group rides by rides.UserId
-                into newobj
-                                     select new
-                                     {
-                                         user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
-                                         AmountRides = newobj.Count()
-                                     }).Take(1)
+                                   orderby rides.UserInfo descending
+                                   group rides by rides.UserId
+                                   into newobj
+                                   select new
+                                   {
+                                       user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
+                                       AmountRides = newobj.Count()
+                                   }).Take(1)
             .ToListAsync();
         return userAmountRides;
     }

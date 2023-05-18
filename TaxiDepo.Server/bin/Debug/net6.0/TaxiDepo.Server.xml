@@ -157,7 +157,7 @@
             </summary>
             <returns>CarDto object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.String,System.String)">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Task 2 - Print info about user who driven in date range sort by surname
             </summary>

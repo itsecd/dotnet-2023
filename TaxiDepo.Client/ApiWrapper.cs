@@ -36,7 +36,6 @@ public class ApiWrapper
         await _client.CarsDELETEAsync(id);
     }
 
-
     public async Task<ICollection<DriverDto>> GetAllDrivers()
         => await _client.GetAllDriversAsync();
 
@@ -52,7 +51,6 @@ public class ApiWrapper
     {
         await _client.DriversDELETEAsync(id);
     }
-
 
     public async Task<ICollection<RideDto>> GetAllRides()
        => await _client.GetAllRidesAsync();
@@ -70,7 +68,6 @@ public class ApiWrapper
         await _client.RidesDELETEAsync(id);
     }
 
-
     public async Task<ICollection<UserDto>> GetAllUsers()
        => await _client.GetAllUsersAsync();
 
@@ -86,6 +83,4 @@ public class ApiWrapper
     {
         await _client.UsersDELETEAsync(id);
     }
-
-
 }

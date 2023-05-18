@@ -22,7 +22,6 @@
 		<Label Classes="Window" Grid.Row="0" Grid.Column="2">Name</Label>
 		<Label Classes="Window" Grid.Row="0" Grid.Column="3">Patronymic</Label>
 		<Label Classes="Window" Grid.Row="0" Grid.Column="4">PhoneNumber</Label>
-		<Label Classes="Window" Grid.Row="0" Grid.Column="5">AmountRides</Label>
 
 
 		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Id}"/>
@@ -30,7 +29,6 @@
 		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding UserName}"/>
 		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding UserPatronymic}"/>
 		<TextBox Grid.Row="1" Grid.Column="4" Text="{Binding UserPhoneNumber}"/>
-		<TextBox Grid.Row="1" Grid.Column="5" Text="{Binding AmountRides}"/>
 		
 
 

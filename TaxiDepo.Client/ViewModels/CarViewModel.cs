@@ -6,7 +6,7 @@ namespace TaxiDepo.Client.ViewModels;
 public class CarViewModel : ViewModelBase
 {
     private int _id;
-
+    
     public int Id
     {
         get => _id;

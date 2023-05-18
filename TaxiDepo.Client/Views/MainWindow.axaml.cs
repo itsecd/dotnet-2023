@@ -11,8 +11,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         InitializeComponent();
 
         this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowCarDialog.RegisterHandler(ShowCarDialogAsync)));
+
         this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowDriverDialog.RegisterHandler(ShowDriverDialogAsync)));
+
         this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowRideDialog.RegisterHandler(ShowRideDialogAsync)));
+
         this.WhenActivated(disposableElement => disposableElement(ViewModel!.ShowUserDialog.RegisterHandler(ShowUserDialogAsync)));
     }
 
@@ -24,6 +27,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         };
 
         var result = await dialog.ShowDialog<CarViewModel?>(this);
+
         interaction.SetOutput(result);
     }
 
@@ -35,6 +39,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         };
 
         var result = await dialog.ShowDialog<DriverViewModel?>(this);
+
         interaction.SetOutput(result);
     }
 
@@ -46,6 +51,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         };
 
         var result = await dialog.ShowDialog<RideViewModel?>(this);
+
         interaction.SetOutput(result);
     }
 
@@ -57,6 +63,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         };
 
         var result = await dialog.ShowDialog<UserViewModel?>(this);
+
         interaction.SetOutput(result);
     }
 }

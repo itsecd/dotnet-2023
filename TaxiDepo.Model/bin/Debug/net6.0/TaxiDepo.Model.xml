@@ -354,11 +354,6 @@
             User phone number
             </summary>
         </member>
-        <member name="P:TaxiDepo.Model.User.AmountRides">
-            <summary>
-            Amount user rides
-            </summary>
-        </member>
         <member name="P:TaxiDepo.Model.User.UserRide">
             <summary>
             User ride collection

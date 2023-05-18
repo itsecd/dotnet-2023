@@ -17,8 +17,11 @@ public class MainWindowViewModel : ViewModelBase
     private readonly IMapper _mapper;
 
     private CarViewModel? _selectedCar;
+
     private DriverViewModel? _selectedDriver;
+    
     private RideViewModel? _selectedRide;
+    
     private UserViewModel? _selectedUser;
 
     public CarViewModel? SelectedCar
@@ -41,7 +44,6 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedUser;
         set => this.RaiseAndSetIfChanged(ref _selectedUser, value);
     }
-
 
     public ObservableCollection<CarViewModel> Cars { get; } = new();
 
@@ -86,11 +88,15 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
+
         _mapper = Locator.Current.GetService<IMapper>();
 
         ShowCarDialog = new Interaction<CarViewModel, CarViewModel?>();
+        
         ShowDriverDialog = new Interaction<DriverViewModel, DriverViewModel?>();
+        
         ShowRideDialog = new Interaction<RideViewModel, RideViewModel?>();
+        
         ShowUserDialog = new Interaction<UserViewModel, UserViewModel?>();
 
         RxApp.MainThreadScheduler.Schedule(LoadClassesAsync);
@@ -103,6 +109,7 @@ public class MainWindowViewModel : ViewModelBase
             {
 
                 var newCar = await _apiClient.AddCar(_mapper.Map<CarDto>(carViewModel));
+
                 Cars.Add(carViewModel);
             }
         });
@@ -115,6 +122,7 @@ public class MainWindowViewModel : ViewModelBase
             {
                 await _apiClient.UpdateCar(SelectedCar!.Id,
                      _mapper.Map<CarDto>(carViewModel));
+                
                 _mapper.Map(carViewModel, SelectedCar);
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedCar)
@@ -122,14 +130,11 @@ public class MainWindowViewModel : ViewModelBase
 
         OnDeleteCarCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-
-                await _apiClient.DeleteCar(SelectedCar!.Id);
-                Cars.Remove(SelectedCar!);
+            await _apiClient.DeleteCar(SelectedCar!.Id);
+            Cars.Remove(SelectedCar!);
 
         }, this.WhenAnyValue(viewModel => viewModel.SelectedCar)
             .Select(selectCar => selectCar != null));
-
-
 
         OnAddDriverCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -137,10 +142,9 @@ public class MainWindowViewModel : ViewModelBase
 
             if (driverViewModel != null)
             {
-               
-                    var newDriver = await _apiClient.AddDriver(_mapper.Map<DriverDto>(driverViewModel));
-                    Drivers.Add(driverViewModel);
-                 
+                 var newDriver = await _apiClient.AddDriver(_mapper.Map<DriverDto>(driverViewModel));
+              
+                Drivers.Add(driverViewModel); 
             }
         });
 
@@ -150,23 +154,21 @@ public class MainWindowViewModel : ViewModelBase
 
             if (driverViewModel != null)
             {
-                
-                    await _apiClient.UpdateDriver(SelectedDriver!.Id,
-                        _mapper.Map<DriverDto>(driverViewModel));
-                    _mapper.Map(driverViewModel, SelectedDriver);
+                 await _apiClient.UpdateDriver(SelectedDriver!.Id,
+                     _mapper.Map<DriverDto>(driverViewModel));
+                 
+                _mapper.Map(driverViewModel, SelectedDriver);
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDriver)
             .Select(selectDriver => selectDriver != null));
 
         OnDeleteDriverCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-           
-                await _apiClient.DeleteDriver(SelectedDriver!.Id);
-                Drivers.Remove(SelectedDriver!);
-
+            await _apiClient.DeleteDriver(SelectedDriver!.Id);
+        
+            Drivers.Remove(SelectedDriver!);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDriver)
             .Select(selectDriver => selectDriver != null));
-
 
         OnAddRideCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -174,10 +176,9 @@ public class MainWindowViewModel : ViewModelBase
 
             if (rideViewModel != null)
             {
-               
-                    var newRide = await _apiClient.AddRide(_mapper.Map<RideDto>(rideViewModel));
-                    Rides.Add(SelectedRide!);
-                  
+                 var newRide = await _apiClient.AddRide(_mapper.Map<RideDto>(rideViewModel));
+
+                 Rides.Add(SelectedRide!);
             }
         });
 
@@ -187,10 +188,10 @@ public class MainWindowViewModel : ViewModelBase
 
             if (rideViewModel != null)
             {
-               
-                    await _apiClient.UpdateRide(SelectedRide!.Id,
-                        _mapper.Map<RideDto>(rideViewModel));
-                    _mapper.Map(rideViewModel, SelectedRide);
+                 await _apiClient.UpdateRide(SelectedRide!.Id,
+                     _mapper.Map<RideDto>(rideViewModel));
+
+                 _mapper.Map(rideViewModel, SelectedRide);
                    
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedRide)
@@ -198,13 +199,11 @@ public class MainWindowViewModel : ViewModelBase
 
         OnDeleteRideCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-           
-                await _apiClient.DeleteRide(SelectedRide!.Id);
-                Rides.Remove(SelectedRide!);
-           
+             await _apiClient.DeleteRide(SelectedRide!.Id);
+             
+            Rides.Remove(SelectedRide!);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedRide)
             .Select(selectRide => selectRide != null));
-
 
         OnAddUserCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -212,10 +211,9 @@ public class MainWindowViewModel : ViewModelBase
 
             if (userViewModel != null)
             {
+                var newUser = await _apiClient.AddUser(_mapper.Map<UserDto>(userViewModel));
                 
-                    var newUser = await _apiClient.AddUser(_mapper.Map<UserDto>(userViewModel));
-                    Users.Add(userViewModel);
-                  
+                Users.Add(userViewModel);
             }
         });
 
@@ -225,21 +223,19 @@ public class MainWindowViewModel : ViewModelBase
 
             if (userViewModel != null)
             {
-                
-                    await _apiClient.UpdateUser(SelectedUser!.Id,
-                        _mapper.Map<UserDto>(userViewModel));
-                    _mapper.Map(userViewModel, SelectedUser);
-                
+                await _apiClient.UpdateUser(SelectedUser!.Id,
+                   _mapper.Map<UserDto>(userViewModel));
+
+                _mapper.Map(userViewModel, SelectedUser);
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
             .Select(selectUser => selectUser != null));
 
         OnDeleteUserCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-           
-                await _apiClient.DeleteUser(SelectedUser!.Id);
-                Users.Remove(SelectedUser!);
-             
+            await _apiClient.DeleteUser(SelectedUser!.Id);
+            
+            Users.Remove(SelectedUser!);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedUser)
             .Select(selectUser => selectUser != null));
     }
@@ -250,14 +246,17 @@ public class MainWindowViewModel : ViewModelBase
         {
             Cars.Add(_mapper.Map<CarViewModel>(car));
         }
+
         foreach (var driver in await _apiClient.GetAllDrivers())
         {
             Drivers.Add(_mapper.Map<DriverViewModel>(driver));
         }
+
         foreach (var ride in await _apiClient.GetAllRides())
         {
             Rides.Add(_mapper.Map<RideViewModel>(ride));
         }
+
         foreach (var user in await _apiClient.GetAllUsers())
         {
             Users.Add(_mapper.Map<UserViewModel>(user));

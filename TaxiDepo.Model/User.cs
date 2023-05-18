@@ -49,13 +49,6 @@ public class User
     public string UserPhoneNumber { get; set; } = string.Empty;
 
     /// <summary>
-    /// Amount user rides
-    /// </summary>
-    [Column("AmountRides")]
-    [Required]
-    public int AmountRides { get; set; }
-
-    /// <summary>
     /// User ride collection
     /// </summary>
     public Ride? UserRide { get; set; }

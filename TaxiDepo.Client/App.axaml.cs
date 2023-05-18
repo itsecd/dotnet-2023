@@ -21,12 +21,17 @@ public partial class App : Application
             var config = new MapperConfiguration(configuration =>
             {
                 configuration.CreateMap<CarDto, CarViewModel>().ReverseMap();
+
                 configuration.CreateMap<DriverDto, DriverViewModel>().ReverseMap();
+
                 configuration.CreateMap<RideDto, RideViewModel>().ReverseMap();
+
                 configuration.CreateMap<UserDto, UserViewModel>().ReverseMap();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
-            Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));///////
+
+            Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
+
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),

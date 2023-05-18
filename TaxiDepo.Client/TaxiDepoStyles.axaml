@@ -2,9 +2,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
-        </Border>
+		</Border>
     </Design.PreviewWith>
 
-    <!-- Add Styles Here -->
+	<Style Selector="Button.ToolButton">
+		<Setter Property="Width" Value="100"></Setter>
+		<Setter Property="Height" Value="40"></Setter>
+		<Setter Property="Margin" Value="4, 4, 4, 17"></Setter>
+		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="CornerRadius" Value="5"></Setter>
+	</Style>
+	<Style Selector="Grid.MainGrid">
+		<Setter Property="Background" Value="DarkGray"></Setter>
+	</Style>
+	<Style Selector="TextBox">
+		<Setter Property="MaxWidth" Value="100"></Setter>
+	</Style>
+	<Style Selector="StackPanel">
+		<Setter Property="Background" Value="DarkGray"></Setter>
+	</Style>
+	<Style Selector="StackPanel.Buttons">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+	</Style>
+	<Style Selector="Label">
+		<Setter Property="Margin" Value="7, 17, 7, 17"></Setter>
+		<Setter Property="Width" Value="500"></Setter>
+		<Setter Property="Height" Value="30"></Setter>
+		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="CornerRadius" Value="5"></Setter>
+	</Style>
+	<Style Selector="Label.Window">
+		<Setter Property="MaxWidth" Value="100"></Setter>
+		<Setter Property="Margin" Value="4, 4, 4, 14"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+	</Style>
+	<Style Selector="TextBlock.h1">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+	</Style>
+	<Style Selector="TextBox">
+		<Setter Property="Margin" Value="0, 0, 0, 10"></Setter>
+	</Style>
+	<Style Selector="DataGrid">
+		<Setter Property="CornerRadius" Value="5"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="Margin" Value="0, 10, 0, 10"></Setter>
+	</Style>
+	<Style Selector="DataGrid.Columns">
+		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="Foreground" Value="Blue"></Setter>
+	</Style>
 </Styles>

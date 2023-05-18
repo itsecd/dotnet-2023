@@ -47,14 +47,6 @@ public class UserViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _userPhoneNumber, value);
     }
 
-    private int _amountRides;
-
-    public int AmountRides
-    {
-        get => _amountRides;
-        set => this.RaiseAndSetIfChanged(ref _amountRides, value);
-    }
-
     public ReactiveCommand<Unit, UserViewModel> OnSubmitCommand { get; set; }
 
     public UserViewModel()

@@ -16,15 +16,15 @@
 		<StyleInclude Source="/TaxiDepoStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
-		<Label Grid.Row="0" Grid.Column="0">Id</Label>
-		<Label Grid.Row="0" Grid.Column="1">DeparturePlace</Label>
-		<Label Grid.Row="0" Grid.Column="2">DestinationPlace</Label>
-		<Label Grid.Row="0" Grid.Column="3">TripDate</Label>
-		<Label Grid.Row="0" Grid.Column="4">TripTime</Label>
-		<Label Grid.Row="0" Grid.Column="5">TripPrice</Label>
-		<Label Grid.Row="0" Grid.Column="6">Carid</Label>
-		<Label Grid.Row="0" Grid.Column="7">Userid</Label>
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+		<Label Classes="Window" Grid.Row="0" Grid.Column="0">Id</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="1">DeparturePlace</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="2">DestinationPlace</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="3">TripDate</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="4">TripTime</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="5">TripPrice</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="6">Carid</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="7">Userid</Label>
 		
 		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Id}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TripDeparturePlace}"/>

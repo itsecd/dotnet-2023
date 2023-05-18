@@ -12,11 +12,13 @@
 		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
 
 			<StackPanel Grid.Row="0" Orientation="Vertical">
-				<Label>Cars</Label>
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Command="{Binding OnAddCarCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeCarCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteCarCommand}">Удалить</Button>
+				<Label>
+					<TextBlock Classes="h1">Cars</TextBlock>
+				</Label>
+				<StackPanel Grid.Row="0" Orientation="Horizontal" Classes="Buttons">
+					<Button Classes="ToolButton" Command="{Binding OnAddCarCommand}">Добавить</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCarCommand}">Редактировать</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCarCommand}">Удалить</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -32,11 +34,13 @@
 			</DataGrid>
 
 			<StackPanel Grid.Row="2" Orientation="Vertical">
-				<Label>Drivers</Label>
-				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddDriverCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeDriverCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteDriverCommand}">Удалить</Button>
+				<Label>
+					<TextBlock Classes="h1">Drivers</TextBlock>
+				</Label>
+				<StackPanel Orientation="Horizontal" Classes="Buttons">
+					<Button Classes="ToolButton" Command="{Binding OnAddDriverCommand}">Добавить</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeDriverCommand}">Редактировать</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteDriverCommand}">Удалить</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -54,11 +58,13 @@
 			</DataGrid>
 
 			<StackPanel Grid.Row="4" Orientation="Vertical">
-				<Label>Rides</Label>
-				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddRideCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeRideCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteRideCommand}">Удалить</Button>
+				<Label>
+					<TextBlock Classes="h1">Rides</TextBlock>
+				</Label>
+				<StackPanel Orientation="Horizontal" Classes="Buttons">
+					<Button Classes="ToolButton" Command="{Binding OnAddRideCommand}">Добавить</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeRideCommand}">Редактировать</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteRideCommand}">Удалить</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -77,11 +83,13 @@
 			</DataGrid>
 
 			<StackPanel Grid.Row="6" Orientation="Vertical">
-				<Label>Users</Label>
-				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddUserCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeUserCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteUserCommand}">Удалить</Button>
+				<Label>
+					<TextBlock Classes="h1">Users</TextBlock>
+				</Label>
+				<StackPanel Orientation="Horizontal" Classes="Buttons">
+					<Button Classes="ToolButton" Command="{Binding OnAddUserCommand}">Добавить</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeUserCommand}">Редактировать</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteUserCommand}">Удалить</Button>
 				</StackPanel>
 			</StackPanel>
 

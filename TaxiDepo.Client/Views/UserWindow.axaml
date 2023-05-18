@@ -16,13 +16,13 @@
 		<StyleInclude Source="/TaxiDepoStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *">
-		<Label Grid.Row="0" Grid.Column="0">Id</Label>
-		<Label Grid.Row="0" Grid.Column="1">Surname</Label>
-		<Label Grid.Row="0" Grid.Column="2">Name</Label>
-		<Label Grid.Row="0" Grid.Column="3">Patronymic</Label>
-		<Label Grid.Row="0" Grid.Column="4">PhoneNumber</Label>
-		<Label Grid.Row="0" Grid.Column="5">AmountRides</Label>
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+		<Label Classes="Window" Grid.Row="0" Grid.Column="0">Id</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="1">Surname</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="2">Name</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="3">Patronymic</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="4">PhoneNumber</Label>
+		<Label Classes="Window" Grid.Row="0" Grid.Column="5">AmountRides</Label>
 
 
 		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Id}"/>

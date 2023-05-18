@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Tests", "Warehous
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Server", "Warehouse.Server\Warehouse.Server.csproj", "{FD3401D4-3172-4047-AEA0-31EAAC180FB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Client", "Warehouse.Client\Warehouse.Client.csproj", "{B3A3EA76-BA66-470D-8870-EB35E220E1CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD3401D4-3172-4047-AEA0-31EAAC180FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A3EA76-BA66-470D-8870-EB35E220E1CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A3EA76-BA66-470D-8870-EB35E220E1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A3EA76-BA66-470D-8870-EB35E220E1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A3EA76-BA66-470D-8870-EB35E220E1CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

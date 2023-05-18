@@ -3,11 +3,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:RentalService.Client.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
         x:Class="RentalService.Client.Views.ClientWindow"
         Icon="/Assets/client.ico"
         Title="Editing a client"
-        MaxWidth="500" MaxHeight="300"
+        MaxWidth="500"
         SizeToContent="Height">
     
     <Design.DataContext>
@@ -31,7 +31,7 @@
         <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding BirthDate}"></DatePicker>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Passport}"></TextBox>
 
-        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
             <Button 
                IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>

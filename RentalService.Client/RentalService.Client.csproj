@@ -17,7 +17,7 @@
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     
-<!--    <ItemGroup>
+ <!--   <ItemGroup>
         <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="RentalService.Client" ClassName="ApiClient" />
     </ItemGroup>-->
     
@@ -50,6 +50,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="ReactiveUI.Fody" Version="18.4.44" />
         <PackageReference Include="SkiaSharp.NativeAssets.WebAssembly" Version="2.88.3" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
     </ItemGroup>

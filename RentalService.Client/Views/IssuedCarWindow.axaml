@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:RentalService.Client.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
+        x:Class="RentalService.Client.Views.IssuedCarWindow"
+        Icon="/Assets/client.ico"
+        Title="Editing a issued car"
+        MaxWidth="500"
+        SizeToContent="Height">
+    
+    <Design.DataContext>
+        <vm:IssuedCarViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+    </Window.Styles>
+    
+
+    <Grid RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto, *,*">
+        <Label Grid.Row="0" Grid.Column="0">VehicleId</Label>
+        <Label Grid.Row="1" Grid.Column="0">ClientId</Label>
+        <Label Grid.Row="2" Grid.Column="0">RentalInformationId</Label>
+        <Label Grid.Row="3" Grid.Column="0">RefundInformationId</Label>
+        
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding VehicleId}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ClientId}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RentalInformationId}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RefundInformationId}"></TextBox>
+
+        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
+            <Button 
+                IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+        </StackPanel>
+    </Grid>
+    
+</Window>
+

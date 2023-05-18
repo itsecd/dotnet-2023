@@ -90,6 +90,7 @@ public class RidesController : ControllerBase
     /// <param name="ride">Ride to put</param>
     /// <returns>No content</returns>
     [HttpPut("PutRideBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> PutRide(int id, RideDto ride)
     {
         if (_context.Rides == null)
@@ -138,6 +139,7 @@ public class RidesController : ControllerBase
     /// <param name="id">Needed id to delete</param>
     /// <returns>No content</returns>
     [HttpDelete("DeleteRideBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> DeleteRide(int id)
     {
         if (_context.Rides == null)

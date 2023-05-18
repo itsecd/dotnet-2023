@@ -90,6 +90,7 @@ public class UsersController : ControllerBase
     /// <param name="user">User to put</param>
     /// <returns>No content</returns>
     [HttpPut("PutUserBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> PutUser(int id, UserDto user)
     {
         if (_context.Users == null)
@@ -138,6 +139,7 @@ public class UsersController : ControllerBase
     /// <param name="id">Needed id to delete</param>
     /// <returns>No content</returns>
     [HttpDelete("DeleteUserBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> DeleteUser(int id)
     {
         if (_context.Users == null)

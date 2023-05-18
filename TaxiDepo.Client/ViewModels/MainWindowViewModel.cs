@@ -93,10 +93,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowRideDialog = new Interaction<RideViewModel, RideViewModel?>();
         ShowUserDialog = new Interaction<UserViewModel, UserViewModel?>();
 
-        RxApp.MainThreadScheduler.Schedule(LoadCarsAsync);
-       // RxApp.MainThreadScheduler.Schedule(LoadDriversAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadRidesAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadUsersAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadClassesAsync);
 
         OnAddCarCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -116,12 +113,9 @@ public class MainWindowViewModel : ViewModelBase
 
             if (carViewModel != null)
             {
-
-                    await _apiClient.UpdateCar(SelectedCar!.Id,
-                        _mapper.Map<CarDto>(carViewModel));
-                    _mapper.Map(carViewModel, SelectedCar);
-
-
+                await _apiClient.UpdateCar(SelectedCar!.Id,
+                     _mapper.Map<CarDto>(carViewModel));
+                _mapper.Map(carViewModel, SelectedCar);
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedCar)
             .Select(selectCar => selectCar != null));
@@ -250,7 +244,7 @@ public class MainWindowViewModel : ViewModelBase
             .Select(selectUser => selectUser != null));
     }
 
-        private async void LoadCarsAsync()
+    private async void LoadClassesAsync()
     {
         foreach (var car in await _apiClient.GetAllCars())
         {

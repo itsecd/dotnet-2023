@@ -90,6 +90,7 @@ public class DriversController : ControllerBase
     /// <param name="driver">Driver to put</param>
     /// <returns>No content</returns>
     [HttpPut("PutDriverBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> PutDriver(int id, DriverDto driver)
     {
         if (_context.Drivers == null)
@@ -138,6 +139,7 @@ public class DriversController : ControllerBase
     /// <param name="id">Needed id to delete</param>
     /// <returns>No content</returns>
     [HttpDelete("DeleteDriverBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> DeleteDriver(int id)
     {
         if (_context.Drivers == null)

@@ -126,7 +126,7 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -137,9 +137,7 @@
         "tags": [
           "Cars"
         ],
-        "summary": "Post car to collection",
         "requestBody": {
-          "description": "Car to post",
           "content": {
             "application/json": {
               "schema": {
@@ -201,7 +199,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -327,7 +325,7 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -402,7 +400,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -676,7 +674,7 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -751,7 +749,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -877,7 +875,7 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }
@@ -952,7 +950,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Success"
           }
         }

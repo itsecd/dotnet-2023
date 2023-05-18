@@ -90,6 +90,7 @@ public class CarsController : ControllerBase
     /// <param name="car">Car to put</param>
     /// <returns>No content</returns>
     [HttpPut("PutCarBy{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> PutCar(int id, CarDto car)
     {
         if (_context.Cars == null)
@@ -110,14 +111,13 @@ public class CarsController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
-
+    [ProducesResponseType(201)]
     /// <summary>
     /// Post car to collection
     /// </summary>
     /// <param name="car">Car to post</param>
     /// <returns>Created action</returns>
     [HttpPost("PostCar")]
-    [ProducesResponseType(201)]
     public async Task<ActionResult<CarDto>> PostCar(CarDto car)
     {
         if (_context.Cars == null)
@@ -138,6 +138,7 @@ public class CarsController : ControllerBase
     /// </summary>
     /// <param name="id">Needed id to delete</param>
     /// <returns>No content</returns>
+    [ProducesResponseType(204)]
     [HttpDelete("DeleteCarBy{id}")]
     public async Task<IActionResult> DeleteCar(int id)
     {

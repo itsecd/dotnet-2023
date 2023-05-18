@@ -53,13 +53,6 @@
             <param name="car">Car to put</param>
             <returns>No content</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.CarsController.PostCar(TaxiDepo.Server.Dto.CarDto)">
-            <summary>
-            Post car to collection
-            </summary>
-            <param name="car">Car to post</param>
-            <returns>Created action</returns>
-        </member>
         <member name="M:TaxiDepo.Server.Controllers.CarsController.DeleteCar(System.Int32)">
             <summary>
             Delete car from collection

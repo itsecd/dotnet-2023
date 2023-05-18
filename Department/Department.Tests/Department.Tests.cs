@@ -6,11 +6,18 @@ namespace Department.Tests;
 public class DepartmentTests : IClassFixture<DepartmentFixture>
 {
     private readonly DepartmentFixture _departmentFixture;
+
+    /// <summary>
+    /// Constructor 
+    /// </summary>
     public DepartmentTests(DepartmentFixture departmentFixture)
     {
         _departmentFixture = departmentFixture;
     }
 
+    /// <summary>
+    /// 1st request: give info about all sport bikes
+    /// </summary>
     [Fact]
     public void TestTeachers()
     {
@@ -24,6 +31,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         Assert.Equal(2, request.Count());
     }
 
+    /// <summary>
+    /// 1st request: give info about all sport bikes
+    /// </summary>
     [Fact]
     public void TestCourseProject()
     {
@@ -36,6 +46,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         Assert.Equal(2, request.Count());
     }
 
+    /// <summary>
+    /// 1st request: give info about all sport bikes
+    /// </summary>
     [Fact]
     public void TestSubjects()
     {
@@ -47,6 +60,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
 
         Assert.Equal(2, request.Count());
     }
+
 
     [Fact]
     public void TestDepartmentInfo()

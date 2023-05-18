@@ -14,7 +14,7 @@ namespace TransportMgmtServer.Controllers;
 public class RequestController : ControllerBase
 {
     /// <summary>
-    /// Used to store factory contex
+    /// Used to store factory context
     /// </summary>
     private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
     /// <summary>
@@ -87,7 +87,7 @@ public class RequestController : ControllerBase
     [HttpGet("TotalTravelTimeAllTransport")]
     public async Task<ActionResult> TotalTravelTimeAllTransport()
     {
-        using var context = _contextFactory.CreateDbContext();
+        await using var context = _contextFactory.CreateDbContext();
         _logger.LogInformation("Get info about the total travel time for each transport type and model");
         var request = await (from transport in context.Transports
                              join model in context.Models on transport.ModelId equals model.Id

@@ -10,7 +10,7 @@ public class Driver
     /// Unique key of driver
     /// </summary>
     [Key]
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// First name of driver
     /// </summary>
@@ -30,12 +30,12 @@ public class Driver
     /// Driver's passport number
     /// </summary>
     [Required]
-    public int Passport { get; set; } = 0;
+    public int Passport { get; set; }
     /// <summary>
     /// Driver's license number
     /// </summary>
     [Required]
-    public int DriverLicense { get; set; } = 0;
+    public int DriverLicense { get; set; }
     /// <summary>
     /// Driver's address
     /// </summary>

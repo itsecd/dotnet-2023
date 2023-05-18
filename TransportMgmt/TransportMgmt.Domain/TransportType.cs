@@ -10,9 +10,9 @@ public class TransportType
     /// Unique key of transport type
     /// </summary>
     [Key]
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
-    /// Name type of trasport
+    /// Name type of transport
     /// </summary>
     [Required]
     public string TypeName { get; set; } = string.Empty;

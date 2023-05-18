@@ -14,7 +14,7 @@ namespace TransportMgmtServer.Controllers;
 public class RoutesController : Controller
 {
     /// <summary>
-    /// Used to store factory contex
+    /// Used to store factory context
     /// </summary>
     private readonly IDbContextFactory<TransportMgmtContext> _contextFactory;
     /// <summary>

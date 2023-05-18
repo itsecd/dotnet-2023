@@ -10,7 +10,7 @@ public class Model
     /// Unique key of model
     /// </summary>
     [Key]
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Transport model name
     /// </summary>
@@ -25,7 +25,7 @@ public class Model
     /// Maximum capacity of transport model
     /// </summary>
     [Required]
-    public int MaxCapacity { get; set; } = 0;
+    public int MaxCapacity { get; set; }
     public Model() { }
     public Model(int modelId, string modelName, string floorLevel, int maxCapacity)
     {

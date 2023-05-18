@@ -10,7 +10,7 @@ public class Routes
     /// Unique key of route
     /// </summary>
     [Key]
-    public int Id { get; set; } = 0;
+    public int Id { get; set; }
     /// <summary>
     /// Route number
     /// </summary>

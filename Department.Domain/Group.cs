@@ -1,4 +1,4 @@
-﻿namespace Department;
+﻿namespace Department.Domain;
 public class Group
 {
     public uint GroupId { get; set; }

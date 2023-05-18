@@ -1,4 +1,4 @@
-﻿namespace Department;
+﻿namespace Department.Domain;
 public class Course
 {
     public string CourseType { get; set; } = string.Empty;

@@ -1,0 +1,1532 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Taxi.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Driver": {
+      "get": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Get method which returns all drivers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Post method which add new driver in driver table",
+        "requestBody": {
+          "description": "New driver for addition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Driver/{id}": {
+      "get": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Get method which returns driver by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of driver",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Put method which allows change the data of the desired driver by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of driver",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New driver data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Delete - method for deleting a driver by the desired identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of driver",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Passenger": {
+      "get": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Get method which returns all passengers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Post method which add new passenger in passenger table",
+        "requestBody": {
+          "description": "New passenger for addition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Passenger/{id}": {
+      "get": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Get method which returns passenger by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of passenger",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Put method which allows change the data of the desired passenger by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of passenger",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New passenger data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Passenger"
+        ],
+        "summary": "Delete - method for deleting a passenger by the desired identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of passenger",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/vehicles_and_drivers/{id}": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output all information about the individual driver and his vehicle",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of driver",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/passengers_over_given_period": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output all passengers who have ride in the given period, sorted by full name",
+        "parameters": [
+          {
+            "name": "minDate",
+            "in": "query",
+            "description": "Start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "maxDate",
+            "in": "query",
+            "description": "End date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/count_passenger_rides": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output the number of ride for each passenger",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/count_top_driver_rides": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output the top 2 drivers by the number of ride made",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Driver"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/infos_about_rides": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output information about the number of rides, average time and maximum ride time for each driver",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/max_rides_of_passenger": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get method which output the information about the passengers who have made the maximum number of rides in a given\r\nperiod",
+        "parameters": [
+          {
+            "name": "minDate",
+            "in": "query",
+            "description": "Start date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "maxDate",
+            "in": "query",
+            "description": "End date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ride": {
+      "get": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Get method which returns all rides",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RideGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Post method which add new ride in ride table",
+        "requestBody": {
+          "description": "New ride for addition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ride/{id}": {
+      "get": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Get method which returns ride by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of ride",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Put method which allows change the data of the desired ride by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of ride",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New ride data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RideSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Delete - method for deleting a ride by the desired identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of ride",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Vehicle": {
+      "get": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Get method which returns all vehicles",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Post method which add new vehicle in ride table",
+        "requestBody": {
+          "description": "New vehicle for addition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vehicle/{id}": {
+      "get": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Get method which returns vehicle by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Put method which allows change the data of the desired vehicle by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New vehicle data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Delete - method for deleting a vehicle by the desired identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/VehicleClassification": {
+      "get": {
+        "tags": [
+          "VehicleClassification"
+        ],
+        "summary": "Get method which returns vehicles classification",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleClassification"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleClassification"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleClassification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VehicleClassification/{id}": {
+      "get": {
+        "tags": [
+          "VehicleClassification"
+        ],
+        "summary": "Get method which returns vehicle classification by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle classification",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Driver": {
+        "required": [
+          "firstName",
+          "lastName",
+          "passport",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "patronymic": {
+            "maxLength": 45,
+            "type": "string",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DriverSetDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the driver",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the driver",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - a unique sequence of digits that are the series and number of the passport",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber - mobile phone number registered to the driver",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Passenger": {
+        "required": [
+          "firstName",
+          "lastName",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "patronymic": {
+            "maxLength": 45,
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "rides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ride"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PassengerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - unique identifier of the passenger",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the passenger",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the passenger",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the passenger",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber - mobile phone number registered to the passenger",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PassengerSetDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the passenger",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the passenger",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the passenger",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber - mobile phone number registered to the passenger",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ride": {
+        "required": [
+          "cost",
+          "departurePoint",
+          "destinationPoint",
+          "rideDate",
+          "rideTime"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "departurePoint": {
+            "type": "string"
+          },
+          "destinationPoint": {
+            "type": "string"
+          },
+          "rideDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rideTime": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "cost": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passengerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "passenger": {
+            "$ref": "#/components/schemas/Passenger"
+          },
+          "vehicleId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vehicle": {
+            "$ref": "#/components/schemas/Vehicle"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RideGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - unique identifier of the ride",
+            "format": "int64"
+          },
+          "departurePoint": {
+            "type": "string",
+            "description": "DeparturePoint - a address where the ride starts",
+            "nullable": true
+          },
+          "destinationPoint": {
+            "type": "string",
+            "description": "DestinationPoint - a address where the ride ends",
+            "nullable": true
+          },
+          "rideDate": {
+            "type": "string",
+            "description": "RideDate - date and time when the ride started",
+            "format": "date-time"
+          },
+          "rideTime": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "cost": {
+            "type": "integer",
+            "description": "Cost - cost of ride",
+            "format": "int32"
+          },
+          "passengerId": {
+            "type": "integer",
+            "description": "PassengerId - passenger's unique identifier",
+            "format": "int64"
+          },
+          "vehicleId": {
+            "type": "integer",
+            "description": "VehicleId - vehicle's unique identifier",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RideSetDto": {
+        "type": "object",
+        "properties": {
+          "departurePoint": {
+            "type": "string",
+            "description": "DeparturePoint - a address where the ride starts",
+            "nullable": true
+          },
+          "destinationPoint": {
+            "type": "string",
+            "description": "DestinationPoint - a address where the ride ends",
+            "nullable": true
+          },
+          "rideDate": {
+            "type": "string",
+            "description": "RideDate - date and time when the ride started",
+            "format": "date-time"
+          },
+          "rideTime": {
+            "type": "integer",
+            "description": "RideTime - duration of the ride in seconds",
+            "format": "int32"
+          },
+          "cost": {
+            "type": "integer",
+            "description": "Cost - cost of ride",
+            "format": "int32"
+          },
+          "passengerId": {
+            "type": "integer",
+            "description": "PassengerId - passenger's unique identifier",
+            "format": "int64"
+          },
+          "vehicleId": {
+            "type": "integer",
+            "description": "VehicleId - vehicle's unique identifier",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Vehicle": {
+        "required": [
+          "colour",
+          "registrationCarPlate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "registrationCarPlate": {
+            "maxLength": 9,
+            "type": "string"
+          },
+          "colour": {
+            "maxLength": 20,
+            "type": "string"
+          },
+          "vehicleClassificationId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vehicleClassification": {
+            "$ref": "#/components/schemas/VehicleClassification"
+          },
+          "driverId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/Driver"
+          },
+          "rides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ride"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VehicleClassification": {
+        "required": [
+          "brand",
+          "class",
+          "model"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "brand": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "model": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "class": {
+            "maxLength": 5,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VehicleGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - unique identifier of the vehicle",
+            "format": "int64"
+          },
+          "registrationCarPlate": {
+            "type": "string",
+            "description": "RegistrationCarPlate - a sequence of letters and numbers used to identify the vehicle in real life",
+            "nullable": true
+          },
+          "colour": {
+            "type": "string",
+            "description": "Colour - property that stores the colour of the vehicle",
+            "nullable": true
+          },
+          "vehicleClassificationId": {
+            "type": "integer",
+            "description": "VehicleClassificationId - id of the vehicle class to which the car belongs",
+            "format": "int64"
+          },
+          "driverId": {
+            "type": "integer",
+            "description": "DriverId - id of the driver who drives this vehicle",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VehicleSetDto": {
+        "type": "object",
+        "properties": {
+          "registrationCarPlate": {
+            "type": "string",
+            "description": "RegistrationCarPlate - a sequence of letters and numbers used to identify the vehicle in real life",
+            "nullable": true
+          },
+          "colour": {
+            "type": "string",
+            "description": "Colour - property that stores the colour of the vehicle",
+            "nullable": true
+          },
+          "vehicleClassificationId": {
+            "type": "integer",
+            "description": "VehicleClassificationId - id of the vehicle class to which the car belongs",
+            "format": "int64"
+          },
+          "driverId": {
+            "type": "integer",
+            "description": "DriverId - id of the driver who drives this vehicle",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

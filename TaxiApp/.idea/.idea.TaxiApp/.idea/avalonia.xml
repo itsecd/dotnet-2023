@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Taxi.Client/App.axaml" value="Taxi.Client/Taxi.Client.csproj" />
+        <entry key="Taxi.Client/Taxi.axaml" value="Taxi.Client/Taxi.Client.csproj" />
+        <entry key="Taxi.Client/TaxiStyles.axaml" value="Taxi.Client/Taxi.Client.csproj" />
+        <entry key="Taxi.Client/Views/DriverWindow.axaml" value="Taxi.Client/Taxi.Client.csproj" />
+        <entry key="Taxi.Client/Views/MainWindow.axaml" value="Taxi.Client/Taxi.Client.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

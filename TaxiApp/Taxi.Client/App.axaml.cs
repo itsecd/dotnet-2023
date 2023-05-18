@@ -1,0 +1,39 @@
+using AutoMapper;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using Splat;
+using Taxi.Client.ViewModels;
+using Taxi.Client.Views;
+
+namespace Taxi.Client;
+
+public partial class App : Application
+{
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Driver, DriverViewModel>();
+            cfg.CreateMap<DriverViewModel, DriverSetDto>();
+        });
+        
+        Locator.CurrentMutable.RegisterConstant(new ApiWrapper()); 
+        Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
+        
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = new MainWindowViewModel(),
+            };
+        }
+
+        base.OnFrameworkInitializationCompleted();
+    }
+}

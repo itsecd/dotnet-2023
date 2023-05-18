@@ -40,7 +40,7 @@ public class Trip
     /// Transport id for the trip
     /// </summary>
     [ForeignKey("Transport")]
-    public int TransportId { get; set; } 
+    public int TransportId { get; set; }
     /// <summary>
     /// Transport for the trip
     /// </summary>

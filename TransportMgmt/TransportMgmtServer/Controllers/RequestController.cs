@@ -38,7 +38,7 @@ public class RequestController : ControllerBase
     /// First request - display all information about a specific transport
     /// </summary>
     /// <returns> List of all information about a specific transport </returns>
-    [HttpGet("info_about_transport")]
+    [HttpGet("GetInfoAboutSpecificTransport")]
     public async Task<IActionResult> Get(string modelName)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -101,12 +101,12 @@ public class RequestController : ControllerBase
                                  trip.TimeOff
                              }).ToListAsync();
         var tripTime = (from res in request
-                        group res by new { res.ModelName, res.TypeName } into TotalTime
+                        group res by new { res.ModelName, res.TypeName } into totalTime
                         select new
                         {
-                            TotalTime.Key.ModelName,
-                            TotalTime.Key.TypeName,
-                            TotalTimeTrips = TotalTime.Sum(TimeTrip => (TimeTrip.TimeOff - TimeTrip.TimeOn).TotalHours)
+                            totalTime.Key.ModelName,
+                            totalTime.Key.TypeName,
+                            TotalTimeTrips = totalTime.Sum(timeTrip => (timeTrip.TimeOff - timeTrip.TimeOn).TotalHours)
                         }
                         ).ToList();
 

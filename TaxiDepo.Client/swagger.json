@@ -469,8 +469,7 @@
             "in": "query",
             "description": "date before for filter",
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "string"
             }
           },
           {
@@ -478,8 +477,7 @@
             "in": "query",
             "description": "date after for filter",
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "string"
             }
           }
         ],
@@ -540,16 +538,14 @@
             "name": "dateBefore",
             "in": "query",
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "string"
             }
           },
           {
             "name": "dateAfter",
             "in": "query",
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "string"
             }
           }
         ],
@@ -1060,10 +1056,12 @@
           "tripDate": {
             "type": "string",
             "description": "Trip date",
-            "format": "date-time"
+            "nullable": true
           },
           "tripTime": {
-            "$ref": "#/components/schemas/TimeSpan"
+            "type": "string",
+            "description": "Trip time",
+            "nullable": true
           },
           "tripPrice": {
             "type": "number",
@@ -1083,61 +1081,6 @@
         },
         "additionalProperties": false,
         "description": "Dto ride class"
-      },
-      "TimeSpan": {
-        "type": "object",
-        "properties": {
-          "ticks": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "days": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "hours": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "milliseconds": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "minutes": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "seconds": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalDays": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalHours": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalMilliseconds": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalMinutes": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalSeconds": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
       },
       "UserDto": {
         "type": "object",

@@ -12,8 +12,7 @@ builder.Services.AddDbContext<TaxiDepoDbContext>(options =>
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 
-builder.Services.AddScoped<ITaxiDepoRepository, TaxiDepoRepository>();
-builder.Services.AddScoped<ITaxiDepoService, TaxiDepoService>();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

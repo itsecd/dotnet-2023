@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Microsoft.Win32.SafeHandles;
+using ReactiveUI;
 using System;
 using System.Reactive;
 
@@ -30,17 +31,17 @@ public class RideViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tripDestinationPlace, value);
     }
 
-    private DateTime? _tripDate;
+    private string _tripDate = string.Empty;
 
-    public DateTime? TripDate
+    public string TripDate
     {
         get => _tripDate;
         set => this.RaiseAndSetIfChanged(ref _tripDate, value);
     }
 
-    private TimeSpan? _tripTime;
+    private string _tripTime = string.Empty;
 
-    public TimeSpan? TripTime
+    public string TripTime
     {
         get => _tripTime;
         set => this.RaiseAndSetIfChanged(ref _tripTime, value);

@@ -37,14 +37,14 @@ public class Ride
     /// </summary>
     [Column("TripDate")]
     [Required]
-    public DateTime TripDate { get; set; }
+    public string? TripDate { get; set; }
 
     /// <summary>
     /// Trip time
     /// </summary>
     [Column("TripTime")]
     [Required]
-    public TimeSpan TripTime { get; set; }
+    public string? TripTime { get; set; }
 
     /// <summary>
     /// Trip price
@@ -95,7 +95,7 @@ public class Ride
     /// <param name="price">Trip price</param>
     /// <param name="auto">Trip assigned auto</param>
     /// <param name="user">User data</param>
-    public Ride(int id, string departurePlace, string destinationPlace, DateTime date, TimeSpan time, double price,
+    public Ride(int id, string departurePlace, string destinationPlace, string date, string time, double price,
         Car auto, User user)
     {
         Id = id;
@@ -142,16 +142,6 @@ public class Ride
     public static bool operator !=(Ride rideObj1, Ride rideObj2)
     {
         return !Object.Equals(rideObj1, rideObj2);
-    }
-
-    /// <summary>
-    /// Print function
-    /// </summary>
-    /// <param name="obj">Ride class object</param>
-    public void PrintCarData(Ride obj)
-    {
-        Console.WriteLine(
-            $"Departure place: {obj.TripDeparturePlace}, Destination place - {obj.TripDestinationPlace}, date - {obj.TripDate}, time - {obj.TripTime}, price - {obj.TripPrice}, assigned car - {obj.TripCar}");
     }
 
     /// <summary>

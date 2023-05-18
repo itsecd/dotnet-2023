@@ -119,15 +119,6 @@ public class User
         return !Object.Equals(userObj1, userObj2);
     }
 
-    /// <summary>
-    /// Print function
-    /// </summary>
-    /// <param name="obj">User class object</param>
-    public void PrintCarData(User obj)
-    {
-        Console.WriteLine(
-            $"User: {obj.UserSurname} {obj.UserName} {obj.UserPatronymic}, phone number - {obj.UserPhoneNumber}");
-    }
 
     /// <summary>
     /// Get hash code func

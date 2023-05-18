@@ -164,7 +164,7 @@
             </summary>
             <returns>CarDto object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.DateTime,System.DateTime)">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.String,System.String)">
             <summary>
             Task 2 - Print info about user who driven in date range sort by surname
             </summary>
@@ -190,7 +190,7 @@
             </summary>
             <returns>DriversDto object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredController.UsesWithAmountRidesByDate(System.DateTime,System.DateTime)">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.UsesWithAmountRidesByDate(System.String,System.String)">
             <summary>
             Task 6 - Print info about users, with max amount of rides
             </summary>

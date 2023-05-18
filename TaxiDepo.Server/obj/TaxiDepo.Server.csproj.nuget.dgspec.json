@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj": {}
+    "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Server\\TaxiDepo.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj": {
+    "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
+        "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
         "projectName": "TaxiDepo.Model",
-        "projectPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
+        "projectPath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\obj\\",
+        "outputPath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -88,14 +88,14 @@
         }
       }
     },
-    "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj": {
+    "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Server\\TaxiDepo.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
+        "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
         "projectName": "TaxiDepo.Server",
-        "projectPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
+        "projectPath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Server\\TaxiDepo.Server.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Server\\obj\\",
+        "outputPath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -116,8 +116,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj": {
-                "projectPath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj"
+              "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj": {
+                "projectPath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj"
               }
             }
           }

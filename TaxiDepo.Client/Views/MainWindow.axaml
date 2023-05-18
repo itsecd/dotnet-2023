@@ -14,9 +14,9 @@
 			<StackPanel Grid.Row="0" Orientation="Vertical">
 				<Label>Cars</Label>
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Command="{Binding OnAddCarCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeCarCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteCarCommand}">Удалить</Button>
+					<Button Command="{Binding OnAddCarCommand}">Р”РѕР±Р°РІРёС‚СЊ</Button>
+					<Button Command="{Binding OnChangeCarCommand}">Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</Button>
+					<Button Command="{Binding OnDeleteCarCommand}">РЈРґР°Р»РёС‚СЊ</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -34,9 +34,9 @@
 			<StackPanel Grid.Row="2" Orientation="Vertical">
 				<Label>Drivers</Label>
 				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddDriverCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeDriverCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteDriverCommand}">Удалить</Button>
+					<Button Command="{Binding OnAddDriverCommand}">Р”РѕР±Р°РІРёС‚СЊ</Button>
+					<Button Command="{Binding OnChangeDriverCommand}">Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</Button>
+					<Button Command="{Binding OnDeleteDriverCommand}">РЈРґР°Р»РёС‚СЊ</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -56,9 +56,9 @@
 			<StackPanel Grid.Row="4" Orientation="Vertical">
 				<Label>Rides</Label>
 				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddRideCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeRideCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteRideCommand}">Удалить</Button>
+					<Button Command="{Binding OnAddRideCommand}">Р”РѕР±Р°РІРёС‚СЊ</Button>
+					<Button Command="{Binding OnChangeRideCommand}">Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</Button>
+					<Button Command="{Binding OnDeleteRideCommand}">РЈРґР°Р»РёС‚СЊ</Button>
 				</StackPanel>
 			</StackPanel>
 
@@ -79,9 +79,9 @@
 			<StackPanel Grid.Row="6" Orientation="Vertical">
 				<Label>Users</Label>
 				<StackPanel Orientation="Horizontal">
-					<Button Command="{Binding OnAddUserCommand}">Добавить</Button>
-					<Button Command="{Binding OnChangeUserCommand}">Редактировать</Button>
-					<Button Command="{Binding OnDeleteUserCommand}">Удалить</Button>
+					<Button Command="{Binding OnAddUserCommand}">Р”РѕР±Р°РІРёС‚СЊ</Button>
+					<Button Command="{Binding OnChangeUserCommand}">Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</Button>
+					<Button Command="{Binding OnDeleteUserCommand}">РЈРґР°Р»РёС‚СЊ</Button>
 				</StackPanel>
 			</StackPanel>
 

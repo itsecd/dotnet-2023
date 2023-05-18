@@ -119,15 +119,6 @@ public class Car
     }
 
     /// <summary>
-    /// Print function
-    /// </summary>
-    /// <param name="obj">Car class object</param>
-    public void PrintCarData(Car obj)
-    {
-        Console.WriteLine($"Car model: {obj.CarModel}, number - {obj.CarNumber}, color - {obj.CarColor}");
-    }
-
-    /// <summary>
     /// Get hash code func
     /// </summary>
     /// <returns>Integer hash code</returns>

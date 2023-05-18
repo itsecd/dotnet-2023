@@ -127,15 +127,6 @@ public class Driver
         return !Object.Equals(driverObj1, driverObj2);
     }
 
-    /// <summary>
-    /// Print function
-    /// </summary>
-    /// <param name="obj">Driver class object</param>
-    public void PrintDriverData(Driver obj)
-    {
-        Console.WriteLine(
-            $"Driver: {obj.DriverSurname} {obj.DriverName} {obj.DriverPatronymic}, passport ID - {obj.DriverPassportId}, living in {obj.DriverAddress}, phone number - {obj.DriverPhoneNumber}");
-    }
 
     /// <summary>
     /// Get hash code func

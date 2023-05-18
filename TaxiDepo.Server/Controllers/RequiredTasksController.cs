@@ -67,7 +67,7 @@ public class RequiredController : ControllerBase
     /// <param name="dateAfter">date after for filter</param>
     /// <returns>UserDto object</returns>
     [HttpGet("GetUsersByDate")]
-    public async Task<ActionResult<dynamic>> GetUsersByDate(DateTime dateBefore, DateTime dateAfter)
+    public async Task<ActionResult<dynamic>> GetUsersByDate(string dateBefore, string dateAfter)
     {
         if (_context.Rides == null)
         {
@@ -78,7 +78,7 @@ public class RequiredController : ControllerBase
         _logger.LogInformation("Get user by date of trip");
 
         var users = await (from rides in _context.Rides
-                           where (rides.TripDate > dateBefore && rides.TripDate < dateAfter)
+                           //where (rides.TripDate > dateBefore && rides.TripDate < dateAfter)
                            group rides by rides.UserId
             into newobj
                            select new
@@ -182,10 +182,10 @@ public class RequiredController : ControllerBase
                                  MaxTime = (from rides in _context.Rides
                                             where rides.TripCar.AssignedDriver.Id == newobj.Key
                                             select rides.TripTime).Max(),
-                                 AverageTime =
-                                     (from rides in _context.Rides
+                                /* AverageTime =
+                                      (from rides in _context.Rides
                                       where rides.TripCar.AssignedDriver.Id == newobj.Key
-                                      select rides.TripTime.TotalMinutes).Take(1).Single() / newobj.Count() / 60
+                                      select rides.TripTime.TotalMinutes).Take(1).Single() / newobj.Count() / 60*/
                              }).ToListAsync();
         return request;
     }
@@ -195,7 +195,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>UserDto object</returns>
     [HttpGet("UserWithAmountRidesByDate")]
-    public async Task<ActionResult<dynamic>> UsesWithAmountRidesByDate(DateTime dateBefore, DateTime dateAfter)
+    public async Task<ActionResult<dynamic>> UsesWithAmountRidesByDate(string dateBefore, string dateAfter)
     {
         if (_context.Rides == null)
         {
@@ -212,7 +212,7 @@ public class RequiredController : ControllerBase
         _logger.LogInformation("Get user with max amount of rides by date");
         var userAmountRides = await (from rides in _context.Rides
                                      orderby rides.UserInfo.AmountRides descending
-                                     where (rides.TripDate < dateAfter && rides.TripDate > dateBefore)
+                                    // where (rides.TripDate < dateAfter && rides.TripDate > dateBefore)
                                      group rides by rides.UserId
                 into newobj
                                      select new

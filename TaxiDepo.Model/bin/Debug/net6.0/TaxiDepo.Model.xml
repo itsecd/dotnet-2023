@@ -81,12 +81,6 @@
             <param name="carObj2">Car class object</param>
             <returns>True - not equal or false - equal</returns>
         </member>
-        <member name="M:TaxiDepo.Model.Car.PrintCarData(TaxiDepo.Model.Car)">
-            <summary>
-            Print function
-            </summary>
-            <param name="obj">Car class object</param>
-        </member>
         <member name="M:TaxiDepo.Model.Car.GetHashCode">
             <summary>
             Get hash code func
@@ -173,12 +167,6 @@
             <param name="driverObj2">Driver class object</param>
             <returns>True - not equal or false - equal</returns>
         </member>
-        <member name="M:TaxiDepo.Model.Driver.PrintDriverData(TaxiDepo.Model.Driver)">
-            <summary>
-            Print function
-            </summary>
-            <param name="obj">Driver class object</param>
-        </member>
         <member name="M:TaxiDepo.Model.Driver.GetHashCode">
             <summary>
             Get hash code func
@@ -245,7 +233,7 @@
             Constructor without parameters to instantiate the class Ride
             </summary>
         </member>
-        <member name="M:TaxiDepo.Model.Ride.#ctor(System.Int32,System.String,System.String,System.DateTime,System.TimeSpan,System.Double,TaxiDepo.Model.Car,TaxiDepo.Model.User)">
+        <member name="M:TaxiDepo.Model.Ride.#ctor(System.Int32,System.String,System.String,System.String,System.String,System.Double,TaxiDepo.Model.Car,TaxiDepo.Model.User)">
             <summary>
             Constructor with parameters to instantiate the class Ride
             </summary>
@@ -280,12 +268,6 @@
             <param name="rideObj1">Ride class object</param>
             <param name="rideObj2">Ride class object</param>
             <returns>True - not equal or false - equal</returns>
-        </member>
-        <member name="M:TaxiDepo.Model.Ride.PrintCarData(TaxiDepo.Model.Ride)">
-            <summary>
-            Print function
-            </summary>
-            <param name="obj">Ride class object</param>
         </member>
         <member name="M:TaxiDepo.Model.Ride.GetHashCode">
             <summary>
@@ -419,12 +401,6 @@
             <param name="userObj1">User class object</param>
             <param name="userObj2">User class object</param>
             <returns>True - not equal or false - equal</returns>
-        </member>
-        <member name="M:TaxiDepo.Model.User.PrintCarData(TaxiDepo.Model.User)">
-            <summary>
-            Print function
-            </summary>
-            <param name="obj">User class object</param>
         </member>
         <member name="M:TaxiDepo.Model.User.GetHashCode">
             <summary>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VfXkutirIdiZiJWCpZ90rjarMIIHDXgUg42y6Y+xDgfz/va7IQZo+XJMX8rpfl311ktUnPwXb6NbfJHNc9MdSg==",
+  "dgSpecHash": "FXXi4JDwMPhyul9ja3YBRTLu8qHvKmH5BKtpTsyUsKaQPW76LN1oWjX410+BUyfC8uoisTnEOH/YbIjRePQe/A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\1\\source\\repos\\Sv163Sam\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
+  "projectFilePath": "C:\\Users\\1\\Source\\Repos\\dotnet3-2023\\TaxiDepo.Model\\TaxiDepo.Model.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\1\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

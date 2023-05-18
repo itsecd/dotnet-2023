@@ -15,7 +15,7 @@ public class DepartmentFixture
     {
         _subjects = new List<Subject>
         {
-            new Subject {Name = "Математический Анализ", Semester = 1},
+            new Subject {Name = "Математический анализ", Semester = 1},
             new Subject {Name = "Промышленное программирование", Semester = 6},
             new Subject {Name = "Статистический анализ данных", Semester = 5},
             new Subject {Name = "Дискретная математика", Semester = 2},
@@ -38,10 +38,10 @@ public class DepartmentFixture
 
         _courses = new List<Course>
         {
-            new Course {Subject = Subjects[0], CourseType = "Лекции", SemesterHours = 256, Group = Groups[0], Teacher = Teachers[0]},
-            new Course {Subject = Subjects[1], CourseType = "Лекции", SemesterHours = 256, Group = Groups[1], Teacher = Teachers[1]},
-            new Course {Subject = Subjects[2], CourseType = "Лекции", SemesterHours = 256, Group = Groups[2], Teacher = Teachers[2]},
-            new Course {Subject = Subjects[0], CourseType = "Лекции", SemesterHours = 256, Group = Groups[0], Teacher = Teachers[1]}
+            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 256, GroupNumber = 6312, TeachersName = "Максимова Людмила Александровна"},
+            new Course {SubjectName = "Промышленное программирование", CourseType = "Курсовой проект", SemesterHours = 123, GroupNumber = 6311, TeachersName = "Шашкова Татьяна Якубовна"},
+            new Course {SubjectName = "Физкультура", CourseType = "Курсовой проект", SemesterHours = 14, GroupNumber = 6295, TeachersName = "Максимова Людмила Александровна" },
+            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 500, GroupNumber = 6311, TeachersName = "Шашкова Татьяна Якубовна"}
         };
     }
 

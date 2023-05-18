@@ -8,12 +8,12 @@ public class Group
     /// <summary>
     /// Group number
     /// </summary>
-    public uint GroupNumber { get; set; }
+    public int GroupNumber { get; set; }
 
     /// <summary>
     /// Amount of students
     /// </summary>
-    public uint StudentAmount { get; set; }
+    public int StudentAmount { get; set; }
 
     /// <summary>
     /// Type of education (full-time education, evening education, extramural studies)

@@ -8,7 +8,7 @@ public class Course
     /// <summary>
     /// Subject
     /// </summary>
-    public Subject Subject { get; set; } = new Subject();
+    public string SubjectName { get; set; } = string.Empty;
 
     /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
@@ -18,15 +18,15 @@ public class Course
     /// <summary>
     /// Hours per semester
     /// </summary>
-    public uint SemesterHours { get; set; }
+    public int SemesterHours { get; set; }
 
     /// <summary>
     /// Group
     /// </summary>
-    public Group Group { get; set; } = new Group();
+    public int GroupNumber { get; set; }
 
     /// <summary>
     /// Teacher
     /// </summary>
-    public Teacher Teacher { get; set; } = new Teacher();
+    public string TeachersName { get; set; } = string.Empty;
 }

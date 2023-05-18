@@ -104,7 +104,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ClientGetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -272,7 +272,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ClientGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -359,7 +359,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -437,7 +437,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -512,7 +512,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<IssuedCar>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -596,7 +596,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<IssuedCar>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -680,7 +680,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<IssuedCar>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -767,7 +767,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -845,7 +845,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -920,7 +920,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<RefundInformation>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1004,7 +1004,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RefundInformation>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1088,7 +1088,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RefundInformation>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1175,7 +1175,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -1253,7 +1253,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -1328,7 +1328,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<RentalInformation>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1412,7 +1412,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RentalInformation>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1496,7 +1496,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RentalInformation>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1583,7 +1583,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -1661,7 +1661,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -1736,7 +1736,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<RentalPointGetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1820,7 +1820,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RentalPointGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1904,7 +1904,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RentalPointGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1991,7 +1991,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -2069,7 +2069,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -2144,7 +2144,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VehicleGetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2224,7 +2224,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VehicleGetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2308,7 +2308,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<VehicleGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2392,7 +2392,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<VehicleGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2479,7 +2479,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -2557,7 +2557,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -2632,7 +2632,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VehicleModelGetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2716,7 +2716,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<VehicleModelGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2800,7 +2800,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<VehicleModelGetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -2887,7 +2887,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -2965,7 +2965,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -3147,7 +3147,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -3224,7 +3224,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -3301,7 +3301,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -3377,7 +3377,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }
@@ -3456,7 +3456,7 @@ namespace RentalService.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if ((status_ == 200)||(status_ == 204)||(status_ == 201))
                         {
                             return;
                         }

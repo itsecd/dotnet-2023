@@ -8,7 +8,6 @@ using Splat;
 
 namespace RentalService.Client.ViewModels;
 
-using RentalService.Client;
 
 public class MainWindowViewModel : ViewModelBase
 {
@@ -35,6 +34,7 @@ public class MainWindowViewModel : ViewModelBase
         _mapper = Locator.Current.GetService<IMapper>();
         
         ShowClientDialog = new Interaction<ClientViewModel, ClientViewModel?>();
+        
         OnAddClientCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var clientViewModel = await ShowClientDialog.Handle(new ClientViewModel());
@@ -44,15 +44,34 @@ public class MainWindowViewModel : ViewModelBase
                 Clients.Add(_mapper.Map<ClientViewModel>(newClient));
             }
         });
+        
+        OnEditClientCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var clientViewModel = await ShowClientDialog.Handle(SelectedClient!);
+            if (clientViewModel != null)
+            {
+                await _apiClient.UpdateClientsAsync(SelectedClient!.Id,_mapper.Map<ClientPostDto>(clientViewModel));
+                _mapper.Map(clientViewModel, SelectedClient);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedClient)
+            .Select(selectClient => selectClient != null));
+        
+        OnDeleteClientCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteClientsAsync(SelectedClient!.Id);
+            Clients.Remove(SelectedClient);
+
+        }, this.WhenAnyValue(vm => vm.SelectedClient)
+            .Select(selectClient => selectClient != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadClientAsync);
     }
 
     private async void LoadClientAsync()
     {
-        /*Clients.Clear();
-        var clients = await _apiClient.GetClientsAsync();*/
-        foreach (var client in await _apiClient.GetClientsAsync())
+        Clients.Clear();
+        var clients = await _apiClient.GetClientsAsync();
+        foreach (var client in clients)
         {
             Clients.Add(_mapper.Map<ClientViewModel>(client));
         }

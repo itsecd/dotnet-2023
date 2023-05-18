@@ -105,6 +105,7 @@ public class ClientController : ControllerBase
     ///     Delete method for deleting a client
     /// </summary>
     [HttpDelete("{id}")]
+    [ProducesResponseType(204)]
     public async Task<IActionResult> Delete(ulong id)
     {
         if (_context.Clients == null)

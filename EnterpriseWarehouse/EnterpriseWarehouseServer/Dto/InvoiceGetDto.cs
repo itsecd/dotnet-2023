@@ -1,5 +1,8 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
+/// <summary>
+///     InvoiceGetDto - used to represent the Invoice object in the get-request
+/// </summary>
 public class InvoiceGetDto
 {
     /// <summary>

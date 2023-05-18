@@ -1,5 +1,8 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
+/// <summary>
+///     StorageCellPostDto - used to present StorageCell object data in a post-query
+/// </summary>
 public class StorageCellPostDto
 {
     /// <summary>

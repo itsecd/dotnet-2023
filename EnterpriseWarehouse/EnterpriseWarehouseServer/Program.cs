@@ -1,11 +1,8 @@
-using EnterpriseWarehouseServer;
 using EnterpriseWarehouseServer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-builder.Services.AddSingleton<IStorageCellRepository, StorageCellRepository>();
-builder.Services.AddSingleton<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddSingleton<IMainRepository, MainRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

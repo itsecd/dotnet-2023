@@ -1,14 +1,19 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
 /// <summary>
-///     ProductPostDto - used to present Product object data in a post-query
+///     StatusStorageCellGetDto - used to represent the storage cell and product objects in the get-request
 /// </summary>
-public class ProductPostDto
+public class StatusStorageCellGetDto
 {
     /// <summary>
-    ///     ItemNumber - unique identifier of the product
+    ///     Number - cell number
     /// </summary>
-    public uint ItemNumber { get; set; }
+    public uint Number { get; set; }
+
+    /// <summary>
+    ///     ItemNumberProduct - unique identifier of the product 
+    /// </summary>
+	public uint ItemNumberProducts { get; set; }
 
     /// <summary>
     ///     Title - product name
@@ -19,9 +24,4 @@ public class ProductPostDto
     ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
 	public uint Quantity { get; set; }
-
-    /// <summary>
-    ///     CellNumber - number of the cell in which the product is stored
-    /// </summary>
-	public List<uint> CellNumber { get; set; }
 }

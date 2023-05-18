@@ -1,5 +1,8 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
+/// <summary>
+///     InvoicePostDto - used to present Invoice object data in a post-query
+/// </summary>
 public class InvoicePostDto
 {
     /// <summary>

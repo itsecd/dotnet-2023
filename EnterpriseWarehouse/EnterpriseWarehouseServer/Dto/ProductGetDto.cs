@@ -1,5 +1,8 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
+/// <summary>
+///     ProductGetDto - used to represent the Product object in the get-request
+/// </summary>
 public class ProductGetDto
 {
     /// <summary>

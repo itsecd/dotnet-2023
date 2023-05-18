@@ -11,18 +11,22 @@ public class InvoiceController : ControllerBase
 {
     private readonly ILogger<InvoiceController> _logger;
 
-    private readonly IInvoiceRepository _invoiceRepository;
-    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceRepository invoiceRepository)
+    private readonly IMainRepository _mainRepository;
+    public InvoiceController(ILogger<InvoiceController> logger, IMainRepository mainRepository)
     {
         _logger = logger;
-        _invoiceRepository = invoiceRepository;
+        _mainRepository = mainRepository;
     }
 
+    /// <summary>
+    ///     [HttpGet] - return all invoice
+    /// </summary>
+    /// <returns>List of Invoice</returns>
     [HttpGet]
     public IEnumerable<InvoiceGetDto> Get()
     {
         _logger.LogInformation("Get invoice.");
-        return _invoiceRepository.Invoices.Select(invoice =>
+        return _mainRepository.Invoices.Select(invoice =>
             new InvoiceGetDto
             {
                 Id = invoice.Id,
@@ -34,10 +38,15 @@ public class InvoiceController : ControllerBase
         );
     }
 
+    /// <summary>
+    ///     [HttpGet("{id}")] - return invoice with id
+    /// </summary>
+    /// <param Id = "id" >Id of the Invoice to be view</param>
+    /// <returns>Info of product</returns>
     [HttpGet("{id}")]
     public ActionResult<InvoiceGetDto?> Get(int id)
     {
-        var invoice = _invoiceRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
+        var invoice = _mainRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
         if (invoice == null)
         {
             _logger.LogInformation("Not found ivoice with {id}.", id);
@@ -57,10 +66,14 @@ public class InvoiceController : ControllerBase
         }
     }
 
+    /// <summary>
+    ///     [HttpPost] - add new invoice
+    /// </summary>
+    /// <param Invoice>Add new Invoice</param>
     [HttpPost]
     public void Post([FromBody] InvoicePostDto invoice)
     {
-        _invoiceRepository.Invoices.Add(new Invoice(
+        _mainRepository.Invoices.Add(new Invoice(
             invoice.Id,
             invoice.NameOrganization,
             invoice.AdressOrganization,
@@ -70,10 +83,15 @@ public class InvoiceController : ControllerBase
         );
     }
 
+    /// <summary>
+    ///     [HttpPut("{id}")] - update info of invoice with id
+    /// </summary>
+    /// <param Id="id">Id of the Invoice to be update</param>
+    /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
     public ActionResult<InvoicePostDto?> Put(int id, [FromBody] InvoicePostDto invoice_)
     {
-        var invoice = _invoiceRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
+        var invoice = _mainRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
         if (invoice == null)
         {
             _logger.LogInformation("Not found ivoice with {id}.", id);
@@ -81,7 +99,7 @@ public class InvoiceController : ControllerBase
         }
         else
         {
-            _logger.LogInformation("Get invoice with {id}.", id);
+            _logger.LogInformation("Put invoice with {id}.", id);
             invoice.Id = invoice_.Id;
             invoice.NameOrganization = invoice_.NameOrganization;
             invoice.AdressOrganization = invoice_.AdressOrganization;
@@ -91,10 +109,15 @@ public class InvoiceController : ControllerBase
         }
     }
 
+    /// <summary>
+    ///     [HttpDelete("{id}")] - delete invoice with id
+    /// </summary>
+    /// <param Id="id">Id of the Invoice to be removed</param>
+    /// <returns>Result of operation</returns>
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var invoice = _invoiceRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
+        var invoice = _mainRepository.Invoices.FirstOrDefault(invoice => invoice.Id == id);
         if (invoice == null)
         {
             _logger.LogInformation("Not found ivoice with {id}.", id);
@@ -102,8 +125,8 @@ public class InvoiceController : ControllerBase
         }
         else
         {
-            _logger.LogInformation("Get invoice with {id}.", id);
-            _invoiceRepository.Invoices.Remove(invoice);
+            _logger.LogInformation("Delete invoice with {id}.", id);
+            _mainRepository.Invoices.Remove(invoice);
             return Ok();
         }
     }

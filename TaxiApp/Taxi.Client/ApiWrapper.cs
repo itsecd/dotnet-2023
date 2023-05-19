@@ -41,4 +41,89 @@ public class ApiWrapper
     {
         return _client.DriverDELETEAsync(id);
     }
+    
+    public Task<ICollection<PassengerGetDto>> GetPassengersAsync()
+    {
+        return _client.PassengerAllAsync();
+    }
+    
+    public Task<PassengerGetDto> AddPassengerAsync(PassengerSetDto passenger)
+    {
+        return _client.PassengerPOSTAsync(passenger);
+    }
+    
+    public Task UpdatePassengerAsync(ulong id, PassengerSetDto passenger)
+    {
+        return _client.PassengerPUTAsync(id, passenger);
+    }
+    
+    public Task DeletePassengerAsync(ulong id)
+    {
+        return _client.PassengerDELETEAsync(id);
+    }
+    
+    
+    public Task<ICollection<VehicleGetDto>> GetVehiclesAsync()
+    {
+        return _client.VehicleAllAsync();
+    }
+    
+    public Task<VehicleGetDto> AddVehicleAsync(VehicleSetDto vehicle)
+    {
+        return _client.VehiclePOSTAsync(vehicle);
+    }
+    
+    public Task UpdateVehicleAsync(ulong id, VehicleSetDto vehicle)
+    {
+        return _client.VehiclePUTAsync(id, vehicle);
+    }
+    
+    public Task DeleteVehicleAsync(ulong id)
+    {
+        return _client.VehicleDELETEAsync(id);
+    }
+    
+    
+    public Task<ICollection<VehicleClassification>> GetVehicleClassificationsAsync()
+    {
+        return _client.VehicleClassificationAllAsync();
+    }
+    
+    public Task<VehicleClassification> AddVehicleClassificationAsync(VehicleClassificationSetDto vehicleClassification)
+    {
+        return _client.VehicleClassificationPOSTAsync(vehicleClassification);
+    }
+    
+    public Task UpdateVehicleClassificationAsync(ulong id, VehicleClassificationSetDto vehicleClassification)
+    {
+        return _client.VehicleClassificationPUTAsync(id, vehicleClassification);
+    }
+    
+    public Task DeleteVehicleClassificationAsync(ulong id)
+    {
+        return _client.VehicleClassificationDELETEAsync(id);
+    }
+    
+    
+    
+    public Task<ICollection<RideGetDto>> GetRidesAsync()
+    {
+        return _client.RideAllAsync();
+    }
+    
+    public Task<Ride> AddRideAsync(RideSetDto ride)
+    {
+        return _client.RidePOSTAsync(ride);
+    }
+    
+    public Task UpdateRideAsync(ulong id, RideSetDto ride)
+    {
+        return _client.RidePUTAsync(id, ride);
+    }
+    
+    public Task DeleteRideAsync(ulong id)
+    {
+        return _client.RideDELETEAsync(id);
+    }
+    
 }

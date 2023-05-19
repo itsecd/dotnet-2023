@@ -8,7 +8,7 @@ using Taxi.Client.Views;
 
 namespace Taxi.Client;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -21,6 +21,14 @@ public partial class App : Application
         {
             cfg.CreateMap<Driver, DriverViewModel>();
             cfg.CreateMap<DriverViewModel, DriverSetDto>();
+            cfg.CreateMap<PassengerGetDto, PassengerViewModel>();
+            cfg.CreateMap<PassengerViewModel, PassengerSetDto>();
+            cfg.CreateMap<VehicleGetDto, VehicleViewModel>();
+            cfg.CreateMap<VehicleViewModel, VehicleSetDto>();
+            cfg.CreateMap<VehicleClassification, VehicleClassificationViewModel>();
+            cfg.CreateMap<VehicleClassificationViewModel, VehicleClassificationSetDto>();
+            cfg.CreateMap<RideGetDto, RideViewModel>();
+            cfg.CreateMap<RideViewModel, RideSetDto>();
         });
         
         Locator.CurrentMutable.RegisterConstant(new ApiWrapper()); 

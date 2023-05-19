@@ -19,5 +19,6 @@ public class MappingProfile : Profile
         CreateMap<Passenger, PassengerGetDto>();
         CreateMap<Ride, RideGetDto>();
         CreateMap<RideGetDto, Ride>();
+        CreateMap<VehicleClassificationSetDto, VehicleClassification>();
     }
 }

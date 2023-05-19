@@ -5,9 +5,9 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Taxi.Client.ViewModels;
 
-public class DriverViewModel: ViewModelBase
+public class PassengerViewModel: ViewModelBase
 {
-    [Reactive]
+    [Reactive] 
     public ulong Id { get; set; }
     
     [Required] 
@@ -15,23 +15,20 @@ public class DriverViewModel: ViewModelBase
     public string FirstName { get; set; } = string.Empty;
     
     [Required] 
-    [Reactive]
+    [Reactive] 
     public string LastName { get; set; } = string.Empty;
     
-    [Reactive]
-    public string? Patronymic { get; set; } = string.Empty;
+    [Reactive] 
+    public string? Patronymic { get; set; }
     
     [Required] 
-    [Reactive]
-    public string Passport { get; set; } = string.Empty;
-    
-    [Required] 
-    [Reactive]
+    [Reactive] 
     public string PhoneNumber { get; set; } = string.Empty;
     
-    public ReactiveCommand<Unit, DriverViewModel> OnSubmitCommand { get; }
+    
+    public ReactiveCommand<Unit, PassengerViewModel> OnSubmitCommand { get; }
 
-    public DriverViewModel()
+    public PassengerViewModel()
     {
         OnSubmitCommand = ReactiveCommand.Create(() => this);
     }

@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Taxi.Client.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Taxi.Client.Views.VehicleClassificationWindow"
+        Title="Добавление/Редактирование классификации транспортного средства"
+        MaxWidth="500"
+        SizeToContent="Height">
+    
+        <Design.DataContext>
+                <viewModels:VehicleClassificationViewModel/>
+        </Design.DataContext>
+        
+        <Window.Styles>
+                <StyleInclude Source="/TaxiStyles.axaml"/>
+        </Window.Styles>
+    
+        <Grid Classes = "MainGrid" RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Бренд</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Brand}"/>
+                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Модель</Label>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Model}"/>
+                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Класс транспортного средства</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Class}"/>
+        
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                            HorizontalAlignment="Right" 
+                            Orientation="Horizontal">
+                        <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+                        <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+                </StackPanel>
+        </Grid>
+
+</Window>

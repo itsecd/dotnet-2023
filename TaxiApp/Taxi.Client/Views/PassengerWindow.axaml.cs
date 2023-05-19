@@ -9,12 +9,12 @@ using Taxi.Client.ViewModels;
 
 namespace Taxi.Client.Views;
 
-public partial class DriverWindow : ReactiveWindow<DriverViewModel>
+public partial class PassengerWindow : ReactiveWindow<PassengerViewModel>
 {
-    public DriverWindow()
+    public PassengerWindow()
     {
         InitializeComponent();
-
+        
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
 

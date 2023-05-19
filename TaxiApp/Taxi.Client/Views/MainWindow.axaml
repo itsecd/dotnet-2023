@@ -7,8 +7,8 @@
         x:Class="Taxi.Client.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Taxi.Client">
-
+        Title="TaxiApp">
+    
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
@@ -17,25 +17,144 @@
         <StyleInclude Source="/TaxiStyles.axaml"/>
     </Window.Styles>
     
-    <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Classes="ToolButton" Command="{Binding OnAddCommand}">
-                <Image Source="/Assets/add.png"/>
-            </Button>
-            <Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
-                <Image Source="/Assets/settings.png"/>
-            </Button>
-            <Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
-                <Image Source="/Assets/delete.png"/>
-            </Button>
-        </StackPanel>
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-                  Items="{Binding Drivers}"
-                  SelectedItem="{Binding SelectedDriver}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
-    
+    <TabControl>
+        <TabItem Header="Водители" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Classes="ToolButton" Command="{Binding OnAddDriverCommand}">
+                        <Image Source="/Assets/add.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnChangeDriverCommand}">
+                        <Image Source="/Assets/settings.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnDeleteDriverCommand}">
+                        <Image Source="/Assets/delete.png"/>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                          Items="{Binding Drivers}"
+                          SelectedItem="{Binding SelectedDriver}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID водителя" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                        <DataGridTextColumn Header="Серия и номер паспорта" Binding="{Binding Passport}"/>
+                        <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNumber}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Пассажиры" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Classes="ToolButton" Command="{Binding OnAddPassengerCommand}">
+                        <Image Source="/Assets/add.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnChangePassengerCommand}">
+                        <Image Source="/Assets/settings.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnDeletePassengerCommand}">
+                        <Image Source="/Assets/delete.png"/>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Passengers}"
+                          SelectedItem="{Binding SelectedPassenger}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID пассажира" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                        <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNumber}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Транспортные средства" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Classes="ToolButton" Command="{Binding OnAddVehicleCommand}">
+                        <Image Source="/Assets/add.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnChangeVehicleCommand}">
+                        <Image Source="/Assets/settings.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleCommand}">
+                        <Image Source="/Assets/delete.png"/>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Vehicles}"
+                          SelectedItem="{Binding SelectedVehicle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID транспортного средства" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Регистрационный номер" Binding="{Binding RegistrationCarPlate}"/>
+                        <DataGridTextColumn Header="Цвет" Binding="{Binding Colour}"/>
+                        <DataGridTextColumn Header="ID классификации транспортного средства" Binding="{Binding VehicleClassificationId}"/>
+                        <DataGridTextColumn Header="ID водителя" Binding="{Binding DriverId}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Классификация транспортных средств" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Classes="ToolButton" Command="{Binding OnAddVehicleClassificationCommand}">
+                        <Image Source="/Assets/add.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnChangeVehicleClassificationCommand}">
+                        <Image Source="/Assets/settings.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleClassificationCommand}">
+                        <Image Source="/Assets/delete.png"/>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding VehicleClassifications}"
+                          SelectedItem="{Binding SelectedVehicleClassification}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID классификации транспортного средства" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Бренд" Binding="{Binding Brand}"/>
+                        <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+                        <DataGridTextColumn Header="Класс транспортного средства" Binding="{Binding Class}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Поездки" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Classes="ToolButton" Command="{Binding OnAddVehicleClassificationCommand}">
+                        <Image Source="/Assets/add.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnChangeVehicleClassificationCommand}">
+                        <Image Source="/Assets/settings.png"/>
+                    </Button>
+                    <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleClassificationCommand}">
+                        <Image Source="/Assets/delete.png"/>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Rides}"
+                          SelectedItem="{Binding SelectedRide}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID поездки" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Точка отправления" Binding="{Binding DeparturePoint}"/>
+                        <DataGridTextColumn Header="Точка прибытия" Binding="{Binding DestinationPoint}"/>
+                        <DataGridTextColumn Header="Дата и время начала поездки" Binding="{Binding RideDate}"/>
+                        <DataGridTextColumn Header="Длительность поездки" Binding="{Binding RideTime}"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
+                        <DataGridTextColumn Header="ID пассажира" Binding="{Binding PassengerId}"/>
+                        <DataGridTextColumn Header="ID транспортного средства" Binding="{Binding VehicleId}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        
+    </TabControl>
 </Window>

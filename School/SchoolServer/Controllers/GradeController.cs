@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.Classes;
 using SchoolServer.Dto;
-using SchoolServer.Repository;
 
 namespace SchoolServer.Controllers;
 
@@ -66,7 +65,7 @@ public class GradeController : ControllerBase
     }
 
     /// <summary>
-    /// Измененеие данных об оценке
+    /// Изменение данных об оценке
     /// </summary>
     /// <param name="id">Идентификатор класса</param>
     /// <param name="grade">Изменяемая оценка</param>

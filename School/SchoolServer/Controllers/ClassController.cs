@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SchoolServer.Dto;
-using SchoolServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.Classes;

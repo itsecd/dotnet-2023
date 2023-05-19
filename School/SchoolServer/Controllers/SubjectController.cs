@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.Classes;
 using SchoolServer.Dto;
-using SchoolServer.Repository;
 
 namespace SchoolServer.Controllers;
 

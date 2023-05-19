@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using School.Classes;
 using SchoolServer.Dto;
-using SchoolServer.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace SchoolServer.Controllers;

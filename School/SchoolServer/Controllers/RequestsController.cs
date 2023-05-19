@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SchoolServer.Dto;
-using SchoolServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using School.Classes;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +46,7 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Отобразить информацию обо всех учащихся в указанном классе, отсортировать по имени.
     /// </summary>
-    /// <param name="ClassId">Class id</param>
+    /// <param name="ClassId">Идентификатор класса</param>
     /// <returns></returns>
     [HttpGet("GetAllStudentByClassId/{ClassId}")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int ClassId)

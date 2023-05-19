@@ -5,21 +5,21 @@
             <!-- Add Controls for Previewer Here -->
         </Border>
     </Design.PreviewWith>
-    
+
     <Style Selector="Button.ToolButton">
-        <Setter Property="Width" Value="40"></Setter>
-        <Setter Property="Height" Value="40"></Setter>
-        <Setter Property="Margin" Value="0,5,0,5"></Setter>
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="0,5,0,5" />
     </Style>
-    
+
     <Style Selector="Button">
-        <Setter Property="Width" Value="80"></Setter>
+        <Setter Property="Width" Value="80" />
     </Style>
-    
-    
+
+
     <Style Selector="Grid.MainGrid">
 
-        <Setter Property="Margin" Value="10, 0, 10, 10"></Setter>
+        <Setter Property="Margin" Value="10, 0, 10, 10" />
     </Style>
-    
+
 </Styles>

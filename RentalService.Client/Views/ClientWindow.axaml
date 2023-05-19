@@ -9,33 +9,36 @@
         Title="Editing a client"
         MaxWidth="500"
         SizeToContent="Height">
-    
+
     <Design.DataContext>
-        <vm:ClientViewModel/>
+        <vm:ClientViewModel />
     </Design.DataContext>
-    
+
     <Window.Styles>
-        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+        <StyleInclude Source="/RentalServiceStyles.axaml" />
     </Window.Styles>
-    
+
     <Grid RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto, *,*">
         <Label Grid.Row="0" Grid.Column="0">LastName</Label>
         <Label Grid.Row="1" Grid.Column="0">FirstName</Label>
         <Label Grid.Row="2" Grid.Column="0">Patronymic</Label>
         <Label Grid.Row="3" Grid.Column="0">BirthDate</Label>
         <Label Grid.Row="4" Grid.Column="0">Passport</Label>
-        
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}"></TextBox>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}"></TextBox>
-        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding BirthDate}"></DatePicker>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Passport}"></TextBox>
 
-        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}" />
+        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding BirthDate}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Passport}" />
+
+        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    Orientation="Horizontal">
             <Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
-            <Button 
-               IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+            <Button
+                IsCancel="True" Click="CancelButton_OnClick">
+                Cancel
+            </Button>
         </StackPanel>
     </Grid>
-    
+
 </Window>

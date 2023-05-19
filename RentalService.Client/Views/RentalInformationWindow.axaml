@@ -9,31 +9,34 @@
         Title="Editing a rental information"
         MaxWidth="500"
         SizeToContent="Height">
-    
+
     <Design.DataContext>
-        <vm:RentalInformationViewModel/>
+        <vm:RentalInformationViewModel />
     </Design.DataContext>
-    
+
     <Window.Styles>
-        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+        <StyleInclude Source="/RentalServiceStyles.axaml" />
     </Window.Styles>
-    
+
 
     <Grid RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto, *,*">
         <Label Grid.Row="0" Grid.Column="0">RentalPointId</Label>
         <Label Grid.Row="1" Grid.Column="0">RentalPeriod</Label>
         <Label Grid.Row="2" Grid.Column="0">RefundDate</Label>
         <Label Grid.Row="3" Grid.Column="0">IssuedCarId</Label>
-        
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RentalPointId}"></TextBox>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RentalPeriod}"></TextBox>
-        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RentalDate}"></DatePicker>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding IssuedCarId}"></TextBox>
-        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RentalPointId}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RentalPeriod}" />
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RentalDate}" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding IssuedCarId}" />
+        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    Orientation="Horizontal">
             <Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
-            <Button 
-                IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+            <Button
+                IsCancel="True" Click="CancelButton_OnClick">
+                Cancel
+            </Button>
         </StackPanel>
     </Grid>
-    
+
 </Window>

@@ -12,39 +12,39 @@
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
-    
+
     <Window.Styles>
-        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+        <StyleInclude Source="/RentalServiceStyles.axaml" />
     </Window.Styles>
-    
+
     <TabControl>
         <TabItem Header="Client">
             <Grid RowDefinitions="Auto,*">
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddClientCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditClientCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteClientCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-                          Items="{Binding Clients}" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Clients}"
                           SelectedItem="{Binding SelectedClient}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
-                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
-                        <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
-                        <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate}"/>
-                        <DataGridTextColumn Header="Passport" Binding="{Binding Passport}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
+                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" />
+                        <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+                        <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate}" />
+                        <DataGridTextColumn Header="Passport" Binding="{Binding Passport}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -53,23 +53,23 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddVehicleModelCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditVehicleModelCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleModelCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding VehicleModels}"
                           SelectedItem="{Binding SelectedVehicleModel}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
-                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -78,24 +78,24 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddVehicleCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditVehicleCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding Vehicles}"
                           SelectedItem="{Binding SelectedVehicle}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="VehicleModelId" Binding="{Binding VehicleModelId}"/>
-                        <DataGridTextColumn Header="Colour" Binding="{Binding Colour}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+                        <DataGridTextColumn Header="VehicleModelId" Binding="{Binding VehicleModelId}" />
+                        <DataGridTextColumn Header="Colour" Binding="{Binding Colour}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -104,23 +104,23 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddRentalPointCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditRentalPointCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteRentalPointCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding RentalPoints}"
                           SelectedItem="{Binding SelectedRentalPoint}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
-                        <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -129,25 +129,25 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddRentalInformationCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditRentalInformationCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteRentalInformationCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding RentalInformations}"
                           SelectedItem="{Binding SelectedRentalInformation}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="RentalPointId" Binding="{Binding RentalPointId}"/>
-                        <DataGridTextColumn Header="RentalDate" Binding="{Binding RentalDate}"/>
-                        <DataGridTextColumn Header="RentalPeriod" Binding="{Binding RentalPeriod}"/>
-                        <DataGridTextColumn Header="IssuedCarId" Binding="{Binding IssuedCarId}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="RentalPointId" Binding="{Binding RentalPointId}" />
+                        <DataGridTextColumn Header="RentalDate" Binding="{Binding RentalDate}" />
+                        <DataGridTextColumn Header="RentalPeriod" Binding="{Binding RentalPeriod}" />
+                        <DataGridTextColumn Header="IssuedCarId" Binding="{Binding IssuedCarId}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -156,24 +156,24 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddRefundInformationCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditRefundInformationCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteRefundInformationCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding RefundInformations}"
                           SelectedItem="{Binding SelectedRefundInformation}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="RentalPointId" Binding="{Binding RentalPointId}"/>
-                        <DataGridTextColumn Header="RefundDate" Binding="{Binding RefundDate}"/>
-                        <DataGridTextColumn Header="IssuedCarId" Binding="{Binding IssuedCarId}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="RentalPointId" Binding="{Binding RentalPointId}" />
+                        <DataGridTextColumn Header="RefundDate" Binding="{Binding RefundDate}" />
+                        <DataGridTextColumn Header="IssuedCarId" Binding="{Binding IssuedCarId}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
@@ -182,38 +182,37 @@
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Classes="ToolButton" Command="{Binding OnAddIssuedCarCommand}">
-                            <Image Source="/Assets/add.png"/>
+                            <Image Source="/Assets/add.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnEditIssuedCarCommand}">
-                            <Image Source="/Assets/edit.png"/>
+                            <Image Source="/Assets/edit.png" />
                         </Button>
                         <Button Classes="ToolButton" Command="{Binding OnDeleteIssuedCarCommand}">
-                            <Image Source="/Assets/del.png"/>
+                            <Image Source="/Assets/del.png" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                           Items="{Binding IssuedCars}"
                           SelectedItem="{Binding SelectedIssuedCar}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="VehicleId" Binding="{Binding VehicleId}"/>
-                        <DataGridTextColumn Header="ClientId" Binding="{Binding ClientId}"/>
-                        <DataGridTextColumn Header="RentalInformationId" Binding="{Binding RentalInformationId}"/>
-                        <DataGridTextColumn Header="RefundInformationId" Binding="{Binding RefundInformationId}"/>
-                    </DataGrid.Columns> 
+                        <DataGridTextColumn Header="VehicleId" Binding="{Binding VehicleId}" />
+                        <DataGridTextColumn Header="ClientId" Binding="{Binding ClientId}" />
+                        <DataGridTextColumn Header="RentalInformationId" Binding="{Binding RentalInformationId}" />
+                        <DataGridTextColumn Header="RefundInformationId" Binding="{Binding RefundInformationId}" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
-        <TabItem Header="Vehicles Information">
-            <DataGrid Grid.Row="1" AutoGenerateColumns="True">
+        <TabItem Header="Rented Vehicles Information">
+            <DataGrid AutoGenerateColumns="False" Items="{Binding RentedVehicles}">
                 <DataGrid.Columns>
-                        <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="Colour" Binding="{Binding Colour}"/>
-                        <DataGridTextColumn Header="RentalInformationId" Binding="{Binding Model}"/>
-                        <DataGridTextColumn Header="RefundInformationId" Binding="{Binding Brand}"/>
-                    </DataGrid.Columns> 
-                </DataGrid>
+                    <DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+                    <DataGridTextColumn Header="Colour" Binding="{Binding Colour}" />
+                    <DataGridTextColumn Header="VehicleModelId" Binding="{Binding VehicleModelId}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </TabItem>
     </TabControl>
-    
+
 </Window>

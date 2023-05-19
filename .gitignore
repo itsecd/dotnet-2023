@@ -351,3 +351,6 @@ MigrationBackup/
 
 # .idea
 .idea/
+
+# avalonia-dotnet-templates
+avalonia-dotnet-templates/

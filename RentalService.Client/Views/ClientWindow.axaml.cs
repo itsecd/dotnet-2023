@@ -1,7 +1,4 @@
 using System;
-using System.Reactive;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -27,6 +24,4 @@ public partial class ClientWindow : ReactiveWindow<ClientViewModel>
     {
         Close();
     }
-
-    
 }

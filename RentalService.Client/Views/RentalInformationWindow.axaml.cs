@@ -1,6 +1,4 @@
 using System;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -21,10 +19,9 @@ public partial class RentalInformationWindow : ReactiveWindow<RentalInformationV
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
+
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Close();
     }
-
 }

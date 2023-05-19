@@ -16,11 +16,10 @@
         <Folder Include="Models\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
-    
- <!--   <ItemGroup>
-        <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="RentalService.Client" ClassName="ApiClient" />
-    </ItemGroup>-->
-    
+
+    <ItemGroup>
+        <OpenApiReference Include="swagger4.json" CodeGenerator="NSwagCSharp" Namespace="RentalService.Client" ClassName="ApiClient" />
+    </ItemGroup>
     
     <ItemGroup>
         <ProjectCapability Include="Avalonia" />
@@ -43,12 +42,12 @@
         <PackageReference Include="Microsoft.VisualStudio.Designer.Interfaces" Version="17.5.33428.366" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="NSwag.ApiDescription.Client" Version="13.19.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="NSwag.MSBuild" Version="13.19.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="ReactiveUI.Fody" Version="18.4.44" />
         <PackageReference Include="SkiaSharp.NativeAssets.WebAssembly" Version="2.88.3" />
@@ -59,7 +58,6 @@
         <None Update="appsettings.json" ClassName="ApiClient">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="swagger.json" ClassName="ApiClient" />
     </ItemGroup>
-    
+
 </Project>

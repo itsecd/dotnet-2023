@@ -58,7 +58,7 @@ public class RequestController : ControllerBase
     ///     List of clients
     /// </returns>
     [HttpGet("clients_by_model_id/{id}")]
-    public async Task<IActionResult> GetClientsByModelId(ulong id)
+    public async Task<ActionResult<ClientGetDto>> GetClientsByModelId(ulong id)
     {
         List<ClientGetDto> query = await (from client in _context.Clients
             join issuedCar in _context.IssuedCars on client.Id equals issuedCar.ClientId
@@ -83,19 +83,12 @@ public class RequestController : ControllerBase
     ///     List of vehicles
     /// </returns>
     [HttpGet("cars_for_rent")]
-    public async Task<IActionResult> GetCarsForRent()
+    public async Task<ActionResult<IEnumerable<VehicleGetDto>>> GetCarsForRent()
     {
-        var query = await (from issuedCar in _context.IssuedCars
+        List<VehicleGetDto> query = await (from issuedCar in _context.IssuedCars
             join vehicle in _context.Vehicles on issuedCar.VehicleId equals vehicle.Id
             where issuedCar.RefundInformationId == null
-            select new
-            {
-                vehicle.Id,
-                vehicle.Colour,
-                vehicle.VehicleModel.Model,
-                vehicle.VehicleModel.Brand,
-                vehicle.Number
-            }).ToListAsync();
+            select _mapper.Map<VehicleGetDto>(vehicle)).ToListAsync();
 
         if (query.Count == 0)
         {

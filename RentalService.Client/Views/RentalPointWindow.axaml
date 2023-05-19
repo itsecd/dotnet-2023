@@ -9,27 +9,30 @@
         Title="Editing a rental point"
         MaxWidth="500"
         SizeToContent="Height">
-    
+
     <Design.DataContext>
-        <vm:RentalPointViewModel/>
+        <vm:RentalPointViewModel />
     </Design.DataContext>
-    
+
     <Window.Styles>
-        <StyleInclude Source="/RentalServiceStyles.axaml"></StyleInclude>
+        <StyleInclude Source="/RentalServiceStyles.axaml" />
     </Window.Styles>
-    
+
 
     <Grid RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto, *,*">
         <Label Grid.Row="0" Grid.Column="0">Title</Label>
         <Label Grid.Row="1" Grid.Column="0">Address</Label>
-        
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}"></TextBox>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}"></TextBox>
-        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}" />
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    Orientation="Horizontal">
             <Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
-            <Button 
-                IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+            <Button
+                IsCancel="True" Click="CancelButton_OnClick">
+                Cancel
+            </Button>
         </StackPanel>
     </Grid>
-    
+
 </Window>

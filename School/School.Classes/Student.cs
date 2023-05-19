@@ -53,7 +53,7 @@ public class Student
     /// <summary>
     /// Класс для внешнего ключа
     /// </summary>
-    [ForeignKey("classId")]//attention
+    [ForeignKey("classId")]
     public Class Class { get; set; }
 
     /// <summary>

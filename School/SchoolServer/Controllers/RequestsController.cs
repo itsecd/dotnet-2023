@@ -48,7 +48,7 @@ public class RequestsController : ControllerBase
     /// </summary>
     /// <param name="classId">Идентификатор класса</param>
     /// <returns></returns>
-    [HttpGet("GetAllStudentByClassId/{СlassId}")]
+    [HttpGet("GetAllStudentByClassId/{classId}")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int classId)
     {
         if (_context.Students == null)

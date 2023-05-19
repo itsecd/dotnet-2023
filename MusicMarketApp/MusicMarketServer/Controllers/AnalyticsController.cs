@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MusicMarket;
 using MusicMarketplace;
 using MusicMarketServer.Dto;
-using MySqlX.XDevAPI.Relational;
-using System.Security.Cryptography.Xml;
-using System.Text.RegularExpressions;
 
 namespace MusicMarketServer.Controllers;
 
@@ -151,41 +148,43 @@ public class AnalyticsController : ControllerBase
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
     /// <returns>Top 5 customers</returns>
-    //[HttpGet("Top_5_customers")]
-    //public async Task<IActionResult> TopFiveСustomer()
-    //{
-    //    await using var context = await _contextFactory.CreateDbContextAsync();
-    //    _logger.LogInformation("Get top 5 customers");
+    [HttpGet("Top_5_customers")]
+    public async Task<IActionResult> TopFiveСustomer()
+    {
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _logger.LogInformation("Get top 5 customers");
 
-    //    var customerPurchases =
-    //        from customer in context.Customers
-    //        from purchase in customer.Purchases
-    //        //from product in purchase.IdProduct
-    //        select new
-    //        {
-    //            customer.Id,
-    //            PurchaseCost = purchase.IdProduct.Sum(product => product.Price + product.Seller?.Price)
-    //        };
-    //    var customerAvgPurchases = 
-    //        from customerPurchase in customerPurchases
-    //        group customerPurchase by customerPurchase.Id into customer
-    //        select new
-    //        {
-    //            customer.Key,
-    //            AvgCost = customer.Average(cust => cust.PurchaseCost)
-    //        };
-    //   var result = await customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5).Reverse().ToListAsync();
+        var customerPurchases = await (from customer in context.Customers
+                                 from purchase in context.Purchases
+                                 from product in context.Products
+                                 from seller in context.Sellers
+                                 where customer.Id == purchase.IdCustomer && purchase.IdProduct == product.Id && seller.Id == product.IdSeller
+                                 select new
+                                 {
+                                     customer.Id,
+                                     PurchaseCost = product.Price + seller.Price
+                                 }).ToListAsync();
+        var customerAvgPurchases =
+            (from customerPurchase in customerPurchases
+            group customerPurchase by customerPurchase.Id into customer
+            select new
+            {
+                customer.Key,
+                AvgCost = customer.Average(cust => cust.PurchaseCost)
+            }).ToList();
+        var result = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5).Reverse().ToList();
 
-    //    if (result.Count == 0)
-    //    {
-    //        _logger.LogInformation("No information found");
-    //        return NotFound();
-    //    }
-    //    else
-    //    {
-    //        return Ok(result);
-    //    }
-    //}
+        if (result.Count == 0)
+        {
+            _logger.LogInformation("No information found");
+            return NotFound();
+        }
+        else
+        {
+            return Ok(result);
+        }
+
+    }
 
     /// <summary>
     /// Запрос 6 - Вывести информацию о количестве проданных товаров каждым продавцом за последние две недели.
@@ -196,7 +195,6 @@ public class AnalyticsController : ControllerBase
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get information about sold products in two weeks");
-        //var now = DateTime.Now;
 
         var request = await (from purchases in context.Purchases
                              join products in context.Products on purchases.IdProduct equals products.Id
@@ -208,37 +206,26 @@ public class AnalyticsController : ControllerBase
                                  purchases.Date
 
                              }).ToListAsync();
-        var selCount = (from sel in request
-                       where sel.Date >= DateTime.Now.AddDays(-14)
-                       group sel by sel.IdSeller into g
-                       select new { sellerid = g.Key, count = g.Sum(x => x.IdProduct) 
-                       }).ToList();
 
-        if (selCount.Count == 0)    
+        var selCount = (from sel in request
+                        where sel.Date >= DateTime.Now.AddDays(-14)
+                        group sel by sel.IdSeller into g
+                        select new
+                        {
+                            sellerid = g.Key,
+                            count = g.Sum(x => x.IdProduct)
+                        }).ToList();
+
+
+
+        if (request.Count == 0)
         {
             _logger.LogInformation("No information found");
             return NotFound();
         }
         else
         {
-            return Ok(selCount);
+            return Ok(request);
         }
     }
 }
-//var request = await(from purchase in context.Purchases
-//                    join product in context.Product on purchase.IdProduct equals product.Id
-//                    join seller in context.Seller on product.IdSeller equals seller.Id
-//                    where purchase.Date >= now.AddDays(-14)
-//                    select new
-//                    {
-//                        seller = product.IdSeller,
-//                        proucts = product.Id,
-//                        date = purchase.Date,
-//                    }).ToListAsync();
-
-//SELECT DISTINCT idSeller, COUNT(product.idProduct) as count
-//FROM lr3.purchase
-//JOIN lr3.product
-//ON product.idProduct = purchase.idProduct && Date('2023-04-25') - Date(purchase.Date) <= 14
-//GROUP BY idSeller #, product.idProduct, Date 
-//ORDER BY count;

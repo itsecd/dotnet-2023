@@ -46,10 +46,10 @@ public class RequestsController : ControllerBase
     /// <summary>
     /// Отобразить информацию обо всех учащихся в указанном классе, отсортировать по имени.
     /// </summary>
-    /// <param name="ClassId">Идентификатор класса</param>
+    /// <param name="classId">Идентификатор класса</param>
     /// <returns></returns>
-    [HttpGet("GetAllStudentByClassId/{ClassId}")]
-    public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int ClassId)
+    [HttpGet("GetAllStudentByClassId/{СlassId}")]
+    public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int classId)
     {
         if (_context.Students == null)
         {
@@ -58,7 +58,7 @@ public class RequestsController : ControllerBase
         var allStudents = await _context.Students.ToListAsync();
 
         var needStudents = (from student in allStudents
-                            where student.ClassId.Equals(ClassId)
+                            where student.ClassId.Equals(classId)
                             orderby student.LastName, student.FirstName, student.Patronymic
                             select student).ToList();
 
@@ -86,7 +86,6 @@ public class RequestsController : ControllerBase
         var infoStudent = (from grade in allGrades
                            where grade.Date == date
                            select grade.StudentId).ToList();
-        //16 April 2022
         var allStudents = await _context.Students.ToListAsync();
 
         var needStudents = allStudents.Where(x => infoStudent.Contains(x.Id)).ToList().Select(_mapper.Map<Student, StudentGetDto>);

@@ -1,4 +1,4 @@
-using Factory.Domain;
+using Factory.Model;
 
 namespace Factory.Test;
 
@@ -64,11 +64,11 @@ public class FactoryTest
         var supply = CreateSupply();
         return new List<Enterprise>()
         {
-            new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>(){supply[0], supply[1] }),
-            new Enterprise(2, "1156313028981", 6, "ЗГМ", "ул.22 партъезда д.10а", "88462295931", 2, 150, 1500, new List<Supply>(){supply[4], supply[7] }),
-            new Enterprise(3, "1116318009510", 4, "ВЗМК", "ул.Балаковская д.6а", "884692007711", 2, 200, 2000, new List<Supply>(){supply[2] }),
-            new Enterprise(4, "1026300767899", 2, "АВИАКОР", "ул.Земеца д.32", "88463720888", 3, 250, 2500, new List < Supply >() { supply[3], supply[6] }),
-            new Enterprise(5, "1026301697487", 6, "ЭКРАН", "ул.Кирова д.24", "88469983785", 4, 130, 1300, new List < Supply >() { supply[5]}),
+            new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000),
+            new Enterprise(2, "1156313028981", 6, "ЗГМ", "ул.22 партъезда д.10а", "88462295931", 2, 150, 1500),
+            new Enterprise(3, "1116318009510", 4, "ВЗМК", "ул.Балаковская д.6а", "884692007711", 2, 200, 2000),
+            new Enterprise(4, "1026300767899", 2, "АВИАКОР", "ул.Земеца д.32", "88463720888", 3, 250, 2500),
+            new Enterprise(5, "1026301697487", 6, "ЭКРАН", "ул.Кирова д.24", "88469983785", 4, 130, 1300),
         };
     }
 
@@ -81,11 +81,11 @@ public class FactoryTest
         var supply = CreateSupply();
         return new List<Supplier>()
         {
-            new Supplier(1, "Артур Пирожков", "ул. Зацепильная д.42", "89375550203", new List<Supply>(){supply[0]}),
-            new Supplier(2, "Чендлер Бинг", "ул. Центральная д.1", "89370101010", new List<Supply>(){supply[1], supply[7] }),
-            new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289", new List<Supply>(){supply[2], supply[6] }),
-            new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>(){supply[3] }),
-            new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567", new List<Supply>(){supply[4], supply[5] })
+            new Supplier(1, "Артур Пирожков", "ул. Зацепильная д.42", "89375550203"),
+            new Supplier(2, "Чендлер Бинг", "ул. Центральная д.1", "89370101010"),
+            new Supplier(3, "Барни Стинсон", "ул. Приоденься д.50", "89376431289"),
+            new Supplier(4, "Джон Сноу", "ул. Таргариенская д.35", "89372229978"),
+            new Supplier(5, "Райан Гослинг", "ул. Лалаленд д.14", "89371234567")
         };
     }
 
@@ -243,7 +243,7 @@ public class FactoryTest
     public void EnterpriseConstructorTest()
     {
         var supply = new Supply(1, 1, 1, "20.01.2023", 3);
-        var enterprise = new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000, new List<Supply>() { supply });
+        var enterprise = new Enterprise(1, "1036300446093", 6, "СТАН", "ул.22 партъезда д.7а", "88469926984", 1, 100, 1000);
 
         Assert.Equal(1, enterprise.EnterpriseID);
         Assert.Equal("1036300446093", enterprise.RegistrationNumber);
@@ -255,7 +255,7 @@ public class FactoryTest
         Assert.Equal(100, enterprise.EmployeesCount);
         Assert.Equal(1000, enterprise.TotalArea);
         Assert.Equal(1000, enterprise.TotalArea);
-        Assert.Equal(new List<Supply>() { supply }, enterprise.Supplies);
+       // Assert.Equal(new List<Supply>() { supply }, enterprise.Supplies);
     }
 
     /// <summary>
@@ -265,7 +265,7 @@ public class FactoryTest
     public void SupplierConstructorTest()
     {
         var supply = new Supply(1, 1, 1, "20.01.2023", 3);
-        var supplier = new Supplier(1, "Джон Сноу", "ул. Таргариенская д.35", "89372229978", new List<Supply>() { supply });
+        var supplier = new Supplier(1, "Джон Сноу", "ул. Таргариенская д.35", "89372229978");
         Assert.Equal(1, supplier.SupplierID);
         Assert.Equal("Джон Сноу", supplier.Name);
         Assert.Equal("ул. Таргариенская д.35", supplier.Address);

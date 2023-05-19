@@ -1,8 +1,11 @@
-﻿using ReactiveUI;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +34,7 @@ public class EnterpriseViewModel : ViewModelBase
     }
 
     private string _name = string.Empty;
+    [Required]
     public string Name
     {
         get => _name;
@@ -71,4 +75,10 @@ public class EnterpriseViewModel : ViewModelBase
         get => _totalArea;
         set => this.RaiseAndSetIfChanged(ref _totalArea, value); 
     } 
+
+    public ReactiveCommand<Unit, EnterpriseViewModel> OnSubmitCommand { get; }
+    public EnterpriseViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

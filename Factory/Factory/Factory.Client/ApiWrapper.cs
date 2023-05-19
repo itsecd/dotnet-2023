@@ -21,7 +21,7 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public Task<ICollection<EnterpriseGetDto>> GetEnterpriseAsync()
+   public Task<ICollection<EnterpriseGetDto>> GetEnterpriseAsync()
     {
         return _client.EnterpriseAllAsync();
     }

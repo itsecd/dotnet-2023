@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Factory.Test": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57832;http://localhost:57833"
+    }
+  }
+}

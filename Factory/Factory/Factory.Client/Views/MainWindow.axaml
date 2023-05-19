@@ -9,20 +9,30 @@
         Title="Factory.Client">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+      <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid RowDefinitions="Auto, *">
+	<Window.Styles>
+		<StyleInclude Source="/FactoryStyles.axaml"/>
+	</Window.Styles>
+	
+	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button/>
-			<Button>hey</Button>
-			<Button/>
+			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+				<Image Source="/Assets/add.png"/>
+			</Button> 
+			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+				<Image Source="/Assets/settings.png"/>
+			</Button>
+			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+				<Image Source="/Assets/delete.png"/>
+			</Button>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="True" Items="(Bilding Enterprises">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+				  Items="{Binding Enterprises}"
+				  SelectedItem="{Binding SelectedEnterprise}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Name"/>
+				<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

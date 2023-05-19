@@ -12,6 +12,7 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="swagger.json" />
+    <None Remove="Views\SupplierWindow.axaml~RF2d9817e8.TMP" />
   </ItemGroup>
 
   <ItemGroup>

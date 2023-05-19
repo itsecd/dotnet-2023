@@ -1,13 +1,6 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
+﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Factory.Client.ViewModels;
 public class EnterpriseViewModel : ViewModelBase

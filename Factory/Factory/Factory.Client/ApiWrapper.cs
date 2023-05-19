@@ -40,4 +40,23 @@ public class ApiWrapper
     {
         return _client.Enterprise4Async(id);
     }
+    public Task<ICollection<SupplierGetDto>> GetSupplierAsync()
+    {
+        return _client.SupplierAllAsync();
+    }
+
+    public Task AddSupplierAsync(SupplierPostDto supplier)
+    {
+        return _client.SupplierAsync(supplier);
+    }
+
+    public Task UpdateSupplierAsync(int id, SupplierPostDto supplier)
+    {
+        return _client.Supplier3Async(id, supplier);
+    }
+
+    public Task DeleteSupplierAsync(int id)
+    {
+        return _client.Supplier4Async(id);
+    }
 }

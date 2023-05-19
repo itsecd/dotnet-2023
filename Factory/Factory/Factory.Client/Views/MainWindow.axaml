@@ -15,25 +15,51 @@
 	<Window.Styles>
 		<StyleInclude Source="/FactoryStyles.axaml"/>
 	</Window.Styles>
-	
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
-				<Image Source="/Assets/add.png"/>
-			</Button> 
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
-				<Image Source="/Assets/settings.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
-				<Image Source="/Assets/delete.png"/>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-				  Items="{Binding Enterprises}"
-				  SelectedItem="{Binding SelectedEnterprise}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+	<TabControl>
+		<TabItem Header="Enterprise" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+						<Image Source="/Assets/settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Enterprises}"
+						  SelectedItem="{Binding SelectedEnterprise}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		<TabItem Header="Supplier" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddSupplierCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeSupplierCommand}">
+						<Image Source="/Assets/settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteSupplierCommand}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Suppliers}"
+						  SelectedItem="{Binding SelectedSupplier}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
 </Window>

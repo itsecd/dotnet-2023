@@ -1,11 +1,10 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
+using Factory.Client.ViewModels;
 using ReactiveUI;
 using System;
 
-
-namespace Factory.Client.ViewModels;
+namespace Factory.Client.Views;
 public partial class EnterpriseWindow : ReactiveWindow<EnterpriseViewModel>
 {
     public EnterpriseWindow()

@@ -354,3 +354,6 @@ MigrationBackup/
 
 # avalonia-dotnet-templates
 avalonia-dotnet-templates/
+
+# gen
+ gen/

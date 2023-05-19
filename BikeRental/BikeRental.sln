@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Domain", "BikeRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRental.Tests", "BikeRental.Tests\BikeRental.Tests.csproj", "{3DF67AAF-4A60-436E-BAD0-CB807DDA1661}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRental.Server", "BikeRental.Server\BikeRental.Server.csproj", "{056E488F-D3E2-4BD6-A35C-B157B694966E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3DF67AAF-4A60-436E-BAD0-CB807DDA1661}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF67AAF-4A60-436E-BAD0-CB807DDA1661}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF67AAF-4A60-436E-BAD0-CB807DDA1661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056E488F-D3E2-4BD6-A35C-B157B694966E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056E488F-D3E2-4BD6-A35C-B157B694966E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056E488F-D3E2-4BD6-A35C-B157B694966E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056E488F-D3E2-4BD6-A35C-B157B694966E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

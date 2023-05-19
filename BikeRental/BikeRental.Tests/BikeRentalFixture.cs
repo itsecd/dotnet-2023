@@ -42,13 +42,13 @@ public class BikeRentalFixture
 
         _records = new List<RentRecord>
         {
-            new RentRecord { Id = 1, ClientName = "Ivan Ivanov", BikeSerialNumber = 12345, RentStartTime = DateTime.Parse("2023-01-1 13:45"), RentEndTime = DateTime.Parse("2023-01-1 14:45") },
-            new RentRecord { Id = 2, ClientName = "Petr Petrov", BikeSerialNumber = 23451, RentStartTime = DateTime.Parse("2023-01-1 15:45"), RentEndTime = DateTime.Parse("2023-01-1 16:45") },
-            new RentRecord { Id = 3, ClientName = "Kuznec Kuznecov", BikeSerialNumber = 34512, RentStartTime = DateTime.Parse("2023-01-1 10:45"), RentEndTime = DateTime.Parse("2023-01-1 11:45") },
-            new RentRecord { Id = 4, ClientName = "Andrey Andreev", BikeSerialNumber = 45123, RentStartTime = DateTime.Parse("2023-01-1 8:45"), RentEndTime = DateTime.Parse("2023-01-1 9:45") },
-            new RentRecord { Id = 5, ClientName = "Ignat Ignatiev", BikeSerialNumber = 23451, RentStartTime = DateTime.Parse("2023-01-1 19:45"), RentEndTime = DateTime.Parse("2023-01-1 20:45") },
-            new RentRecord { Id = 6, ClientName = "Ivan Ivanov", BikeSerialNumber = 12345, RentStartTime = DateTime.Parse("2023-01-1 15:45"), RentEndTime = DateTime.Parse("2023-01-1 16:45") },
-            new RentRecord { Id = 7, ClientName = "Ivan Ivanov", BikeSerialNumber = 01234, RentStartTime = DateTime.Parse("2023-01-1 17:45"), RentEndTime = DateTime.Parse("2023-01-1 19:48") }
+            new RentRecord { Id = 1, ClientId = 1, BikeId = 1, RentStartTime = DateTime.Parse("2023-01-1 13:45"), RentEndTime = DateTime.Parse("2023-01-1 14:45") },
+            new RentRecord { Id = 2, ClientId = 2, BikeId = 2, RentStartTime = DateTime.Parse("2023-01-1 15:45"), RentEndTime = DateTime.Parse("2023-01-1 16:45") },
+            new RentRecord { Id = 3, ClientId = 3, BikeId = 3, RentStartTime = DateTime.Parse("2023-01-1 10:45"), RentEndTime = DateTime.Parse("2023-01-1 11:45") },
+            new RentRecord { Id = 4, ClientId = 4, BikeId = 4, RentStartTime = DateTime.Parse("2023-01-1 8:45"), RentEndTime = DateTime.Parse("2023-01-1 9:45") },
+            new RentRecord { Id = 5, ClientId = 5, BikeId = 2, RentStartTime = DateTime.Parse("2023-01-1 19:45"), RentEndTime = DateTime.Parse("2023-01-1 20:45") },
+            new RentRecord { Id = 6, ClientId = 1, BikeId = 1, RentStartTime = DateTime.Parse("2023-01-1 15:45"), RentEndTime = DateTime.Parse("2023-01-1 16:45") },
+            new RentRecord { Id = 7, ClientId = 1, BikeId = 6, RentStartTime = DateTime.Parse("2023-01-1 17:45"), RentEndTime = DateTime.Parse("2023-01-1 19:48") }
         };
     }
 

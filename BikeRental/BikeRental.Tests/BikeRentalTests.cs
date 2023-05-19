@@ -1,4 +1,5 @@
 using BikeRental.Domain;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
 
 namespace BikeRental.Tests;
@@ -38,8 +39,8 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     {
         var request = 
             from client in _bikeRentalFixture.Clients
-            join record in _bikeRentalFixture.Records on client.FullName equals record.ClientName
-            join bike in _bikeRentalFixture.Bikes on record.BikeSerialNumber equals bike.SerialNumber
+            join record in _bikeRentalFixture.Records on client.Id equals record.ClientId
+            join bike in _bikeRentalFixture.Bikes on record.BikeId equals bike.Id
             where bike.Type == _bikeRentalFixture.BikeTypes[0]
             orderby client.FullName 
             select client;
@@ -55,7 +56,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     {
         var request =
             (from record in _bikeRentalFixture.Records
-             join bike in _bikeRentalFixture.Bikes on record.BikeSerialNumber equals bike.SerialNumber
+             join bike in _bikeRentalFixture.Bikes on record.BikeId equals bike.Id
              group record by bike.Type.Id into BikeTypeGroup
              select new
              {
@@ -77,8 +78,8 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     {
         var rentAmount =
             (from record in _bikeRentalFixture.Records
-             orderby record.ClientName
-             group record by record.ClientName into clientGroup
+             orderby record.ClientId
+             group record by record.ClientId into clientGroup
              select new
              {
                  name = clientGroup.Key,
@@ -89,7 +90,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
              where record.counter == rentAmount.Max(rents => rents.counter)
              select record.name).ToList();
 
-        Assert.Equal("Ivan Ivanov", maxRent[0]);
+        Assert.Equal(1, maxRent[0]);
     }
 
     /// <summary>
@@ -100,7 +101,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     {
         var counter = 
             (from record in _bikeRentalFixture.Records
-             group record by record.BikeSerialNumber into bikeRents
+             group record by record.BikeId into bikeRents
              select new
              {
                  number = bikeRents.Key,

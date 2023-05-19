@@ -26,31 +26,31 @@
 
 ## Клиентское приложение
 ### Список клиентов, окно редактирования и добавления клиентов
-![img.png](img.png)
-![img_4.png](img_4.png)
+![img.png](RentalServise.Images/img.png)
+![img_4.png](RentalServise.Images/img_4.png)
 ### Список моделей автомобилей, окно редактирования и добавления моделей
-![img_1.png](img_1.png)
-![img_5.png](img_5.png)
+![img_1.png](RentalServise.Images/img_1.png)
+![img_5.png](RentalServise.Images/img_5.png)
 ### Список автомобилей, окно редактирования и добавления автомобилей
-![img_2.png](img_2.png)
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
+![img_2.png](RentalServise.Images/img_2.png)
+![img_6.png](RentalServise.Images/img_6.png)
+![img_7.png](RentalServise.Images/img_7.png)
 ### Список пунктов аренды, окно редактирования и добавления пунктов
-![img_3.png](img_3.png)
-![img_8.png](img_8.png)
+![img_3.png](RentalServise.Images/img_3.png)
+![img_8.png](RentalServise.Images/img_8.png)
 ### Список информации о аренде, окно редактирования и добавления информации
-![img_9.png](img_9.png)
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
+![img_9.png](RentalServise.Images/img_9.png)
+![img_10.png](RentalServise.Images/img_10.png)
+![img_11.png](RentalServise.Images/img_11.png)
 ### Список информации о возврате, окно редактирования и добавления информации
-![img_12.png](img_12.png)
-![img_13.png](img_13.png)
-![img_14.png](img_14.png)
+![img_12.png](RentalServise.Images/img_12.png)
+![img_13.png](RentalServise.Images/img_13.png)
+![img_14.png](RentalServise.Images/img_14.png)
 ### Список информации о арендованных когда-либо машинах, окно редактирования и добавления автомобилей
-![img_18.png](img_18.png)
-![img_16.png](img_16.png)
-![img_17.png](img_17.png)
+![img_18.png](RentalServise.Images/img_18.png)
+![img_16.png](RentalServise.Images/img_16.png)
+![img_17.png](RentalServise.Images/img_17.png)
 ### Информация о автомобилях находящихся в аренде
-![img_19.png](img_19.png)
+![img_19.png](RentalServise.Images/img_19.png)
 ### Выбор даты в окнах редактирования
-![img_20.png](img_20.png)
+![img_20.png](RentalServise.Images/img_20.png)

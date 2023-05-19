@@ -14,35 +14,35 @@ public class FlightViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private int _numberOfFlight;
-    
+    [Required]
     public int NumberOfFlight
     {
         get => _numberOfFlight;
         set => this.RaiseAndSetIfChanged(ref _numberOfFlight, value);
     }
     private string _departureCity = string.Empty;
-    
+    [Required]
     public string DepartureCity
     {
         get => _departureCity;
         set => this.RaiseAndSetIfChanged(ref _departureCity, value);
     }
     private string _arrivalCity = string.Empty;
-    
+    [Required]
     public string ArrivalCity
     {
         get => _arrivalCity;
         set => this.RaiseAndSetIfChanged(ref _arrivalCity, value);
     }
     private DateTime _departureDate;
-    
+    [Required]
     public DateTime DepartureDate
     {
         get => _departureDate;
         set => this.RaiseAndSetIfChanged(ref _departureDate, value);
     }
     private DateTime _arrivalDate;
-    
+    [Required]
     public DateTime ArrivalDate
     {
         get => _arrivalDate;

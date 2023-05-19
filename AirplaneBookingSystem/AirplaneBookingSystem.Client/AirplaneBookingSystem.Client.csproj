@@ -12,9 +12,13 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\add-pic.png" />
+    <None Remove="Assets\airplane-pic.png" />
+    <None Remove="Assets\client-pic.png" />
+    <None Remove="Assets\flight-pic.png" />
     <None Remove="Assets\icon.ico" />
     <None Remove="Assets\remove-pic.png" />
     <None Remove="Assets\settings-pic.png" />
+    <None Remove="Assets\ticket-pic.png" />
     <None Remove="swagger.json" />
   </ItemGroup>
 
@@ -51,6 +55,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\FlightWindow.axaml.cs">
+      <DependentUpon>FlightWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

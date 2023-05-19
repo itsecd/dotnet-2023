@@ -6,7 +6,8 @@
         x:Class="AirplaneBookingSystem.Client.Views.AirplaneWindow"
         xmlns:vm="using:AirplaneBookingSystem.Client.ViewModels"
 		Title="Airplane editing"
-		MaxWidth="500"
+		MaxWidth="350"
+		MaxHeight="250"
 		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:AirplaneViewModel/>

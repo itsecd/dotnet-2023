@@ -10,6 +10,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         InitializeComponent();
         this.WhenActivated(d => d(ViewModel!.ShowAirplaneDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowFlightDialog.RegisterHandler(ShowDialogAsync)));
     }
     private async Task ShowDialogAsync(InteractionContext<AirplaneViewModel, AirplaneViewModel?> interaction)
     {
@@ -18,6 +19,15 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<AirplaneViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowDialogAsync(InteractionContext<FlightViewModel, FlightViewModel?> interaction)
+    {
+        var dialog = new FlightWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<FlightViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

@@ -15,24 +15,58 @@
 		<StyleInclude Source="/AirplaneBookingSystemStyles.axaml"/>
 	</Window.Styles>
 
-    <Grid Classes="MainGrid" RowDefinitions="Auto,*">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
-				<Image Source="/Assets/add-pic.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
-				<Image Source="/Assets/remove-pic.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
-				<Image Source="/Assets/settings-pic.png"/>
-			</Button>
-		</StackPanel>
-	    <DataGrid Grid.Row="1" AutoGenerateColumns="False"
-				   Items="{Binding Airplanes}"
-				   SelectedItem="{Binding SelectedAirplane}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Model of airplane" Binding="{Binding Model}"/> 
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Image Source="/Assets/airplane-pic.png"/>
+				<Label>Airplanes</Label>
+			</StackPanel>
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCommandAirplane}">
+					<Image Source="/Assets/add-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCommandAirplane}">
+					<Image Source="/Assets/remove-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCommandAirplane}">
+					<Image Source="/Assets/settings-pic.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+					   Items="{Binding Airplanes}"
+					   SelectedItem="{Binding SelectedAirplane}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Model of airplane" Binding="{Binding Model}"/> 
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="3" Orientation="Horizontal">
+				<Image Source="/Assets/flight-pic.png"/>
+				<Label>Flights</Label>
+			</StackPanel>
+			<StackPanel Grid.Row="4" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCommandFlight}">
+					<Image Source="/Assets/add-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCommandFlight}">
+					<Image Source="/Assets/remove-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCommandFlight}">
+					<Image Source="/Assets/settings-pic.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="5" AutoGenerateColumns="False"
+					   Items="{Binding Flights}"
+					   SelectedItem="{Binding SelectedFlight}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Number of flight" Binding="{Binding NumberOfFlight}"/>
+					<DataGridTextColumn Header="Departure city" Binding="{Binding DepartureCity}"/>
+					<DataGridTextColumn Header="Arrival city" Binding="{Binding ArrivalCity}"/>
+					<DataGridTextColumn Header="Departure date" Binding="{Binding DepartureDate}"/>
+					<DataGridTextColumn Header="Arrival date" Binding="{Binding ArrivalDate}"/>
+					<DataGridTextColumn Header="Flight`s airplane id" Binding="{Binding AirplaneId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
 </Window>

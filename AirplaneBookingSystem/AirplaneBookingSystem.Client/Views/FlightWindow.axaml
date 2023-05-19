@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AirplaneBookingSystem.Client.Views.FlightWindow"
+        xmlns:vm="using:AirplaneBookingSystem.Client.ViewModels"
+		Title="Flight editing"
+		MaxWidth="500"
+		MaxHeight="350"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:FlightViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/AirplaneBookingSystemStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Number of flight</Label>
+		<Label Grid.Row="1" Grid.Column="0">Departure city</Label>
+		<Label Grid.Row="2" Grid.Column="0">Arrival city</Label>
+		<Label Grid.Row="3" Grid.Column="0">Departure date</Label>
+		<Label Grid.Row="4" Grid.Column="0">Arrival date</Label>
+		<Label Grid.Row="5" Grid.Column="0">Flight`s airplane id</Label>
+		
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NumberOfFlight}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DepartureCity}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ArrivalCity}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DepartureDate}"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ArrivalDate}"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding AirplaneId}"/>
+		<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Сancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

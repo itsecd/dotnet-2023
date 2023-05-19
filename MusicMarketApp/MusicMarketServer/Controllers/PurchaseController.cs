@@ -66,7 +66,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:{id}", id);
+            _logger.LogInformation("Not found purchase:", id);
             return NotFound();
         }
         else
@@ -100,7 +100,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:{id}", id);
+            _logger.LogInformation("Not found purchase:", id);
             return NotFound();
         }
         else
@@ -123,7 +123,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:{id}", id);
+            _logger.LogInformation("Not found purchase:", id);
             return NotFound();
         }
         else

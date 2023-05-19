@@ -68,7 +68,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:{id}", id);
+            _logger.LogInformation("Not found customer:", id);
             return NotFound();
         }
         else
@@ -107,7 +107,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:{id}", id);
+            _logger.LogInformation("Not found customer:", id);
             return NotFound();
         }
         else
@@ -130,7 +130,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:{id}", id);
+            _logger.LogInformation("Not found customer:", id);
             return NotFound();
         }
         else

@@ -66,7 +66,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:{id}", id);
+            _logger.LogInformation("Not found product:", id);
             return NotFound();
         }
         else
@@ -100,7 +100,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:{id}", id);
+            _logger.LogInformation("Not found product:", id);
             return NotFound();
         }
         else
@@ -123,7 +123,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:{id}", id);
+            _logger.LogInformation("Not found product:", id);
             return NotFound();
         }
         else

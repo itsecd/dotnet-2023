@@ -102,7 +102,7 @@ public class SellerController : ControllerBase
         var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation("Not found seller:{id}", id);
+            _logger.LogInformation("Not found seller:", id);
             return NotFound();
         }
         else
@@ -125,7 +125,7 @@ public class SellerController : ControllerBase
         var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation("Not found seller:{id}", id);
+            _logger.LogInformation("Not found seller:", id);
             return NotFound();
         }
         else

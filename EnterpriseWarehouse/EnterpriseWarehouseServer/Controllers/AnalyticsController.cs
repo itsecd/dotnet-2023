@@ -39,13 +39,13 @@ public class AnalyticsController : ControllerBase
     ///     [HttpGet("GetInformationProductReceivedOnCertainDay")] - return information about the company's products received on the specified day by the recipient of products
     /// <return>List of Produc</return>
     /// </summary>
-    [HttpGet("GetInformationProductReceivedOnCertainDay")]
-    public IEnumerable<ProductGetDto> GetInformationProductReceivedOnCertainDay()
+    [HttpGet("GetInformationProductReceivedOnCertainDay/{date_str}")]
+    public IEnumerable<ProductGetDto> GetInformationProductReceivedOnCertainDay(DateTime date)
     {
         _logger.LogInformation("Get information product received on certain day.");
         var query = (from invoice in _mainRepository.Invoices
                      from infoProduct in invoice.Products
-                     where invoice.ShipmentDate == new DateTime(2023, 2, 11)
+                     where invoice.ShipmentDate == date.Date
                      join product in _mainRepository.Products on infoProduct.Key equals product.ItemNumber
                      select new ProductGetDto
                      {
@@ -82,13 +82,13 @@ public class AnalyticsController : ControllerBase
     ///     [HttpGet("GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod")] - return information about the organizations that received the maximum volume products for a given period
     /// <return>Information of invoice with max quantity</return>
     /// </summary>
-    [HttpGet("GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod")]
-    public InfoOfAllInvoiceGetDto GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod()
+    [HttpGet("GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod/{date_begin},{date_end}")]
+    public InfoOfAllInvoiceGetDto GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod(DateTime date_begin, DateTime date_end)
     {
         _logger.LogInformation("Get info organizations received max volume products for given period.");
         var query = (from invoice in _mainRepository.Invoices
                      from product in invoice.Products
-                     where invoice.ShipmentDate > new DateTime(2023, 2, 1) && invoice.ShipmentDate < new DateTime(2023, 2, 15)
+                     where invoice.ShipmentDate > date_begin.Date && invoice.ShipmentDate < date_end.Date
                      group invoice by new
                      {
                          invoice.NameOrganization,

@@ -15,7 +15,7 @@ public class AirplaneViewModel : ViewModelBase
     [Required]
     public string Model
     {
-        get => _model; 
+        get => _model;
         set => this.RaiseAndSetIfChanged(ref _model, value);
     }
     public ReactiveCommand<Unit, AirplaneViewModel> OnSubmitCommand { get; }

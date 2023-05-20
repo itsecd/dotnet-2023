@@ -3,8 +3,8 @@ using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 namespace AirplaneBookingSystem.Client.ViewModels;
 
@@ -28,7 +28,7 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedFlight, value);
     }
 
-    public ReactiveCommand<Unit,Unit> OnAddCommandAirplane { get; set; }
+    public ReactiveCommand<Unit, Unit> OnAddCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandAirplane { get; set; }
 
@@ -48,7 +48,7 @@ public class MainWindowViewModel : ViewModelBase
         OnAddCommandAirplane = ReactiveCommand.CreateFromTask(async () =>
         {
             var airplaneViewModel = await ShowAirplaneDialog.Handle(new AirplaneViewModel());
-            if (airplaneViewModel != null) 
+            if (airplaneViewModel != null)
             {
                 await _apiClient.AddAirplaneAsync(_mapper.Map<AirplanePostDto>(airplaneViewModel));
                 Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplaneViewModel));
@@ -69,7 +69,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             await _apiClient.DeleteAirplaneAsync(SelectedAirplane!.Id);
             Airplanes.Remove(SelectedAirplane);
-                
+
         }, this.WhenAnyValue(vm => vm.SelectedAirplane).Select(selectedAirplane => selectedAirplane != null));
 
 

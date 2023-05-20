@@ -1,0 +1,29 @@
+name: MusicMarket 
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install dependencies
+      run: |
+        dotnet add MusicMarketApp\MusicMarketServer package AutoMapper --version 12.0.1
+        dotnet add MusicMarketApp\MusicMarketServer package Microsoft.EntityFrameworkCore.Tools --version 6.0.15
+        dotnet add MusicMarketApp\MusicMarketServer package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1
+        dotnet add MusicMarketApp\MusicMarketServer package Swashbuckle.AspNetCore --version 6.2.3
+        dotnet add MusicMarketApp\MusicMarketServer package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.15
+        dotnet add MusicMarketApp\MusicMarketServer package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.13
+        dotnet add MusicMarketApp\MusicMarketplace package MySql.EntityFrameworkCore --version 7.0.2
+    - name: Build with dotnet
+      run: dotnet build MusicMarketApp/MusicMarketServer
+    - name: Test with dotnet
+      run: dotnet test MusicMarketApp

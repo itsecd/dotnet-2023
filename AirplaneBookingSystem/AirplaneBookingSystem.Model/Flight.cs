@@ -33,12 +33,12 @@ public class Flight
     /// Departure date
     /// </summary>
     [Column("departureDate")]
-    public DateTime DepartureDate { get; set; } = new DateTime();
+    public DateTimeOffset DepartureDate { get; set; } = new DateTimeOffset();
     /// <summary>
     /// Arrival date
     /// </summary>
     [Column("arrivalDate")]
-    public DateTime ArrivalDate { get; set; } = new DateTime();
+    public DateTimeOffset ArrivalDate { get; set; } = new DateTimeOffset();
     /// <summary>
     /// List of tickets on this flight
     /// </summary>
@@ -51,7 +51,7 @@ public class Flight
     [Column("airplaneId")]
     public int AirplaneId { get; set; }
     public Flight() { }
-    public Flight(int id, int numberOfFlight, string departureCity, string arrivalCity, DateTime departureDate, DateTime arrivalDate, Airplane airplane)
+    public Flight(int id, int numberOfFlight, string departureCity, string arrivalCity, DateTimeOffset departureDate, DateTimeOffset arrivalDate, Airplane airplane)
     {
         Id = id;
         NumberOfFlight = numberOfFlight;

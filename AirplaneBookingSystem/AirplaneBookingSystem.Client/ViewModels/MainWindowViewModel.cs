@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ public class MainWindowViewModel : ViewModelBase
     private readonly IMapper _mapper;
     public ObservableCollection<AirplaneViewModel> Airplanes { get; } = new();
     public ObservableCollection<FlightViewModel> Flights { get; } = new();
+    public ObservableCollection<TicketViewModel> Tickets { get; } = new();
 
     private AirplaneViewModel? _selectedAirplane;
     public AirplaneViewModel? SelectedAirplane
@@ -27,7 +29,12 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedFlight;
         set => this.RaiseAndSetIfChanged(ref _selectedFlight, value);
     }
-
+    private TicketViewModel? _selectedTicket;
+    public TicketViewModel? SelectedTicket
+    {
+        get => _selectedTicket;
+        set => this.RaiseAndSetIfChanged(ref _selectedTicket, value);
+    }
     public ReactiveCommand<Unit, Unit> OnAddCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandAirplane { get; set; }
@@ -35,8 +42,14 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddCommandFlight { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCommandFlight { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandFlight { get; set; }
+
+    public ReactiveCommand<Unit, Unit> OnAddCommandTicket { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeCommandTicket { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteCommandTicket { get; set; }
     public Interaction<AirplaneViewModel, AirplaneViewModel?> ShowAirplaneDialog { get; set; }
     public Interaction<FlightViewModel, FlightViewModel?> ShowFlightDialog { get; set; }
+    public Interaction<TicketViewModel, TicketViewModel?> ShowTicketDialog { get; set; }
+
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
@@ -44,14 +57,18 @@ public class MainWindowViewModel : ViewModelBase
 
         ShowAirplaneDialog = new Interaction<AirplaneViewModel, AirplaneViewModel?>();
         ShowFlightDialog = new Interaction<FlightViewModel, FlightViewModel?>();
+        ShowTicketDialog = new Interaction<TicketViewModel, TicketViewModel?>();
 
         OnAddCommandAirplane = ReactiveCommand.CreateFromTask(async () =>
         {
             var airplaneViewModel = await ShowAirplaneDialog.Handle(new AirplaneViewModel());
             if (airplaneViewModel != null)
             {
-                await _apiClient.AddAirplaneAsync(_mapper.Map<AirplanePostDto>(airplaneViewModel));
-                Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplaneViewModel));
+                var newAirplane = _mapper.Map<AirplanePostDto>(airplaneViewModel);
+                await _apiClient.AddAirplaneAsync(newAirplane);
+                Airplanes.Add(airplaneViewModel);
+                Airplanes.Clear();
+                LoadAirplanesAsync();
             }
         });
 
@@ -73,48 +90,92 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedAirplane).Select(selectedAirplane => selectedAirplane != null));
 
 
-        OnAddCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        //OnAddCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        //{
+        //    var flightViewModel = await ShowFlightDialog.Handle(new FlightViewModel());
+        //    if (flightViewModel != null)
+        //    {
+        //        var newFlight = _mapper.Map<FlightPostDto>(flightViewModel);
+        //        await _apiClient.AddFlightAsync(newFlight);
+        //        Flights.Add(flightViewModel);
+        //        Flights.Clear();
+        //        LoadAirplanesAsync();
+        //    }
+        //});
+
+        //OnChangeCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        //{
+        //    var flightViewModel = await ShowFlightDialog.Handle(SelectedFlight!);
+        //    if (flightViewModel != null)
+        //    {
+        //        await _apiClient.UpdateFlightAsync(SelectedFlight!.Id, _mapper.Map<FlightPostDto>(flightViewModel));
+        //        _mapper.Map(flightViewModel, SelectedFlight);
+        //    }
+        //}, this.WhenAnyValue(vm => vm.SelectedFlight).Select(selectedFlight => selectedFlight != null));
+
+        //OnDeleteCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        //{
+        //    await _apiClient.DeleteFlightAsync(SelectedFlight!.Id);
+        //    Flights.Remove(SelectedFlight);
+
+        //}, this.WhenAnyValue(vm => vm.SelectedFlight).Select(selectedFlight => selectedFlight != null));
+
+        OnAddCommandTicket = ReactiveCommand.CreateFromTask(async () =>
         {
-            var flightViewModel = await ShowFlightDialog.Handle(new FlightViewModel());
-            if (flightViewModel != null)
+            var ticketViewModel = await ShowTicketDialog.Handle(new TicketViewModel());
+            if (ticketViewModel != null)
             {
-                await _apiClient.AddFlightAsync(_mapper.Map<FlightPostDto>(flightViewModel));
-                Flights.Add(_mapper.Map<FlightViewModel>(flightViewModel));
+                var newTicket = _mapper.Map<TicketPostDto>(ticketViewModel);
+                await _apiClient.AddTicketAsync(newTicket);
+                Tickets.Add(ticketViewModel);
+                Tickets.Clear();
+                LoadAirplanesAsync();
             }
         });
 
-        OnChangeCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        OnChangeCommandTicket = ReactiveCommand.CreateFromTask(async () =>
         {
-            var flightViewModel = await ShowFlightDialog.Handle(SelectedFlight!);
-            if (flightViewModel != null)
+            var ticketViewModel = await ShowTicketDialog.Handle(SelectedTicket!);
+            if (ticketViewModel != null)
             {
-                await _apiClient.UpdateFlightAsync(SelectedFlight!.Id, _mapper.Map<FlightPostDto>(flightViewModel));
-                _mapper.Map(flightViewModel, SelectedFlight);
+                await _apiClient.UpdateTicketAsync(SelectedTicket!.Id, _mapper.Map<TicketPostDto>(ticketViewModel));
+                _mapper.Map(ticketViewModel, SelectedTicket);
             }
-        }, this.WhenAnyValue(vm => vm.SelectedFlight).Select(selectedFlight => selectedFlight != null));
+        }, this.WhenAnyValue(vm => vm.SelectedTicket).Select(selectedTicket => selectedTicket != null));
 
-        OnDeleteCommandFlight = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteCommandTicket = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteFlightAsync(SelectedFlight!.Id);
-            Flights.Remove(SelectedFlight);
+            await _apiClient.DeleteTicketAsync(SelectedTicket!.Id);
+            Tickets.Remove(SelectedTicket);
 
-        }, this.WhenAnyValue(vm => vm.SelectedFlight).Select(selectedFlight => selectedFlight != null));
-
-        RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
+        }, this.WhenAnyValue(vm => vm.SelectedTicket).Select(selectedTicket => selectedTicket != null));
+        RxApp.MainThreadScheduler.Schedule(LoadTicketsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAirplanesAsync);
+        //RxApp.MainThreadScheduler.Schedule(LoadFlightsAsync);
     }
 
-    private async void LoadAllAsync()
+    private async void LoadAirplanesAsync()
     {
         var airplanes = await _apiClient.GetAirplanesAsync();
         foreach (var airplane in airplanes)
         {
             Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
         }
-
-        var flights = await _apiClient.GetFlightsAsync();
-        foreach (var flight in flights)
+    }
+    //private async void LoadFlightsAsync()
+    //{
+    //    var flights = await _apiClient.GetFlightsAsync();
+    //    foreach (var flight in flights)
+    //    {
+    //        Flights.Add(_mapper.Map<FlightViewModel>(flight));
+    //    }
+    //}
+    private async void LoadTicketsAsync()
+    {
+        var tickets = await _apiClient.GetTicketsAsync();
+        foreach (var ticket in tickets)
         {
-            Flights.Add(_mapper.Map<FlightViewModel>(flight));
+            Tickets.Add(_mapper.Map<TicketViewModel>(ticket));
         }
     }
 }

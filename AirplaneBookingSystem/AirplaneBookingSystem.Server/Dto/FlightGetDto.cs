@@ -20,11 +20,11 @@ public class FlightGetDto
     /// <summary>
     /// Departure date
     /// </summary>
-    public DateTime DepartureDate { get; set; } = new DateTime();
+    public DateTimeOffset DepartureDate { get; set; } = new DateTimeOffset();
     /// <summary>
     /// Arrival date
     /// </summary>
-    public DateTime ArrivalDate { get; set; } = new DateTime();
+    public DateTimeOffset ArrivalDate { get; set; } = new DateTimeOffset();
     /// <summary>
     /// Airplane`s id of flight
     /// </summary>

@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -28,7 +29,16 @@ public class App : Application
             cfg.CreateMap<VehicleClassification, VehicleClassificationViewModel>();
             cfg.CreateMap<VehicleClassificationViewModel, VehicleClassificationSetDto>();
             cfg.CreateMap<RideGetDto, RideViewModel>();
-            cfg.CreateMap<RideViewModel, RideSetDto>();
+
+            cfg.CreateMap<RideViewModel, RideSetDto>()
+                .ForMember(d => d.RideTime, 
+                    s =>
+                    {
+                        s.MapFrom(ride => Convert.ToUInt32(ride.RideTime.TotalSeconds));
+                    });
+                        
+            cfg.CreateMap<CountPassengerRidesGetDto, CountPassengerRidesViewModel>();
+            cfg.CreateMap<InfosAboutRidesGetDto, InfosAboutRidesViewModel>();
         });
         
         Locator.CurrentMutable.RegisterConstant(new ApiWrapper()); 

@@ -2,6 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
+
 namespace Taxi.Client;
 
 internal class Program

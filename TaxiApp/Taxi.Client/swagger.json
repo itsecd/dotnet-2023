@@ -415,7 +415,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleAndDriverGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleAndDriverGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleAndDriverGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -487,7 +513,33 @@
         "summary": "Get method which output the number of ride for each passenger",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPassengerRidesGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPassengerRidesGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPassengerRidesGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -539,7 +591,33 @@
         "summary": "Get method which output information about the number of rides, average time and maximum ride time for each driver",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InfosAboutRidesGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InfosAboutRidesGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InfosAboutRidesGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -572,7 +650,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaxRidesOfPassengerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaxRidesOfPassengerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaxRidesOfPassengerGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1004,6 +1108,54 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "VehicleClassification"
+        ],
+        "summary": "Post method which add new vehicle classification in ride table",
+        "requestBody": {
+          "description": "New vehicle for addition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleClassification"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/VehicleClassification/{id}": {
@@ -1046,11 +1198,102 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "VehicleClassification"
+        ],
+        "summary": "Put method which allows change the data of the desired vehicle classification by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle classification",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleClassificationSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VehicleClassification"
+        ],
+        "summary": "Delete - method for deleting a vehicle classification by the desired identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of vehicle classification",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     }
   },
   "components": {
     "schemas": {
+      "CountPassengerRidesGetDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the passenger",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the passenger",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the passenger",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count - count passenger rides",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "Driver": {
         "required": [
           "firstName",
@@ -1113,6 +1356,73 @@
             "type": "string",
             "description": "PhoneNumber - mobile phone number registered to the driver",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InfosAboutRidesGetDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the driver",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the driver",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count - count driver rides",
+            "format": "int32"
+          },
+          "averageTime": {
+            "type": "string",
+            "description": "AverageTime - average time of driver's rides",
+            "nullable": true
+          },
+          "maxTime": {
+            "type": "string",
+            "description": "MaxTime - max time of driver's rides",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MaxRidesOfPassengerGetDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of the passenger",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the passenger",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the passenger",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber - mobile phone number registered to the passenger",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count - max count of passenger's rides",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1443,6 +1753,61 @@
         },
         "additionalProperties": false
       },
+      "VehicleAndDriverGetDto": {
+        "type": "object",
+        "properties": {
+          "registrationCarPlate": {
+            "type": "string",
+            "description": "RegistrationCarPlate - a sequence of letters and numbers used to identify the vehicle in real life",
+            "nullable": true
+          },
+          "colour": {
+            "type": "string",
+            "description": "Colour - property that stores the colour of the vehicle",
+            "nullable": true
+          },
+          "brand": {
+            "type": "string",
+            "description": "Brand - a name of the company that makes the vehicle",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model - a name that manufacturers use to identify and sell cars",
+            "nullable": true
+          },
+          "class": {
+            "type": "string",
+            "description": "Class - a vehicle belonging to a certain type of vehicle.",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of the driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic - patronymic of the driver",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - a unique sequence of digits that are the series and number of the passport",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber - mobile phone number registered to the driver",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "VehicleClassification": {
         "required": [
           "brand",
@@ -1466,6 +1831,27 @@
           "class": {
             "maxLength": 5,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VehicleClassificationSetDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "description": "Brand - a name of the company that makes the vehicle",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model - a name that manufacturers use to identify and sell cars",
+            "nullable": true
+          },
+          "class": {
+            "type": "string",
+            "description": "Class - a vehicle belonging to a certain type of vehicle.",
+            "nullable": true
           }
         },
         "additionalProperties": false

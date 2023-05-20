@@ -129,13 +129,13 @@
         <TabItem Header="Поездки" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid Classes = "MainGrid" RowDefinitions="Auto,*">
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Button Classes="ToolButton" Command="{Binding OnAddVehicleClassificationCommand}">
+                    <Button Classes="ToolButton" Command="{Binding OnAddRideCommand}">
                         <Image Source="/Assets/add.png"/>
                     </Button>
-                    <Button Classes="ToolButton" Command="{Binding OnChangeVehicleClassificationCommand}">
+                    <Button Classes="ToolButton" Command="{Binding OnChangeRideCommand}">
                         <Image Source="/Assets/settings.png"/>
                     </Button>
-                    <Button Classes="ToolButton" Command="{Binding OnDeleteVehicleClassificationCommand}">
+                    <Button Classes="ToolButton" Command="{Binding OnDeleteRideCommand}">
                         <Image Source="/Assets/delete.png"/>
                     </Button>
                 </StackPanel>
@@ -154,6 +154,59 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
+        </TabItem>
+        
+        <TabItem Header="Аналитика" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ScrollViewer>
+                <Grid Classes = "MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Label>Количество поездок каждого пассажира</Label> 
+                    </StackPanel>
+                    
+                    <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                              Items="{Binding CountPassengersRides}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                            <DataGridTextColumn Header="Количество поездок" Binding="{Binding Count}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Label>Топ водителей по количество совершенных поездок</Label> 
+                    </StackPanel>
+                    
+                    <DataGrid Grid.Row="3" AutoGenerateColumns="False"
+                              Items="{Binding TopDrivers}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID водителя" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                            <DataGridTextColumn Header="Серия и номер паспорта" Binding="{Binding Passport}"/>
+                            <DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNumber}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <StackPanel Grid.Row="4" Orientation="Horizontal">
+                        <Label>Информация о количестве поездок, среднем времени и максимальном времени поездки для каждого водителя</Label> 
+                    </StackPanel>
+                    
+                    <DataGrid Grid.Row="5" AutoGenerateColumns="False"
+                              Items="{Binding InfosAboutRides}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                            <DataGridTextColumn Header="Количество поездок" Binding="{Binding Count}"/>
+                            <DataGridTextColumn Header="Среднее время" Binding="{Binding AverageTime}"/>
+                            <DataGridTextColumn Header="Максимальное время" Binding="{Binding MaxTime}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                </Grid>
+            </ScrollViewer>
         </TabItem>
         
     </TabControl>

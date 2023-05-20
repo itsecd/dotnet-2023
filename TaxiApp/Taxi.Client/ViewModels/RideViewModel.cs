@@ -18,14 +18,12 @@ public class RideViewModel
     [Required] 
     [Reactive] 
     public string DestinationPoint { get; set; } = string.Empty;
+
+    [Required] [Reactive] public DateTimeOffset RideDate { get; set; } = DateTime.Today;
     
     [Required] 
     [Reactive] 
-    public DateTime RideDate { get; set; }
-    
-    [Required] 
-    [Reactive] 
-    public TimeSpan RideTime { get; set; }
+    public System.TimeSpan RideTime { get; set; }
     
     [Required] 
     [Reactive] 

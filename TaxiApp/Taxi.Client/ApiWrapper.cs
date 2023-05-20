@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -125,5 +126,35 @@ public class ApiWrapper
     {
         return _client.RideDELETEAsync(id);
     }
-    
+
+    public Task<ICollection<VehicleAndDriverGetDto>> VehicleAndDriverAsync(ulong id)
+    {
+        return _client.VehicleAndDriverAsync(id);
+    }
+
+    public Task<ICollection<PassengerGetDto>> PassengersPeriodAsync(DateTimeOffset minDate, DateTimeOffset maxDate)
+    {
+        return _client.PassengersPeriodAsync(minDate, maxDate);
+    }
+
+    public Task<ICollection<CountPassengerRidesGetDto>> CountPassengerRidesAsync()
+    {
+        return _client.CountPassengerRidesAsync();
+    }
+
+    public Task<ICollection<Driver>> TopDriverAsync()
+    {
+        return _client.RidesTopDriverAsync();
+    }
+
+    public Task<System.Collections.Generic.ICollection<InfosAboutRidesGetDto>> InfosAboutRidesAsync()
+    {
+        return _client.InfosAboutRidesAsync();
+    }
+
+    public Task<ICollection<MaxRidesOfPassengerGetDto>> MaxRidesOfPassengerAsync(DateTimeOffset? minDate,
+        DateTimeOffset? maxDate)
+    {
+        return _client.MaxRidesOfPassengerAsync(minDate, maxDate);
+    }
 }

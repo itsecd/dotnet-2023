@@ -30,6 +30,10 @@ public partial class App : Application
                 cfg.CreateMap<SupplierViewModel, SupplierPostDto>();
                 cfg.CreateMap<SupplierPostDto, SupplierViewModel>();
 
+                cfg.CreateMap<SupplyGetDto, SupplyViewModel>();
+                cfg.CreateMap<SupplyViewModel, SupplyGetDto>();
+                cfg.CreateMap<SupplyViewModel, SupplyPostDto>();
+                cfg.CreateMap<SupplyPostDto, SupplyViewModel>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

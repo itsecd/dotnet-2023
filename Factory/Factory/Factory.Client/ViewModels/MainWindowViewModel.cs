@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
@@ -12,6 +13,8 @@ public class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<EnterpriseViewModel> Enterprises { get; } = new();
     public ObservableCollection<SupplierViewModel> Suppliers { get; } = new();
+    public ObservableCollection<SupplyViewModel> Supplies { get; } = new();
+
 
     private EnterpriseViewModel? _selectedEnterprise;
     public EnterpriseViewModel? SelectedEnterprise
@@ -27,6 +30,13 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedSupplier, value);
     }
 
+    private SupplyViewModel? _selectedSupply;
+    public SupplyViewModel? SelectedSupply
+    {
+        get => _selectedSupply;
+        set => this.RaiseAndSetIfChanged(ref _selectedSupply, value);
+    }
+
     private readonly ApiWrapper _apiClient;
 
     private readonly IMapper _mapper;
@@ -38,9 +48,14 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddSupplierCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeSupplierCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteSupplierCommand { get; set; }
-    
+
+    public ReactiveCommand<Unit, Unit> OnAddSupplyCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeSupplyCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteSupplyCommand { get; set; }
+
     public Interaction<EnterpriseViewModel, EnterpriseViewModel?> ShowEnterpriseDialog { get; } 
     public Interaction<SupplierViewModel, SupplierViewModel?> ShowSupplierDialog { get; }
+    public Interaction<SupplyViewModel, SupplyViewModel?> ShowSupplyDialog { get; }
 
     public MainWindowViewModel() 
     { 
@@ -49,6 +64,7 @@ public class MainWindowViewModel : ViewModelBase
 
         ShowEnterpriseDialog = new Interaction<EnterpriseViewModel, EnterpriseViewModel?>();
         ShowSupplierDialog = new Interaction<SupplierViewModel, SupplierViewModel?>();
+        ShowSupplyDialog = new Interaction<SupplyViewModel, SupplyViewModel?>();
 
         OnAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -72,12 +88,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedEnterprise).Select(selectEnterprise => selectEnterprise != null));
         OnDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var enterpriseViewModel = await ShowEnterpriseDialog.Handle(new EnterpriseViewModel());
-            if (enterpriseViewModel != null)
-            {
-                await _apiClient.DeleteEnterpriseAsync(SelectedEnterprise!.EnterpriseID);
-                Enterprises.Remove(SelectedEnterprise);
-            }
+            await _apiClient.DeleteEnterpriseAsync(SelectedEnterprise!.EnterpriseID);
+            Enterprises.Remove(SelectedEnterprise);
         }, this.WhenAnyValue(vm => vm.SelectedEnterprise).Select(selectEnterprise => selectEnterprise != null));
 
         OnAddSupplierCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -102,16 +114,41 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedSupplier).Select(selectSupplier => selectSupplier != null));
         OnDeleteSupplierCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var supplierViewModel = await ShowSupplierDialog.Handle(new SupplierViewModel());
-            if (supplierViewModel != null)
-            {
-                await _apiClient.DeleteSupplierAsync(SelectedSupplier!.SupplierID);
-                Suppliers.Remove(SelectedSupplier);
-            }
+            await _apiClient.DeleteSupplierAsync(SelectedSupplier!.SupplierID);
+            Suppliers.Remove(SelectedSupplier);
+
         }, this.WhenAnyValue(vm => vm.SelectedSupplier).Select(selectSupplier => selectSupplier != null));
+
+        OnAddSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var supplyViewModel = await ShowSupplyDialog!.Handle(new SupplyViewModel());
+            if (supplyViewModel != null)
+            {
+                var newSupply = _mapper.Map<SupplyPostDto>(supplyViewModel);
+                await _apiClient.AddSupplyAsync(newSupply);
+                Supplies.Add(supplyViewModel);
+            }
+        });
+        OnChangeSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var supplyViewModel = await ShowSupplyDialog!.Handle(SelectedSupply!);
+            if (supplyViewModel != null)
+            {
+                var newSupply = _mapper.Map<SupplyPostDto>(supplyViewModel);
+                await _apiClient.UpdateSupplyAsync(SelectedSupply!.SupplyID, newSupply);
+                _mapper.Map(supplyViewModel, SelectedSupply);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
+        OnDeleteSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteSupplyAsync(SelectedSupply!.SupplyID);
+            Supplies.Remove(SelectedSupply);
+
+        }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadEnterprisesAsync);
         RxApp.MainThreadScheduler.Schedule(LoadSupplierAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadSupplyAsync);
     }
 
     private async void LoadEnterprisesAsync()
@@ -121,15 +158,21 @@ public class MainWindowViewModel : ViewModelBase
         {
             Enterprises.Add(_mapper.Map<EnterpriseViewModel>(enterprise));
         }
-
     }
     private async void LoadSupplierAsync()
     {
-
         var suppliers = await _apiClient.GetSupplierAsync();
         foreach (var supplier in suppliers)
         {
             Suppliers.Add(_mapper.Map<SupplierViewModel>(supplier));
+        }
+    }
+    private async void LoadSupplyAsync()
+    {
+        var supplies = await _apiClient.GetSupplyAsync();
+        foreach (var supply in supplies)
+        {
+            Supplies.Add(_mapper.Map<SupplyViewModel>(supply));
         }
     }
 }

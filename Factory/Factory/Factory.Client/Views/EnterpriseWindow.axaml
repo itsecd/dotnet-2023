@@ -17,10 +17,26 @@
 		<StyleInclude Source="/FactoryStyles.axaml"/>
 	</Window.Styles>
 	
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-		<Label VerticalAlignment="Center">Name</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">RegistrationNumber</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RegistrationNumber}"/>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">TypeID</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TypeID}"/>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Name</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Name}"/>
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Address</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Address}"/>
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">TelephoneNumber</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TelephoneNumber}"/>
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">OwnershipFormID</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding OwnershipFormID}"/>
+		<Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">EmployeesCount</Label>
+		<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding EmployeesCount}"/>
+		<Label Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">TotalArea</Label>
+		<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding TotalArea}"/>
+		
+		<StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" 
 					HorizontalAlignment="Right" 
 					 Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>

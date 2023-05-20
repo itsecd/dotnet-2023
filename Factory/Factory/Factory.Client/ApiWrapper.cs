@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Factory.Client;
@@ -58,5 +55,25 @@ public class ApiWrapper
     public Task DeleteSupplierAsync(int id)
     {
         return _client.Supplier4Async(id);
+    }
+
+    public Task<ICollection<SupplyGetDto>> GetSupplyAsync()
+    {
+        return _client.SupplyAllAsync();
+    }
+
+    public Task AddSupplyAsync(SupplyPostDto supply)
+    {
+        return _client.SupplyAsync(supply);
+    }
+
+    public Task UpdateSupplyAsync(int id, SupplyPostDto supply)
+    {
+        return _client.Supply3Async(id, supply);
+    }
+
+    public Task DeleteSupplyAsync(int id)
+    {
+        return _client.Supply4Async(id);
     }
 }

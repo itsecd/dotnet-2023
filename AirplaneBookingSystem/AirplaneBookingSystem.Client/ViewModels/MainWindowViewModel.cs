@@ -100,20 +100,17 @@ public class MainWindowViewModel : ViewModelBase
 
         }, this.WhenAnyValue(vm => vm.SelectedFlight).Select(selectedFlight => selectedFlight != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadAirplanesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadFlightsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
     }
 
-    private async void LoadAirplanesAsync()
+    private async void LoadAllAsync()
     {
         var airplanes = await _apiClient.GetAirplanesAsync();
         foreach (var airplane in airplanes)
         {
             Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
         }
-    }
-    private async void LoadFlightsAsync()
-    {
+
         var flights = await _apiClient.GetFlightsAsync();
         foreach (var flight in flights)
         {

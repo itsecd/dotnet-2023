@@ -87,67 +87,67 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     /// Пятый запрос: Вывести информацию о топ 5 покупателях 
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
-    //[Fact]
-    //public void TopFiveTest()
-    //{
-    //    var customers = _fixture.FixtureCustomers.ToList();
-    //    var purchases = _fixture.FixturePurchases.ToList();
-    //    var products = _fixture.FixtureProducts.ToList();
-    //    var sellers = _fixture.FixtureSellers.ToList();
+    [Fact]
+    public void TopFiveTest()
+    {
+        var customers = _fixture.FixtureCustomers.ToList();
+        var purchases = _fixture.FixturePurchases.ToList();
+        var products = _fixture.FixtureProducts.ToList();
+        var sellers = _fixture.FixtureSellers.ToList();
 
-    //    var customerPurchases =
-    //        from customer in customers
-    //        from purchase in customer.IdPurchase
-    //        select new
-    //        {
-    //            customer.Id,
-    //            PurchaseCost = purchase.Products.Sum(product => product.Price + product.Seller?.Price)
-    //        };
-    //    var customerAvgPurchases =
-    //        from customerPurchase in customerPurchases
-    //        group customerPurchase by customerPurchase.Id into customer
-    //        select new
-    //        {
-    //            customer.Key,
-    //            AvgCost = customer.Average(cust => cust.PurchaseCost)
-    //        };
-    //    var top5 = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5);
-    //    var max = top5.Max(a => a.AvgCost);
-    //    Assert.Equal(7240, max);
-    //}
+        var customerPurchases =
+            from customer in customers
+            from purchase in customer.IdPurchase
+            select new
+            {
+                customer.Id,
+                PurchaseCost = purchase.Products.Sum(product => product.Price + product.Seller?.Price)
+            };
+        var customerAvgPurchases =
+            from customerPurchase in customerPurchases
+            group customerPurchase by customerPurchase.Id into customer
+            select new
+            {
+                customer.Key,
+                AvgCost = customer.Average(cust => cust.PurchaseCost)
+            };
+        var top5 = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5);
+        var max = top5.Max(a => a.AvgCost);
+        Assert.Equal(7240, max);
+    }
 
     /// <summary>
     /// Шестой запрос: Вывести информацию о количестве проданных товаров каждым продавцом 
     /// за последние две недели.
     /// </summary>
 
-    //[Fact]
-    //public void SoldProducsInTwoWeeks()
-    //{
-    //    var now = DateTime.Now;
+    [Fact]
+    public void SoldProducsInTwoWeeks()
+    {
+        var now = DateTime.Now;
 
 
-    //    var purchases = _fixture.FixturePurchases.ToList();
+        var purchases = _fixture.FixturePurchases.ToList();
 
-    //    var request = (from purchase in purchases
-    //                   where purchase.Date >= now.AddDays(-14)
-    //                   select new
-    //                   {
-    //                       seller = purchase.Products[0].IdSeller,
-    //                       count = purchase.Products.Count
-    //                   }).ToList();
+        var request = (from purchase in purchases
+                       where purchase.Date >= now.AddDays(-14)
+                       select new
+                       {
+                           seller = purchase.Products[0].IdSeller,
+                           count = purchase.Products.Count
+                       }).ToList();
 
-    //    var selCount = (from sel in request
-    //                    group sel by sel.seller.ShopName into g
-    //                    select new
-    //                    {
-    //                        seller = g.Key,
-    //                        count = g.Sum(x => x.count)
-    //                    }).ToList();
+        var selCount = (from sel in request
+                        group sel by sel.seller.ShopName into g
+                        select new
+                        {
+                            seller = g.Key,
+                            count = g.Sum(x => x.count)
+                        }).ToList();
 
-    //    Assert.Equal(1, selCount[0].count);
-    //    Assert.Equal(1, selCount[1].count);
-    //}
+        Assert.Equal(1, selCount[0].count);
+        Assert.Equal(1, selCount[1].count);
+    }
 
 
 }

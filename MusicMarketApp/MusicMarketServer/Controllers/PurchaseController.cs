@@ -44,7 +44,7 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns>list of purchases</returns>
+    /// <returns>Returns a list of purchases</returns>
     [HttpGet]
     public async Task<IEnumerable<PurchaseGetDto>> Get()
     {
@@ -66,7 +66,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:", id);
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else
@@ -92,7 +92,7 @@ public class PurchaseController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <param name="purchaseToPut"></param>
-    /// <returns></returns> 
+    /// <returns>Update purchase by id</returns> 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] PurchasePostDto purchaseToPut)
     {
@@ -100,7 +100,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:", id);
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else
@@ -115,7 +115,7 @@ public class PurchaseController : ControllerBase
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Delete purchase by id</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -123,7 +123,7 @@ public class PurchaseController : ControllerBase
         var purchase = await context.Purchases.FirstOrDefaultAsync(purchase => purchase.Id == id);
         if (purchase == null)
         {
-            _logger.LogInformation("Not found purchase:", id);
+            _logger.LogInformation("Not found purchase:{id}", id);
             return NotFound();
         }
         else

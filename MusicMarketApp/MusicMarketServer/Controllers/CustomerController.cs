@@ -46,7 +46,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns> Returns a list of all customers</returns>
     [HttpGet]
     public async Task<IEnumerable<CustomerGetDto>> Get()
     {
@@ -68,7 +68,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:", id);
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else
@@ -82,7 +82,6 @@ public class CustomerController : ControllerBase
     /// POST-запрос на добавление нового элемента в коллекцию
     /// </summary>
     /// <param name="customer"></param>
-    /// <returns>Add new customer </returns>
     [HttpPost]
     public async void Post([FromBody] CustomerPostDto customer)
     {
@@ -107,7 +106,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:", id);
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else
@@ -130,7 +129,7 @@ public class CustomerController : ControllerBase
         var customer = await context.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
         if (customer == null)
         {
-            _logger.LogInformation("Not found customer:", id);
+            _logger.LogInformation("Not found customer:{id}", id);
             return NotFound();
         }
         else

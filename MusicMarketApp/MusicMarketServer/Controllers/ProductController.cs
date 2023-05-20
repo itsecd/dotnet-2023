@@ -44,7 +44,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех товаров коллекции
     /// </summary>
-    /// <returns>list of products</returns>
+    /// <returns>Returns a list of products</returns>
     [HttpGet]
     public async Task<IEnumerable<ProductGetDto>> Get()
     {
@@ -58,7 +58,7 @@ public class ProductController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>Product with input id</returns>
+    /// <returns>Returns product with input id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductGetDto>> Get(int id)
     {
@@ -66,7 +66,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:", id);
+            _logger.LogInformation("Not found product:{id}", id);
             return NotFound();
         }
         else
@@ -100,7 +100,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:", id);
+            _logger.LogInformation("Not found product:{id}", id);
             return NotFound();
         }
         else
@@ -123,7 +123,7 @@ public class ProductController : ControllerBase
         var product = await context.Products.FirstOrDefaultAsync(product => product.Id == id);
         if (product == null)
         {
-            _logger.LogInformation("Not found product:", id);
+            _logger.LogInformation("Not found product:{id}", id);
             return NotFound();
         }
         else

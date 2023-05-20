@@ -44,7 +44,7 @@ public class SellerController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns>list of sellers</returns>
+    /// <returns>Returns a list of sellers</returns>
     [HttpGet]
     public async Task<IEnumerable<SellerGetDto>> Get()
     {
@@ -59,7 +59,7 @@ public class SellerController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>seller by id</returns>
+    /// <returns>Returns seller by id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<SellerGetDto>> Get(int id)
     {
@@ -102,7 +102,7 @@ public class SellerController : ControllerBase
         var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation("Not found seller:", id);
+            _logger.LogInformation("Not found seller:{id}", id);
             return NotFound();
         }
         else
@@ -125,7 +125,7 @@ public class SellerController : ControllerBase
         var seller = await context.Sellers.FirstOrDefaultAsync(seller => seller.Id == id);
         if (seller == null)
         {
-            _logger.LogInformation("Not found seller:", id);
+            _logger.LogInformation("Not found seller:{id}", id);
             return NotFound();
         }
         else

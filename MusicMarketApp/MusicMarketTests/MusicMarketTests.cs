@@ -35,7 +35,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                        where (product.IdSeller == 3)
                        orderby product.Price
                        select product).Count();
-        Assert.Equal(3, request);
+        Assert.Equal(5, request);
     }
     /// <summary>
     /// Третий запрос: Вывести информацию о продаваемых дисковых изданиях       

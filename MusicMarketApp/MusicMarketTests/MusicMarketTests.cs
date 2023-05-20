@@ -32,7 +32,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
     {
         var fixtureProduct = _fixture.FixtureProducts.ToList();
         var request = (from product in fixtureProduct
-                       where (product.IdSeller == 2)
+                       where (product.IdSeller == 3)
                        orderby product.Price
                        select product).Count();
         Assert.Equal(3, request);

@@ -20,3 +20,30 @@
    максимальном времени поездки для каждого водителя.
 6) Вывести информацию о пассажирах, совершивших максимальное число
    поездок за указанный период.
+
+
+## Реализация клиентского приложения
+
+### Вывод аналитики
+![Analytics.png](TaxiApp.Screenshots/Analytics.png)
+
+### Вывод водителей, окно добавления/редактирования
+![Drivers.png](TaxiApp.Screenshots/Drivers.png)
+![AddDrivers.png](TaxiApp.Screenshots/AddDrivers.png)
+![AddDrivers2.png](TaxiApp.Screenshots/AddDrivers2.png)
+
+### Вывод классификаций транспортных средств, окно добавления/редактирования
+![VehicleClassifications.png](TaxiApp.Screenshots/VehicleClassifications.png)
+![AddVehicleClassifications.png](TaxiApp.Screenshots/AddVehicleClassifications.png)
+
+### Вывод пассажиров, окно добавления/редактирования
+![Passengers.png](TaxiApp.Screenshots/Passengers.png)
+![AddPassengers.png](TaxiApp.Screenshots/AddPassengers.png)
+
+### Вывод поездок, окно добавления/редактирования
+![Rides.png](TaxiApp.Screenshots/Rides.png)
+![AddRides.png](TaxiApp.Screenshots/AddRides.png)
+
+### Вывод транспортных средств, окно добавления/редактирования
+![Vehicles.png](TaxiApp.Screenshots/Vehicles.png)
+![AddVehicles.png](TaxiApp.Screenshots/AddVehicles.png)

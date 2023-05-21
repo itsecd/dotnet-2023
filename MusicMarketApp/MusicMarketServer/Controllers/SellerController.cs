@@ -58,7 +58,7 @@ public class SellerController : ControllerBase
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">SellerId</param>
     /// <returns>Returns seller by id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<SellerGetDto>> Get(int id)
@@ -80,7 +80,7 @@ public class SellerController : ControllerBase
     /// <summary>
     /// POST-запрос на добавление нового элемента в коллекцию
     /// </summary>
-    /// <param name="seller"></param>
+    /// <param name="seller">New seller</param>
     [HttpPost]
     public async void Post([FromBody] SellerPostDto seller)
     {
@@ -92,8 +92,8 @@ public class SellerController : ControllerBase
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="sellerToPut"></param>
+    /// <param name="id">SellerId</param>
+    /// <param name="sellerToPut">New seller</param>
     /// <returns>Ok()</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] SellerPostDto sellerToPut)
@@ -116,7 +116,7 @@ public class SellerController : ControllerBase
     /// <summary>
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">SellerId</param>
     /// <returns>Ok()</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

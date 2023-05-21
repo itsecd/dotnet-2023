@@ -57,7 +57,7 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">PurchaseId</param>
     /// <returns>Ok(found purchase with input id)</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<PurchaseGetDto>> Get(int id)
@@ -78,7 +78,7 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// POST-запрос на добавление нового элемента в коллекцию
     /// </summary>
-    /// <param name="purchase"></param>
+    /// <param name="purchase"> New purchase</param>
     [HttpPost]
     public async void Post([FromBody] PurchasePostDto purchase)
     {
@@ -90,8 +90,8 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="purchaseToPut"></param>
+    /// <param name="id">PurchaseId</param>
+    /// <param name="purchaseToPut">New purchase</param>
     /// <returns>Update purchase by id</returns> 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] PurchasePostDto purchaseToPut)
@@ -114,7 +114,7 @@ public class PurchaseController : ControllerBase
     /// <summary>
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">PurchaseId</param>
     /// <returns>Delete purchase by id</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

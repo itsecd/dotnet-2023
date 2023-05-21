@@ -59,7 +59,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">CustomerId</param>
     /// <returns>Customer found by specified id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<CustomerGetDto>> Get(int id)
@@ -81,7 +81,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// POST-запрос на добавление нового элемента в коллекцию
     /// </summary>
-    /// <param name="customer"></param>
+    /// <param name="customer">New customer</param>
     [HttpPost]
     public async void Post([FromBody] CustomerPostDto customer)
     {
@@ -95,8 +95,8 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="customerToPut"></param>
+    /// <param name="id">CustomerId</param>
+    /// <param name="customerToPut">New customer</param>
     /// <returns>Update customer by id or NotFound</returns>
     /// 
     [HttpPut("{id}")]
@@ -120,7 +120,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">CustomerId</param>
     /// <returns>DELETE element</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

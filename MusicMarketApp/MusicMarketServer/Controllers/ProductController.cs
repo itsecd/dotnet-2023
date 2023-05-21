@@ -57,7 +57,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">ProductId</param>
     /// <returns>Returns product with input id</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductGetDto>> Get(int id)
@@ -78,7 +78,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// POST-запрос на добавление нового элемента в коллекцию
     /// </summary>
-    /// <param name="product"></param>
+    /// <param name="product">New product</param>
     [HttpPost]
     public async void Post([FromBody] ProductPostDto product)
     {
@@ -90,8 +90,8 @@ public class ProductController : ControllerBase
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="productToPut"></param>
+    /// <param name="id">ProductId</param>
+    /// <param name="productToPut">New product</param>
     /// <returns>Ok()</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ProductPostDto productToPut)
@@ -114,7 +114,7 @@ public class ProductController : ControllerBase
     /// <summary>
     /// DELETE-запрос на удаление элемента из коллекции
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">ProductId</param>
     /// <returns>Ok()</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

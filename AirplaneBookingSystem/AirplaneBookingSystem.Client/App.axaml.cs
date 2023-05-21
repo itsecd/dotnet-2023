@@ -22,6 +22,15 @@ public partial class App : Application
             {
                 cfg.CreateMap<AirplaneGetDto, AirplaneViewModel>();
                 cfg.CreateMap<AirplaneViewModel, AirplanePostDto>();
+
+                cfg.CreateMap<FlightGetDto, FlightViewModel>();
+                cfg.CreateMap<FlightViewModel, FlightPostDto>();
+
+                cfg.CreateMap<TicketGetDto, TicketViewModel>();
+                cfg.CreateMap<TicketViewModel, TicketPostDto>();
+
+                //cfg.CreateMap<ClientGetDto, ClientViewModel>();
+                //cfg.CreateMap<ClientViewModel, ClientPostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

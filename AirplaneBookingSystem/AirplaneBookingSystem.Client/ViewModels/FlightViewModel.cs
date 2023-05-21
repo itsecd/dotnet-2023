@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reactive;
 
 namespace AirplaneBookingSystem.Client.ViewModels;
@@ -49,6 +50,7 @@ public class FlightViewModel : ViewModelBase
     }
     private int _airplaneId;
     [Required]
+    [ForeignKey("Airplane")]
     public int AirplaneId
     {
         get => _airplaneId;

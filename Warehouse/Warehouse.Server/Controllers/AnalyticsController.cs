@@ -83,8 +83,9 @@ public class AnalyticsController : ControllerBase
         var request = await (from products in ctx.Products
                              from cells in products.WarehouseCell
                              orderby cells.CellNumber
-                             select new { 
-                                 cells.CellNumber, 
+                             select new
+                             {
+                                 cells.CellNumber,
                                  products.Name,
                                  products.Id
                              }).ToListAsync();
@@ -106,11 +107,13 @@ public class AnalyticsController : ControllerBase
         var request = await (from products in ctx.Products
                              from supply in products.Supply
                              where supply.SupplyDate > minDate && supply.SupplyDate < maxDate
-                             group supply by new {
+                             group supply by new
+                             {
                                  supply.CompanyName,
                                  supply.CompanyAddress
                              } into grp
-                             select _mapper.Map<SuppliesGetDto>(new {
+                             select _mapper.Map<SuppliesGetDto>(new
+                             {
                                  grp.Key.CompanyName,
                                  grp.Key.CompanyAddress,
                                  quantity = grp.Sum(x => x.Quantity)
@@ -146,8 +149,9 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Quantity of delivered products");
         var request = await (from products in ctx.Products
                              from supply in products.Supply
-                             select new {
-                                 supply.CompanyName, 
+                             select new
+                             {
+                                 supply.CompanyName,
                                  supply.CompanyAddress,
                                  products.Name,
                                  products.Id,

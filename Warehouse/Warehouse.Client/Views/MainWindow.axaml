@@ -3,17 +3,107 @@
         xmlns:vm="using:Warehouse.Client.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="Warehouse.Client.Views.MainWindow"
-        Icon="/Assets/warehouse.ico"
+        Icon="/Assets/placeholder.ico"
+		MinHeight="400" MinWidth="400"
         Title="Warehouse.Client">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+  <Window.Styles>
+    <StyleInclude Source="/Styles.axaml"/>
+  </Window.Styles>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
+			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 
+      <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Label>Products</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddProductCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditProductCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteProductCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="2" AutoGenerateColumns="False"
+					  Items="{Binding Products}"
+					  SelectedItem="{Binding SelectedProduct}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <Label>Warehouse cells</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddCellCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditCellCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteCellCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="5" AutoGenerateColumns="False"
+					  Items="{Binding Cells}"
+					  SelectedItem="{Binding SelectedCell}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="CellNumber" Binding="{Binding CellNumber}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="6" Orientation="Horizontal">
+        <Label>Supplies</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="7" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddSupplyCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditSupplyCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteSupplyCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="8" AutoGenerateColumns="False"
+					  Items="{Binding Supplies}"
+					  SelectedItem="{Binding SelectedSupply}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+          <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+          <DataGridTextColumn Header="CompanyName" Binding="{Binding CompanyName}"/>
+          <DataGridTextColumn Header="CompanyAddress" Binding="{Binding CompanyAddres}"/>
+          <DataGridTextColumn Header="SupplyDate" Binding="{Binding SupplyDate}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="9" Orientation="Horizontal">
+        <Label>All issued products orderred by name</Label>
+      </StackPanel>
+
+      <DataGrid Grid.Row="10" AutoGenerateColumns="False"
+					  Items="{Binding AllProducts}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </ScrollViewer>
 </Window>

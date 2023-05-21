@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using ReactiveUI;
-using Splat;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using Warehouse.Client.ViewModels;
+using AutoMapper;
+using ReactiveUI;
+using Splat;
 
 namespace Warehouse.Client.ViewModels;
 
@@ -16,234 +15,175 @@ public class MainWindowViewModel : ViewModelBase
 
     private readonly IMapper _mapper;
 
-    public ObservableCollection<ProductsViewModel> Product { get; } = new();
-    public ObservableCollection<SuppliesViewModel> Supply { get; } = new();
-    public ObservableCollection<WarehouseCellsViewModel> WarehouseCell { get; } = new();
+    public ObservableCollection<ProductViewModel> Products { get; } = new();
+    public ObservableCollection<SupplyViewModel> Supplies { get; } = new();
+    public ObservableCollection<WarehouseCellViewModel> Cells { get; } = new();
+    public ObservableCollection<ProductViewModel> AllProducts { get; } = new();
 
-    private ProductsViewModel? _selectedProduct;
-    public ProductsViewModel? SelectedProduct
+    private ProductViewModel? _selectedProduct;
+    public ProductViewModel? SelectedProduct
     {
         get => _selectedProduct;
         set => this.RaiseAndSetIfChanged(ref _selectedProduct, value);
     }
 
-    private SuppliesViewModel? _selectedSupply;
-    public SuppliesViewModel? SelectedSupply
+    private SupplyViewModel? _selectedSupply;
+    public SupplyViewModel? SelectedSupply
     {
         get => _selectedSupply;
         set => this.RaiseAndSetIfChanged(ref _selectedSupply, value);
     }
 
-    private WarehouseCellsViewModel? _selectedCell;
-    public WarehouseCellsViewModel? SelectedCell
+    private WarehouseCellViewModel? _selectedCell;
+    public WarehouseCellViewModel? SelectedCell
     {
         get => _selectedCell;
         set => this.RaiseAndSetIfChanged(ref _selectedCell, value);
     }
 
-    public ReactiveCommand<Unit, Unit> OnAddProductsCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnEditProductsCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteProductsCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnAddProductCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnEditProductCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteProductCommand { get; set; }
 
-    public ReactiveCommand<Unit, Unit> OnAddSuppliesCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnEditSuppliesCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteSuppliesCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnAddSupplyCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnEditSupplyCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteSupplyCommand { get; set; }
 
-    public ReactiveCommand<Unit, Unit> OnAddWarehouseCellsCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnEditWarehouseCellsCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteWarehouseCellsCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnAddWarehouseCellCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnEditWarehouseCellCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteWarehouseCellCommand { get; set; }
 
-    public ReactiveCommand<Unit, Unit> OnAddReaderCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnEditReaderCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteReaderCommand { get; set; }
-
-    public Interaction<ProductsViewModel, ProductsViewModel?> ShowProductsDialog { get; }
-    public Interaction<SuppliesViewModel, SuppliesViewModel?> ShowSuppliesDialog { get; }
-    public Interaction<WarehouseCellsViewModel, WarehouseCellsViewModel?> ShowWarehouseCellsDialog { get; }
+    public Interaction<ProductViewModel, ProductViewModel?> ShowProductDialog { get; }
+    public Interaction<SupplyViewModel, SupplyViewModel?> ShowSupplyDialog { get; }
+    public Interaction<WarehouseCellViewModel, WarehouseCellViewModel?> ShowWarehouseCellDialog { get; }
 
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
-        ShowProductsDialog = new Interaction<ProductsViewModel, ProductsViewModel?>();
-        ShowSuppliesDialog = new Interaction<SuppliesViewModel, SuppliesViewModel?>();
-        ShowWarehouseCellsDialog = new Interaction<WarehouseCellsViewModel, WarehouseCellsViewModel?>();
+        ShowProductDialog = new Interaction<ProductViewModel, ProductViewModel?>();
+        ShowSupplyDialog = new Interaction<SupplyViewModel, SupplyViewModel?>();
+        ShowWarehouseCellDialog = new Interaction<WarehouseCellViewModel, WarehouseCellViewModel?>();
 
-        OnAddProductsCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnAddProductCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var productsViewModel = await ShowProductsDialog.Handle(new ProductsViewModel());
-            if (ProductsViewModel != null)
+            var productViewModel = await ShowProductDialog.Handle(new ProductViewModel());
+            if (productViewModel != null)
             {
-                var newProducts = await _apiClient.AddProductsAsync(_mapper.Map<ProductsPostDto>(ProductsViewModel));
-                Productss.Add(_mapper.Map<ProductsViewModel>(newProducts));
+                await _apiClient.AddProductAsync(_mapper.Map<ProductsPostDto>(productViewModel));
+                _mapper.Map(productViewModel, SelectedProduct);
             }
         });
 
-        OnEditProductsCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnEditProductCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var ProductsViewModel = await ShowProductsDialog.Handle(SelectedProducts!);
-            if (ProductsViewModel != null)
+            var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
+            if (productViewModel != null)
             {
-                await _apiClient.UpdateProductsAsync(SelectedProducts!.Id, _mapper.Map<ProductsPostDto>(ProductsViewModel));
-                _mapper.Map(ProductsViewModel, SelectedProducts);
+                await _apiClient.UpdateProductAsync(SelectedProduct!.Id, _mapper.Map<ProductsPostDto>(productViewModel));
+                _mapper.Map(productViewModel, SelectedProduct);
             }
-        }, this.WhenAnyValue(vm => vm.SelectedProducts).Select(selectProducts => selectProducts != null));
+        }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectProduct => selectProduct != null));
 
-        OnDeleteProductsCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteProductCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteProductsAsync(SelectedProducts!.Id);
-            Productss.Remove(SelectedProducts);
-        }, this.WhenAnyValue(vm => vm.SelectedProducts).Select(selectProducts => selectProducts != null));
+            await _apiClient.DeleteProductAsync(SelectedProduct!.Id);
+            Products.Remove(SelectedProduct);
+        }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectProduct => selectProduct != null));
 
-        OnAddSuppliesCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnAddSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var SuppliesViewModel = await ShowSuppliesDialog.Handle(new SuppliesViewModel());
-            if (SuppliesViewModel != null)
+            var supplyViewModel = await ShowSupplyDialog.Handle(new SupplyViewModel());
+            if (supplyViewModel != null)
             {
-                var newSupplies = await _apiClient.AddSuppliesAsync(_mapper.Map<SuppliesPostDto>(SuppliesViewModel));
-                Suppliess.Add(_mapper.Map<SuppliesViewModel>(newSupplies));
-            }
-        });
-
-        OnEditSuppliesCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var SuppliesViewModel = await ShowSuppliesDialog.Handle(SelectedSupplies!);
-            if (SuppliesViewModel != null)
-            {
-                await _apiClient.UpdateSuppliesAsync(SelectedSupplies!.Id, _mapper.Map<SuppliesPostDto>(SuppliesViewModel));
-                _mapper.Map(SuppliesViewModel, SelectedSupplies);
-            }
-        }, this.WhenAnyValue(vm => vm.SelectedSupplies).Select(selectSupplies => selectSupplies != null));
-
-        OnDeleteSuppliesCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await _apiClient.DeleteSuppliesAsync(SelectedSupplies!.Id);
-            Suppliess.Remove(SelectedSupplies);
-        }, this.WhenAnyValue(vm => vm.SelectedSupplies).Select(selectSupplies => selectSupplies != null));
-
-        OnAddWarehouseCellsCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var WarehouseCellsViewModel = await ShowWarehouseCellsDialog.Handle(new WarehouseCellsViewModel());
-            if (WarehouseCellsViewModel != null)
-            {
-                var newWarehouseCells = await _apiClient.AddWarehouseCellsAsync(_mapper.Map<WarehouseCellsPostDto>(WarehouseCellsViewModel));
-                WarehouseCellss.Add(_mapper.Map<WarehouseCellsViewModel>(newWarehouseCells));
+                await _apiClient.AddSupplyAsync(_mapper.Map<SuppliesPostDto>(supplyViewModel));
+                _mapper.Map(supplyViewModel, SelectedSupply);
             }
         });
 
-        OnEditWarehouseCellsCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnEditSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var WarehouseCellsViewModel = await ShowWarehouseCellsDialog.Handle(SelectedWarehouseCells!);
-            if (WarehouseCellsViewModel != null)
+            var supplyViewModel = await ShowSupplyDialog.Handle(SelectedSupply!);
+            if (supplyViewModel != null)
             {
-                await _apiClient.UpdateWarehouseCellsAsync(SelectedWarehouseCells!.Id, _mapper.Map<WarehouseCellsPostDto>(WarehouseCellsViewModel));
-                _mapper.Map(WarehouseCellsViewModel, SelectedWarehouseCells);
+                await _apiClient.UpdateSupplyAsync(SelectedSupply!.Id, _mapper.Map<SuppliesPostDto>(supplyViewModel));
+                _mapper.Map(supplyViewModel, SelectedSupply);
             }
-        }, this.WhenAnyValue(vm => vm.SelectedWarehouseCells).Select(selectWarehouseCells => selectWarehouseCells != null));
+        }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
 
-        OnDeleteWarehouseCellsCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteSupplyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteWarehouseCellsAsync(SelectedWarehouseCells!.Id);
-            WarehouseCellss.Remove(SelectedWarehouseCells);
-        }, this.WhenAnyValue(vm => vm.SelectedWarehouseCells).Select(selectWarehouseCells => selectWarehouseCells != null));
+            await _apiClient.DeleteSupplyAsync(SelectedSupply!.Id);
+            Supplies.Remove(SelectedSupply);
+        }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
 
-        OnAddReaderCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnAddWarehouseCellCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var readerViewModel = await ShowReaderDialog.Handle(new ReaderViewModel());
-            if (readerViewModel != null)
+            var warehouseCellViewModel = await ShowWarehouseCellDialog.Handle(new WarehouseCellViewModel());
+            if (warehouseCellViewModel != null)
             {
-                var newReader = await _apiClient.AddReaderAsync(_mapper.Map<ReaderPostDto>(readerViewModel));
-                Readers.Add(_mapper.Map<ReaderViewModel>(newReader));
+                await _apiClient.AddWarehouseCellAsync(_mapper.Map<WarehouseCellsDto>(warehouseCellViewModel));
+                _mapper.Map(warehouseCellViewModel, SelectedCell);
             }
         });
 
-        OnEditReaderCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnEditWarehouseCellCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var readerViewModel = await ShowReaderDialog.Handle(SelectedReader!);
-            if (readerViewModel != null)
+            var warehouseCellViewModel = await ShowWarehouseCellDialog.Handle(SelectedCell!);
+            if (warehouseCellViewModel != null)
             {
-                await _apiClient.UpdateReaderAsync(SelectedReader!.Id, _mapper.Map<ReaderPostDto>(readerViewModel));
-                _mapper.Map(readerViewModel, SelectedReader);
+                await _apiClient.UpdateWarehouseCellAsync(SelectedCell!.CellNumber, _mapper.Map<WarehouseCellsDto>(warehouseCellViewModel));
+                _mapper.Map(warehouseCellViewModel, SelectedCell);
             }
-        }, this.WhenAnyValue(vm => vm.SelectedReader).Select(selectReader => selectReader != null));
+        }, this.WhenAnyValue(vm => vm.SelectedCell).Select(selectWarehouseCell => selectWarehouseCell != null));
 
-        OnDeleteReaderCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteWarehouseCellCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteReaderAsync(SelectedReader!.Id);
-            Readers.Remove(SelectedReader);
-        }, this.WhenAnyValue(vm => vm.SelectedReader).Select(selectReader => selectReader != null));
+            await _apiClient.DeleteWarehouseCellAsync(SelectedCell!.CellNumber);
+            Cells.Remove(SelectedCell);
+        }, this.WhenAnyValue(vm => vm.SelectedCell).Select(selectWarehouseCell => selectWarehouseCell != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadProductssAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSuppliessAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadWarehouseCellssAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadReadersAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadTypesEditionsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadTypesWarehouseCellssAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadAllProductssAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadProductsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadSuppliesAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadCellsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllProductsAsync);
     }
 
-    private async void LoadAllProductssAsync()
+    private async void LoadAllProductsAsync()
     {
-        AllProductss.Clear();
-        var Productss = await _apiClient.GetAllProductssAsync();
-        foreach (var Products in Productss)
+        AllProducts.Clear();
+        var products = await _apiClient.GetAllProductsAsync();
+        foreach (var product in products)
         {
-            AllProductss.Add(_mapper.Map<ProductsViewModel>(Products));
+            AllProducts.Add(_mapper.Map<ProductViewModel>(product));
         }
     }
 
-    private async void LoadProductssAsync()
+    private async void LoadProductsAsync()
     {
-        var Productss = await _apiClient.GetProductssAsync();
-        foreach (var Products in Productss)
+        var products = await _apiClient.GetProductsAsync();
+        foreach (var product in products)
         {
-            Productss.Add(_mapper.Map<ProductsViewModel>(Products));
+            Products.Add(_mapper.Map<ProductViewModel>(product));
         }
     }
 
-    private async void LoadSuppliessAsync()
+    private async void LoadSuppliesAsync()
     {
-        var Suppliess = await _apiClient.GetSuppliessAsync();
-        foreach (var Supplies in Suppliess)
+        var supplies = await _apiClient.GetSuppliesAsync();
+        foreach (var supply in supplies)
         {
-            Suppliess.Add(_mapper.Map<SuppliesViewModel>(Supplies));
+            Supplies.Add(_mapper.Map<SupplyViewModel>(supply));
         }
     }
 
-    private async void LoadWarehouseCellssAsync()
+    private async void LoadCellsAsync()
     {
-        var WarehouseCellss = await _apiClient.GetWarehouseCellssAsync();
-        foreach (var WarehouseCells in WarehouseCellss)
+        var cells = await _apiClient.GetWarehouseCellsAsync();
+        foreach (var cell in cells)
         {
-            WarehouseCellss.Add(_mapper.Map<WarehouseCellsViewModel>(WarehouseCells));
-        }
-    }
-
-    private async void LoadReadersAsync()
-    {
-        var readers = await _apiClient.GetReadersAsync();
-        foreach (var reader in readers)
-        {
-            Readers.Add(_mapper.Map<ReaderViewModel>(reader));
-        }
-    }
-
-    private async void LoadTypesEditionsAsync()
-    {
-        var types = await _apiClient.GetTypeEditionsAsync();
-        foreach (var type in types)
-        {
-            TypesEditions.Add(_mapper.Map<TypeEditionViewModel>(type));
-        }
-    }
-
-    private async void LoadTypesWarehouseCellssAsync()
-    {
-        var types = await _apiClient.GetTypeWarehouseCellssAsync();
-        foreach (var type in types)
-        {
-            TypesWarehouseCellss.Add(_mapper.Map<TypeWarehouseCellsViewModel>(type));
+            Cells.Add(_mapper.Map<WarehouseCellViewModel>(cell));
         }
     }
 }

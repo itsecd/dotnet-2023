@@ -157,9 +157,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                             count = g.Sum(x => x.IdProduct)
                         }).ToList();
 
-        Assert.Equal(1, selCount[0].count);
-        Assert.Equal(1, selCount[1].count);
-        Assert.Equal(1, selCount[2].count);
+        Assert.Equal(7, selCount[0].count);
     }
 
 

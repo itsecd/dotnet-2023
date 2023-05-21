@@ -3,7 +3,7 @@
         xmlns:vm="using:AirplaneBookingSystem.Client.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
         x:Class="AirplaneBookingSystem.Client.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="AirplaneBookingSystem.Client">
@@ -16,7 +16,7 @@
 	</Window.Styles>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 				<Image Source="/Assets/ticket-pic.png"/>
 				<Label>Tickets</Label>
@@ -115,6 +115,22 @@
 					<DataGridTextColumn Header="Full name" Binding="{Binding Name}"/>
 					<DataGridTextColumn Header="Passport number" Binding="{Binding PassportNumber}"/>
 					<DataGridTextColumn Header="Birthday data" Binding="{Binding BirthdayData}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="13" Orientation="Horizontal">
+				<Image Source="/Assets/star-pic.png"/>
+				<Label>Flights wiht max count of clients</Label>
+			</StackPanel>
+			<DataGrid Grid.Row="14" AutoGenerateColumns="False"
+					   Items="{Binding FlightWithMaxAmountOfClients}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Number of flight" Binding="{Binding NumberOfFlight}"/>
+					<DataGridTextColumn Header="Departure city" Binding="{Binding DepartureCity}"/>
+					<DataGridTextColumn Header="Arrival city" Binding="{Binding ArrivalCity}"/>
+					<DataGridTextColumn Header="Departure date" Binding="{Binding DepartureDate}"/>
+					<DataGridTextColumn Header="Arrival date" Binding="{Binding ArrivalDate}"/>
+					<DataGridTextColumn Header="Flight`s airplane id" Binding="{Binding AirplaneId}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 			

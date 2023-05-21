@@ -17,7 +17,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<FlightViewModel> Flights { get; } = new();
     public ObservableCollection<TicketViewModel> Tickets { get; } = new();
     public ObservableCollection<ClientViewModel> Clients { get; } = new();
-    public ObservableCollection<FlightViewModel> FlightWithMaxAmountOflients { get; set; } = new();
+    public ObservableCollection<FlightViewModel> FlightWithMaxAmountOfClients { get; set; } = new();
 
     private AirplaneViewModel? _selectedAirplane;
     public AirplaneViewModel? SelectedAirplane
@@ -59,7 +59,7 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeCommandClient { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandClient { get; set; }
 
-    public ReactiveCommand<Unit, Unit> ShowFlightWithMaxAmountOflients { get; set; }
+    public ReactiveCommand<Unit, Unit> ShowFlightWithMaxAmountOfClients { get; set; }
     public Interaction<AirplaneViewModel, AirplaneViewModel?> ShowAirplaneDialog { get; set; }
     public Interaction<FlightViewModel, FlightViewModel?> ShowFlightDialog { get; set; }
     public Interaction<TicketViewModel, TicketViewModel?> ShowTicketDialog { get; set; }
@@ -87,6 +87,7 @@ public class MainWindowViewModel : ViewModelBase
                 Clients.Clear();
                 Tickets.Clear();
                 Flights.Clear();
+                FlightWithMaxAmountOfClients.Clear();
                 LoadAllAsync();
             }
         });
@@ -121,6 +122,7 @@ public class MainWindowViewModel : ViewModelBase
                 Clients.Clear();
                 Tickets.Clear();
                 Flights.Clear();
+                FlightWithMaxAmountOfClients.Clear();
                 LoadAllAsync();
             }
         });
@@ -154,6 +156,7 @@ public class MainWindowViewModel : ViewModelBase
                 Clients.Clear();
                 Tickets.Clear();
                 Flights.Clear();
+                FlightWithMaxAmountOfClients.Clear();
                 LoadAllAsync();
             }
         });
@@ -187,6 +190,7 @@ public class MainWindowViewModel : ViewModelBase
                 Clients.Clear();
                 Tickets.Clear();
                 Flights.Clear();
+                FlightWithMaxAmountOfClients.Clear();
                 LoadAllAsync();
             }
         });
@@ -207,15 +211,6 @@ public class MainWindowViewModel : ViewModelBase
             Clients.Remove(SelectedClient);
 
         }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectedClient => selectedClient != null));
-
-        //ShowFlightWithMaxAmountOflients = ReactiveCommand.CreateFromTask(async () =>
-        //{
-        //    var requestFlights = await _apiClient.FlightsWithMaxCountOfClient();
-        //    foreach (var flight in requestFlights)
-        //    {
-        //        FlightWithMaxAmountOflients.Add(_mapper.Map<FlightViewModel>(flight));
-        //    }
-        //});
 
         RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
     }
@@ -242,5 +237,10 @@ public class MainWindowViewModel : ViewModelBase
         //{
         //    Clients.Add(_mapper.Map<ClientViewModel>(client));
         //}
+        var analiticsFlights = await _apiClient.FlightWithMaxAmountOfClients();
+        foreach (var analiticsFlight in analiticsFlights)
+        {
+            FlightWithMaxAmountOfClients.Add(_mapper.Map<FlightViewModel>(analiticsFlight));
+        }
     }
 }

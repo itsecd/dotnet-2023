@@ -89,4 +89,8 @@ public class ApiWrapper
     {
         await _client.Ticket4Async(id);
     }
+    public Task<ICollection<FlightGetDto>> FlightWithMaxAmountOfClients()
+    {
+        return _client.FlightWithMaxAmountOfClientsAsync();
+    }
 }

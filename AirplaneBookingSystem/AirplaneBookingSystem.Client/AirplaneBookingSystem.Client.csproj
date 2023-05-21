@@ -18,6 +18,7 @@
     <None Remove="Assets\icon.ico" />
     <None Remove="Assets\remove-pic.png" />
     <None Remove="Assets\settings-pic.png" />
+    <None Remove="Assets\star-pic.png" />
     <None Remove="Assets\ticket-pic.png" />
     <None Remove="swagger.json" />
   </ItemGroup>

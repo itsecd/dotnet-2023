@@ -16,7 +16,7 @@ public class CountPassengerRidesGetDto
     ///     Patronymic - patronymic of the passenger
     /// </summary>
     public string? Patronymic { get; set; }
-    
+
     /// <summary>
     ///     Count - count passenger rides
     /// </summary>

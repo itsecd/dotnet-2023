@@ -11,7 +11,7 @@ public class VehicleAndDriverGetDto
     ///     Colour - property that stores the colour of the vehicle
     /// </summary>
     public string Colour { get; set; } = string.Empty;
-    
+
     /// <summary>
     ///     Brand - a name of the company that makes the vehicle
     /// </summary>
@@ -28,7 +28,7 @@ public class VehicleAndDriverGetDto
     public string Class { get; set; } = string.Empty;
 
     // <summary>
-    ///     FirstName - first name of the driver
+    /// FirstName - first name of the driver
     /// </summary>
     public string FirstName { get; set; } = string.Empty;
 

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using Taxi.Client.ViewModels;
@@ -15,7 +14,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowDriverDialog.RegisterHandler(ShowDriverDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowPassengerDialog.RegisterHandler(ShowPassengerDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowVehicleDialog.RegisterHandler(ShowVehicleDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.ShowVehicleClassificationDialog.RegisterHandler(ShowVehicleClassificationDialogAsync)));
+        this.WhenActivated(d =>
+            d(ViewModel!.ShowVehicleClassificationDialog.RegisterHandler(ShowVehicleClassificationDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowRideDialog.RegisterHandler(ShowRideDialogAsync)));
     }
 
@@ -25,48 +25,49 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<DriverViewModel?>(this);
+        DriverViewModel? result = await dialog.ShowDialog<DriverViewModel?>(this);
         interaction.SetOutput(result);
     }
-    
+
     private async Task ShowPassengerDialogAsync(InteractionContext<PassengerViewModel, PassengerViewModel?> interaction)
     {
         var dialog = new PassengerWindow
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<PassengerViewModel?>(this);
+        PassengerViewModel? result = await dialog.ShowDialog<PassengerViewModel?>(this);
         interaction.SetOutput(result);
     }
-    
+
     private async Task ShowVehicleDialogAsync(InteractionContext<VehicleViewModel, VehicleViewModel?> interaction)
     {
         var dialog = new VehicleWindow
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<VehicleViewModel?>(this);
+        VehicleViewModel? result = await dialog.ShowDialog<VehicleViewModel?>(this);
         interaction.SetOutput(result);
     }
-    
-    
-    private async Task ShowVehicleClassificationDialogAsync(InteractionContext<VehicleClassificationViewModel, VehicleClassificationViewModel?> interaction)
+
+
+    private async Task ShowVehicleClassificationDialogAsync(
+        InteractionContext<VehicleClassificationViewModel, VehicleClassificationViewModel?> interaction)
     {
         var dialog = new VehicleClassificationWindow
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<VehicleClassificationViewModel?>(this);
+        VehicleClassificationViewModel? result = await dialog.ShowDialog<VehicleClassificationViewModel?>(this);
         interaction.SetOutput(result);
     }
-    
+
     private async Task ShowRideDialogAsync(InteractionContext<RideViewModel, RideViewModel?> interaction)
     {
         var dialog = new RideWindow
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<RideViewModel?>(this);
+        RideViewModel? result = await dialog.ShowDialog<RideViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

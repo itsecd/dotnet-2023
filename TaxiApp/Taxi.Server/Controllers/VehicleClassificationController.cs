@@ -60,8 +60,8 @@ public class VehicleClassificationController : ControllerBase
         _logger.LogInformation("Get vehicle classification with id={id}", id);
         return Ok(vehicleClassification);
     }
-    
-    
+
+
     /// <summary>
     ///     Post method which add new vehicle classification in ride table
     /// </summary>
@@ -73,8 +73,9 @@ public class VehicleClassificationController : ControllerBase
     {
         _logger.LogInformation("Post vehicle classification");
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        
-        VehicleClassification? mappedVehicleClassification = _mapper.Map<VehicleClassification>(vehicleClassificationToPost);
+
+        VehicleClassification? mappedVehicleClassification =
+            _mapper.Map<VehicleClassification>(vehicleClassificationToPost);
 
         await ctx.VehicleClassifications.AddAsync(mappedVehicleClassification);
         await ctx.SaveChangesAsync();
@@ -94,7 +95,7 @@ public class VehicleClassificationController : ControllerBase
     public async Task<IActionResult> Put(ulong id, VehicleClassificationSetDto vehicleClassificationToPut)
     {
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        
+
         VehicleClassification? vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
         if (vehicleClassification == null)
         {

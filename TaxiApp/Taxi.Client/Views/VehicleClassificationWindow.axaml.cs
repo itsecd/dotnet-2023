@@ -11,10 +11,10 @@ public partial class VehicleClassificationWindow : ReactiveWindow<VehicleClassif
     public VehicleClassificationWindow()
     {
         InitializeComponent();
-        
+
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
-    
+
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Close();

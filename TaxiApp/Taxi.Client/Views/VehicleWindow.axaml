@@ -8,33 +8,33 @@
         Title="Добавление/Редактирование транспортного средства"
         MaxWidth="500"
         SizeToContent="Height">
-    
-        <Design.DataContext>
-                <viewModels:VehicleViewModel/>
-        </Design.DataContext>
-        
-        <Window.Styles>
-                <StyleInclude Source="/TaxiStyles.axaml"/>
-        </Window.Styles>
-    
-        <Grid Classes = "MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Регистрационный номер</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RegistrationCarPlate}"/>
-                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Цвет</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Colour}"/>
-                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">ID классификации транспортного средства</Label>
-                <TextBox Grid.Row="2" Grid.Column="1" 
-                               Text="{Binding VehicleClassificationId}"/>
-                <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">ID водителя</Label>
-                <TextBox Grid.Row="3" Grid.Column="1" 
-                               Text="{Binding DriverId}"/>
-        
-                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
-                            HorizontalAlignment="Right" 
-                            Orientation="Horizontal">
-                        <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
-                        <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-                </StackPanel>
-        </Grid>
-        
+
+    <Design.DataContext>
+        <viewModels:VehicleViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/TaxiStyles.axaml" />
+    </Window.Styles>
+
+    <Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Регистрационный номер</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RegistrationCarPlate}" />
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Цвет</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Colour}" />
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">ID классификации транспортного средства</Label>
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 Text="{Binding VehicleClassificationId}" />
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">ID водителя</Label>
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 Text="{Binding DriverId}" />
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+            <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+        </StackPanel>
+    </Grid>
+
 </Window>

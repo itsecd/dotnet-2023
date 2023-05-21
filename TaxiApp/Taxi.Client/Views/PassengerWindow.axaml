@@ -8,32 +8,32 @@
         Title="Добавление/Редактирование пассажира"
         MaxWidth="500"
         SizeToContent="Height">
-   
-        <Design.DataContext>
-                <viewModels:PassengerViewModel/>
-        </Design.DataContext>
-        
-        <Window.Styles>
-                <StyleInclude Source="/TaxiStyles.axaml"/>
-        </Window.Styles>
-    
-        <Grid Classes = "MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Фамилия</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}"/>
-                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
-                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Отчество</Label>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}"/>
-                <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Номер телефона</Label>
-                <MaskedTextBox Mask="+0-000-000-00-00" Grid.Row="3" Grid.Column="1" 
-                               Text="{Binding PhoneNumber}"/>
-        
-                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
-                            HorizontalAlignment="Right" 
-                            Orientation="Horizontal">
-                        <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
-                        <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-                </StackPanel>
-        </Grid>
-        
+
+    <Design.DataContext>
+        <viewModels:PassengerViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/TaxiStyles.axaml" />
+    </Window.Styles>
+
+    <Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Фамилия</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}" />
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}" />
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Отчество</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}" />
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Номер телефона</Label>
+        <MaskedTextBox Mask="+0-000-000-00-00" Grid.Row="3" Grid.Column="1"
+                       Text="{Binding PhoneNumber}" />
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+            <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+        </StackPanel>
+    </Grid>
+
 </Window>

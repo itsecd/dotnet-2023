@@ -3,55 +3,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Taxi.Client.ViewModels"
-        
-        xmlns:valueConversion="clr-namespace:Microsoft.EntityFrameworkCore.Storage.ValueConversion;assembly=Microsoft.EntityFrameworkCore"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Taxi.Client.Views.RideWindow"
         Title="Добавление/Редактирование поездок"
         MaxWidth="500"
         SizeToContent="Height">
-        
-    
-        <Design.DataContext>
-                <viewModels:RideViewModel/>
-        </Design.DataContext>
-        
-        <Window.Styles>
-                <StyleInclude Source="/TaxiStyles.axaml"/>
-        </Window.Styles>
-    
-        <Grid Classes = "MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Точка отправления</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DeparturePoint}"/>
-                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Точка прибытия</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DestinationPoint}"/>
-                
-                <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Дата начала поездки</Label>
-                <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RideDate}"/>
-                
-                <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Длительность поездки</Label>
-                <TimePicker Grid.Row="3" Grid.Column="1" SelectedTime="{Binding RideTime}"/>
-                
-                <!-- <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Длительность поездки</Label> -->
-                <!-- <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RideTime}"/> -->
-                
-                <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Стоимость</Label>
-                
-                <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding Cost}"/>
-                
-                <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">ID пассажира</Label>
-                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PassengerId}"/>
-                
-                
-                <Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">ID транспортного средства</Label>
-                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding VehicleId}"/>
-        
-                <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" 
-                            HorizontalAlignment="Right" 
-                            Orientation="Horizontal">
-                        <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
-                        <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-                </StackPanel>
-        </Grid>
-        
+
+
+    <Design.DataContext>
+        <viewModels:RideViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/TaxiStyles.axaml" />
+    </Window.Styles>
+
+
+    <Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Точка отправления</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DeparturePoint}" />
+
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Точка прибытия</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DestinationPoint}" />
+
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Дата начала поездки</Label>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RideDate}" />
+
+
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Длительность поездки</Label>
+        <TimePicker Grid.Row="3" Grid.Column="1" SelectedTime="{Binding RideTime}" />
+
+        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Стоимость</Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Cost}" />
+
+        <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">ID пассажира</Label>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PassengerId}" />
+
+
+        <Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">ID транспортного средства</Label>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding VehicleId}" />
+
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+            <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+        </StackPanel>
+    </Grid>
+
 </Window>

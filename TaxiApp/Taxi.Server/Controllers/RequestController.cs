@@ -144,7 +144,7 @@ public class RequestController : ControllerBase
             where vehicle.DriverId == driver.Id
             orderby vehicle.Rides.Count
             select driver).Distinct().Take(2).ToListAsync();
-        
+
         _logger.LogInformation("Get top 2 driver by count of rides");
         return query;
     }
@@ -196,7 +196,8 @@ public class RequestController : ControllerBase
     ///     Return list of passengers
     /// </returns>
     [HttpGet("max_rides_of_passenger")]
-    public async Task<ActionResult<IEnumerable<CountPassengerRidesGetDto>>> GetMaxRidesOfPassenger(DateTime minDate, DateTime maxDate)
+    public async Task<ActionResult<IEnumerable<CountPassengerRidesGetDto>>> GetMaxRidesOfPassenger(DateTime minDate,
+        DateTime maxDate)
     {
         await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
 

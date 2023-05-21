@@ -16,19 +16,19 @@ public class InfosAboutRidesGetDto
     ///     Patronymic - patronymic of the driver
     /// </summary>
     public string? Patronymic { get; set; }
-    
+
     /// <summary>
     ///     Count - count driver rides
     /// </summary>
     public int Count { get; set; }
-    
+
     /// <summary>
     ///     AverageTime - average time of driver's rides
     /// </summary>
-    public string AverageTime { get; set; } = string.Empty;
-    
+    public TimeSpan AverageTime { get; set; } = new();
+
     /// <summary>
     ///     MaxTime - max time of driver's rides
     /// </summary>
-    public string MaxTime { get; set; } = string.Empty;
+    public TimeSpan MaxTime { get; set; } = new();
 }

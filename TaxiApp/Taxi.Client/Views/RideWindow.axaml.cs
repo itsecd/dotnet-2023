@@ -1,8 +1,5 @@
 using System;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using Taxi.Client.ViewModels;
@@ -17,10 +14,9 @@ public partial class RideWindow : ReactiveWindow<RideViewModel>
 
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
-    
+
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Close();
     }
-    
 }

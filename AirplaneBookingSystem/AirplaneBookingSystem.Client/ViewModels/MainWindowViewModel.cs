@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
-using System.Net;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -82,7 +80,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.AddAirplaneAsync(newAirplane);
                 Airplanes.Add(airplaneViewModel);
                 Airplanes.Clear();
-                LoadAirplanesAsync();
+                LoadAllAsync();
             }
         });
 
@@ -113,7 +111,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.AddFlightAsync(newFlight);
                 Flights.Add(flightViewModel);
                 Flights.Clear();
-                LoadAirplanesAsync();
+                LoadAllAsync();
             }
         });
 
@@ -143,7 +141,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.AddTicketAsync(newTicket);
                 Tickets.Add(ticketViewModel);
                 Tickets.Clear();
-                LoadAirplanesAsync();
+                LoadAllAsync();
             }
         });
 
@@ -173,7 +171,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.AddClientAsync(newClient);
                 Clients.Add(clientViewModel);
                 Clients.Clear();
-                LoadClientsAsync();
+                LoadAllAsync();
             }
         });
 
@@ -194,38 +192,26 @@ public class MainWindowViewModel : ViewModelBase
 
         }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectedClient => selectedClient != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadTicketsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadAirplanesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadFlightsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadClientsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
     }
 
-    private async void LoadAirplanesAsync()
-    {
-        var airplanes = await _apiClient.GetAirplanesAsync();
-        foreach (var airplane in airplanes)
-        {
-            Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
-        }
-    }
-    private async void LoadFlightsAsync()
+    private async void LoadAllAsync()
     {
         var flights = await _apiClient.GetFlightsAsync();
         foreach (var flight in flights)
         {
             Flights.Add(_mapper.Map<FlightViewModel>(flight));
         }
-    }
-    private async void LoadTicketsAsync()
-    {
         var tickets = await _apiClient.GetTicketsAsync();
         foreach (var ticket in tickets)
         {
             Tickets.Add(_mapper.Map<TicketViewModel>(ticket));
         }
-    }
-    private async void LoadClientsAsync()
-    {
+        var airplanes = await _apiClient.GetAirplanesAsync();
+        foreach (var airplane in airplanes)
+        {
+            Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
+        }
         var clients = await _apiClient.GetClientsAsync();
         foreach (var client in clients)
         {

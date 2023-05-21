@@ -19,7 +19,7 @@ public class ClientViewModel : ViewModelBase
         get => _passportNumber;
         set => this.RaiseAndSetIfChanged(ref _passportNumber, value);
     }
-    private DateTime _birthdayData;
+    private DateTime _birthdayData = new();
     [Required]
     public DateTime BirthdayData
     {

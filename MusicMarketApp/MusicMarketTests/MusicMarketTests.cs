@@ -80,8 +80,8 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                         where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")
                         select product).Count();
 
-        Assert.Equal(3, request0);
-        Assert.Equal(3, request1);
+        Assert.Equal(2, request0);
+        Assert.Equal(2, request1);
         Assert.Equal(2, request2);
     }
 

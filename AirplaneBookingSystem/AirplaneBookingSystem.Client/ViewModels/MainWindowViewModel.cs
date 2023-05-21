@@ -232,11 +232,11 @@ public class MainWindowViewModel : ViewModelBase
         {
             Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
         }
-        //var clients = await _apiClient.GetClientsAsync();
-        //foreach (var client in clients)
-        //{
-        //    Clients.Add(_mapper.Map<ClientViewModel>(client));
-        //}
+        var clients = await _apiClient.GetClientsAsync();
+        foreach (var client in clients)
+        {
+            Clients.Add(_mapper.Map<ClientViewModel>(client));
+        }
         var analiticsFlights = await _apiClient.FlightWithMaxAmountOfClients();
         foreach (var analiticsFlight in analiticsFlights)
         {

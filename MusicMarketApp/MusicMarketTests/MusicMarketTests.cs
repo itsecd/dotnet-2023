@@ -1,5 +1,7 @@
 namespace MusicMarketTests;
 
+using Microsoft.EntityFrameworkCore.Internal;
+using MusicMarket;
 using System.Linq;
 
 public class MusicMarketTest : IClassFixture<MusicMarketFixture>
@@ -78,8 +80,8 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                         where (product.TypeOfCarrier == "vinyl record") && (product.Status == "sold")
                         select product).Count();
 
-        Assert.Equal(2, request0);
-        Assert.Equal(2, request1);
+        Assert.Equal(3, request0);
+        Assert.Equal(3, request1);
         Assert.Equal(2, request2);
     }
 
@@ -97,12 +99,16 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
 
         var customerPurchases =
             from customer in customers
-            from purchase in customer.IdPurchase
+            from purchase in purchases
+            from product in products
+            from seller in sellers
+            where customer.Id == purchase.IdCustomer && purchase.IdProduct == product.Id && seller.Id == product.IdSeller
             select new
             {
                 customer.Id,
-                PurchaseCost = purchase.Products.Sum(product => product.Price + product.Seller?.Price)
+                PurchaseCost = product.Price + seller.Price
             };
+
         var customerAvgPurchases =
             from customerPurchase in customerPurchases
             group customerPurchase by customerPurchase.Id into customer
@@ -128,25 +134,32 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
 
 
         var purchases = _fixture.FixturePurchases.ToList();
+        var products = _fixture.FixtureProducts.ToList();
+        var sellers = _fixture.FixtureSellers.ToList();
 
         var request = (from purchase in purchases
-                       where purchase.Date >= now.AddDays(-14)
+                       join product in products on purchase.IdProduct equals product.Id
+                       join seller in sellers on product.IdSeller equals seller.Id
                        select new
                        {
-                           seller = purchase.Products[0].IdSeller,
-                           count = purchase.Products.Count
+                           product.IdSeller,
+                           purchase.IdProduct,
+                           purchase.Date
+
                        }).ToList();
 
         var selCount = (from sel in request
-                        group sel by sel.seller.ShopName into g
+                        where sel.Date >= DateTime.Now.AddDays(-14)
+                        group sel by sel.IdSeller into g
                         select new
                         {
-                            seller = g.Key,
-                            count = g.Sum(x => x.count)
+                            sellerid = g.Key,
+                            count = g.Sum(x => x.IdProduct)
                         }).ToList();
 
         Assert.Equal(1, selCount[0].count);
         Assert.Equal(1, selCount[1].count);
+        Assert.Equal(1, selCount[2].count);
     }
 
 

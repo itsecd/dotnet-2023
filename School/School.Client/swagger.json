@@ -1,0 +1,1254 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SchoolServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Class": {
+      "get": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Получение всех классов",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Добавление нового класса",
+        "requestBody": {
+          "description": "класс",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Class/{id}": {
+      "get": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Получение класса по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор класса",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClassGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Изменение данных о классе",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор класса",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Изменяемый класс",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Удаление класса",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор удаляемого класса",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Grade": {
+      "get": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Получение всех оценок",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Добавление новой оценки",
+        "requestBody": {
+          "description": "оценка",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Grade/{id}": {
+      "get": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Получение оценки по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор оценки",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Изменение данных об оценке",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор класса",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Изменяемая оценка",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Удаление оценки",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор удаляемой оценки",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAllSubject": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Выведите информацию обо всех элементах. Проверьте количество элементов",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAllStudentByClassId/{classId}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Отобразить информацию обо всех учащихся в указанном классе, отсортировать по имени.",
+        "parameters": [
+          {
+            "name": "classId",
+            "in": "path",
+            "description": "Идентификатор класса",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/StudentsGetsGradesByDay/{date}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Выведите информацию обо всех учащихся, получивших оценки в указанный день.",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "День выставления оценки",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Top5StudentsAvrMark": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Выделите 5 лучших студентов по среднему баллу",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/MaxAvrGradeStudentsByPeriod": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Вывод студентов с максимальным средним баллом за указанный период",
+        "parameters": [
+          {
+            "name": "first",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "second",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/StatisticSubjects": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Выведите информацию о минимальном, среднем и максимальном балле по каждому предмету",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Student": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Получение всех студентов",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Добавление нового студента",
+        "requestBody": {
+          "description": "студент",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Student/{id}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Получение студента по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Изменение данных выбранного студента",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Студент, данные которого нужно изменить",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Удаление студента",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Subject": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Получение всех предметов",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Добавление нового предмета",
+        "requestBody": {
+          "description": "предмет",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Subject/{id}": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Получение предмета по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор предмета",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Изменение данных о школьном предмете",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор предмета",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Изменяемый предмет",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Удаление предмета",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор удаляемого предмета",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ClassGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор класса",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Номер класса",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Литера класса"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Класс - класс описывающий класс ученика"
+      },
+      "ClassPostDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "description": "Номер класса",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Литера класса"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Класс - класс описывающий класс ученика"
+      },
+      "GradeGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "id Предмета",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "description": "id Студента",
+            "format": "int32"
+          },
+          "mark": {
+            "type": "integer",
+            "description": "Оценка",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Дата оценки",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Grade - класс описывающий оценки ученика"
+      },
+      "GradePostDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "id Предмета",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "description": "id Студента",
+            "format": "int32"
+          },
+          "mark": {
+            "type": "integer",
+            "description": "Оценка",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Дата оценки",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Имя",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Отчество",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string",
+            "description": "Паспортные данные",
+            "nullable": true
+          },
+          "classId": {
+            "type": "integer",
+            "description": "Класс студента",
+            "format": "int32"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dto для метода Get класса Student"
+      },
+      "StudentPostDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Имя",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Отчество",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string",
+            "description": "Паспортные данные",
+            "nullable": true
+          },
+          "classId": {
+            "type": "integer",
+            "description": "Класс студента",
+            "format": "int32"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Наименование предмета",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "description": "Год обучения",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Subject class для метода Get"
+      },
+      "SubjectPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Наименование предмета",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "description": "Год обучения",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

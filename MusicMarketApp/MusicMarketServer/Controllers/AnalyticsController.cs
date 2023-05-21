@@ -71,13 +71,13 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// Запрос 2 - Вывести информацию о всех товарах указанного продавца, упорядочить по цене.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Seller id</param>
     /// <returns>Ok(information about products by seller  with id)</returns>
     [HttpGet("All_products_by_seller_id")]
     public async Task<ActionResult<ProductGetDto>> ProductsBySeller(int id)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get information about products with seller id {id}");
+        _logger.LogInformation("Get information about products by seller");
         var products = await (from product in context.Products
                               where product.IdSeller == id
                               orderby product.Price

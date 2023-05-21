@@ -255,7 +255,7 @@ public class FactoryTest
         Assert.Equal(100, enterprise.EmployeesCount);
         Assert.Equal(1000, enterprise.TotalArea);
         Assert.Equal(1000, enterprise.TotalArea);
-       // Assert.Equal(new List<Supply>() { supply }, enterprise.Supplies);
+        // Assert.Equal(new List<Supply>() { supply }, enterprise.Supplies);
     }
 
     /// <summary>

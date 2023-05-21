@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
@@ -51,14 +50,14 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedOwnershipForm;
         set => this.RaiseAndSetIfChanged(ref _selectedOwnershipForm, value);
     }
-    
+
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
-    
-    public ReactiveCommand<Unit, Unit> OnAddCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnChangeCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteCommand { get; set; }
-    
+
+    public ReactiveCommand<Unit, Unit> OnAddEnterpriseCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeEnterpriseCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteEnterpriseCommand { get; set; }
+
     public ReactiveCommand<Unit, Unit> OnAddSupplierCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeSupplierCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteSupplierCommand { get; set; }
@@ -67,42 +66,40 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeSupplyCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteSupplyCommand { get; set; }
 
-    public Interaction<EnterpriseViewModel, EnterpriseViewModel?> ShowEnterpriseDialog { get; } 
+    public Interaction<EnterpriseViewModel, EnterpriseViewModel?> ShowEnterpriseDialog { get; }
     public Interaction<SupplierViewModel, SupplierViewModel?> ShowSupplierDialog { get; }
     public Interaction<SupplyViewModel, SupplyViewModel?> ShowSupplyDialog { get; }
-    public Interaction<TypeIndustryViewModel, TypeIndustryViewModel?> ShowTypeIndustryDialog { get; }
 
-    public MainWindowViewModel() 
-    { 
+    public MainWindowViewModel()
+    {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
         ShowEnterpriseDialog = new Interaction<EnterpriseViewModel, EnterpriseViewModel?>();
         ShowSupplierDialog = new Interaction<SupplierViewModel, SupplierViewModel?>();
         ShowSupplyDialog = new Interaction<SupplyViewModel, SupplyViewModel?>();
-       // ShowTypeIndustryDialog = new Interaction<TypeIndustryViewModel, TypeIndustryViewModel?>();
 
-        OnAddCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnAddEnterpriseCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var enterpriseViewModel = await ShowEnterpriseDialog.Handle(new EnterpriseViewModel());
-            if(enterpriseViewModel != null)
+            if (enterpriseViewModel != null)
             {
                 var newEnterprise = _mapper.Map<EnterprisePostDto>(enterpriseViewModel);
                 await _apiClient.AddEnterpriseAsync(newEnterprise);
                 Enterprises.Add(enterpriseViewModel);
             }
         });
-        OnChangeCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnChangeEnterpriseCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var enterpriseViewModel = await ShowEnterpriseDialog.Handle(SelectedEnterprise!);
             if (enterpriseViewModel != null)
             {
                 var newEnterprise = _mapper.Map<EnterprisePostDto>(enterpriseViewModel);
                 await _apiClient.UpdateEnterpriseAsync(SelectedEnterprise!.EnterpriseID, newEnterprise);
-                _mapper.Map (enterpriseViewModel, SelectedEnterprise);
+                _mapper.Map(enterpriseViewModel, SelectedEnterprise);
             }
         }, this.WhenAnyValue(vm => vm.SelectedEnterprise).Select(selectEnterprise => selectEnterprise != null));
-        OnDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteEnterpriseCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             await _apiClient.DeleteEnterpriseAsync(SelectedEnterprise!.EnterpriseID);
             Enterprises.Remove(SelectedEnterprise);
@@ -120,11 +117,10 @@ public class MainWindowViewModel : ViewModelBase
         });
         OnChangeSupplierCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var supplierViewModel = await ShowSupplierDialog!.Handle(SelectedSupplier!);
+            var supplierViewModel = await ShowSupplierDialog.Handle(SelectedSupplier!);
             if (supplierViewModel != null)
             {
-                var newSupplier = _mapper.Map<SupplierPostDto>(supplierViewModel);
-                await _apiClient.UpdateSupplierAsync(SelectedSupplier!.SupplierID, newSupplier);
+                await _apiClient.UpdateSupplierAsync(SelectedSupplier!.SupplierID, _mapper.Map<SupplierPostDto>(supplierViewModel));
                 _mapper.Map(supplierViewModel, SelectedSupplier);
             }
         }, this.WhenAnyValue(vm => vm.SelectedSupplier).Select(selectSupplier => selectSupplier != null));
@@ -163,6 +159,7 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
+
     }
 
     private async void LoadAllAsync()

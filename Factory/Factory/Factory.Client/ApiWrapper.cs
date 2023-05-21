@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Factory.Client;
 public class ApiWrapper
 {
-    private readonly ApiClient _client; 
+    private readonly ApiClient _client;
     public ApiWrapper()
     {
         var configuration = new ConfigurationBuilder()
@@ -18,7 +18,7 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-   public Task<ICollection<EnterpriseGetDto>> GetEnterpriseAsync()
+    public Task<ICollection<EnterpriseGetDto>> GetEnterpriseAsync()
     {
         return _client.EnterpriseAllAsync();
     }

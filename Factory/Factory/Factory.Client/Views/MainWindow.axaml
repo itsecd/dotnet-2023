@@ -19,13 +19,13 @@
 		<TabItem Header="Enterprise" VerticalContentAlignment="Center">
 			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+					<Button Classes="ToolButton" Command="{Binding OnAddEnterpriseCommand}">
 						<Image Source="/Assets/add.png"/>
 					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+					<Button Classes="ToolButton" Command="{Binding OnChangeEnterpriseCommand}">
 						<Image Source="/Assets/settings.png"/>
 					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+					<Button Classes="ToolButton" Command="{Binding OnDeleteEnterpriseCommand}">
 						<Image Source="/Assets/delete.png"/>
 					</Button>
 				</StackPanel>

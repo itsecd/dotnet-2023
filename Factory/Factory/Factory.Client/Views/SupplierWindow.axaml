@@ -8,7 +8,7 @@
 		Title="Supplier editing"
 		MaxWidth="500"
 		SizeToContent="Height">
-
+	
 	<Design.DataContext>
 		<vm:SupplierViewModel/>
 	</Design.DataContext>

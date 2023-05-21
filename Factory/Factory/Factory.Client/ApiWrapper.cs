@@ -76,4 +76,14 @@ public class ApiWrapper
     {
         return _client.Supply4Async(id);
     }
+
+    public Task<ICollection<TypeIndustryGetDto>> GetTypeIndustryAsync()
+    {
+        return _client.TypeindustryAllAsync();
+    }
+
+    public Task<ICollection<OwnershipFormGetDto>> GetOwnershipFormAsync()
+    {
+        return _client.OwnershipformAllAsync();
+    }
 }

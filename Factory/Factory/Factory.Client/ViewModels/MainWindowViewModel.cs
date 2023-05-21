@@ -14,7 +14,8 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<EnterpriseViewModel> Enterprises { get; } = new();
     public ObservableCollection<SupplierViewModel> Suppliers { get; } = new();
     public ObservableCollection<SupplyViewModel> Supplies { get; } = new();
-
+    public ObservableCollection<TypeIndustryViewModel> TypeIndustries { get; } = new();
+    public ObservableCollection<OwnershipFormViewModel> OwnershipForms { get; } = new();
 
     private EnterpriseViewModel? _selectedEnterprise;
     public EnterpriseViewModel? SelectedEnterprise
@@ -37,8 +38,21 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedSupply, value);
     }
 
-    private readonly ApiWrapper _apiClient;
+    private TypeIndustryViewModel? _selectedTypeIndustry;
+    public TypeIndustryViewModel? SelectedTypeIndustry
+    {
+        get => _selectedTypeIndustry;
+        set => this.RaiseAndSetIfChanged(ref _selectedTypeIndustry, value);
+    }
 
+    private OwnershipFormViewModel? _selectedOwnershipForm;
+    public OwnershipFormViewModel? SelectedOwnershipForm
+    {
+        get => _selectedOwnershipForm;
+        set => this.RaiseAndSetIfChanged(ref _selectedOwnershipForm, value);
+    }
+    
+    private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
     
     public ReactiveCommand<Unit, Unit> OnAddCommand { get; set; }
@@ -56,6 +70,7 @@ public class MainWindowViewModel : ViewModelBase
     public Interaction<EnterpriseViewModel, EnterpriseViewModel?> ShowEnterpriseDialog { get; } 
     public Interaction<SupplierViewModel, SupplierViewModel?> ShowSupplierDialog { get; }
     public Interaction<SupplyViewModel, SupplyViewModel?> ShowSupplyDialog { get; }
+    public Interaction<TypeIndustryViewModel, TypeIndustryViewModel?> ShowTypeIndustryDialog { get; }
 
     public MainWindowViewModel() 
     { 
@@ -65,6 +80,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowEnterpriseDialog = new Interaction<EnterpriseViewModel, EnterpriseViewModel?>();
         ShowSupplierDialog = new Interaction<SupplierViewModel, SupplierViewModel?>();
         ShowSupplyDialog = new Interaction<SupplyViewModel, SupplyViewModel?>();
+       // ShowTypeIndustryDialog = new Interaction<TypeIndustryViewModel, TypeIndustryViewModel?>();
 
         OnAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -146,33 +162,39 @@ public class MainWindowViewModel : ViewModelBase
 
         }, this.WhenAnyValue(vm => vm.SelectedSupply).Select(selectSupply => selectSupply != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadEnterprisesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSupplierAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSupplyAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
     }
 
-    private async void LoadEnterprisesAsync()
+    private async void LoadAllAsync()
     {
         var enterprises = await _apiClient.GetEnterpriseAsync();
         foreach (var enterprise in enterprises)
         {
             Enterprises.Add(_mapper.Map<EnterpriseViewModel>(enterprise));
         }
-    }
-    private async void LoadSupplierAsync()
-    {
+
         var suppliers = await _apiClient.GetSupplierAsync();
         foreach (var supplier in suppliers)
         {
             Suppliers.Add(_mapper.Map<SupplierViewModel>(supplier));
         }
-    }
-    private async void LoadSupplyAsync()
-    {
+
         var supplies = await _apiClient.GetSupplyAsync();
         foreach (var supply in supplies)
         {
             Supplies.Add(_mapper.Map<SupplyViewModel>(supply));
+        }
+
+        var types = await _apiClient.GetTypeIndustryAsync();
+        foreach (var type in types)
+        {
+            TypeIndustries.Add(_mapper.Map<TypeIndustryViewModel>(type));
+        }
+
+        var forms = await _apiClient.GetOwnershipFormAsync();
+        foreach (var form in forms)
+        {
+            OwnershipForms.Add(_mapper.Map<OwnershipFormViewModel>(form));
         }
     }
 }

@@ -95,5 +95,29 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
+			<TabItem Header="Type Industry" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding TypeIndustries}"
+							  SelectedItem="{Binding SelectedTypeIndustry}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="#" Binding="{Binding TypeIndustryID}" />
+							<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+		<TabItem Header="Ownership Form" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding OwnershipForms}"
+						  SelectedItem="{Binding SelectedOwnershipForms}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="#" Binding="{Binding OwnershipFormID}" />
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 	</TabControl>
 </Window>

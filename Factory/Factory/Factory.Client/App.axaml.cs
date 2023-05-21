@@ -34,7 +34,14 @@ public partial class App : Application
                 cfg.CreateMap<SupplyViewModel, SupplyGetDto>();
                 cfg.CreateMap<SupplyViewModel, SupplyPostDto>();
                 cfg.CreateMap<SupplyPostDto, SupplyViewModel>();
+
+                cfg.CreateMap<TypeIndustryGetDto, TypeIndustryViewModel>();
+                cfg.CreateMap<TypeIndustryViewModel, TypeIndustryGetDto>();
+
+                cfg.CreateMap<OwnershipFormGetDto, OwnershipFormViewModel>();
+                cfg.CreateMap<OwnershipFormViewModel, OwnershipFormGetDto>();
             });
+
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
             desktop.MainWindow = new MainWindow

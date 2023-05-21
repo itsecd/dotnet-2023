@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace Factory.Client.ViewModels;
@@ -12,32 +13,32 @@ public class SupplyViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
-    private int _enterpriseID;
-    public int EnterpriseID 
-    { 
-        get => _enterpriseID; 
-        set => this.RaiseAndSetIfChanged(ref _enterpriseID, value); 
+    private int _enterpriseID = 0;
+    public int EnterpriseID
+    {
+        get => _enterpriseID;
+        set => this.RaiseAndSetIfChanged(ref _enterpriseID, value);
     }
 
-    private int _supplierID;
+    private int _supplierID = 0;
     public int SupplierID 
     { 
         get => _supplierID; 
         set => this.RaiseAndSetIfChanged(ref _supplierID, value); 
     } 
 
-    private DateTime _date;
-    public DateTime Date 
+    private DateTimeOffset _date = new DateTime(1970, 1, 1);
+    public DateTimeOffset Date 
     { 
         get => _date; 
         set => this.RaiseAndSetIfChanged(ref _date, value);
     }
 
-    private int _quantity;
+    private int _quantity = 0;
     public int Quantity 
     { 
         get => _quantity; 
-        set=> this.RaiseAndSetIfChanged(ref _quantity, value); 
+        set => this.RaiseAndSetIfChanged(ref _quantity, value); 
     }
 
     public ReactiveCommand<Unit, SupplyViewModel> OnSubmitCommand { get; }

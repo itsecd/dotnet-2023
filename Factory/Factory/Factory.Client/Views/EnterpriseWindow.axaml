@@ -8,6 +8,7 @@
 		Title="Enterprise editing"
 		MaxWidth="500"
 		SizeToContent="Height">
+	
 	<Design.DataContext>
 		<vm:EnterpriseViewModel/>
 	</Design.DataContext>

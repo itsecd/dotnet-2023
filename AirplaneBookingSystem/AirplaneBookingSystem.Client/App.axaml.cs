@@ -29,6 +29,8 @@ public partial class App : Application
                 cfg.CreateMap<TicketGetDto, TicketViewModel>();
                 cfg.CreateMap<TicketViewModel, TicketPostDto>();
 
+                cfg.CreateMap<ClientGetDto, ClientViewModel>();
+                cfg.CreateMap<ClientViewModel, ClientPostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

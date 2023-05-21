@@ -11,6 +11,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         InitializeComponent();
         this.WhenActivated(d => d(ViewModel!.ShowAirplaneDialog.RegisterHandler(ShowDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowFlightDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowClientDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowTicketDialog.RegisterHandler(ShowDialogAsync)));
     }
     private async Task ShowDialogAsync(InteractionContext<AirplaneViewModel, AirplaneViewModel?> interaction)
     {
@@ -28,6 +30,24 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<FlightViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowDialogAsync(InteractionContext<TicketViewModel, TicketViewModel?> interaction)
+    {
+        var dialog = new TicketWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<TicketViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowDialogAsync(InteractionContext<ClientViewModel, ClientViewModel?> interaction)
+    {
+        var dialog = new ClientWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<ClientViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

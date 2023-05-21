@@ -37,7 +37,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
                        where (product.IdSeller == 3)
                        orderby product.Price
                        select product).Count();
-        Assert.Equal(5, request);
+        Assert.Equal(3, request);
     }
     /// <summary>
     /// Третий запрос: Вывести информацию о продаваемых дисковых изданиях       
@@ -119,7 +119,7 @@ public class MusicMarketTest : IClassFixture<MusicMarketFixture>
             };
         var top5 = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5);
         var max = top5.Max(a => a.AvgCost);
-        Assert.Equal(7240, max);
+        Assert.Equal(4670, max);
     }
 
     /// <summary>

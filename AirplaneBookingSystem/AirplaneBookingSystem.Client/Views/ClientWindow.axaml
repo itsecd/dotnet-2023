@@ -24,7 +24,7 @@
 
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PassportNumber}"/>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding BirthdayData}"/>
+		<DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding BirthdayData}"/>
 		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">

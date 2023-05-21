@@ -28,8 +28,8 @@
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NumberOfFlight}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DepartureCity}"/>
 		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ArrivalCity}"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DepartureDate}"/>
-		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ArrivalDate}"/>
+		<DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding DepartureDate}"/>
+		<DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding ArrivalDate}"/>
 		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding AirplaneId}"/>
 		<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"

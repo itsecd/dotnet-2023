@@ -3,7 +3,7 @@
         xmlns:vm="using:AirplaneBookingSystem.Client.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="750"
         x:Class="AirplaneBookingSystem.Client.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="AirplaneBookingSystem.Client">

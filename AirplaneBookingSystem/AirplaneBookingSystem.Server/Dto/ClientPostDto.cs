@@ -8,7 +8,7 @@ public class ClientPostDto
     /// <summary>
     /// Client`s birthday
     /// </summary>
-    public DateTime BirthdayData { get; set; } = new DateTime();
+    public DateTimeOffset BirthdayData { get; set; } = new DateTimeOffset();
     /// <summary>
     /// Client`s name
     /// </summary>

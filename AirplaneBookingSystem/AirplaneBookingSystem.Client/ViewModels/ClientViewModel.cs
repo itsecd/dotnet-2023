@@ -19,9 +19,9 @@ public class ClientViewModel : ViewModelBase
         get => _passportNumber;
         set => this.RaiseAndSetIfChanged(ref _passportNumber, value);
     }
-    private DateTime _birthdayData = new();
+    private DateTimeOffset _birthdayData = DateTime.Today;
     [Required]
-    public DateTime BirthdayData
+    public DateTimeOffset BirthdayData
     {
         get => _birthdayData;
         set => this.RaiseAndSetIfChanged(ref _birthdayData, value);

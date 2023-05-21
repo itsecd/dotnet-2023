@@ -30,7 +30,7 @@ public class SpecializationController : Controller
     /// Получение списка специальностей.
     /// </summary>
     /// <returns>Список специальностей.</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetSpecializations")]
     public async Task<IEnumerable<SpecializationDtoGet>> GetSpecializations()
     {
         return (await _selectionCommitteeRepository.GetSpecializations())
@@ -48,7 +48,7 @@ public class SpecializationController : Controller
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <returns>Факультет.</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetSpecialization")]
     public async Task<ActionResult<SpecializationDtoGet>> GetSpecialization(int id)
     {
         var specialization = await _selectionCommitteeRepository.GetSpecialization(id);
@@ -71,7 +71,7 @@ public class SpecializationController : Controller
     /// Добавление специальности.
     /// </summary>
     /// <param name="specialization">Специальность.</param>
-    [HttpPost]
+    [HttpPost(Name = "AddSpecialization")]
     public async Task<ActionResult<int>> AddSpecialization([FromBody] SpecializationDtoPostOrPut specialization)
     {
         if (await _selectionCommitteeRepository.GetFaculty(specialization.FacultyId) == null)
@@ -93,7 +93,7 @@ public class SpecializationController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <param name="specializationDtoPostOrPut">Содержит новые данные для специальности.</param>
     /// <returns>Результат обновления.</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "UpdateSpecialization")]
     public async Task<IActionResult> UpdateSpecialization(int id, [FromBody] SpecializationDtoPostOrPut specializationDtoPostOrPut)
     {
         var specialization = await _selectionCommitteeRepository.GetSpecialization(id);
@@ -123,7 +123,7 @@ public class SpecializationController : Controller
     /// </summary>
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteSpecialization")]
     public async Task<IActionResult> DeleteSpecialization(int id)
     {
         var specialization = await _selectionCommitteeRepository.GetSpecialization(id);

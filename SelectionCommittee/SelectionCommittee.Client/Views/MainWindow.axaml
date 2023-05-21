@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SelectionCommittee.Client.Views.MainWindow"
+        Title="Приемная комиссия">
+
+  <Window.Styles>
+    <StyleInclude Source="/SelectionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+    <Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+
+      <StackPanel Grid.Row="0" Orientation="Vertical">
+        <Label>Абитуриенты</Label>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+          <Button Command="{Binding OnAddEnrolleeCommand}">Добавить</Button>
+          <Button Command="{Binding OnChangeEnrolleeCommand}">Редактировать</Button>
+          <Button Command="{Binding OnDeleteEnrolleeCommand}">Удалить</Button>
+        </StackPanel>
+        <TextBlock Text="{Binding EnrolleeExceptionValue}"></TextBlock>
+      </StackPanel>
+
+      <DataGrid Classes="ResponseTable" Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Enrollees}"
+					SelectedItem="{Binding SelectedEnrollee}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+          <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+          <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+          <DataGridTextColumn Header="Дата рождения" Binding="{Binding BirthDate}"/>
+          <DataGridTextColumn Header="Страна" Binding="{Binding Country}"/>
+          <DataGridTextColumn Header="Город" Binding="{Binding City}"/>
+          <DataGridTextColumn Header="Идентификатор специальности" Binding="{Binding SpecializationId}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="2" Orientation="Vertical">
+        <Label>Результаты экзаменов</Label>
+        <StackPanel Orientation="Horizontal">
+          <Button Command="{Binding OnAddExamResultCommand}">Добавить</Button>
+          <Button Command="{Binding OnChangeExamResultCommand}">Редактировать</Button>
+          <Button Command="{Binding OnDeleteExamResultCommand}">Удалить</Button>
+        </StackPanel>
+        <TextBlock Text="{Binding ExamResultExceptionValue}"></TextBlock>
+      </StackPanel>
+
+      <DataGrid Classes="ResponseTable" Grid.Row="3" AutoGenerateColumns="False" Items="{Binding ExamResults}"
+					  SelectedItem="{Binding SelectedExamResult}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Предмет" Binding="{Binding SubjectName}"/>
+          <DataGridTextColumn Header="Количество баллов" Binding="{Binding Points}"/>
+          <DataGridTextColumn Header="Идентификатор абитуриента" Binding="{Binding EnrolleeId}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="4" Orientation="Vertical">
+        <Label>Факультеты</Label>
+        <StackPanel Orientation="Horizontal">
+          <Button Command="{Binding OnAddFacultyCommand}">Добавить</Button>
+          <Button Command="{Binding OnChangeFacultyCommand}">Редактировать</Button>
+          <Button Command="{Binding OnDeleteFacultyCommand}">Удалить</Button>
+        </StackPanel>
+        <TextBlock Text="{Binding FacultyExceptionValue}"></TextBlock>
+      </StackPanel>
+
+      <DataGrid Classes="ResponseTable" Grid.Row="5" AutoGenerateColumns="False" Items="{Binding Faculties}"
+					  SelectedItem="{Binding SelectedFaculty}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="6" Orientation="Vertical">
+        <Label>Специальности</Label>
+        <StackPanel Orientation="Horizontal">
+          <Button Command="{Binding OnAddSpecializationCommand}">Добавить</Button>
+          <Button Command="{Binding OnChangeSpecializationCommand}">Редактировать</Button>
+          <Button Command="{Binding OnDeleteSpecializationCommand}">Удалить</Button>
+        </StackPanel>
+        <TextBlock Text="{Binding SpecializationExceptionValue}"></TextBlock>
+      </StackPanel>
+
+      <DataGrid Classes="ResponseTable" Grid.Row="7" AutoGenerateColumns="False" Items="{Binding Specializations}"
+					  SelectedItem="{Binding SelectedSpecialization}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Приоритет" Binding="{Binding Priority}"/>
+          <DataGridTextColumn Header="Идентификатор факультета" Binding="{Binding FacultyId}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </ScrollViewer>
+</Window>

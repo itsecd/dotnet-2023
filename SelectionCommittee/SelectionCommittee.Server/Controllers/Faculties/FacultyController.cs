@@ -30,7 +30,7 @@ public class FacultyController : Controller
     /// Получение списка факультетов.
     /// </summary>
     /// <returns>Список факультетов.</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetFaculties")]
     public async Task<IEnumerable<FacultyDtoGet>> GetFaculties()
     {
         return (await _selectionCommitteeRepository.GetFaculties())
@@ -46,7 +46,7 @@ public class FacultyController : Controller
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <returns>Факультет.</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetFaculty")]
     public async Task<ActionResult<FacultyDtoGet>> GetFaculty(int id)
     {
         var faculty = await _selectionCommitteeRepository.GetFaculty(id);
@@ -67,7 +67,7 @@ public class FacultyController : Controller
     /// Добавление факультета.
     /// </summary>
     /// <param name="faculty">Факультет.</param>
-    [HttpPost]
+    [HttpPost(Name = "AddFaculty")]
     public async Task<ActionResult<int>> AddFaculty([FromBody] FacultyDtoPostOrPut faculty)
     {
         return Ok(await _selectionCommitteeRepository.AddFaculty(new Faculty
@@ -82,7 +82,7 @@ public class FacultyController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <param name="facultyDtoPostOrPut">Содержит новые данные для факультета.</param>
     /// <returns>Результат обновления.</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "UpdateFaculty")]
     public async Task<IActionResult> UpdateFaculty(int id, [FromBody] FacultyDtoPostOrPut facultyDtoPostOrPut)
     {
         var faculty = await _selectionCommitteeRepository.GetFaculty(id);
@@ -105,7 +105,7 @@ public class FacultyController : Controller
     /// </summary>
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteFaculty")]
     public async Task<IActionResult> DeleteFaculty(int id)
     {
         var faculty = await _selectionCommitteeRepository.GetFaculty(id);

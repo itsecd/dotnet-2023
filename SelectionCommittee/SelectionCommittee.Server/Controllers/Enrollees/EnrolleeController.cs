@@ -30,7 +30,7 @@ public class EnrolleeController : Controller
     /// Получение списка абитуриентов.
     /// </summary>
     /// <returns>Список абитуриентов.</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetEnrollees")]
     public async Task<IEnumerable<EnrolleeDtoGet>> GetEnrollees()
     {
         return (await _selectionCommitteeRepository.GetEnrollees()).Select(enrollee => new EnrolleeDtoGet
@@ -52,7 +52,7 @@ public class EnrolleeController : Controller
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <returns>Абитуриента.</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetEnrollee")]
     public async Task<ActionResult<EnrolleeDtoGet>> GetEnrollee(int id)
     {
         var enrollee = await _selectionCommitteeRepository.GetEnrollee(id);
@@ -80,7 +80,7 @@ public class EnrolleeController : Controller
     /// Добавление абитуриента.
     /// </summary>
     /// <param name="enrollee">Абитуриент.</param>
-    [HttpPost]
+    [HttpPost(Name = "AddEnrollee")]
     public async Task<ActionResult<int>> AddEnrollee([FromBody] EnrolleeDtoPostOrPut enrollee)
     {
         if (await _selectionCommitteeRepository.GetSpecialization(enrollee.SpecializationId) == null)
@@ -107,7 +107,7 @@ public class EnrolleeController : Controller
     /// <param name="id">Идентификатор.</param>
     /// <param name="enrolleeDtoPostOrPut">Содержит новые данные для абитуриента</param>
     /// <returns>Результат обновления.</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "UpdateEnrollee")]
     public async Task<IActionResult> UpdateEnrollee(int id, [FromBody] EnrolleeDtoPostOrPut enrolleeDtoPostOrPut)
     {
         if (await _selectionCommitteeRepository.GetEnrollee(id) == null)
@@ -140,7 +140,7 @@ public class EnrolleeController : Controller
     /// </summary>
     /// <param name="id">Идентификатор</param>
     /// <returns>Результат удаления.</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteEnrollee")]
     public async Task<IActionResult> DeleteEnrollee(int id)
     {
         var enrollee = await _selectionCommitteeRepository.GetEnrollee(id);

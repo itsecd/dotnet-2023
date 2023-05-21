@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SelectionCommittee.Client.Views.EnrolleeWindow"
+		xmlns:vm="using:SelectionCommittee.Client.ViewModels"
+        Title="Редактирование абитуриента"
+		SizeToContent="Height"
+		MaxWidth="1000">
+  <Design.DataContext>
+    <vm:EnrolleeViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+    <StyleInclude Source="/SelectionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *">
+    <Label Grid.Row="0" Grid.Column="0">Имя</Label>
+    <Label Grid.Row="0" Grid.Column="1">Фамилия</Label>
+    <Label Grid.Row="0" Grid.Column="2">Отчество</Label>
+    <Label Grid.Row="0" Grid.Column="3">Дата рождения</Label>
+    <Label Grid.Row="0" Grid.Column="4">Страна</Label>
+    <Label Grid.Row="0" Grid.Column="5">Город</Label>
+    <Label Grid.Row="0" Grid.Column="6">Идентификатор специальности</Label>
+
+    <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding FirstName}"/>
+    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}"/>
+    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Patronymic}"/>
+    <DatePicker x:Name="enrolleeBirthDate" Grid.Row="1" Grid.Column="3" SelectedDateChanged="ChangedEnrolleeCreationDateEvent"/>
+    <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding Country}"/>
+    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding City}"/>
+    <TextBox Grid.Row="1" Grid.Column="6" Text="{Binding SpecializationId}"/>
+
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal">
+      <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+      <Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+    </StackPanel>
+  </Grid>
+
+
+</Window>

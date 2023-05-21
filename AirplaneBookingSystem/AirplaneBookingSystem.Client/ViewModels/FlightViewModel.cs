@@ -1,7 +1,6 @@
 ﻿using ReactiveUI;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Reactive;
 
 namespace AirplaneBookingSystem.Client.ViewModels;
@@ -34,14 +33,14 @@ public class FlightViewModel : ViewModelBase
         get => _arrivalCity;
         set => this.RaiseAndSetIfChanged(ref _arrivalCity, value);
     }
-    private DateTimeOffset _departureDate = new();
+    private DateTimeOffset _departureDate = DateTime.Today;
     [Required]
     public DateTimeOffset DepartureDate
     {
         get => _departureDate;
         set => this.RaiseAndSetIfChanged(ref _departureDate, value);
     }
-    private DateTimeOffset _arrivalDate = new();
+    private DateTimeOffset _arrivalDate = DateTime.Today;
     [Required]
     public DateTimeOffset ArrivalDate
     {

@@ -2,6 +2,7 @@
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -83,6 +84,9 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.AddAirplaneAsync(newAirplane);
                 Airplanes.Add(airplaneViewModel);
                 Airplanes.Clear();
+                Clients.Clear();
+                Tickets.Clear();
+                Flights.Clear();
                 LoadAllAsync();
             }
         });
@@ -108,11 +112,14 @@ public class MainWindowViewModel : ViewModelBase
         OnAddCommandFlight = ReactiveCommand.CreateFromTask(async () =>
         {
             var flightViewModel = await ShowFlightDialog.Handle(new FlightViewModel());
-            if (flightViewModel != null)
+            if (flightViewModel != null && Airplanes.Any(a => a.Id == flightViewModel.AirplaneId))
             {
                 var newFlight = _mapper.Map<FlightPostDto>(flightViewModel);
                 await _apiClient.AddFlightAsync(newFlight);
                 Flights.Add(flightViewModel);
+                Airplanes.Clear();
+                Clients.Clear();
+                Tickets.Clear();
                 Flights.Clear();
                 LoadAllAsync();
             }
@@ -138,12 +145,15 @@ public class MainWindowViewModel : ViewModelBase
         OnAddCommandTicket = ReactiveCommand.CreateFromTask(async () =>
         {
             var ticketViewModel = await ShowTicketDialog.Handle(new TicketViewModel());
-            if (ticketViewModel != null)
+            if (ticketViewModel != null && Flights.Any(f => f.Id == ticketViewModel.FlightId) && Clients.Any(c => c.Id == ticketViewModel.ClientId))
             {
                 var newTicket = _mapper.Map<TicketPostDto>(ticketViewModel);
                 await _apiClient.AddTicketAsync(newTicket);
                 Tickets.Add(ticketViewModel);
+                Airplanes.Clear();
+                Clients.Clear();
                 Tickets.Clear();
+                Flights.Clear();
                 LoadAllAsync();
             }
         });
@@ -173,7 +183,10 @@ public class MainWindowViewModel : ViewModelBase
                 var newClient = _mapper.Map<ClientPostDto>(clientViewModel);
                 await _apiClient.AddClientAsync(newClient);
                 Clients.Add(clientViewModel);
+                Airplanes.Clear();
                 Clients.Clear();
+                Tickets.Clear();
+                Flights.Clear();
                 LoadAllAsync();
             }
         });
@@ -224,10 +237,10 @@ public class MainWindowViewModel : ViewModelBase
         {
             Airplanes.Add(_mapper.Map<AirplaneViewModel>(airplane));
         }
-        var clients = await _apiClient.GetClientsAsync();
-        foreach (var client in clients)
-        {
-            Clients.Add(_mapper.Map<ClientViewModel>(client));
-        }
+        //var clients = await _apiClient.GetClientsAsync();
+        //foreach (var client in clients)
+        //{
+        //    Clients.Add(_mapper.Map<ClientViewModel>(client));
+        //}
     }
 }

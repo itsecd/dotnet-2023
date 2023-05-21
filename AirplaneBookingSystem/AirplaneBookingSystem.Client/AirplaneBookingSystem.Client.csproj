@@ -58,6 +58,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ClientWindow.axaml.cs">
+      <DependentUpon>ClientWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TicketWindow.axaml.cs">
       <DependentUpon>TicketWindow.axaml</DependentUpon>
     </Compile>

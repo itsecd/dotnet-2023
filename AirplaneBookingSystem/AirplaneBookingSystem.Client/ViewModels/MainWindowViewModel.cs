@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -15,6 +17,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<AirplaneViewModel> Airplanes { get; } = new();
     public ObservableCollection<FlightViewModel> Flights { get; } = new();
     public ObservableCollection<TicketViewModel> Tickets { get; } = new();
+    public ObservableCollection<ClientViewModel> Clients { get; } = new();
 
     private AirplaneViewModel? _selectedAirplane;
     public AirplaneViewModel? SelectedAirplane
@@ -34,6 +37,12 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedTicket;
         set => this.RaiseAndSetIfChanged(ref _selectedTicket, value);
     }
+    private ClientViewModel? _selectedClient;
+    public ClientViewModel? SelectedClient
+    {
+        get => _selectedClient;
+        set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
+    }
     public ReactiveCommand<Unit, Unit> OnAddCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCommandAirplane { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandAirplane { get; set; }
@@ -45,9 +54,14 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddCommandTicket { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCommandTicket { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCommandTicket { get; set; }
+
+    public ReactiveCommand<Unit, Unit> OnAddCommandClient { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeCommandClient { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteCommandClient { get; set; }
     public Interaction<AirplaneViewModel, AirplaneViewModel?> ShowAirplaneDialog { get; set; }
     public Interaction<FlightViewModel, FlightViewModel?> ShowFlightDialog { get; set; }
     public Interaction<TicketViewModel, TicketViewModel?> ShowTicketDialog { get; set; }
+    public Interaction<ClientViewModel, ClientViewModel?> ShowClientDialog { get; set; }
 
     public MainWindowViewModel()
     {
@@ -57,6 +71,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowAirplaneDialog = new Interaction<AirplaneViewModel, AirplaneViewModel?>();
         ShowFlightDialog = new Interaction<FlightViewModel, FlightViewModel?>();
         ShowTicketDialog = new Interaction<TicketViewModel, TicketViewModel?>();
+        ShowClientDialog = new Interaction<ClientViewModel, ClientViewModel?>();
 
         OnAddCommandAirplane = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -148,9 +163,41 @@ public class MainWindowViewModel : ViewModelBase
             Tickets.Remove(SelectedTicket);
 
         }, this.WhenAnyValue(vm => vm.SelectedTicket).Select(selectedTicket => selectedTicket != null));
+
+        OnAddCommandClient = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var clientViewModel = await ShowClientDialog.Handle(new ClientViewModel());
+            if (clientViewModel != null)
+            {
+                var newClient = _mapper.Map<ClientPostDto>(clientViewModel);
+                await _apiClient.AddClientAsync(newClient);
+                Clients.Add(clientViewModel);
+                Clients.Clear();
+                LoadClientsAsync();
+            }
+        });
+
+        OnChangeCommandClient = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var clientViewModel = await ShowClientDialog.Handle(SelectedClient!);
+            if (clientViewModel != null)
+            {
+                await _apiClient.UpdateClientAsync(SelectedClient!.Id, _mapper.Map<ClientPostDto>(clientViewModel));
+                _mapper.Map(clientViewModel, SelectedClient);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectedClient => selectedClient != null));
+
+        OnDeleteCommandClient = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteClientAsync(SelectedClient!.Id);
+            Clients.Remove(SelectedClient);
+
+        }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectedClient => selectedClient != null));
+
         RxApp.MainThreadScheduler.Schedule(LoadTicketsAsync);
         RxApp.MainThreadScheduler.Schedule(LoadAirplanesAsync);
         RxApp.MainThreadScheduler.Schedule(LoadFlightsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadClientsAsync);
     }
 
     private async void LoadAirplanesAsync()
@@ -175,6 +222,14 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var ticket in tickets)
         {
             Tickets.Add(_mapper.Map<TicketViewModel>(ticket));
+        }
+    }
+    private async void LoadClientsAsync()
+    {
+        var clients = await _apiClient.GetClientsAsync();
+        foreach (var client in clients)
+        {
+            Clients.Add(_mapper.Map<ClientViewModel>(client));
         }
     }
 }

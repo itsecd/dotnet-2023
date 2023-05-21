@@ -16,7 +16,7 @@
 	</Window.Styles>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 				<Image Source="/Assets/ticket-pic.png"/>
 				<Label>Tickets</Label>
@@ -92,6 +92,32 @@
 					<DataGridTextColumn Header="Flight`s airplane id" Binding="{Binding AirplaneId}"/>
 				</DataGrid.Columns>
 			</DataGrid>
+
+			<StackPanel Grid.Row="10" Orientation="Horizontal">
+				<Image Source="/Assets/client-pic.png"/>
+				<Label>Clients</Label>
+			</StackPanel>
+			<StackPanel Grid.Row="11" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCommandClient}">
+					<Image Source="/Assets/add-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCommandClient}">
+					<Image Source="/Assets/remove-pic.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCommandClient}">
+					<Image Source="/Assets/settings-pic.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="12" AutoGenerateColumns="False"
+					   Items="{Binding Clients}"
+					   SelectedItem="{Binding SelectedClient}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Full name" Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="Passport number" Binding="{Binding PassportNumber}"/>
+					<DataGridTextColumn Header="Birthday data" Binding="{Binding BirthdayData}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			
 		</Grid>
 	</ScrollViewer>
 </Window>

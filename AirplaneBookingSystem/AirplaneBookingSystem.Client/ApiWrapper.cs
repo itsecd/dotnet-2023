@@ -17,9 +17,9 @@ public class ApiWrapper
         var serverUrl = configuration.GetSection("ServerUrl").Value;
         _client = new ApiClient(serverUrl, new HttpClient());
     }
-    public async Task<ICollection<AirplaneGetDto>> GetAirplanesAsync()
+    public Task<ICollection<AirplaneGetDto>> GetAirplanesAsync()
     {
-        return await _client.AirplaneAllAsync();
+        return _client.AirplaneAllAsync();
     }
     public async Task AddAirplaneAsync(AirplanePostDto airplane)
     {
@@ -35,9 +35,9 @@ public class ApiWrapper
     {
         await _client.Airplane4Async(id);
     }
-    public async Task<ICollection<FlightGetDto>> GetFlightsAsync()
+    public Task<ICollection<FlightGetDto>> GetFlightsAsync()
     {
-        return await _client.FlightAllAsync();
+        return _client.FlightAllAsync();
     }
     public async Task AddFlightAsync(FlightPostDto flight)
     {
@@ -53,9 +53,9 @@ public class ApiWrapper
     {
         await _client.Flight4Async(id);
     }
-    public async Task<ICollection<ClientGetDto>> GetClientsAsync()
+    public Task<ICollection<ClientGetDto>> GetClientsAsync()
     {
-        return await _client.ClientAllAsync();
+        return _client.ClientAllAsync();
     }
     public async Task AddClientAsync(ClientPostDto client)
     {
@@ -71,9 +71,9 @@ public class ApiWrapper
     {
         await _client.Client4Async(id);
     }
-    public async Task<ICollection<TicketGetDto>> GetTicketsAsync()
+    public Task<ICollection<TicketGetDto>> GetTicketsAsync()
     {
-        return await _client.TicketAllAsync();
+        return _client.TicketAllAsync();
     }
     public async Task AddTicketAsync(TicketPostDto ticket)
     {

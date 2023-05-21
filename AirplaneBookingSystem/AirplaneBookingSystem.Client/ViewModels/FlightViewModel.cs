@@ -35,14 +35,14 @@ public class FlightViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _arrivalCity, value);
     }
     private DateTimeOffset _departureDate = new();
-    
+    [Required]
     public DateTimeOffset DepartureDate
     {
         get => _departureDate;
         set => this.RaiseAndSetIfChanged(ref _departureDate, value);
     }
     private DateTimeOffset _arrivalDate = new();
-    
+    [Required]
     public DateTimeOffset ArrivalDate
     {
         get => _arrivalDate;
@@ -50,7 +50,6 @@ public class FlightViewModel : ViewModelBase
     }
     private int _airplaneId;
     [Required]
-    [ForeignKey("Airplane")]
     public int AirplaneId
     {
         get => _airplaneId;

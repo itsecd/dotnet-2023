@@ -29,9 +29,6 @@ public class Server
         var mapper = mapperConfig.CreateMapper();
         builder.Services.AddSingleton(mapper);
 
-
-        builder.Services.AddSingleton<IRecruitmentAgencyServerRepository, RecruitmentAgencyServerRepository>();
-
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
@@ -49,12 +46,7 @@ public class Server
         }
 
         app.UseHttpsRedirection();
-        app.UseRouting();
-        app.UseAuthorization();
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.MapControllers();
 
         app.Run();
     }

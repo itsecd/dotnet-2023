@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -60,13 +61,16 @@ public class TitleController : ControllerBase
     /// </summary>
     /// <param name="title">Title data</param>
     [HttpPost]
+    [ProducesResponseType(201)]
     public async Task<IActionResult> Post([FromBody] TitlePostDto title)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post title");
         await ctx.Titles.AddAsync(_mapper.Map<Title>(title));
         await ctx.SaveChangesAsync();
-        return Ok();
+        var mappedTitle = _mapper.Map<TitleGetDto>(title);
+        return CreatedAtAction("Post", new { id = mappedTitle.Id },
+            _mapper.Map<TitleGetDto>(mappedTitle));
     }
 
     /// <summary>

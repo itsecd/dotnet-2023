@@ -19,88 +19,88 @@ public class ApiWrapper
             
         _client = new ApiClient(serverUrl, new HttpClient());
     }
-    public Task<ICollection<CompanyGetDto>> GetCompaniesAsync()
+    public async Task<ICollection<CompanyGetDto>> GetCompaniesAsync()
     {
-        return _client.CompanyAllAsync();
+        return await _client.CompanyAllAsync();
     }
-    public Task<CompanyGetDto> AddCompanyAsync(CompanyPostDto company)
+    public async Task<CompanyGetDto> AddCompanyAsync(CompanyPostDto company)
     {
-        return (Task<CompanyGetDto>)_client.CompanyAsync(company);
+        return await _client.CompanyPOSTAsync(company);
     }
-    public Task UpdateCompanyAsync(int id, CompanyPostDto company)
+    public async Task UpdateCompanyAsync(int id, CompanyPostDto company)
     {
-        return _client.Company3Async(id, company);
+        await _client.CompanyPUTAsync(id, company);
     }
-    public Task DeleteCompanyAsync(int id)
+    public async Task DeleteCompanyAsync(int id)
     {
-        return _client.Company4Async(id);
-    }
-
-    public Task<ICollection<CompanyApplicationGetDto>> GetCompanyApplicationsAsync()
-    {
-        return _client.CompanyApplicationAllAsync();
-    }
-    public Task<CompanyApplicationGetDto> AddCompanyApplicationAsync(CompanyApplicationPostDto companyApplication)
-    {
-        return (Task<CompanyApplicationGetDto>)_client.CompanyApplicationAsync(companyApplication);
-    }
-    public Task UpdateCompanyApplicationAsync(int id, CompanyApplicationPostDto companyApplication)
-    {
-        return _client.CompanyApplication3Async(id, companyApplication);
-    }
-    public Task DeleteCompanyApplicationAsync(int id)
-    {
-        return _client.CompanyApplication4Async(id);
+        await _client.CompanyDELETEAsync(id);
     }
 
-    public Task<ICollection<EmployeeGetDto>> GetEmployeesAsync()
+    public async Task<ICollection<CompanyApplicationGetDto>> GetCompanyApplicationsAsync()
     {
-        return _client.EmployeeAllAsync();
+        return await _client.CompanyApplicationAllAsync();
     }
-    public Task<EmployeeGetDto> AddEmployeeAsync(EmployeePostDto employee)
+    public async Task<CompanyApplicationGetDto> AddCompanyApplicationAsync(CompanyApplicationPostDto companyApplication)
     {
-        return (Task<EmployeeGetDto>)_client.EmployeeAsync(employee);
+        return await (Task<CompanyApplicationGetDto>)_client.CompanyApplicationPOSTAsync(companyApplication);
     }
-    public Task UpdateEmployeeAsync(int id, EmployeePostDto employee)
+    public async Task UpdateCompanyApplicationAsync(int id, CompanyApplicationPostDto companyApplication)
     {
-        return _client.Employee3Async(id, employee);
+        await _client.CompanyApplicationPUTAsync(id, companyApplication);
     }
-    public Task DeleteEmployeeAsync(int id)
+    public async Task DeleteCompanyApplicationAsync(int id)
     {
-        return _client.Employee4Async(id);
-    }
-
-    public Task<ICollection<JobApplicationGetDto>> GetJobApplicationsAsync()
-    {
-        return _client.JobApplicationAllAsync();
-    }
-    public Task<JobApplicationGetDto> AddEmployeeAsync(JobApplicationPostDto jobApplication)
-    {
-        return (Task<JobApplicationGetDto>)_client.JobApplicationAsync(jobApplication);
-    }
-    public Task UpdateJobApplicationAsync(int id, JobApplicationPostDto jobApplication)
-    {
-        return _client.JobApplication3Async(id, jobApplication);
-    }
-    public Task DeleteJobApplicationAsync(int id)
-    {
-        return _client.JobApplication4Async(id);
+        await _client.CompanyApplicationDELETEAsync(id);
     }
 
-    public Task<ICollection<TitleGetDto>> GetTitlesAsync()
+    public async Task<ICollection<EmployeeGetDto>> GetEmployeesAsync()
     {
-        return _client.TitleAllAsync();
+        return await _client.EmployeeAllAsync();
     }
-    public Task<TitleGetDto> AddTitleAsync(TitlePostDto title)
+    public async Task<EmployeeGetDto> AddEmployeeAsync(EmployeePostDto employee)
     {
-        return (Task<TitleGetDto>)_client.TitleAsync(title);
+        return await (Task<EmployeeGetDto>)_client.EmployeePOSTAsync(employee);
     }
-    public Task UpdateTitleAsync(int id, TitlePostDto title)
+    public async Task UpdateEmployeeAsync(int id, EmployeePostDto employee)
     {
-        return _client.Title3Async(id, title);
+        await _client.EmployeePUTAsync(id, employee);
     }
-    public Task DeleteTitleAsync(int id)
+    public async Task DeleteEmployeeAsync(int id)
     {
-        return _client.Title4Async(id);
+        await _client.EmployeeDELETEAsync(id);
+    }
+
+    public async Task<ICollection<JobApplicationGetDto>> GetJobApplicationsAsync()
+    {
+        return await _client.JobApplicationAllAsync();
+    }
+    public async Task<JobApplicationGetDto> AddEmployeeAsync(JobApplicationPostDto jobApplication)
+    {
+        return await (Task<JobApplicationGetDto>)_client.JobApplicationPOSTAsync(jobApplication);
+    }
+    public async Task UpdateJobApplicationAsync(int id, JobApplicationPostDto jobApplication)
+    {
+        await _client.JobApplicationPUTAsync(id, jobApplication);
+    }
+    public async Task DeleteJobApplicationAsync(int id)
+    {
+        await _client.JobApplicationDELETEAsync(id);
+    }
+
+    public async Task<ICollection<TitleGetDto>> GetTitlesAsync()
+    {
+        return await _client.TitleAllAsync();
+    }
+    public async Task<TitleGetDto> AddTitleAsync(TitlePostDto title)
+    {
+        return await (Task<TitleGetDto>)_client.TitlePOSTAsync(title);
+    }
+    public async Task UpdateTitleAsync(int id, TitlePostDto title)
+    {
+        await _client.TitlePUTAsync(id, title);
+    }
+    public async Task DeleteTitleAsync(int id)
+    {
+        await _client.TitleDELETEAsync(id);
     }
 }

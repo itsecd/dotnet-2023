@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -62,6 +63,7 @@ public class CompanyApplicationController : ControllerBase
     /// </summary>
     /// <param name="companyApplication">Company application data to post</param>
     [HttpPost]
+    [ProducesResponseType(201)]
     public async Task<IActionResult> Post([FromBody] CompanyApplicationPostDto companyApplication)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -74,7 +76,9 @@ public class CompanyApplicationController : ControllerBase
         }
         await ctx.CompanyApplications.AddAsync(_mapper.Map<CompanyApplication>(companyApplication));
         await ctx.SaveChangesAsync();
-        return Ok();
+        var mappedCompanyApplication = _mapper.Map<CompanyApplicationGetDto>(companyApplication);
+        return CreatedAtAction("Post", new { id = mappedCompanyApplication.Id },
+            _mapper.Map<CompanyApplicationGetDto>(mappedCompanyApplication));
     }
 
 

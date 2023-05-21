@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySql.EntityFrameworkCore.Extensions;
 
 namespace RecruitmentAgency;
 /// <summary>
@@ -8,13 +10,15 @@ public sealed class RecruitmentAgencyContext : DbContext
 {
     public RecruitmentAgencyContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
+        Database.EnsureCreatedAsync();
     }
     public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<CompanyApplication> CompanyApplications { get; set; } = null!;
     public DbSet<Employee> Employees { get; set; } = null!;
     public DbSet<JobApplication> JobApplications { get; set; } = null!;
     public DbSet<Title> Titles { get; set; } = null!;
+
+    private DbContextOptions DbOptions { get; set; }
 
     private List<Company> RepositoryCompanies
     {
@@ -269,8 +273,7 @@ public sealed class RecruitmentAgencyContext : DbContext
       .WithMany()
       .HasForeignKey(jobApplication => jobApplication.TitleId)
         .IsRequired();
-
-
+        
         foreach (var title in titles)
         {
             title.Id = index;

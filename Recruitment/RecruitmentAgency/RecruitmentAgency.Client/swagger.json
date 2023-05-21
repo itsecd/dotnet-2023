@@ -69,8 +69,25 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Success"
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -247,7 +264,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success"
           }
         }
@@ -425,7 +442,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success"
           }
         }
@@ -603,7 +620,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success"
           }
         }
@@ -981,7 +998,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success"
           }
         }

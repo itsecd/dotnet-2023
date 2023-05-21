@@ -61,13 +61,16 @@ public class CompanyController : ControllerBase
     /// </summary>
     /// <param name="company">Company data</param>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CompanyPostDto company)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<CompanyGetDto>> Post([FromBody] CompanyPostDto company)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post company");
         await ctx.Companies.AddAsync(_mapper.Map<Company>(company));
         await ctx.SaveChangesAsync();
-        return Ok();
+        var mappedCompany = _mapper.Map<CompanyGetDto>(company);
+        return CreatedAtAction("Post", new { id = mappedCompany.Id },
+            _mapper.Map<CompanyGetDto>(mappedCompany));
     }
 
     /// <summary>

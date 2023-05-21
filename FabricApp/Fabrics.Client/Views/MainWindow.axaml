@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Fabrics.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Fabrics.Client.Views.MainWindow"
+        Icon="/Assets/icon.ico"
+        Title="Fabrics.Client">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/FabricsStyles.axaml"/>
+	</Window.Styles>
+	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-add.png"/>
+			</Button>
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-settings.png"/>
+			</Button>
+			<Button Classes="ToolButton">
+				<Image Source="/Assets/task-remove.png"/>
+			</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+				  Items="{Binding Fabrics}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Name" Binding="{Binding
+									Name}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>

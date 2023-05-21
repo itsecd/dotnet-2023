@@ -1,0 +1,873 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Fabrics.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/fabric-information": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get information from one fabric.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of Fabric.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/providers-information-in-interval": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get all providers who delivered goods during the given interval.",
+        "parameters": [
+          {
+            "name": "firstDate",
+            "in": "query",
+            "description": "Smaller interval boundary",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "secondDate",
+            "in": "query",
+            "description": "Bigger interval boundary",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/number-of-partners-of-providers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get the number of fabrics that each providers works with.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/number-of-providers-for-each-form": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get information about the number of providers for each form of ownership of fabrics.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/top-5-providers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get top 5 of providers by the number of shipments.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/providers-information-in-interval-max": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get information about providers who delivered the maximum quantity of goods during the given interval.",
+        "parameters": [
+          {
+            "name": "firstDate",
+            "in": "query",
+            "description": "Smaller interval boundary",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "secondDate",
+            "in": "query",
+            "description": "Bigger interval boundary",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Fabric": {
+      "get": {
+        "tags": [
+          "Fabric"
+        ],
+        "summary": "Get list of all fabrics.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FabricGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FabricGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FabricGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Fabric"
+        ],
+        "summary": "Post new Fabric",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Fabric/{id}": {
+      "get": {
+        "tags": [
+          "Fabric"
+        ],
+        "summary": "Get fabric by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Fabric"
+        ],
+        "summary": "Put fabric",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FabricPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Fabric"
+        ],
+        "summary": "Delete fabric by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Provider": {
+      "get": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Get list of all providers.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProviderGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProviderGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProviderGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Post new provider",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Provider/{id}": {
+      "get": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Get provider by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Put provider",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Delete provider",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Shipment": {
+      "get": {
+        "tags": [
+          "Shipment"
+        ],
+        "summary": "Get list of all shipments.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Shipment"
+        ],
+        "summary": "Post new shipment",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Shipment/{id}": {
+      "get": {
+        "tags": [
+          "Shipment"
+        ],
+        "summary": "Get shipment by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Shipment"
+        ],
+        "summary": "Put shipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Shipment"
+        ],
+        "summary": "Delete shipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FabricGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is used to store the ID.",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type is used to store information about the Fabric category.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name is used to store name of Fabric.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address is used to store address of Fabric.",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber is used to store phone number of Fabric.",
+            "nullable": true
+          },
+          "formOfOwnership": {
+            "type": "string",
+            "description": "FormOfOwnership is used to store information about ownership form.",
+            "nullable": true
+          },
+          "numberOfWorkers": {
+            "type": "integer",
+            "description": "NumberOfWorkers is used to store information about quantity of workers.",
+            "format": "int32"
+          },
+          "totalSquare": {
+            "type": "integer",
+            "description": "TotalSquare is used to store information about the area of the Fabric.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class FabricGetDto is used to make HTTP GET request."
+      },
+      "FabricPostDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type is used to store information about the Fabric category.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name is used to store name of Fabric.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address is used to store address of Fabric.",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "PhoneNumber is used to store phone number of Fabric.",
+            "nullable": true
+          },
+          "formOfOwnership": {
+            "type": "string",
+            "description": "FormOfOwnership is used to store information about ownership form.",
+            "nullable": true
+          },
+          "numberOfWorkers": {
+            "type": "integer",
+            "description": "NumberOfWorkers is used to store information about quantity of workers.",
+            "format": "int32"
+          },
+          "totalSquare": {
+            "type": "integer",
+            "description": "TotalSquare is used to store information about the area of the Fabric.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ProviderPostDto is used to make HTTP POST request."
+      },
+      "ProviderGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is used to store the ID.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name is used to store name of Provider.",
+            "nullable": true
+          },
+          "typeOfGoods": {
+            "type": "string",
+            "description": "TypeOfGoods is used to store product type information.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address is used to store address of Provider.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ProviderGetDto is used to make HTTP GET request."
+      },
+      "ProviderPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name is used to store name of Provider.",
+            "nullable": true
+          },
+          "typeOfGoods": {
+            "type": "string",
+            "description": "TypeOfGoods is used to store product type information.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "PhoneNumber is used to store phone number of Fabric.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ProviderPostDto is used to make HTTP POST request."
+      },
+      "ShipmentGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is used to store the ID.",
+            "format": "int32"
+          },
+          "fabricId": {
+            "type": "integer",
+            "description": "FabricId is used to store the ID of recipient.",
+            "format": "int32"
+          },
+          "providerId": {
+            "type": "integer",
+            "description": "ProviderId is used to store the ID of sender.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date is used to store the information about date of shipment.",
+            "format": "date-time"
+          },
+          "numberOfGoods": {
+            "type": "integer",
+            "description": "NumberOfGoods is used to store the information about amount of goods in shipment.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ShipmentGetDto is used to make HTTP GET request."
+      },
+      "ShipmentPostDto": {
+        "type": "object",
+        "properties": {
+          "fabricId": {
+            "type": "integer",
+            "description": "FabricId is used to store the ID of recipient.",
+            "format": "int32"
+          },
+          "providerId": {
+            "type": "integer",
+            "description": "ProviderId is used to store the ID of sender.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date is used to store the information about date of shipment.",
+            "format": "date-time"
+          },
+          "numberOfGoods": {
+            "type": "integer",
+            "description": "NumberOfGoods is used to store the information about amount of goods in shipment.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ShipmentGetDto is used to make HTTP POST request."
+      }
+    }
+  }
+}

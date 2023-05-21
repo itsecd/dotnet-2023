@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrics.Test", "Fabric.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrics.Server", "Fabric.Server\Fabrics.Server.csproj", "{654C5796-7EEF-421A-A8C1-F0FBB4CEB5CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrics.Client", "Fabrics.Client\Fabrics.Client.csproj", "{BF11C32E-90F9-4A4A-AF36-2D0449639B49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{654C5796-7EEF-421A-A8C1-F0FBB4CEB5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654C5796-7EEF-421A-A8C1-F0FBB4CEB5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654C5796-7EEF-421A-A8C1-F0FBB4CEB5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF11C32E-90F9-4A4A-AF36-2D0449639B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF11C32E-90F9-4A4A-AF36-2D0449639B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF11C32E-90F9-4A4A-AF36-2D0449639B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF11C32E-90F9-4A4A-AF36-2D0449639B49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

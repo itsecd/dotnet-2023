@@ -9,6 +9,12 @@ public interface IDepartment
 
     Department? GetDepartmentById(string idDepartment);
 
+    Task<ICollection<Department>>? GetDepartmentsAsync();
+    Task<ICollection<Department>>? GetDepartmentsByInstitutionAsync(string idInstitution);
+    Task<ICollection<Department>>? GetDepartmentsByFacultyAsync(string idFaculty);
+
+    Task<Department>? GetDepartmentByIdAsync(string idDepartment);
+
     bool DepartmentExistsById(string idDepartment);
     Task<bool> DepartmentExistsByIdAsync(string idDepartment);
 

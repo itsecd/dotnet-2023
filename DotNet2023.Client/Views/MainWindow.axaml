@@ -1,0 +1,202 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DotNet2023.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DotNet2023.Client.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="DotNet2023.Client">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<TabControl>
+		<TabItem Header="Institution">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddInstitutionCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditInstitutionCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteInstitutionCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Institutions}"
+                          SelectedItem="{Binding SelectedHigherEducationInstitution}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="FullName" Binding="{Binding FullName}" />
+						<DataGridTextColumn Header="Initials" Binding="{Binding Initials}" />
+						<DataGridTextColumn Header="LegalAddress" Binding="{Binding LegalAddress}" />
+						<DataGridTextColumn Header="RegistrationNumber" Binding="{Binding RegistrationNumber}" />
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Departments">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddDepartmentCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditDepartmentCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteDepartmentCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Departments}"
+                          SelectedItem="{Binding SelectedDepartment}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Faculties">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddFacultyCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditFacultyCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteFacultyCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Faculties}"
+                          SelectedItem="{Binding SelectedFaculty}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="GroupOfStudents">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddGroupOfStudentsCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditGroupOfStudentsCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteGroupOfStudentsCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding GroupOfStudents}"
+                          SelectedItem="{Binding SelectedGroupOfStudents}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+						<DataGridTextColumn Header="Code Speciality" Binding="{Binding IdSpeciality}"/>
+
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="InstituteSpecialities">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddInstituteSpecialityCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditInstituteSpecialityCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteInstituteSpecialityCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding InstituteSpecialities}"
+                          SelectedItem="{Binding SelectedInstituteSpeciality}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Phone" Binding="{Binding IdSpeciality}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding IdHigherEducationInstitution}"/>
+
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Speciality">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddSpecialityCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditSpecialityCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteSpecialityCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Specialities}"
+                          SelectedItem="{Binding SelectedSpeciality}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+						<DataGridTextColumn Header="Code" Binding="{Binding Code}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="EducationWorkers">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddEducationWorkerCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditEducationWorkerCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteEducationWorkerCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding EducationWorkers}"
+                          SelectedItem="{Binding SelectedEducationWorker}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+						<DataGridTextColumn Header="BirthDay" Binding="{Binding BirthDay}"/>
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+						<DataGridTextColumn Header="ScienceDegree" Binding="{Binding ScienceDegree}" />
+						<DataGridTextColumn Header="JobTitle" Binding="{Binding JobTitle}"/>
+						<DataGridTextColumn Header="Salary" Binding="{Binding Salary}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+
+		<TabItem Header="Students">
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<Button Command="{Binding OnAddStudentCommand}">Добавить</Button>
+						<Button Command="{Binding OnEditStudentCommand}">Редактировать</Button>
+						<Button Command="{Binding OnDeleteStudentCommand}">Удалить</Button>
+					</StackPanel>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                          Items="{Binding Students}"
+                          SelectedItem="{Binding SelectedStudent}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+						<DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+						<DataGridTextColumn Header="BirthDay" Binding="{Binding BirthDay}"/>
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+						<DataGridTextColumn Header="IdSpeciality" Binding="{Binding IdSpeciality}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+	</TabControl>
+		  
+</Window>

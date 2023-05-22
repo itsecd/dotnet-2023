@@ -29,17 +29,19 @@ public class QueriesController : Controller
     /// <param name="id">Id of the institute for which want to get information</param>
     /// <returns>IActionResult with HigherEducationInstitutionDto</returns>
     [HttpGet("GetInstitutionById")]
-    public IActionResult GetInstitutionById(string id)
-    {
-        var result = _mapper.Map<HigherEducationInstitutionDto>(_repository.GetInstitutionById(id));
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found by id = {id}, method GetInstitutionById");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"Found by id = {id}");
-        return Ok(result);
-    }
+    public HigherEducationInstitutionDto GetInstitutionById(string id) =>
+        _mapper.Map<HigherEducationInstitutionDto>(_repository.GetInstitutionById(id));
+
+    /// <summary>
+    /// Async Get information about your chosen university by id
+    /// </summary>
+    /// <param name="id">Id of the institute for which want to get information</param>
+    /// <returns>IActionResult with HigherEducationInstitutionDto</returns>
+    [HttpGet("GetInstitutionByIdAsync")]
+    public async Task<HigherEducationInstitutionDto> GetInstitutionByIdAsync(string id) =>
+        _mapper.Map<HigherEducationInstitutionDto>(
+            await _repository.GetInstitutionByIdAsync(id));
+
 
     /// <summary>
     /// Get information about your chosen university by initials
@@ -47,20 +49,18 @@ public class QueriesController : Controller
     /// <param name="initials">Initials of the institute for which want to get information</param>
     /// <returns>IActionResult with HigherEducationInstitutionDto</returns>
     [HttpGet("GetInstitutionByInitials")]
-    public IActionResult GetInstitutionByInitials(string initials)
-    {
-        var result = _mapper.Map<HigherEducationInstitutionDto>(
+    public HigherEducationInstitutionDto GetInstitutionByInitials(string initials) =>
+        _mapper.Map<HigherEducationInstitutionDto>(
             _repository.GetInstitutionByInitials(initials));
-
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found by initials {initials}, " +
-                $"method GetInstitutionByInitials");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"Found by initials = {initials}");
-        return Ok(result);
-    }
+    /// <summary>
+    /// Async Get information about your chosen university by initials
+    /// </summary>
+    /// <param name="initials">Initials of the institute for which want to get information</param>
+    /// <returns>IActionResult with HigherEducationInstitutionDto</returns>
+    [HttpGet("GetInstitutionByInitialsAsync")]
+    public async Task<HigherEducationInstitutionDto> GetInstitutionByInitialsAsync(string initials) =>
+        _mapper.Map<HigherEducationInstitutionDto>(
+            await _repository.GetInstitutionByInitialsAsync(initials));
 
     /// <summary>
     /// Get information about university in format: 
@@ -70,20 +70,25 @@ public class QueriesController : Controller
     /// <param name="buildingProperty">BuildingProperty, value is 0, 1 or 2</param>
     /// <returns>IActionResult with ResponseUniversityStructByProperty</returns>
     [HttpGet("GetInstitutionStruct")]
-    public IActionResult GetInstitutionStruct(
+    public IEnumerable<ResponseUniversityStructByProperty> GetInstitutionStruct(
         InstitutionalProperty institutionalProperty,
-        BuildingProperty buildingProperty)
-    {
-        var result = _repository
+        BuildingProperty buildingProperty) =>
+        _repository
             .GetInstitutionStruct(institutionalProperty, buildingProperty);
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found in GetInstitutionStruct, method GetInstitutionStruct");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"All okay, method GetInstitutionStruct");
-        return Ok(result);
-    }
+
+    /// <summary>
+    /// Async Get information about university in format: 
+    /// Name, CountFaculties, CountDepartments and CountGroups
+    /// </summary>
+    /// <param name="institutionalProperty">InstitutionalProperty, value is 0 or 1</param>
+    /// <param name="buildingProperty">BuildingProperty, value is 0, 1 or 2</param>
+    /// <returns>IActionResult with ResponseUniversityStructByProperty</returns>
+    [HttpGet("GetInstitutionStructAsync")]
+    public async Task<IEnumerable<ResponseUniversityStructByProperty>> GetInstitutionStructAsync(
+        InstitutionalProperty institutionalProperty,
+        BuildingProperty buildingProperty) =>
+        await _repository
+            .GetInstitutionStructAsync(institutionalProperty, buildingProperty);
 
     /// <summary>
     /// Get information about university in format: 
@@ -92,38 +97,37 @@ public class QueriesController : Controller
     /// <param name="initials">Initials of the institute for which want to get information</param>
     /// <returns></returns>
     [HttpGet("GetInstitutionStructByInitials")]
-    public IActionResult GetInstitutionStructByInitials(string initials)
-    {
-        var result = _repository
+    public ResponseUniversityStructByInitials GetInstitutionStructByInitials(
+        string initials) => _repository
             .GetInstitutionStructByInitials(initials);
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found by initials {initials}, " +
-                $"method GetInstitutionStructByInitials");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"All okay, method GetInstitutionStructByInitials");
-        return Ok(result);
-    }
+
+    /// <summary>
+    /// Async Get information about university in format: 
+    /// Name, CountFaculties, CountDepartments and CountSpecialities
+    /// </summary>
+    /// <param name="initials">Initials of the institute for which want to get information</param>
+    /// <returns></returns>
+    [HttpGet("GetInstitutionStructByInitialsAsync")]
+    public async Task<ResponseUniversityStructByInitials> GetInstitutionStructByInitialsAsync(string initials) =>
+        await _repository
+            .GetInstitutionStructByInitialsAsync(initials);
 
     /// <summary>
     /// Get institutions with max department count
     /// </summary>
     /// <returns>Array of HigherEducationInstitutionDto</returns>
     [HttpGet("GetInstitutionsWithMaxDepartments")]
-    public IActionResult GetInstitutionsWithMaxDepartments()
-    {
-        var result = _mapper.Map<List<HigherEducationInstitutionDto>>(
+    public IEnumerable<HigherEducationInstitutionDto> GetInstitutionsWithMaxDepartments() =>
+        _mapper.Map<List<HigherEducationInstitutionDto>>(
             _repository.GetInstitutionsWithMaxDepartments());
-
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found, method GetInstitutionsWithMaxDepartments");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"All okay, method GetInstitutionsWithMaxDepartments");
-        return Ok(result);
-    }
+    /// <summary>
+    /// Async Get institutions with max department count
+    /// </summary>
+    /// <returns>Array of HigherEducationInstitutionDto</returns>
+    [HttpGet("GetInstitutionsWithMaxDepartmentsAsync")]
+    public async Task<IEnumerable<HigherEducationInstitutionDto>> GetInstitutionsWithMaxDepartmentsAsync() =>
+        _mapper.Map<List<HigherEducationInstitutionDto>>(
+            await _repository.GetInstitutionsWithMaxDepartmentsAsync());
 
     /// <summary>
     /// Get Ownership Institution And Group
@@ -131,34 +135,33 @@ public class QueriesController : Controller
     /// <param name="property">InstitutionalProperty, value is 0 or 1</param>
     /// <returns>Dictionary<string, int>, string - initials Inistitution, int - count of groups</returns>
     [HttpGet("GetOwnershipInstitutionAndGroup")]
-    public IActionResult GetOwnershipInstitutionAndGroup(InstitutionalProperty property)
-    {
-        var result = _repository
+    public Dictionary<string, int> GetOwnershipInstitutionAndGroup(
+        InstitutionalProperty property) =>
+        _repository
             .GetOwnershipInstitutionAndGroup(property);
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found, method GetOwnershipInstitutionAndGroup");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"All okay, method GetOwnershipInstitutionAndGroup");
-        return Ok(result);
-    }
+    /// <summary>
+    /// Async Get Ownership Institution And Group
+    /// </summary>
+    /// <param name="property">InstitutionalProperty, value is 0 or 1</param>
+    /// <returns>Dictionary<string, int>, string - initials Inistitution, int - count of groups</returns>
+    [HttpGet("GetOwnershipInstitutionAndGroupAsync")]
+    public async Task<Dictionary<string, int>> GetOwnershipInstitutionAndGroupAsync(
+        InstitutionalProperty property) =>
+        await _repository
+            .GetOwnershipInstitutionAndGroupAsync(property);
 
     /// <summary>
     /// Get Popular speciality
     /// </summary>
     /// <returns>IActionResult with SpecialityDto</returns>
     [HttpGet("GetPopularSpeciality")]
-    public IActionResult GetPopularSpeciality()
-    {
-        var result = _mapper.Map<List<SpecialityDto>>(_repository.GetPopularSpeciality());
-
-        if (!ModelState.IsValid)
-        {
-            _logger.LogError($"Not found, method GetPopularSpeciality");
-            return BadRequest(ModelState);
-        }
-        _logger.LogInformation($"All okay, method GetPopularSpeciality");
-        return Ok(result);
-    }
+    public IEnumerable<SpecialityDto> GetPopularSpeciality() =>
+        _mapper.Map<List<SpecialityDto>>(_repository.GetPopularSpeciality());
+    /// <summary>
+    /// Async Get Popular speciality
+    /// </summary>
+    /// <returns>IActionResult with SpecialityDto</returns>
+    [HttpGet("GetPopularSpecialityAsync")]
+    public async Task<IEnumerable<SpecialityDto>> GetPopularSpecialityAsync() =>
+        _mapper.Map<List<SpecialityDto>>(await _repository.GetPopularSpecialityAsync());
 }

@@ -7,6 +7,7 @@ public class GroupOfStudentsConfiguration : BaseSectionConfiguration, IEntityTyp
 {
     public void Configure(EntityTypeBuilder<GroupOfStudents> builder)
     {
+
         builder
             .HasMany(x => x.Students)
             .WithOne(x => x.Group)

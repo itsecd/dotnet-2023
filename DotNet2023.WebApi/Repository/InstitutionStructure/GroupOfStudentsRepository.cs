@@ -15,69 +15,86 @@ public class GroupOfStudentsRepository : IGroupOfStudents
         _dbContext.GroupOfStudents.Add(groupOfStudents);
         return Save();
     }
-
     public async Task<bool> CreateGroupOfStudentsAsync(GroupOfStudents groupOfStudents)
     {
         await _dbContext.GroupOfStudents.AddAsync(groupOfStudents);
         return await SaveAsync();
     }
 
+
     public bool DeleteGroupOfStudents(GroupOfStudents groupOfStudents)
     {
         _dbContext.GroupOfStudents.Remove(groupOfStudents);
         return Save();
     }
-
     public async Task<bool> DeleteGroupOfStudentsAsync(GroupOfStudents groupOfStudents)
     {
         _dbContext.GroupOfStudents.Remove(groupOfStudents);
         return await SaveAsync();
     }
 
+
     public ICollection<GroupOfStudents>? GetGroupOfStudents() =>
         _dbContext.GroupOfStudents.ToList();
+    public async Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsAsync() =>
+        await _dbContext.GroupOfStudents.ToListAsync();
+
 
     public ICollection<GroupOfStudents>? GetGroupOfStudentsByDepartment(
         string idDepartment) =>
         _dbContext.GroupOfStudents
         .Where(x => x.IdDepartment == idDepartment)
         .ToList();
+    public async Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsByDepartmentAsync(
+        string idDepartment) =>
+        await _dbContext.GroupOfStudents
+        .Where(x => x.IdDepartment == idDepartment)
+        .ToListAsync();
+
 
     public ICollection<GroupOfStudents>? GetGroupOfStudentsBySpecialityCode(string code) =>
         _dbContext.GroupOfStudents
         .Where(x => x.IdSpeciality == code)
         .ToList();
+    public async Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsBySpecialityCodeAsync(string code) =>
+        await _dbContext.GroupOfStudents
+        .Where(x => x.IdSpeciality == code)
+        .ToListAsync();
+
 
     public GroupOfStudents? GetGroupOfStudentstById(string IdGroupOfStudents) =>
         _dbContext.GroupOfStudents
         .FirstOrDefault(x => x.Id == IdGroupOfStudents);
+    public async Task<GroupOfStudents>? GetGroupOfStudentstByIdAsync(string IdGroupOfStudents) =>
+        await _dbContext.GroupOfStudents
+        .FirstOrDefaultAsync(x => x.Id == IdGroupOfStudents);
+
 
     public bool GroupOfStudentsExistsById(string IdGroupOfStudents) =>
         _dbContext.GroupOfStudents
         .Any(x => x.Id == IdGroupOfStudents);
-
     public async Task<bool> GroupOfStudentsExistsByIdAsync(string IdGroupOfStudents) =>
         await _dbContext.GroupOfStudents
         .AnyAsync(x => x.Id == IdGroupOfStudents);
+
 
     public bool Save()
     {
         var saved = _dbContext.SaveChanges();
         return saved > 0 ? true : false;
     }
-
     public async Task<bool> SaveAsync()
     {
         var saved = await _dbContext.SaveChangesAsync();
         return saved > 0 ? true : false;
     }
 
+
     public bool UpdateGroupOfStudents(GroupOfStudents groupOfStudents)
     {
         _dbContext.GroupOfStudents.Update(groupOfStudents);
         return Save();
     }
-
     public async Task<bool> UpdateGroupOfStudentsAsync(GroupOfStudents groupOfStudents)
     {
         _dbContext.GroupOfStudents.Update(groupOfStudents);

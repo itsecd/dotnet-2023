@@ -23,17 +23,20 @@ public class StudentController : Controller
     /// </summary>
     /// <returns>IActionResult with List<StudentDto></returns>
     [HttpGet]
-    public IActionResult GetStudents()
-    {
-        var educationWorker = _mapper
+    public IEnumerable<StudentDto> GetStudents() =>
+        _mapper
             .Map<List<StudentDto>>
             (_repository.GetStudents());
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+    /// <summary>
+    /// Async Get all students
+    /// </summary>
+    /// <returns>IActionResult with List<StudentDto></returns>
+    [HttpGet("GetStudentsAsync")]
+    public async Task<IEnumerable<StudentDto>> GetStudentsAsync() =>
+        _mapper
+            .Map<List<StudentDto>>
+            (await _repository.GetStudentsAsync());
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(educationWorker);
-    }
 
     /// <summary>
     /// Get student by id
@@ -41,17 +44,20 @@ public class StudentController : Controller
     /// <param name="idStudent">id Student</param>
     /// <returns>IActionResult with StudentDto</returns>
     [HttpGet("GetStudent")]
-    public IActionResult GetStudent(string idStudent)
-    {
-        var institution = _mapper
+    public StudentDto GetStudent(string idStudent) =>
+         _mapper
             .Map<StudentDto>
             (_repository.GetStudentById(idStudent));
-
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(institution);
-    }
+    /// <summary>
+    /// Async Get student by id
+    /// </summary>
+    /// <param name="idStudent">id Student</param>
+    /// <returns>IActionResult with StudentDto</returns>
+    [HttpGet("GetStudentAsync")]
+    public async Task<StudentDto> GetStudentAsync(string idStudent) =>
+         _mapper
+            .Map<StudentDto>
+            (await _repository.GetStudentByIdAsync(idStudent));
 
     /// <summary>
     /// Create a new student
@@ -70,6 +76,29 @@ public class StudentController : Controller
         _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.CreateStudent(studentMap))
+        {
+            ModelState.AddModelError("", "Something went wrong while savin");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
+    }
+    /// <summary>
+    /// Async Create a new student
+    /// </summary>
+    /// <param name="student">new student</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPost("CreateStudentAsync")]
+    public async Task<IActionResult> CreateStudentAsync(
+    [FromBody] StudentDto student)
+    {
+        if (student == null)
+            return BadRequest(ModelState);
+
+        var studentMap = _mapper
+            .Map<Student>(student);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.CreateStudentAsync(studentMap))
         {
             ModelState.AddModelError("", "Something went wrong while savin");
             return StatusCode(500, ModelState);
@@ -96,6 +125,29 @@ public class StudentController : Controller
             return BadRequest(ModelState);
 
         if (!_repository.DeleteStudent(studentToDelete))
+            ModelState.AddModelError("", "Something went wrong deleting institution");
+
+        return Ok("Successfully deleted");
+    }
+    /// <summary>
+    /// Async Delete by id Student
+    /// </summary>
+    /// <param name="idStudent">id Student</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpDelete("DeleteStudentAsync")]
+    public async Task<IActionResult> DeleteStudentAsync(string idStudent)
+    {
+        if (!await _repository.StudentExistsByIdAsync(idStudent))
+            return NotFound();
+
+        var studentToDelete = await _repository
+            .GetStudentByIdAsync(idStudent);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!ModelState.IsValid || studentToDelete == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.DeleteStudentAsync(studentToDelete))
             ModelState.AddModelError("", "Something went wrong deleting institution");
 
         return Ok("Successfully deleted");
@@ -127,7 +179,35 @@ public class StudentController : Controller
             ModelState.AddModelError("", "Something went wrong updating institution");
             return StatusCode(500, ModelState);
         }
+        return Ok("Successfully updated");
+    }
 
+    /// <summary>
+    /// Async Update model
+    /// </summary>
+    /// <param name="student">model that is updated</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPut("UpdateStudentAsync")]
+    public async Task<IActionResult> UpdateStudentAsync(
+        [FromBody] StudentDto student)
+    {
+        if (student == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.StudentExistsByIdAsync(student.Id))
+            return NotFound();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var studentToUpdate = _mapper.Map<Student>(student);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.UpdateStudentAsync(studentToUpdate))
+        {
+            ModelState.AddModelError("", "Something went wrong updating institution");
+            return StatusCode(500, ModelState);
+        }
         return Ok("Successfully updated");
     }
 

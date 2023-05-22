@@ -8,6 +8,11 @@ public interface IEducationWorker
 
     EducationWorker? GetEducationWorkerById(string IdEducationWorker);
 
+    Task<ICollection<EducationWorker>>? GetEducationWorkersAsync();
+    Task<ICollection<EducationWorker>>? GetEducationWorkerByInstitutionAsync(string idInstitution);
+
+    Task<EducationWorker>? GetEducationWorkerByIdAsync(string IdEducationWorker);
+
     bool EducationWorkerExistsById(string IdEducationWorker);
     Task<bool> EducationWorkerExistsByIdAsync(string IdEducationWorker);
 

@@ -15,37 +15,57 @@ public class StudentRepository : IStudent
         _dbContext.Students.Add(student);
         return Save();
     }
-
     public async Task<bool> CreateStudentAsync(Student student)
     {
         await _dbContext.Students.AddAsync(student);
         return await SaveAsync();
     }
 
+
     public bool DeleteStudent(Student student)
     {
         _dbContext.Students.Remove(student);
         return Save();
     }
-
     public async Task<bool> DeleteStudentAsync(Student student)
     {
         _dbContext.Students.Remove(student);
         return await SaveAsync();
     }
 
+
     public Student? GetStudentById(string IdStudent) =>
         _dbContext.Students
         .FirstOrDefault(x => x.Id == IdStudent);
+    public async Task<Student>? GetStudentByIdAsync(string IdStudent) =>
+        await _dbContext.Students
+        .FirstOrDefaultAsync(x => x.Id == IdStudent);
+
 
     public ICollection<Student>? GetStudents() =>
         _dbContext.Students.ToList();
+    public async Task<ICollection<Student>>? GetStudentsAsync() =>
+        await _dbContext.Students.ToListAsync();
 
-    public ICollection<Student>? GetStudentsByGroupOfStudents(
-        string idGroupOfStudent) =>
+
+    public ICollection<Student>? GetStudentsByGroupOfStudents
+        (string idGroupOfStudent) =>
         _dbContext.Students
         .Where(x => x.IdGroup == idGroupOfStudent)
         .ToList();
+    public async Task<ICollection<Student>>? GetStudentsByGroupOfStudentsAsync
+        (string idGroupOfStudent) =>
+        await _dbContext.Students
+        .Where(x => x.IdGroup == idGroupOfStudent)
+        .ToListAsync();
+
+
+    public bool StudentExistsById(string idStudent) =>
+        _dbContext.Students
+        .Any(x => x.Id == idStudent);
+    public async Task<bool> StudentExistsByIdAsync(string idStudent) =>
+        await _dbContext.Students
+        .AnyAsync(x => x.Id == idStudent);
 
 
     public bool Save()
@@ -53,27 +73,18 @@ public class StudentRepository : IStudent
         var saved = _dbContext.SaveChanges();
         return saved > 0 ? true : false;
     }
-
     public async Task<bool> SaveAsync()
     {
         var saved = await _dbContext.SaveChangesAsync();
         return saved > 0 ? true : false;
     }
 
-    public bool StudentExistsById(string idStudent) =>
-        _dbContext.Students
-        .Any(x => x.Id == idStudent);
-
-    public async Task<bool> StudentExistsByIdAsync(string idStudent) =>
-        await _dbContext.Students
-        .AnyAsync(x => x.Id == idStudent);
 
     public bool UpdateStudent(Student student)
     {
         _dbContext.Students.Update(student);
         return Save();
     }
-
     public async Task<bool> UpdateStudentAsync(Student student)
     {
         _dbContext.Students.Update(student);

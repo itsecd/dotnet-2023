@@ -4,6 +4,8 @@ namespace DotNet2023.WebApi.Interfaces.Organization;
 public interface IHigherEducationInstitution
 {
     ICollection<HigherEducationInstitution> GetInstitutions();
+    Task<ICollection<HigherEducationInstitution>> GetInstitutionsAsync();
+
     HigherEducationInstitution? GetInstitution(string idInstitution);
     Task<HigherEducationInstitution>? GetInstitutionAsync(string idInstitution);
     bool InstitutionExists(string idInstitution);
@@ -17,7 +19,6 @@ public interface IHigherEducationInstitution
     bool DeleteInstructon(HigherEducationInstitution institution);
     bool Save();
 
-    // TODO create async methods
     Task<bool> CreateInstructonAsync(HigherEducationInstitution institution);
     Task<bool> UpdateInstructonAsync(HigherEducationInstitution institution);
     Task<bool> DeleteInstructonAsync(HigherEducationInstitution institution);

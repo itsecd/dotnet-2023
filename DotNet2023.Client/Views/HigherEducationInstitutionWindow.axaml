@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:DotNet2023.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DotNet2023.Client.Views.HigherEducationInstitutionWindow"
+        Title="HigherEducationInstitutionWindow">
+
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:HigherEducationInstitutionViewModel/>
+	</Design.DataContext>
+
+
+	<Grid RowDefinitions="Auto,*,*,*,*,*,*,*,*" ColumnDefinitions="Auto, *,*">
+		<Label Grid.Row="0" Grid.Column="0">FullName</Label>
+		<Label Grid.Row="1" Grid.Column="0">Initials</Label>
+		<Label Grid.Row="2" Grid.Column="0">LegalAddress</Label>
+		<Label Grid.Row="3" Grid.Column="0">RegistrationNumber</Label>
+		<Label Grid.Row="4" Grid.Column="0">Phone</Label>
+		<Label Grid.Row="5" Grid.Column="0">Email</Label>
+		<Label Grid.Row="6" Grid.Column="0">InstitutionalProperty</Label>
+		<Label Grid.Row="7" Grid.Column="0">BuildingProperty</Label>
+
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FullName}" />
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Initials}" />
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding LegalAddress}" />
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RegistrationNumber}" />
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Phone}" />
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Email}" />
+		<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InstitutionalProperty}" />
+		<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding BuildingProperty}" />
+
+		<StackPanel Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OkButtonOnClick}">Ok</Button>
+			<Button
+                IsCancel="True" Click="CancelButton_OnClick">
+				Cancel
+			</Button>
+		</StackPanel>
+	</Grid>
+
+
+
+
+
+
+
+</Window>

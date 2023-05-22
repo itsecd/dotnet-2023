@@ -7,6 +7,7 @@ public class EducationWorkerConfiguration : PersonConfiguration, IEntityTypeConf
 {
     public void Configure(EntityTypeBuilder<EducationWorker> builder)
     {
+
         builder
             .Property(x => x.Rank)
             .HasMaxLength(127);

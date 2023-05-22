@@ -9,6 +9,13 @@ public interface IGroupOfStudents
 
     GroupOfStudents? GetGroupOfStudentstById(string IdGroupOfStudents);
 
+    Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsAsync();
+    Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsBySpecialityCodeAsync(string code);
+    Task<ICollection<GroupOfStudents>>? GetGroupOfStudentsByDepartmentAsync(string idDepartment);
+
+    Task<GroupOfStudents?> GetGroupOfStudentstByIdAsync(string IdGroupOfStudents);
+
+
     bool GroupOfStudentsExistsById(string IdGroupOfStudents);
     Task<bool> GroupOfStudentsExistsByIdAsync(string IdGroupOfStudents);
 

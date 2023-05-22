@@ -11,6 +11,14 @@ public interface IInstituteSpeciality
 
     InstituteSpeciality? GetInstituteSpeciality(string code, string idInstitution);
 
+    Task<ICollection<InstituteSpeciality>>? GetInstituteSpecialitiesAsync();
+    Task<ICollection<InstituteSpeciality>>? GetInstituteSpecialitiesByCodeAsync(
+        string code);
+    Task<ICollection<InstituteSpeciality>>? GetInstituteSpecialitiesByInstitutionAsync(
+        string idInstitution);
+
+    Task<InstituteSpeciality>? GetInstituteSpecialityAsync(string code, string idInstitution);
+
     bool InstituteSpecialityExistsByCode(string code);
     bool InstituteSpecialityExists(string code, string idInstitution);
     Task<bool> InstituteSpecialityExistsByCodeAsync(string code);

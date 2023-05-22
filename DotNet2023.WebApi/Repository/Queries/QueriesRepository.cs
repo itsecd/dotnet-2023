@@ -24,27 +24,52 @@ public class QueriesRepository : IQueries
 
     public HigherEducationInstitution? GetInstitutionById(string id) =>
         QueriesToDomainModel.GetInstitutionById(_dbContext, id);
+    public async Task<HigherEducationInstitution>? GetInstitutionByIdAsync(string id) =>
+        await QueriesToDomainModelAsync.GetInstitutionByIdAsync(_dbContext, id);
+
 
     public HigherEducationInstitution? GetInstitutionByInitials(string initials) =>
         QueriesToDomainModel.GetInstitutionByInitials(_dbContext, initials);
+    public async Task<HigherEducationInstitution>? GetInstitutionByInitialsAsync(string initials) =>
+        await QueriesToDomainModelAsync.GetInstitutionByInitialsAsync(_dbContext, initials);
+
 
     public ResponseUniversityStructByProperty[]? GetInstitutionStruct(
         InstitutionalProperty institutionalProperty,
         BuildingProperty buildingProperty) =>
         QueriesToDomainModel.GetInstitutionStruct(_dbContext, institutionalProperty,
             buildingProperty);
+    public async Task<ResponseUniversityStructByProperty[]>? GetInstitutionStructAsync(
+        InstitutionalProperty institutionalProperty,
+        BuildingProperty buildingProperty) =>
+        await QueriesToDomainModelAsync.GetInstitutionStructAsync(_dbContext, institutionalProperty,
+            buildingProperty);
 
-    public ResponseUniversityStructByInitials? GetInstitutionStructByInitials(
-        string initials) =>
+
+    public ResponseUniversityStructByInitials? GetInstitutionStructByInitials
+        (string initials) =>
         QueriesToDomainModel.GetInstitutionStructByInitials(_dbContext, initials);
+    public async Task<ResponseUniversityStructByInitials>? GetInstitutionStructByInitialsAsync
+        (string initials) =>
+        await QueriesToDomainModelAsync.GetInstitutionStructByInitialsAsync(_dbContext, initials);
+
 
     public HigherEducationInstitution[]? GetInstitutionsWithMaxDepartments() =>
         QueriesToDomainModel.GetInstitutionsWithMaxDepartments(_dbContext);
+    public async Task<HigherEducationInstitution[]>? GetInstitutionsWithMaxDepartmentsAsync() =>
+        await QueriesToDomainModelAsync.GetInstitutionsWithMaxDepartmentsAsync(_dbContext);
 
-    public Dictionary<string, int> GetOwnershipInstitutionAndGroup(
-        InstitutionalProperty property) =>
+
+    public Dictionary<string, int> GetOwnershipInstitutionAndGroup
+        (InstitutionalProperty property) =>
         QueriesToDomainModel.GetOwnershipInstitutionAndGroup(_dbContext, property);
+    public async Task<Dictionary<string, int>> GetOwnershipInstitutionAndGroupAsync
+        (InstitutionalProperty property) =>
+        await QueriesToDomainModelAsync.GetOwnershipInstitutionAndGroupAsync(_dbContext, property);
+
 
     public Speciality[]? GetPopularSpeciality() =>
         QueriesToDomainModel.GetPopularSpeciality(_dbContext);
+    public async Task<Speciality[]>? GetPopularSpecialityAsync() =>
+        await QueriesToDomainModelAsync.GetPopularSpecialityAsync(_dbContext);
 }

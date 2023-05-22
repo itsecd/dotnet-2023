@@ -8,6 +8,11 @@ public interface IFaculty
 
     Faculty? GetFacultyById(string IdFaculty);
 
+    Task<ICollection<Faculty>>? GetFacultiesAsync();
+    Task<ICollection<Faculty>>? GetFacultiesByInstitutionAsync(string idInstitution);
+
+    Task<Faculty>? GetFacultyByIdAsync(string IdFaculty);
+
     bool FacultytExistsById(string IdFaculty);
     Task<bool> FacultyExistsByIdAsync(string IdFaculty);
 

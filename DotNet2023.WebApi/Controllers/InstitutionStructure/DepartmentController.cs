@@ -23,17 +23,20 @@ public class DepartmentController : Controller
     /// </summary>
     /// <returns>IActionResult with List<DepartmentDto></returns>
     [HttpGet]
-    public IActionResult GetDepartments()
-    {
-        var institutions = _mapper
+    public IEnumerable<DepartmentDto> GetDepartments() =>
+        _mapper
             .Map<List<DepartmentDto>>
             (_repository.GetDepartments());
-        _logger.LogInformation($"ModelState {ModelState}, method GetInstituteSpecialities");
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(institutions);
-    }
+    /// <summary>
+    /// Async Get all departments
+    /// </summary>
+    /// <returns>IActionResult with List<DepartmentDto></returns>
+    [HttpGet("GetDepartmentsAsync")]
+    public async Task<IEnumerable<DepartmentDto>> GetDepartmentsAsync() =>
+        _mapper
+            .Map<List<DepartmentDto>>
+            (await _repository.GetDepartmentsAsync());
 
     /// <summary>
     /// Get department by id
@@ -41,18 +44,20 @@ public class DepartmentController : Controller
     /// <param name="idDepartment">id department</param>
     /// <returns>IActionResult with DepartmentDto</returns>
     [HttpGet("GetDepartment")]
-    public IActionResult GetDepartment(string idDepartment)
-    {
-        var institution = _mapper
+    public DepartmentDto GetDepartment(string idDepartment) =>
+        _mapper
             .Map<DepartmentDto>
             (_repository.GetDepartmentById(idDepartment));
-        _logger.LogInformation($"ModelState {ModelState}, method GetInstituteSpecialities");
-
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(institution);
-    }
+    /// <summary>
+    /// Async Get department by id
+    /// </summary>
+    /// <param name="idDepartment">id department</param>
+    /// <returns>IActionResult with DepartmentDto</returns>
+    [HttpGet("GetDepartmentAsync")]
+    public async Task<DepartmentDto> GetDepartmentAsync(string idDepartment) =>
+        _mapper
+            .Map<DepartmentDto>
+            (await _repository.GetDepartmentByIdAsync(idDepartment));
 
     /// <summary>
     /// Create a new Department
@@ -71,6 +76,29 @@ public class DepartmentController : Controller
         _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.CreateDepartment(departmentMap))
+        {
+            ModelState.AddModelError("", "Something went wrong while savin");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
+    }
+    /// <summary>
+    /// Async Create a new Department
+    /// </summary>
+    /// <param name="department">new department</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPost("CreateDepartmentAsync")]
+    public async Task<IActionResult> CreateDepartmentAsync(
+    [FromBody] DepartmentDto department)
+    {
+        if (department == null)
+            return BadRequest(ModelState);
+
+        var departmentMap = _mapper
+            .Map<Department>(department);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.CreateDepartmentAsync(departmentMap))
         {
             ModelState.AddModelError("", "Something went wrong while savin");
             return StatusCode(500, ModelState);
@@ -97,6 +125,29 @@ public class DepartmentController : Controller
             return BadRequest(ModelState);
 
         if (!_repository.DeleteDepartment(departmentToDelete))
+            ModelState.AddModelError("", "Something went wrong deleting institution");
+
+        return Ok("Successfully deleted");
+    }
+    /// <summary>
+    /// Delete a Department
+    /// </summary>
+    /// <param name="idDepartment">id department</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpDelete("DeleteDepartmentAsync")]
+    public async Task<IActionResult> DeleteDepartmentAsync(string idDepartment)
+    {
+        if (!await _repository.DepartmentExistsByIdAsync(idDepartment))
+            return NotFound();
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        var departmentToDelete = await _repository
+            .GetDepartmentByIdAsync(idDepartment);
+
+        if (!ModelState.IsValid || departmentToDelete == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.DeleteDepartmentAsync(departmentToDelete))
             ModelState.AddModelError("", "Something went wrong deleting institution");
 
         return Ok("Successfully deleted");
@@ -128,7 +179,34 @@ public class DepartmentController : Controller
             ModelState.AddModelError("", "Something went wrong updating institution");
             return StatusCode(500, ModelState);
         }
+        return Ok("Successfully updated");
+    }
+    /// <summary>
+    /// Async Update a Department
+    /// </summary>
+    /// <param name="department">update department</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPut("UpdateDepartmentAsync")]
+    public async Task<IActionResult> UpdateDepartmentAsync(
+        [FromBody] DepartmentDto department)
+    {
+        if (department == null)
+            return BadRequest(ModelState);
 
+        if (!await _repository.DepartmentExistsByIdAsync(department.Id))
+            return NotFound();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var departmentToUpdate = _mapper.Map<Department>(department);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.UpdateDepartmentAsync(departmentToUpdate))
+        {
+            ModelState.AddModelError("", "Something went wrong updating institution");
+            return StatusCode(500, ModelState);
+        }
         return Ok("Successfully updated");
     }
 }

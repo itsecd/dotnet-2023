@@ -9,6 +9,7 @@
 /// </summary>
 public class Worker : BasePerson
 {
+
     public string? IdOrganization { get; set; }
 
     public string? JobTitle { get; set; }

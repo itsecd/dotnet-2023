@@ -27,7 +27,7 @@ public enum StudyFormat
 /// </summary>
 public class Speciality
 {
-    // TODO rename Code to IdSpeciality
+
     [RegularExpression(@"\d.\d\d.\d\d.\d\d")]
     public string Code { get; set; } = new Guid().ToString();
     public string? Title { get; set; }

@@ -23,17 +23,20 @@ public class InstitutionController : Controller
     /// </summary>
     /// <returns>IActionResult with List<FacultyDto></returns>
     [HttpGet]
-    public IActionResult GetInstitutions()
-    {
-        var institutions = _mapper
+    public IEnumerable<HigherEducationInstitutionDto> GetInstitutions() =>
+        _mapper
             .Map<List<HigherEducationInstitutionDto>>
             (_repository.GetInstitutions());
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+    /// <summary>
+    /// Async Get all Institutions
+    /// </summary>
+    /// <returns>IActionResult with List<FacultyDto></returns>
+    [HttpGet("GetInstitutionsAsync")]
+    public async Task<IEnumerable<HigherEducationInstitutionDto>> GetInstitutionsAsync() =>
+        _mapper
+            .Map<List<HigherEducationInstitutionDto>>
+            (await _repository.GetInstitutionsAsync());
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(institutions);
-    }
 
     /// <summary>
     /// Get Institution by id
@@ -41,18 +44,10 @@ public class InstitutionController : Controller
     /// <param name="idInstitution">id Institution</param>
     /// <returns>IActionResult with List<FacultyDto></returns>
     [HttpGet("GetInstitution")]
-    public IActionResult GetInstitution(string idInstitution)
-    {
-        var institution = _mapper
+    public HigherEducationInstitutionDto GetInstitution(string idInstitution) =>
+        _mapper
             .Map<HigherEducationInstitutionDto>
             (_repository.GetInstitution(idInstitution));
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
-
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(institution);
-    }
 
     /// <summary>
     /// Async Get Institution by id
@@ -60,18 +55,10 @@ public class InstitutionController : Controller
     /// <param name="idInstitution">id Institution</param>
     /// <returns>IActionResult with List<FacultyDto></returns>
     [HttpGet("GetInstitutionAsync")]
-    public async Task<IActionResult>? GetInstitutionAsync(
-        string idInstitution)
-    {
-        var institution = await _repository
-            .GetInstitutionAsync(idInstitution);
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
-
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(_mapper.Map<HigherEducationInstitutionDto>(institution));
-    }
+    public async Task<HigherEducationInstitutionDto>? GetInstitutionAsync(
+        string idInstitution) =>
+        _mapper.Map<HigherEducationInstitutionDto>(await _repository
+            .GetInstitutionAsync(idInstitution));
 
     /// <summary>
     /// Create a new institution
@@ -96,6 +83,30 @@ public class InstitutionController : Controller
         }
         return Ok("Successfully created");
     }
+    /// <summary>
+    /// Async Create a new institution
+    /// </summary>
+    /// <param name="institution">new institution</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPost("CreateInstructonAsync")]
+    public async Task<IActionResult> CreateInstitutionAsync(
+        [FromBody] HigherEducationInstitutionDto institution)
+    {
+        if (institution == null)
+            return BadRequest(ModelState);
+
+        var institutionMap = _mapper
+            .Map<HigherEducationInstitution>(institution);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.CreateInstructonAsync(institutionMap))
+        {
+            ModelState.AddModelError("", "Something went wrong while savin");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
+    }
+
 
     /// <summary>
     /// Delete by id Institution
@@ -116,6 +127,30 @@ public class InstitutionController : Controller
             return BadRequest(ModelState);
 
         if (!_repository.DeleteInstructon(institutionToDelete))
+            ModelState.AddModelError("", "Something went wrong deleting institution");
+
+        return Ok("Successfully deleted");
+    }
+
+    /// <summary>
+    /// Async Delete by id Institution
+    /// </summary>
+    /// <param name="idInstitution">id Institution</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpDelete("DeleteInstructonAsync")]
+    public async Task<IActionResult> DeleteInstitutionAsync(string idInstitution)
+    {
+        if (!await _repository.InstitutionExistsAsync(idInstitution))
+            return NotFound();
+
+        var institutionToDelete = _repository
+            .GetInstitution(idInstitution);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!ModelState.IsValid || institutionToDelete == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.DeleteInstructonAsync(institutionToDelete))
             ModelState.AddModelError("", "Something went wrong deleting institution");
 
         return Ok("Successfully deleted");
@@ -143,6 +178,35 @@ public class InstitutionController : Controller
         _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.UpdateInstructon(institutionToUpdate))
+        {
+            ModelState.AddModelError("", "Something went wrong updating institution");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok("Successfully updated");
+    }
+    /// <summary>
+    /// Async Update model
+    /// </summary>
+    /// <param name="institution">model that is updated</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPut("UpdateInstitutionAsync")]
+    public async Task<IActionResult> UpdateInstitutionAsync(
+        [FromBody] HigherEducationInstitutionDto institution)
+    {
+        if (institution == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.InstitutionExistsAsync(institution.Id))
+            return NotFound();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var institutionToUpdate = _mapper.Map<HigherEducationInstitution>(institution);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.UpdateInstructonAsync(institutionToUpdate))
         {
             ModelState.AddModelError("", "Something went wrong updating institution");
             return StatusCode(500, ModelState);

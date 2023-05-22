@@ -8,6 +8,11 @@ public interface IStudent
 
     Student? GetStudentById(string idStudent);
 
+    Task<ICollection<Student>>? GetStudentsAsync();
+    Task<ICollection<Student>>? GetStudentsByGroupOfStudentsAsync(string idGroupOfStudent);
+
+    Task<Student>? GetStudentByIdAsync(string idStudent);
+
     bool StudentExistsById(string idStudent);
     Task<bool> StudentExistsByIdAsync(string idStudent);
 

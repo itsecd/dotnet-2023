@@ -14,7 +14,6 @@ namespace DotNet2023.Domain.Person;
 /// </summary>
 public class Student : BasePerson
 {
-
     /// <summary>
     /// one-to-many -> One GroupOfStudent Many Student
     /// </summary>

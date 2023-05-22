@@ -6,6 +6,9 @@ public interface ISpeciality
     ICollection<Speciality>? GetSpecialities();
     Speciality? GetSpeciality(string code);
 
+    Task<ICollection<Speciality>>? GetSpecialitiesAsync();
+    Task<Speciality>? GetSpecialityAsync(string code);
+
     bool SpecialityExists(string code);
     Task<bool> SpecialityExistsAsync(string code);
 

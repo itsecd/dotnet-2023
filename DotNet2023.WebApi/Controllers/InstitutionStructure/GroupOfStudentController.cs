@@ -23,17 +23,19 @@ public class GroupOfStudentController : Controller
     /// </summary>
     /// <returns>IActionResult with List<FacultyDto></returns>
     [HttpGet]
-    public IActionResult GetGroupOfStudents()
-    {
-        var institutions = _mapper
+    public IEnumerable<GroupOfStudentsDto> GetGroupOfStudents() =>
+        _mapper
             .Map<List<GroupOfStudentsDto>>
             (_repository.GetGroupOfStudents());
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
-
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(institutions);
-    }
+    /// <summary>
+    /// Async Get all GroupOfStudents
+    /// </summary>
+    /// <returns>IActionResult with List<FacultyDto></returns>
+    [HttpGet("GetGroupOfStudentsAsync")]
+    public async Task<IEnumerable<GroupOfStudentsDto>> GetGroupOfStudentsAsync() =>
+        _mapper
+            .Map<List<GroupOfStudentsDto>>
+            (await _repository.GetGroupOfStudentsAsync());
 
     /// <summary>
     /// Get GroupOfStudents by id
@@ -41,18 +43,22 @@ public class GroupOfStudentController : Controller
     /// <param name="idGroupOfStudent">id GroupOfStudents</param>
     /// <returns>IActionResult with FacultyDto</returns>
     [HttpGet("GetGroupOfStudent")]
-    public IActionResult GetGroupOfStudent(string idGroupOfStudent)
-    {
-        var institution = _mapper
+    public GroupOfStudentsDto GetGroupOfStudent(string idGroupOfStudent) =>
+        _mapper
             .Map<GroupOfStudentsDto>
             (_repository.GetGroupOfStudentstById(idGroupOfStudent));
-        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+    /// <summary>
+    /// Async Get GroupOfStudents by id
+    /// </summary>
+    /// <param name="idGroupOfStudent">id GroupOfStudents</param>
+    /// <returns>IActionResult with FacultyDto</returns>
+    [HttpGet("GetGroupOfStudentAsync")]
+    public async Task<GroupOfStudentsDto> GetGroupOfStudentAsync(string idGroupOfStudent) =>
+         _mapper
+            .Map<GroupOfStudentsDto>
+            (await _repository.GetGroupOfStudentstByIdAsync(idGroupOfStudent));
 
-        return Ok(institution);
-    }
 
     /// <summary>
     /// Create a new GroupOfStudent
@@ -71,6 +77,29 @@ public class GroupOfStudentController : Controller
         _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
 
         if (!_repository.CreateGroupOfStudents(groupOfStudentsMap))
+        {
+            ModelState.AddModelError("", "Something went wrong while savin");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
+    }
+    /// <summary>
+    /// Async Create a new GroupOfStudent
+    /// </summary>
+    /// <param name="groupOfStudents">new groupOfStudents</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPost("CreateGroupOfStudentAsync")]
+    public async Task<IActionResult> CreateGroupOfStudentAsync(
+    [FromBody] GroupOfStudentsDto groupOfStudents)
+    {
+        if (groupOfStudents == null)
+            return BadRequest(ModelState);
+
+        var groupOfStudentsMap = _mapper
+            .Map<GroupOfStudents>(groupOfStudents);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.CreateGroupOfStudentsAsync(groupOfStudentsMap))
         {
             ModelState.AddModelError("", "Something went wrong while savin");
             return StatusCode(500, ModelState);
@@ -101,7 +130,29 @@ public class GroupOfStudentController : Controller
 
         return Ok("Successfully deleted");
     }
+    /// <summary>
+    /// Async Delete by id GroupOfStudents
+    /// </summary>
+    /// <param name="idGroupOfStudents">id GroupOfStudents</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpDelete("DeleteGroupOfStudentsAsync")]
+    public async Task<IActionResult> DeleteGroupOfStudentsAsync(string idGroupOfStudents)
+    {
+        if (!await _repository.GroupOfStudentsExistsByIdAsync(idGroupOfStudents))
+            return NotFound();
 
+        var groupOfStudentToDelete = await _repository
+            .GetGroupOfStudentstByIdAsync(idGroupOfStudents);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!ModelState.IsValid || groupOfStudentToDelete == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.DeleteGroupOfStudentsAsync(groupOfStudentToDelete))
+            ModelState.AddModelError("", "Something went wrong deleting institution");
+
+        return Ok("Successfully deleted");
+    }
 
     /// <summary>
     /// Update model
@@ -132,4 +183,34 @@ public class GroupOfStudentController : Controller
 
         return Ok("Successfully updated");
     }
+    /// <summary>
+    /// Async Update model
+    /// </summary>
+    /// <param name="groupOfStudent">model that is updated</param>
+    /// <returns>Ok :) or Not Ok :(</returns>
+    [HttpPut("UpdateGroupOfStudentsAsync")]
+    public async Task<IActionResult> UpdateGroupOfStudentsAsync(
+        [FromBody] GroupOfStudentsDto groupOfStudent)
+    {
+        if (groupOfStudent == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.GroupOfStudentsExistsByIdAsync(groupOfStudent.Id))
+            return NotFound();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var groupOfStudentToUpdate = _mapper.Map<GroupOfStudents>(groupOfStudent);
+        _logger.LogInformation($"ModelState {ModelState}, method CreateInstituteSpeciality");
+
+        if (!await _repository.UpdateGroupOfStudentsAsync(groupOfStudentToUpdate))
+        {
+            ModelState.AddModelError("", "Something went wrong updating institution");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok("Successfully updated");
+    }
+
 }

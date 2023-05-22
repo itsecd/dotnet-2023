@@ -20,4 +20,20 @@ public interface IQueries
     public ResponseUniversityStructByProperty[]? GetInstitutionStruct
         (InstitutionalProperty institutionalProperty,
         BuildingProperty buildingProperty);
+
+    public Task<HigherEducationInstitution>? GetInstitutionByIdAsync(string id);
+
+    public Task<HigherEducationInstitution>? GetInstitutionByInitialsAsync(string initials);
+
+    public Task<Speciality[]>? GetPopularSpecialityAsync();
+
+    public Task<HigherEducationInstitution[]>? GetInstitutionsWithMaxDepartmentsAsync();
+
+    public Task<Dictionary<string, int>> GetOwnershipInstitutionAndGroupAsync(InstitutionalProperty property);
+
+    public Task<ResponseUniversityStructByInitials>? GetInstitutionStructByInitialsAsync(string initials);
+
+    public Task<ResponseUniversityStructByProperty[]>? GetInstitutionStructAsync
+        (InstitutionalProperty institutionalProperty,
+        BuildingProperty buildingProperty);
 }

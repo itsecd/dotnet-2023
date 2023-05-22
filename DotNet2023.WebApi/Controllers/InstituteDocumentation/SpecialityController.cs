@@ -23,16 +23,19 @@ public class SpecialityController : Controller
     /// </summary>
     /// <returns>IActionResult with SpecialityDto</returns>
     [HttpGet]
-    public IActionResult GetSpecialities()
-    {
-        var specialities = _mapper
+    public IEnumerable<SpecialityDto> GetSpecialities() =>
+        _mapper
             .Map<List<SpecialityDto>>
             (_repository.GetSpecialities());
-        _logger.LogInformation($"ModelState {ModelState}, method GetSpecialities");
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(specialities);
-    }
+    /// <summary>
+    /// Async Get all specialities
+    /// </summary>
+    /// <returns>IActionResult with SpecialityDto</returns>
+    [HttpGet("GetSpecialitiesAsync")]
+    public async Task<IEnumerable<SpecialityDto>> GetSpecialitiesAsync() =>
+        _mapper
+            .Map<List<SpecialityDto>>
+            (await _repository.GetSpecialitiesAsync());
 
     /// <summary>
     /// Get speciality by code
@@ -40,18 +43,21 @@ public class SpecialityController : Controller
     /// <param name="code">id speciality</param>
     /// <returns>IActionResult with SpecialityDto</returns>
     [HttpGet("GetSpeciality")]
-    public IActionResult GetSpeciality(string code)
-    {
-        var speciality = _mapper
+    public SpecialityDto GetSpeciality(string code) =>
+        _mapper
             .Map<SpecialityDto>
             (_repository.GetSpeciality(code));
-        _logger.LogInformation($"ModelState {ModelState}, method GetSpecialities");
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(speciality);
-    }
+    /// <summary>
+    /// Async Get speciality by code
+    /// </summary>
+    /// <param name="code">id speciality</param>
+    /// <returns>IActionResult with SpecialityDto</returns>
+    [HttpGet("GetSpecialityAsync")]
+    public async Task<SpecialityDto> GetSpecialityAsync(string code) =>
+        _mapper
+            .Map<SpecialityDto>
+            (await _repository.GetSpecialityAsync(code));
 
     /// <summary>
     /// create a new speciality
@@ -76,6 +82,30 @@ public class SpecialityController : Controller
         }
         return Ok("Successfully created");
     }
+    /// <summary>
+    /// Async Create a new speciality
+    /// </summary>
+    /// <param name="speciality">new speciality</param>
+    /// <returns>Ok :) or not Ok :(</returns>
+    [HttpPost("CreateSpecialityAsync")]
+    public async Task<IActionResult> CreateSpecialityAsync(
+        [FromBody] SpecialityDto speciality)
+    {
+        if (speciality == null)
+            return BadRequest(ModelState);
+        _logger.LogInformation($"ModelState {ModelState}, method GetSpecialities");
+
+        var specialityMap = _mapper
+            .Map<Speciality>(speciality);
+
+        if (!await _repository.CreateSpecialityAsync(specialityMap))
+        {
+            ModelState.AddModelError("", "Something went wrong while savin");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
+    }
+
 
     /// <summary>
     /// delete speciality by code
@@ -100,6 +130,30 @@ public class SpecialityController : Controller
 
         return Ok("Successfully deleted");
     }
+    /// <summary>
+    /// Async delete speciality by code
+    /// </summary>
+    /// <param name="code">id speciality</param>
+    /// <returns>Ok :) or not Ok :(</returns>
+    [HttpDelete("DeleteSpecialityAsync")]
+    public async Task<IActionResult> DeleteSpecialityAsync(string code)
+    {
+        if (!_repository.SpecialityExists(code))
+            return NotFound();
+
+        var institutionToDelete = await _repository
+            .GetSpecialityAsync(code);
+        _logger.LogInformation($"ModelState {ModelState}, method GetSpecialities");
+
+        if (!ModelState.IsValid || institutionToDelete == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.DeleteSpecialityAsync(institutionToDelete))
+            ModelState.AddModelError("", "Something went wrong deleting institution");
+
+        return Ok("Successfully deleted");
+    }
+
 
     /// <summary>
     /// update speciality
@@ -131,4 +185,35 @@ public class SpecialityController : Controller
 
         return Ok("Successfully updated");
     }
+    /// <summary>
+    /// Async Update speciality
+    /// </summary>
+    /// <param name="speciality">update speciality</param>
+    /// <returns>Ok :) or not Ok :(</returns>
+    [HttpPut("UpdateSpecialityAsync")]
+    public async Task<IActionResult> UpdateSpecialityAsync(
+        [FromBody] SpecialityDto speciality)
+    {
+        if (speciality == null)
+            return BadRequest(ModelState);
+
+        if (!await _repository.SpecialityExistsAsync(speciality.Code))
+            return NotFound();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var specialityToUpdate = _mapper.Map<Speciality>(speciality);
+
+        _logger.LogInformation($"ModelState {ModelState}, method GetSpecialities");
+
+        if (!await _repository.UpdateSpecialityAsync(specialityToUpdate))
+        {
+            ModelState.AddModelError("", "Something went wrong updating institution");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok("Successfully updated");
+    }
+
 }

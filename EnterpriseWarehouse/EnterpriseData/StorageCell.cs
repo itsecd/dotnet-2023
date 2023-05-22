@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Enterprise.Data;
 
 /// <summary>
@@ -8,16 +11,22 @@ public class StorageCell
     /// <summary>
     ///     Number - cell number
     /// </summary>
+    /// 
+    [Key]
+    [Column("cellNumber")]
     public uint Number { get; set; }
 
     /// <summary>
     ///     ItemNumberProduct - unique identifier of the product 
     /// </summary>
-	public uint ItemNumberProducts { get; set; }
+    [ForeignKey("Product")]
+    [Column("productId")]
+    public uint ItemNumberProducts { get; set; }
+    public Product Product { get; set; }
 
-    public StorageCell(uint number, uint itemNumberProducts)
+    public StorageCell(uint number, Product product)
     {
         Number = number;
-        ItemNumberProducts = itemNumberProducts;
+        Product = product;
     }
 }

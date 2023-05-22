@@ -1,7 +1,8 @@
-﻿using Enterprise.Data;
+﻿using AutoMapper;
+using Enterprise.Data;
 using EnterpriseWarehouseServer.Dto;
-using EnterpriseWarehouseServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnterpriseWarehouseServer.Controllers;
 [Route("api/[controller]")]
@@ -10,11 +11,14 @@ public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
 
-    private readonly IMainRepository _mainRepository;
-    public ProductController(ILogger<ProductController> logger, IMainRepository mainRepository)
+    private readonly EnterpriseWarehouseDbContext _context;
+
+    private readonly IMapper _mapper;
+    public ProductController(ILogger<ProductController> logger, EnterpriseWarehouseDbContext context, IMapper mapper)
     {
         _logger = logger;
-        _mainRepository = mainRepository;
+        _context = context;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -22,18 +26,23 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <returns>List of Product</returns>
     [HttpGet]
-    public IEnumerable<ProductGetDto> Get()
+    public async Task<ActionResult<IEnumerable<ProductGetDto>>> Get()
     {
         _logger.LogInformation("Get products.");
-        return _mainRepository.Products.Select(product =>
-            new ProductGetDto
-            {
-                ItemNumber = product.ItemNumber,
-                Title = product.Title,
-                Quantity = product.Quantity,
-                CellNumber = product.CellNumber
-            }
-        );
+        if (_context.Products != null)
+        {
+            return await _mapper.ProjectTo<ProductGetDto>(_context.Products).ToListAsync();
+            return await _context.Products.Select(product =>
+                new ProductGetDto
+                {
+                    ItemNumber = product.ItemNumber,
+                    Title = product.Title,
+                    Quantity = product.Quantity
+                }
+            ).ToListAsync();
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -42,24 +51,32 @@ public class ProductController : ControllerBase
     /// <param ItemNumber = "id" >ItemNumber of the Product to be view</param>
     /// <returns>Info of product</returns>
     [HttpGet("{id}")]
-    public ActionResult<ProductGetDto?> Get(int id)
+    public async Task<ActionResult<ActionResult<ProductGetDto?>>> Get(int id)
     {
-        var product = _mainRepository.Products.FirstOrDefault(product => product.ItemNumber == id);
-        if (product == null)
+        if (_context.Products != null)
         {
-            _logger.LogInformation("Not found product with {id}.", id);
-            return NotFound();
+            var product = _context.Products.FirstOrDefault(product => product.ItemNumber == id);
+            if (product != null)
+            {
+                _logger.LogInformation("Get product with {id}.", id);
+                return Ok(_mapper.Map<ProductGetDto>(product));
+                return Ok(new ProductGetDto
+                {
+                    ItemNumber = product.ItemNumber,
+                    Title = product.Title,
+                    Quantity = product.Quantity
+                });
+            }
+            else
+            {
+                _logger.LogInformation("Not found product with {id}.", id);
+                return NotFound();
+            }
         }
         else
         {
-            _logger.LogInformation("Get product with {id}.", id);
-            return Ok(new ProductGetDto
-            {
-                ItemNumber = product.ItemNumber,
-                Title = product.Title,
-                Quantity = product.Quantity,
-                CellNumber = product.CellNumber
-            });
+            _logger.LogInformation("Not found product with {id}.", id);
+            return NotFound();
         }
     }
 
@@ -68,14 +85,20 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param Product>Add new Product</param>
     [HttpPost]
-    public void Post([FromBody] ProductPostDto product)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<Product>> Post([FromBody] ProductPostDto product)
     {
-        _mainRepository.Products.Add(new Product(
-            product.ItemNumber,
-            product.Title,
-            product.Quantity,
-            product.CellNumber)
-            );
+        if (_context.Products != null)
+        {
+            var mappedProduct = _mapper.Map<Product>(product);
+
+            _context.Add(mappedProduct);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("Post", new { itemNumber = mappedProduct.ItemNumber }, _mapper.Map<ProductGetDto>(mappedProduct));
+        }
+        else
+            return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");
+
     }
 
     /// <summary>
@@ -84,22 +107,21 @@ public class ProductController : ControllerBase
     /// <param ItemNumber="id">ItemNumber of the Product to be update</param>
     /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ProductPostDto productToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ProductPostDto productToPut)
     {
-        var product = _mainRepository.Products.FirstOrDefault(product => product.ItemNumber == id);
-        if (product == null)
+        if (_context.Products == null)
+            return NotFound();
+        var productToModify = await _context.Products.FindAsync(id);
+        if (productToModify == null)
         {
             _logger.LogInformation("Not found product with {id}.", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Put product with {id}.", id);
-            product.ItemNumber = productToPut.ItemNumber;
-            product.Title = productToPut.Title;
-            product.Quantity = productToPut.Quantity;
-            product.CellNumber = productToPut.CellNumber;
-            return Ok();
+            _mapper.Map(productToPut, productToModify);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 
@@ -109,19 +131,25 @@ public class ProductController : ControllerBase
     /// <param ItemNumber="id">ItemNumber of the Product to be removed</param>
     /// <returns>Result of operation</returns>
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
-        var product = _mainRepository.Products.FirstOrDefault(product => product.ItemNumber == id);
-        if (product == null)
+        if (_context.Products != null)
         {
-            _logger.LogInformation("Not found product with {id}.", id);
-            return NotFound();
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                _logger.LogInformation("Not found product with {id}.", id);
+                return NotFound();
+            }
+            else
+            {
+                _logger.LogInformation("Delete product with {id}.", id);
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
         }
         else
-        {
-            _logger.LogInformation("Delete product with {id}.", id);
-            _mainRepository.Products.Remove(product);
-            return Ok();
-        }
+            return NotFound();
     }
 }

@@ -10,11 +10,11 @@ public class StorageCellController : ControllerBase
 {
     private readonly ILogger<StorageCellController> _logger;
 
-    private readonly IMainRepository _mainRepository;
+    private readonly IMainRepository _context;
     public StorageCellController(ILogger<StorageCellController> logger, IMainRepository mainRepository)
     {
         _logger = logger;
-        _mainRepository = mainRepository;
+        _context = mainRepository;
     }
 
     /// <summary>
@@ -24,11 +24,11 @@ public class StorageCellController : ControllerBase
     public IEnumerable<StorageCellGetDto> Get()
     {
         _logger.LogInformation("Get storage cell.");
-        return _mainRepository.StorageCell.Select(storageCell =>
+        return _context.StorageCell.Select(storageCell =>
             new StorageCellGetDto
             {
                 Number = storageCell.Number,
-                ItemNumberProducts = storageCell.ItemNumberProducts,
+                ItemNumberProduct = storageCell.ItemNumberProducts,
             }
         );
     }
@@ -41,7 +41,7 @@ public class StorageCellController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<StorageCellGetDto?> Get(int id)
     {
-        var storageCell = _mainRepository.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
+        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
         if (storageCell == null)
         {
             _logger.LogInformation("Not found storage cell with {id}.", id);
@@ -53,7 +53,7 @@ public class StorageCellController : ControllerBase
             return Ok(new StorageCellGetDto
             {
                 Number = storageCell.Number,
-                ItemNumberProducts = storageCell.ItemNumberProducts,
+                ItemNumberProduct = storageCell.ItemNumberProducts,
             });
         }
     }
@@ -65,11 +65,14 @@ public class StorageCellController : ControllerBase
     [HttpPost]
     public void Post([FromBody] StorageCellPostDto storageCell)
     {
-        _mainRepository.StorageCell.Add(new StorageCell(
-            storageCell.Number,
-            storageCell.ItemNumberProducts
-            )
-        );
+        var product = _context.Products.FirstOrDefault(product => product.ItemNumber == storageCell.ItemNumberProduct);
+        var new_storageCell = new StorageCell(
+            storageCell.Number, product)
+        {
+            ItemNumberProducts = storageCell.ItemNumberProduct
+        };
+        product.StorageCell.Add(new_storageCell);
+        _context.StorageCell.Add(new_storageCell);
     }
 
     /// <summary>
@@ -80,7 +83,7 @@ public class StorageCellController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult Put(int id, [FromBody] StorageCell storageCell_)
     {
-        var storageCell = _mainRepository.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
+        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
         if (storageCell == null)
         {
             _logger.LogInformation("Not found stirage cell with {id}.", id);
@@ -103,7 +106,7 @@ public class StorageCellController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var storageCell = _mainRepository.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
+        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
         if (storageCell == null)
         {
             _logger.LogInformation("Not found stirage cell with {id}.", id);
@@ -112,7 +115,7 @@ public class StorageCellController : ControllerBase
         else
         {
             _logger.LogInformation("Get storage cell with {id}.", id);
-            _mainRepository.StorageCell.Remove(storageCell);
+            _context.StorageCell.Remove(storageCell);
             return Ok();
         }
 

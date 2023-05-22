@@ -13,5 +13,5 @@ public class StorageCellGetDto
     /// <summary>
     ///     ItemNumberProduct - unique identifier of the product 
     /// </summary>
-	public uint ItemNumberProducts { get; set; }
+	public uint ItemNumberProduct { get; set; }
 }

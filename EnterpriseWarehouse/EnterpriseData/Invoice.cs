@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Enterprise.Data;
 
 /// <summary>
@@ -6,36 +9,40 @@ namespace Enterprise.Data;
 public class Invoice
 {
     /// <summary>
-    ///     Id - number of the voice
+    ///     Id - number of the invoice
     /// </summary>
+    [Key]
+    [Column("id")]
     public uint Id { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
     /// </summary>
-	public string NameOrganization { get; set; } = string.Empty;
+    [Column("nameOrganization")]
+    public string NameOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     AdressOrganization - address of the organization to which the shipment was made
     /// </summary>
-	public string AdressOrganization { get; set; } = string.Empty;
+    [Column("addressOrganization")]
+    public string AdressOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     ShipmentDate - shipment date
     /// </summary>
-	public DateTime ShipmentDate { get; set; }
+    [Column("shipmentDate")]
+    public DateTime ShipmentDate { get; set; }
 
     /// <summary>
-    ///     Product - collection of pairs "product identifier - product quantity"
+    ///     InvoiceContentid - invoice information number
     /// </summary>
-    public Dictionary<uint, uint> Products { get; set; } = new Dictionary<uint, uint>();
+    public List<InvoiceContent> InvoiceContent { get; set; } = new List<InvoiceContent>();
 
-    public Invoice(uint id, string nameOrganization, string adressOrganization, DateTime shipmentDate, Dictionary<uint, uint> products)
+    public Invoice(uint id, string nameOrganization, string adressOrganization, DateTime shipmentDate)
     {
         Id = id;
         NameOrganization = nameOrganization;
         AdressOrganization = adressOrganization;
         ShipmentDate = shipmentDate;
-        Products = products;
     }
 }

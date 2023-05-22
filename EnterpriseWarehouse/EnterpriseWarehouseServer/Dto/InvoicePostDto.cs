@@ -23,7 +23,7 @@ public class InvoicePostDto
     /// <summary>
     ///     ShipmentDate - shipment date
     /// </summary>
-	public DateOnly ShipmentDate { get; set; }
+	public string ShipmentDate { get; set; } = string.Empty;
 
     /// <summary>
     ///     Product - collection of pairs "product identifier - product quantity"

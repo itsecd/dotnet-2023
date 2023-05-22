@@ -1,5 +1,8 @@
 ﻿namespace BikeRental.Server.Dto;
 
+/// <summary>
+/// Class BikeGetDto has the info about bikes
+/// </summary>
 public class BikeGetDto
 {
     /// <summary>

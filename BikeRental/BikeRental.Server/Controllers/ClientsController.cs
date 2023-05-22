@@ -1,39 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BikeRental.Domain;
+using AutoMapper;
+using BikeRental.Server.Dto;
 
 namespace BikeRental.Server.Controllers;
 
+/// <summary>
+/// Clients
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClientsController : ControllerBase
 {
     private readonly BikeRentalDbContext _context;
 
-    public ClientsController(BikeRentalDbContext context)
+    private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Constructor for ClientsController
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public ClientsController(BikeRentalDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    // GET: api/Clients
+    /// <summary>
+    /// View all clients
+    /// </summary>
+    /// <returns>Client list</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Client>>> GetClients()
+    public async Task<ActionResult<IEnumerable<ClientGetDto>>> GetClients()
     {
       if (_context.Clients == null)
       {
           return NotFound();
       }
-        return await _context.Clients.ToListAsync();
+        return await _mapper.ProjectTo<ClientGetDto>(_context.Clients).ToListAsync();
     }
 
-    // GET: api/Clients/5
+    /// <summary>
+    /// View client by id
+    /// </summary>
+    /// <param name="id">Client id</param>
+    /// <returns>Client</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Client>> GetClient(int id)
+    public async Task<ActionResult<ClientGetDto>> GetClient(int id)
     {
       if (_context.Clients == null)
       {
@@ -46,56 +61,62 @@ public class ClientsController : ControllerBase
             return NotFound();
         }
 
-        return client;
+        return _mapper.Map<ClientGetDto>(client);
     }
 
-    // PUT: api/Clients/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    /// <summary>
+    /// Change client info
+    /// </summary>
+    /// <param name="id">Client id</param>
+    /// <param name="client">Changing client</param>
+    /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutClient(int id, Client client)
+    public async Task<IActionResult> PutClient(int id, ClientSetDto client)
     {
-        if (id != client.Id)
+        if (_context.Clients == null)
         {
-            return BadRequest();
+            return NotFound();
+        }
+        var clientToModify = await _context.Clients.FindAsync(id);
+        if (clientToModify == null)
+        {
+            return NotFound();
         }
 
-        _context.Entry(client).State = EntityState.Modified;
+        _mapper.Map(client, clientToModify);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!ClientExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    // POST: api/Clients
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    /// <summary>
+    /// Adding new client
+    /// </summary>
+    /// <param name="client">Client</param>
+    /// <returns>Added client</returns>
     [HttpPost]
-    public async Task<ActionResult<Client>> PostClient(Client client)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ClientGetDto>> PostClient(ClientSetDto client)
     {
       if (_context.Clients == null)
       {
           return Problem("Entity set 'BikeRentalDbContext.Clients'  is null.");
       }
-        _context.Clients.Add(client);
+        var mappedClient = _mapper.Map<Client>(client);
+
+        _context.Clients.Add(mappedClient);
+
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetClient", new { id = client.Id }, client);
+        return CreatedAtAction("PostClient", new { id = mappedClient.Id }, _mapper.Map<ClientGetDto>(mappedClient));
     }
 
-    // DELETE: api/Clients/5
+    /// <summary>
+    /// Deleting a client
+    /// </summary>
+    /// <param name="id">Deleted client id</param>
+    /// <returns>Action result</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteClient(int id)
     {
@@ -113,10 +134,5 @@ public class ClientsController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
-    }
-
-    private bool ClientExists(int id)
-    {
-        return (_context.Clients?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }

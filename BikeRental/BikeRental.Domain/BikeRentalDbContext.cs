@@ -1,21 +1,45 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace BikeRental.Domain;
+
+/// <summary>
+/// DbContext for creating a database
+/// </summary>
 public class BikeRentalDbContext : DbContext
 {
+    /// <summary>
+    /// Collection of bikes
+    /// </summary>
     public DbSet<Bike>? Bikes { get; set; }
 
+    /// <summary>
+    /// Collection of bike types
+    /// </summary>
     public DbSet<BikeType>? BikeTypes { get; set; }
 
+    /// <summary>
+    /// Collection of clients
+    /// </summary>
     public DbSet<Client>? Clients { get; set; }
 
+    /// <summary>
+    /// Collection of rent records
+    /// </summary>
     public DbSet<RentRecord>? RentRecords { get; set; }
 
+    /// <summary>
+    /// Constructor for DbContext
+    /// </summary>
+    /// <param name="options"></param>
     public BikeRentalDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
 
+    /// <summary>
+    /// Insetring data into database
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

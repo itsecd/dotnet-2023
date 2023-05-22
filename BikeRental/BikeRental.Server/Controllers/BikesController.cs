@@ -17,6 +17,11 @@ public class BikesController : ControllerBase
 
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Constructor for BikesController
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
     public BikesController(BikeRentalDbContext context, IMapper mapper)
     {
         _context = context;

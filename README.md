@@ -23,29 +23,29 @@ And eventually a client application was created with avalonia, which interacts w
 
 # Screenshots
 ## Application
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/MainWindow.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/MainWindow.png)
 ## Company buttons
 ### Company add
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyAdd.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyAdd.png)
 ### Company edit
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyEdit.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyEdit.png)
 ## Company application buttons
 ### Company application add
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyApplicationAdd.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyApplicationAdd.png)
 ### Company application edit
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyApplicationEdit.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyApplicationEdit.png)
 ## Job application buttons
 ### Job application add
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/JobApplicationAdd.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/JobApplicationAdd.png)
 ### Job application edit
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/JobApplicationEdit.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/JobApplicationEdit.png)
 ## Employee buttons
 ### Employee add
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/EmployeeAdd.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/EmployeeAdd.png)
 ### Employee edit
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/EmployeeEdit.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/EmployeeEdit.png)
 ## Title buttons
 ### Title add
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/TitleAdd.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/TitleAdd.png)
 ### Title edit
-![](https://raw.githubusercontent.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/TitleEdit.png)
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/TitleEdit.png)

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
 using RecruitmentAgencyServer.Dto;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RecruitmentAgencyServer.Controllers;
 
@@ -37,7 +36,7 @@ public class JobApplicationController : ControllerBase
         _logger.LogInformation("Get job applications");
         //var jobApplications = _mapper.Map<IEnumerable<JobApplicationGetDto>>(await ctx.JobApplications.ToListAsync());
         var jobApplications = await ctx.JobApplications.ToListAsync();
-        var data =  _mapper.Map<IEnumerable<JobApplicationGetDto>>(jobApplications);
+        var data = _mapper.Map<IEnumerable<JobApplicationGetDto>>(jobApplications);
         return data;
     }
     /// <summary>

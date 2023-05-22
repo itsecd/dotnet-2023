@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
@@ -14,21 +13,24 @@ public class CompanyViewModel : ViewModelBase
     }
     private string _companyName = string.Empty;
     [Required]
-    public string CompanyName { 
+    public string CompanyName
+    {
         get => _companyName;
         set => this.RaiseAndSetIfChanged(ref _companyName, value);
     }
     private string _contactName = string.Empty;
     [Required]
-    public string ContactName {
+    public string ContactName
+    {
         get => _contactName;
-        set => this.RaiseAndSetIfChanged(ref _contactName, value); 
+        set => this.RaiseAndSetIfChanged(ref _contactName, value);
     }
     private string _telephone = string.Empty;
-    public string Telephone {
-        get => _telephone; 
+    public string Telephone
+    {
+        get => _telephone;
         set => this.RaiseAndSetIfChanged(ref _telephone, value);
-    } 
+    }
     public ReactiveCommand<Unit, CompanyViewModel> OnSubmitCommand { get; }
     public CompanyViewModel()
     {

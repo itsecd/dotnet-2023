@@ -13,7 +13,7 @@ public partial class CompanyWindow : ReactiveWindow<CompanyViewModel>
 
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
-    
+
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Close();

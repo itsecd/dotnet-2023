@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentAgency;
-using RecruitmentAgencyServer.Repository;
 using System.Reflection;
 
 namespace RecruitmentAgencyServer;

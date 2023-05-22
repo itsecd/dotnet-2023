@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySql.EntityFrameworkCore.Extensions;
 
 namespace RecruitmentAgency;
 /// <summary>
@@ -273,7 +271,7 @@ public sealed class RecruitmentAgencyContext : DbContext
       .WithMany()
       .HasForeignKey(jobApplication => jobApplication.TitleId)
         .IsRequired();
-        
+
         foreach (var title in titles)
         {
             title.Id = index;

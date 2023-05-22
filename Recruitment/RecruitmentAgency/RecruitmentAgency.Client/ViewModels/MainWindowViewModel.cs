@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ReactiveUI;
-using RecruitmentAgencyServer.Dto;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -16,8 +14,8 @@ public class MainWindowViewModel : ViewModelBase
     private CompanyViewModel? _selectedCompany;
     public CompanyViewModel? SelectedCompany
     {
-        get=> _selectedCompany;
-        set=> this.RaiseAndSetIfChanged(ref _selectedCompany, value);
+        get => _selectedCompany;
+        set => this.RaiseAndSetIfChanged(ref _selectedCompany, value);
     }
     public ObservableCollection<CompanyApplicationViewModel> CompanyApplications { get; } = new();
     private CompanyApplicationViewModel? _selectedCompanyApplication;
@@ -51,8 +49,8 @@ public class MainWindowViewModel : ViewModelBase
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
     public ReactiveCommand<Unit, Unit> OnAddCompanyCommand { get; set; }
-    public ReactiveCommand<Unit,Unit> OnChangeCompanyCommand{get;set;}
-    public ReactiveCommand<Unit,Unit> OnDeleteCompanyCommand { get;set;}
+    public ReactiveCommand<Unit, Unit> OnChangeCompanyCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteCompanyCommand { get; set; }
     public Interaction<CompanyViewModel, CompanyViewModel?> ShowCompanyDialog { get; }
     public ReactiveCommand<Unit, Unit> OnAddCompanyApplicationCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCompanyApplicationCommand { get; set; }
@@ -70,7 +68,8 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeTitleCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteTitleCommand { get; set; }
     public Interaction<TitleViewModel, TitleViewModel?> ShowTitleDialog { get; }
-    public MainWindowViewModel() {
+    public MainWindowViewModel()
+    {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
@@ -78,12 +77,12 @@ public class MainWindowViewModel : ViewModelBase
         ShowCompanyApplicationDialog = new Interaction<CompanyApplicationViewModel, CompanyApplicationViewModel?>();
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
         ShowJobApplicationDialog = new Interaction<JobApplicationViewModel, JobApplicationViewModel?>();
-        ShowTitleDialog = new Interaction<TitleViewModel, TitleViewModel?>(); 
+        ShowTitleDialog = new Interaction<TitleViewModel, TitleViewModel?>();
 
         OnAddCompanyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var companyViewModel = await ShowCompanyDialog.Handle(new CompanyViewModel());
-            if(companyViewModel != null)
+            if (companyViewModel != null)
             {
                 var newCompany = await _apiClient.AddCompanyAsync(_mapper.Map<CompanyPostDto>(companyViewModel));
                 Companies.Add(_mapper.Map<CompanyViewModel>(newCompany));
@@ -98,7 +97,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.UpdateCompanyAsync(SelectedCompany!.Id, _mapper.Map<CompanyPostDto>(companyViewModel));
                 _mapper.Map(companyViewModel, SelectedCompany);
             }
-        }, this.WhenAnyValue(vm=>vm.SelectedCompany).Select(selectCompany=> selectCompany != null));
+        }, this.WhenAnyValue(vm => vm.SelectedCompany).Select(selectCompany => selectCompany != null));
 
         OnDeleteCompanyCommand = ReactiveCommand.CreateFromTask(async () =>
         {

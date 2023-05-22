@@ -7,7 +7,7 @@ namespace RecruitmentAgency.Client.Views;
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
     public MainWindow()
-    {   
+    {
         InitializeComponent();
 
         this.WhenActivated(d => d(ViewModel!.ShowCompanyDialog.RegisterHandler(ShowCompanyDialogAsync)));
@@ -17,7 +17,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowTitleDialog.RegisterHandler(ShowTitleDialogAsync)));
 
     }
-    private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction) {
+    private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction)
+    {
         var dialog = new CompanyWindow
         {
             DataContext = interaction.Input

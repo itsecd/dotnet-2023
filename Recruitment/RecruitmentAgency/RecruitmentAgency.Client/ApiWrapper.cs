@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using RecruitmentAgencyServer.Dto;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -16,7 +15,7 @@ public class ApiWrapper
             .AddJsonFile("appsettings.json")
             .Build();
         var serverUrl = configuration.GetSection("ServerUrl").Value;
-            
+
         _client = new ApiClient(serverUrl, new HttpClient());
     }
     public async Task<ICollection<CompanyGetDto>> GetCompaniesAsync()

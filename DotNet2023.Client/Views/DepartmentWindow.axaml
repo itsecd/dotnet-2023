@@ -14,6 +14,10 @@
 		<vm:DepartmentViewModel/>
 	</Design.DataContext>
 
+	<Window.Styles>
+		<StyleInclude Source="/Assets/Styles.axaml" />
+	</Window.Styles>
+
 	<Grid RowDefinitions="Auto,*,*,*,*" ColumnDefinitions="Auto, *,*">
 		<Label Grid.Row="0" Grid.Column="0">Name</Label>
 		<Label Grid.Row="1" Grid.Column="0">Phone</Label>

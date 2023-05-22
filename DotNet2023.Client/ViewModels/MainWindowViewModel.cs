@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-
+using System.Threading.Tasks;
 
 namespace DotNet2023.Client.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    #region ObservableCollection
     public ObservableCollection<HigherEducationInstitutionViewModel> Institutions { get; } = new();
     public ObservableCollection<DepartmentViewModel> Departments { get; } = new();
     public ObservableCollection<EducationWorkerViewModel> EducationWorkers { get; } = new();
@@ -19,6 +20,16 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<InstituteSpecialityViewModel> InstituteSpecialities { get; } = new();
     public ObservableCollection<SpecialityViewModel> Specialities { get; } = new();
     public ObservableCollection<StudentViewModel> Students { get; } = new();
+
+    #endregion ObservableCollection
+
+    #region Queries
+    public ObservableCollection<SpecialityViewModel> PopularSpecialies { get; } = new();
+    public ObservableCollection<HigherEducationInstitutionViewModel> InstitutionsWithMaxDepartmentsAsync { get; } = new();
+    public ObservableCollection<ResponseUniversityStructByProperty> InstitutionStructAsync { get; } = new();
+
+    #endregion Queries
+
 
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
@@ -37,6 +48,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
+
+        OnUpdateQueries = ReactiveCommand.CreateFromTask(() =>
+        {
+            LoadQueriesAsync();
+            return Task.CompletedTask;
+        });
 
         ShowInstitutionDialog = new Interaction<HigherEducationInstitutionViewModel, HigherEducationInstitutionViewModel?>();
         OnAddInstitutionCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -278,6 +295,7 @@ public class MainWindowViewModel : ViewModelBase
 
     }
 
+    #region Selected
     public HigherEducationInstitutionViewModel? SelectedHigherEducationInstitution
     {
         get => _selectedHigherEducationInstitution;
@@ -318,8 +336,10 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedStudent;
         set => this.RaiseAndSetIfChanged(ref _selectedStudent, value);
     }
+    #endregion
 
-
+    #region Commands
+    public ReactiveCommand<Unit, Unit> OnUpdateQueries { get; set; }
     public ReactiveCommand<Unit, Unit> OnAddInstitutionCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnEditInstitutionCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteInstitutionCommand { get; set; }
@@ -365,7 +385,29 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnDeleteStudentCommand { get; set; }
     public Interaction<StudentViewModel, StudentViewModel?> ShowStudentDialog { get; }
 
+    #endregion Commands
 
+    #region Loads
+    private async void LoadQueriesAsync()
+    {
+        PopularSpecialies.Clear();
+        InstitutionsWithMaxDepartmentsAsync.Clear();
+        InstitutionStructAsync.Clear();
+
+        foreach (var elem in await _apiClient.GetPopularSpecialityAsync())
+        {
+            PopularSpecialies.Add(_mapper.Map<SpecialityViewModel>(elem));
+        }
+        foreach (var elem in await _apiClient.GetInstitutionsWithMaxDepartmentsAsync())
+        {
+            InstitutionsWithMaxDepartmentsAsync.Add(_mapper.Map<HigherEducationInstitutionViewModel>(elem));
+        }
+        foreach (var elem in await _apiClient.GetInstitutionStructAsync(InstitutionalProperty._0, BuildingProperty._2))
+        {
+            InstitutionStructAsync.Add(elem);
+        }
+
+    }
 
     private async void LoadInstitutionAsync()
     {
@@ -431,4 +473,6 @@ public class MainWindowViewModel : ViewModelBase
             Students.Add(_mapper.Map<StudentViewModel>(elem));
         }
     }
+
+    #endregion Loads
 }

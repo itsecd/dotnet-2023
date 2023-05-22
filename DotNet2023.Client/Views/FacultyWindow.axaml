@@ -12,6 +12,9 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:FacultyViewModel/>
 	</Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/Assets/Styles.axaml" />
+	</Window.Styles>
 	
 	<Grid RowDefinitions="Auto,*,*,*,*" ColumnDefinitions="Auto, *,*">
 		<Label Grid.Row="0" Grid.Column="0">Name</Label>

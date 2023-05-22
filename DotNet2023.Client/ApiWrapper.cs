@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,12 +11,15 @@ public class ApiWrapper
 
     public ApiWrapper()
     {
-        _client = new ApiClient("https://localhost:7266//", new HttpClient());
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("settings.json")
+            .Build();
+        var serverUrl = configuration.GetSection("ServerUrl").Value;
+        _client = new ApiClient(serverUrl, new HttpClient());
     }
     public async Task<IEnumerable<HigherEducationInstitutionDto>> GetInstitutionsAsync() =>
         await _client.GetInstitutionsAsync();
-    public async Task<HigherEducationInstitutionDto> GetInstitutionByIdAsync(string id) =>
-        await _client.GetInstitutionByIdAsync(id);
     public async Task GreateInstitutionAsync(HigherEducationInstitutionDto body) =>
         await _client.CreateInstructonAsync(body);
     public async Task DeleteInstitutionAsync(string id) =>
@@ -91,4 +96,20 @@ public class ApiWrapper
         await _client.DeleteStudentAsync(id);
     public async Task UpdateStudentAsync(StudentDto body) =>
         await _client.UpdateStudentAsync(body);
+
+
+    // QUERIES
+
+    public async Task<HigherEducationInstitutionDto> GetInstitutionByIdAsync(string id) =>
+        await _client.GetInstitutionByIdAsync(id);
+    public async Task<IEnumerable<SpecialityDto>> GetPopularSpecialityAsync() =>
+        await _client.GetPopularSpecialityAsync();
+    public async Task<IEnumerable<HigherEducationInstitutionDto>> GetInstitutionsWithMaxDepartmentsAsync() =>
+        await _client.GetInstitutionsWithMaxDepartmentsAsync();
+    public async Task<IDictionary<string, int>> GetOwnershipInstitutionAndGroupAsync(
+        InstitutionalProperty property) =>
+        await _client.GetOwnershipInstitutionAndGroupAsync(property);
+    public async Task<IEnumerable<ResponseUniversityStructByProperty>> GetInstitutionStructAsync(
+        InstitutionalProperty propertyInstitution, BuildingProperty buildingProperty) =>
+        await _client.GetInstitutionStructAsync(propertyInstitution, buildingProperty);
 }

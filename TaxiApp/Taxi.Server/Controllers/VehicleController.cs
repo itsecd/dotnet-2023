@@ -65,7 +65,6 @@ public class VehicleController : ControllerBase
     ///     Post method which add new vehicle in ride table
     /// </summary>
     /// <param name="vehicleToPost"> New vehicle for addition</param>
-    /// >
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<VehicleGetDto>> Post(VehicleSetDto vehicleToPost)

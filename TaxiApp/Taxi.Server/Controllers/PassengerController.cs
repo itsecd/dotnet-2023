@@ -65,7 +65,6 @@ public class PassengerController : ControllerBase
     ///     Post method which add new passenger in passenger table
     /// </summary>
     /// <param name="passengerToPost"> New passenger for addition</param>
-    /// >
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<PassengerGetDto>> Post(PassengerSetDto passengerToPost)

@@ -65,7 +65,6 @@ public class DriverController : ControllerBase
     ///     Post method which add new driver in driver table
     /// </summary>
     /// <param name="driverToPost"> New driver for addition</param>
-    /// >
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<Driver>> Post(DriverSetDto driverToPost)

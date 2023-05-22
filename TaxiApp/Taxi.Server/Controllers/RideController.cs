@@ -65,7 +65,6 @@ public class RideController : ControllerBase
     ///     Post method which add new ride in ride table
     /// </summary>
     /// <param name="rideToPost"> New ride for addition</param>
-    /// >
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<Ride>> Post(RideSetDto rideToPost)

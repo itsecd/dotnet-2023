@@ -66,7 +66,6 @@ public class VehicleClassificationController : ControllerBase
     ///     Post method which add new vehicle classification in ride table
     /// </summary>
     /// <param name="vehicleClassificationToPost"> New vehicle for addition</param>
-    /// >
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<VehicleClassification>> Post(VehicleClassificationSetDto vehicleClassificationToPost)

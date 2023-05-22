@@ -34,7 +34,10 @@ public class App : Application
 
             cfg.CreateMap<RideViewModel, RideSetDto>()
                 .ForMember(destination => destination.RideTime,
-                    options => { options.MapFrom(ride => Convert.ToUInt32(System.TimeSpan.Parse(ride.RideTime).TotalSeconds)); });
+                    options =>
+                    {
+                        options.MapFrom(ride => Convert.ToUInt32(System.TimeSpan.Parse(ride.RideTime).TotalSeconds));
+                    });
 
             cfg.CreateMap<Ride, RideViewModel>()
                 .ForMember(destination => destination.RideTime,

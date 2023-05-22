@@ -37,9 +37,7 @@ public class MainWindowViewModel : ViewModelBase
             TopDrivers.Clear();
             InfosAboutRides.Clear();
 
-            LoadCountPassengersRidesAsync();
-            LoadTopDriversAsync();
-            LoadInfosAboutRidesAsync();
+            LoadDataAsync();
 
             return Task.CompletedTask;
         });
@@ -203,16 +201,7 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedRide).Select(selectedRide => selectedRide != null));
 
 
-        RxApp.MainThreadScheduler.Schedule(LoadDriversAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadPassengerAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadVehicleAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadVehicleClassificationAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadRidesAsync);
-
-
-        RxApp.MainThreadScheduler.Schedule(LoadCountPassengersRidesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadTopDriversAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadInfosAboutRidesAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
 
     public ObservableCollection<DriverViewModel> Drivers { get; } = new();
@@ -271,78 +260,55 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public Interaction<RideViewModel, RideViewModel?> ShowRideDialog { get; }
-    
-    private async void LoadDriversAsync()
+
+    private async void LoadDataAsync()
     {
         ICollection<Driver> drivers = await _apiClient.GetDriversAsync();
         foreach (Driver driver in drivers)
         {
             Drivers.Add(_mapper.Map<DriverViewModel>(driver));
         }
-    }
-
-    private async void LoadPassengerAsync()
-    {
+        
         ICollection<PassengerGetDto> passengers = await _apiClient.GetPassengersAsync();
         foreach (PassengerGetDto passenger in passengers)
         {
             Passengers.Add(_mapper.Map<PassengerViewModel>(passenger));
         }
-    }
-
-    private async void LoadVehicleAsync()
-    {
+        
         ICollection<VehicleGetDto> vehicles = await _apiClient.GetVehiclesAsync();
         foreach (VehicleGetDto vehicle in vehicles)
         {
             Vehicles.Add(_mapper.Map<VehicleViewModel>(vehicle));
         }
-    }
-
-    private async void LoadVehicleClassificationAsync()
-    {
+        
         ICollection<VehicleClassification> vehicleClassifications = await _apiClient.GetVehicleClassificationsAsync();
         foreach (VehicleClassification vehicleClassification in vehicleClassifications)
         {
             VehicleClassifications.Add(_mapper.Map<VehicleClassificationViewModel>(vehicleClassification));
         }
-    }
-
-    private async void LoadRidesAsync()
-    {
+        
         ICollection<RideGetDto> rides = await _apiClient.GetRidesAsync();
         foreach (RideGetDto ride in rides)
         {
             Rides.Add(_mapper.Map<RideViewModel>(ride));
         }
-    }
-
-
-    private async void LoadCountPassengersRidesAsync()
-    {
-        ICollection<CountPassengerRidesGetDto> passengers = await _apiClient.CountPassengerRidesAsync();
-        foreach (CountPassengerRidesGetDto passenger in passengers)
+        
+        ICollection<CountPassengerRidesGetDto> countPassengersRides = await _apiClient.CountPassengerRidesAsync();
+        foreach (CountPassengerRidesGetDto countPassengerRides in countPassengersRides)
         {
-            CountPassengersRides.Add(_mapper.Map<CountPassengerRidesViewModel>(passenger));
+            CountPassengersRides.Add(_mapper.Map<CountPassengerRidesViewModel>(countPassengerRides));
         }
-    }
-
-
-    private async void LoadTopDriversAsync()
-    {
-        ICollection<Driver> drivers = await _apiClient.TopDriverAsync();
-        foreach (Driver driver in drivers)
+        
+        ICollection<Driver> topDrivers = await _apiClient.TopDriverAsync();
+        foreach (Driver topDriver in topDrivers)
         {
-            TopDrivers.Add(_mapper.Map<DriverViewModel>(driver));
+            TopDrivers.Add(_mapper.Map<DriverViewModel>(topDriver));
         }
-    }
-
-    private async void LoadInfosAboutRidesAsync()
-    {
-        ICollection<InfosAboutRidesGetDto> rides = await _apiClient.InfosAboutRidesAsync();
-        foreach (InfosAboutRidesGetDto ride in rides)
+        
+        ICollection<InfosAboutRidesGetDto> infosAboutRides = await _apiClient.InfosAboutRidesAsync();
+        foreach (InfosAboutRidesGetDto infoAboutRides in infosAboutRides)
         {
-            InfosAboutRides.Add(_mapper.Map<InfoAboutRidesViewModel>(ride));
+            InfosAboutRides.Add(_mapper.Map<InfoAboutRidesViewModel>(infoAboutRides));
         }
     }
 }

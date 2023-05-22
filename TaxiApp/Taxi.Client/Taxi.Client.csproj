@@ -43,7 +43,7 @@
         <PackageReference Include="ReactiveUI.Fody" Version="18.4.44"/>
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1"/>
     </ItemGroup>
-    
+
 
     <ItemGroup>
         <None Update="appsettings.json" ClassName="ApiClient">

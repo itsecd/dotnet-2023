@@ -87,7 +87,7 @@ public class VehicleClassificationController : ControllerBase
     ///     Put method which allows change the data of the desired vehicle classification by id
     /// </summary>
     /// <param name="id"> Identifier of vehicle classification</param>
-    /// <param name="vehicleToPut"> New vehicle data</param>
+    /// <param name="vehicleClassificationToPut"> New vehicle data</param>
     /// <returns>
     ///     Signalization of success or error
     /// </returns>

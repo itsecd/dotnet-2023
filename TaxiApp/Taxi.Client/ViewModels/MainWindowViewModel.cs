@@ -20,8 +20,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        _apiClient = Locator.Current.GetService<ApiWrapper>();
-        _mapper = Locator.Current.GetService<IMapper>();
+        _apiClient = Locator.Current.GetService<ApiWrapper>()!;
+        _mapper = Locator.Current.GetService<IMapper>()!;
 
         ShowDriverDialog = new Interaction<DriverViewModel, DriverViewModel?>();
         ShowPassengerDialog = new Interaction<PassengerViewModel, PassengerViewModel?>();
@@ -271,7 +271,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public Interaction<RideViewModel, RideViewModel?> ShowRideDialog { get; }
-
+    
     private async void LoadDriversAsync()
     {
         ICollection<Driver> drivers = await _apiClient.GetDriversAsync();

@@ -13,13 +13,10 @@ public class RequestController : ControllerBase
 {
     private readonly IDbContextFactory<TaxiDbContext> _contextFactory;
     private readonly ILogger<RequestController> _logger;
-    private readonly IMapper _mapper;
 
-    public RequestController(IDbContextFactory<TaxiDbContext> contextFactory, IMapper mapper,
-        ILogger<RequestController> logger)
+    public RequestController(IDbContextFactory<TaxiDbContext> contextFactory, ILogger<RequestController> logger)
     {
         _contextFactory = contextFactory;
-        _mapper = mapper;
         _logger = logger;
     }
 

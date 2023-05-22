@@ -9,8 +9,7 @@ public class CustomerGetDto
     /// <summary>
     /// ID Покупателя.
     /// </summary>
-    [Key]
-    public int Id;
+    public int Id { get; set; } = 0;
 
     /// <summary>
     /// Ф.И.О.

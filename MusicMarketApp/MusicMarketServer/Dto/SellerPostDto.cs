@@ -17,5 +17,5 @@ public class SellerPostDto
     /// <summary>
     /// Стоимость доставки за 1 товар.
     /// </summary>
-    public double Price { get; set; }
+    public double Price { get; set; } = 0;
 }

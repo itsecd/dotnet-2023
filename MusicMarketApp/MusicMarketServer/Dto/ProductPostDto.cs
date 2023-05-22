@@ -42,7 +42,7 @@ public class ProductPostDto
     /// <summary>
     /// Цена
     /// </summary>
-    public double Price { get; set; }
+    public double Price { get; set; } = 0;
 
     /// <summary>
     /// Cтатус: в продаже || продан. 
@@ -52,5 +52,5 @@ public class ProductPostDto
     /// <summary>
     /// ID Продавца.
     /// </summary>
-    public int SellerId { get; set; }
+    public int SellerId { get; set; } = 0;
 }

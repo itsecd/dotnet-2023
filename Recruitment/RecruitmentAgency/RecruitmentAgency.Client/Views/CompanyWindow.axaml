@@ -17,17 +17,13 @@
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto *" ColumnDefinitions="Auto,*">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">PersonalName</Label>
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Telephone</Label>
-		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">WorkExperience</Label>
-		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Education</Label>
-		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Salary</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PersonalName}"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Telephone}"/>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkExperience}"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Education}"/>
-		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Salary}"/>
-		<StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">CompanyName</Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">ContactName</Label>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Telephone</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CompanyName}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ContactName}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Telephone}"/>
+		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Accept</Button>

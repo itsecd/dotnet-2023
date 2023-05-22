@@ -66,6 +66,10 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeJobApplicationCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteJobApplicationCommand { get; set; }
     public Interaction<JobApplicationViewModel, JobApplicationViewModel?> ShowJobApplicationDialog { get; }
+    public ReactiveCommand<Unit, Unit> OnAddTitleCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeTitleCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteTitleCommand { get; set; }
+    public Interaction<TitleViewModel, TitleViewModel?> ShowTitleDialog { get; }
     public MainWindowViewModel() {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
@@ -74,6 +78,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowCompanyApplicationDialog = new Interaction<CompanyApplicationViewModel, CompanyApplicationViewModel?>();
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
         ShowJobApplicationDialog = new Interaction<JobApplicationViewModel, JobApplicationViewModel?>();
+        ShowTitleDialog = new Interaction<TitleViewModel, TitleViewModel?>(); 
 
         OnAddCompanyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -178,7 +183,7 @@ public class MainWindowViewModel : ViewModelBase
                 await _apiClient.UpdateJobApplicationAsync(SelectedJobApplication!.Id, _mapper.Map<JobApplicationPostDto>(jobApplicationViewModel));
                 _mapper.Map(jobApplicationViewModel, SelectedJobApplication);
             }
-        }, this.WhenAnyValue(vm => vm.SelectedCompany).Select(selectCompany => selectCompany != null));
+        }, this.WhenAnyValue(vm => vm.SelectedJobApplication).Select(selectJobApplication => selectJobApplication != null));
 
         OnDeleteJobApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -186,6 +191,31 @@ public class MainWindowViewModel : ViewModelBase
             JobApplications.Remove(SelectedJobApplication!);
         }, this.WhenAnyValue(vm => vm.SelectedJobApplication).Select(selectJobApplication => selectJobApplication != null));
 
+        OnAddTitleCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var titleViewModel = await ShowTitleDialog.Handle(new TitleViewModel());
+            if (titleViewModel != null)
+            {
+                var newTitle = await _apiClient.AddTitleAsync(_mapper.Map<TitlePostDto>(titleViewModel));
+                Titles.Add(_mapper.Map<TitleViewModel>(newTitle));
+            }
+        });
+
+        OnChangeTitleCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var titleViewModel = await ShowTitleDialog.Handle(SelectedTitle!);
+            if (titleViewModel != null)
+            {
+                await _apiClient.UpdateTitleAsync(SelectedTitle!.Id, _mapper.Map<TitlePostDto>(titleViewModel));
+                _mapper.Map(titleViewModel, SelectedTitle);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedTitle).Select(selectTitle => selectTitle != null));
+
+        OnDeleteTitleCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteTitleAsync(SelectedTitle!.Id);
+            Titles.Remove(SelectedTitle!);
+        }, this.WhenAnyValue(vm => vm.SelectedTitle).Select(selectTitle => selectTitle != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }

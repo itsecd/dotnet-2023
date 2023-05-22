@@ -14,6 +14,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowCompanyApplicationDialog.RegisterHandler(ShowCompanyApplicationDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowJobApplicationDialog.RegisterHandler(ShowJobApplicationDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowTitleDialog.RegisterHandler(ShowTitleDialogAsync)));
+
     }
     private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction) {
         var dialog = new CompanyWindow
@@ -48,6 +50,15 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<JobApplicationViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowTitleDialogAsync(InteractionContext<TitleViewModel, TitleViewModel?> interaction)
+    {
+        var dialog = new TitleWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<TitleViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

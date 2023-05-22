@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reactive;
 
 namespace RecruitmentAgency.Client.ViewModels;
 public class TitleViewModel : ViewModelBase
@@ -20,5 +21,10 @@ public class TitleViewModel : ViewModelBase
     public int Id {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
+    }
+    public ReactiveCommand<Unit, TitleViewModel> OnSubmitCommand { get; }
+    public TitleViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

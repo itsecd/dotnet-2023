@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RecruitmentAgency.Client.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="RecruitmentAgency.Client">
+        Title="RecruitmentAgency.Client"
+		SizeToContent="Height">
 
     <Design.DataContext>
 		<vm:MainWindowViewModel/>
@@ -17,7 +18,8 @@
 	</Window.Styles>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
+			  Auto,Auto,Auto,Auto,Auto,Auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 				<Label>Companies</Label>
 			</StackPanel>
@@ -100,9 +102,8 @@
 				</DataGrid.Columns>
 			</DataGrid>
 
-
 			<StackPanel Grid.Row="9" Orientation="Horizontal">
-				<Label>Job Application</Label>
+				<Label>Job Applications</Label>
 			</StackPanel>
 
 			<StackPanel Grid.Row="10" Orientation="Horizontal">
@@ -124,6 +125,31 @@
 					<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
 					<DataGridTextColumn Header="EmployeeId" Binding="{Binding EmployeeId}"/>
 					<DataGridTextColumn Header="TitleId " Binding="{Binding TitleId }"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="12" Orientation="Horizontal">
+				<Label>Titles</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="13" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddTitleCommand}">
+					<Image Source="/Assets/Add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeTitleCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteTitleCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="14" AutoGenerateColumns="False"
+					  Items="{Binding Titles}"
+					  SelectedItem="{Binding SelectedTitle}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Section" Binding="{Binding Section}"/>
+					<DataGridTextColumn Header="JobTitle" Binding="{Binding JobTitle}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>

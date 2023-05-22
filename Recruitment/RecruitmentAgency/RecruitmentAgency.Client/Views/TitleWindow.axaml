@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RecruitmentAgency.Client.Views.TitleWindow"
+		xmlns:vm= "using:RecruitmentAgency.Client.ViewModels"
+        Title="Editing a title"
+		SizeToContent="Height"
+		MaxWidth="500">
+	<Design.DataContext>
+		<vm:TitleViewModel></vm:TitleViewModel>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/RecruitmentAgencyStyles.axaml" />
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto, *" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Section</Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">JobTitle</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Section}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding JobTitle}"/>
+		<StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Accept</Button>
+			<Button IsDefault="False" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+
+</Window>

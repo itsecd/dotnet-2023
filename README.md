@@ -11,7 +11,7 @@
 Вывести топ 5 работодателей по количеству заявок.
 Вывести информацию о работодателях, открывших заявки с максимальным уровнем зарплаты.
 
-## Usage
+## About the project
 
 Several classes were created in this project that describe the profession of recruitment agency.
 Mysql queries (LINQ) were used to process the data, and unit tests were used to check the stability of some methods.

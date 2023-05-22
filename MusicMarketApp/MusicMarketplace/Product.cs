@@ -60,7 +60,7 @@ public class Product
     /// Цена
     /// </summary>
     [Required]
-    public double Price { get; set; }
+    public double Price { get; set; } = 0;
 
     /// <summary>
     /// Cтатус: в продаже || продан. 
@@ -72,7 +72,7 @@ public class Product
     /// ID Продавца.
     /// </summary>
     [ForeignKey("IdSeller")]
-    public int IdSeller { get; set; }
+    public int IdSeller { get; set; } = 0;
 
 
     /// <summary>

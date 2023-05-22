@@ -17,18 +17,24 @@ public class Purchase
     /// <summary>
     /// ID Товара.
     /// </summary>
-    public int IdProduct { get; set; }
 
     [ForeignKey("IdProduct")]
-    public Product Product { get; set; }
+    public int IdProduct { get; set; } = 0;
+
+    /// <summary>
+    /// Товар.
+    /// </summary>
+    public Product? Product { get; set; }
 
     /// <summary>
     /// ID Покупателя.
     /// </summary>
-    public int IdCustomer { get; set; }
-
     [ForeignKey("IdCustomer")]
-    public Customer Customer { get; set; }
+    public int IdCustomer { get; set; } = 0;
+    /// <summary>
+    /// Покупатель.
+    /// </summary>
+    public Customer? Customer { get; set; }
 
     /// <summary>
     /// Дата совершения покупки.

@@ -9,6 +9,9 @@ namespace MusicMarketServer;
 /// </summary>
 public class MappingProfile : Profile
 {
+    /// <summary>
+    /// Mapping settings
+    /// </summary>
     public MappingProfile()
     {
         CreateMap<Customer, CustomerGetDto>();

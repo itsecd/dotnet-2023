@@ -2,6 +2,9 @@
 
 namespace MusicMarketServer.Repository;
 
+/// <summary>
+/// Сlass MusicMarketRepository
+/// </summary>
 public class MusicMarketRepository : IMusicMarketRepository
 {
 
@@ -10,6 +13,9 @@ public class MusicMarketRepository : IMusicMarketRepository
     private readonly List<Purchase> _purchases;
     private readonly List<Product> _products;
 
+    /// <summary>
+    /// MusicMarketRepository constructor
+    /// </summary>
     public MusicMarketRepository()
     {
         _products = new List<Product>();
@@ -185,9 +191,21 @@ public class MusicMarketRepository : IMusicMarketRepository
 
     }
 
+    /// <summary>
+    /// Сollection of customers 
+    /// </summary>
     public List<Customer> Customers => _customers;
+    /// <summary>
+    ///Сollection of sellers 
+    /// </summary>
     public List<Seller> Sellers => _sellers;
+    /// <summary>
+    /// Сollection of purchases  
+    /// </summary>
     public List<Purchase> Purchases => _purchases;
+    /// <summary>
+    /// UСollection of products 
+    /// </summary>
     public List<Product> Products => _products;
 
 }

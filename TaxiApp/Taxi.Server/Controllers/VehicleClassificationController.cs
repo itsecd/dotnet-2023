@@ -35,7 +35,7 @@ public class VehicleClassificationController : ControllerBase
     public async Task<IEnumerable<VehicleClassification>> Get()
     {
         _logger.LogInformation("Get vehicles classification");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         return await ctx.VehicleClassifications.ToListAsync();
     }
 
@@ -49,8 +49,8 @@ public class VehicleClassificationController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<VehicleClassification>> Get(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        VehicleClassification? vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
         if (vehicleClassification == null)
         {
             _logger.LogInformation("Not found vehicle classification with id={id}", id);
@@ -72,9 +72,9 @@ public class VehicleClassificationController : ControllerBase
     public async Task<ActionResult<VehicleClassification>> Post(VehicleClassificationSetDto vehicleClassificationToPost)
     {
         _logger.LogInformation("Post vehicle classification");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        VehicleClassification? mappedVehicleClassification =
+        var mappedVehicleClassification =
             _mapper.Map<VehicleClassification>(vehicleClassificationToPost);
 
         await ctx.VehicleClassifications.AddAsync(mappedVehicleClassification);
@@ -94,9 +94,9 @@ public class VehicleClassificationController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, VehicleClassificationSetDto vehicleClassificationToPut)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        VehicleClassification? vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
+        var vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
         if (vehicleClassification == null)
         {
             _logger.LogInformation("Not found vehicle classification with id={id}", id);
@@ -119,8 +119,8 @@ public class VehicleClassificationController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        VehicleClassification? vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var vehicleClassification = await ctx.VehicleClassifications.FindAsync(id);
         if (vehicleClassification == null)
         {
             _logger.LogInformation("Not found vehicle classification with id={id}", id);

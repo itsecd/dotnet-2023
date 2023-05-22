@@ -35,7 +35,7 @@ public class RideController : ControllerBase
     public async Task<IEnumerable<RideGetDto>> Get()
     {
         _logger.LogInformation("Get rides");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         return await _mapper.ProjectTo<RideGetDto>(ctx.Rides).ToListAsync();
     }
 
@@ -49,8 +49,8 @@ public class RideController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<RideGetDto>> Get(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Ride? ride = await ctx.Rides.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);
@@ -71,23 +71,23 @@ public class RideController : ControllerBase
     public async Task<ActionResult<Ride>> Post(RideSetDto rideToPost)
     {
         _logger.LogInformation("Post ride");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Vehicle? vehicleToPost = await ctx.Vehicles.FindAsync(rideToPost.VehicleId);
+        var vehicleToPost = await ctx.Vehicles.FindAsync(rideToPost.VehicleId);
         if (vehicleToPost == null)
         {
             _logger.LogInformation("Not found vehicle with id={rideToPost.VehicleId}", rideToPost.VehicleId);
             return BadRequest();
         }
 
-        Passenger? passengerToPost = await ctx.Passengers.FindAsync(rideToPost.PassengerId);
+        var passengerToPost = await ctx.Passengers.FindAsync(rideToPost.PassengerId);
         if (passengerToPost == null)
         {
             _logger.LogInformation("Not found passenger with id={rideToPost.PassengerId}", rideToPost.PassengerId);
             return BadRequest();
         }
 
-        Ride? mappedRide = _mapper.Map<Ride>(rideToPost);
+        var mappedRide = _mapper.Map<Ride>(rideToPost);
 
         await ctx.Rides.AddAsync(mappedRide);
         await ctx.SaveChangesAsync();
@@ -106,23 +106,23 @@ public class RideController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, RideSetDto rideToPut)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Vehicle? vehicleToPut = await ctx.Vehicles.FindAsync(rideToPut.VehicleId);
+        var vehicleToPut = await ctx.Vehicles.FindAsync(rideToPut.VehicleId);
         if (vehicleToPut == null)
         {
             _logger.LogInformation("Not found vehicle with id={rideToPut.VehicleId}", rideToPut.VehicleId);
             return BadRequest();
         }
 
-        Passenger? passengerToPut = await ctx.Passengers.FindAsync(rideToPut.PassengerId);
+        var passengerToPut = await ctx.Passengers.FindAsync(rideToPut.PassengerId);
         if (passengerToPut == null)
         {
             _logger.LogInformation("Not found passenger with id={rideToPut.PassengerId}", rideToPut.PassengerId);
             return BadRequest();
         }
 
-        Ride? ride = await ctx.Rides.FindAsync(id);
+        var ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);
@@ -145,8 +145,8 @@ public class RideController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Ride? ride = await ctx.Rides.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var ride = await ctx.Rides.FindAsync(id);
         if (ride == null)
         {
             _logger.LogInformation("Not found ride with id={id}", id);

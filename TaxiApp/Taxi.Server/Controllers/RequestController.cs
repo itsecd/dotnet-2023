@@ -30,7 +30,7 @@ public class RequestController : ControllerBase
     [HttpGet("vehicles_and_drivers/{id}")]
     public async Task<ActionResult<IEnumerable<VehicleAndDriverGetDto>>> GetVehicleAndDriver(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
         var query = await (from vehicle in ctx.Vehicles
             where vehicle.Driver.Id == id
@@ -70,7 +70,7 @@ public class RequestController : ControllerBase
     public async Task<ActionResult<IEnumerable<PassengerGetDto>>> GetPassengerOverGivenPeriod(DateTime minDate,
         DateTime maxDate)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
         var query = await (from ride in ctx.Rides
                 where ride.RideDate <= maxDate && ride.RideDate >= minDate
@@ -103,7 +103,7 @@ public class RequestController : ControllerBase
     [HttpGet("count_passenger_rides")]
     public async Task<ActionResult<IEnumerable<CountPassengerRidesGetDto>>> GetCountPassengerRides()
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
         var query = await (from passenger in ctx.Passengers
             select new
@@ -133,9 +133,9 @@ public class RequestController : ControllerBase
     [HttpGet("count_top_driver_rides")]
     public async Task<IEnumerable<Driver>> GetTopDriver()
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        List<Driver> query = await (from vehicle in ctx.Vehicles
+        var query = await (from vehicle in ctx.Vehicles
             from driver in ctx.Drivers
             where vehicle.DriverId == driver.Id
             orderby vehicle.Rides.Count
@@ -154,7 +154,7 @@ public class RequestController : ControllerBase
     [HttpGet("infos_about_rides")]
     public async Task<ActionResult<IEnumerable<InfosAboutRidesGetDto>>> GetInfosAboutRides()
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
         var query = await (from ridesInfo in from ride in ctx.Rides
                 group ride by ride.VehicleId
@@ -195,7 +195,7 @@ public class RequestController : ControllerBase
     public async Task<ActionResult<IEnumerable<CountPassengerRidesGetDto>>> GetMaxRidesOfPassenger(DateTime minDate,
         DateTime maxDate)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
         var subquery = await (from passenger in ctx.Passengers
             from ride in passenger.Rides

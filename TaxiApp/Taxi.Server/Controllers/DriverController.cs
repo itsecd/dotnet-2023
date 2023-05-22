@@ -35,7 +35,7 @@ public class DriverController : ControllerBase
     public async Task<IEnumerable<Driver>> Get()
     {
         _logger.LogInformation("Get drivers");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         return await ctx.Drivers.ToListAsync();
     }
 
@@ -49,8 +49,8 @@ public class DriverController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Driver>> Get(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Driver? driver = await ctx.Drivers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var driver = await ctx.Drivers.FindAsync(id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id={id}", id);
@@ -71,9 +71,9 @@ public class DriverController : ControllerBase
     public async Task<ActionResult<Driver>> Post(DriverSetDto driverToPost)
     {
         _logger.LogInformation("Post driver");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Driver? mappedDriver = _mapper.Map<Driver>(driverToPost);
+        var mappedDriver = _mapper.Map<Driver>(driverToPost);
 
         await ctx.Drivers.AddAsync(mappedDriver);
         await ctx.SaveChangesAsync();
@@ -91,8 +91,8 @@ public class DriverController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, DriverSetDto driverToPut)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Driver? driver = await ctx.Drivers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var driver = await ctx.Drivers.FindAsync(id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id={id}", id);
@@ -115,8 +115,8 @@ public class DriverController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Driver? driver = await ctx.Drivers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var driver = await ctx.Drivers.FindAsync(id);
         if (driver == null)
         {
             _logger.LogInformation("Not found driver with id={id}", id);

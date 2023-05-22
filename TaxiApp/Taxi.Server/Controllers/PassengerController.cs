@@ -35,7 +35,7 @@ public class PassengerController : ControllerBase
     public async Task<IEnumerable<PassengerGetDto>> Get()
     {
         _logger.LogInformation("Get passenger");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         return await _mapper.ProjectTo<PassengerGetDto>(ctx.Passengers).ToListAsync();
     }
 
@@ -49,8 +49,8 @@ public class PassengerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<PassengerGetDto>> Get(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Passenger? passenger = await ctx.Passengers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);
@@ -71,9 +71,9 @@ public class PassengerController : ControllerBase
     public async Task<ActionResult<PassengerGetDto>> Post(PassengerSetDto passengerToPost)
     {
         _logger.LogInformation("Post passenger");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Passenger? mappedPassenger = _mapper.Map<Passenger>(passengerToPost);
+        var mappedPassenger = _mapper.Map<Passenger>(passengerToPost);
 
         await ctx.Passengers.AddAsync(mappedPassenger);
         await ctx.SaveChangesAsync();
@@ -92,8 +92,8 @@ public class PassengerController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, PassengerSetDto passengerToPut)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Passenger? passenger = await ctx.Passengers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);
@@ -116,8 +116,8 @@ public class PassengerController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Passenger? passenger = await ctx.Passengers.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var passenger = await ctx.Passengers.FindAsync(id);
         if (passenger == null)
         {
             _logger.LogInformation("Not found passenger with id={id}", id);

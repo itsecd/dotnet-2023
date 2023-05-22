@@ -35,7 +35,7 @@ public class VehicleController : ControllerBase
     public async Task<IEnumerable<VehicleGetDto>> Get()
     {
         _logger.LogInformation("Get vehicle");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
         return await _mapper.ProjectTo<VehicleGetDto>(ctx.Vehicles).ToListAsync();
     }
 
@@ -49,8 +49,8 @@ public class VehicleController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<VehicleGetDto>> Get(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle with id={id}", id);
@@ -71,16 +71,16 @@ public class VehicleController : ControllerBase
     public async Task<ActionResult<VehicleGetDto>> Post(VehicleSetDto vehicleToPost)
     {
         _logger.LogInformation("Post vehicle");
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Driver? driverToPost = await ctx.Drivers.FindAsync(vehicleToPost.DriverId);
+        var driverToPost = await ctx.Drivers.FindAsync(vehicleToPost.DriverId);
         if (driverToPost == null)
         {
             _logger.LogInformation("Not found driver with id={vehicleToPost.DriverId}", vehicleToPost.DriverId);
             return BadRequest();
         }
 
-        VehicleClassification? vehicleClassificationToPost =
+        var vehicleClassificationToPost =
             await ctx.VehicleClassifications.FindAsync(vehicleToPost.VehicleClassificationId);
         if (vehicleClassificationToPost == null)
         {
@@ -89,7 +89,7 @@ public class VehicleController : ControllerBase
             return BadRequest();
         }
 
-        Vehicle? mappedVehicle = _mapper.Map<Vehicle>(vehicleToPost);
+        var mappedVehicle = _mapper.Map<Vehicle>(vehicleToPost);
 
         await ctx.Vehicles.AddAsync(mappedVehicle);
         await ctx.SaveChangesAsync();
@@ -108,16 +108,16 @@ public class VehicleController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(ulong id, VehicleSetDto vehicleToPut)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
 
-        Driver? driverToPut = await ctx.Drivers.FindAsync(vehicleToPut.DriverId);
+        var driverToPut = await ctx.Drivers.FindAsync(vehicleToPut.DriverId);
         if (driverToPut == null)
         {
             _logger.LogInformation("Not found driver with id={vehicleToPut.DriverId}", vehicleToPut.DriverId);
             return BadRequest();
         }
 
-        VehicleClassification? vehicleClassificationToPut =
+        var vehicleClassificationToPut =
             await ctx.VehicleClassifications.FindAsync(vehicleToPut.VehicleClassificationId);
         if (vehicleClassificationToPut == null)
         {
@@ -126,7 +126,7 @@ public class VehicleController : ControllerBase
             return BadRequest();
         }
 
-        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
+        var vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle with id={id}", id);
@@ -149,8 +149,8 @@ public class VehicleController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(ulong id)
     {
-        await using TaxiDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        Vehicle? vehicle = await ctx.Vehicles.FindAsync(id);
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+        var vehicle = await ctx.Vehicles.FindAsync(id);
         if (vehicle == null)
         {
             _logger.LogInformation("Not found vehicle with id={id}", id);

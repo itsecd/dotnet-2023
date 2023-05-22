@@ -44,17 +44,17 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddDriverCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            DriverViewModel? driverViewModel = await ShowDriverDialog.Handle(new DriverViewModel());
+            var driverViewModel = await ShowDriverDialog.Handle(new DriverViewModel());
             if (driverViewModel != null)
             {
-                Driver newDriver = await _apiClient.AddDriverAsync(_mapper.Map<DriverSetDto>(driverViewModel));
+                var newDriver = await _apiClient.AddDriverAsync(_mapper.Map<DriverSetDto>(driverViewModel));
                 Drivers.Add(_mapper.Map<DriverViewModel>(newDriver));
             }
         });
 
         OnChangeDriverCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            DriverViewModel? driverViewModel = await ShowDriverDialog.Handle(SelectedDriver!);
+            var driverViewModel = await ShowDriverDialog.Handle(SelectedDriver!);
             if (driverViewModel != null)
             {
                 await _apiClient.UpdateDriverAsync(SelectedDriver!.Id, _mapper.Map<DriverSetDto>(driverViewModel));
@@ -72,10 +72,10 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddPassengerCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            PassengerViewModel? passengerViewModel = await ShowPassengerDialog.Handle(new PassengerViewModel());
+            var passengerViewModel = await ShowPassengerDialog.Handle(new PassengerViewModel());
             if (passengerViewModel != null)
             {
-                PassengerGetDto newPassenger =
+                var newPassenger =
                     await _apiClient.AddPassengerAsync(_mapper.Map<PassengerSetDto>(passengerViewModel));
                 Passengers.Add(_mapper.Map<PassengerViewModel>(newPassenger));
             }
@@ -83,7 +83,7 @@ public class MainWindowViewModel : ViewModelBase
 
         OnChangePassengerCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            PassengerViewModel? passengerViewModel = await ShowPassengerDialog.Handle(SelectedPassenger!);
+            var passengerViewModel = await ShowPassengerDialog.Handle(SelectedPassenger!);
             if (passengerViewModel != null)
             {
                 await _apiClient.UpdatePassengerAsync(SelectedPassenger!.Id,
@@ -102,12 +102,12 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddVehicleCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            VehicleViewModel? vehicleViewModel = await ShowVehicleDialog.Handle(new VehicleViewModel());
+            var vehicleViewModel = await ShowVehicleDialog.Handle(new VehicleViewModel());
             if (vehicleViewModel != null &&
                 Drivers.Any(d => d.Id == vehicleViewModel.DriverId) &&
                 VehicleClassifications.Any(vc => vc.Id == vehicleViewModel.VehicleClassificationId))
             {
-                VehicleGetDto newVehicle =
+                var newVehicle =
                     await _apiClient.AddVehicleAsync(_mapper.Map<VehicleSetDto>(vehicleViewModel));
                 Vehicles.Add(_mapper.Map<VehicleViewModel>(newVehicle));
             }
@@ -115,7 +115,7 @@ public class MainWindowViewModel : ViewModelBase
 
         OnChangeVehicleCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            VehicleViewModel? vehicleViewModel = await ShowVehicleDialog.Handle(SelectedVehicle!);
+            var vehicleViewModel = await ShowVehicleDialog.Handle(SelectedVehicle!);
             if (vehicleViewModel != null &&
                 Drivers.Any(d => d.Id == vehicleViewModel.DriverId) &&
                 VehicleClassifications.Any(vc => vc.Id == vehicleViewModel.VehicleClassificationId))
@@ -135,11 +135,11 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddVehicleClassificationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            VehicleClassificationViewModel? vehicleClassificationViewModel =
+            var vehicleClassificationViewModel =
                 await ShowVehicleClassificationDialog.Handle(new VehicleClassificationViewModel());
             if (vehicleClassificationViewModel != null)
             {
-                VehicleClassification newVehicleClassification =
+                var newVehicleClassification =
                     await _apiClient.AddVehicleClassificationAsync(
                         _mapper.Map<VehicleClassificationSetDto>(vehicleClassificationViewModel));
                 VehicleClassifications.Add(_mapper.Map<VehicleClassificationViewModel>(newVehicleClassification));
@@ -148,7 +148,7 @@ public class MainWindowViewModel : ViewModelBase
 
         OnChangeVehicleClassificationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            VehicleClassificationViewModel? vehicleClassificationViewModel =
+            var vehicleClassificationViewModel =
                 await ShowVehicleClassificationDialog.Handle(SelectedVehicleClassification!);
             if (vehicleClassificationViewModel != null)
             {
@@ -170,20 +170,20 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddRideCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            RideViewModel? rideViewModel = await ShowRideDialog.Handle(new RideViewModel());
+            var rideViewModel = await ShowRideDialog.Handle(new RideViewModel());
 
             if (rideViewModel != null &&
                 Vehicles.Any(v => v.Id == rideViewModel.VehicleId) &&
                 Passengers.Any(p => p.Id == rideViewModel.PassengerId))
             {
-                Ride newRide = await _apiClient.AddRideAsync(_mapper.Map<RideSetDto>(rideViewModel));
+                var newRide = await _apiClient.AddRideAsync(_mapper.Map<RideSetDto>(rideViewModel));
                 Rides.Add(_mapper.Map<RideViewModel>(newRide));
             }
         });
 
         OnChangeRideCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            RideViewModel? rideViewModel = await ShowRideDialog.Handle(SelectedRide!);
+            var rideViewModel = await ShowRideDialog.Handle(SelectedRide!);
             if (rideViewModel != null &&
                 Vehicles.Any(v => v.Id == rideViewModel.VehicleId) &&
                 Passengers.Any(p => p.Id == rideViewModel.PassengerId))
@@ -263,50 +263,50 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadDataAsync()
     {
-        ICollection<Driver> drivers = await _apiClient.GetDriversAsync();
-        foreach (Driver driver in drivers)
+        var drivers = await _apiClient.GetDriversAsync();
+        foreach (var driver in drivers)
         {
             Drivers.Add(_mapper.Map<DriverViewModel>(driver));
         }
-        
-        ICollection<PassengerGetDto> passengers = await _apiClient.GetPassengersAsync();
-        foreach (PassengerGetDto passenger in passengers)
+
+        var passengers = await _apiClient.GetPassengersAsync();
+        foreach (var passenger in passengers)
         {
             Passengers.Add(_mapper.Map<PassengerViewModel>(passenger));
         }
-        
-        ICollection<VehicleGetDto> vehicles = await _apiClient.GetVehiclesAsync();
-        foreach (VehicleGetDto vehicle in vehicles)
+
+        var vehicles = await _apiClient.GetVehiclesAsync();
+        foreach (var vehicle in vehicles)
         {
             Vehicles.Add(_mapper.Map<VehicleViewModel>(vehicle));
         }
-        
-        ICollection<VehicleClassification> vehicleClassifications = await _apiClient.GetVehicleClassificationsAsync();
-        foreach (VehicleClassification vehicleClassification in vehicleClassifications)
+
+        var vehicleClassifications = await _apiClient.GetVehicleClassificationsAsync();
+        foreach (var vehicleClassification in vehicleClassifications)
         {
             VehicleClassifications.Add(_mapper.Map<VehicleClassificationViewModel>(vehicleClassification));
         }
-        
-        ICollection<RideGetDto> rides = await _apiClient.GetRidesAsync();
-        foreach (RideGetDto ride in rides)
+
+        var rides = await _apiClient.GetRidesAsync();
+        foreach (var ride in rides)
         {
             Rides.Add(_mapper.Map<RideViewModel>(ride));
         }
-        
-        ICollection<CountPassengerRidesGetDto> countPassengersRides = await _apiClient.CountPassengerRidesAsync();
-        foreach (CountPassengerRidesGetDto countPassengerRides in countPassengersRides)
+
+        var countPassengersRides = await _apiClient.CountPassengerRidesAsync();
+        foreach (var countPassengerRides in countPassengersRides)
         {
             CountPassengersRides.Add(_mapper.Map<CountPassengerRidesViewModel>(countPassengerRides));
         }
-        
-        ICollection<Driver> topDrivers = await _apiClient.TopDriverAsync();
-        foreach (Driver topDriver in topDrivers)
+
+        var topDrivers = await _apiClient.TopDriverAsync();
+        foreach (var topDriver in topDrivers)
         {
             TopDrivers.Add(_mapper.Map<DriverViewModel>(topDriver));
         }
-        
-        ICollection<InfosAboutRidesGetDto> infosAboutRides = await _apiClient.InfosAboutRidesAsync();
-        foreach (InfosAboutRidesGetDto infoAboutRides in infosAboutRides)
+
+        var infosAboutRides = await _apiClient.InfosAboutRidesAsync();
+        foreach (var infoAboutRides in infosAboutRides)
         {
             InfosAboutRides.Add(_mapper.Map<InfoAboutRidesViewModel>(infoAboutRides));
         }

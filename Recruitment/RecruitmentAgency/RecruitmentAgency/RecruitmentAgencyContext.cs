@@ -10,7 +10,7 @@ public sealed class RecruitmentAgencyContext : DbContext
 {
     public RecruitmentAgencyContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreatedAsync();
+        Database.EnsureCreated();
     }
     public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<CompanyApplication> CompanyApplications { get; set; } = null!;

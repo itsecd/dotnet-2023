@@ -66,12 +66,15 @@ public class CompanyController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post company");
-        await ctx.Companies.AddAsync(_mapper.Map<Company>(company));
+        var newCompany = _mapper.Map<Company>(company);
+        await ctx.Companies.AddAsync(newCompany);
         await ctx.SaveChangesAsync();
-        var mappedCompany = _mapper.Map<CompanyGetDto>(company);
-        return CreatedAtAction("Post", new { id = mappedCompany.Id },
-            _mapper.Map<CompanyGetDto>(mappedCompany));
+
+        var mappedCompany = _mapper.Map<CompanyGetDto>(newCompany);
+
+        return CreatedAtAction("Post", new { id = mappedCompany.Id }, mappedCompany);
     }
+
 
     /// <summary>
     /// Put method which allows change the data of a company with a specific id

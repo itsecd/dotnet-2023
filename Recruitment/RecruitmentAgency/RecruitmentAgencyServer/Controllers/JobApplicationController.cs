@@ -35,8 +35,10 @@ public class JobApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get job applications");
-        var jobApplications = _mapper.Map<IEnumerable<JobApplicationGetDto>>(await ctx.JobApplications.ToListAsync());
-        return jobApplications;
+        //var jobApplications = _mapper.Map<IEnumerable<JobApplicationGetDto>>(await ctx.JobApplications.ToListAsync());
+        var jobApplications = await ctx.JobApplications.ToListAsync();
+        var data =  _mapper.Map<IEnumerable<JobApplicationGetDto>>(jobApplications);
+        return data;
     }
     /// <summary>
     ///  Get method that returns a job Application with a specific id
@@ -62,22 +64,37 @@ public class JobApplicationController : ControllerBase
     /// <param name="jobApplication">Job application data</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<IActionResult> Post([FromBody] JobApplicationPostDto jobApplication)
+    public async Task<ActionResult<JobApplicationGetDto>> Post([FromBody] JobApplicationPostDto jobApplication)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post job application");
+
         var titleExists = await ctx.Titles.AnyAsync(title => title.Id == jobApplication.TitleId);
-        var employeeExists = await ctx.Employees.AnyAsync(employee => employee.Id == jobApplication.TitleId);
+        var employeeExists = await ctx.Employees.AnyAsync(employee => employee.Id == jobApplication.EmployeeId);
+
         if (!titleExists || !employeeExists)
         {
-            return BadRequest("Title does not exist");
+            return BadRequest("Title or Employee does not exist");
         }
+
+        if (jobApplication == null)
+        {
+            _logger.LogInformation("Posting nullable object");
+            return NotFound();
+        }
+
         await ctx.JobApplications.AddAsync(_mapper.Map<JobApplication>(jobApplication));
         await ctx.SaveChangesAsync();
-        var mappedJobApplication = _mapper.Map<JobApplicationGetDto>(jobApplication);
-        return CreatedAtAction("Post", new { id = mappedJobApplication.Id },
-            _mapper.Map<JobApplicationGetDto>(mappedJobApplication));
+
+        var newJobApplication = await ctx.JobApplications
+            .OrderByDescending(a => a.Id)
+            .FirstOrDefaultAsync();
+
+        var mappedJobApplication = _mapper.Map<JobApplicationGetDto>(newJobApplication);
+
+        return CreatedAtAction("Post", new { id = mappedJobApplication.Id }, mappedJobApplication);
     }
+
 
     /// <summary>
     /// Put method which allows change the data of a job application with a specific id

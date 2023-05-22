@@ -64,22 +64,28 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="companyApplication">Company application data to post</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<IActionResult> Post([FromBody] CompanyApplicationPostDto companyApplication)
+    public async Task<ActionResult<CompanyApplicationGetDto>> Post([FromBody] CompanyApplicationPostDto companyApplication)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post company application");
+
         var titleExists = await ctx.Titles.AnyAsync(t => t.Id == companyApplication.TitleId);
         var companyExists = await ctx.Companies.AnyAsync(c => c.Id == companyApplication.CompanyId);
+
         if (!titleExists || !companyExists)
         {
             return BadRequest("Title or Company does not exist");
         }
-        await ctx.CompanyApplications.AddAsync(_mapper.Map<CompanyApplication>(companyApplication));
+
+        var newCompanyApplication = _mapper.Map<CompanyApplication>(companyApplication);
+        await ctx.CompanyApplications.AddAsync(newCompanyApplication);
         await ctx.SaveChangesAsync();
-        var mappedCompanyApplication = _mapper.Map<CompanyApplicationGetDto>(companyApplication);
-        return CreatedAtAction("Post", new { id = mappedCompanyApplication.Id },
-            _mapper.Map<CompanyApplicationGetDto>(mappedCompanyApplication));
+
+        var mappedCompanyApplication = _mapper.Map<CompanyApplicationGetDto>(newCompanyApplication);
+
+        return CreatedAtAction("Post", new { id = mappedCompanyApplication.Id }, mappedCompanyApplication);
     }
+
 
 
     /// <summary>
@@ -109,7 +115,7 @@ public class CompanyApplicationController : ControllerBase
     /// <param name="id">Company application id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Delete company  application with id ({id})", id);

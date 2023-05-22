@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ReactiveUI;
+using RecruitmentAgencyServer.Dto;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -52,11 +54,26 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit,Unit> OnChangeCompanyCommand{get;set;}
     public ReactiveCommand<Unit,Unit> OnDeleteCompanyCommand { get;set;}
     public Interaction<CompanyViewModel, CompanyViewModel?> ShowCompanyDialog { get; }
+    public ReactiveCommand<Unit, Unit> OnAddCompanyApplicationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeCompanyApplicationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteCompanyApplicationCommand { get; set; }
+    public Interaction<CompanyApplicationViewModel, CompanyApplicationViewModel?> ShowCompanyApplicationDialog { get; }
+    public ReactiveCommand<Unit, Unit> OnAddEmployeeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeEmployeeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteEmployeeCommand { get; set; }
+    public Interaction<EmployeeViewModel, EmployeeViewModel?> ShowEmployeeDialog { get; }
+    public ReactiveCommand<Unit, Unit> OnAddJobApplicationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeJobApplicationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteJobApplicationCommand { get; set; }
+    public Interaction<JobApplicationViewModel, JobApplicationViewModel?> ShowJobApplicationDialog { get; }
     public MainWindowViewModel() {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
         ShowCompanyDialog = new Interaction<CompanyViewModel, CompanyViewModel?>();
+        ShowCompanyApplicationDialog = new Interaction<CompanyApplicationViewModel, CompanyApplicationViewModel?>();
+        ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
+        ShowJobApplicationDialog = new Interaction<JobApplicationViewModel, JobApplicationViewModel?>();
 
         OnAddCompanyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -84,52 +101,120 @@ public class MainWindowViewModel : ViewModelBase
             Companies.Remove(SelectedCompany!);
         }, this.WhenAnyValue(vm => vm.SelectedCompany).Select(selectCompany => selectCompany != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadCompaniesAsync);
-        /*RxApp.MainThreadScheduler.Schedule(LoadCompanyApplicationsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadEmployeesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadJobApplicationsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadTitlesAsync);*/
+        OnAddCompanyApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var companyApplicationViewModel = await ShowCompanyApplicationDialog.Handle(new CompanyApplicationViewModel());
+            if (companyApplicationViewModel != null)
+            {
+                try
+                {
+                    var newCompanyApplication = await _apiClient.AddCompanyApplicationAsync(_mapper.Map<CompanyApplicationPostDto>(companyApplicationViewModel));
+                    CompanyApplications.Add(_mapper.Map<CompanyApplicationViewModel>(newCompanyApplication));
+                }
+                catch { }
+            }
+        });
+
+        OnChangeCompanyApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var companyApplicationViewModel = await ShowCompanyApplicationDialog.Handle(SelectedCompanyApplication!);
+            if (companyApplicationViewModel != null)
+            {
+                await _apiClient.UpdateCompanyApplicationAsync(SelectedCompanyApplication!.Id, _mapper.Map<CompanyApplicationPostDto>(companyApplicationViewModel));
+                _mapper.Map(companyApplicationViewModel, SelectedCompanyApplication);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedCompanyApplication).Select(selectCompanyApplication => selectCompanyApplication != null));
+
+        OnDeleteCompanyApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteCompanyApplicationAsync(SelectedCompanyApplication!.Id);
+            CompanyApplications.Remove(SelectedCompanyApplication!);
+        }, this.WhenAnyValue(vm => vm.SelectedCompanyApplication).Select(selectCompanyApplication => selectCompanyApplication != null));
+        OnAddEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var employeeViewModel = await ShowEmployeeDialog.Handle(new EmployeeViewModel());
+            if (employeeViewModel != null)
+            {
+                var newEmployee = await _apiClient.AddEmployeeAsync(_mapper.Map<EmployeePostDto>(employeeViewModel));
+                Employees.Add(_mapper.Map<EmployeeViewModel>(newEmployee));
+            }
+        });
+
+        OnChangeEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var employeeViewModel = await ShowEmployeeDialog.Handle(SelectedEmployee!);
+            if (employeeViewModel != null)
+            {
+                await _apiClient.UpdateEmployeeAsync(SelectedEmployee!.Id, _mapper.Map<EmployeePostDto>(employeeViewModel));
+                _mapper.Map(employeeViewModel, SelectedEmployee);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedEmployee).Select(selectEmployee => selectEmployee != null));
+
+        OnDeleteEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteEmployeeAsync(SelectedEmployee!.Id);
+            Employees.Remove(SelectedEmployee!);
+        }, this.WhenAnyValue(vm => vm.SelectedEmployee).Select(selectEmployee => selectEmployee != null));
+
+        OnAddJobApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var jobApplicationViewModel = await ShowJobApplicationDialog.Handle(new JobApplicationViewModel());
+            if (jobApplicationViewModel != null)
+            {
+                try
+                {
+                    var newJobApplication = await _apiClient.AddJobApplicationAsync(_mapper.Map<JobApplicationPostDto>(jobApplicationViewModel));
+                    JobApplications.Add(_mapper.Map<JobApplicationViewModel>(newJobApplication));
+                }
+                catch { }
+            }
+        });
+
+        OnChangeJobApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var jobApplicationViewModel = await ShowJobApplicationDialog.Handle(SelectedJobApplication!);
+            if (jobApplicationViewModel != null)
+            {
+                await _apiClient.UpdateJobApplicationAsync(SelectedJobApplication!.Id, _mapper.Map<JobApplicationPostDto>(jobApplicationViewModel));
+                _mapper.Map(jobApplicationViewModel, SelectedJobApplication);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedCompany).Select(selectCompany => selectCompany != null));
+
+        OnDeleteJobApplicationCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteJobApplicationAsync(SelectedJobApplication!.Id);
+            JobApplications.Remove(SelectedJobApplication!);
+        }, this.WhenAnyValue(vm => vm.SelectedJobApplication).Select(selectJobApplication => selectJobApplication != null));
+
+
+        RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
-    private async void LoadCompaniesAsync()
+    private async void LoadDataAsync()
     {
         var companies = await _apiClient.GetCompaniesAsync();
         foreach (var company in companies)
         {
             Companies.Add(_mapper.Map<CompanyViewModel>(company));
         }
-        
-    }
-    private async void LoadCompanyApplicationsAsync()
-    {
         var companyApplications = await _apiClient.GetCompanyApplicationsAsync();
         foreach (var companyApplication in companyApplications)
         {
             CompanyApplications.Add(_mapper.Map<CompanyApplicationViewModel>(companyApplication));
         }
-    }
-    private async void LoadJobApplicationsAsync()
-    {
         var jobApplications = await _apiClient.GetJobApplicationsAsync();
         foreach (var jobApplication in jobApplications)
         {
             JobApplications.Add(_mapper.Map<JobApplicationViewModel>(jobApplication));
         }
-    }
-    private async void LoadEmployeesAsync()
-    {
         var employees = await _apiClient.GetEmployeesAsync();
         foreach (var employee in employees)
         {
             Employees.Add(_mapper.Map<EmployeeViewModel>(employee));
         }
-    }
-    private async void LoadTitlesAsync()
-    {
         var titles = await _apiClient.GetTitlesAsync();
         foreach (var title in titles)
         {
             Titles.Add(_mapper.Map<TitleViewModel>(title));
         }
     }
-
 }

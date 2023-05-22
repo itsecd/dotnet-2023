@@ -16,25 +16,116 @@
 		<StyleInclude Source="/RecruitmentAgencyStyles.axaml" />
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-		<StackPanel Grid.Row="0" Orientation ="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCompanyCommand}">
-				<Image Source="/Assets/Add.png"></Image>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCompanyCommand}">
-				<Image Source="/Assets/Edit.png"></Image>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCompanyCommand}">
-				<Image Source="/Assets/Remove.png"></Image>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-				  Items="{Binding Companies}"
-				  SelectedItem="{Binding SelectedCompany}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Name" Binding ="{Binding CompanyName}"/>
-			</DataGrid.Columns>
-		</DataGrid> 
-	</Grid>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Label>Companies</Label>
+			</StackPanel>
 
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCompanyCommand}">
+					<Image Source="/Assets/Add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCompanyCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCompanyCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+					  Items="{Binding Companies}"
+					  SelectedItem="{Binding SelectedCompany}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="CompanyName" Binding="{Binding CompanyName}"/>
+					<DataGridTextColumn Header="ContactName" Binding="{Binding ContactName}"/>
+					<DataGridTextColumn Header="Telephone" Binding="{Binding Telephone}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="3" Orientation="Horizontal">
+				<Label>Company Applications</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="4" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCompanyApplicationCommand}">
+					<Image Source="/Assets/Add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCompanyApplicationCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCompanyApplicationCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="5" AutoGenerateColumns="False"
+					  Items="{Binding CompanyApplications}"
+					  SelectedItem="{Binding SelectedCompanyApplication}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+					<DataGridTextColumn Header="Work Experience" Binding="{Binding WorkExperience}"/>
+					<DataGridTextColumn Header="Salary" Binding="{Binding Salary}"/>
+					<DataGridTextColumn Header="Company Id" Binding="{Binding CompanyId}"/>
+					<DataGridTextColumn Header="Title Id" Binding="{Binding TitleId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="6" Orientation="Horizontal">
+				<Label>Employees</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="7" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddEmployeeCommand}">
+					<Image Source="/Assets/Add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="8" AutoGenerateColumns="False"
+					  Items="{Binding Employees}"
+					  SelectedItem="{Binding SelectedEmployee}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="PersonalName" Binding="{Binding PersonalName}"/>
+					<DataGridTextColumn Header="Telephone" Binding="{Binding Telephone}"/>
+					<DataGridTextColumn Header="WorkExperience " Binding="{Binding WorkExperience }"/>
+					<DataGridTextColumn Header="Education" Binding="{Binding Education}"/>
+					<DataGridTextColumn Header="Salary" Binding="{Binding Salary}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+
+			<StackPanel Grid.Row="9" Orientation="Horizontal">
+				<Label>Job Application</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="10" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddJobApplicationCommand}">
+					<Image Source="/Assets/Add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeJobApplicationCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteJobApplicationCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="11" AutoGenerateColumns="False"
+					  Items="{Binding JobApplications}"
+					  SelectedItem="{Binding SelectedJobApplication}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+					<DataGridTextColumn Header="EmployeeId" Binding="{Binding EmployeeId}"/>
+					<DataGridTextColumn Header="TitleId " Binding="{Binding TitleId }"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
 </Window>

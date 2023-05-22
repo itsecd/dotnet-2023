@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Reactive;
 
 namespace RecruitmentAgency.Client.ViewModels;
 public class EmployeeViewModel : ViewModelBase
@@ -34,5 +35,10 @@ public class EmployeeViewModel : ViewModelBase
     public int Id {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
+    }
+    public ReactiveCommand<Unit, EmployeeViewModel> OnSubmitCommand { get; }
+    public EmployeeViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

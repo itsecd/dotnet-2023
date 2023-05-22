@@ -52,6 +52,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\JobApplicationWindow.axaml.cs">
+      <DependentUpon>JobApplicationWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

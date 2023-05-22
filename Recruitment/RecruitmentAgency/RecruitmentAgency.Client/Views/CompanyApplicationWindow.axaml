@@ -9,7 +9,7 @@
 		SizeToContent="Height"
 		MaxWidth="500">
 	<Design.DataContext>
-		<vm:CompanyViewModel></vm:CompanyViewModel>
+		<vm:CompanyApplicationViewModel></vm:CompanyApplicationViewModel>
 	</Design.DataContext>
 
 	<Window.Styles>

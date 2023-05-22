@@ -10,14 +10,44 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {   
         InitializeComponent();
 
-        this.WhenActivated(d => d(ViewModel!.ShowCompanyDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowCompanyDialog.RegisterHandler(ShowCompanyDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowCompanyApplicationDialog.RegisterHandler(ShowCompanyApplicationDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowJobApplicationDialog.RegisterHandler(ShowJobApplicationDialogAsync)));
     }
-    private async Task ShowDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction) {
+    private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction) {
         var dialog = new CompanyWindow
         {
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<CompanyViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowCompanyApplicationDialogAsync(InteractionContext<CompanyApplicationViewModel, CompanyApplicationViewModel?> interaction)
+    {
+        var dialog = new CompanyApplicationWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<CompanyApplicationViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowEmployeeDialogAsync(InteractionContext<EmployeeViewModel, EmployeeViewModel?> interaction)
+    {
+        var dialog = new EmployeeWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<EmployeeViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+    private async Task ShowJobApplicationDialogAsync(InteractionContext<JobApplicationViewModel, JobApplicationViewModel?> interaction)
+    {
+        var dialog = new JobApplicationWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<JobApplicationViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

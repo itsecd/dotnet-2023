@@ -265,7 +265,24 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyApplicationGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -443,7 +460,24 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -621,7 +655,24 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobApplicationGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -999,7 +1050,24 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -1306,18 +1374,20 @@
       "JobApplicationGetDto": {
         "type": "object",
         "properties": {
-          "employee": {
-            "$ref": "#/components/schemas/EmployeePostDto"
+          "employeeId": {
+            "type": "integer",
+            "description": "Employee - contains employee id",
+            "format": "int32"
           },
           "date": {
             "type": "string",
             "description": "Date - date of application",
             "format": "date-time"
           },
-          "title": {
-            "type": "string",
+          "titleId": {
+            "type": "integer",
             "description": "Title - responsible for the job title",
-            "nullable": true
+            "format": "int32"
           },
           "id": {
             "type": "integer",

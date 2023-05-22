@@ -63,15 +63,21 @@ public class EmployeeController : ControllerBase
     /// <param name="employee">Employee data</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<IActionResult> Post([FromBody] EmployeePostDto employee)
+    public async Task<ActionResult<EmployeeGetDto>> Post([FromBody] EmployeePostDto employee)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post employee");
+
         await ctx.Employees.AddAsync(_mapper.Map<Employee>(employee));
         await ctx.SaveChangesAsync();
-        var mappedEmployee = _mapper.Map<EmployeeGetDto>(employee);
-        return CreatedAtAction("Post", new { id = mappedEmployee.Id },
-            _mapper.Map<EmployeeGetDto>(mappedEmployee));
+
+        var newEmployee = await ctx.Employees
+            .OrderByDescending(e => e.Id)
+            .FirstOrDefaultAsync();
+
+        var mappedEmployee = _mapper.Map<EmployeeGetDto>(newEmployee);
+
+        return CreatedAtAction("Post", new { id = mappedEmployee.Id }, mappedEmployee);
     }
 
     /// <summary>

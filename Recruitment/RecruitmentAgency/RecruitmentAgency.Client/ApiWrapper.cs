@@ -42,7 +42,7 @@ public class ApiWrapper
     }
     public async Task<CompanyApplicationGetDto> AddCompanyApplicationAsync(CompanyApplicationPostDto companyApplication)
     {
-        return await (Task<CompanyApplicationGetDto>)_client.CompanyApplicationPOSTAsync(companyApplication);
+        return await _client.CompanyApplicationPOSTAsync(companyApplication);
     }
     public async Task UpdateCompanyApplicationAsync(int id, CompanyApplicationPostDto companyApplication)
     {
@@ -74,7 +74,7 @@ public class ApiWrapper
     {
         return await _client.JobApplicationAllAsync();
     }
-    public async Task<JobApplicationGetDto> AddEmployeeAsync(JobApplicationPostDto jobApplication)
+    public async Task<JobApplicationGetDto> AddJobApplicationAsync(JobApplicationPostDto jobApplication)
     {
         return await (Task<JobApplicationGetDto>)_client.JobApplicationPOSTAsync(jobApplication);
     }

@@ -7,7 +7,7 @@ public class JobApplicationGetDto
     /// <summary>
     /// Employee - contains employee id
     /// </summary>  
-    public EmployeePostDto? Employee { get; set; }
+    public int EmployeeId { get; set; }
     /// <summary>
     /// Date - date of application
     /// </summary>  
@@ -15,7 +15,7 @@ public class JobApplicationGetDto
     /// <summary>
     /// Title - responsible for the job title
     /// </summary>
-    public string Title { set; get; } = string.Empty;
+    public int TitleId { set; get; }
     /// <summary>  
     /// id - shows the JobApplication id
     /// </summary>  

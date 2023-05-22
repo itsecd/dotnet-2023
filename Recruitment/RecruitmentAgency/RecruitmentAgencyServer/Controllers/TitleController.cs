@@ -62,16 +62,23 @@ public class TitleController : ControllerBase
     /// <param name="title">Title data</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<IActionResult> Post([FromBody] TitlePostDto title)
+    public async Task<ActionResult<TitleGetDto>> Post([FromBody] TitlePostDto title)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Post title");
+
         await ctx.Titles.AddAsync(_mapper.Map<Title>(title));
         await ctx.SaveChangesAsync();
-        var mappedTitle = _mapper.Map<TitleGetDto>(title);
-        return CreatedAtAction("Post", new { id = mappedTitle.Id },
-            _mapper.Map<TitleGetDto>(mappedTitle));
+
+        var newTitle = await ctx.Titles
+            .OrderByDescending(t => t.Id)
+            .FirstOrDefaultAsync();
+
+        var mappedTitle = _mapper.Map<TitleGetDto>(newTitle);
+
+        return CreatedAtAction("Post", new { id = mappedTitle.Id }, mappedTitle);
     }
+
 
     /// <summary>
     /// Put method which allows change the data of a title with a specific id

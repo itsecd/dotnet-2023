@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reactive;
 
 namespace RecruitmentAgency.Client.ViewModels;
 public class JobApplicationViewModel : ViewModelBase
@@ -11,7 +12,7 @@ public class JobApplicationViewModel : ViewModelBase
         get => _employeeId;
         set => this.RaiseAndSetIfChanged(ref _employeeId, value);
     } 
-    private DateTime _date = DateTime.MinValue;
+    private DateTime _date = DateTime.Now;
     public DateTime Date {
         get => _date;
         set => this.RaiseAndSetIfChanged(ref _date, value);
@@ -25,5 +26,10 @@ public class JobApplicationViewModel : ViewModelBase
     public int Id {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
+    }
+    public ReactiveCommand<Unit, JobApplicationViewModel> OnSubmitCommand { get; }
+    public JobApplicationViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

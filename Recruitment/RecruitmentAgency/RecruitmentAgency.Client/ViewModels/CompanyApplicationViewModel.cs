@@ -6,7 +6,7 @@ using System.Reactive;
 namespace RecruitmentAgency.Client.ViewModels;
 public class CompanyApplicationViewModel : ViewModelBase
 {
-    private DateTime _date = DateTime.MinValue;
+    private DateTime _date = DateTime.Now;
     public DateTime Date {
         get => _date;
         set => this.RaiseAndSetIfChanged(ref _date, value);

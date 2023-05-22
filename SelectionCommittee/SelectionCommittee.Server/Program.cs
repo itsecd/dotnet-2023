@@ -1,11 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using SelectionCommittee.Model;
 using SelectionCommittee.Server.Repository;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContextFactory<SelectionCommitteeContext>(optionsBuilder
-    => optionsBuilder.UseMySQL(builder.Configuration.GetConnectionString(nameof(SelectionCommittee))));
+    => optionsBuilder.UseMySQL(builder.Configuration.GetConnectionString(nameof(SelectionCommittee))!));
 
 
 builder.Services.AddScoped<ISelectionCommitteeRepository, SelectionCommitteeRepository>();

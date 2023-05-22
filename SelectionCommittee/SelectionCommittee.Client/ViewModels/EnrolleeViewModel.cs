@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Reactive;
-using ReactiveUI;
 
 namespace SelectionCommittee.Client.ViewModels;
 
@@ -46,9 +46,9 @@ public class EnrolleeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _age, value);
     }
 
-    private DateTime _birthDate;
+    private DateTimeOffset _birthDate;
 
-    public DateTime BirthDate
+    public DateTimeOffset BirthDate
     {
         get => _birthDate;
         set => this.RaiseAndSetIfChanged(ref _birthDate, value);

@@ -17,9 +17,9 @@ public class MainWindowViewModel : ViewModelBase
 
     private string _enrolleeExceptionValue = string.Empty;
 
-    private DateTime _enrolleeBirthDate;
+    private DateTimeOffset _enrolleeBirthDate;
 
-    public DateTime EnrolleeBirthDate
+    public DateTimeOffset EnrolleeBirthDate
     {
         get => _enrolleeBirthDate;
         set => this.RaiseAndSetIfChanged(ref _enrolleeBirthDate, value);

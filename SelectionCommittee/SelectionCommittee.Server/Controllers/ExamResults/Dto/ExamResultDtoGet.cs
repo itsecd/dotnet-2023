@@ -1,6 +1,4 @@
-﻿using SelectionCommittee.Domain;
-
-namespace SelectionCommittee.Server.Controllers.ExamResults.Dto;
+﻿namespace SelectionCommittee.Server.Controllers.ExamResults.Dto;
 
 /// <summary>
 /// Dto для Get операций сущности результатов экзамена.

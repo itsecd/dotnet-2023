@@ -589,7 +589,6 @@
         "tags": [
           "Query"
         ],
-        "operationId": "GetEnrolleesByCity",
         "parameters": [
           {
             "name": "city",
@@ -638,7 +637,6 @@
         "tags": [
           "Query"
         ],
-        "operationId": "GetSortedEnrolleesByAge",
         "parameters": [
           {
             "name": "age",
@@ -688,7 +686,6 @@
         "tags": [
           "Query"
         ],
-        "operationId": "GetEnrolleesBySpecialization",
         "parameters": [
           {
             "name": "specialization",
@@ -737,7 +734,6 @@
         "tags": [
           "Query"
         ],
-        "operationId": "GetEnrolleesBySpecializationAndPriority",
         "parameters": [
           {
             "name": "specialization",
@@ -794,7 +790,6 @@
         "tags": [
           "Query"
         ],
-        "operationId": "GetEnrollesByExamResult",
         "parameters": [
           {
             "name": "count",

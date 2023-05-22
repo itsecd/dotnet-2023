@@ -29,24 +29,24 @@ public class App : Application
             cfg.CreateMap<VehicleClassification, VehicleClassificationViewModel>();
             cfg.CreateMap<VehicleClassificationViewModel, VehicleClassificationSetDto>();
             cfg.CreateMap<RideGetDto, RideViewModel>()
-                .ForMember(d => d.RideTime,
-                    s => { s.MapFrom(ride => ride.RideTime.ToString()); });
+                .ForMember(destination => destination.RideTime,
+                    options => { options.MapFrom(ride => ride.RideTime.ToString()); });
 
             cfg.CreateMap<RideViewModel, RideSetDto>()
-                .ForMember(d => d.RideTime,
-                    s => { s.MapFrom(ride => Convert.ToUInt32(System.TimeSpan.Parse(ride.RideTime).TotalSeconds)); });
+                .ForMember(destination => destination.RideTime,
+                    options => { options.MapFrom(ride => Convert.ToUInt32(System.TimeSpan.Parse(ride.RideTime).TotalSeconds)); });
 
             cfg.CreateMap<Ride, RideViewModel>()
-                .ForMember(d => d.RideTime,
-                    s => { s.MapFrom(ride => ride.RideTime.ToString()); });
+                .ForMember(destination => destination.RideTime,
+                    options => { options.MapFrom(ride => ride.RideTime.ToString()); });
 
             cfg.CreateMap<CountPassengerRidesGetDto, CountPassengerRidesViewModel>();
 
             cfg.CreateMap<InfosAboutRidesGetDto, InfoAboutRidesViewModel>()
-                .ForMember(d => d.AverageTime,
-                    s => { s.MapFrom(ride => System.TimeSpan.Parse(ride.AverageTime)); })
-                .ForMember(d => d.MaxTime,
-                    s => { s.MapFrom(ride => System.TimeSpan.Parse(ride.MaxTime)); });
+                .ForMember(destination => destination.AverageTime,
+                    options => { options.MapFrom(infos => System.TimeSpan.Parse(infos.AverageTime)); })
+                .ForMember(destination => destination.MaxTime,
+                    options => { options.MapFrom(infos => System.TimeSpan.Parse(infos.MaxTime)); });
         });
 
         Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

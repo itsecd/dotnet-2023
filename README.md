@@ -23,7 +23,7 @@ And eventually a client application was created with avalonia, which interacts w
 
 # Screenshots
 ## Application
-![](https://github.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/MainWindow.png)
+![Screenshot](https://github.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/MainWindow.png)
 ## Company buttons
 ### Company add
 ![](https://github.com/YoniqueeZyzzFan/dotnet/tree/main/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CompanyAdd.png)

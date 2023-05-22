@@ -2,20 +2,40 @@
 using MusicMarket;
 
 namespace MusicMarketplace;
+/// <summary>
+/// Class MusicMarketDbContext is used to work with database
+/// </summary>
 public class MusicMarketDbContext : DbContext
 {
+    /// <summary>
+    /// Used to store a collection of customers 
+    /// </summary>
     public DbSet<Customer> Customers { get; set; } = null!;
-
+    /// <summary>
+    /// Used to store a collection of products 
+    /// </summary>
     public DbSet<Product> Products { get; set; } = null!;
-
+    /// <summary>
+    /// Used to store a collection of sellers 
+    /// </summary>
     public DbSet<Seller> Sellers { get; set; } = null!;
-
+    /// <summary>
+    /// Used to store a collection of purchases  
+    /// </summary>
     public DbSet<Purchase> Purchases { get; set; } = null!;
 
+    /// <summary>
+    /// Method to ensure the database is created and all migrations are applied
+    /// </summary>
+    /// <param name="options">DbContextOptions</param>
     public MusicMarketDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
+    /// <summary>
+    /// Writes values ​​to the database
+    /// </summary>
+    /// <param name="modelBuilder">Model builder</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

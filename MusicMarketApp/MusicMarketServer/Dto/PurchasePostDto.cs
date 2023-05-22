@@ -8,7 +8,6 @@ public class PurchasePostDto
     /// Дата совершения покупки.
     /// </summary>
     public DateTime Date { get; set; } = new DateTime();
-
     /// <summary>
     /// ID Товара.
     /// </summary>

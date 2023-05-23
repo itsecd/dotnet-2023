@@ -11,15 +11,15 @@
 Вывести топ 5 работодателей по количеству заявок.
 Вывести информацию о работодателях, открывших заявки с максимальным уровнем зарплаты.
 
-## Usage
+## About the project
 
-Several classes were created in this project that describe the profession of recruitment agency.
+In this project, several classes describing the profession of a staffing agency were created.
 Mysql queries (LINQ) were used to process the data, and unit tests were used to check the stability of some methods.
-A server application was also created that handled CRUD operations.
-Integration tests were used to check the stabulit of the application.
-On the next leg, data storage was transfered to the database, with usage EF Core MySQL.
-The next leg of this project was to move the data storage to the database, using EF Core MySQL.
-And eventually a client application was created with avalonia, which interacts with the server application.
+A server application was also created that processed CRUD operations.
+Integration tests were used to check the stability of the application.
+In the next phase, the data storage was migrated to the database using EF Core MySQL.
+In the next phase of the project, the data warehouse was migrated to the database using EF Core MySQL.
+Finally, a client application was created using avalonia, which communicates with the server application.
 
 # Screenshots
 ## Application

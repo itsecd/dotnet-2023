@@ -16,10 +16,6 @@
         <Folder Include="Models\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
-
-    <ItemGroup>
-        <OpenApiReference Include="swagger4.json" CodeGenerator="NSwagCSharp" Namespace="RentalService.Client" ClassName="ApiClient" />
-    </ItemGroup>
     
     <ItemGroup>
         <ProjectCapability Include="Avalonia" />

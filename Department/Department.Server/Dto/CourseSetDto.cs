@@ -1,24 +1,11 @@
-﻿namespace Department.Domain;
+﻿namespace Department.Server.Dto;
 
-/// <summary>
-/// Class Course has info about all courses at the department
-/// </summary>
-public class Course
+public class CourseSetDto
 {
-    /// <summary>
-    /// Course id
-    /// </summary>
-    public int Id { get; set; }
-
     /// <summary>
     /// Subject
     /// </summary>
     public string SubjectName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Id of subject
-    /// </summary>
-    public int SubjectId { get; set; }
 
     /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
@@ -39,9 +26,4 @@ public class Course
     /// Teacher
     /// </summary>
     public string TeachersName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Teacher's id
-    /// </summary>
-    public int TeacherId { get; set; }
 }

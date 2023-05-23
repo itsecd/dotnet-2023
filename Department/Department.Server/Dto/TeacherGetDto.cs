@@ -1,14 +1,11 @@
-﻿namespace Department.Domain;
+﻿namespace Department.Server.Dto;
 
-/// <summary>
-/// Class Teacher has the info about all teachers
-/// </summary>
-public class Teacher
+public class TeacherGetDto
 {
     /// <summary>
     /// Teacher's id
     /// </summary>
-    public int Id { get; set;  }
+    public int Id { get; set; }
     /// <summary>
     /// Teacher's full name
     /// </summary>

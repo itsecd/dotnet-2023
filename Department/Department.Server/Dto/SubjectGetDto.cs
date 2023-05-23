@@ -1,9 +1,6 @@
-﻿namespace Department.Domain;
+﻿namespace Department.Server.Dto;
 
-/// <summary>
-/// Class Subject has the info about all subjects
-/// </summary>
-public class Subject
+public class SubjectGetDto
 {
     /// <summary>
     /// Subject's id

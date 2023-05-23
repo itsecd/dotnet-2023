@@ -108,7 +108,7 @@ public class GroupsController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("PostGroup", new { id = mappedGroup.Id }, _mapper.Map<GroupGetDto>(mappedGroup);
+        return CreatedAtAction("PostGroup", new { id = mappedGroup.Id }, _mapper.Map<GroupGetDto>(mappedGroup));
     }
 
     /// <summary>

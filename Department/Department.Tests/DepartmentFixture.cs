@@ -38,10 +38,10 @@ public class DepartmentFixture
 
         _courses = new List<Course>
         {
-            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 256, GroupNumber = 6312, TeachersName = "Максимова Людмила Александровна"},
-            new Course {SubjectName = "Промышленное программирование", CourseType = "Курсовой проект", SemesterHours = 123, GroupNumber = 6311, TeachersName = "Шашкова Татьяна Якубовна"},
-            new Course {SubjectName = "Физкультура", CourseType = "Курсовой проект", SemesterHours = 14, GroupNumber = 6295, TeachersName = "Максимова Людмила Александровна" },
-            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 500, GroupNumber = 6311, TeachersName = "Шашкова Татьяна Якубовна"}
+            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 256, GroupId = 6312, TeachersName = "Максимова Людмила Александровна"},
+            new Course {SubjectName = "Промышленное программирование", CourseType = "Курсовой проект", SemesterHours = 123, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна"},
+            new Course {SubjectName = "Физкультура", CourseType = "Курсовой проект", SemesterHours = 14, GroupId = 6295, TeachersName = "Максимова Людмила Александровна" },
+            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 500, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна"}
         };
     }
 

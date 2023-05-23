@@ -5,8 +5,8 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DepartmentDbContext>(options =>
-    options.UseMySQL("Server=127.0.0.1;Uid=root;Database=Department;Pwd=12345")
-   );
+    options.UseMySQL(builder.Configuration.GetConnectionString("Department")!)
+);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

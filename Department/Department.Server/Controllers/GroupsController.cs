@@ -4,7 +4,6 @@ using Department.Domain;
 using AutoMapper;
 using Department.Server.Dto;
 
-// test:3
 namespace Department.Server.Controllers;
 
 /// <summary>

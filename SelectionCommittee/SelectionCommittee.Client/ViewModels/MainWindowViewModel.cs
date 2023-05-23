@@ -139,10 +139,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowFacultyDialog = new Interaction<FacultyViewModel, FacultyViewModel?>();
         ShowSpecializationDialog = new Interaction<SpecializationViewModel, SpecializationViewModel?>();
 
-        RxApp.MainThreadScheduler.Schedule(LoadEnrolleesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadExamResultsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadFacultiesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSpecializationsAsync);
+        LoadData();
 
         OnAddEnrolleeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -394,6 +391,14 @@ public class MainWindowViewModel : ViewModelBase
 
         }, this.WhenAnyValue(viewModel => viewModel.SelectedSpecialization)
             .Select(selectSpecialization => selectSpecialization != null));
+    }
+
+    public void LoadData()
+    {
+        RxApp.MainThreadScheduler.Schedule(LoadEnrolleesAsync);
+        //RxApp.MainThreadScheduler.Schedule(LoadExamResultsAsync);
+        //RxApp.MainThreadScheduler.Schedule(LoadFacultiesAsync);
+        //RxApp.MainThreadScheduler.Schedule(LoadSpecializationsAsync);
     }
 
     public async void LoadEnrolleesAsync()

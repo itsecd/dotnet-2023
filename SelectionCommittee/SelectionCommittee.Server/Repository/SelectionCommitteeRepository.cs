@@ -1,8 +1,8 @@
 ﻿namespace SelectionCommittee.Server.Repository;
 
 using Microsoft.EntityFrameworkCore;
-using SelectionCommittee.Domain;
-using SelectionCommittee.Model;
+using Domain;
+using Model;
 
 /// <summary>
 /// Работа со списками сущностей приемной комиссии.

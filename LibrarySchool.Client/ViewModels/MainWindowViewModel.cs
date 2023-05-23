@@ -5,6 +5,7 @@ using Splat;
 using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ public class MainWindowViewModel : ViewModelBase
     private bool _visibleListMark = false;
 
 
-    private int _selectionHeader;
+    private int _selectionHeader = 0;
     /// <summary>
     /// 
     /// </summary>
@@ -90,14 +91,14 @@ public class MainWindowViewModel : ViewModelBase
     /// </summary>
     public MarkViewModel? SelectedMark
     {
-        get=> _selectedMark;
+        get => _selectedMark;
         set => this.RaiseAndSetIfChanged(ref _selectedMark, value);
     }
 
     /// <summary>
     /// List information student in tabe
     /// </summary>
-    public ObservableCollection<StudentViewModel> ListStudent { get; } = new ();
+    public ObservableCollection<StudentViewModel> ListStudent { get; } = new();
 
     /// <summary>
     /// List information class in table
@@ -197,6 +198,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowMarkDialog = new Interaction<MarkViewModel, MarkViewModel?>();
         ShowQueryDialog = new Interaction<QueryViewModel, QueryViewModel?>();
 
+
         OnListStudentCommand = ReactiveCommand.CreateFromTask(GetListStudent,
                                                         this.WhenAnyValue(vm => vm._visibleListStudent)
                                                             .Select(student => !student));
@@ -221,8 +223,7 @@ public class MainWindowViewModel : ViewModelBase
         OnUpdateCommand = ReactiveCommand.CreateFromTask(UpdateDataAsync, CanUpdateOrDelete);
         OnDeleteCommand = ReactiveCommand.CreateFromTask(DeleteDataAsync, CanUpdateOrDelete);
         OnQueryCommand = ReactiveCommand.CreateFromTask(OpenQueryAsync);
-        SelectionHeader = 0;
-
+        RxApp.MainThreadScheduler.Schedule(FirstLoadingStudent);
     }
 
     /// <summary>
@@ -265,7 +266,7 @@ public class MainWindowViewModel : ViewModelBase
                                 .GetMessageBoxStandardWindow("Error", ex.Message, ButtonEnum.Ok, Icon.Error)
                                 .Show();
                 }
-            } 
+            }
         }
         else if (_visibleListSubject)
         {
@@ -305,7 +306,7 @@ public class MainWindowViewModel : ViewModelBase
 
             }
         }
-        
+
     }
 
     /// <summary>
@@ -324,7 +325,7 @@ public class MainWindowViewModel : ViewModelBase
                     await _clientApiWrapper.UpdateStudentAsync(SelectedStudent!.StudentId, _mapper.Map<StudentPostDto>(studentViewModel));
                 }
                 catch (Exception ex)
-                {    
+                {
                     await MessageBox.Avalonia.MessageBoxManager
                                 .GetMessageBoxStandardWindow("Error", ex.Message, ButtonEnum.Ok, Icon.Error)
                                 .Show();
@@ -333,7 +334,7 @@ public class MainWindowViewModel : ViewModelBase
             else
                 await GetListStudent();
         }
-        else if (SelectedClassType!= null) 
+        else if (SelectedClassType != null)
         {
             var classTypeViewModel = await ShowClassTypeDialog.Handle(SelectedClassType!);
             if (classTypeViewModel != null)
@@ -504,7 +505,7 @@ public class MainWindowViewModel : ViewModelBase
         _visibleListClass = true;
         _visibleListStudent = false;
         _visibleListSubject = false;
-        _visibleListMark= false;
+        _visibleListMark = false;
 
         SelectedStudent = null;
         SelectedSubject = null;
@@ -529,13 +530,13 @@ public class MainWindowViewModel : ViewModelBase
         _visibleListSubject = false;
 
         SelectedClassType = null;
-        SelectedStudent= null;
-        SelectedSubject = null; 
+        SelectedStudent = null;
+        SelectedSubject = null;
     }
 
     private async Task GetListStudent()
     {
-        ShowListStudent();        
+        ShowListStudent();
         ListStudent.Clear();
         try
         {
@@ -601,6 +602,26 @@ public class MainWindowViewModel : ViewModelBase
                 ListMark.Add(_mapper.Map<MarkViewModel>(mark));
         }
         catch (Exception ex)
+        {
+            await MessageBox.Avalonia.MessageBoxManager
+                        .GetMessageBoxStandardWindow("Error", ex.Message, ButtonEnum.Ok, Icon.Error)
+                        .Show();
+        }
+    }
+
+    private async void FirstLoadingStudent()
+    {
+        ShowListStudent();
+        ListStudent.Clear();
+        try
+        {
+            var listStudentResult = await _clientApiWrapper.GetAllStudentAsync();
+            foreach (var student in listStudentResult)
+            {
+                ListStudent.Add(_mapper.Map<StudentViewModel>(student));
+            }
+        }
+        catch (ApiException ex)
         {
             await MessageBox.Avalonia.MessageBoxManager
                         .GetMessageBoxStandardWindow("Error", ex.Message, ButtonEnum.Ok, Icon.Error)

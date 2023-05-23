@@ -9,3 +9,26 @@
   4.	Вывести информацию о ВУЗах с максимальном количеством кафедр, упорядочить по названию.
   5.	Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.
   6.	Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания. 
+
+Страница с запросами: 
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/wJ5KQZP9Of0.jpg)
+Выполненные запросы:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/yYcGuZx6rbQ.jpg)
+Страница с добавлением записи:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/BAbj5VquO0s.jpg)
+Страница с изменением записи:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/rjzkewsuCss.jpg)
+Страница с выводом учебных заведений:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/zsRKvP21KAE.jpg)
+Страница с кафедрами:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/eqIS44GJYsw.jpg)
+Страница с факультетатами:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/GM8czwBNA64.jpg)
+Страница с группами студентов:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/qpwlC3bw72k.jpg)
+Страница со специальностями 
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/712mTsEAkvk.jpg)
+Страница с работниками образования:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/qkD3k8azuQU.jpg)
+Страница со студентами:
+![](https://github.com/4u-daisy/dotnet-2023/blob/main/DotNet2023.Screenshots/rwLXyuO1Lx0.jpg)

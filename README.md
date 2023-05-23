@@ -20,9 +20,18 @@
 товару и каждой организации.
 
 ## Клиент
+Основное окно:
 ![MainWindow1](Warehouse/Warehouse.Images/MainWindow1.jpg)
 ![MainWindow2](Warehouse/Warehouse.Images/MainWindow2.jpg)
+
+Добавление товара:
 ![ProductWindowAdd](Warehouse/Warehouse.Images/ProductWindowAdd.jpg)
+
+Изменение товара:
 ![ProductWindowEdit](Warehouse/Warehouse.Images/ProductWindowEdit.jpg)
+
+Добавление поставки:
 ![SupplyWindowAdd](Warehouse/Warehouse.Images/SupplyWindowAdd.jpg)
+
+Изменение поставки:
 ![SupplyWindowEdit](Warehouse/Warehouse.Images/SupplyWindowEdit.jpg)

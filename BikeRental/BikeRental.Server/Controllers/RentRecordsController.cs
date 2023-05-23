@@ -17,11 +17,6 @@ public class RentRecordsController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    /// <summary>
-    /// Constructor for RentRecordsController
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="mapper"></param>
     public RentRecordsController(BikeRentalDbContext context, IMapper mapper)
     {
         _context = context;

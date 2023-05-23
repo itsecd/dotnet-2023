@@ -1,4 +1,5 @@
 using BikeRental.Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
 
@@ -57,17 +58,17 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
         var request =
             (from record in _bikeRentalFixture.Records
              join bike in _bikeRentalFixture.Bikes on record.BikeId equals bike.Id
-             group record by bike.Type.Id into BikeTypeGroup
+             group record by bike.Type.Id into bikeTypeGroup
              select new
              {
-                 type = BikeTypeGroup.Key,
-                 time = BikeTypeGroup.Sum(x => (x.RentEndTime - x.RentStartTime).TotalMinutes)
+                 type = bikeTypeGroup.Key,
+                 rentTime = bikeTypeGroup.Sum(time => (time.RentEndTime - time.RentStartTime).TotalMinutes)
              }).ToList();
 
-        Assert.Equal(3, request.Count);
-        Assert.Equal(180, request[0].time);
-        Assert.Equal(120, request[1].time);
-        Assert.Equal(183, request[2].time);
+        Assert.Equal(3, request.Count());
+        Assert.Equal(180, request[0].rentTime);
+        Assert.Equal(120, request[1].rentTime);
+        Assert.Equal(183, request[2].rentTime);
     }
 
     /// <summary>

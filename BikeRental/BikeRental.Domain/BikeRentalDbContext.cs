@@ -27,10 +27,6 @@ public class BikeRentalDbContext : DbContext
     /// </summary>
     public DbSet<RentRecord>? RentRecords { get; set; }
 
-    /// <summary>
-    /// Constructor for DbContext
-    /// </summary>
-    /// <param name="options"></param>
     public BikeRentalDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();

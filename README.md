@@ -28,3 +28,8 @@
 количество товара за указанный период.
 
 ### Клиентское приложение:
+![](https://github.com/lanasbananas/dotnet-2023/blob/main/Factory/Factory/Factory.Client/Assets/1.jpg)
+![](https://github.com/lanasbananas/dotnet-2023/blob/main/Factory/Factory/Factory.Client/Assets/2.jpg)
+![](https://github.com/lanasbananas/dotnet-2023/blob/main/Factory/Factory/Factory.Client/Assets/3.jpg)
+![](https://github.com/lanasbananas/dotnet-2023/blob/main/Factory/Factory/Factory.Client/Assets/4.jpg)
+![](https://github.com/lanasbananas/dotnet-2023/blob/main/Factory/Factory/Factory.Client/Assets/5.jpg)

@@ -5,10 +5,14 @@
 /// </summary>
 public class Course
 {
+    public int Id { get; set; }
+
     /// <summary>
     /// Subject
     /// </summary>
     public string SubjectName { get; set; } = string.Empty;
+
+    public int SubjectId { get; set; }
 
     /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
@@ -23,10 +27,12 @@ public class Course
     /// <summary>
     /// Group
     /// </summary>
-    public int GroupNumber { get; set; }
+    public int GroupId { get; set; }
 
     /// <summary>
     /// Teacher
     /// </summary>
     public string TeachersName { get; set; } = string.Empty;
+
+    public int TeacherId { get; set; }
 }

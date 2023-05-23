@@ -5,6 +5,7 @@
 /// </summary>
 public class Teacher
 {
+    public int Id { get; set;  }
     /// <summary>
     /// Teacher's full name
     /// </summary>

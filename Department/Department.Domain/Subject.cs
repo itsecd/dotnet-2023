@@ -5,6 +5,8 @@
 /// </summary>
 public class Subject
 {
+    public int Id { get; set; }
+
     /// <summary>
     /// Subject's name
     /// </summary>

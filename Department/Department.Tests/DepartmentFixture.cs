@@ -24,9 +24,9 @@ public class DepartmentFixture
 
         _groups = new List<Group>
         {
-            new Group {GroupNumber = 6311, StudentAmount = 25, EducationType = "D"},
-            new Group {GroupNumber = 6312, StudentAmount = 16, EducationType = "D"},
-            new Group {GroupNumber = 6295, StudentAmount = 25, EducationType = "V"}
+            new Group {Id = 6311, StudentAmount = 25, EducationType = "D"},
+            new Group {Id = 6312, StudentAmount = 16, EducationType = "D"},
+            new Group {Id = 6295, StudentAmount = 25, EducationType = "V"}
         };
 
         _teachers = new List<Teacher>

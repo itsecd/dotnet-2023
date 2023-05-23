@@ -1,9 +1,6 @@
-﻿namespace Department.Domain;
+﻿namespace Department.Server.Dto;
 
-/// <summary>
-/// Class Group has the info about all groups
-/// </summary>
-public class Group
+public class GroupGetDto
 {
     /// <summary>
     /// Group number

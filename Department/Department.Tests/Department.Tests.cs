@@ -8,7 +8,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
     private readonly DepartmentFixture _departmentFixture;
 
     /// <summary>
-    /// Constructor 
+    /// Constructor
     /// </summary>
     public DepartmentTests(DepartmentFixture departmentFixture)
     {
@@ -16,7 +16,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
     }
 
     /// <summary>
-    /// 1st request: give info about all sport bikes
+    /// 1st request: give info about all teachers on given course
     /// </summary>
     [Fact]
     public void TestTeachers()
@@ -32,7 +32,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
     }
 
     /// <summary>
-    /// 1st request: give info about all sport bikes
+    /// 2nd request: give info about all teachers whose curriculum includes a course project
     /// </summary>
     [Fact]
     public void TestCourseProject()
@@ -47,7 +47,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
     }
 
     /// <summary>
-    /// 1st request: give info about all sport bikes
+    /// 3rd request: give info about all subjects for given group
     /// </summary>
     [Fact]
     public void TestSubjects()
@@ -61,7 +61,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         Assert.Equal(2, request.Count());
     }
 
-
+    /// <summary>
+    /// 4th request: summary information on the department (amount of teachers, amount of groups, amount of students, etc.)
+    /// </summary>
     [Fact]
     public void TestDepartmentInfo()
     {
@@ -107,6 +109,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         Assert.Equal(66, totalStudents.Sum());
     }
 
+    /// <summary>
+    /// 5th request: give info about most busy teacher
+    /// </summary>
     [Fact]
     public void TestMostBusy()
     {
@@ -126,6 +131,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         Assert.Equal(623, result[0].totalTime);
     }
 
+    /// <summary>
+    /// 6th request: give info about subjects taught by different teachers
+    /// </summary>
     [Fact]
     public void TestDifferentTeachers()
     {

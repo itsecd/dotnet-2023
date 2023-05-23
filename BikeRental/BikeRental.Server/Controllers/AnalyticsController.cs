@@ -3,7 +3,6 @@ using BikeRental.Domain;
 using BikeRental.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using System.Collections.Immutable;
 
 namespace BikeRental.Server.Controllers;
 

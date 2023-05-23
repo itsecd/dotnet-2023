@@ -6,7 +6,7 @@ namespace Enterprise.Data;
 /// <summary>
 ///     InvoicesContent - is the class that links the quantity of goods purchased to the invoice
 /// </summary>
-[Table("Invoice_Content")]
+[Table("invoice_content")]
 public class InvoiceContent
 {
     /// <summary>
@@ -21,18 +21,15 @@ public class InvoiceContent
     /// </summary>
     public int InvoiceId { get; set; }
     [ForeignKey("InvoiceId")]
-    [Column("invoiceId")]
+    [Column("invoice_id")]
     public Invoice Invoices { get; set; }
 
     /// <summary>
-    ///     
-    /// 
-    /// 
-    /// - item number of the product
+    ///     ProductItemNumber - item number of the product
     /// </summary>
     public int ProductItemNumber { get; set; }
     [ForeignKey("ProductItemNumber")]
-    [Column("productId")]
+    [Column("product_id")]
     public Product Product { get; set; }
 
     /// <summary>

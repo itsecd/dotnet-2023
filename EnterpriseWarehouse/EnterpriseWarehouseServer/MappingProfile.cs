@@ -7,15 +7,12 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Product, ProductGetDto>().ReverseMap();
-        CreateMap<ProductPostDto, Product>().ReverseMap();
-        CreateMap<ProductPostDto, ProductGetDto>().ReverseMap();
-        CreateMap<StorageCell, StorageCellGetDto>().ReverseMap();
-        CreateMap<StorageCellPostDto, StorageCell>().ReverseMap();
-        CreateMap<StorageCellPostDto, StorageCellGetDto>().ReverseMap();
-        CreateMap<StorageCell, StorageCellGetDto>().ReverseMap();
-        CreateMap<StorageCellPostDto, StorageCell>().ReverseMap();
-        CreateMap<StorageCellPostDto, StorageCellGetDto>().ReverseMap();
-        CreateMap<InvoiceGetDto, InvoicePostDto>().ReverseMap();
+        CreateMap<Product, ProductGetDto>();
+        CreateMap<ProductPostDto, Product>();
+        CreateMap<ProductPostDto, ProductGetDto>();
+        CreateMap<StorageCell, StorageCellGetDto>();
+        CreateMap<StorageCellPostDto, StorageCell>();
+        CreateMap<StorageCellPostDto, StorageCellGetDto>();
+        CreateMap<InvoiceGetDto, InvoicePostDto>();
     }
 }

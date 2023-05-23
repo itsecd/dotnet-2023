@@ -6,7 +6,7 @@ namespace Enterprise.Data;
 /// <summary>
 ///     Product - is a class that stores information about a product
 /// </summary>
-[Table("Product")]
+[Table("product")]
 public class Product
 {
     /// <summary>
@@ -18,7 +18,7 @@ public class Product
     /// <summary>
     ///     ItemNumber - unique identifier of the product
     /// </summary>
-    [Column("itemNumber")]
+    [Column("item_number")]
     public int ItemNumber { get; set; }
 
     /// <summary>
@@ -36,13 +36,13 @@ public class Product
     /// <summary>
     ///     CellNumber - number of the cell in which the product is stored
     /// </summary>
-	[Column("cellNumber")]
+	[Column("cell_number")]
     public ICollection<StorageCell> StorageCell { get; set; } = new List<StorageCell>();
 
     /// <summary>
     ///     InvoicesContent - invoice information
     /// </summary>
-	[Column("invoiceContent")]
+	[Column("invoice_content")]
     public IList<InvoiceContent> InvoicesContent { get; } = new List<InvoiceContent>();
 
     public Product(int itemNumber, string title, int quantity)

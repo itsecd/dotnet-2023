@@ -1,12 +1,10 @@
 using AutoMapper;
 using Enterprise.Data;
 using EnterpriseWarehouseServer;
-using EnterpriseWarehouseServer.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IMainRepository, MainRepository>();
 builder.Services.AddDbContext<EnterpriseWarehouseDbContext>(options =>
 {
     options.UseMySQL(builder.Configuration.GetConnectionString("EnterpriseWarehouseServer")!);

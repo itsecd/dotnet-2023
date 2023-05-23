@@ -70,14 +70,19 @@ public class StorageCellController : ControllerBase
     /// <param StorageCell>Add new product</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<StorageCell>> Post([FromBody] StorageCellPostDto storageCell)
+    public async Task<ActionResult<int>> Post([FromBody] StorageCellPostDto storageCell)
     {
         if (_context.StorageCells != null)
         {
-            var mapperStorageCell = _mapper.Map<StorageCell>(storageCell);
-            _context.Add(mapperStorageCell);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("Post", new { number = storageCell.Number }, _mapper.Map<StorageCellGetDto>(mapperStorageCell));
+            if (_context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == storageCell.Number) == null)
+            {
+                var mapperStorageCell = _mapper.Map<StorageCell>(storageCell);
+                _context.Add(mapperStorageCell);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("Post", storageCell.Number);
+            }
+            else
+                return Problem("Such a cell already exists.");
         }
         else
             return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");

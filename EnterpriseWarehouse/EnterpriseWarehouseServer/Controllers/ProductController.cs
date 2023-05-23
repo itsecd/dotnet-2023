@@ -72,7 +72,7 @@ public class ProductController : ControllerBase
     /// <param Product>Add new Product</param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<Product>> Post([FromBody] ProductPostDto product)
+    public async Task<ActionResult<int>> Post([FromBody] ProductPostDto product)
     {
         if (_context.Products != null)
         {
@@ -80,7 +80,7 @@ public class ProductController : ControllerBase
 
             _context.Add(mappedProduct);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("Post", new { itemNumber = mappedProduct.ItemNumber }, _mapper.Map<ProductGetDto>(mappedProduct));
+            return CreatedAtAction("Post", mappedProduct.ItemNumber);
         }
         else
             return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");

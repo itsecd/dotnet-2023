@@ -6,7 +6,7 @@ namespace Enterprise.Data;
 /// <summary>
 ///     StorageCell - is a class linking the cell number and the product stored in it
 /// </summary>
-[Table("Storage_Cell")]
+[Table("storage_cell")]
 public class StorageCell
 {
     /// <summary>
@@ -18,7 +18,7 @@ public class StorageCell
     /// <summary>
     ///     Number - cell number
     /// </summary>
-    [Column("cellNumber")]
+    [Column("cell_number")]
     public int Number { get; set; }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class StorageCell
     /// </summary>
     public int ProductIN { get; set; }
     [ForeignKey("ProductIN")]
-    [Column("productId")]
+    [Column("product_id")]
     public Product Product { get; set; }
 
     public StorageCell(int number, Product product)

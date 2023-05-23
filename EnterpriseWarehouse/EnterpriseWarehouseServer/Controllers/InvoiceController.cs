@@ -113,7 +113,7 @@ public class InvoiceController : ControllerBase
     /// <returns>Result of operation</returns>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<Invoice>> Post([FromBody] InvoicePostDto invoice)
+    public async Task<ActionResult<int>> Post([FromBody] InvoicePostDto invoice)
     {
         if (_context.Invoices != null)
         {
@@ -148,7 +148,7 @@ public class InvoiceController : ControllerBase
                     return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");
             }
             _context.SaveChanges();
-            return CreatedAtAction("Post", new { id = invoice.Id }, _mapper.Map<InvoiceGetDto>(invoice));
+            return CreatedAtAction("Post", invoice.Id);
         }
         else
             return Problem("Entity set 'EnterpriseWarehouseDbContext.Invoices is null.");

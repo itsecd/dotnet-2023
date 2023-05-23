@@ -6,32 +6,32 @@ namespace Enterprise.Data;
 /// <summary>
 ///     Invoices - is a class that stores the history of shipments
 /// </summary>
-[Table("Invoices")]
+[Table("invoices")]
 public class Invoice
 {
     /// <summary>
     ///     Id - number of the invoice
     /// </summary>
     [Key]
-    [Column("invoiceId")]
+    [Column("invoice_id")]
     public int Id { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
     /// </summary>
-    [Column("nameOrganization")]
+    [Column("name_organization")]
     public string NameOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     AddressOrganization - address of the organization to which the shipment was made
     /// </summary>
-    [Column("addressOrganization")]
+    [Column("address_organization")]
     public string AddressOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     ShipmentDate - shipment date
     /// </summary>
-    [Column("shipmentDate")]
+    [Column("shipment_date")]
     public DateTime ShipmentDate { get; set; }
 
     /// <summary>

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
+
 namespace Factory.Client.ViewModels;
 public class EnterpriseViewModel : ViewModelBase
 {

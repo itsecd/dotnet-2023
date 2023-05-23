@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
+using ReactiveUI;
 using System;
 using System.Reactive;
 
@@ -18,7 +20,7 @@ public class SupplyViewModel : ViewModelBase
         get => _enterpriseID;
         set => this.RaiseAndSetIfChanged(ref _enterpriseID, value);
     }
-
+    
     private int _supplierID;
     public int SupplierID
     {
@@ -26,12 +28,12 @@ public class SupplyViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _supplierID, value);
     }
 
-    private DateTimeOffset _date;
-    public DateTimeOffset Date
+    public DateTimeOffset? Date
     {
-        get => _date;
-        set => this.RaiseAndSetIfChanged(ref _date, value);
-    }
+
+        get;
+        set;
+    } = DateTime.Today;
 
     private int _quantity;
     public int Quantity
@@ -43,6 +45,8 @@ public class SupplyViewModel : ViewModelBase
     public ReactiveCommand<Unit, SupplyViewModel> OnSubmitCommand { get; }
     public SupplyViewModel()
     {
+       
         OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
+
 }

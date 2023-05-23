@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace Factory.Client.ViewModels;
@@ -12,7 +13,7 @@ public class SupplierViewModel : ViewModelBase
     }
 
     private string _name = string.Empty;
-
+    [Required]
     public string Name
     {
         get => _name;

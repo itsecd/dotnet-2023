@@ -10,6 +10,6 @@ public class BikeRentalContextFactory : IDesignTimeDbContextFactory<BikeRentalDb
         var optionsBuilder = new DbContextOptionsBuilder<BikeRentalDbContext>();
         optionsBuilder.UseMySQL("Server=127.0.0.1;Uid=root;Database=BikeRental;Pwd=12345");
 
-        return new BikeRentalDbContext(optionsBuilder.Options); 
+        return new BikeRentalDbContext(optionsBuilder.Options);
     }
 }

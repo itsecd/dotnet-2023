@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using BikeRental.Domain;
-using AutoMapper;
 using BikeRental.Server.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeRental.Server.Controllers;
 
@@ -33,10 +33,10 @@ public class ClientsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ClientGetDto>>> GetClients()
     {
-      if (_context.Clients == null)
-      {
-          return NotFound();
-      }
+        if (_context.Clients == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get clients list");
         return await _mapper.ProjectTo<ClientGetDto>(_context.Clients).ToListAsync();
     }
@@ -103,10 +103,10 @@ public class ClientsController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<ClientGetDto>> PostClient(ClientSetDto client)
     {
-      if (_context.Clients == null)
-      {
-          return Problem("Entity set 'BikeRentalDbContext.Clients'  is null.");
-      }
+        if (_context.Clients == null)
+        {
+            return Problem("Entity set 'BikeRentalDbContext.Clients'  is null.");
+        }
         var mappedClient = _mapper.Map<Client>(client);
 
         _context.Clients.Add(mappedClient);

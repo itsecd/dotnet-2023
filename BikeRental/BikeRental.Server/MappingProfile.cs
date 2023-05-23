@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BikeRental.Server.Dto;
 using BikeRental.Domain;
+using BikeRental.Server.Dto;
 
 namespace BikeRental.Server;
 

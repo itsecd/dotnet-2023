@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using BikeRental.Domain;
-using AutoMapper;
 using BikeRental.Server.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeRental.Server.Controllers;
 
@@ -35,7 +35,7 @@ public class RentRecordsController : ControllerBase
     {
         _logger.LogInformation("Get rent records list");
         if (_context.RentRecords == null)
-        { 
+        {
             return NotFound();
         }
         return await _mapper.ProjectTo<RentRecordGetDto>(_context.RentRecords).ToListAsync();
@@ -103,10 +103,10 @@ public class RentRecordsController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<RentRecordGetDto>> PostRentRecord(RentRecordSetDto rentRecord)
     {
-      if (_context.RentRecords == null)
-      {
-          return Problem("Entity set 'BikeRentalDbContext.RentRecords'  is null.");
-      }
+        if (_context.RentRecords == null)
+        {
+            return Problem("Entity set 'BikeRentalDbContext.RentRecords'  is null.");
+        }
         var mappedRecord = _mapper.Map<RentRecord>(rentRecord);
 
         _context.RentRecords.Add(mappedRecord);

@@ -44,10 +44,10 @@ public class BikeRentalDbContext : DbContext
         var type2 = new BikeType { Id = 2, TypeName = "прогулочный", RentCost = 100 };
         var type3 = new BikeType { Id = 3, TypeName = "спортивный", RentCost = 200 };
 
-        modelBuilder.Entity<BikeType>().HasData(new List<BikeType> { type1, type2 ,type3 });
+        modelBuilder.Entity<BikeType>().HasData(new List<BikeType> { type1, type2, type3 });
 
-        var bike1 = new Bike { Id = 1, SerialNumber = 12345, Model = "Model1", Color = "green", TypeId = 1};
-        var bike2 = new Bike { Id = 2, SerialNumber = 23451, Model = "Model2", Color = "red", TypeId = 2};
+        var bike1 = new Bike { Id = 1, SerialNumber = 12345, Model = "Model1", Color = "green", TypeId = 1 };
+        var bike2 = new Bike { Id = 2, SerialNumber = 23451, Model = "Model2", Color = "red", TypeId = 2 };
         var bike3 = new Bike { Id = 3, SerialNumber = 34512, Model = "Model3", Color = "purple", TypeId = 3 };
         var bike4 = new Bike { Id = 4, SerialNumber = 45123, Model = "Model4", Color = "green", TypeId = 1 };
         var bike5 = new Bike { Id = 5, SerialNumber = 51234, Model = "Model5", Color = "blue", TypeId = 3 };

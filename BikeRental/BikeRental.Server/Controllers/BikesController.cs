@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using BikeRental.Domain;
-using AutoMapper;
 using BikeRental.Server.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeRental.Server.Controllers;
 
@@ -33,10 +33,10 @@ public class BikesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BikeGetDto>>> GetBikes()
     {
-      if (_context.Bikes == null)
-      {
-          return NotFound();
-      }
+        if (_context.Bikes == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get bikes list");
         return await _mapper.ProjectTo<BikeGetDto>(_context.Bikes).ToListAsync();
     }
@@ -90,7 +90,7 @@ public class BikesController : ControllerBase
         _logger.LogInformation("Successfully updated");
 
         await _context.SaveChangesAsync();
-        
+
         return NoContent();
     }
 
@@ -103,19 +103,19 @@ public class BikesController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<BikeGetDto>> PostBike(BikeSetDto bike)
     {
-      if (_context.Bikes == null)
-      {
-          return Problem("Entity set 'BikeRentalDbContext.Bikes'  is null.");
-      }
-      var mappedBike = _mapper.Map<Bike>(bike);
+        if (_context.Bikes == null)
+        {
+            return Problem("Entity set 'BikeRentalDbContext.Bikes'  is null.");
+        }
+        var mappedBike = _mapper.Map<Bike>(bike);
 
-      _context.Bikes.Add(mappedBike);
+        _context.Bikes.Add(mappedBike);
 
-      _logger.LogInformation("Successfully added");
+        _logger.LogInformation("Successfully added");
 
-      await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-      return CreatedAtAction("PostBike", new { id = mappedBike.Id }, _mapper.Map<BikeGetDto>(mappedBike));
+        return CreatedAtAction("PostBike", new { id = mappedBike.Id }, _mapper.Map<BikeGetDto>(mappedBike));
     }
 
     /// <summary>

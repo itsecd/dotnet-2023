@@ -4,7 +4,6 @@ using BikeRental.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace BikeRental.Server.Controllers;
 
@@ -118,7 +117,7 @@ public class AnalyticsController : ControllerBase
                  record.RentStartTime
              }).ToListAsync();
 
-        var rentTime = 
+        var rentTime =
             (from res in request
              group res by new { res.TypeName, res.TypeId } into totalTime
              select new

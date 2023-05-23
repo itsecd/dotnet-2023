@@ -1,8 +1,3 @@
-using BikeRental.Domain;
-using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks.Dataflow;
-
 namespace BikeRental.Tests;
 
 public class BikeRentalTests : IClassFixture<BikeRentalFixture>
@@ -20,7 +15,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     [Fact]
     public void TestSportBikes()
     {
-        var request = 
+        var request =
             from bike in _bikeRentalFixture.Bikes
             where bike.Type == _bikeRentalFixture.BikeTypes[2]
             select bike;
@@ -34,12 +29,12 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     [Fact]
     public void TestMountainBikes()
     {
-        var request = 
+        var request =
             from client in _bikeRentalFixture.Clients
             join record in _bikeRentalFixture.Records on client.Id equals record.ClientId
             join bike in _bikeRentalFixture.Bikes on record.BikeId equals bike.Id
             where bike.Type == _bikeRentalFixture.BikeTypes[0]
-            orderby client.FullName 
+            orderby client.FullName
             select client;
 
         Assert.Equal(3, request.Count());
@@ -96,7 +91,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
     [Fact]
     public void TestMostRentedBikes()
     {
-        var counter = 
+        var counter =
             (from record in _bikeRentalFixture.Records
              group record by record.BikeId into bikeRents
              select new

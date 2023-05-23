@@ -144,46 +144,35 @@ public class MainWindowViewModel : ViewModelBase
             Cells.Remove(SelectedCell);
         }, this.WhenAnyValue(vm => vm.SelectedCell).Select(selectWarehouseCell => selectWarehouseCell != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadProductsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSuppliesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadCellsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadAllProductsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
 
-    private async void LoadAllProductsAsync()
+    private async void LoadDataAsync()
     {
         AllProducts.Clear();
-        var products = await _apiClient.GetAllProductsAsync();
-        foreach (var product in products)
+        var allProducts = await _apiClient.GetAllProductsAsync();
+        foreach (var product in allProducts)
         {
             AllProducts.Add(_mapper.Map<ProductViewModel>(product));
         }
-    }
 
-    private async void LoadProductsAsync()
-    {
         var products = await _apiClient.GetProductsAsync();
         foreach (var product in products)
         {
             Products.Add(_mapper.Map<ProductViewModel>(product));
         }
-    }
 
-    private async void LoadSuppliesAsync()
-    {
         var supplies = await _apiClient.GetSuppliesAsync();
         foreach (var supply in supplies)
         {
             Supplies.Add(_mapper.Map<SupplyViewModel>(supply));
         }
-    }
 
-    private async void LoadCellsAsync()
-    {
         var cells = await _apiClient.GetWarehouseCellsAsync();
         foreach (var cell in cells)
         {
             Cells.Add(_mapper.Map<WarehouseCellViewModel>(cell));
         }
+
     }
 }

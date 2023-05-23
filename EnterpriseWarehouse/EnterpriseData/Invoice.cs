@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Enterprise.Data;
 
 /// <summary>
-///     Invoice - is a class that stores the history of shipments
+///     Invoices - is a class that stores the history of shipments
 /// </summary>
+[Table("Invoices")]
 public class Invoice
 {
     /// <summary>
     ///     Id - number of the invoice
     /// </summary>
     [Key]
-    [Column("id")]
-    public uint Id { get; set; }
+    [Column("invoiceId")]
+    public int Id { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
@@ -22,10 +23,10 @@ public class Invoice
     public string NameOrganization { get; set; } = string.Empty;
 
     /// <summary>
-    ///     AdressOrganization - address of the organization to which the shipment was made
+    ///     AddressOrganization - address of the organization to which the shipment was made
     /// </summary>
     [Column("addressOrganization")]
-    public string AdressOrganization { get; set; } = string.Empty;
+    public string AddressOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     ShipmentDate - shipment date
@@ -34,15 +35,17 @@ public class Invoice
     public DateTime ShipmentDate { get; set; }
 
     /// <summary>
-    ///     InvoiceContentid - invoice information number
+    ///     InvoicesContent - invoice information
     /// </summary>
-    public List<InvoiceContent> InvoiceContent { get; set; } = new List<InvoiceContent>();
+    public IList<InvoiceContent> InvoicesContent { get; } = new List<InvoiceContent>();
 
-    public Invoice(uint id, string nameOrganization, string adressOrganization, DateTime shipmentDate)
+    public Invoice(int id, string nameOrganization, string adressOrganization, DateTime shipmentDate)
     {
         Id = id;
         NameOrganization = nameOrganization;
-        AdressOrganization = adressOrganization;
+        AddressOrganization = adressOrganization;
         ShipmentDate = shipmentDate;
     }
+
+    public Invoice() { }
 }

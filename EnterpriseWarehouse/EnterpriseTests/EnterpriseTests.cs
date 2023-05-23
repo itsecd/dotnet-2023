@@ -40,7 +40,7 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
     {
         var query = (from invoice in _fixture.InvoicesFixture
                      where invoice.ShipmentDate == new DateTime(2023, 2, 11)
-                     from invoiceContent in invoice.InvoiceContent
+                     from invoiceContent in invoice.InvoicesContent
                      select invoiceContent.Product).ToList();
         Assert.Equal(2, query.Count);
         Assert.Contains(query, queryElem => queryElem.Title == "Кувшин для воды из стекла 4л");
@@ -90,17 +90,17 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
     {
         var query = (from invoice in _fixture.InvoicesFixture
                      where invoice.ShipmentDate >= new DateTime(2023, 2, 1) && invoice.ShipmentDate <= new DateTime(2023, 2, 15)
-                     from invoiceContent in invoice.InvoiceContent
+                     from invoiceContent in invoice.InvoicesContent
                      join product in _fixture.ProductsFixture on invoiceContent.Product.ItemNumber equals product.ItemNumber
                      group invoiceContent by new
                      {
                          invoice.NameOrganization,
-                         invoice.AdressOrganization
+                         invoice.AddressOrganization
                      } into grp
                      select new
                      {
                          grp.Key.NameOrganization,
-                         grp.Key.AdressOrganization,
+                         grp.Key.AddressOrganization,
                          quantity = grp.Sum(x => x.Quantity)
                      }).ToList();
         var max = query.Max(x => x.quantity);
@@ -109,7 +109,7 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
             if (q.quantity == max)
             {
                 Assert.Equal("Посуда Центр", q.NameOrganization);
-                Assert.Equal("г. Самара, ул. Партизанская, 17.", q.AdressOrganization);
+                Assert.Equal("г. Самара, ул. Партизанская, 17.", q.AddressOrganization);
             }
         }
 
@@ -139,19 +139,19 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
     public void InfoAboutTheQuantityGoodsDelivered()
     {
         var query = (from invoice in _fixture.InvoicesFixture
-                     from invoiceContent in invoice.InvoiceContent
+                     from invoiceContent in invoice.InvoicesContent
                      join product in _fixture.ProductsFixture on invoiceContent.Product.ItemNumber equals product.ItemNumber
                      group invoiceContent by new
                      {
                          invoice.NameOrganization,
-                         invoice.AdressOrganization,
+                         invoice.AddressOrganization,
                          product.ItemNumber,
                          product.Title
                      } into grp
                      select new
                      {
                          grp.Key.NameOrganization,
-                         grp.Key.AdressOrganization,
+                         grp.Key.AddressOrganization,
                          grp.Key.ItemNumber,
                          grp.Key.Title,
                          quantity = grp.Sum(x => x.Quantity)
@@ -161,8 +161,8 @@ public class EnterpriseTestsClass : IClassFixture<EnterpriseFixture>
         Assert.Contains(query, queryElem => queryElem.ItemNumber == 101700);
         Assert.Contains(query, queryElem => queryElem.ItemNumber == 320510);
         Assert.Contains(query, queryElem => queryElem.ItemNumber == 103700);
-        Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Партизанская, 17.");
-        Assert.Contains(query, queryElem => queryElem.AdressOrganization == "г. Самара, ул. Луцкая, 16.");
+        Assert.Contains(query, queryElem => queryElem.AddressOrganization == "г. Самара, ул. Партизанская, 17.");
+        Assert.Contains(query, queryElem => queryElem.AddressOrganization == "г. Самара, ул. Луцкая, 16.");
         Assert.Contains(query, queryElem => queryElem.NameOrganization == "СамараПласт");
         Assert.Contains(query, queryElem => queryElem.NameOrganization == "Посуда Центр");
         Assert.DoesNotContain(query, queryElem => queryElem.Title == "Кастрюля алюм. с крышкой 5л");

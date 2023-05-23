@@ -1,14 +1,14 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
 /// <summary>
-///     InvoiceGetDto - used to represent the Invoice object in the get-request
+///     InvoiceGetDto - used to represent the Invoices object in the get-request
 /// </summary>
 public class InvoiceGetDto
 {
     /// <summary>
     ///     Id - number of the voice
     /// </summary>
-    public uint Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
@@ -28,5 +28,5 @@ public class InvoiceGetDto
     /// <summary>
     ///     Product - collection of pairs "product identifier - product quantity"
     /// </summary>
-    public Dictionary<uint, uint> Products { get; set; } = new Dictionary<uint, uint>();
+    public Dictionary<int, int> Products { get; set; } = new Dictionary<int, int>();
 }

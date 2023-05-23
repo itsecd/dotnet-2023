@@ -49,22 +49,22 @@ public class MainRepository : IMainRepository
             new StorageCell(16, _products[8])
         };
 
-        _storageCells[0].ItemNumberProducts = _products[0].ItemNumber;
-        _storageCells[1].ItemNumberProducts = _products[1].ItemNumber;
-        _storageCells[2].ItemNumberProducts = _products[2].ItemNumber;
-        _storageCells[3].ItemNumberProducts = _products[3].ItemNumber;
-        _storageCells[4].ItemNumberProducts = _products[4].ItemNumber;
-        _storageCells[5].ItemNumberProducts = _products[4].ItemNumber;
-        _storageCells[6].ItemNumberProducts = _products[4].ItemNumber;
-        _storageCells[7].ItemNumberProducts = _products[5].ItemNumber;
-        _storageCells[8].ItemNumberProducts = _products[5].ItemNumber;
-        _storageCells[9].ItemNumberProducts = _products[6].ItemNumber;
-        _storageCells[10].ItemNumberProducts = _products[7].ItemNumber;
-        _storageCells[11].ItemNumberProducts = _products[7].ItemNumber;
-        _storageCells[12].ItemNumberProducts = _products[7].ItemNumber;
-        _storageCells[13].ItemNumberProducts = _products[7].ItemNumber;
-        _storageCells[14].ItemNumberProducts = _products[8].ItemNumber;
-        _storageCells[15].ItemNumberProducts = _products[8].ItemNumber;
+        _storageCells[0].ProductIN = _products[0].ItemNumber;
+        _storageCells[1].ProductIN = _products[1].ItemNumber;
+        _storageCells[2].ProductIN = _products[2].ItemNumber;
+        _storageCells[3].ProductIN = _products[3].ItemNumber;
+        _storageCells[4].ProductIN = _products[4].ItemNumber;
+        _storageCells[5].ProductIN = _products[4].ItemNumber;
+        _storageCells[6].ProductIN = _products[4].ItemNumber;
+        _storageCells[7].ProductIN = _products[5].ItemNumber;
+        _storageCells[8].ProductIN = _products[5].ItemNumber;
+        _storageCells[9].ProductIN = _products[6].ItemNumber;
+        _storageCells[10].ProductIN = _products[7].ItemNumber;
+        _storageCells[11].ProductIN = _products[7].ItemNumber;
+        _storageCells[12].ProductIN = _products[7].ItemNumber;
+        _storageCells[13].ProductIN = _products[7].ItemNumber;
+        _storageCells[14].ProductIN = _products[8].ItemNumber;
+        _storageCells[15].ProductIN = _products[8].ItemNumber;
 
         _products[0].StorageCell.Add(_storageCells[0]);
         _products[1].StorageCell.Add(_storageCells[1]);
@@ -107,15 +107,15 @@ public class MainRepository : IMainRepository
         _invoicesContent[2].ProductItemNumber = _products[6].ItemNumber;
         _invoicesContent[3].ProductItemNumber = _products[8].ItemNumber;
 
-        _invoices[0].InvoiceContent.Add(_invoicesContent[0]);
-        _invoices[1].InvoiceContent.Add(_invoicesContent[1]);
-        _invoices[1].InvoiceContent.Add(_invoicesContent[2]);
-        _invoices[2].InvoiceContent.Add(_invoicesContent[3]);
+        _invoices[0].InvoicesContent.Add(_invoicesContent[0]);
+        _invoices[1].InvoicesContent.Add(_invoicesContent[1]);
+        _invoices[1].InvoicesContent.Add(_invoicesContent[2]);
+        _invoices[2].InvoicesContent.Add(_invoicesContent[3]);
 
-        _products[0].InvoiceContent.Add(_invoicesContent[0]);
-        _products[7].InvoiceContent.Add(_invoicesContent[1]);
-        _products[6].InvoiceContent.Add(_invoicesContent[2]);
-        _products[8].InvoiceContent.Add(_invoicesContent[3]);
+        _products[0].InvoicesContent.Add(_invoicesContent[0]);
+        _products[7].InvoicesContent.Add(_invoicesContent[1]);
+        _products[6].InvoicesContent.Add(_invoicesContent[2]);
+        _products[8].InvoicesContent.Add(_invoicesContent[3]);
     }
 
     public List<Product> Products => _products;

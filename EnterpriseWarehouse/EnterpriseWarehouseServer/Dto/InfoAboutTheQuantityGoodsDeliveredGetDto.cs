@@ -1,7 +1,7 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
 /// <summary>
-///     InfoAboutTheQuantityGoodsDeliveredGetDto - used to represent the Invoice and Product objects in the get-request
+///     InfoAboutTheQuantityGoodsDeliveredGetDto - used to represent the Invoices and Product objects in the get-request
 /// </summary>
 public class InfoAboutTheQuantityGoodsDeliveredGetDto
 {
@@ -18,7 +18,7 @@ public class InfoAboutTheQuantityGoodsDeliveredGetDto
     /// <summary>
     ///     ItemNumber - unique identifier of the product
     /// </summary>
-    public uint ItemNumber { get; set; }
+    public int ItemNumber { get; set; }
 
     /// <summary>
     ///     Title - product name

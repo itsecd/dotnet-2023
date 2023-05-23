@@ -1,14 +1,14 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
 /// <summary>
-///     InvoicePostDto - used to present Invoice object data in a post-query
+///     InvoicePostDto - used to present Invoices object data in a post-query
 /// </summary>
 public class InvoicePostDto
 {
     /// <summary>
     ///     Id - number of the voice
     /// </summary>
-    public uint Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     NameOrganizationn - the name of the organization to which the shipment was made
@@ -28,5 +28,5 @@ public class InvoicePostDto
     /// <summary>
     ///     Product - collection of pairs "product identifier - product quantity"
     /// </summary>
-    public Dictionary<uint, uint> Products { get; set; } = new Dictionary<uint, uint>();
+    public Dictionary<int, int> Products { get; set; } = new Dictionary<int, int>();
 }

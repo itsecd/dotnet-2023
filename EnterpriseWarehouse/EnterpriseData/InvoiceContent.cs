@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Enterprise.Data;
 
 /// <summary>
-///     InvoiceContent - is the class that links the quantity of goods purchased to the invoice
+///     InvoicesContent - is the class that links the quantity of goods purchased to the invoice
 /// </summary>
+[Table("Invoice_Content")]
 public class InvoiceContent
 {
     /// <summary>
@@ -13,35 +14,40 @@ public class InvoiceContent
     /// </summary>
     [Key]
     [Column("id")]
-    public uint Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
-    ///     InvoiceId - number of the invoice
+    ///     Id - number of the invoice
     /// </summary>
-    [ForeignKey("Invoice")]
+    public int InvoiceId { get; set; }
+    [ForeignKey("InvoiceId")]
     [Column("invoiceId")]
-    public uint InvoiceId { get; set; }
-    public Invoice Invoice { get; set; }
+    public Invoice Invoices { get; set; }
 
     /// <summary>
-    ///     ProductItemNumber - item number of the product
+    ///     
+    /// 
+    /// 
+    /// - item number of the product
     /// </summary>
-    [ForeignKey("Product")]
+    public int ProductItemNumber { get; set; }
+    [ForeignKey("ProductItemNumber")]
     [Column("productId")]
-    public uint ProductItemNumber { get; set; }
     public Product Product { get; set; }
 
     /// <summary>
     ///     Quantity - quantity of goods purchased
     /// </summary>
     [Column("quantity")]
-    public uint Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public InvoiceContent(uint id, Invoice invoice, Product product, uint quantity)
+    public InvoiceContent(int id, Invoice invoice, Product product, int quantity)
     {
         Id = id;
-        Invoice = invoice;
+        Invoices = invoice;
         Product = product;
         Quantity = quantity;
     }
+
+    public InvoiceContent() { }
 }

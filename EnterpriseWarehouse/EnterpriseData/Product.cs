@@ -6,14 +6,20 @@ namespace Enterprise.Data;
 /// <summary>
 ///     Product - is a class that stores information about a product
 /// </summary>
+[Table("Product")]
 public class Product
 {
     /// <summary>
-    ///     ItemNumber - unique identifier of the product
+    ///     Id - identifier of the product in database
     /// </summary>
     [Key]
     [Column("id")]
-    public uint ItemNumber { get; set; }
+    public int Id { get; set; }
+    /// <summary>
+    ///     ItemNumber - unique identifier of the product
+    /// </summary>
+    [Column("itemNumber")]
+    public int ItemNumber { get; set; }
 
     /// <summary>
     ///     Title - product name
@@ -25,25 +31,26 @@ public class Product
     ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
 	[Column("quantity")]
-    public uint Quantity { get; set; }
+    public int Quantity { get; set; }
 
     /// <summary>
     ///     CellNumber - number of the cell in which the product is stored
     /// </summary>
 	[Column("cellNumber")]
-    public List<StorageCell> StorageCell { get; set; } = new List<StorageCell>();
+    public ICollection<StorageCell> StorageCell { get; set; } = new List<StorageCell>();
 
     /// <summary>
-    ///     CellNumber - number of the cell in which the product is stored
+    ///     InvoicesContent - invoice information
     /// </summary>
 	[Column("invoiceContent")]
-    public List<InvoiceContent> InvoiceContent { get; set; } = new List<InvoiceContent>();
+    public IList<InvoiceContent> InvoicesContent { get; } = new List<InvoiceContent>();
 
-    public Product(uint itemNumber, string title, uint quantity)
+    public Product(int itemNumber, string title, int quantity)
     {
         ItemNumber = itemNumber;
         Title = title;
         Quantity = quantity;
     }
 
+    public Product() { }
 }

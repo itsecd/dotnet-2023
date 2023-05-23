@@ -32,14 +32,6 @@ public class ProductController : ControllerBase
         if (_context.Products != null)
         {
             return await _mapper.ProjectTo<ProductGetDto>(_context.Products).ToListAsync();
-            return await _context.Products.Select(product =>
-                new ProductGetDto
-                {
-                    ItemNumber = product.ItemNumber,
-                    Title = product.Title,
-                    Quantity = product.Quantity
-                }
-            ).ToListAsync();
         }
         else
             return NotFound();
@@ -55,17 +47,11 @@ public class ProductController : ControllerBase
     {
         if (_context.Products != null)
         {
-            var product = _context.Products.FirstOrDefault(product => product.ItemNumber == id);
+            var product = await _context.Products.FirstOrDefaultAsync(product => product.ItemNumber == id);
             if (product != null)
             {
                 _logger.LogInformation("Get product with {id}.", id);
                 return Ok(_mapper.Map<ProductGetDto>(product));
-                return Ok(new ProductGetDto
-                {
-                    ItemNumber = product.ItemNumber,
-                    Title = product.Title,
-                    Quantity = product.Quantity
-                });
             }
             else
             {

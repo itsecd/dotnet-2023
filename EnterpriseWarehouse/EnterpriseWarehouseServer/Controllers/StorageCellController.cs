@@ -1,60 +1,66 @@
-﻿using Enterprise.Data;
+﻿using AutoMapper;
+using Enterprise.Data;
 using EnterpriseWarehouseServer.Dto;
-using EnterpriseWarehouseServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnterpriseWarehouseServer.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class StorageCellController : ControllerBase
 {
-    private readonly ILogger<StorageCellController> _logger;
+    private readonly ILogger<ProductController> _logger;
 
-    private readonly IMainRepository _context;
-    public StorageCellController(ILogger<StorageCellController> logger, IMainRepository mainRepository)
+    private readonly EnterpriseWarehouseDbContext _context;
+
+    private readonly IMapper _mapper;
+    public StorageCellController(ILogger<ProductController> logger, EnterpriseWarehouseDbContext context, IMapper mapper)
     {
         _logger = logger;
-        _context = mainRepository;
+        _context = context;
+        _mapper = mapper;
     }
 
     /// <summary>
     ///     [HttpGet] - return all StorageCell
     /// </summary>
+    /// /// <returns>List of Storage Cell</returns>
     [HttpGet]
-    public IEnumerable<StorageCellGetDto> Get()
+    public async Task<ActionResult<IEnumerable<StorageCellGetDto>>> Get()
     {
         _logger.LogInformation("Get storage cell.");
-        return _context.StorageCell.Select(storageCell =>
-            new StorageCellGetDto
-            {
-                Number = storageCell.Number,
-                ItemNumberProduct = storageCell.ItemNumberProducts,
-            }
-        );
+        if (_context.StorageCells != null)
+            return await _mapper.ProjectTo<StorageCellGetDto>(_context.StorageCells.OrderBy(x => x.Number)).ToListAsync();
+        else
+            return NotFound();
     }
 
     /// <summary>
-    ///     [HttpGet("{id}")] - return StorageCell with id
+    ///     [HttpGet("{cellNumber}")] - return StorageCell with cellNumber
     /// </summary>
-    /// <param Number = "id" >Number of the StorageCell to be view</param>
+    /// <param Number = "cellNumber" >Number of the StorageCell to be view</param>
     /// <returns>Info of StorageCell</returns>
-    [HttpGet("{id}")]
-    public ActionResult<StorageCellGetDto?> Get(int id)
+    [HttpGet("{cellNumber}")]
+    public async Task<ActionResult<ActionResult<StorageCellGetDto?>>> Get(int cellNumber)
     {
-        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
-        if (storageCell == null)
+        if (_context.StorageCells != null)
         {
-            _logger.LogInformation("Not found storage cell with {id}.", id);
-            return NotFound();
+            var storageCell = await _context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == cellNumber);
+            if (storageCell != null)
+            {
+                _logger.LogInformation("Get storage cell with {cellNumber}.", cellNumber);
+                return Ok(_mapper.Map<StorageCellGetDto>(storageCell));
+            }
+            else
+            {
+                _logger.LogInformation("Not found storage cell with {cellNumber}.", cellNumber);
+                return NotFound();
+            }
         }
         else
         {
-            _logger.LogInformation("Get storage cell with {id}.", id);
-            return Ok(new StorageCellGetDto
-            {
-                Number = storageCell.Number,
-                ItemNumberProduct = storageCell.ItemNumberProducts,
-            });
+            _logger.LogInformation("Not found storage cell with {cellNumber}.", cellNumber);
+            return NotFound();
         }
     }
 
@@ -63,61 +69,69 @@ public class StorageCellController : ControllerBase
     /// </summary>
     /// <param StorageCell>Add new product</param>
     [HttpPost]
-    public void Post([FromBody] StorageCellPostDto storageCell)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<StorageCell>> Post([FromBody] StorageCellPostDto storageCell)
     {
-        var product = _context.Products.FirstOrDefault(product => product.ItemNumber == storageCell.ItemNumberProduct);
-        var new_storageCell = new StorageCell(
-            storageCell.Number, product)
+        if (_context.StorageCells != null)
         {
-            ItemNumberProducts = storageCell.ItemNumberProduct
-        };
-        product.StorageCell.Add(new_storageCell);
-        _context.StorageCell.Add(new_storageCell);
+            var mapperStorageCell = _mapper.Map<StorageCell>(storageCell);
+            _context.Add(mapperStorageCell);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("Post", new { number = storageCell.Number }, _mapper.Map<StorageCellGetDto>(mapperStorageCell));
+        }
+        else
+            return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");
     }
 
     /// <summary>
-    ///     HttpPut("{id}")] - update info of StorageCell with id
+    ///     HttpPut("{cellNumber}")] - update info of StorageCell with cellNumber
     /// </summary>
-    /// <param Number="id">Number of the StorageCell to be update</param>
+    /// <param Number="cellNumber">Number of the StorageCell to be update</param>
     /// <returns>Result of operation</returns>
-    [HttpPut("{id}")]
-    public ActionResult Put(int id, [FromBody] StorageCell storageCell_)
+    [HttpPut("{cellNumber}")]
+    public async Task<IActionResult> Put(int cellNumber, [FromBody] StorageCellPostDto storageCellToPut)
     {
-        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
-        if (storageCell == null)
+        if (_context.StorageCells == null)
+            return NotFound();
+        var storageCellToModify = await _context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == cellNumber);
+        if (storageCellToModify == null)
         {
-            _logger.LogInformation("Not found stirage cell with {id}.", id);
+            _logger.LogInformation("Not found storage cell with {cellNumber}.", cellNumber);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get storage cell with {id}.", id);
-            storageCell.Number = storageCell_.Number;
-            storageCell.ItemNumberProducts = storageCell_.ItemNumberProducts;
-            return Ok();
+            _mapper.Map(storageCellToPut, storageCellToModify);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 
     /// <summary>
-    ///     [HttpDelete("{id}")] - delete StorageCell with id
+    ///     [HttpDelete("{cellNumber}")] - delete StorageCell with cellNumber
     /// </summary>
-    /// <param Number="id">Number of the StorageCell to be removed</param>
+    /// <param Number="cellNumber">Number of the StorageCell to be removed</param>
     /// <returns>Result of operation</returns>
-    [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    [HttpDelete("{cellNumber}")]
+    public async Task<ActionResult> Delete(int cellNumber)
     {
-        var storageCell = _context.StorageCell.FirstOrDefault(storageCell => storageCell.Number == id);
-        if (storageCell == null)
+        if (_context.StorageCells != null)
         {
-            _logger.LogInformation("Not found stirage cell with {id}.", id);
-            return NotFound();
+            var storageCell = await _context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == cellNumber);
+            if (storageCell == null)
+            {
+                _logger.LogInformation("Not found storage cell with {cellNumber}.", cellNumber);
+                return NotFound();
+            }
+            else
+            {
+                _logger.LogInformation("Delete storage cell with {cellNumber}.", cellNumber);
+                _context.StorageCells.Remove(storageCell);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
         }
         else
-        {
-            _logger.LogInformation("Get storage cell with {id}.", id);
-            _context.StorageCell.Remove(storageCell);
-            return Ok();
-        }
-
+            return NoContent();
     }
 }

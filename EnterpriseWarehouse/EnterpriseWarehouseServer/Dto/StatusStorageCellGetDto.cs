@@ -8,12 +8,12 @@ public class StatusStorageCellGetDto
     /// <summary>
     ///     Number - cell number
     /// </summary>
-    public uint Number { get; set; }
+    public int Number { get; set; }
 
     /// <summary>
-    ///     ItemNumberProduct - unique identifier of the product 
+    ///     ProductIN - unique identifier of the product 
     /// </summary>
-	public uint ItemNumberProducts { get; set; }
+	public int ItemNumberProducts { get; set; }
 
     /// <summary>
     ///     Title - product name
@@ -23,5 +23,5 @@ public class StatusStorageCellGetDto
     /// <summary>
     ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
-	public uint Quantity { get; set; }
+	public int Quantity { get; set; }
 }

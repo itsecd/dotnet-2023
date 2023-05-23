@@ -6,27 +6,33 @@ namespace Enterprise.Data;
 /// <summary>
 ///     StorageCell - is a class linking the cell number and the product stored in it
 /// </summary>
+[Table("Storage_Cell")]
 public class StorageCell
 {
     /// <summary>
+    ///     Id - identifier of the storage cell in database
+    /// </summary>
+    [Key]
+    [Column("id")]
+    public int Id { get; set; }
+    /// <summary>
     ///     Number - cell number
     /// </summary>
-    /// 
-    [Key]
     [Column("cellNumber")]
-    public uint Number { get; set; }
+    public int Number { get; set; }
 
     /// <summary>
-    ///     ItemNumberProduct - unique identifier of the product 
+    ///     ProductIN - unique identifier of the product 
     /// </summary>
-    [ForeignKey("Product")]
+    public int ProductIN { get; set; }
+    [ForeignKey("ProductIN")]
     [Column("productId")]
-    public uint ItemNumberProducts { get; set; }
     public Product Product { get; set; }
 
-    public StorageCell(uint number, Product product)
+    public StorageCell(int number, Product product)
     {
         Number = number;
         Product = product;
     }
+    public StorageCell() { }
 }

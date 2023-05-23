@@ -1,7 +1,7 @@
 ﻿namespace EnterpriseWarehouseServer.Dto;
 
 /// <summary>
-///     InfoOfAllInvoiceGetDto - used to represent the all Invoice object in the get-request
+///     InfoOfAllInvoiceGetDto - used to represent the all Invoices object in the get-request
 /// </summary>
 public class InfoOfAllInvoiceGetDto
 {

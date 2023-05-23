@@ -1,6 +1,8 @@
-﻿using EnterpriseWarehouseServer.Dto;
-using EnterpriseWarehouseServer.Repositories;
+﻿using AutoMapper;
+using Enterprise.Data;
+using EnterpriseWarehouseServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnterpriseWarehouseServer.Controllers;
 [Route("api/[controller]")]
@@ -9,11 +11,14 @@ public class AnalyticsController : ControllerBase
 {
     private readonly ILogger<AnalyticsController> _logger;
 
-    private readonly IMainRepository _context;
-    public AnalyticsController(ILogger<AnalyticsController> logger, IMainRepository mainRepository)
+    private readonly EnterpriseWarehouseDbContext _context;
+
+    private readonly IMapper _mapper;
+    public AnalyticsController(ILogger<AnalyticsController> logger, EnterpriseWarehouseDbContext context, IMapper mapper)
     {
         _logger = logger;
-        _context = mainRepository;
+        _context = context;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -21,17 +26,15 @@ public class AnalyticsController : ControllerBase
     /// <return>List of Produc</return>
     /// </summary>
     [HttpGet("GetAllProductSortebByTitle")]
-    public IEnumerable<ProductGetDto> GetAllProductSortebByTitle()
+    public async Task<ActionResult<IEnumerable<ProductGetDto>>> GetAllProductSortebByTitle()
     {
-        _logger.LogInformation("Get all product sorteb by title.");
-        return _context.Products.Select(product =>
-            new ProductGetDto
-            {
-                ItemNumber = product.ItemNumber,
-                Title = product.Title,
-                Quantity = product.Quantity
-            }
-        ).OrderBy(_context => _context.Title);
+        _logger.LogInformation("Get products.");
+        if (_context.Products != null)
+        {
+            return await _mapper.ProjectTo<ProductGetDto>(_context.Products).OrderBy(product => product.Title).ToListAsync();
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -39,19 +42,24 @@ public class AnalyticsController : ControllerBase
     /// <return>List of Produc</return>
     /// </summary>
     [HttpGet("GetInformationProductReceivedOnCertainDay/{date}")]
-    public IEnumerable<ProductGetDto> GetInformationProductReceivedOnCertainDay(string date)
+    public async Task<ActionResult<IEnumerable<ProductGetDto>>> GetInformationProductReceivedOnCertainDay(string date)
     {
-        _logger.LogInformation("Get information product received on certain day.");
-        var query = (from invoice in _context.Invoices
-                     where invoice.ShipmentDate == DateTime.Parse(date).Date
-                     from invoiceContent in invoice.InvoiceContent
-                     select new ProductGetDto
-                     {
-                         ItemNumber = invoiceContent.Product.ItemNumber,
-                         Title = invoiceContent.Product.Title,
-                         Quantity = invoiceContent.Product.Quantity
-                     }).ToList();
-        return query;
+        if (_context.Invoices != null && _context.InvoicesContent != null)
+        {
+            _logger.LogInformation("Get information product received on certain day.");
+            var query = await (from invoice in _context.Invoices
+                               where invoice.ShipmentDate == DateTime.Parse(date).Date
+                               from invoiceContent in invoice.InvoicesContent
+                               select new ProductGetDto
+                               {
+                                   ItemNumber = invoiceContent.Product.ItemNumber,
+                                   Title = invoiceContent.Product.Title,
+                                   Quantity = invoiceContent.Product.Quantity
+                               }).ToListAsync();
+            return query;
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -59,20 +67,25 @@ public class AnalyticsController : ControllerBase
     /// <return>List information of product and storage cell</return>
     /// </summary>
     [HttpGet("GetCurrentStateWarehouseWithCellNumbers")]
-    public IEnumerable<StatusStorageCellGetDto> GetCurrentStateWarehouseWithCellNumbers()
+    public async Task<ActionResult<IEnumerable<StatusStorageCellGetDto>>> GetCurrentStateWarehouseWithCellNumbers()
     {
-        _logger.LogInformation("Get current state warehouse with cell numbers.");
-        var query = (from warehouse in _context.StorageCell
-                     join product in _context.Products on warehouse.ItemNumberProducts equals product.ItemNumber
-                     orderby warehouse.Number
-                     select new StatusStorageCellGetDto
-                     {
-                         Number = warehouse.Number,
-                         ItemNumberProducts = warehouse.ItemNumberProducts,
-                         Title = product.Title,
-                         Quantity = product.Quantity,
-                     }).ToList();
-        return query;
+        if (_context.StorageCells != null && _context.Products != null)
+        {
+            _logger.LogInformation("Get current state warehouse with cell numbers.");
+            var query = await (from warehouse in _context.StorageCells
+                               join product in _context.Products on warehouse.ProductIN equals product.ItemNumber
+                               orderby warehouse.Number
+                               select new StatusStorageCellGetDto
+                               {
+                                   Number = warehouse.Number,
+                                   ItemNumberProducts = warehouse.ProductIN,
+                                   Title = product.Title,
+                                   Quantity = product.Quantity,
+                               }).ToListAsync();
+            return query;
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -80,26 +93,31 @@ public class AnalyticsController : ControllerBase
     /// <return>Information of invoice with max quantity</return>
     /// </summary>
     [HttpGet("GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod/{date_begin},{date_end}")]
-    public InfoOfAllInvoiceGetDto GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod(string date_begin, string date_end)
+    public async Task<ActionResult<InfoOfAllInvoiceGetDto>> GetInfoOrganizationsReceivedMaxVolumeProductsForGivenPeriod(string date_begin, string date_end)
     {
-        _logger.LogInformation("Get info organizations received max volume products for given period.");
-        var query = (from invoice in _context.Invoices
-                     join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
-                     join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
-                     where invoice.ShipmentDate >= DateTime.Parse(date_begin).Date && invoice.ShipmentDate <= DateTime.Parse(date_end).Date
-                     group invoiceContent by new
-                     {
-                         invoice.NameOrganization,
-                         invoice.AdressOrganization
-                     } into grp
-                     select new InfoOfAllInvoiceGetDto
-                     {
-                         NameOrganization = grp.Key.NameOrganization,
-                         AdressOrganization = grp.Key.AdressOrganization,
-                         Quantity = grp.Sum(x => x.Quantity)
-                     }).ToList();
-        InfoOfAllInvoiceGetDto? result = query.MaxBy(x => x.Quantity);
-        return result;
+        if (_context.StorageCells != null && _context.Products != null && _context.Invoices != null && _context.InvoicesContent != null)
+        {
+            _logger.LogInformation("Get info organizations received max volume products for given period.");
+            var query = await (from invoice in _context.Invoices
+                               join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
+                               join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
+                               where invoice.ShipmentDate >= DateTime.Parse(date_begin).Date && invoice.ShipmentDate <= DateTime.Parse(date_end).Date
+                               group invoiceContent by new
+                               {
+                                   invoice.NameOrganization,
+                                   invoice.AddressOrganization
+                               } into grp
+                               select new InfoOfAllInvoiceGetDto
+                               {
+                                   NameOrganization = grp.Key.NameOrganization,
+                                   AdressOrganization = grp.Key.AddressOrganization,
+                                   Quantity = grp.Sum(x => x.Quantity)
+                               }).ToListAsync();
+            InfoOfAllInvoiceGetDto? result = query.MaxBy(x => x.Quantity);
+            return result;
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -107,18 +125,23 @@ public class AnalyticsController : ControllerBase
     /// <return>List of product</return>
     /// </summary>
     [HttpGet("GetTopFiveProductsByStockAvailability")]
-    public IEnumerable<ProductGetDto> GetTopFiveProductsByStockAvailability()
+    public async Task<ActionResult<IEnumerable<ProductGetDto>>> GetTopFiveProductsByStockAvailability()
     {
-        _logger.LogInformation("Get top five products by stock availability.");
-        var query = (from product in _context.Products
-                     orderby product.Quantity descending
-                     select new ProductGetDto
-                     {
-                         ItemNumber = product.ItemNumber,
-                         Title = product.Title,
-                         Quantity = product.Quantity
-                     }).Take(5).ToList();
-        return query;
+        if (_context.Products != null)
+        {
+            _logger.LogInformation("Get top five products by stock availability.");
+            var query = await (from product in _context.Products
+                               orderby product.Quantity descending
+                               select new ProductGetDto
+                               {
+                                   ItemNumber = product.ItemNumber,
+                                   Title = product.Title,
+                                   Quantity = product.Quantity
+                               }).Take(5).ToListAsync();
+            return query;
+        }
+        else
+            return NotFound();
     }
 
     /// <summary>
@@ -126,27 +149,32 @@ public class AnalyticsController : ControllerBase
     /// <return>List of product and storage cell</return>
     /// </summary>
     [HttpGet("GetInfoAboutTheQuantityGoodsDelivered")]
-    public IEnumerable<InfoAboutTheQuantityGoodsDeliveredGetDto> GetInfoAboutTheQuantityGoodsDelivered()
+    public async Task<ActionResult<IEnumerable<InfoAboutTheQuantityGoodsDeliveredGetDto>>> GetInfoAboutTheQuantityGoodsDelivered()
     {
-        _logger.LogInformation("Get info about the quantity goods delivered.");
-        var query = (from invoice in _context.Invoices
-                     join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
-                     join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
-                     group invoiceContent by new
-                     {
-                         invoice.NameOrganization,
-                         invoice.AdressOrganization,
-                         product.ItemNumber,
-                         product.Title
-                     } into grp
-                     select new InfoAboutTheQuantityGoodsDeliveredGetDto
-                     {
-                         NameOrganization = grp.Key.NameOrganization,
-                         AdressOrganization = grp.Key.AdressOrganization,
-                         ItemNumber = grp.Key.ItemNumber,
-                         Title = grp.Key.Title,
-                         Quantity = grp.Sum(x => x.Quantity)
-                     }).ToList();
-        return query;
+        if (_context.StorageCells != null && _context.Products != null && _context.Invoices != null && _context.InvoicesContent != null)
+        {
+            _logger.LogInformation("Get info about the quantity goods delivered.");
+            var query = await (from invoice in _context.Invoices
+                               join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
+                               join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
+                               group invoiceContent by new
+                               {
+                                   invoice.NameOrganization,
+                                   invoice.AddressOrganization,
+                                   product.ItemNumber,
+                                   product.Title
+                               } into grp
+                               select new InfoAboutTheQuantityGoodsDeliveredGetDto
+                               {
+                                   NameOrganization = grp.Key.NameOrganization,
+                                   AdressOrganization = grp.Key.AddressOrganization,
+                                   ItemNumber = grp.Key.ItemNumber,
+                                   Title = grp.Key.Title,
+                                   Quantity = grp.Sum(x => x.Quantity)
+                               }).ToListAsync();
+            return query;
+        }
+        else
+            return NotFound();
     }
 }

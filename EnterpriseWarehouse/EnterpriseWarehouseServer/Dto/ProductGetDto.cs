@@ -8,7 +8,7 @@ public class ProductGetDto
     /// <summary>
     ///     ItemNumber - unique identifier of the product
     /// </summary>
-    public uint ItemNumber { get; set; }
+    public int ItemNumber { get; set; }
 
     /// <summary>
     ///     Title - product name
@@ -18,5 +18,5 @@ public class ProductGetDto
     /// <summary>
     ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
-	public uint Quantity { get; set; }
+	public int Quantity { get; set; }
 }

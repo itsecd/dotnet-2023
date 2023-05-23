@@ -8,7 +8,7 @@ public class ProductPostDto
     /// <summary>
     ///     ItemNumber - unique identifier of the product
     /// </summary>
-    public uint ItemNumber { get; set; }
+    public int ItemNumber { get; set; }
 
     /// <summary>
     ///     Title - product name
@@ -18,10 +18,5 @@ public class ProductPostDto
     /// <summary>
     ///     Quantity - quantity of goods stored in the warehouse
     /// </summary>
-	public uint Quantity { get; set; }
-
-    /// <summary>
-    ///     CellNumber - number of the cell in which the product is stored
-    /// </summary>
-	public List<uint> CellNumber { get; set; }
+	public int Quantity { get; set; }
 }

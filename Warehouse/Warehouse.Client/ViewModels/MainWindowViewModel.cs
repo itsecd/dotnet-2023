@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -18,7 +19,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ProductViewModel> Products { get; } = new();
     public ObservableCollection<SupplyViewModel> Supplies { get; } = new();
     public ObservableCollection<WarehouseCellViewModel> Cells { get; } = new();
-    public ObservableCollection<ProductViewModel> AllProducts { get; } = new();
+    public ObservableCollection<ProductViewModel> TopFiveProducts { get; } = new();
 
     private ProductViewModel? _selectedProduct;
     public ProductViewModel? SelectedProduct
@@ -149,11 +150,11 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadDataAsync()
     {
-        AllProducts.Clear();
-        var allProducts = await _apiClient.GetAllProductsAsync();
-        foreach (var product in allProducts)
+        TopFiveProducts.Clear();
+        var topProducts = await _apiClient.GetTopFiveProductsAsync();
+        foreach (var product in topProducts)
         {
-            AllProducts.Add(_mapper.Map<ProductViewModel>(product));
+            TopFiveProducts.Add(_mapper.Map<ProductViewModel>(product));
         }
 
         var products = await _apiClient.GetProductsAsync();

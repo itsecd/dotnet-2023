@@ -80,8 +80,8 @@ public class ApiWrapper
         await _client.WarehouseCellsDELETEAsync(id);
     }
 
-    public async Task<ICollection<ProductsGetDto>> GetAllProductsAsync()
+    public async Task<ICollection<ProductsGetDto>> GetTopFiveProductsAsync()
     {
-        return await _client.AllProductsAsync();
+        return await _client.TopFiveProductsAsync();
     }
 }

@@ -93,11 +93,11 @@
       </DataGrid>
 
       <StackPanel Grid.Row="9" Orientation="Horizontal">
-        <Label>All issued products orderred by name</Label>
+        <Label>Top five products by stock availability</Label>
       </StackPanel>
 
       <DataGrid Grid.Row="10" AutoGenerateColumns="False"
-					  Items="{Binding AllProducts}">
+					  Items="{Binding TopFiveProducts}">
         <DataGrid.Columns>
           <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
           <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>

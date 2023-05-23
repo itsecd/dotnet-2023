@@ -17,10 +17,13 @@ public class BikeTypesController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public BikeTypesController(BikeRentalDbContext context, IMapper mapper)
+    private readonly ILogger<BikeTypesController> _logger;
+
+    public BikeTypesController(BikeRentalDbContext context, IMapper mapper, ILogger<BikeTypesController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -30,6 +33,7 @@ public class BikeTypesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BikeTypeGetDto>>> GetBikeTypes()
     {
+        _logger.LogInformation("Get bike types list");
         return await _mapper.ProjectTo<BikeTypeGetDto>(_context.BikeTypes).ToListAsync();
     }
 
@@ -41,10 +45,13 @@ public class BikeTypesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<BikeTypeGetDto>> GetBikeType(int id)
     {
+        _logger.LogInformation("Get the bike type by id");
+
         var bikeType = await _context.BikeTypes.FindAsync(id);
 
         if (bikeType == null)
         {
+            _logger.LogInformation("Bike type not found");
             return NotFound();
         }
 

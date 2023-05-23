@@ -17,10 +17,13 @@ public class BikesController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public BikesController(BikeRentalDbContext context, IMapper mapper)
+    private readonly ILogger<BikesController> _logger;
+
+    public BikesController(BikeRentalDbContext context, IMapper mapper, ILogger<BikesController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -34,6 +37,7 @@ public class BikesController : ControllerBase
       {
           return NotFound();
       }
+        _logger.LogInformation("Get bikes list");
         return await _mapper.ProjectTo<BikeGetDto>(_context.Bikes).ToListAsync();
     }
 
@@ -45,14 +49,16 @@ public class BikesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<BikeGetDto>> GetBike(int id)
     {
-      if (_context.Bikes == null)
-      {
-          return NotFound();
-      }
+        _logger.LogInformation("Get the bike by id");
+        if (_context.Bikes == null)
+        {
+            return NotFound();
+        }
         var bike = await _context.Bikes.FindAsync(id);
 
         if (bike == null)
         {
+            _logger.LogInformation("Bike not found");
             return NotFound();
         }
 
@@ -75,10 +81,13 @@ public class BikesController : ControllerBase
         var bikeToModify = await _context.Bikes.FindAsync(id);
         if (bikeToModify == null)
         {
+            _logger.LogInformation("Bike not found");
             return NotFound();
         }
 
         _mapper.Map(bike, bikeToModify);
+
+        _logger.LogInformation("Successfully updated");
 
         await _context.SaveChangesAsync();
         
@@ -102,6 +111,8 @@ public class BikesController : ControllerBase
 
       _context.Bikes.Add(mappedBike);
 
+      _logger.LogInformation("Successfully added");
+
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("PostBike", new { id = mappedBike.Id }, _mapper.Map<BikeGetDto>(mappedBike));
@@ -122,10 +133,14 @@ public class BikesController : ControllerBase
         var bike = await _context.Bikes.FindAsync(id);
         if (bike == null)
         {
+            _logger.LogInformation("Bike not found");
             return NotFound();
         }
 
         _context.Bikes.Remove(bike);
+
+        _logger.LogInformation("Successfully deleted");
+
         await _context.SaveChangesAsync();
 
         return NoContent();

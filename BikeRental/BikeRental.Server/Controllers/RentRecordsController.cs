@@ -17,10 +17,13 @@ public class RentRecordsController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public RentRecordsController(BikeRentalDbContext context, IMapper mapper)
+    private readonly ILogger _logger;
+
+    public RentRecordsController(BikeRentalDbContext context, IMapper mapper, ILogger<RentRecordsController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -30,10 +33,11 @@ public class RentRecordsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RentRecordGetDto>>> GetRentRecords()
     {
-      if (_context.RentRecords == null)
-      { 
-          return NotFound();
-      }
+        _logger.LogInformation("Get rent records list");
+        if (_context.RentRecords == null)
+        { 
+            return NotFound();
+        }
         return await _mapper.ProjectTo<RentRecordGetDto>(_context.RentRecords).ToListAsync();
     }
 
@@ -45,14 +49,16 @@ public class RentRecordsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<RentRecordGetDto>> GetRentRecord(int id)
     {
-      if (_context.RentRecords == null)
-      {
-          return NotFound();
-      }
+        _logger.LogInformation("Get rent record by id");
+        if (_context.RentRecords == null)
+        {
+            return NotFound();
+        }
         var rentRecord = await _context.RentRecords.FindAsync(id);
 
         if (rentRecord == null)
         {
+            _logger.LogInformation("Rent record not found");
             return NotFound();
         }
 
@@ -75,10 +81,13 @@ public class RentRecordsController : ControllerBase
         var recordToModify = await _context.RentRecords.FindAsync(id);
         if (recordToModify == null)
         {
+            _logger.LogInformation("Rent record not found");
             return NotFound();
         }
 
         _mapper.Map(rentRecord, recordToModify);
+
+        _logger.LogInformation("Successfully updated");
 
         await _context.SaveChangesAsync();
 
@@ -102,6 +111,8 @@ public class RentRecordsController : ControllerBase
 
         _context.RentRecords.Add(mappedRecord);
 
+        _logger.LogInformation("Successfully added");
+
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("PostRentRecord", new { id = mappedRecord.Id }, _mapper.Map<RentRecordGetDto>(mappedRecord));
@@ -122,10 +133,14 @@ public class RentRecordsController : ControllerBase
         var rentRecord = await _context.RentRecords.FindAsync(id);
         if (rentRecord == null)
         {
+            _logger.LogInformation("Rent record not found");
             return NotFound();
         }
 
         _context.RentRecords.Remove(rentRecord);
+
+        _logger.LogInformation("Successfully deleted");
+
         await _context.SaveChangesAsync();
 
         return NoContent();

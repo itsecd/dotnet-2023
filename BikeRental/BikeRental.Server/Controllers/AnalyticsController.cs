@@ -19,10 +19,13 @@ public class AnalyticsController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public AnalyticsController(BikeRentalDbContext context, IMapper mapper)
+    private readonly ILogger<AnalyticsController> _logger;
+
+    public AnalyticsController(BikeRentalDbContext context, IMapper mapper, ILogger<AnalyticsController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -32,6 +35,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("sport_bikes")]
     public async Task<ActionResult<BikeGetDto>> GetSportBikes()
     {
+        _logger.LogInformation("Get info about sport bikes");
         if (_context.Bikes == null)
         {
             return NotFound();
@@ -44,6 +48,7 @@ public class AnalyticsController : ControllerBase
 
         if (request.Count == 0)
         {
+            _logger.LogInformation("Sport bikes not found");
             return NotFound();
         }
         else
@@ -59,6 +64,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("mountain_bikes_clients")]
     public async Task<ActionResult<BikeGetDto>> GetMountainBikesClients()
     {
+        _logger.LogInformation("Give info about clients who rented mountain bikes");
         if (_context.RentRecords == null || _context.Bikes == null)
         {
             return NotFound();
@@ -78,6 +84,7 @@ public class AnalyticsController : ControllerBase
 
         if (request.Count == 0)
         {
+            _logger.LogInformation("Clients not found");
             return NotFound();
         }
         else
@@ -93,6 +100,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("total_rent_time")]
     public async Task<ActionResult> GetRentTime()
     {
+        _logger.LogInformation("Get total rent time for each bike type");
         if (_context.RentRecords == null || _context.Bikes == null)
         {
             return NotFound();
@@ -122,6 +130,7 @@ public class AnalyticsController : ControllerBase
 
         if (rentTime.Count == 0)
         {
+            _logger.LogInformation("Time not found");
             return NotFound();
         }
         else
@@ -137,6 +146,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("max_rents_clients")]
     public async Task<ActionResult<ClientGetDto>> GetClientsInfo()
     {
+        _logger.LogInformation("Give info about clients who rented bikes the most");
         if (_context.RentRecords == null)
         {
             return NotFound();
@@ -159,6 +169,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("top_five_bikes")]
     public async Task<ActionResult<BikeGetDto>> GetTopFiveBikes()
     {
+        _logger.LogInformation("Give info about 5 most rented bikes");
         if (_context.RentRecords == null)
         {
             return NotFound();
@@ -181,6 +192,12 @@ public class AnalyticsController : ControllerBase
     [HttpGet("rent_time")]
     public async Task<ActionResult> GetTimeValues()
     {
+        _logger.LogInformation("Get min, max and avg time of rent");
+        if (_context.RentRecords == null)
+        {
+            return NotFound();
+        }
+
         var time = await
             (from record in _context.RentRecords
              select new

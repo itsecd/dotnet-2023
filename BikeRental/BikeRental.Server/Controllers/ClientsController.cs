@@ -17,10 +17,13 @@ public class ClientsController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public ClientsController(BikeRentalDbContext context, IMapper mapper)
+    private readonly ILogger<ClientsController> _logger;
+
+    public ClientsController(BikeRentalDbContext context, IMapper mapper, ILogger<ClientsController> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>
@@ -34,6 +37,7 @@ public class ClientsController : ControllerBase
       {
           return NotFound();
       }
+        _logger.LogInformation("Get clients list");
         return await _mapper.ProjectTo<ClientGetDto>(_context.Clients).ToListAsync();
     }
 
@@ -45,14 +49,16 @@ public class ClientsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ClientGetDto>> GetClient(int id)
     {
-      if (_context.Clients == null)
-      {
-          return NotFound();
-      }
+        _logger.LogInformation("Get client by id");
+        if (_context.Clients == null)
+        {
+            return NotFound();
+        }
         var client = await _context.Clients.FindAsync(id);
 
         if (client == null)
         {
+            _logger.LogInformation("Client not found");
             return NotFound();
         }
 
@@ -75,10 +81,13 @@ public class ClientsController : ControllerBase
         var clientToModify = await _context.Clients.FindAsync(id);
         if (clientToModify == null)
         {
+            _logger.LogInformation("Client not found");
             return NotFound();
         }
 
         _mapper.Map(client, clientToModify);
+
+        _logger.LogInformation("Successfully updated");
 
         await _context.SaveChangesAsync();
 
@@ -102,6 +111,8 @@ public class ClientsController : ControllerBase
 
         _context.Clients.Add(mappedClient);
 
+        _logger.LogInformation("Successfully added");
+
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("PostClient", new { id = mappedClient.Id }, _mapper.Map<ClientGetDto>(mappedClient));
@@ -122,10 +133,14 @@ public class ClientsController : ControllerBase
         var client = await _context.Clients.FindAsync(id);
         if (client == null)
         {
+            _logger.LogInformation("Client not found");
             return NotFound();
         }
 
         _context.Clients.Remove(client);
+
+        _logger.LogInformation("Successfully deleted");
+
         await _context.SaveChangesAsync();
 
         return NoContent();

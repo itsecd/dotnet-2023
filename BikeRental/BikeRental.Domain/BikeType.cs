@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeRental.Domain;
+
 /// <summary>
 /// Class BikeType has the info about bike types
 /// </summary>

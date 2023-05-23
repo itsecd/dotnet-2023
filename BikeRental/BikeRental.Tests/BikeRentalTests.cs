@@ -9,10 +9,6 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
 {
     private readonly BikeRentalFixture _bikeRentalFixture;
 
-    /// <summary>
-    /// Constructor 
-    /// </summary>
-    /// <param name="bikeRentalFixture"></param>
     public BikeRentalTests(BikeRentalFixture bikeRentalFixture)
     {
         _bikeRentalFixture = bikeRentalFixture;
@@ -65,7 +61,7 @@ public class BikeRentalTests : IClassFixture<BikeRentalFixture>
                  rentTime = bikeTypeGroup.Sum(time => (time.RentEndTime - time.RentStartTime).TotalMinutes)
              }).ToList();
 
-        Assert.Equal(3, request.Count());
+        Assert.Equal(3, request.Count);
         Assert.Equal(180, request[0].rentTime);
         Assert.Equal(120, request[1].rentTime);
         Assert.Equal(183, request[2].rentTime);

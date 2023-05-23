@@ -46,6 +46,10 @@ public class BikeTypesController : ControllerBase
     public async Task<ActionResult<BikeTypeGetDto>> GetBikeType(int id)
     {
         _logger.LogInformation("Get the bike type by id");
+        if (_context.BikeTypes == null)
+        {
+            return NotFound();
+        }
 
         var bikeType = await _context.BikeTypes.FindAsync(id);
 

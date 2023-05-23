@@ -396,9 +396,9 @@ public class MainWindowViewModel : ViewModelBase
     public void LoadData()
     {
         RxApp.MainThreadScheduler.Schedule(LoadEnrolleesAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadExamResultsAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadFacultiesAsync);
-        //RxApp.MainThreadScheduler.Schedule(LoadSpecializationsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadExamResultsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadFacultiesAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadSpecializationsAsync);
     }
 
     public async void LoadEnrolleesAsync()

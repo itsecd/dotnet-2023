@@ -69,7 +69,7 @@ public class BikesController : ControllerBase
     /// Change bike info
     /// </summary>
     /// <param name="id">Bike id</param>
-    /// <param name="bike">Cnanging bike</param>
+    /// <param name="bike">Changing bike</param>
     /// <returns>Action result</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutBike(int id, BikeSetDto bike)

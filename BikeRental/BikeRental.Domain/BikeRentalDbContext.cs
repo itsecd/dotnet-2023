@@ -33,7 +33,7 @@ public class BikeRentalDbContext : DbContext
     }
 
     /// <summary>
-    /// Insetring data into database
+    /// Inserting data into database
     /// </summary>
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)

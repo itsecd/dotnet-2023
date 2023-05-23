@@ -3,7 +3,7 @@
 namespace BikeRental.Domain;
 
 /// <summary>
-/// Class CLient has the info about a client who rented bikes
+/// Class Client has the info about a client who rented bikes
 /// </summary>
 [Table("client")]
 public class Client

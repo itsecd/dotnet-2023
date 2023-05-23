@@ -1,7 +1,7 @@
 ﻿namespace BikeRental.Server.Dto;
 
 /// <summary>
-/// Class CLientSetDto has the info about a client who rented bikes
+/// Class ClientSetDto has the info about a client who rented bikes
 /// </summary>
 public class ClientSetDto
 {

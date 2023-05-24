@@ -9,6 +9,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for JobApplicationController
 /// </summary>
+[Collection("Tests")]
 public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;

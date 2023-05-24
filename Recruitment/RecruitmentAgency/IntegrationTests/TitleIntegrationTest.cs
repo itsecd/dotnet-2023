@@ -9,6 +9,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for TitleController
 /// </summary>
+[Collection("Tests")]
 public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;
@@ -81,7 +82,7 @@ public class TitleIntegrationTests : IClassFixture<WebApplicationFactory<Server>
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var response = await _client.DeleteAsync("api/Title/15");
+        var response = await _client.DeleteAsync("api/Title/155");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }

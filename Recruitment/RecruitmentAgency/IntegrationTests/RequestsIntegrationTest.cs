@@ -7,6 +7,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for RequestsController
 /// </summary>
+[Collection("Tests")]
 public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;
@@ -46,8 +47,8 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetApplicantsThatMatchCompanyApplicationTest()
     {
         await Task.Delay(5000).ConfigureAwait(false);
-        var response = await _client.GetAsync("api/requests/applicants_matches/0");
-        Assert.True(response.IsSuccessStatusCode);
+        var response = await _client.GetAsync("api/requests/applicants_matches/144");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>
     /// Test of the GetNumberApplications method

@@ -9,6 +9,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for CompanyController
 /// </summary>
+[Collection("Tests")]
 public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;
@@ -95,7 +96,7 @@ public class CompanyIntegrationTests : IClassFixture<WebApplicationFactory<Serve
     [Fact]
     public async Task GetCompanyByIdReturnsSuccess()
     {
-        var response = await _client.GetAsync("api/Company/15");
+        var response = await _client.GetAsync("api/Company/1111");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

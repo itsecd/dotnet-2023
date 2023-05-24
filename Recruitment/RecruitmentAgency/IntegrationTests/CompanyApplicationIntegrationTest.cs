@@ -10,6 +10,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration tests for CompanyApplicationController
 /// </summary>
+[Collection("Tests")]
 public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;
@@ -30,7 +31,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
             WorkExperience = 0,
             Salary = 50000,
             Education = "None",
-            CompanyId = 0,
+            CompanyId = 1,
             TitleId = 1
         };
         var options = new JsonSerializerOptions
@@ -42,7 +43,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await _client.PostAsync("api/CompanyApplication", postData);
 
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
     /// <summary>
     /// Test of the get method
@@ -91,7 +92,7 @@ public class CompanyApplicationIntegrationTests : IClassFixture<WebApplicationFa
     public async Task DeleteValuesReturnsSuccess()
     {
 
-        var response = await _client.DeleteAsync("api/CompanyApplication/5");
+        var response = await _client.DeleteAsync("api/CompanyApplication/122");
 
         Assert.False(response.IsSuccessStatusCode);
     }

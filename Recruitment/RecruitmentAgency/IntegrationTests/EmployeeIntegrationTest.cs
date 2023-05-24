@@ -9,6 +9,7 @@ namespace IntegrationTests;
 /// <summary>
 /// Integration test for EmployeeController
 /// </summary>
+[Collection("Tests")]
 public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Server>>
 {
     private readonly HttpClient _client;
@@ -53,7 +54,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
         var postData = new StringContent(requestContent, Encoding.UTF8, "application/json");
         var response = await _client.PostAsync("api/Employee", postData);
 
-        Assert.True(response.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
     /// <summary>
     /// Test of the put method
@@ -90,7 +91,6 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task DeleteValuesReturnsSuccess()
     {
         var response = await _client.DeleteAsync("api/Employee/25");
-
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>

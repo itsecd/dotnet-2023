@@ -8,3 +8,11 @@
 специальности и указать их приоритет. Рейтинг поступающих формируется
 согласно баллам, полученным абитуриентам по результатам экзаменов по трем
 предметам.
+
+## Клиентское приложение
+![image](https://github.com/Dzhabrailov63/dotnet-2023/assets/92310232/e58610be-745a-477b-83e7-92a42b9d1dca)
+![image](https://github.com/Dzhabrailov63/dotnet-2023/assets/92310232/60385b98-d914-4edd-81a4-8321872c64fa)
+![image](https://github.com/Dzhabrailov63/dotnet-2023/assets/92310232/5c132945-e1f8-4156-82f1-9f428228d057)
+![image](https://github.com/Dzhabrailov63/dotnet-2023/assets/92310232/d4336e14-110d-4a0e-9472-ca5c182cb55c)
+![image](https://github.com/Dzhabrailov63/dotnet-2023/assets/92310232/19a515e2-223f-471f-a42f-4782940ae5eb)
+

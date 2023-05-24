@@ -7,7 +7,7 @@ public class PrivatizedBuildingViewModel : ViewModelBase
     public int Id
     {
         get => _id;
-        set => this.RaiseAndSetIfChanged( ref _id, value );
+        set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
     private int _firstCost;

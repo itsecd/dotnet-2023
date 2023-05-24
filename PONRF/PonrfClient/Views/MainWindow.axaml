@@ -25,7 +25,7 @@
 			</Button>
 		</StackPanel>
 		<DataGrid Grid.Row="1" AutoGenerateColumns="True"
-				  Items="{Binding	Customer}">
+				  Items="{Binding	PrivatizedBuildings}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Наименование"/>
 			</DataGrid.Columns>

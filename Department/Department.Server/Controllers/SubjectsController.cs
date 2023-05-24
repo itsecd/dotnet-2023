@@ -62,14 +62,14 @@ public class SubjectsController : ControllerBase
             return NotFound();
         }
 
-        return _mapper.Map<SubjectGetDto>(subject); ;
+        return _mapper.Map<SubjectGetDto>(subject);
     }
 
     /// <summary>
     /// Change subject info
     /// </summary>
     /// <param name="id">Subject id</param>
-    /// <param name="bike">Changing subject</param>
+    /// <param name="subject">Changing subject</param>
     /// <returns>Action result</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutSubject(int id, SubjectSetDto subject)
@@ -82,7 +82,7 @@ public class SubjectsController : ControllerBase
         var subjectToModify = await _context.Subjects.FindAsync(id);
         if (subjectToModify == null)
         {
-            _logger.LogInformation("Bike not found");
+            _logger.LogInformation("Subject not found");
             return NotFound();
         }
 

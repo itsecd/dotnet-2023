@@ -13,11 +13,6 @@ public class CourseGetDto
     public string SubjectName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Id of subject
-    /// </summary>
-    public int SubjectId { get; set; }
-
-    /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
     /// </summary>
     public string CourseType { get; set; } = string.Empty;
@@ -36,9 +31,4 @@ public class CourseGetDto
     /// Teacher
     /// </summary>
     public string TeachersName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Teacher's id
-    /// </summary>
-    public int TeacherId { get; set; }
 }

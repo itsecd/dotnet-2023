@@ -3,7 +3,6 @@ using Department.Domain;
 using Department.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
 
 namespace Department.Server.Controllers;
 

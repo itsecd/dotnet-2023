@@ -24,7 +24,7 @@ public class CoursesController : ControllerBase
     }
 
     /// <summary>
-    /// View all subjects
+    /// View all courses
     /// </summary>
     /// <returns>Subjects list</returns>
     [HttpGet]

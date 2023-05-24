@@ -61,6 +61,6 @@ public class DepartmentDbContext : DbContext
         var course3 = new Course { Id = 3, SubjectName = "Физкультура", CourseType = "Курсовой проект", SubjectId = 5, SemesterHours = 14, GroupId = 6295, TeachersName = "Максимова Людмила Александровна", TeacherId = 1 };
         var course4 = new Course { Id = 4, SubjectName = "Математический анализ", SubjectId = 1, CourseType = "Лекции", SemesterHours = 500, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна", TeacherId = 2 };
 
-        modelBuilder.Entity<Course>().HasData(new List<Course> { course1, course2, course3 });
+        modelBuilder.Entity<Course>().HasData(new List<Course> { course1, course2, course3, course4 });
     }
 }

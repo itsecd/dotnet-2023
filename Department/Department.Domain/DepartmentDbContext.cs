@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using static Google.Protobuf.WireFormat;
 
 namespace Department.Domain;
 public class DepartmentDbContext : DbContext
@@ -43,24 +42,24 @@ public class DepartmentDbContext : DbContext
 
         modelBuilder.Entity<Group>().HasData(new List<Group> { group1, group2, group3 });
 
-        var subject1 = new Subject { Name = "Математический анализ", Semester = 1 };
-        var subject2 = new Subject { Name = "Промышленное программирование", Semester = 6 };
-        var subject3 = new Subject { Name = "Статистический анализ данных", Semester = 5 };
-        var subject4 = new Subject { Name = "Дискретная математика", Semester = 2 };
-        var subject5 = new Subject { Name = "Физкультура", Semester = 3 };
+        var subject1 = new Subject { Id = 1, Name = "Математический анализ", Semester = 1 };
+        var subject2 = new Subject { Id = 2, Name = "Промышленное программирование", Semester = 6 };
+        var subject3 = new Subject { Id = 3, Name = "Статистический анализ данных", Semester = 5 };
+        var subject4 = new Subject { Id = 4, Name = "Дискретная математика", Semester = 2 };
+        var subject5 = new Subject { Id = 5, Name = "Физкультура", Semester = 3 };
 
         modelBuilder.Entity<Subject>().HasData(new List<Subject> { subject1, subject2, subject3, subject4, subject5 });
 
-        var teacher1 = new Teacher { FullName = "Максимова Людмила Александровна", Degree = "Профессор" };
-        var teacher2 = new Teacher { FullName = "Шашкова Татьяна Якубовна", Degree = "Доцент" };
-        var teacher3 = new Teacher { FullName = "Аввакумова Тамара Николаевна", Degree = "Профессор" };
+        var teacher1 = new Teacher { Id = 1, FullName = "Максимова Людмила Александровна", Degree = "Профессор" };
+        var teacher2 = new Teacher { Id = 2, FullName = "Шашкова Татьяна Якубовна", Degree = "Доцент" };
+        var teacher3 = new Teacher { Id = 3, FullName = "Аввакумова Тамара Николаевна", Degree = "Профессор" };
 
         modelBuilder.Entity<Teacher>().HasData(new List<Teacher> { teacher1, teacher2, teacher3 });
 
-        var course1 = new Course { SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 256, GroupId = 6312, TeachersName = "Максимова Людмила Александровна" };
-        var course2 = new Course { SubjectName = "Промышленное программирование", CourseType = "Курсовой проект", SemesterHours = 123, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна" };
-        var course3 = new Course { SubjectName = "Физкультура", CourseType = "Курсовой проект", SemesterHours = 14, GroupId = 6295, TeachersName = "Максимова Людмила Александровна" };
-        var course4 = new Course { SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 500, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна" };
+        var course1 = new Course { Id = 1, SubjectName = "Математический анализ", SubjectId = 1, CourseType = "Лекции", SemesterHours = 256, GroupId = 6312, TeachersName = "Максимова Людмила Александровна", TeacherId = 1 };
+        var course2 = new Course { Id = 2, SubjectName = "Промышленное программирование", SubjectId = 2, CourseType = "Курсовой проект", SemesterHours = 123, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна", TeacherId = 2 };
+        var course3 = new Course { Id = 3, SubjectName = "Физкультура", CourseType = "Курсовой проект", SubjectId = 5, SemesterHours = 14, GroupId = 6295, TeachersName = "Максимова Людмила Александровна", TeacherId = 1 };
+        var course4 = new Course { Id = 4, SubjectName = "Математический анализ", SubjectId = 1, CourseType = "Лекции", SemesterHours = 500, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна", TeacherId = 2 };
 
         modelBuilder.Entity<Course>().HasData(new List<Course> { course1, course2, course3 });
     }

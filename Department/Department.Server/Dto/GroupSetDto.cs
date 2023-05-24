@@ -3,6 +3,11 @@
 public class GroupSetDto
 {
     /// <summary>
+    /// Group number
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
     /// Amount of students
     /// </summary>
     public int StudentAmount { get; set; }

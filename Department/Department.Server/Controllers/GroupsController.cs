@@ -76,13 +76,16 @@ public class GroupsController : ControllerBase
         {
             return NotFound();
         }
-        var groupToModify = _context.Groups.FindAsync(id);
+        var groupToModify = await _context.Groups.FindAsync(id);
         if (groupToModify == null)
         {
+            _logger.LogInformation("Group not found");
             return NotFound();
         }
 
         _mapper.Map(group, groupToModify);
+
+        _logger.LogInformation("Successfully updated"); 
 
         await _context.SaveChangesAsync();
 
@@ -106,6 +109,8 @@ public class GroupsController : ControllerBase
 
         _context.Groups.Add(mappedGroup);
 
+        _logger.LogInformation("Successfully added");
+
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("PostGroup", new { id = mappedGroup.Id }, _mapper.Map<GroupGetDto>(mappedGroup));
@@ -121,6 +126,7 @@ public class GroupsController : ControllerBase
     {
         if (_context.Groups == null)
         {
+            _logger.LogInformation("Group not found");
             return NotFound();
         }
         var group = await _context.Groups.FindAsync(id);
@@ -130,6 +136,9 @@ public class GroupsController : ControllerBase
         }
 
         _context.Groups.Remove(group);
+
+        _logger.LogInformation("Successfully deleted");
+
         await _context.SaveChangesAsync();
 
         return NoContent();

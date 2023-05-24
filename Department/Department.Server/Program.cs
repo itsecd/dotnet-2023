@@ -1,12 +1,18 @@
+using AutoMapper;
 using Department.Domain;
+using Department.Server;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DepartmentDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("Department")!)
+    options.UseMySQL("Server=127.0.0.1;Uid=root;Database=Department;Pwd=12345")
 );
+
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

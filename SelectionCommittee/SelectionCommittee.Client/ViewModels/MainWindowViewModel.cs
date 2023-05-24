@@ -3,7 +3,6 @@ using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -139,7 +138,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowFacultyDialog = new Interaction<FacultyViewModel, FacultyViewModel?>();
         ShowSpecializationDialog = new Interaction<SpecializationViewModel, SpecializationViewModel?>();
 
-        LoadData();
+        RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
 
         OnAddEnrolleeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -393,15 +392,7 @@ public class MainWindowViewModel : ViewModelBase
             .Select(selectSpecialization => selectSpecialization != null));
     }
 
-    public void LoadData()
-    {
-        RxApp.MainThreadScheduler.Schedule(LoadEnrolleesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadExamResultsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadFacultiesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSpecializationsAsync);
-    }
-
-    public async void LoadEnrolleesAsync()
+    public async void LoadDataAsync()
     {
         var enrollees = await _apiClient.GetEnrolleesAsync();
 
@@ -409,30 +400,21 @@ public class MainWindowViewModel : ViewModelBase
         {
             Enrollees.Add(_mapper.Map<EnrolleeViewModel>(enrollee));
         }
-    }
 
-    public async void LoadExamResultsAsync()
-    {
         var examResults = await _apiClient.GetExamResultsAsync();
 
         foreach (var examResult in examResults)
         {
             ExamResults.Add(_mapper.Map<ExamResultViewModel>(examResult));
         }
-    }
 
-    public async void LoadFacultiesAsync()
-    {
         var faculties = await _apiClient.GetFacultiesAsync();
 
         foreach (var faculty in faculties)
         {
             Faculties.Add(_mapper.Map<FacultyViewModel>(faculty));
         }
-    }
 
-    public async void LoadSpecializationsAsync()
-    {
         var specializations = await _apiClient.GetSpecializationsAsync();
 
         foreach (var specialization in specializations)

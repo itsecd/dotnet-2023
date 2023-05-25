@@ -13,7 +13,7 @@ public class Teacher
     /// Teacher's id
     /// </summary>
     [Column("id")]
-    public int Id { get; set;  }
+    public int Id { get; set; }
     /// <summary>
     /// Teacher's full name
     /// </summary>

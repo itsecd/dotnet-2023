@@ -33,10 +33,10 @@ public class TeachersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TeacherGetDto>>> GetTeachers()
     {
-      if (_context.Teachers == null)
-      {
-          return NotFound();
-      }
+        if (_context.Teachers == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get teachers list");
         return await _mapper.ProjectTo<TeacherGetDto>(_context.Teachers).ToListAsync();
     }
@@ -52,7 +52,7 @@ public class TeachersController : ControllerBase
         _logger.LogInformation("Get teacher by id");
         if (_context.Teachers == null)
         {
-          return NotFound();
+            return NotFound();
         }
         var teacher = await _context.Teachers.FindAsync(id);
 
@@ -103,10 +103,10 @@ public class TeachersController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<TeacherGetDto>> PostTeacher(TeacherSetDto teacher)
     {
-      if (_context.Teachers == null)
-      {
-          return Problem("Entity set 'DepartmentDbContext.Teachers'  is null.");
-      }
+        if (_context.Teachers == null)
+        {
+            return Problem("Entity set 'DepartmentDbContext.Teachers'  is null.");
+        }
         var mappedTeacher = _mapper.Map<Teacher>(teacher);
 
         _context.Teachers.Add(mappedTeacher);
@@ -140,7 +140,7 @@ public class TeachersController : ControllerBase
         _context.Teachers.Remove(teacher);
 
         _logger.LogInformation("Successfully deleted");
-            
+
         await _context.SaveChangesAsync();
 
         return NoContent();

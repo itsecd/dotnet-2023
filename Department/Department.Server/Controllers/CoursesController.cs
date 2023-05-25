@@ -30,10 +30,10 @@ public class CoursesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CourseGetDto>>> GetCourses()
     {
-      if (_context.Courses == null)
-      {
-          return NotFound();
-      }
+        if (_context.Courses == null)
+        {
+            return NotFound();
+        }
         _logger.LogInformation("Get courses list");
         return await _mapper.ProjectTo<CourseGetDto>(_context.Courses).ToListAsync();
     }
@@ -101,11 +101,11 @@ public class CoursesController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<CourseGetDto>> PostCourse(CourseSetDto course)
     {
-      if (_context.Courses == null)
-      {
-          return Problem("Entity set 'DepartmentDbContext.Courses'  is null.");
-      }
-        
+        if (_context.Courses == null)
+        {
+            return Problem("Entity set 'DepartmentDbContext.Courses'  is null.");
+        }
+
         var mappedCourse = _mapper.Map<Course>(course);
 
         _context.Courses.Add(mappedCourse);

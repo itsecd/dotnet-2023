@@ -3,9 +3,6 @@ using Department.Domain;
 using Department.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
-using NuGet.ContentModel;
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace BikeRental.Server.Controllers;
 
@@ -29,10 +26,10 @@ public class AnalyticsController : ControllerBase
         _logger = logger;
     }
 
-        /// <summary>
-        /// 1st request: give info about all teachers on given course
-        /// </summary>
-        /// <returns> List of teachers on course </returns>
+    /// <summary>
+    /// 1st request: give info about all teachers on given course
+    /// </summary>
+    /// <returns> List of teachers on course </returns>
     [HttpGet("course_teachers")]
     public async Task<ActionResult<TeacherGetDto>> GetCourseTeachers(string courseName)
     {
@@ -41,12 +38,12 @@ public class AnalyticsController : ControllerBase
         {
             return NotFound();
         }
-                var request = await
-            (from teacher in _context.Teachers
-            join course in _context.Courses on teacher.FullName equals course.TeachersName
-            where course.SubjectName == courseName
-             orderby teacher.FullName
-            select teacher).ToListAsync();
+        var request = await
+    (from teacher in _context.Teachers
+     join course in _context.Courses on teacher.FullName equals course.TeachersName
+     where course.SubjectName == courseName
+     orderby teacher.FullName
+     select teacher).ToListAsync();
         return Ok(request);
     }
 
@@ -65,9 +62,9 @@ public class AnalyticsController : ControllerBase
 
         var request = await
             (from teacher in _context.Teachers
-            join course in _context.Courses on teacher.FullName equals course.TeachersName
-            where course.CourseType == "Курсовой проект"
-            select teacher).ToListAsync();
+             join course in _context.Courses on teacher.FullName equals course.TeachersName
+             where course.CourseType == "Курсовой проект"
+             select teacher).ToListAsync();
 
         if (request.Count == 0)
         {
@@ -95,9 +92,9 @@ public class AnalyticsController : ControllerBase
 
         var request = await
             (from subject in _context.Subjects
-            join course in _context.Courses on subject.Name equals course.SubjectName
-            where course.GroupId == groupNumber
-            select subject).ToListAsync();
+             join course in _context.Courses on subject.Name equals course.SubjectName
+             where course.GroupId == groupNumber
+             select subject).ToListAsync();
 
         if (request.Count == 0)
         {
@@ -111,13 +108,17 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// 4th request: summary information on the department (amount of teachers, amount of groups, amount of students, etc.)
+    /// 4th request: summary information about the department (amount of teachers, amount of groups, amount of students, etc.)
     /// </summary>
     /// <returns>Clients who rented bikes the most</returns>
     [HttpGet("department_summary")]
-    public async Task<ActionResult<object>> GetDepartmentInfo()
+    public async Task<ActionResult> GetDepartmentInfo()
     {
         _logger.LogInformation("Give info about department");
+        if (_context.Courses == null || _context.Groups == null || _context.Teachers == null)
+        {
+            return NotFound();
+        }
 
         var teacherInfo = await
             (from teacher in _context.Teachers
@@ -139,7 +140,7 @@ public class AnalyticsController : ControllerBase
 
         var listGroups = await
             (from studentGroup in _context.Groups
-            select studentGroup).ToListAsync();
+             select studentGroup).ToListAsync();
         var totalGroups = listGroups.Count;
 
         var listStudents = await
@@ -147,13 +148,13 @@ public class AnalyticsController : ControllerBase
              select studentGroup.StudentAmount).ToListAsync();
         var totalStudents = listStudents.Sum();
 
-        return new
+        return Ok(new
         {
             teacherInfo,
             courseInfo,
             totalGroups,
             totalStudents
-        };
+        });
     }
 
     /// <summary>
@@ -195,14 +196,14 @@ public class AnalyticsController : ControllerBase
         {
             return NotFound();
         }
-            var teachersCounter = await
-            (from courses in _context.Courses
-             group courses by courses.SubjectName into courseGroup
-             select new
-             {
-                 subjectName = courseGroup.Key,
-                 teachers = courseGroup.DistinctBy(x => x.TeachersName).Count()
-             }).ToListAsync();
+        var teachersCounter = await
+        (from courses in _context.Courses
+         group courses.TeachersName by courses.SubjectName into courseGroup
+         select new
+         {
+             subjectName = courseGroup.Key,
+             teachers = courseGroup.Distinct().Count()
+         }).ToListAsync();
 
         var resultSubjects = new List<string>();
         foreach (var subject in teachersCounter)

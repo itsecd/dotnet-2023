@@ -1,6 +1,3 @@
-using Department.Domain;
-using System.Security.Cryptography;
-
 namespace Department.Tests;
 
 public class DepartmentTests : IClassFixture<DepartmentFixture>
@@ -62,19 +59,19 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
     }
 
     /// <summary>
-    /// 4th request: summary information on the department (amount of teachers, amount of groups, amount of students, etc.)
+    /// 4th request: summary information about the department (amount of teachers, amount of groups, amount of students, etc.)
     /// </summary>
     [Fact]
     public void TestDepartmentInfo()
     {
         var teacherInfo =
             (from teacher in _departmentFixture.Teachers
-            group teacher by teacher.Degree into teacherGroup
-            select new
-            {
-                type = teacherGroup.Key,
-                counter = teacherGroup.Count()
-            }).ToList();
+             group teacher by teacher.Degree into teacherGroup
+             select new
+             {
+                 type = teacherGroup.Key,
+                 counter = teacherGroup.Count()
+             }).ToList();
 
         var courseInfo =
             (from course in _departmentFixture.Courses
@@ -89,9 +86,9 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
             from studentGroup in _departmentFixture.Groups
             select studentGroup;
 
-        var totalStudents = 
+        var totalStudents =
             (from studentGroup in _departmentFixture.Groups
-            select studentGroup.StudentAmount).ToList();
+             select studentGroup.StudentAmount).ToList();
 
         Assert.Equal("Профессор", teacherInfo[0].type);
         Assert.Equal(2, teacherInfo[0].counter);

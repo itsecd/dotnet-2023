@@ -6,6 +6,7 @@ public class TeacherGetDto
     /// Teacher's id
     /// </summary>
     public int Id { get; set; }
+
     /// <summary>
     /// Teacher's full name
     /// </summary>

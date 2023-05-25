@@ -5,7 +5,7 @@ public class CourseSetDto
     /// <summary>
     /// Subject
     /// </summary>
-    public string SubjectName { get; set; } = string.Empty;
+    public int SubjectId { get; set; }
 
     /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
@@ -25,5 +25,5 @@ public class CourseSetDto
     /// <summary>
     /// Teacher
     /// </summary>
-    public string TeachersName { get; set; } = string.Empty;
+    public int TeacherId { get; set; }
 }

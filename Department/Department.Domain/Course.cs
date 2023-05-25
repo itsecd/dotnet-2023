@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Contracts;
 
 namespace Department.Domain;
 
@@ -71,5 +70,5 @@ public class Course
     /// <summary>
     /// Connection to another class
     /// </summary>
-    public Teacher? Teacher { get; set;}
+    public Teacher? Teacher { get; set; }
 }

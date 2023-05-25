@@ -74,11 +74,11 @@ public class PonrfContext : DbContext
         {
             new PrivatizedBuilding(){Id = 1, DateOfSale = DateTime.Parse("2023-02-02"), FirstCost = 100000, SecondCost = 300000, CustomerId = 1, AuctionId = 1, BuildingId = 1},
             new PrivatizedBuilding(){Id = 2, FirstCost =  178000, SecondCost = 0, CustomerId = null, AuctionId = 1, BuildingId = 3},
-            new PrivatizedBuilding(){Id = 3, DateOfSale = DateTime.Parse("2003-02-02"), FirstCost = 400000, SecondCost = 750000, CustomerId = 2, AuctionId = 1, BuildingId = 2},
-            new PrivatizedBuilding(){Id = 4, DateOfSale = DateTime.Parse("2023-03-04"), FirstCost = 560000, SecondCost = 640000, CustomerId = 2, AuctionId = 3, BuildingId = 4},
+            new PrivatizedBuilding(){Id = 3, DateOfSale = DateTime.Parse("2023-02-02"), FirstCost = 400000, SecondCost = 750000, CustomerId = 2, AuctionId = 1, BuildingId = 2},
+            new PrivatizedBuilding(){Id = 4, DateOfSale = DateTime.Parse("2023-03-03"), FirstCost = 560000, SecondCost = 640000, CustomerId = 2, AuctionId = 3, BuildingId = 4},
             new PrivatizedBuilding(){Id = 5, DateOfSale = DateTime.Parse("2023-03-03"), FirstCost = 600000, SecondCost = 650000, CustomerId = 3, AuctionId = 3, BuildingId = 3},
-            new PrivatizedBuilding(){Id = 6, DateOfSale = DateTime.Parse("2023-09-11"), FirstCost = 303000, SecondCost = 708000, CustomerId = 4, AuctionId = 2, BuildingId = 6},
-            new PrivatizedBuilding(){Id = 7, DateOfSale = DateTime.Parse("2023-09-11"), FirstCost = 3100000, SecondCost = 6700000, CustomerId = 6, AuctionId = 2, BuildingId = 5},
+            new PrivatizedBuilding(){Id = 6, DateOfSale = DateTime.Parse("2022-09-11"), FirstCost = 303000, SecondCost = 708000, CustomerId = 4, AuctionId = 2, BuildingId = 6},
+            new PrivatizedBuilding(){Id = 7, DateOfSale = DateTime.Parse("2022-09-11"), FirstCost = 3100000, SecondCost = 6700000, CustomerId = 6, AuctionId = 2, BuildingId = 5},
         };
 
         auctions[0].PrivatizedBuilding?.Add(privatizedBuildings[0]);

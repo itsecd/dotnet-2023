@@ -1,6 +1,9 @@
 ﻿using ReactiveUI;
+using System;
+using System.Reactive;
 
 namespace PonrfClient.ViewModels;
+
 public class PrivatizedBuildingViewModel : ViewModelBase
 {
     private int _id;
@@ -22,5 +25,18 @@ public class PrivatizedBuildingViewModel : ViewModelBase
     {
         get => _secondCost;
         set => this.RaiseAndSetIfChanged(ref _secondCost, value);
+    }
+
+    public DateTimeOffset _dateOfSale;
+    public DateTimeOffset DateOfSale
+    {
+        get => _dateOfSale;
+        set => this.RaiseAndSetIfChanged(ref _dateOfSale, value);
+    }
+
+    public ReactiveCommand<Unit, PrivatizedBuildingViewModel> OnSubmitCommand { get; }
+    public PrivatizedBuildingViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

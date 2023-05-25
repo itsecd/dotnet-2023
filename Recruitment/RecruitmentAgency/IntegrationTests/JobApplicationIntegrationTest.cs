@@ -97,7 +97,7 @@ public class JobApplicationIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task GetJobApplicationByIdReturnsSuccess()
     {
-        var response = await _client.GetAsync("api/JobApplication/35");
+        var response = await _client.GetAsync("api/JobApplication/353");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

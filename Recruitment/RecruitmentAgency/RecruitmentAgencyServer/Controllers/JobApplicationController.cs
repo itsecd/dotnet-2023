@@ -49,7 +49,7 @@ public class JobApplicationController : ControllerBase
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Get job application with id {id}");
-        var jobApplication = ctx.Companies.FirstOrDefault(jobApplication => jobApplication.Id == id);
+        var jobApplication = ctx.JobApplications.FirstOrDefault(jobApplication => jobApplication.Id == id);
         if (jobApplication == null)
         {
             _logger.LogInformation("Not found job application with id equals to: {id}", id);

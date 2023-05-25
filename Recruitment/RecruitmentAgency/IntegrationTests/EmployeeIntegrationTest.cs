@@ -90,7 +90,7 @@ public class EmployeeIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     [Fact]
     public async Task DeleteValuesReturnsSuccess()
     {
-        var response = await _client.DeleteAsync("api/Employee/25");
+        var response = await _client.DeleteAsync("api/Employee/255");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
     /// <summary>

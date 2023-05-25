@@ -55,7 +55,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         var request =
             from subject in _departmentFixture.Subjects
             join course in _departmentFixture.Courses on subject.Name equals course.SubjectName
-            where course.GroupNumber == 6311
+            where course.GroupId == 6311
             select subject;
 
         Assert.Equal(2, request.Count());

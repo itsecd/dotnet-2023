@@ -124,10 +124,10 @@ public sealed class TaxiDepoDbContext : DbContext
         var trip1 = new Ride
         {
             Id = 1,
-            TripDate = "2020-01-01",
+            TripDate = new DateTime(2022, 01, 01, 11, 11, 11),
             CarId = 1,
             TripPrice = 223,
-            TripTime = "121",
+            TripTime = 121,
             TripDeparturePlace = "Samara",
             TripDestinationPlace = "Moscow",
             UserId = 1
@@ -135,10 +135,10 @@ public sealed class TaxiDepoDbContext : DbContext
         var trip2 = new Ride
         {
             Id = 2,
-            TripDate = "2021-01-01",
+            TripDate = new DateTime(2020, 01, 01, 11, 11, 11),
             CarId = 2,
             TripPrice = 423,
-            TripTime = "57",
+            TripTime = 57,
             TripDeparturePlace = "Orsk",
             TripDestinationPlace = "Moscow",
             UserId = 2
@@ -146,10 +146,10 @@ public sealed class TaxiDepoDbContext : DbContext
         var trip3 = new Ride
         {
             Id = 3,
-            TripDate = "2019-01-01",
+            TripDate = new DateTime(2018, 02, 02, 12, 12, 12),
             CarId = 3,
             TripPrice = 243,
-            TripTime = "34",
+            TripTime = 34,
             TripDeparturePlace = "Orel",
             TripDestinationPlace = "Orsk",
             UserId = 3
@@ -157,10 +157,10 @@ public sealed class TaxiDepoDbContext : DbContext
         var trip4 = new Ride
         {
             Id = 4,
-            TripDate = "2018-01-01",
+            TripDate = new DateTime(2015, 11, 11, 03, 31, 31),
             CarId = 4,
             TripPrice = 777,
-            TripTime = "34",
+            TripTime = 34,
             TripDeparturePlace = "Moscow",
             TripDestinationPlace = "Orel",
             UserId = 4

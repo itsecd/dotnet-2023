@@ -111,13 +111,13 @@ public class CarsController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
-    [ProducesResponseType(201)]
     /// <summary>
     /// Post car to collection
     /// </summary>
     /// <param name="car">Car to post</param>
     /// <returns>Created action</returns>
     [HttpPost("PostCar")]
+    [ProducesResponseType(201)]
     public async Task<ActionResult<CarDto>> PostCar(CarDto car)
     {
         if (_context.Cars == null)

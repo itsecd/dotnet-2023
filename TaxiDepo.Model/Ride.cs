@@ -37,14 +37,14 @@ public class Ride
     /// </summary>
     [Column("TripDate")]
     [Required]
-    public string? TripDate { get; set; }
+    public DateTime TripDate { get; set; }
 
     /// <summary>
     /// Trip time
     /// </summary>
     [Column("TripTime")]
     [Required]
-    public string? TripTime { get; set; }
+    public double TripTime { get; set; }
 
     /// <summary>
     /// Trip price
@@ -95,7 +95,7 @@ public class Ride
     /// <param name="price">Trip price</param>
     /// <param name="auto">Trip assigned auto</param>
     /// <param name="user">User data</param>
-    public Ride(int id, string departurePlace, string destinationPlace, string date, string time, double price,
+    public Ride(int id, string departurePlace, string destinationPlace, DateTime date, double time, double price,
         Car auto, User user)
     {
         Id = id;

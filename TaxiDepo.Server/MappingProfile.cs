@@ -16,7 +16,10 @@ public class MappingProfile : Profile
     {
         CreateMap<Car, CarDto>().ReverseMap();
         CreateMap<Driver, DriverDto>().ReverseMap();
-        CreateMap<Ride, RideDto>().ReverseMap();
+        CreateMap<Ride, RideDto>();
+        CreateMap<RideDto, Ride>()
+            .ForMember(ride => ride.TripTime, s =>
+                s.MapFrom(ride => TimeSpan.FromSeconds(ride.TripTime)));
         CreateMap<User, UserDto>().ReverseMap();
     }
 }

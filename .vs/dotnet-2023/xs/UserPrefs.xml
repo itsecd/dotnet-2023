@@ -1,0 +1,5 @@
+﻿<Properties StartupConfiguration="{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.ItemProperties.TaxiDepo.Server PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.TaxiDepo.Model PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+</Properties>

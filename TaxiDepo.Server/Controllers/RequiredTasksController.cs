@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Org.BouncyCastle.Asn1.Pkcs;
 using TaxiDepo.Model;
 using TaxiDepo.Server.Dto;
 
@@ -46,7 +48,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>CarDto object</returns>
     [HttpGet("GetCarAndDriver")]
-    public async Task<ActionResult<IEnumerable<CarDto>>> GetCarAndDriver(int id)
+    public async Task<ActionResult<IEnumerable<CarAndDriverDto>>> GetCarAndDriver(int id)
     {
         if (_context.Cars == null)
         {
@@ -55,9 +57,22 @@ public class RequiredController : ControllerBase
         }
 
         _logger.LogInformation("Get car and driver");
-        var request = (from cars in _context.Cars where (cars.Id == id) select cars).Include(car => car.AssignedDriver);
-
-        return await _mapper.ProjectTo<CarDto>(request).ToListAsync();
+        var request = await (from car in _context.Cars where (car.Id == id)
+        select new
+        {
+            car.Id,
+            car.CarColor,
+            car.CarModel,
+            car.CarNumber,
+            car.DriverId,
+            car.AssignedDriver.DriverSurname,
+            car.AssignedDriver.DriverName,
+            car.AssignedDriver.DriverPatronymic,
+            car.AssignedDriver.DriverPassportId,
+            car.AssignedDriver.DriverAddress,
+            car.AssignedDriver.DriverPhoneNumber
+        }).ToListAsync();
+        return Ok(request);
     }
 
     /// <summary>
@@ -67,7 +82,7 @@ public class RequiredController : ControllerBase
     /// <param name="dateAfter">date after for filter</param>
     /// <returns>UserDto object</returns>
     [HttpGet("GetUsersByDate")]
-    public async Task<ActionResult<dynamic>> GetUsersByDate(string dateBefore, string dateAfter)
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersByDate(string dateBefore, string dateAfter)
     {
         if (_context.Rides == null)
         {
@@ -85,7 +100,7 @@ public class RequiredController : ControllerBase
                                user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
                                AmountRides = newobj.Count(),
                            }).ToListAsync();
-        return users;
+        return Ok(users);
     }
 
     /// <summary>
@@ -93,7 +108,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>UserDto object</returns>
     [HttpGet("GetUserRides")]
-    public async Task<ActionResult<dynamic>> GetUserRides()
+    public async Task<ActionResult<IEnumerable<CountUserRidesDto>>> GetUserRides()
     {
         if (_context.Rides == null)
         {
@@ -109,14 +124,21 @@ public class RequiredController : ControllerBase
 
         _logger.LogInformation("Get user rides");
         var userAmountRides = await (from rides in _context.Rides
-                                     group rides by rides.UserId
-            into newobj
+                                     group rides by rides.UserId into newobj
                                      select new
                                      {
-                                         user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
+                                         UserSurname = (from user in _context.Users
+                                                        where user.Id == newobj.Key
+                                                        select user.UserSurname).Single(),
+                                         UserName = (from user in _context.Users
+                                                     where user.Id == newobj.Key
+                                                     select user.UserName).Single(),
+                                         UserPatronymic = (from user in _context.Users
+                                                           where user.Id == newobj.Key
+                                                           select user.UserPatronymic).Single(),
                                          AmountRides = newobj.Count(),
                                      }).ToListAsync();
-        return userAmountRides;
+        return Ok(userAmountRides);
     }
 
     /// <summary>
@@ -124,7 +146,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>DriverDto object</returns>
     [HttpGet("TopFiveDrivers")]
-    public async Task<ActionResult<dynamic>> TopFiveDrivers()
+    public async Task<ActionResult<Driver>> TopFiveDrivers()
     {
         if (_context.Rides == null)
         {
@@ -139,17 +161,17 @@ public class RequiredController : ControllerBase
         }
 
         _logger.LogInformation("Get top five drivers");
-        var userAmountRides = await (from rides in _context.Rides
-                                     orderby rides.TripCar.CarRide.Count() descending
+        var driver = await (from rides in _context.Rides
+                                     orderby rides.TripCar.CarRide!.Count() descending
                                      group rides by rides.TripCar.DriverId
                 into newobj
                                      select new
                                      {
-                                         driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
+                                         driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver!.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
                                          AmountRides = newobj.Count()
                                      }).Take(5)
             .ToListAsync();
-        return userAmountRides;
+        return Ok(driver);
     }
 
     /// <summary>
@@ -157,7 +179,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>DriversDto object</returns>
     [HttpGet("DriversTripTime")]
-    public async Task<ActionResult<dynamic>> DriversTripTime()
+    public async Task<ActionResult<IEnumerable<DriverRidesInfoDto>>> DriversTripTime()
     {
         if (_context.Rides == null)
         {
@@ -172,17 +194,27 @@ public class RequiredController : ControllerBase
         }
 
         _logger.LogInformation("Get drivers with his trip info");
-        var request = await (from rides in _context.Rides
-                             group rides by (rides.TripCar.AssignedDriver.Id)
-            into newobj
-                             select new
-                             {
-                                 driver = (from rides in _context.Rides where rides.TripCar.AssignedDriver.Id == newobj.Key select _mapper.Map<DriverDto>(rides.TripCar.AssignedDriver)).Single(),
-                                 MaxTime = (from rides in _context.Rides
-                                            where rides.TripCar.AssignedDriver.Id == newobj.Key
-                                            select rides.TripTime).Max()
-                             }).ToListAsync();
-        return request;
+        var query = await (from ridesInfo in from ride in _context.Rides
+                                             group ride by ride.CarId into grp
+                                             select new
+                                             {
+                                                 CarId = grp.Key,
+                                                 AmountRides = grp.Count(),
+                                                 max = grp.Max(ride => ride.TripTime),
+                                                 rideTimesInSeconds = grp.Select(ride => ride.TripTime)
+                                             }
+                           from car in _context.Cars!
+                           where ridesInfo.CarId == car.Id
+                           select new
+                           {
+                               car.AssignedDriver!.DriverSurname,
+                               car.AssignedDriver.DriverName,
+                               car.AssignedDriver.DriverPatronymic,
+                               ridesInfo.AmountRides,
+                               avg = TimeSpan.FromSeconds(ridesInfo.rideTimesInSeconds.Sum() / ridesInfo.AmountRides),
+                               ridesInfo.max
+                           }).ToListAsync();
+        return Ok(query);
     }
 
     /// <summary>
@@ -190,7 +222,7 @@ public class RequiredController : ControllerBase
     /// </summary>
     /// <returns>UserDto object</returns>
     [HttpGet("UserWithAmountRidesByDate")]
-    public async Task<ActionResult<dynamic>> UsesWithAmountRidesByDate(string dateBefore, string dateAfter)
+    public async Task<ActionResult<dynamic>> UsesWithAmountRidesByDate(DateTime dateBefore, DateTime dateAfter)
     {
         if (_context.Rides == null)
         {
@@ -205,16 +237,37 @@ public class RequiredController : ControllerBase
         }
 
         _logger.LogInformation("Get user with max amount of rides by date");
-        var userAmountRides = await (from rides in _context.Rides
-                                   orderby rides.UserInfo descending
-                                   group rides by rides.UserId
-                                   into newobj
-                                   select new
-                                   {
-                                       user = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select _mapper.Map<UserDto>(rides.UserInfo)).Single(),
-                                       AmountRides = newobj.Count()
-                                   }).Take(1)
-            .ToListAsync();
-        return userAmountRides;
+
+        var subquery = await (from rides in _context.Rides
+                              orderby rides.UserInfo descending
+                              group rides by rides.UserId into newobj
+                              select new
+                              {
+                                  UserSurname = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select rides.UserInfo.UserSurname).Single(),
+                                  UserName = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select rides.UserInfo.UserName).Single(),
+                                  UserPatronymic = (from rides in _context.Rides where rides.UserInfo.Id == newobj.Key select rides.UserInfo.UserPatronymic).Single(),
+                                  AmountRides = newobj.Count()
+                              }).ToListAsync();
+
+        if (subquery.Count == 0)
+        {
+            _logger.LogInformation("Not found passengers");
+            return NotFound();
+        }
+
+        var max = subquery.Max(elem => elem.AmountRides);
+
+        var query = (from sq in subquery
+                     where sq.AmountRides == max
+                     select new
+                     {
+                         sq.UserSurname,
+                         sq.UserName,
+                         sq.UserPatronymic,
+                         max
+                     }).ToList();
+
+        _logger.LogInformation("Get passenger with max count of rides");
+        return Ok(query);
     }
 }

@@ -23,12 +23,12 @@ public class RideDto
     /// <summary>
     /// Trip date
     /// </summary>
-    public string? TripDate { get; set; }
+    public DateTime TripDate { get; set; }
 
     /// <summary>
     /// Trip time
     /// </summary>
-    public string? TripTime { get; set; }
+    public double TripTime { get; set; }
 
     /// <summary>
     /// Trip price

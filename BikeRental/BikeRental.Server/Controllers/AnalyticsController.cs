@@ -30,7 +30,7 @@ public class AnalyticsController : ControllerBase
     /// 1st request - give info about all sport bikes
     /// </summary>
     /// <returns> List of sport bikes </returns>
-    [HttpGet("sport_bikes")]
+    [HttpGet("sportBikes")]
     public async Task<ActionResult<BikeGetDto>> GetSportBikes()
     {
         _logger.LogInformation("Get info about sport bikes");
@@ -59,7 +59,7 @@ public class AnalyticsController : ControllerBase
     /// 2nd request - give ordered by client's name info about all clients who have rented mountain bikes
     /// </summary>
     /// <returns> Ordered by name list of clients who rented mountain bikes </returns>
-    [HttpGet("mountain_bikes_clients")]
+    [HttpGet("mountaiBikesClients")]
     public async Task<ActionResult<BikeGetDto>> GetMountainBikesClients()
     {
         _logger.LogInformation("Give info about clients who rented mountain bikes");
@@ -95,7 +95,7 @@ public class AnalyticsController : ControllerBase
     /// 3rd request - give total rent time for each bike type
     /// </summary>
     /// <returns>Total rent time for each type in minutes</returns>
-    [HttpGet("total_rent_time")]
+    [HttpGet("totalRentTime")]
     public async Task<ActionResult> GetRentTime()
     {
         _logger.LogInformation("Get total rent time for each bike type");
@@ -141,7 +141,7 @@ public class AnalyticsController : ControllerBase
     /// 4th request - give info about clients who have rented bikes the most
     /// </summary>
     /// <returns>Clients who rented bikes the most</returns>
-    [HttpGet("max_rents_clients")]
+    [HttpGet("maxRentsClients")]
     public async Task<ActionResult<ClientGetDto>> GetClientsInfo()
     {
         _logger.LogInformation("Give info about clients who rented bikes the most");
@@ -164,7 +164,7 @@ public class AnalyticsController : ControllerBase
     /// 5th request - give info about 5 most rented bikes
     /// </summary>
     /// <returns>Top 5 most rented bikes</returns>
-    [HttpGet("top_five_bikes")]
+    [HttpGet("topFiveBikes")]
     public async Task<ActionResult<BikeGetDto>> GetTopFiveBikes()
     {
         _logger.LogInformation("Give info about 5 most rented bikes");
@@ -187,7 +187,7 @@ public class AnalyticsController : ControllerBase
     /// 6th request - give info about min, max and average rent time
     /// </summary>
     /// <returns>Min, max and average rent time</returns>
-    [HttpGet("rent_time")]
+    [HttpGet("rentTime")]
     public async Task<ActionResult> GetTimeValues()
     {
         _logger.LogInformation("Get min, max and avg time of rent");

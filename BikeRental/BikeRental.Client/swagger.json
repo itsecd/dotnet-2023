@@ -1,0 +1,1014 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BikeRental.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/sportBikes": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "1st request - give info about all sport bikes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/mountaiBikesClients": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "2nd request - give ordered by client's name info about all clients who have rented mountain bikes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/totalRentTime": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "3rd request - give total rent time for each bike type",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/maxRentsClients": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "4th request - give info about clients who have rented bikes the most",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/topFiveBikes": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "5th request - give info about 5 most rented bikes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/rentTime": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "6th request - give info about min, max and average rent time",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Bikes": {
+      "get": {
+        "tags": [
+          "Bikes"
+        ],
+        "summary": "View all bikes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bikes"
+        ],
+        "summary": "Adding new bike",
+        "requestBody": {
+          "description": "Bike",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Bikes/{id}": {
+      "get": {
+        "tags": [
+          "Bikes"
+        ],
+        "summary": "View bike by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Bike id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bikes"
+        ],
+        "summary": "Change bike info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Bike id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing bike",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BikeSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bikes"
+        ],
+        "summary": "Deleting a bike",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleted bike id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/BikeTypes": {
+      "get": {
+        "tags": [
+          "BikeTypes"
+        ],
+        "summary": "View all bike types",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeTypeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeTypeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeTypeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BikeTypes/{id}": {
+      "get": {
+        "tags": [
+          "BikeTypes"
+        ],
+        "summary": "View bike type by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeTypeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeTypeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BikeTypeGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "View all clients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Adding new client",
+        "requestBody": {
+          "description": "Client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clients/{id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "View client by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Change client info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Deleting a client",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleted client id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/RentRecords": {
+      "get": {
+        "tags": [
+          "RentRecords"
+        ],
+        "summary": "View all rent records",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentRecordGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentRecordGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentRecordGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RentRecords"
+        ],
+        "summary": "Adding new rent record",
+        "requestBody": {
+          "description": "Rent record",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RentRecords/{id}": {
+      "get": {
+        "tags": [
+          "RentRecords"
+        ],
+        "summary": "View rent record by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentRecordGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RentRecords"
+        ],
+        "summary": "Change record info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing record",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentRecordSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RentRecords"
+        ],
+        "summary": "Deleting a rent record",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleted rent record id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BikeGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a bike",
+            "format": "int32"
+          },
+          "serialNumber": {
+            "type": "integer",
+            "description": "Serial number of a bike",
+            "format": "int32"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model info of a bike",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "description": "Color info of a bike",
+            "nullable": true
+          },
+          "typeId": {
+            "type": "integer",
+            "description": "Id of a bike type",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class BikeGetDto has the info about bikes"
+      },
+      "BikeSetDto": {
+        "type": "object",
+        "properties": {
+          "serialNumber": {
+            "type": "integer",
+            "description": "Serial number of a bike",
+            "format": "int32"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model info of a bike",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "description": "Color info of a bike",
+            "nullable": true
+          },
+          "typeId": {
+            "type": "integer",
+            "description": "Id of a bike type",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class BikeSetDto has the info about bikes"
+      },
+      "BikeTypeGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a bike type",
+            "format": "int32"
+          },
+          "typeName": {
+            "type": "string",
+            "description": "Name of a bike type",
+            "nullable": true
+          },
+          "rentCost": {
+            "type": "integer",
+            "description": "Price per hour of rent",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class BikeTypeGetDto has the info about bike types"
+      },
+      "ClientGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a client",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "A full name of a client",
+            "nullable": true
+          },
+          "birthYear": {
+            "type": "integer",
+            "description": "Client's year of birth",
+            "format": "int32"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Client's phone number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ClientGetDto has the info about a client who rented bikes"
+      },
+      "ClientSetDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "A full name of a client",
+            "nullable": true
+          },
+          "birthYear": {
+            "type": "integer",
+            "description": "Client's year of birth",
+            "format": "int32"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Client's phone number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class ClientSetDto has the info about a client who rented bikes"
+      },
+      "RentRecordGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a rent record",
+            "format": "int32"
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "Id of a client who rented a bike",
+            "format": "int32"
+          },
+          "bikeId": {
+            "type": "integer",
+            "description": "Id of a rented bike",
+            "format": "int32"
+          },
+          "rentStartTime": {
+            "type": "string",
+            "description": "Date and time of the start of the rent",
+            "format": "date-time"
+          },
+          "rentEndTime": {
+            "type": "string",
+            "description": "Date and time when whe client must return a bike",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class RentRecordGetDto has the info about a bike rent: client info, rented bike info, rent time"
+      },
+      "RentRecordSetDto": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "integer",
+            "description": "Id of a client who rented a bike",
+            "format": "int32"
+          },
+          "bikeId": {
+            "type": "integer",
+            "description": "Id of a rented bike",
+            "format": "int32"
+          },
+          "rentStartTime": {
+            "type": "string",
+            "description": "Date and time of the start of the rent",
+            "format": "date-time"
+          },
+          "rentEndTime": {
+            "type": "string",
+            "description": "Date and time when whe client must return a bike",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class RentRecordSetDto has the info about a bike rent: client info, rented bike info, rent time"
+      }
+    }
+  }
+}

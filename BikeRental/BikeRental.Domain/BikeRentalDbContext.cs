@@ -51,7 +51,7 @@ public class BikeRentalDbContext : DbContext
         var bike3 = new Bike { Id = 3, SerialNumber = 34512, Model = "Model3", Color = "purple", TypeId = 3 };
         var bike4 = new Bike { Id = 4, SerialNumber = 45123, Model = "Model4", Color = "green", TypeId = 1 };
         var bike5 = new Bike { Id = 5, SerialNumber = 51234, Model = "Model5", Color = "blue", TypeId = 3 };
-        var bike6 = new Bike { Id = 6, SerialNumber = 01234, Model = "Model6", Color = "purple", TypeId = 3 };
+        var bike6 = new Bike { Id = 6, SerialNumber = 11234, Model = "Model6", Color = "purple", TypeId = 3 };
 
         modelBuilder.Entity<Bike>().HasData(new List<Bike> { bike1, bike2, bike3, bike4, bike5, bike6 });
 

@@ -20,12 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" Namespace="Fabrics.Client" ClassName="ApiClient">
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
-    </OpenApiReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <TrimmerRootDescriptor Include="Roots.xml" />
   </ItemGroup>
 
@@ -57,5 +51,13 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\FabricWindow.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="Fabrics.Client" />
   </ItemGroup>
 </Project>

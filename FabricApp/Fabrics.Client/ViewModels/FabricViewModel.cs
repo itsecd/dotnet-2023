@@ -1,4 +1,6 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
+using System.Reactive;
 
 namespace Fabrics.Client.ViewModels;
 public class FabricViewModel : ViewModelBase
@@ -19,6 +21,8 @@ public class FabricViewModel : ViewModelBase
     }
 
     private string _name = string.Empty;
+
+    [Required]
     public string Name
     {
         get => _name;
@@ -55,5 +59,12 @@ public class FabricViewModel : ViewModelBase
     {
         get => _totalSquare;
         set => this.RaiseAndSetIfChanged(ref _totalSquare, value);
+    }
+
+    public ReactiveCommand<Unit, FabricViewModel> OnSubmitCommand { get; }
+
+    public FabricViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

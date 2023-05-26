@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Fabrics.Client.ViewModels;
 using Fabrics.Client.Views;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Splat;
 
 namespace Fabrics.Client;

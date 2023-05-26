@@ -73,11 +73,15 @@ public class FabricController : ControllerBase
     /// </summary>
     /// <param name="fabric"></param>
     [HttpPost]
-    public async void Post([FromBody] FabricPostDto fabric)
+    public async Task<ActionResult<FabricGetDto>> Post([FromBody] FabricPostDto fabric)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Fabrics.AddAsync(_mapper.Map<Fabric>(fabric));
+        var mappedFabric = _mapper.Map<Fabric>(fabric);
+
+        await context.Fabrics.AddAsync(mappedFabric);
         await context.SaveChangesAsync();
+
+        return Ok( _mapper.Map<FabricGetDto>(mappedFabric));
     }
     /// <summary>
     /// Put fabric

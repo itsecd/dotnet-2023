@@ -16,21 +16,36 @@
 	</Window.Styles>
 	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
 				<Image Source="/Assets/task-add.png"/>
 			</Button>
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
 				<Image Source="/Assets/task-settings.png"/>
 			</Button>
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
 				<Image Source="/Assets/task-remove.png"/>
 			</Button>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-				  Items="{Binding Fabrics}">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+				  Items="{Binding Fabrics}"
+				  SelectedItem="{Binding SelectedFabric}">
 			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
 				<DataGridTextColumn Header="Name" Binding="{Binding
 									Name}"/>
+				<DataGridTextColumn Header="Type" Binding="{Binding
+									Type}"/>
+				<DataGridTextColumn Header="Address" Binding="{Binding
+									Address}"/>
+				<DataGridTextColumn Header="Phone" Binding="{Binding
+									PhoneNumber}"/>
+				<DataGridTextColumn Header="Form" Binding="{Binding
+									FormOfOwnership}"/>
+				<DataGridTextColumn Header="Number of workers" Binding="{Binding
+									NumberOfWorkers}"/>
+				<DataGridTextColumn Header="Total square" Binding="{Binding
+									TotalSquare}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

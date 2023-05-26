@@ -73,11 +73,15 @@ public class ProviderController : ControllerBase
     /// </summary>
     /// <param name="provider"></param>
     [HttpPost]
-    public async void Post([FromBody] ProviderPostDto provider)
+    public async Task<ActionResult<ProviderGetDto>> Post([FromBody] ProviderPostDto provider)
     {
+        var mappedProvider = _mapper.Map<Provider>(provider);
+
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Providers.AddAsync(_mapper.Map<Provider>(provider));
+        await context.Providers.AddAsync(mappedProvider);
         await context.SaveChangesAsync();
+
+        return Ok(_mapper.Map<ProviderGetDto>(mappedProvider));
     }
     /// <summary>
     /// Put provider

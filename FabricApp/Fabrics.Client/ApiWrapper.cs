@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.Extensions.Configuration;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -22,63 +21,63 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public Task<ICollection<FabricGetDto>> GetFabricAsync()
+    public async Task<ICollection<FabricGetDto>> GetFabricAsync()
     {
-        return _client.FabricAllAsync();
-    }
-    
-    public Task AddFabricAsync(FabricPostDto fabric)
-    {
-        return _client.FabricAsync(fabric);
-    }
-    
-    public Task UpdateFabricAsync(int id, FabricPostDto fabric)
-    {
-        return _client.Fabric3Async(id, fabric);
-    }
-    
-    public Task DeleteFabricAsync(int id)
-    {
-        return _client.Fabric4Async(id);
+        return await _client.FabricAllAsync();
     }
 
-    public Task<ICollection<ProviderGetDto>> GetProviderAsync()
+    public async Task<FabricGetDto> AddFabricAsync(FabricPostDto fabric)
     {
-        return _client.ProviderAllAsync();
+        return await _client.FabricAsync(fabric);
     }
 
-    public Task AddProviderAsync(ProviderPostDto provider)
+    public async Task UpdateFabricAsync(int id, FabricPostDto fabric)
     {
-        return _client.ProviderAsync(provider);
+        await _client.Fabric3Async(id, fabric);
     }
 
-    public Task UpdateProviderAsync(int id, ProviderPostDto provider)
+    public async Task DeleteFabricAsync(int id)
     {
-        return _client.Provider3Async(id, provider);
+        await _client.Fabric4Async(id);
     }
 
-    public Task DeleteProviderAsync(int id)
+    public async Task<ICollection<ProviderGetDto>> GetProviderAsync()
     {
-        return _client.Provider4Async(id);
+        return await _client.ProviderAllAsync();
     }
 
-    public Task<ICollection<ShipmentGetDto>> GetShipmentAsync()
+    public async Task<ProviderGetDto> AddProviderAsync(ProviderPostDto provider)
     {
-        return _client.ShipmentAllAsync();
+        return await _client.ProviderAsync(provider);
     }
 
-    public Task AddShipmentAsync(ShipmentPostDto shipment)
+    public async Task UpdateProviderAsync(int id, ProviderPostDto provider)
     {
-        return _client.ShipmentAsync(shipment);
+        await _client.Provider3Async(id, provider);
     }
 
-    public Task UpdateShipmentAsync(int id, ShipmentPostDto shipment)
+    public async Task DeleteProviderAsync(int id)
     {
-        return _client.Shipment3Async(id, shipment);
+        await _client.Provider4Async(id);
     }
 
-    public Task DeleteShipmentAsync(int id)
+    public async Task<ICollection<ShipmentGetDto>> GetShipmentAsync()
     {
-        return _client.Shipment4Async(id);
+        return await _client.ShipmentAllAsync();
+    }
+
+    public async Task<ShipmentGetDto> AddShipmentAsync(ShipmentPostDto shipment)
+    {
+        return await _client.ShipmentAsync(shipment);
+    }
+
+    public async Task UpdateShipmentAsync(int id, ShipmentPostDto shipment)
+    {
+        await _client.Shipment3Async(id, shipment);
+    }
+
+    public async Task DeleteShipmentAsync(int id)
+    {
+        await _client.Shipment4Async(id);
     }
 }

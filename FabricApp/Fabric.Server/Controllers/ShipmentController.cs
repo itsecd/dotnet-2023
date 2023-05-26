@@ -70,11 +70,15 @@ public class ShipmentController : ControllerBase
     /// </summary>
     /// <param name="shipment"></param>
     [HttpPost]
-    public async void Post([FromBody] ShipmentPostDto shipment)
+    public async Task<ActionResult<ShipmentGetDto>> Post([FromBody] ShipmentPostDto shipment)
     {
+        var mappedShipment = _mapper.Map<Shipment>(shipment);
+
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Shipments.AddAsync(_mapper.Map<Shipment>(shipment));
+        await context.Shipments.AddAsync(mappedShipment);
         await context.SaveChangesAsync();
+
+        return Ok(_mapper.Map<ShipmentGetDto>(mappedShipment));
     }
     /// <summary>
     /// Put shipment

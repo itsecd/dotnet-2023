@@ -199,7 +199,24 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -377,7 +394,24 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderGetDto"
+                }
+              }
+            }
           }
         }
       }
@@ -555,7 +589,24 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentGetDto"
+                }
+              }
+            }
           }
         }
       }

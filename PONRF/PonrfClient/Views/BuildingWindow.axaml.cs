@@ -5,9 +5,9 @@ using ReactiveUI;
 using System;
 
 namespace PonrfClient.Views;
-public partial class PrivatizedBuildingWindow : ReactiveWindow<PrivatizedBuildingViewModel>
+public partial class BuildingWindow : ReactiveWindow<BuildingViewModel>
 {
-    public PrivatizedBuildingWindow()
+    public BuildingWindow()
     {
         InitializeComponent();
 

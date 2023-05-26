@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PonrfClient.Views.BuildingWindow"
+        xmlns:vm="using:PonrfClient.ViewModels"
+        Title="BuildingWindow"
+		MaxWidth="500"
+	    SizeToContent="WidthAndHeight">
+	<Design.DataContext>
+		<vm:BuildingViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PonrfStyles.axaml" />
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Registration number: </Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">District: </Label>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Street: </Label>
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">House number: </Label>
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Area: </Label>
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Floors: </Label>
+		<Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Date of sale: </Label>
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RegistNum}" />
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding District}" />
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Street}" />
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding HouseNumber}"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Area}" />
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Floors}" />
+		<DatePicker Grid.Row="6" Grid.Column="1" SelectedDate="{Binding DateOfSale}" />
+
+		<StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

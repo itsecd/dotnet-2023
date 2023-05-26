@@ -16,10 +16,22 @@
 		<StyleInclude Source="/PonrfStyles.axaml" />
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
-		<Label VerticalAlignment="Center">Дата продажи: </Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DateOfSale}"/>
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Date of sale: </Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">First cost: </Label>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Second cost: </Label>
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">CustomerId: </Label>
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">AuctionId: </Label>
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">BuildingId: </Label>
+
+		<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DateOfSale}" />
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstCost}" />
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SecondCost}" />
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CustomerId}" />
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AuctionId}"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding BuildingId}" />
+		
+		<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>

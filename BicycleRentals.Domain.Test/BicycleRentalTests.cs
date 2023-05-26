@@ -49,10 +49,10 @@ public class BicycleRentalTests
                                select new
                                {
                                    TypeId = g.Key,
-                                   TotalTime =g.Sum(br => br.RentalDurationHours)
+                                   TotalTime =g.Sum(br => br.RentalTime)
                                }).ToList();
         // Assert       
-        Assert.Equal(new { TypeId = 1, TotalTime = 5.5 },totalRentalTime[0]);
+        Assert.Equal(new { TypeId = 1, TotalTime = 5 },totalRentalTime[0]);
     }
 
     /// <summary>
@@ -106,9 +106,9 @@ public class BicycleRentalTests
                            select new
                            {
                                TypeId = g.Key,
-                               minRentalTime = g.Min(br => br.RentalDurationHours),
-                               maxRentalTime = g.Max(br => br.RentalDurationHours),
-                               avgRentalTime = g.Average(br => br.RentalDurationHours)
+                               minRentalTime = g.Min(br => br.RentalTime),
+                               maxRentalTime = g.Max(br => br.RentalTime),
+                               avgRentalTime = g.Average(br => br.RentalTime)
                            }).ToList();
         // Assert - verify that we got the correct results
         Assert.Equal(0.5, rentalTimes[0].minRentalTime);

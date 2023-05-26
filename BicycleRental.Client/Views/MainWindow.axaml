@@ -1,0 +1,104 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BicycleRental.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BicycleRental.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="BicycleRental.Client">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/BicycleRentalStyles.axaml"/>
+	</Window.Styles>
+
+	<TabControl>
+		<TabItem Header="Bicycle" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddBicycleCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeBicycleCommand}">
+						<Image Source="/Assets/setting.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteBicycleCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Bicycles}"
+							SelectedItem="{Binding SelectedBicycle}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
+						<DataGridTextColumn Header="TypeId" Binding="{Binding TypeId}"/>
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+						<DataGridTextColumn Header="Color" Binding="{Binding Color}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Customer" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
+						<Image Source="/Assets/setting.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Customers}"
+							SelectedItem="{Binding SelectedCustomer}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="FullName" Binding="{Binding FullName}"/>
+						<DataGridTextColumn Header="BirthYear" Binding="{Binding BirthYear}"/>
+						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Rental" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddRentalCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeRentalCommand}">
+						<Image Source="/Assets/setting.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteRentalCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Rentals}"
+							SelectedItem="{Binding SelectedRental}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="RentalId" Binding="{Binding RentalId}"/>
+						<DataGridTextColumn Header="CustomerId" Binding="{Binding CustomerId}"/>
+						<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
+						<DataGridTextColumn Header="RentalTime" Binding="{Binding RentalTime}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Type" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Types}"
+						    SelectedItem="{Binding SelectedType}">	
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+</Window>

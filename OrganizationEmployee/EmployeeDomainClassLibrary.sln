@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomain", "EmployeeDomain\EmployeeDomain.csproj", "{23A42F92-3DCD-4327-8E2F-38412C1A95AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Domain", "Organization.Domain\Organization.Domain.csproj", "{23A42F92-3DCD-4327-8E2F-38412C1A95AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainTests", "EmployeeDomainTests\EmployeeDomainTests.csproj", "{3043D4DA-6146-459B-8E4A-4C82B769E199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.UnitTests", "Organization.UnitTests\Organization.UnitTests.csproj", "{3043D4DA-6146-459B-8E4A-4C82B769E199}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationServer", "OrganizationServer\OrganizationServer.csproj", "{3C56F3CB-5D74-47EC-A6F2-5EAF6239FE3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Server", "Organization.Server\Organization.Server.csproj", "{3C56F3CB-5D74-47EC-A6F2-5EAF6239FE3F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeDomainIntegrationTests", "EmployeeDomainIntegrationTests\EmployeeDomainIntegrationTests.csproj", "{D5CD163B-1FBB-45D1-815C-0589A29146A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.IntegrationTests", "Organization.IntegrationTests\Organization.IntegrationTests.csproj", "{D5CD163B-1FBB-45D1-815C-0589A29146A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizationClient", "OrganizationClient\OrganizationClient.csproj", "{19F59B95-40BC-4D38-ADA8-0A7F1B66E6F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organization.Client", "Organization.Client\Organization.Client.csproj", "{19F59B95-40BC-4D38-ADA8-0A7F1B66E6F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

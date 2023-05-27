@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Organization.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Organization.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Organization.Client">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
+	</Window.Styles>
+	
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+				Добавить
+			</Button>
+			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+				Удалить
+			</Button>
+			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+				Изменить
+			</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+				  Items="{Binding Departments}" 
+				  SelectedItem="{Binding SelectedDepartment}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+
+
+</Window>

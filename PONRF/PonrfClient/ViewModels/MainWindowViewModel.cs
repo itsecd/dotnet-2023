@@ -83,6 +83,8 @@ public class MainWindowViewModel : ViewModelBase
                 var newPrivatizedBuilding = _mapper.Map<PrivatizedBuildingPostDto>(privatizedBuildingViewModel);
                 await _apiClient.AddPrivatizedBuildingAsync(newPrivatizedBuilding);
                 PrivatizedBuildings.Add(privatizedBuildingViewModel);
+                PrivatizedBuildings.Clear();
+                LoadPrivatizedBuildingAsync();
             }
         });
 
@@ -103,10 +105,108 @@ public class MainWindowViewModel : ViewModelBase
             PrivatizedBuildings.Remove(SelectedPrivatizedBuilding);
         }, this.WhenAnyValue(vm => vm.SelectedPrivatizedBuilding).Select(selectedPrivatizedBuilding => selectedPrivatizedBuilding != null));
 
+        ShowAuctionDialog = new Interaction<AuctionViewModel, AuctionViewModel?>();
+
+        OnAddAuctionCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var auctionViewModel = await ShowAuctionDialog.Handle(new AuctionViewModel());
+            if (auctionViewModel != null)
+            {
+                var newAuction = _mapper.Map<AuctionPostDto>(auctionViewModel);
+                await _apiClient.AddAuctionAsync(newAuction);
+                Auctions.Add(auctionViewModel);
+                Auctions.Clear();
+                LoadAuctionAsync();
+            }
+        });
+
+        OnChangeAuctionCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var auctionViewModel = await ShowAuctionDialog.Handle(SelectedAuction!);
+            if (auctionViewModel != null)
+            {
+                var newAuction = _mapper.Map<AuctionPostDto>(auctionViewModel);
+                await _apiClient.UpdateAuctionAsync(SelectedAuction!.Id, newAuction);
+                _mapper.Map(auctionViewModel, SelectedAuction);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedAuction).Select(selectedAuction => selectedAuction != null));
+
+        OnDeleteAuctionCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteAuctionAsync(SelectedAuction!.Id);
+            Auctions.Remove(SelectedAuction);
+        }, this.WhenAnyValue(vm => vm.SelectedAuction).Select(selectedAuction => selectedAuction != null));
+
+        ShowBuildingDialog = new Interaction<BuildingViewModel, BuildingViewModel?>();
+
+        OnAddBuildingCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var buildingViewModel = await ShowBuildingDialog.Handle(new BuildingViewModel());
+            if (buildingViewModel != null)
+            {
+                var newBuilding = _mapper.Map<BuildingPostDto>(buildingViewModel);
+                await _apiClient.AddBuildingAsync(newBuilding);
+                Buildings.Add(buildingViewModel);
+                Buildings.Clear();
+                LoadBuildingAsync();
+            }
+        });
+
+        OnChangeBuildingCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var buildingViewModel = await ShowBuildingDialog.Handle(SelectedBuilding!);
+            if (buildingViewModel != null)
+            {
+                var newBuilding = _mapper.Map<BuildingPostDto>(buildingViewModel);
+                await _apiClient.UpdateBuildingAsync(SelectedBuilding!.Id, newBuilding);
+                _mapper.Map(buildingViewModel, SelectedBuilding);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedBuilding).Select(selectedBuilding => selectedBuilding != null));
+
+        OnDeleteBuildingCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteBuildingAsync(SelectedBuilding!.Id);
+            Buildings.Remove(SelectedBuilding);
+        }, this.WhenAnyValue(vm => vm.SelectedBuilding).Select(selectedBuilding => selectedBuilding != null));
+
+        ShowCustomerDialog = new Interaction<CustomerViewModel, CustomerViewModel?>();
+
+        OnAddCustomerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var customerViewModel = await ShowCustomerDialog.Handle(new CustomerViewModel());
+            if (customerViewModel != null)
+            {
+                var newCustomer = _mapper.Map<CustomerPostDto>(customerViewModel);
+                await _apiClient.AddCustomerAsync(newCustomer);
+                Customers.Add(customerViewModel);
+                Customers.Clear();
+                LoadCustomerAsync();
+            }
+        });
+
+        OnChangeCustomerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var customerViewModel = await ShowCustomerDialog.Handle(SelectedCustomer!);
+            if (customerViewModel != null)
+            {
+                var newCustomer = _mapper.Map<CustomerPostDto>(customerViewModel);
+                await _apiClient.UpdateCustomerAsync(SelectedCustomer!.Id, newCustomer);
+                _mapper.Map(customerViewModel, SelectedCustomer);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedCustomer).Select(selectedCustomer => selectedCustomer != null));
+
+        OnDeleteCustomerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteCustomerAsync(SelectedCustomer!.Id);
+            Customers.Remove(SelectedCustomer);
+        }, this.WhenAnyValue(vm => vm.SelectedCustomer).Select(selectedCustomer => selectedCustomer != null));
+
         RxApp.MainThreadScheduler.Schedule(LoadPrivatizedBuildingAsync);
         RxApp.MainThreadScheduler.Schedule(LoadAuctionAsync);
         RxApp.MainThreadScheduler.Schedule(LoadBuildingAsync);
         RxApp.MainThreadScheduler.Schedule(LoadCustomerAsync);
+
+        //RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
 
     private async void LoadPrivatizedBuildingAsync()
@@ -144,4 +244,30 @@ public class MainWindowViewModel : ViewModelBase
             Customers.Add(_mapper.Map<CustomerViewModel>(customer));
         }
     }
+
+    //private async void LoadDataAsync()
+    //{
+    //    var privatizedBuildings = await _apiClient.GetPrivatizedBuildingAsync();
+    //    foreach (var privatizedBuilding in privatizedBuildings)
+    //    {
+    //        PrivatizedBuildings.Add(_mapper.Map<PrivatizedBuildingViewModel>(privatizedBuilding));
+    //    }
+
+    //    var auctions = await _apiClient.GetAuctionAsync();
+    //    foreach (var auction in auctions)
+    //    {
+    //        Auctions.Add(_mapper.Map<AuctionViewModel>(auction));
+    //    }
+
+    //    var buildings = await _apiClient.GetBuildingAsync();
+    //    foreach (var building in buildings)
+    //    {
+    //        Buildings.Add(_mapper.Map<BuildingViewModel>(building));
+    //    }
+    //    var customers = await _apiClient.GetCustomerAsync();
+    //    foreach (var customer in customers)
+    //    {
+    //        Customers.Add(_mapper.Map<CustomerViewModel>(customer));
+    //    }
+    //}
 }

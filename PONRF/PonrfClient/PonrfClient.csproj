@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Compile Remove="ApiClient.cs" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Add.png" />
     <None Remove="Assets\Change.png" />

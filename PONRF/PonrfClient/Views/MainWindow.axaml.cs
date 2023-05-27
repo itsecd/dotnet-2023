@@ -11,9 +11,9 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         InitializeComponent();
 
         this.WhenActivated(d => d(ViewModel!.ShowPrivatizedBuildingDialog.RegisterHandler(ShowPrivatizedBuildingDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowAuctionDialog.RegisterHandler(ShowAuctionDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowBuildingDialog.RegisterHandler(ShowBuildingDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowCustomerDialog.RegisterHandler(ShowCustomerDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowAuctionDialog.RegisterHandler(ShowAuctionDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowBuildingDialog.RegisterHandler(ShowBuildingDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowCustomerDialog.RegisterHandler(ShowCustomerDialogAsync)));
     }
 
     private async Task ShowPrivatizedBuildingDialogAsync(InteractionContext<PrivatizedBuildingViewModel, PrivatizedBuildingViewModel?> interaction)

@@ -40,6 +40,29 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		<TabItem Header="Auctions" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddAuctionCommand}">
+						<Image Source="/Assets/Add.png" />
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeAuctionCommand}">
+						<Image Source="/Assets/Change.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteAuctionCommand}">
+						<Image Source="/Assets/Delete.png" />
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding	Auctions}"
+						  SelectedItem="{Binding SelectedAuction}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+						<DataGridTextColumn Header="Organizer" Binding="{Binding Organizer}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 		<TabItem Header="Buildings" VerticalContentAlignment="Center">
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -57,13 +80,37 @@
 						  Items="{Binding	Buildings}"
 						  SelectedItem="{Binding SelectedBuilding}">
 					<DataGrid.Columns>
+						<DataGridTextColumn Header="Date of build" Binding="{Binding DateOfBuild}"/>
 						<DataGridTextColumn Header="Registration number" Binding="{Binding RegistNum}"/>
 						<DataGridTextColumn Header="District" Binding="{Binding District}"/>
 						<DataGridTextColumn Header="Street" Binding="{Binding Street}"/>
 						<DataGridTextColumn Header="House number" Binding="{Binding HouseNumber}"/>
 						<DataGridTextColumn Header="Area" Binding="{Binding Area}"/>
 						<DataGridTextColumn Header="Floors" Binding="{Binding Floors}"/>
-						<DataGridTextColumn Header="Date of sale" Binding="{Binding DateOfSale}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Customers" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+						<Image Source="/Assets/Add.png" />
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
+						<Image Source="/Assets/Change.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
+						<Image Source="/Assets/Delete.png" />
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding	Customers}"
+						  SelectedItem="{Binding SelectedCustomer}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}"/>
+						<DataGridTextColumn Header="Fio" Binding="{Binding Fio}"/>
+						<DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

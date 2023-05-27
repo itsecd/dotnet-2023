@@ -53,8 +53,6 @@ public class AnalyticsController : ControllerBase
         var request = await (from auction in context.Auctions
                              join privatizedBuilding in context.PrivatizedBuildings
                              on auction.Id equals privatizedBuilding.AuctionId
-                             join building in context.Buildings
-                             on privatizedBuilding.BuildingId equals building.Id
                              where privatizedBuilding.CustomerId == null
                              select _mapper.Map<AuctionGetDto>(auction)).ToListAsync();
         return Ok(request);

@@ -154,6 +154,60 @@ public class MainWindowViewModel : ViewModelBase
             Buildings.Remove(SelectedBuilding);
         }, this.WhenAnyValue(vm => vm.SelectedBuilding).Select(selectedBuilding => selectedBuilding != null));
 
+        OnAddBuyerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var buyerViewModel = await ShowBuyerDialog.Handle(new BuyerViewModel());
+            if (buyerViewModel != null)
+            {
+                var newBuyer = await _apiClient.AddBuyerAsync(_mapper.Map<BuyerPostDto>(buyerViewModel));
+                Buyers.Add(_mapper.Map<BuyerViewModel>(newBuyer));
+            }
+        });
+
+        OnUpdateBuyerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var buyerViewModel = await ShowBuyerDialog.Handle(_selectedBuyer!);
+            if (buyerViewModel != null)
+            {
+                var newBuyer = await _apiClient.UpdateBuyerAsync(SelectedBuyer!.BuyerId,
+                    _mapper.Map<BuyerPostDto>(SelectedBuyer));
+                _mapper.Map(buyerViewModel, SelectedBuyer);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedBuyer).Select(selectedBuyer => selectedBuyer != null));
+
+        OnDeleteBuyerCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteBuyerAsync(SelectedBuyer!.BuyerId);
+            Buyers.Remove(SelectedBuyer);
+        }, this.WhenAnyValue(vm => vm.SelectedBuyer).Select(selectedBuyer => selectedBuyer != null));
+
+        OnAddDistrictCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var districtViewModel = await ShowDistrictDialog.Handle(new DistrictViewModel());
+            if (districtViewModel != null)
+            {
+                var newDistrict = await _apiClient.AddDistrictAsync(_mapper.Map<DistrictPostDto>(districtViewModel));
+                Districts.Add(_mapper.Map<DistrictViewModel>(newDistrict));
+            }
+        });
+
+        OnUpdateDistrictCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var districtViewModel = await ShowDistrictDialog.Handle(_selectedDistrict!);
+            if (districtViewModel != null)
+            {
+                var newDistrict = await _apiClient.UpdateDistrictAsync(SelectedDistrict!.DistrictId,
+                    _mapper.Map<DistrictPostDto>(SelectedDistrict));
+                _mapper.Map(districtViewModel, SelectedDistrict);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedDistrict).Select(selectedDistrict => selectedDistrict != null));
+
+        OnDeleteDistrictCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteDistrictAsync(SelectedDistrict!.DistrictId);
+            Districts.Remove(SelectedDistrict);
+        }, this.WhenAnyValue(vm => vm.SelectedDistrict).Select(selectedDistrict => selectedDistrict != null));
+
         OnAddOrganizationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var organizationViewModel = await ShowOrganizationDialog.Handle(new OrganizationViewModel());
@@ -180,6 +234,34 @@ public class MainWindowViewModel : ViewModelBase
             await _apiClient.DeleteOrganizationAsync(SelectedOrganization!.OrganizationId);
             Organizations.Remove(SelectedOrganization);
         }, this.WhenAnyValue(vm => vm.SelectedOrganization).Select(selectedOrganization => selectedOrganization != null));
+
+        OnAddPrivatizedCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var privatizedViewModel = await ShowPrivatizedDialog.Handle(new PrivatizedViewModel());
+            if (privatizedViewModel != null)
+            {
+                var newPrivatized = await _apiClient.AddPrivatizedAsync(_mapper.Map<PrivatizedPostDto>(privatizedViewModel));
+                Privatized.Add(_mapper.Map<PrivatizedViewModel>(newPrivatized));
+            }
+        });
+
+        OnUpdatePrivatizedCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var privatizedViewModel = await ShowPrivatizedDialog.Handle(SelectedPrivatized!);
+            if (privatizedViewModel != null)
+            {
+                var newPrivatized = await _apiClient.UpdatePrivatizedAsync(SelectedPrivatized!.RegistrationNumber,
+                    _mapper.Map<PrivatizedPostDto>(SelectedPrivatized));
+                _mapper.Map(privatizedViewModel, SelectedPrivatized);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedPrivatized).Select(selectedPrivatized => selectedPrivatized != null));
+
+        OnDeletePrivatizedCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeletePrivatizedAsync(SelectedPrivatized!.RegistrationNumber);
+            Privatized.Remove(SelectedPrivatized);
+        }, this.WhenAnyValue(vm => vm.SelectedPrivatized).Select(selectedPrivatized => selectedPrivatized != null));
+
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }

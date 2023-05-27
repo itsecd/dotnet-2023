@@ -20,20 +20,23 @@ public partial class App : Application
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<OrganizationGetDto, OrganizationViewModel>();
-                cfg.CreateMap<OrganizationViewModel, OrganizationPostDto>();
-
-                cfg.CreateMap<BuildingGetDto, BuildingViewModel>();
-                cfg.CreateMap<BuildingViewModel, BuildingPostDto>();
-                
                 cfg.CreateMap<AuctionGetDto, AuctionViewModel>();
                 cfg.CreateMap<AuctionViewModel, AuctionPostDto>();
 
-                cfg.CreateMap<PrivatizedGetDto, PrivatizedViewModel>();
-                cfg.CreateMap<PrivatizedViewModel, PrivatizedPostDto>();
+                cfg.CreateMap<BuildingGetDto, BuildingViewModel>();
+                cfg.CreateMap<BuildingViewModel, BuildingPostDto>();
+
+                cfg.CreateMap<BuyerGetDto, BuyerViewModel>();
+                cfg.CreateMap<BuyerViewModel, BuyerPostDto>();
 
                 cfg.CreateMap<DistrictGetDto, DistrictViewModel>();
                 cfg.CreateMap<DistrictViewModel, DistrictPostDto>();
+
+                cfg.CreateMap<OrganizationGetDto, OrganizationViewModel>();
+                cfg.CreateMap<OrganizationViewModel, OrganizationPostDto>();
+
+                cfg.CreateMap<PrivatizedGetDto, PrivatizedViewModel>();
+                cfg.CreateMap<PrivatizedViewModel, PrivatizedPostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

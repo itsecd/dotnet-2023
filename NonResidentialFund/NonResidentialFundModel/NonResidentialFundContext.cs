@@ -53,7 +53,11 @@ public sealed class NonResidentialFundContext : DbContext
     /// <param name="options">Parameter for NonResidentialFundContext</param>
     public NonResidentialFundContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
+        try{
+            Database.EnsureCreated();
+        }
+        catch{
+        }
     }
 
     /// <summary>

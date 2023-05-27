@@ -94,8 +94,85 @@
 			</DockPanel>
 		</TabItem>
 		<TabItem Header="Покупатели">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddBuyerCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdateBuyerCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteBuyerCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Buyers}" SelectedItem="{Binding SelectedBuyer}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="ID" Binding="{Binding BuyerId}"/>
+							<DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+							<DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+							<DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
+							<DataGridTextColumn Header="Серия паспорта" Binding="{Binding PassportSeries}"/>
+							<DataGridTextColumn Header="Номер паспорта" Binding="{Binding PassportNumber}"/>
+							<DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
 		</TabItem>
 		<TabItem Header="Приватизированные здания">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddPrivatizedCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdatePrivatizedCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeletePrivatizedCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Privatized}" SelectedItem="{Binding SelectedPrivatized}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Номер" Binding="{Binding RegistrationNumber}"/>
+							<DataGridTextColumn Header="ID покупателя" Binding="{Binding BuyerId}"/>
+							<DataGridTextColumn Header="ID аукциона продажи" Binding="{Binding AuctionId}"/>
+							<DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate}"/>
+							<DataGridTextColumn Header="Начальная цена" Binding="{Binding StartPrice}"/>
+							<DataGridTextColumn Header="Конечная цена" Binding="{Binding EndPrice}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
+		</TabItem>
+		<TabItem Header="Районы">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddDistrictCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdateDistrictCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteDistrictCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Districts}" SelectedItem="{Binding SelectedDistrict}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="ID" Binding="{Binding DistrictId}"/>
+							<DataGridTextColumn Header="Название" Binding="{Binding DistrictName}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
 		</TabItem>
 	</TabControl>
 </Window>

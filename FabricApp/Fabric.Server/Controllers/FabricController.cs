@@ -81,7 +81,7 @@ public class FabricController : ControllerBase
         await context.Fabrics.AddAsync(mappedFabric);
         await context.SaveChangesAsync();
 
-        return Ok( _mapper.Map<FabricGetDto>(mappedFabric));
+        return Ok(_mapper.Map<FabricGetDto>(mappedFabric));
     }
     /// <summary>
     /// Put fabric

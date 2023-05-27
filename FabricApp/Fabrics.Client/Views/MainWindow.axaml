@@ -14,15 +14,17 @@
 	<Window.Styles>
 		<StyleInclude Source="/FabricsStyles.axaml"/>
 	</Window.Styles>
+	<TabControl>
+		<TabItem Header="Fabric" VerticalContentAlignment="Center">
 	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnAddFabricCommand}">
 				<Image Source="/Assets/task-add.png"/>
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnChangeFabricCommand}">
 				<Image Source="/Assets/task-settings.png"/>
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteFabricCommand}">
 				<Image Source="/Assets/task-remove.png"/>
 			</Button>
 		</StackPanel>
@@ -49,4 +51,35 @@
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
+	</TabItem>
+		<TabItem Header="Provider" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddProviderCommand}">
+						<Image Source="/Assets/task-add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeProviderCommand}">
+						<Image Source="/Assets/task-settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteProviderCommand}">
+						<Image Source="/Assets/task-remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Providers}"
+						  SelectedItem="{Binding SelectedProvider}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding
+									Name}"/>
+						<DataGridTextColumn Header="Type of goods" Binding="{Binding
+									TypeOfGoods}"/>
+						<DataGridTextColumn Header="Address" Binding="{Binding
+									Address}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
 </Window>

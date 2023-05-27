@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.Reactive;
 
 namespace Fabrics.Client.ViewModels;
 public class ShipmentViewModel : ViewModelBase
@@ -25,8 +26,8 @@ public class ShipmentViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _providerId, value);
     }
 
-    private DateTime _date;
-    public DateTime Date
+    private DateTimeOffset _date;
+    public DateTimeOffset Date
     {
         get => _date;
         set => this.RaiseAndSetIfChanged(ref _date, value);
@@ -37,5 +38,12 @@ public class ShipmentViewModel : ViewModelBase
     {
         get => _numberOfGoods;
         set => this.RaiseAndSetIfChanged(ref _numberOfGoods, value);
+    }
+
+    public ReactiveCommand<Unit, ShipmentViewModel> OnSubmitCommand { get; }
+
+    public ShipmentViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

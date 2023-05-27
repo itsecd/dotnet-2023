@@ -1,4 +1,6 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
+using System.Reactive;
 
 namespace Fabrics.Client.ViewModels;
 public class ProviderViewModel : ViewModelBase
@@ -10,6 +12,7 @@ public class ProviderViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private string _name = string.Empty;
+    [Required]
     public string Name
     {
         get => _name;
@@ -26,5 +29,12 @@ public class ProviderViewModel : ViewModelBase
     {
         get => _address;
         set => this.RaiseAndSetIfChanged(ref _address, value);
+    }
+
+    public ReactiveCommand<Unit, ProviderViewModel> OnSubmitCommand { get; }
+
+    public ProviderViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

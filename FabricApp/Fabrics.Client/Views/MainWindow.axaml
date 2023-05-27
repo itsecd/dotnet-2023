@@ -81,5 +81,36 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		<TabItem Header="Shipment" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddShipmentCommand}">
+						<Image Source="/Assets/task-add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeShipmentCommand}">
+						<Image Source="/Assets/task-settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteShipmentCommand}">
+						<Image Source="/Assets/task-remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Shipments}"
+						  SelectedItem="{Binding SelectedShipment}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="Fabric ID" Binding="{Binding
+									FabricId}"/>
+						<DataGridTextColumn Header="Provider ID" Binding="{Binding
+									ProviderId}"/>
+						<DataGridTextColumn Header="Date" Binding="{Binding
+									Date}"/>
+						<DataGridTextColumn Header="Number of goods" Binding="{Binding
+									NumberOfGoods}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 	</TabControl>
 </Window>

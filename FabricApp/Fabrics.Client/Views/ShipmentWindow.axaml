@@ -4,6 +4,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Fabrics.Client.Views.ShipmentWindow"
-        Title="ShipmentWindow">
-  Welcome to Avalonia!
+		xmlns:vm="using:Fabrics.Client.ViewModels"
+        Title="Edit shipment"
+		MaxWidth="500"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:ShipmentViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/FabricsStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto *" ColumnDefinitions="Auto, *">
+
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Fabric ID</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FabricId}"/>
+
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Provider ID</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProviderId}"/>
+
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Date</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Date}"/>
+
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Number of goods</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NumberOfGoods}"/>
+
+
+		<StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
 </Window>

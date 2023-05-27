@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace Fabrics.Client.ViewModels;
@@ -13,6 +14,8 @@ public class ShipmentViewModel : ViewModelBase
     }
 
     private int _fabricId;
+
+    [Required]
     public int FabricId
     {
         get => _fabricId;
@@ -20,6 +23,7 @@ public class ShipmentViewModel : ViewModelBase
     }
 
     private int _providerId;
+    [Required]
     public int ProviderId
     {
         get => _providerId;

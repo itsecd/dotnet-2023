@@ -12,7 +12,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
         this.WhenActivated(d => d(ViewModel!.ShowFabricDialog.RegisterHandler(ShowFabricDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowProviderDialog.RegisterHandler(ShowProviderDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowShipmentDialog.RegisterHandler(ShowShipmentDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowShipmentDialog.RegisterHandler(ShowShipmentDialogAsync)));
     }
 
     private async Task ShowFabricDialogAsync(InteractionContext<FabricViewModel, FabricViewModel?> interaction)

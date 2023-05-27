@@ -9,7 +9,7 @@
 		MaxWidth="500"
 		SizeToContent="Height">
 	<Design.DataContext>
-		<vm:FabricViewModel/>
+		<vm:ProviderViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>

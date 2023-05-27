@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="NonResidentialFund.Client.Views.AuctionWindow"
+        xmlns:vm="using:NonResidentialFund.Client.ViewModels"
+        Title="Редактирование аукциона"
+        MaxWidth="500"
+        SizeToContent="Height">
+	<Design.DataContext>
+		<vm:AuctionViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/NonResidentialFundStyles.axaml"/>
+	</Window.Styles>
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0">ID</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding AuctionId}" />
+		<Label Grid.Row="1" Grid.Column="0">Дата проведения</Label>
+		<DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Date}" />
+		<Label Grid.Row="2" Grid.Column="0">ID организации-организатора</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding OrganizationId}" />
+		<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ок</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

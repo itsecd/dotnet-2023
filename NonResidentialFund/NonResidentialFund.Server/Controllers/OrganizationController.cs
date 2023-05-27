@@ -29,7 +29,8 @@ public class OrganizationController : ControllerBase
     {
         _logger.LogInformation("Get all organization");
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        return _mapper.Map<IEnumerable<OrganizationGetDto>>(ctx.Organizations);
+        var organizations = await ctx.Organizations.ToListAsync();
+        return _mapper.Map<IEnumerable<OrganizationGetDto>>(organizations);
     }
 
     /// <summary>
@@ -41,7 +42,7 @@ public class OrganizationController : ControllerBase
     public async Task<ActionResult<OrganizationGetDto>> Get(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        var organization = await ctx.Organizations.FirstOrDefaultAsync(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -59,11 +60,13 @@ public class OrganizationController : ControllerBase
     /// </summary>
     /// <param name="organization">Organization to be created</param>
     [HttpPost]
-    public async void Post([FromBody] OrganizationPostDto organization)
+    public async Task<ActionResult<OrganizationGetDto>> Post([FromBody] OrganizationPostDto organization)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Organizations.Add(_mapper.Map<Organization>(organization));
-        ctx.SaveChanges();
+        var organizationToPut = _mapper.Map<Organization>(organization);
+        ctx.Organizations.Add(organizationToPut);
+        await ctx.SaveChangesAsync();
+        return Ok(_mapper.Map<OrganizationGetDto>(organizationToPut));
     }
 
     /// <summary>
@@ -73,10 +76,10 @@ public class OrganizationController : ControllerBase
     /// <param name="organizationToPut">New organization data</param>
     /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] OrganizationPostDto organizationToPut)
+    public async Task<ActionResult<OrganizationGetDto>> Put(int id, [FromBody] OrganizationPostDto organizationToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        var organization = await ctx.Organizations.FirstOrDefaultAsync(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -85,8 +88,8 @@ public class OrganizationController : ControllerBase
         else
         {
             ctx.Organizations.Update(_mapper.Map(organizationToPut, organization));
-            ctx.SaveChanges();
-            return Ok();
+            await ctx.SaveChangesAsync();
+            return Ok(_mapper.Map<OrganizationGetDto>(organization));
         }
     }
 
@@ -99,7 +102,7 @@ public class OrganizationController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var organization = ctx.Organizations.FirstOrDefault(organization => organization.OrganizationId == id);
+        var organization = await ctx.Organizations.FirstOrDefaultAsync(organization => organization.OrganizationId == id);
         if (organization == null)
         {
             _logger.LogInformation("Not found organization with id: {id}", id);
@@ -108,7 +111,7 @@ public class OrganizationController : ControllerBase
         else
         {
             ctx.Organizations.Remove(organization);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

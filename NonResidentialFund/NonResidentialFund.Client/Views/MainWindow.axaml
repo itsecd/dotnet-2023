@@ -1,0 +1,101 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:NonResidentialFund.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="NonResidentialFund.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Приватизация нежилого фонда">
+	
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/NonResidentialFundStyles.axaml"/>
+	</Window.Styles>
+	<TabControl>
+		<TabItem Header="Организации">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddOrganizationCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdateOrganizationCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteOrganizationCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Organizations}" SelectedItem="{Binding SelectedOrganization}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="ID" Binding="{Binding OrganizationId}"/>
+							<DataGridTextColumn Header="Название" Binding="{Binding OrganizationName}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
+		</TabItem>
+		<TabItem Header="Здания">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddBuildingCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdateBuildingCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteBuildingCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="ID" Binding="{Binding RegistrationNumber}"/>
+							<DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+							<DataGridTextColumn Header="ID района" Binding="{Binding DistrictId}"/>
+							<DataGridTextColumn Header="Площадь" Binding="{Binding Area}"/>
+							<DataGridTextColumn Header="Количество этажей" Binding="{Binding FloorCount}"/>
+							<DataGridTextColumn Header="Дата постройки" Binding="{Binding BuildDate}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
+		</TabItem>
+		<TabItem Header="Аукционы">
+			<DockPanel>
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddAuctionCommand}">
+							<Image Source="/Assets/add96.ico"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnUpdateAuctionCommand}">
+							<Image Source="/Assets/update.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteAuctionCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								Items="{Binding Auctions}" SelectedItem="{Binding SelectedAuction}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="ID" Binding="{Binding AuctionId}"/>
+							<DataGridTextColumn Header="Дата проведения" Binding="{Binding Date}"/>
+							<DataGridTextColumn Header="ID организации-организатора" Binding="{Binding OrganizationId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</DockPanel>
+		</TabItem>
+		<TabItem Header="Покупатели">
+		</TabItem>
+		<TabItem Header="Приватизированные здания">
+		</TabItem>
+	</TabControl>
+</Window>

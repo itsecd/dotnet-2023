@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonResidentialFund.Server", "NonResidentialFund.Server\NonResidentialFund.Server.csproj", "{ED337685-6B71-4EEB-9950-3E083694B986}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonResidentialFund.Client", "NonResidentialFund.Client\NonResidentialFund.Client.csproj", "{3C385319-6D6F-4140-9AA7-6FC035A7F47E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{ED337685-6B71-4EEB-9950-3E083694B986}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED337685-6B71-4EEB-9950-3E083694B986}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED337685-6B71-4EEB-9950-3E083694B986}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C385319-6D6F-4140-9AA7-6FC035A7F47E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C385319-6D6F-4140-9AA7-6FC035A7F47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C385319-6D6F-4140-9AA7-6FC035A7F47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C385319-6D6F-4140-9AA7-6FC035A7F47E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

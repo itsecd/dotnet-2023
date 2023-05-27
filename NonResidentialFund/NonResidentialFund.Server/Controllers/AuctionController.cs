@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Model;
 using NonResidentialFund.Server.Dto;
+using System;
 
 namespace NonResidentialFund.Server.Controllers;
 
@@ -30,7 +31,8 @@ public class AuctionController : ControllerBase
     {
         _logger.LogInformation("Get all auctions");
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        return _mapper.Map<IEnumerable<AuctionGetDto>>(ctx.Auctions); ;
+        var auctions = await ctx.Auctions.ToListAsync();
+        return _mapper.Map<IEnumerable<AuctionGetDto>>(auctions); ;
     }
 
     /// <summary>
@@ -42,7 +44,7 @@ public class AuctionController : ControllerBase
     public async Task<ActionResult<AuctionGetDto>> Get(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = await ctx.Auctions.FindAsync(id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -60,13 +62,14 @@ public class AuctionController : ControllerBase
     /// </summary>
     /// <param name="auction">Auction to be created</param>
     [HttpPost]
-    public async void Post([FromBody] AuctionPostDto auction)
+    public async Task<ActionResult<AuctionGetDto>> Post([FromBody] AuctionPostDto auction)
     {
         _logger.LogInformation("Post request auctions: create auction");
         using var ctx = await _contextFactory.CreateDbContextAsync();
         var auctionToCreate = _mapper.Map<Auction>(auction);
         ctx.Auctions.Add(auctionToCreate);
-        ctx.SaveChanges();
+        await ctx.SaveChangesAsync();
+        return Ok(_mapper.Map<AuctionGetDto>(auctionToCreate));
     }
 
     /// <summary>
@@ -76,10 +79,10 @@ public class AuctionController : ControllerBase
     /// <param name="auctionToPut">New auction data</param>
     /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] AuctionPostDto auctionToPut)
+    public async Task<ActionResult<AuctionGetDto>> Put(int id, [FromBody] AuctionPostDto auctionToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = await ctx.Auctions.FindAsync(id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -89,8 +92,8 @@ public class AuctionController : ControllerBase
         {
             _logger.LogInformation("Updated auction with id {id}", id);
             ctx.Auctions.Update(_mapper.Map(auctionToPut, auction));
-            ctx.SaveChanges();
-            return Ok();
+            await ctx.SaveChangesAsync();
+            return Ok(_mapper.Map<AuctionGetDto>(auction));
         }
     }
 
@@ -103,7 +106,7 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = await ctx.Auctions.FindAsync(id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -112,7 +115,7 @@ public class AuctionController : ControllerBase
         else
         {
             ctx.Auctions.Remove(auction);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }
@@ -126,7 +129,7 @@ public class AuctionController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuildingAuctionConnectionForAuctionDto>>> GetBuildings(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = await ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefaultAsync(auction => auction.AuctionId == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -148,11 +151,11 @@ public class AuctionController : ControllerBase
     /// <param name="connection">Building to be add</param>
     /// <returns>Result of operation</returns>
     [HttpPost("{id}/Buildings")]
-    public async Task<IActionResult> PostBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
+    public async Task<ActionResult<BuildingAuctionConnectionForAuctionDto>> PostBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
-        var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
+        var auction = await ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefaultAsync(auction => auction.AuctionId == id);
+        var building = await ctx.Buildings.FirstOrDefaultAsync(building => building.RegistrationNumber == connection.BuildingId);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -164,8 +167,8 @@ public class AuctionController : ControllerBase
             {
                 var connectionToAdd = new BuildingAuctionConnection(connection.BuildingId, id);
                 auction.Buildings.Add(connectionToAdd);
-                ctx.SaveChanges();
-                return Ok();
+                await ctx.SaveChangesAsync();
+                return Ok(_mapper.Map<BuildingAuctionConnectionForAuctionDto>(connectionToAdd));
             }
             else
             {
@@ -184,8 +187,8 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> DeleteBuilding(int id, [FromBody] BuildingAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefault(auction => auction.AuctionId == id);
-        var building = ctx.Buildings.FirstOrDefault(building => building.RegistrationNumber == connection.BuildingId);
+        var auction = await ctx.Auctions.Include(auction => auction.Buildings).FirstOrDefaultAsync(auction => auction.AuctionId == id);
+        var building = await ctx.Buildings.FirstOrDefaultAsync(building => building.RegistrationNumber == connection.BuildingId);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -197,7 +200,7 @@ public class AuctionController : ControllerBase
             if (connectionToDelete != null)
             {
                 auction.Buildings.Remove(connectionToDelete);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 return Ok();
             }
             else
@@ -216,7 +219,7 @@ public class AuctionController : ControllerBase
     public async Task<ActionResult<IEnumerable<BuyerAuctionConnectionForAuctionDto>>> GetBuyers(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
+        var auction = await ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefaultAsync(auction => auction.AuctionId == id);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -238,11 +241,11 @@ public class AuctionController : ControllerBase
     /// <param name="connection">Buyer to be add</param>
     /// <returns>Result of operation</returns>
     [HttpPost("{id}/Buyers")]
-    public async Task<IActionResult> PostBuilding(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
+    public async Task<ActionResult<BuyerAuctionConnectionForAuctionDto>> PostBuilding(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
-        var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
+        var auction = await ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefaultAsync(auction => auction.AuctionId == id);
+        var buyer = await ctx.Buyers.FirstOrDefaultAsync(buyer => buyer.BuyerId == connection.BuyerId);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -254,8 +257,8 @@ public class AuctionController : ControllerBase
             {
                 var connectionToAdd = new BuyerAuctionConnection(connection.BuyerId, id);
                 auction.Buyers.Add(connectionToAdd);
-                ctx.SaveChanges();
-                return Ok();
+                await ctx.SaveChangesAsync();
+                return Ok(_mapper.Map<BuyerAuctionConnectionForAuctionDto>(connectionToAdd));
             }
             else
             {
@@ -274,8 +277,8 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> DeleteBuyer(int id, [FromBody] BuyerAuctionConnectionForAuctionDto connection)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var auction = ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefault(auction => auction.AuctionId == id);
-        var buyer = ctx.Buyers.FirstOrDefault(buyer => buyer.BuyerId == connection.BuyerId);
+        var auction = await ctx.Auctions.Include(auction => auction.Buyers).FirstOrDefaultAsync(auction => auction.AuctionId == id);
+        var buyer = await ctx.Buyers.FirstOrDefaultAsync(buyer => buyer.BuyerId == connection.BuyerId);
         if (auction == null)
         {
             _logger.LogInformation("Not found auction with id: {id}", id);
@@ -287,7 +290,7 @@ public class AuctionController : ControllerBase
             if (connectionToDelete != null)
             {
                 auction.Buyers.Remove(connectionToDelete);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 return Ok();
             }
             else

@@ -29,7 +29,8 @@ public class DistrictController : ControllerBase
     {
         _logger.LogInformation("Get all districts");
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        return _mapper.Map<IEnumerable<DistrictGetDto>>(ctx.Districts);
+        var districts = await ctx.Districts.ToListAsync();
+        return _mapper.Map<IEnumerable<DistrictGetDto>>(districts);
     }
 
     /// <summary>
@@ -41,7 +42,7 @@ public class DistrictController : ControllerBase
     public async Task<ActionResult<DistrictGetDto>> Get(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var district = ctx.Districts.FirstOrDefault(district => district.DistrictId == id);
+        var district = await ctx.Districts.FirstOrDefaultAsync(district => district.DistrictId == id);
         if (district == null)
         {
             _logger.LogInformation("Not found district with id: {id}", id);
@@ -59,11 +60,13 @@ public class DistrictController : ControllerBase
     /// </summary>
     /// <param name="district">District to be created</param>
     [HttpPost]
-    public async void Post([FromBody] DistrictPostDto district)
+    public async Task<ActionResult<DistrictGetDto>> Post([FromBody] DistrictPostDto district)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Districts.Add(_mapper.Map<District>(district));
-        ctx.SaveChanges();
+        var districtToAdd = _mapper.Map<District>(district);
+        ctx.Districts.Add(districtToAdd);
+        await ctx.SaveChangesAsync();
+        return Ok(_mapper.Map<DistrictGetDto>(districtToAdd));
     }
 
     /// <summary>
@@ -73,10 +76,10 @@ public class DistrictController : ControllerBase
     /// <param name="districtToPut">New district data</param>
     /// <returns>Result of operation</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] DistrictPostDto districtToPut)
+    public async Task<ActionResult<DistrictGetDto>> Put(int id, [FromBody] DistrictPostDto districtToPut)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var district = ctx.Districts.FirstOrDefault(district => district.DistrictId == id);
+        var district = await ctx.Districts.FirstOrDefaultAsync(district => district.DistrictId == id);
         if (district == null)
         {
             _logger.LogInformation("Not found district {id}", id);
@@ -85,8 +88,8 @@ public class DistrictController : ControllerBase
         else
         {
             ctx.Districts.Update(_mapper.Map(districtToPut, district));
-            ctx.SaveChanges();
-            return Ok();
+            await ctx.SaveChangesAsync();
+            return Ok(_mapper.Map<DistrictGetDto>(district));
         }
     }
 
@@ -99,7 +102,7 @@ public class DistrictController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         using var ctx = await _contextFactory.CreateDbContextAsync();
-        var district = ctx.Districts.FirstOrDefault(district => district.DistrictId == id);
+        var district = await ctx.Districts.FirstOrDefaultAsync(district => district.DistrictId == id);
         if (district == null)
         {
             _logger.LogInformation("Not found district with id: {id}", id);
@@ -108,7 +111,7 @@ public class DistrictController : ControllerBase
         else
         {
             ctx.Districts.Remove(district);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return Ok();
         }
     }

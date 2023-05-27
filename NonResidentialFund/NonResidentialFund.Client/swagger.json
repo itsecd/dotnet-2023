@@ -1,0 +1,2581 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NonResidentialFund.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Auction": {
+      "get": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Returns all auctions",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Creates new auction",
+        "requestBody": {
+          "description": "Auction to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auction/{id}": {
+      "get": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Returns the auction by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Changes the auction by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the auction to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New auction data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuctionPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuctionGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Removes the auction by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the auction to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Auction/{id}/Buildings": {
+      "get": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Returns the registration numbers of the buildings that were offered at the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Adds a new building to the list of buildings for sale at the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Building to be add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Removes a building from the list of buildings for sale at the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Building to be removed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForAuctionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Auction/{id}/Buyers": {
+      "get": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Returns the id of the buyers who participated in the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Adds a new buyer to the list of buyers who participated in the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Buyer to be add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Auction"
+        ],
+        "summary": "Removes a buyer from the list of buyers who participated in the specified auction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of auction",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Buyer to be remove",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForAuctionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Building": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Returns all buildings",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Creates new building",
+        "requestBody": {
+          "description": "Building to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Building/{registrationNumber}": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Returns the building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "registration number of the building",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Changes the building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the building to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New building data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Removes the building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the building to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Building/{registrationNumber}/Auctions": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Returning auctions, in which the building was put up for sale",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the building",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Adds a new auction to the list of auctions in which the building was put up for sale",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the building",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Auction to be add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "Removes a auction from the list of auctions in which the building was put up for sale",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of building",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Auction to be remove",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingAuctionConnectionForBuildingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Buyer": {
+      "get": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Returns all buyers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Creates new buyer",
+        "requestBody": {
+          "description": "Buyer to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Buyer/{id}": {
+      "get": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Returns the buyer by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the buyer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Changes the buyer by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the buyer to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New buyer data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Removes the buyer by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the buyer to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Buyer/{id}/Auctions": {
+      "get": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Returns auctions in which the specified buyer participated",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the buyer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Adds a new auction to the list of auctions in which the specified buyer participated",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the buyer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Auction to be add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Buyer"
+        ],
+        "summary": "Removes a auction from the list of auctions in which the specified buyer participated",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the buyer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Auction to be remove",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyerAuctionConnectionForBuyerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/District": {
+      "get": {
+        "tags": [
+          "District"
+        ],
+        "summary": "Returns all districts",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DistrictGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DistrictGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DistrictGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "District"
+        ],
+        "summary": "Creates new district",
+        "requestBody": {
+          "description": "District to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/District/{id}": {
+      "get": {
+        "tags": [
+          "District"
+        ],
+        "summary": "Returns the district by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the district",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "District"
+        ],
+        "summary": "Changes the district by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the district to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New district data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DistrictPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "District"
+        ],
+        "summary": "Removes the district by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the district to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Organization": {
+      "get": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Returns all organizations",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Creates new organization",
+        "requestBody": {
+          "description": "Organization to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Organization/{id}": {
+      "get": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Returns the organization by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the organization",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Changes the organization by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the organization to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New organization data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Removes the organization by the specified id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the organization to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Privatized": {
+      "get": {
+        "tags": [
+          "Privatized"
+        ],
+        "summary": "Returns all privatized buildings",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrivatizedGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrivatizedGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrivatizedGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Privatized"
+        ],
+        "summary": "Creates new privatized building",
+        "requestBody": {
+          "description": "Privatized building to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Privatized/{registrationNumber}": {
+      "get": {
+        "tags": [
+          "Privatized"
+        ],
+        "summary": "Returns the privatized building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "registration number of the privatized building",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Privatized"
+        ],
+        "summary": "Changes the privatized building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the privatized building to be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New privatized building data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivatizedPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivatizedGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Privatized"
+        ],
+        "summary": "Removes the privatized building by the specified registration number",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "description": "Registration number of the privatized building to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAllCustomers": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Returns information about all customers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAuctionsNotAllLotsSold": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output information on auctions in which all auctioned buildings were not sold",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetBuyersInSpecifiedDistrict/{id}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Output the information about the buyers who received the nonresidential fund for a certain the district of the city, and the total amount of privatized fund of the district. Arrange by full name",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "District id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAddressesOfAuctionParticipantsInSpecifiedDate/{date}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Find the addresses of all buyers participating in the auction of the specified date (Date format: 2022-03-21)",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAddressDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAddressDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerAddressDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetTopBuyersByExpenses": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Returns the top 5 buyers who spent the most money",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerExpensesDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerExpensesDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyerExpensesDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAuctionsWithHighestIncome": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Returns the data on the auctions that brought the most profit",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionIncomeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionIncomeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuctionIncomeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuctionGetDto": {
+        "type": "object",
+        "properties": {
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - unique key of auction",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date - auction date",
+            "format": "date-time"
+          },
+          "organizationId": {
+            "type": "integer",
+            "description": "OrganizationId - the id of the organization that organized the auction",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "AuctionGetDto - used to represent the Auction object in the get-request."
+      },
+      "AuctionIncomeDto": {
+        "type": "object",
+        "properties": {
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - unique key of auction",
+            "format": "int32"
+          },
+          "income": {
+            "type": "number",
+            "description": "The income that the auction received",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "AuctionIncomeDto - used to provide information about the id of the auction and its income."
+      },
+      "AuctionPostDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date - auction date",
+            "format": "date-time"
+          },
+          "organizationId": {
+            "type": "integer",
+            "description": "OrganizationId - the id of the organization that organized the auction",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "AuctionPostDto - used to get information about the Auction object in the post-request to create it in the database."
+      },
+      "BuildingAuctionConnectionForAuctionDto": {
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "integer",
+            "description": "BuildingId - The id of the building being auctioned off",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuildingAuctionConnectionForAuctionDto - represents BuildingAuctionConnection object.\r\nIt used to get information about which buildings were offered for sale for the specified auction."
+      },
+      "BuildingAuctionConnectionForBuildingDto": {
+        "type": "object",
+        "properties": {
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - The id of auction",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuildingAuctionConnectionForBuildingDto - represents BuildingAuctionConnection object.\r\nIt used to obtain information on which auctions the specified building has been offered for sale."
+      },
+      "BuildingGetDto": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of building",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - a string that store address of building",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "description": "DistrictId - id of the district in which the building is located",
+            "format": "int32"
+          },
+          "area": {
+            "type": "number",
+            "description": "Area - Building area",
+            "format": "double"
+          },
+          "floorCount": {
+            "type": "integer",
+            "description": "FloorCount - count of floors in building",
+            "format": "int32"
+          },
+          "buildDate": {
+            "type": "string",
+            "description": "BuildDate - date of building construction",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuildingGetDto - used to represent the Building object in the get-request."
+      },
+      "BuildingPostDto": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of building",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - a string that store address of building",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "description": "DistrictId - id of the district in which the building is located",
+            "format": "int32"
+          },
+          "area": {
+            "type": "number",
+            "description": "Area - Building area",
+            "format": "double"
+          },
+          "floorCount": {
+            "type": "integer",
+            "description": "FloorCount - count of floors in building",
+            "format": "int32"
+          },
+          "buildDate": {
+            "type": "string",
+            "description": "BuildDate - date of building construction",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuildingPostDto - used to get information about the Building object in the post-request to create it in the database."
+      },
+      "BuyerAddressDto": {
+        "type": "object",
+        "properties": {
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - the id of the buyer",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - buyer's residence address",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerAddressDto - Represents information about the buyer's id and address."
+      },
+      "BuyerAuctionConnectionForAuctionDto": {
+        "type": "object",
+        "properties": {
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - the id of the buyer participating in the auction",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerAuctionConnectionForAuctionDto - represents BuyerAuctionConnection object.\r\nIt used to obtain information about which buyers participated in the specified auction."
+      },
+      "BuyerAuctionConnectionForBuyerDto": {
+        "type": "object",
+        "properties": {
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - The id of auction",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerAuctionConnectionForBuyerDto - represents BuyerAuctionConnection object.\r\nIt used to obtain information on which auctions the specified buyer participated in."
+      },
+      "BuyerExpensesDto": {
+        "type": "object",
+        "properties": {
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - the id of the buyer",
+            "format": "int32"
+          },
+          "expenses": {
+            "type": "number",
+            "description": "Expenses cpent by the buyer",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerExpensesDto - represents information about the buyer and his total expenses."
+      },
+      "BuyerGetDto": {
+        "type": "object",
+        "properties": {
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - the id of the buyer",
+            "format": "int32"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - buyer's last name",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - buyer's first name",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "description": "MiddleName - buyer's middle name",
+            "nullable": true
+          },
+          "passportSeries": {
+            "type": "string",
+            "description": "PassportSeries - buyer's passport series",
+            "nullable": true
+          },
+          "passportNumber": {
+            "type": "string",
+            "description": "PassportNumber - buyer's passpoer number",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - buyer's residence address",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerGetDto - used to represent the Buyer object in the get-request."
+      },
+      "BuyerPostDto": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "description": "LastName - buyer's last name",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - buyer's first name",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "description": "MiddleName - buyer's middle name",
+            "nullable": true
+          },
+          "passportSeries": {
+            "type": "string",
+            "description": "PassportSeries - buyer's passport series",
+            "nullable": true
+          },
+          "passportNumber": {
+            "type": "string",
+            "description": "PassportNumber - buyer's passpoer number",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - buyer's residence address",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "BuyerPostDto - used to get information about the Buyer object in the post-request to create it in the database."
+      },
+      "DistrictGetDto": {
+        "type": "object",
+        "properties": {
+          "districtId": {
+            "type": "integer",
+            "description": "DistrictId - the id of the district",
+            "format": "int32"
+          },
+          "districtName": {
+            "type": "string",
+            "description": "DistrictName - district's name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DistrictGetDto - used to represent the District object in the get-request."
+      },
+      "DistrictPostDto": {
+        "type": "object",
+        "properties": {
+          "districtName": {
+            "type": "string",
+            "description": "DistrictName - district's name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DistrictPostDto - used to get information about the District object in the post-request to create it in the database."
+      },
+      "OrganizationGetDto": {
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "integer",
+            "description": "OrganizationId - the id of the organization",
+            "format": "int32"
+          },
+          "organizationName": {
+            "type": "string",
+            "description": "OrganizationName - organization's name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "OrganizationGetDto - used to represent the Organization object in the get-request."
+      },
+      "OrganizationPostDto": {
+        "type": "object",
+        "properties": {
+          "organizationName": {
+            "type": "string",
+            "description": "OrganizationName - organization's name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "OrganizationPostDto - used to get information about the Organization object in the post-request to create it in the database."
+      },
+      "PrivatizedGetDto": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of privatized building",
+            "format": "int32"
+          },
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - The buyer's id of building",
+            "format": "int32"
+          },
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - The id of the auction at which the building was sold",
+            "format": "int32"
+          },
+          "saleDate": {
+            "type": "string",
+            "description": "SaleDate - Date of sale of the building",
+            "format": "date-time"
+          },
+          "startPrice": {
+            "type": "number",
+            "description": "StartPrice - The starting price for this building at the auction",
+            "format": "double"
+          },
+          "endPrice": {
+            "type": "number",
+            "description": "EndPrice - The final price of this building at the auction",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PrivatizedGetDto - used to represent the Privatized building object in the get-request."
+      },
+      "PrivatizedPostDto": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of privatized building",
+            "format": "int32"
+          },
+          "buyerId": {
+            "type": "integer",
+            "description": "BuyerId - The buyer's id of building",
+            "format": "int32"
+          },
+          "auctionId": {
+            "type": "integer",
+            "description": "AuctionId - The id of the auction at which the building was sold",
+            "format": "int32"
+          },
+          "saleDate": {
+            "type": "string",
+            "description": "SaleDate - Date of sale of the building",
+            "format": "date-time"
+          },
+          "startPrice": {
+            "type": "number",
+            "description": "StartPrice - The starting price for this building at the auction",
+            "format": "double"
+          },
+          "endPrice": {
+            "type": "number",
+            "description": "EndPrice - The final price of this building at the auction",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PrivatizedPostDto - used to get information about the Privatized object in the post-request to create it in the database."
+      }
+    }
+  }
+}

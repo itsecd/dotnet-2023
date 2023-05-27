@@ -60,13 +60,14 @@ public class DepartmentController : Controller
     /// </summary>
     /// <param name="department">A new department that need to be added</param>
     [HttpPost]
-    public async void Post([FromBody] PostDepartmentDto department)
+    public async Task<ActionResult<GetDepartmentDto>> Post([FromBody] PostDepartmentDto department)
     {
         _logger.LogInformation("POST department method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedDepartment = _mapper.Map<Department>(department);
         ctx.Departments.Add(mappedDepartment);
         await ctx.SaveChangesAsync();
+        return Ok(_mapper.Map<GetDepartmentDto>(mappedDepartment));
     }
     /// <summary>
     /// The method updates a department information by ID
@@ -87,13 +88,16 @@ public class DepartmentController : Controller
         }
         ctx.Departments.Update(_mapper.Map(newDepartment, department));
         await ctx.SaveChangesAsync();
-        return Ok();
+        var mappedDepartment = _mapper.Map<Department>(newDepartment);
+        return Ok(_mapper.Map<GetDepartmentDto>(mappedDepartment));
     }
     /// <summary>
     /// The method deletes a department by ID
     /// </summary>
     /// <param name="id">An ID of the department</param>
-    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
+    /// <returns>Code 200 if operation is successful, 
+    /// code 404 if the department wasn't found
+    /// or code 409 if there are foreign key exception</returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult<GetDepartmentDto>> Delete(int id)
     {
@@ -105,8 +109,19 @@ public class DepartmentController : Controller
             _logger.LogInformation("The department with ID {id} is not found", id);
             return NotFound();
         }
-        ctx.Departments.Remove(department);
-        await ctx.SaveChangesAsync();
-        return Ok();
+        try
+        {
+            ctx.Departments.Remove(department);
+            await ctx.SaveChangesAsync();
+        }
+        catch(DbUpdateException ex)
+        {
+            _logger.LogInformation("SQL exception while deleting the department, " +
+                "exception message", ex.Message);
+            return Conflict("Can not remove the department because some rows " +
+                "in other tables are pointing on that department! " +
+                "Remove them first and then try again!");
+        }
+        return Ok(_mapper.Map<GetDepartmentDto>(department));
     }
 }

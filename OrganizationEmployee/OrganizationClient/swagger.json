@@ -1,0 +1,2924 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OrganizationServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Department": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "The method returns all the departments in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "The method adds a new department into organization",
+        "requestBody": {
+          "description": "A new department that need to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Department/{id}": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "The method returns a department by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Department ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "The method updates a department information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the department",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "The method deletes a department by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DepartmentEmployee": {
+      "get": {
+        "tags": [
+          "DepartmentEmployee"
+        ],
+        "summary": "The method returns all the connections between Department and Employee",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DepartmentEmployee"
+        ],
+        "summary": "The method adds a new DepartmentEmployee into organization",
+        "requestBody": {
+          "description": "A new DepartmentEmployee that need to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DepartmentEmployee/{id}": {
+      "get": {
+        "tags": [
+          "DepartmentEmployee"
+        ],
+        "summary": "The method returns a DepartmentEmployee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "DepartmentEmployee ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DepartmentEmployee"
+        ],
+        "summary": "The method updates a DepartmentEmployee information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the DepartmentEmployee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the DepartmentEmployee",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DepartmentEmployee"
+        ],
+        "summary": "The method deletes a DepartmentEmployee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the DepartmentEmployee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Employee": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "The method returns all the employee in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "The method adds a new employee into organization",
+        "requestBody": {
+          "description": "A new employee that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Employee/{id}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "The method returns an employee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "The method updates an employee's information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the employee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the employee",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "The method deletes an employee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the employee",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EmployeeOccupation": {
+      "get": {
+        "tags": [
+          "EmployeeOccupation"
+        ],
+        "summary": "The method returns all the connections between Employee and Occupation",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EmployeeOccupation"
+        ],
+        "summary": "The method adds a new EmployeeOccupation into organization",
+        "requestBody": {
+          "description": "A new EmployeeOccupation that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EmployeeOccupation/{id}": {
+      "get": {
+        "tags": [
+          "EmployeeOccupation"
+        ],
+        "summary": "The method returns a EmployeeOccupation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "EmployeeOccupation ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EmployeeOccupation"
+        ],
+        "summary": "The method updates an EmployeeOccupation information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the EmployeeOccupation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the EmployeeOccupation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EmployeeOccupation"
+        ],
+        "summary": "The method deletes a EmployeeOccupation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the EmployeeOccupation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EmployeeVacationVoucher": {
+      "get": {
+        "tags": [
+          "EmployeeVacationVoucher"
+        ],
+        "summary": "The method returns all the connections between Employee and VacationVoucher",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EmployeeVacationVoucher"
+        ],
+        "summary": "The method adds a new EmployeeVacationVoucher into organization",
+        "requestBody": {
+          "description": "A new EmployeeVacationVoucher that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EmployeeVacationVoucher/{id}": {
+      "get": {
+        "tags": [
+          "EmployeeVacationVoucher"
+        ],
+        "summary": "The method returns a EmployeeVacationVoucher by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "EmployeeVacationVoucher ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EmployeeVacationVoucher"
+        ],
+        "summary": "The method updates an EmployeeVacationVoucher information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the EmployeeVacationVoucher",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the EmployeeVacationVoucher",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EmployeeVacationVoucher"
+        ],
+        "summary": "The method deletes a EmployeeVacationVoucher by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the EmployeeVacationVoucher",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Occupation": {
+      "get": {
+        "tags": [
+          "Occupation"
+        ],
+        "summary": "The method returns all the occupations in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetOccupationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetOccupationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetOccupationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Occupation"
+        ],
+        "summary": "The method adds a new occupation into organization",
+        "requestBody": {
+          "description": "A new occupation that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Occupation/{id}": {
+      "get": {
+        "tags": [
+          "Occupation"
+        ],
+        "summary": "The method returns an occupation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Occupation ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Occupation"
+        ],
+        "summary": "The method updates an occupation information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the occupation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the occupation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOccupationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Occupation"
+        ],
+        "summary": "The method deletes an occupation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the occupation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOccupationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/DepartmentId/{departmentId}": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs all employees of the given department",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "description": "An ID of the department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetEmployeeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/EmployeesWithFewDepartments": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs all employees working in more than 1 department. \r\nThe result is sorted by last name, first name, patronymic name.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWithFewDepartmentsDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWithFewDepartmentsDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWithFewDepartmentsDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/ArchiveOfDismissals": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs the archive of dismissals, including registration number, first name, last name, patronymic name,\r\ndate of birth, workshop, department, occupation of the employee.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchiveOfDismissalsDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchiveOfDismissalsDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchiveOfDismissalsDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/AvgAgeInDepartments": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs an average age of employees for each department",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AverageAgeInDepartmentDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AverageAgeInDepartmentDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AverageAgeInDepartmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/EmployeeLastYearVoucher": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs the info about employees, who received a vacation voucher in past year.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeLastYearVoucherDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeLastYearVoucherDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeLastYearVoucherDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/EmployeeWithLongestWorkExperience": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "The method outputs the top-5 employees who have the longest working experience at the company.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWorkExperienceDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWorkExperienceDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeWorkExperienceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VacationVoucher": {
+      "get": {
+        "tags": [
+          "VacationVoucher"
+        ],
+        "summary": "The method returns all the vacation vouchers in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVacationVoucherDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVacationVoucherDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVacationVoucherDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "VacationVoucher"
+        ],
+        "summary": "The method adds a new VacationVoucher into organization",
+        "requestBody": {
+          "description": "A new VacationVoucher that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VacationVoucher/{id}": {
+      "get": {
+        "tags": [
+          "VacationVoucher"
+        ],
+        "summary": "The method returns an VacationVoucher by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "VacationVoucher ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VacationVoucher"
+        ],
+        "summary": "The method updates an VacationVoucher information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the VacationVoucher",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the VacationVoucher",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVacationVoucherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VacationVoucher"
+        ],
+        "summary": "The method deletes an VacationVoucher by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the VacationVoucher",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VoucherType": {
+      "get": {
+        "tags": [
+          "VoucherType"
+        ],
+        "summary": "The method returns all the voucher types in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVoucherTypeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVoucherTypeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetVoucherTypeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "VoucherType"
+        ],
+        "summary": "The method adds a new VoucherType into organization",
+        "requestBody": {
+          "description": "A new VoucherType that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VoucherType/{id}": {
+      "get": {
+        "tags": [
+          "VoucherType"
+        ],
+        "summary": "The method returns an voucher type by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "VoucherType ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VoucherType"
+        ],
+        "summary": "The method updates an VoucherType information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the VoucherType",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the VoucherType",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostVoucherTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VoucherType"
+        ],
+        "summary": "The method deletes an VoucherType by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the VoucherType",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workshop": {
+      "get": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "The method returns all the workshops in the organization",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetWorkshopDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetWorkshopDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetWorkshopDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "The method adds a new workshop into organization",
+        "requestBody": {
+          "description": "A new workshop that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workshop/{id}": {
+      "get": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "The method returns an workshop by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Workshop ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWorkshopDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWorkshopDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWorkshopDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "The method updates a workshop information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the workshop",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information of the workshop",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWorkshopDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "The method deletes a workshop by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An ID of the workshop",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWorkshopDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArchiveOfDismissalsDto": {
+        "type": "object",
+        "properties": {
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "patronymicName": {
+            "type": "string",
+            "description": "LastName - patronymic name of on Employee",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of an Employee",
+            "format": "date-time",
+            "nullable": true
+          },
+          "workshopName": {
+            "type": "string",
+            "description": "Workshop - an id of the Workshop",
+            "nullable": true
+          },
+          "departmentName": {
+            "type": "string",
+            "description": "DepartmentName - a name of department of the Employee",
+            "nullable": true
+          },
+          "occupationName": {
+            "type": "string",
+            "description": "OccupationName - a name of occupation of the Employee",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ArchiveOfDismissals represents an archive of dismissed employees"
+      },
+      "AverageAgeInDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "averageAge": {
+            "type": "number",
+            "description": "AverageAge - an average age of employees in the department",
+            "format": "double",
+            "nullable": true
+          },
+          "departmentName": {
+            "type": "string",
+            "description": "DepartmentName - a name of the department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "AverageAgeInDepartmentDto represents a department and a calculated employees' average age in that department"
+      },
+      "EmployeeLastYearVoucherDto": {
+        "type": "object",
+        "properties": {
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "voucherTypeName": {
+            "type": "string",
+            "description": "VoucherTypeName - a name of a VoucherType",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "EmployeeLastYearVoucherDto - represents an employee and employee's vacation voucher, that they has received"
+      },
+      "EmployeeWithFewDepartmentsDto": {
+        "type": "object",
+        "properties": {
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "patronymicName": {
+            "type": "string",
+            "description": "LastName - patronymic name of on Employee",
+            "nullable": true
+          },
+          "countDepart": {
+            "type": "integer",
+            "description": "CountDepart - a number of departments, in which the employee works",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classs EmployeeWithFewDepartmentsDto represents an employee, who works in 2 or more departments of the organization"
+      },
+      "EmployeeWorkExperienceDto": {
+        "type": "object",
+        "properties": {
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "workExperience": {
+            "type": "number",
+            "description": "WorkExperience - a work experience of an Employee",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "EmployeeWorkExperienceDto - represents an employee and employee's work experience"
+      },
+      "GetDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the department",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class GetDepartmentDto - represents a department in company"
+      },
+      "GetDepartmentEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the link",
+            "format": "int32"
+          },
+          "departmentId": {
+            "type": "integer",
+            "description": "DepartmentId - an id of Department object",
+            "format": "int32",
+            "nullable": true
+          },
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class DepartmentEmployee - represents a many-to-many relationship\r\nbetween Employee and Department"
+      },
+      "GetEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Employee object",
+            "format": "int32"
+          },
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "patronymicName": {
+            "type": "string",
+            "description": "LastName - patronymic name of on Employee",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of an Employee",
+            "format": "date-time"
+          },
+          "workshopId": {
+            "type": "integer",
+            "description": "Workshop - an id of the Workshop",
+            "format": "int32"
+          },
+          "homeAddress": {
+            "type": "string",
+            "description": "HomeAddress - home address of an employee",
+            "nullable": true
+          },
+          "homeTelephone": {
+            "type": "string",
+            "description": "HomeTelephone - home telephone of an employee",
+            "nullable": true
+          },
+          "workTelephone": {
+            "type": "string",
+            "description": "Work Telephone - work telephone of an employee",
+            "nullable": true
+          },
+          "familyStatus": {
+            "type": "string",
+            "description": "FamilyStatus - family status of an employee (ex. \"married\", \"single\")",
+            "nullable": true
+          },
+          "familyMembersCount": {
+            "type": "integer",
+            "description": "FamilyMembersCount - number of people in the employee's family",
+            "format": "int32"
+          },
+          "childrenCount": {
+            "type": "integer",
+            "description": "ChildrenCount - number of the employee's children",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classs PostEmployeeDto represents an employee in organization, it contains personal information."
+      },
+      "GetEmployeeOccupationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the class object",
+            "format": "int32"
+          },
+          "hireDate": {
+            "type": "string",
+            "description": "HireDate - a date, when an employee was hired on the given occupation.",
+            "format": "date-time"
+          },
+          "dismissalDate": {
+            "type": "string",
+            "description": "DismissalDate - a date, when an employee was dismissed from the occupation.\r\nCan be null if the employee is still working on that job.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "occupationId": {
+            "type": "integer",
+            "description": "OccupationId - an id of Occupation object",
+            "format": "int32",
+            "nullable": true
+          },
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class PostEmployeeOccupationDto - represents a many-to-many relationship\r\nbetween Employee and Occupation, also it contains date, when an employee was hired, and date, when employee was dismissed."
+      },
+      "GetEmployeeVacationVoucherDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the object",
+            "format": "int32"
+          },
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          },
+          "vacationVoucherId": {
+            "type": "integer",
+            "description": "VacationVoucherId - an id of VacationVoucher object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class PostEmployeeVacationVoucherDto - represents a many-to-many relationship between Employee and VacationVoucher"
+      },
+      "GetOccupationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the occupation",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the given occupation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostOccupationDto - represents an employee occupation."
+      },
+      "GetVacationVoucherDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of a VacationVoucher",
+            "format": "int32"
+          },
+          "issueDate": {
+            "type": "string",
+            "description": "IssueDate - a date, when the VacationVoucher was issued",
+            "format": "date-time"
+          },
+          "voucherTypeId": {
+            "type": "integer",
+            "description": "VoucherTypeId - an id of VoucherType object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostVacationVoucherDto - represents a vacation voucher, that may be issued to an employee.\r\nThe class stores information about issue date and voucher type."
+      },
+      "GetVoucherTypeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of a VoucherType",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of a VoucherType",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "VoucherType - represents a type of vacation voucher, e.g. \"sanatorium\", \"vacation home\", etc."
+      },
+      "GetWorkshopDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the workshop",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the workshop",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class PostWorkshopDto represents a workshop on the organization"
+      },
+      "PostDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class PostDepartmentDto - represents a department in company"
+      },
+      "PostDepartmentEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "departmentId": {
+            "type": "integer",
+            "description": "DepartmentId - an id of Department object",
+            "format": "int32",
+            "nullable": true
+          },
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class DepartmentEmployee - represents a many-to-many relationship\r\nbetween Employee and Department"
+      },
+      "PostEmployeeDto": {
+        "type": "object",
+        "properties": {
+          "regNumber": {
+            "type": "integer",
+            "description": "RegNumber - registration number of an Employee",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of an Employee",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of an Employee",
+            "nullable": true
+          },
+          "patronymicName": {
+            "type": "string",
+            "description": "LastName - patronymic name of on Employee",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of an Employee",
+            "format": "date-time"
+          },
+          "workshopId": {
+            "type": "integer",
+            "description": "Workshop - an id of the Workshop",
+            "format": "int32"
+          },
+          "homeAddress": {
+            "type": "string",
+            "description": "HomeAddress - home address of an employee",
+            "nullable": true
+          },
+          "homeTelephone": {
+            "type": "string",
+            "description": "HomeTelephone - home telephone of an employee",
+            "nullable": true
+          },
+          "workTelephone": {
+            "type": "string",
+            "description": "Work Telephone - work telephone of an employee",
+            "nullable": true
+          },
+          "familyStatus": {
+            "type": "string",
+            "description": "FamilyStatus - family status of an employee (ex. \"married\", \"single\")",
+            "nullable": true
+          },
+          "familyMembersCount": {
+            "type": "integer",
+            "description": "FamilyMembersCount - number of people in the employee's family",
+            "format": "int32"
+          },
+          "childrenCount": {
+            "type": "integer",
+            "description": "ChildrenCount - number of the employee's children",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Classs PostEmployeeDto represents an employee in organization, it contains personal information."
+      },
+      "PostEmployeeOccupationDto": {
+        "type": "object",
+        "properties": {
+          "hireDate": {
+            "type": "string",
+            "description": "HireDate - a date, when an employee was hired on the given occupation.",
+            "format": "date-time"
+          },
+          "dismissalDate": {
+            "type": "string",
+            "description": "DismissalDate - a date, when an employee was dismissed from the occupation.\r\nCan be null if the employee is still working on that job.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "occupationId": {
+            "type": "integer",
+            "description": "OccupationId - an id of Occupation object",
+            "format": "int32",
+            "nullable": true
+          },
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class PostEmployeeOccupationDto - represents a many-to-many relationship\r\nbetween Employee and Occupation, also it contains date, when an employee was hired, and date, when employee was dismissed."
+      },
+      "PostEmployeeVacationVoucherDto": {
+        "type": "object",
+        "properties": {
+          "employeeId": {
+            "type": "integer",
+            "description": "EmployeeId - an id of Employee object",
+            "format": "int32",
+            "nullable": true
+          },
+          "vacationVoucherId": {
+            "type": "integer",
+            "description": "VacationVoucherId - an id of VacationVoucher object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "class PostEmployeeVacationVoucherDto - represents a many-to-many relationship between Employee and VacationVoucher"
+      },
+      "PostOccupationDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the given occupation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostOccupationDto - represents an employee occupation."
+      },
+      "PostVacationVoucherDto": {
+        "type": "object",
+        "properties": {
+          "issueDate": {
+            "type": "string",
+            "description": "IssueDate - a date, when the VacationVoucher was issued",
+            "format": "date-time"
+          },
+          "voucherTypeId": {
+            "type": "integer",
+            "description": "VoucherTypeId - an id of VoucherType object",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PostVacationVoucherDto - represents a vacation voucher, that may be issued to an employee.\r\nThe class stores information about issue date and voucher type."
+      },
+      "PostVoucherTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of a VoucherType",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "VoucherType - represents a type of vacation voucher, e.g. \"sanatorium\", \"vacation home\", etc."
+      },
+      "PostWorkshopDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the workshop",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class PostWorkshopDto represents a workshop on the organization"
+      }
+    }
+  }
+}

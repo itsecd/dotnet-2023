@@ -1,0 +1,2048 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PharmacyCityNetwork.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/all-products-from-pharmacy": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get all products from pharmacy",
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "query",
+            "description": "Prarmacy Id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/products-from-pharmacy": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get products from pharmacy",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "description": "Product Id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/farm-group": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get average cost for each farmGroup and pharmacy",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/top-five-pharmacy": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get top five pharmacy",
+        "parameters": [
+          {
+            "name": "dateOne",
+            "in": "query",
+            "description": "Beginning of the period",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateTwo",
+            "in": "query",
+            "description": "End of the period",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/pharmacy-from-address": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get pharmacy from address",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "description": "Product Id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "description": "Address pharmacy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "countProduct",
+            "in": "query",
+            "description": "Count Product",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/pharmacy-min-cost": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get pharmacy with min cost",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "description": "Product Id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Group": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Get info about all groups",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Post a new group",
+        "requestBody": {
+          "description": "Group class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Group/{idGroup}": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Get group info by id",
+        "parameters": [
+          {
+            "name": "idGroup",
+            "in": "path",
+            "description": "Group Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Put group",
+        "parameters": [
+          {
+            "name": "idGroup",
+            "in": "path",
+            "description": "An id of group which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Group class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Delete a group",
+        "parameters": [
+          {
+            "name": "idGroup",
+            "in": "path",
+            "description": "An id of group which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Manufacturer": {
+      "get": {
+        "tags": [
+          "Manufacturer"
+        ],
+        "summary": "Get info about all manufacturers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManufacturerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManufacturerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManufacturerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Manufacturer"
+        ],
+        "summary": "Post a new manufacturer",
+        "requestBody": {
+          "description": "Manufacturer class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Manufacturer/{idManufacturer}": {
+      "get": {
+        "tags": [
+          "Manufacturer"
+        ],
+        "summary": "Get manufacturer info by id",
+        "parameters": [
+          {
+            "name": "idManufacturer",
+            "in": "path",
+            "description": "Manufacturer Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManufacturerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManufacturerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManufacturerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Manufacturer"
+        ],
+        "summary": "Put manufacturer",
+        "parameters": [
+          {
+            "name": "idManufacturer",
+            "in": "path",
+            "description": "An id of manufacturer which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Manufacturer class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manufacturer"
+        ],
+        "summary": "Delete a manufacturer",
+        "parameters": [
+          {
+            "name": "idManufacturer",
+            "in": "path",
+            "description": "An id of manufacturer which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Pharmacy": {
+      "get": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "summary": "Get info about all pharmacys",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmacyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmacyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmacyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "summary": "Post a new pharmacy",
+        "requestBody": {
+          "description": "Pharmacy class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Pharmacy/{idPharmacy}": {
+      "get": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "summary": "Get pharmacy info by id",
+        "parameters": [
+          {
+            "name": "idPharmacy",
+            "in": "path",
+            "description": "Pharmacy Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmacyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmacyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmacyGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "summary": "Put pharmacy",
+        "parameters": [
+          {
+            "name": "idPharmacy",
+            "in": "path",
+            "description": "An id of pharmacy which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Pharmacy class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "summary": "Delete a pharmacy",
+        "parameters": [
+          {
+            "name": "idPharmacy",
+            "in": "path",
+            "description": "An id of pharmacy which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/PharmaGroup": {
+      "get": {
+        "tags": [
+          "PharmaGroup"
+        ],
+        "summary": "Get info about all pharmaGroups",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmaGroupGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmaGroupGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PharmaGroupGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "PharmaGroup"
+        ],
+        "summary": "Post a new pharmaGroup",
+        "requestBody": {
+          "description": "PharmaGroup class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/PharmaGroup/{idPharmaGroup}": {
+      "get": {
+        "tags": [
+          "PharmaGroup"
+        ],
+        "summary": "Get pharmaGroup info by id",
+        "parameters": [
+          {
+            "name": "idPharmaGroup",
+            "in": "path",
+            "description": "PharmaGroup Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmaGroupGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmaGroupGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmaGroupGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PharmaGroup"
+        ],
+        "summary": "Put pharmaGroup",
+        "parameters": [
+          {
+            "name": "idPharmaGroup",
+            "in": "path",
+            "description": "An id of pharmaGroup which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "PharmaGroup class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmaGroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PharmaGroup"
+        ],
+        "summary": "Delete a pharmaGroup",
+        "parameters": [
+          {
+            "name": "idPharmaGroup",
+            "in": "path",
+            "description": "An id of pharmaGroup which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Product": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get info about all products",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Post a new product",
+        "requestBody": {
+          "description": "Product class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Product/{idProduct}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product info by id",
+        "parameters": [
+          {
+            "name": "idProduct",
+            "in": "path",
+            "description": "Product Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Put product",
+        "parameters": [
+          {
+            "name": "idProduct",
+            "in": "path",
+            "description": "An id of product which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Product class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Delete a product",
+        "parameters": [
+          {
+            "name": "idProduct",
+            "in": "path",
+            "description": "An id of product which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ProductPharmacy": {
+      "get": {
+        "tags": [
+          "ProductPharmacy"
+        ],
+        "summary": "Get info about all productPharmacys",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProductPharmacy"
+        ],
+        "summary": "Post a new productPharmacy",
+        "requestBody": {
+          "description": "ProductPharmacy class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ProductPharmacy/{idProductPharmacy}": {
+      "get": {
+        "tags": [
+          "ProductPharmacy"
+        ],
+        "summary": "Get productPharmacy info by id",
+        "parameters": [
+          {
+            "name": "idProductPharmacy",
+            "in": "path",
+            "description": "ProductPharmacy Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmacyGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProductPharmacy"
+        ],
+        "summary": "Put productPharmacy",
+        "parameters": [
+          {
+            "name": "idProductPharmacy",
+            "in": "path",
+            "description": "An id of productPharmacy which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ProductPharmacy class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmacyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProductPharmacy"
+        ],
+        "summary": "Delete a productPharmacy",
+        "parameters": [
+          {
+            "name": "idProductPharmacy",
+            "in": "path",
+            "description": "An id of productPharmacy which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ProductPharmaGroup": {
+      "get": {
+        "tags": [
+          "ProductPharmaGroup"
+        ],
+        "summary": "Get info about all productPharmaGroups",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProductPharmaGroup"
+        ],
+        "summary": "Post a new productPharmaGroup",
+        "requestBody": {
+          "description": "ProductPharmaGroup class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ProductPharmaGroup/{idProductPharmaGroup}": {
+      "get": {
+        "tags": [
+          "ProductPharmaGroup"
+        ],
+        "summary": "Get productPharmaGroup info by id",
+        "parameters": [
+          {
+            "name": "idProductPharmaGroup",
+            "in": "path",
+            "description": "ProductPharmaGroup Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductPharmaGroupGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProductPharmaGroup"
+        ],
+        "summary": "Put productPharmaGroup",
+        "parameters": [
+          {
+            "name": "idProductPharmaGroup",
+            "in": "path",
+            "description": "An id of productPharmaGroup which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ProductPharmaGroup class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPharmaGroupPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProductPharmaGroup"
+        ],
+        "summary": "Delete a productPharmaGroup",
+        "parameters": [
+          {
+            "name": "idProductPharmaGroup",
+            "in": "path",
+            "description": "An id of productPharmaGroup which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sale": {
+      "get": {
+        "tags": [
+          "Sale"
+        ],
+        "summary": "Get info about all sales",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SaleGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SaleGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SaleGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sale"
+        ],
+        "summary": "Post a new sale",
+        "requestBody": {
+          "description": "Sale class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sale/{idSale}": {
+      "get": {
+        "tags": [
+          "Sale"
+        ],
+        "summary": "Get sale info by id",
+        "parameters": [
+          {
+            "name": "idSale",
+            "in": "path",
+            "description": "Sale Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Sale"
+        ],
+        "summary": "Put sale",
+        "parameters": [
+          {
+            "name": "idSale",
+            "in": "path",
+            "description": "An id of sale which would be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Sale class instance to insert to table",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sale"
+        ],
+        "summary": "Delete a sale",
+        "parameters": [
+          {
+            "name": "idSale",
+            "in": "path",
+            "description": "An id of sale which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GroupGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of group",
+            "format": "int32"
+          },
+          "groupName": {
+            "type": "string",
+            "description": "Group name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupPostDto": {
+        "type": "object",
+        "properties": {
+          "groupName": {
+            "type": "string",
+            "description": "Group name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ManufacturerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of manufacturer",
+            "format": "int32"
+          },
+          "manufacturerName": {
+            "type": "string",
+            "description": "Manufacturer name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ManufacturerPostDto": {
+        "type": "object",
+        "properties": {
+          "manufacturerName": {
+            "type": "string",
+            "description": "Manufacturer name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PharmacyGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of pharmacy",
+            "format": "int32"
+          },
+          "pharmacyName": {
+            "type": "string",
+            "description": "Pharmacy name",
+            "nullable": true
+          },
+          "pharmacyPhone": {
+            "type": "string",
+            "description": "Pharmacy phone",
+            "nullable": true
+          },
+          "pharmacyAddress": {
+            "type": "string",
+            "description": "Pharmacy address",
+            "nullable": true
+          },
+          "pharmacyDirector": {
+            "type": "string",
+            "description": "Pharmacy director",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PharmacyPostDto": {
+        "type": "object",
+        "properties": {
+          "pharmacyName": {
+            "type": "string",
+            "description": "Pharmacy name",
+            "nullable": true
+          },
+          "pharmacyPhone": {
+            "type": "string",
+            "description": "Pharmacy phone",
+            "nullable": true
+          },
+          "pharmacyAddress": {
+            "type": "string",
+            "description": "Pharmacy address",
+            "nullable": true
+          },
+          "pharmacyDirector": {
+            "type": "string",
+            "description": "Pharmacy director",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PharmaGroupGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of pharma group",
+            "format": "int32"
+          },
+          "pharmaGroupName": {
+            "type": "string",
+            "description": "Pharma group name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PharmaGroupPostDto": {
+        "type": "object",
+        "properties": {
+          "pharmaGroupName": {
+            "type": "string",
+            "description": "Pharma group name",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of product",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "description": "Product name",
+            "nullable": true
+          },
+          "groupId": {
+            "type": "integer",
+            "description": "Product group",
+            "format": "int32"
+          },
+          "manufacturerId": {
+            "type": "integer",
+            "description": "Product manufacturer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductPharmacyGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of productPharmacy",
+            "format": "int32"
+          },
+          "productCount": {
+            "type": "integer",
+            "description": "Product count",
+            "format": "int32"
+          },
+          "productCost": {
+            "type": "integer",
+            "description": "Product cost",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Products of product pharmacy",
+            "format": "int32"
+          },
+          "pharmacyId": {
+            "type": "integer",
+            "description": "Pharmacy of product pharmacy",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductPharmacyPostDto": {
+        "type": "object",
+        "properties": {
+          "productCount": {
+            "type": "integer",
+            "description": "Product count",
+            "format": "int32"
+          },
+          "productCost": {
+            "type": "integer",
+            "description": "Product cost",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Products of product pharmacy",
+            "format": "int32"
+          },
+          "pharmacyId": {
+            "type": "integer",
+            "description": "Pharmacy of product pharmacy",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductPharmaGroupGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of product pharma group",
+            "format": "int32"
+          },
+          "pharmaGroupId": {
+            "type": "integer",
+            "description": "Pharma group",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Product of pharma group",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductPharmaGroupPostDto": {
+        "type": "object",
+        "properties": {
+          "pharmaGroupId": {
+            "type": "integer",
+            "description": "Pharma group",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Product of pharma group",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductPostDto": {
+        "type": "object",
+        "properties": {
+          "productName": {
+            "type": "string",
+            "description": "Product name",
+            "nullable": true
+          },
+          "groupId": {
+            "type": "integer",
+            "description": "Product group",
+            "format": "int32"
+          },
+          "manufacturerId": {
+            "type": "integer",
+            "description": "Product manufacturer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SaleGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of sale",
+            "format": "int32"
+          },
+          "paymentChoice": {
+            "type": "string",
+            "description": "Payment choice",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "description": "Payment date",
+            "format": "date-time"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Product",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalePostDto": {
+        "type": "object",
+        "properties": {
+          "paymentChoice": {
+            "type": "string",
+            "description": "Payment choice",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "description": "Payment date",
+            "format": "date-time"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "Product",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

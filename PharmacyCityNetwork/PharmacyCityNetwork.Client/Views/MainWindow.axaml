@@ -17,7 +17,7 @@
 	
 	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding	OnAddComand}">
 				<Image Source="/Assets/task-add.png"/>
 			</Button>
 			<Button Classes="ToolButton">
@@ -27,9 +27,10 @@
 				<Image Source="/Assets/task-remove.png"/>
 			</Button>
 		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="True">
+		<DataGrid Grid.Row="1" AutoGenerateColumns="True"
+				  Items="{Binding Products}">
 			<DataGrid.Columns>
-				<DataGridTemplateColumn Header="Наименование"/>
+				<DataGridTextColumn Header="Наименование" Binding="{Binding ProductName}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

@@ -181,6 +181,67 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">EmployeeOccupation</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddEmployeeOccupationCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeOccupationCommand}">
+						Удалить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeOccupationCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding EmployeeOccupations}"
+						  SelectedItem="{Binding SelectedEmployeeOccupation}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Hire Date"
+											Binding="{Binding HireDate}"/>
+						<DataGridTextColumn Header="Dismissal Date"
+											Binding="{Binding DismissalDate}"/>
+						<DataGridTextColumn Header="Occupation Id"
+											Binding="{Binding OccupationId}"/>
+						<DataGridTextColumn Header="Employee Id"
+											Binding="{Binding EmployeeId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">VoucherTypes</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddVoucherTypeCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteVoucherTypeCommand}">
+						Удалить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeVoucherTypeCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding VoucherTypes}"
+						  SelectedItem="{Binding SelectedVoucherType}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 	</TabControl>
 
 </Window>

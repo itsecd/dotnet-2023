@@ -59,6 +59,29 @@ public class ApiWrapper
     {
         return _client.DepartmentDELETEAsync(id);
     }
+
+    public Task<ICollection<GetEmployeeOccupationDto>> GetEmployeeOccupationsAsync()
+    {
+        return _client.EmployeeOccupationAllAsync();
+    }
+
+    public Task<GetEmployeeOccupationDto> AddEmployeeOccupationAsync
+        (PostEmployeeOccupationDto employeeOccupation)
+    {
+        return _client.EmployeeOccupationPOSTAsync(employeeOccupation);
+    }
+
+    public Task<GetEmployeeOccupationDto> UpdateEmployeeOccupationAsync(int id, 
+        PostEmployeeOccupationDto employeeOccupation)
+    {
+        return _client.EmployeeOccupationPUTAsync(id, employeeOccupation);
+    }
+
+    public Task<GetEmployeeOccupationDto> DeleteEmployeeOccupationAsync(int id)
+    {
+        return _client.EmployeeOccupationDELETEAsync(id);
+    }
+
     public Task<ICollection<GetEmployeeDto>> GetEmployeesAsync()
     {
         return _client.EmployeeAllAsync();
@@ -100,6 +123,28 @@ public class ApiWrapper
     {
         return _client.EmployeeVacationVoucherDELETEAsync(id);
     }
+
+    public Task<ICollection<GetVoucherTypeDto>> GetVoucherTypesAsync()
+    {
+        return _client.VoucherTypeAllAsync();
+    }
+
+    public Task<GetVoucherTypeDto> AddVoucherTypeAsync(PostVoucherTypeDto voucherType)
+    {
+        return _client.VoucherTypePOSTAsync(voucherType);
+    }
+
+    public Task<GetVoucherTypeDto> UpdateVoucherTypeAsync(int id, PostVoucherTypeDto voucherType)
+    {
+        return _client.VoucherTypePUTAsync(id, voucherType);
+    }
+
+    public Task<GetVoucherTypeDto> DeleteVoucherTypeAsync(int id)
+    {
+        return _client.VoucherTypeDELETEAsync(id);
+    }
+
+
     public Task<ICollection<GetWorkshopDto>> GetWorkshopsAsync()
     {
         return _client.WorkshopAllAsync();

@@ -16,13 +16,19 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         
         this.WhenActivated(disposableObj => 
             disposableObj(ViewModel!.ShowDepartmentDialog.RegisterHandler(ShowDepartmentDialogAsync)));
-        
+
+        this.WhenActivated(disposableObj =>
+            disposableObj(ViewModel!.ShowEmployeeOccupationDialog.RegisterHandler(ShowEmployeeOccupationDialogAsync)));
+
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
         
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowEmployeeVacationVoucherDialog
             .RegisterHandler(ShowEmployeeVacationVoucherDialogAsync)));
+
+        this.WhenActivated(disposableObj =>
+            disposableObj(ViewModel!.ShowVoucherTypeDialog.RegisterHandler(ShowVoucherTypeDialogAsync)));
 
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowWorkshopDialog.RegisterHandler(ShowWorkshopDialogAsync)));
@@ -49,14 +55,14 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    private async Task ShowWorkshopDialogAsync(InteractionContext<WorkshopViewModel, 
-        WorkshopViewModel?> interaction)
+    private async Task ShowEmployeeOccupationDialogAsync(InteractionContext<EmployeeOccupationViewModel,
+    EmployeeOccupationViewModel?> interaction)
     {
-        var dialog = new WorkshopWindow
+        var dialog = new EmployeeOccupationWindow
         {
             DataContext = interaction.Input
         };
-        var result = await dialog.ShowDialog<WorkshopViewModel?>(this);
+        var result = await dialog.ShowDialog<EmployeeOccupationViewModel?>(this);
         interaction.SetOutput(result);
     }
 
@@ -79,6 +85,28 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<EmployeeVacationVoucherViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowVoucherTypeDialogAsync(InteractionContext<VoucherTypeViewModel,
+    VoucherTypeViewModel?> interaction)
+    {
+        var dialog = new VoucherTypeWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<VoucherTypeViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowWorkshopDialogAsync(InteractionContext<WorkshopViewModel,
+    WorkshopViewModel?> interaction)
+    {
+        var dialog = new WorkshopWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<WorkshopViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

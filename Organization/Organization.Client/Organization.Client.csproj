@@ -51,15 +51,14 @@
     <Compile Update="Views\EmployeeVacationVoucherWindow.axaml.cs">
       <DependentUpon>EmployeeVacationVoucherWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\VoucherTypeWindow.axaml.cs">
+      <DependentUpon>VoucherTypeWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\VacationVoucherTypeWindow.axaml" />
   </ItemGroup>
 </Project>

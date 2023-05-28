@@ -27,14 +27,20 @@ public partial class App : Application
                 cfg.CreateMap<GetDepartmentEmployeeDto, DepartmentEmployeeViewModel>();
                 cfg.CreateMap<DepartmentEmployeeViewModel, PostDepartmentEmployeeDto>();
 
-                cfg.CreateMap<GetWorkshopDto, WorkshopViewModel>();
-                cfg.CreateMap<WorkshopViewModel, PostWorkshopDto>();
+                cfg.CreateMap<GetEmployeeOccupationDto, EmployeeOccupationViewModel>();
+                cfg.CreateMap<EmployeeOccupationViewModel, PostEmployeeOccupationDto>();
 
                 cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>();
                 cfg.CreateMap<EmployeeViewModel, PostEmployeeDto>();
 
                 cfg.CreateMap<GetEmployeeVacationVoucherDto, EmployeeVacationVoucherViewModel>();
                 cfg.CreateMap<EmployeeVacationVoucherViewModel, PostEmployeeVacationVoucherDto>();
+
+                cfg.CreateMap<GetVoucherTypeDto, VoucherTypeViewModel>();
+                cfg.CreateMap<VoucherTypeViewModel, PostVoucherTypeDto>();
+
+                cfg.CreateMap<GetWorkshopDto, WorkshopViewModel>();
+                cfg.CreateMap<WorkshopViewModel, PostWorkshopDto>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

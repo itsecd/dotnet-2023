@@ -18,11 +18,15 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<DepartmentViewModel> Departments { get; } = new();
 
-    public ObservableCollection<WorkshopViewModel> Workshops { get; } = new();
+    public ObservableCollection<EmployeeOccupationViewModel> EmployeeOccupations { get; } = new();
 
     public ObservableCollection<EmployeeViewModel> Employees { get; } = new();
 
     public ObservableCollection<EmployeeVacationVoucherViewModel> EmployeeVacationVouchers { get; } = new();
+
+    public ObservableCollection<VoucherTypeViewModel> VoucherTypes { get; } = new();
+
+    public ObservableCollection<WorkshopViewModel> Workshops { get; } = new();
 
     public DepartmentEmployeeViewModel? _selectedDepartmentEmployee;
     public DepartmentEmployeeViewModel? SelectedDepartmentEmployee
@@ -38,11 +42,11 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedDepartment, value);
     }
 
-    public WorkshopViewModel? _selectedWorkshop;
-    public WorkshopViewModel? SelectedWorkshop
+    public EmployeeOccupationViewModel? _selectedEmployeeOccupation;
+    public EmployeeOccupationViewModel? SelectedEmployeeOccupation
     {
-        get => _selectedWorkshop;
-        set => this.RaiseAndSetIfChanged(ref _selectedWorkshop, value);
+        get => _selectedEmployeeOccupation;
+        set => this.RaiseAndSetIfChanged(ref _selectedEmployeeOccupation, value);
     }
 
     public EmployeeViewModel? _selectedEmployee;
@@ -59,6 +63,20 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedEmployeeVacationVoucher, value);
     }
 
+    public VoucherTypeViewModel? _selectedVoucherType;
+    public VoucherTypeViewModel? SelectedVoucherType
+    {
+        get => _selectedVoucherType;
+        set => this.RaiseAndSetIfChanged(ref _selectedVoucherType, value);
+    }
+
+    public WorkshopViewModel? _selectedWorkshop;
+    public WorkshopViewModel? SelectedWorkshop
+    {
+        get => _selectedWorkshop;
+        set => this.RaiseAndSetIfChanged(ref _selectedWorkshop, value);
+    }
+
     private readonly ApiWrapper _apiClient;
 
     private readonly IMapper _mapper;
@@ -70,9 +88,9 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeDepartmentCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteDepartmentCommand { get; set; }
 
-    public ReactiveCommand<Unit, Unit> OnAddWorkshopCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnChangeWorkshopCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OnDeleteWorkshopCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnAddEmployeeOccupationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeEmployeeOccupationCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteEmployeeOccupationCommand { get; set; }
 
     public ReactiveCommand<Unit, Unit> OnAddEmployeeCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeEmployeeCommand { get; set; }
@@ -82,17 +100,30 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeEmployeeVacationVoucherCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteEmployeeVacationVoucherCommand { get; set; }
 
+    public ReactiveCommand<Unit, Unit> OnAddVoucherTypeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeVoucherTypeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteVoucherTypeCommand { get; set; }
+
+    public ReactiveCommand<Unit, Unit> OnAddWorkshopCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeWorkshopCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteWorkshopCommand { get; set; }
+
     public Interaction<DepartmentEmployeeViewModel, 
         DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog { get; }
 
     public Interaction<DepartmentViewModel, DepartmentViewModel?> ShowDepartmentDialog { get; }
 
-    public Interaction<WorkshopViewModel, WorkshopViewModel?> ShowWorkshopDialog { get; }
+    public Interaction<EmployeeOccupationViewModel, 
+        EmployeeOccupationViewModel?> ShowEmployeeOccupationDialog { get; }
 
     public Interaction<EmployeeViewModel, EmployeeViewModel?> ShowEmployeeDialog { get; }
 
     public Interaction<EmployeeVacationVoucherViewModel, 
         EmployeeVacationVoucherViewModel?> ShowEmployeeVacationVoucherDialog { get; }
+
+    public Interaction<VoucherTypeViewModel, VoucherTypeViewModel?> ShowVoucherTypeDialog { get; }
+
+    public Interaction<WorkshopViewModel, WorkshopViewModel?> ShowWorkshopDialog { get; }
 
     public MainWindowViewModel()
     {
@@ -104,12 +135,17 @@ public class MainWindowViewModel : ViewModelBase
 
         ShowDepartmentDialog = new Interaction<DepartmentViewModel, DepartmentViewModel?>();
 
-        ShowWorkshopDialog = new Interaction<WorkshopViewModel, WorkshopViewModel?>();
+        ShowEmployeeOccupationDialog = 
+            new Interaction<EmployeeOccupationViewModel, EmployeeOccupationViewModel?>();
 
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
 
         ShowEmployeeVacationVoucherDialog = 
             new Interaction<EmployeeVacationVoucherViewModel, EmployeeVacationVoucherViewModel?>();
+
+        ShowVoucherTypeDialog = new Interaction<VoucherTypeViewModel, VoucherTypeViewModel?>();
+
+        ShowWorkshopDialog = new Interaction<WorkshopViewModel, WorkshopViewModel?>();
 
         OnAddDepartmentEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -213,55 +249,59 @@ public class MainWindowViewModel : ViewModelBase
         });
 
 
-
-        OnAddWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnAddEmployeeOccupationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var workshopViewModel = await ShowWorkshopDialog.Handle(new WorkshopViewModel());
-            if (workshopViewModel != null)
+            var employeeOccupationViewModel = await ShowEmployeeOccupationDialog
+                .Handle(new EmployeeOccupationViewModel());
+            if (employeeOccupationViewModel != null)
             {
-                var newWorkshop = await _apiClient.AddWorkshopAsync(
-                    _mapper.Map<PostWorkshopDto>(workshopViewModel));
-                Workshops.Add(_mapper.Map<WorkshopViewModel>(newWorkshop));
+                var newEmployeeOccupation = await _apiClient.AddEmployeeOccupationAsync(
+                    _mapper.Map<PostEmployeeOccupationDto>(employeeOccupationViewModel));
+                EmployeeOccupations.Add(_mapper.Map<EmployeeOccupationViewModel>(newEmployeeOccupation));
             }
         });
 
-        OnAddWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnAddEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
-        OnChangeWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnChangeEmployeeOccupationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var workshopViewModel = await ShowWorkshopDialog.Handle(SelectedWorkshop!);
-            if (workshopViewModel != null)
+            var employeeOccupationViewModel = await ShowEmployeeOccupationDialog
+                .Handle(SelectedEmployeeOccupation!);
+            if (employeeOccupationViewModel != null)
             {
-                var newWorkshop = await _apiClient.UpdateWorkshopAsync(_selectedWorkshop!.Id,
-                    _mapper.Map<PostWorkshopDto>(workshopViewModel));
-                _mapper.Map(workshopViewModel, SelectedWorkshop);
+                var newEmployeeOccupation = await _apiClient.UpdateEmployeeOccupationAsync(
+                    _selectedEmployeeOccupation!.Id,
+                    _mapper.Map<PostEmployeeOccupationDto>(employeeOccupationViewModel));
+                _mapper.Map(employeeOccupationViewModel, SelectedEmployeeOccupation);
             }
-        }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
-        OnDeleteWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        OnDeleteEmployeeOccupationCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteWorkshopAsync(_selectedWorkshop!.Id);
-            Workshops.Remove(SelectedWorkshop!);
-        }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
+            await _apiClient.DeleteEmployeeOccupationAsync(_selectedEmployeeOccupation!.Id);
+            EmployeeOccupations.Remove(SelectedEmployeeOccupation!);
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
+
+
 
 
         OnAddEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -369,6 +409,106 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
+
+        OnAddVoucherTypeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var voucherTypeViewModel = await ShowVoucherTypeDialog.Handle(new VoucherTypeViewModel());
+            if (voucherTypeViewModel != null)
+            {
+                var newVoucherType = await _apiClient.AddVoucherTypeAsync(
+                    _mapper.Map<PostVoucherTypeDto>(voucherTypeViewModel));
+                VoucherTypes.Add(_mapper.Map<VoucherTypeViewModel>(newVoucherType));
+            }
+        });
+
+        OnAddVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
+        OnChangeVoucherTypeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var voucherTypeViewModel = await ShowVoucherTypeDialog.Handle(SelectedVoucherType!);
+            if (voucherTypeViewModel != null)
+            {
+                var newVoucherType = await _apiClient.UpdateVoucherTypeAsync(_selectedVoucherType!.Id,
+                    _mapper.Map<PostVoucherTypeDto>(voucherTypeViewModel));
+                _mapper.Map(voucherTypeViewModel, SelectedVoucherType);
+            }
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedVoucherType)
+        .Select(selectProduct => selectProduct != null));
+
+        OnChangeVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+        OnDeleteVoucherTypeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteVoucherTypeAsync(_selectedVoucherType!.Id);
+            VoucherTypes.Remove(SelectedVoucherType!);
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedVoucherType)
+        .Select(selectProduct => selectProduct != null));
+
+        OnDeleteVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
+        OnAddWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var workshopViewModel = await ShowWorkshopDialog.Handle(new WorkshopViewModel());
+            if (workshopViewModel != null)
+            {
+                var newWorkshop = await _apiClient.AddWorkshopAsync(
+                    _mapper.Map<PostWorkshopDto>(workshopViewModel));
+                Workshops.Add(_mapper.Map<WorkshopViewModel>(newWorkshop));
+            }
+        });
+
+        OnAddWorkshopCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
+        OnChangeWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var workshopViewModel = await ShowWorkshopDialog.Handle(SelectedWorkshop!);
+            if (workshopViewModel != null)
+            {
+                var newWorkshop = await _apiClient.UpdateWorkshopAsync(_selectedWorkshop!.Id,
+                    _mapper.Map<PostWorkshopDto>(workshopViewModel));
+                _mapper.Map(workshopViewModel, SelectedWorkshop);
+            }
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
+        .Select(selectProduct => selectProduct != null));
+
+        OnChangeWorkshopCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+        OnDeleteWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteWorkshopAsync(_selectedWorkshop!.Id);
+            Workshops.Remove(SelectedWorkshop!);
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
+        .Select(selectProduct => selectProduct != null));
+
+        OnDeleteWorkshopCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
         RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
     }
 
@@ -376,8 +516,10 @@ public class MainWindowViewModel : ViewModelBase
     {
         DepartmentEmployees.Clear();
         Departments.Clear();
+        EmployeeOccupations.Clear();
         Employees.Clear();
         EmployeeVacationVouchers.Clear();
+        VoucherTypes.Clear();
         Workshops.Clear();
 
         var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
@@ -391,6 +533,13 @@ public class MainWindowViewModel : ViewModelBase
         {
             Departments.Add(_mapper.Map<DepartmentViewModel>(department));
         }
+
+        var employeeOccupations = await _apiClient.GetEmployeeOccupationsAsync();
+        foreach (var employeeOccupation in employeeOccupations)
+        {
+            EmployeeOccupations.Add(_mapper.Map<EmployeeOccupationViewModel>(employeeOccupation));
+        }
+
         var employees = await _apiClient.GetEmployeesAsync();
         foreach (var employee in employees)
         {
@@ -402,6 +551,12 @@ public class MainWindowViewModel : ViewModelBase
         {
             EmployeeVacationVouchers
                 .Add(_mapper.Map<EmployeeVacationVoucherViewModel>(employeeVacationVoucher));
+        }
+
+        var voucherTypes = await _apiClient.GetVoucherTypesAsync();
+        foreach (var voucherType in voucherTypes)
+        {
+            VoucherTypes.Add(_mapper.Map<VoucherTypeViewModel>(voucherType));
         }
 
         var workshops = await _apiClient.GetWorkshopsAsync();

@@ -4,14 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
         x:Class="Organization.Client.Views.EmployeeWindow"
-		xmlns:vm="using:Organization.Client.ViewModels"
         Title="EmployeeWindow"
 		SizeToContent="Height"
 		MaxWidth="600">
-	<Design.DataContext>
-		<vm:EmployeeViewModel/>
-	</Design.DataContext>
-
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>

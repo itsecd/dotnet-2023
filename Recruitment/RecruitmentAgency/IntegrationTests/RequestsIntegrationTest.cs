@@ -23,8 +23,8 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetApplicantsRequestsForSpecificJobTitleTest()
     {
         await Task.Delay(5000).ConfigureAwait(false);
-        var response = await _client.GetAsync("api/requests/applicants_requests/15");
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var response = await _client.GetAsync("api/requests/applicants_requests/1");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
     /// Test of the GetApplicantsOverGivenPeriod method
@@ -47,8 +47,8 @@ public class RequestsIntegrationTests : IClassFixture<WebApplicationFactory<Serv
     public async Task GetApplicantsThatMatchCompanyApplicationTest()
     {
         await Task.Delay(5000).ConfigureAwait(false);
-        var response = await _client.GetAsync("api/requests/applicants_matches/144");
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var response = await _client.GetAsync("api/requests/applicants_matches/1");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     /// <summary>
     /// Test of the GetNumberApplications method

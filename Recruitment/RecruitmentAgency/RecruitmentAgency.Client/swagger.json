@@ -811,7 +811,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                    "$ref": "#/components/schemas/EmployeeGetDto"
                   }
                 }
               },
@@ -819,7 +819,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                    "$ref": "#/components/schemas/EmployeeGetDto"
                   }
                 }
               },
@@ -827,7 +827,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/JobApplicationGetDto"
+                    "$ref": "#/components/schemas/EmployeeGetDto"
                   }
                 }
               }
@@ -921,7 +921,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeGetDto"
+                    "$ref": "#/components/schemas/ApplicationsMatchesDto"
                   }
                 }
               },
@@ -929,7 +929,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeGetDto"
+                    "$ref": "#/components/schemas/ApplicationsMatchesDto"
                   }
                 }
               },
@@ -937,7 +937,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeGetDto"
+                    "$ref": "#/components/schemas/ApplicationsMatchesDto"
                   }
                 }
               }
@@ -954,7 +954,33 @@
         "summary": "Output information about the number of applications for each section and position.",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NumberApplicationsDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NumberApplicationsDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NumberApplicationsDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -967,7 +993,33 @@
         "summary": "Output information about the most popular companies",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MostPopularCompaniesDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MostPopularCompaniesDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MostPopularCompaniesDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -980,7 +1032,33 @@
         "summary": "Output information about the company that pays the highest wages",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1183,6 +1261,34 @@
   },
   "components": {
     "schemas": {
+      "ApplicationsMatchesDto": {
+        "type": "object",
+        "properties": {
+          "personalName": {
+            "type": "string",
+            "description": "PersonalName - a string for name, second_name and surname",
+            "nullable": true
+          },
+          "salary": {
+            "type": "integer",
+            "description": "Salary - an int that stores the salary",
+            "format": "int32"
+          },
+          "companySalary": {
+            "type": "integer",
+            "description": "CompanySalary - shows the salary in the company",
+            "format": "int32"
+          },
+          "companyId": {
+            "type": "integer",
+            "description": "CompanyId - shows company id",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ApplicationsMatchesDto - a class that describes the sql query"
+      },
       "CompanyApplicationGetDto": {
         "type": "object",
         "properties": {
@@ -1419,6 +1525,51 @@
         },
         "additionalProperties": false,
         "description": "JobApplication - a class that describes the employee's application"
+      },
+      "MostPopularCompaniesDto": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "CompanyName - a string for the company name",
+            "nullable": true
+          },
+          "numberOfApplications": {
+            "type": "integer",
+            "description": "NumberOfApplications - an int that stores the number of the applications",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "MostPopularCompaniesDto - a class that describes the sql query"
+      },
+      "NumberApplicationsDto": {
+        "type": "object",
+        "properties": {
+          "jobSection": {
+            "type": "string",
+            "description": "JobSection - a string for the occupation",
+            "nullable": true
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "JobTitle - a string for title of the job",
+            "nullable": true
+          },
+          "numJobApplications": {
+            "type": "integer",
+            "description": "NumJobApplications - shows the number of the job applications",
+            "format": "int32"
+          },
+          "numCompanyApplications": {
+            "type": "integer",
+            "description": "NumCompanyApplications - shows the number of the companies applications",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "NumberApplicationsDto - a class that describes the sql query"
       },
       "TitleGetDto": {
         "type": "object",

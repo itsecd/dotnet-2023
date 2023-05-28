@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using RecruitmentAgencyServer.Dto;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -101,5 +103,29 @@ public class ApiWrapper
     public async Task DeleteTitleAsync(int id)
     {
         await _client.TitleDELETEAsync(id);
+    }
+    public async Task<ICollection<ApplicationsMatchesDto>> ShowMatches(int id)
+    {
+       return await _client.MatchesAsync(id);
+    }
+    public async Task<ICollection<EmployeeGetDto>> ShowEmployeesDuringTime(DateTime minDate, DateTime maxDate)
+    {
+        return await _client.PeriodAsync(minDate, maxDate);
+    }
+    public async Task<ICollection<EmployeeGetDto>> ShowEmployeesForApplication(int id)
+    {
+        return await _client.RequestsAsync(id);
+    }
+    public async Task<ICollection<NumberApplicationsDto>> ShowNumberOfApplications()
+    {
+        return await _client.NumberAsync();
+    }
+    public async Task<ICollection<CompanyGetDto>> ShowCompaniesWithHighestWage()
+    {
+        return await _client.WageAsync();
+    }
+    public async Task<ICollection<MostPopularCompaniesDto>> ShowMostPopularCompanies()
+    {
+        return await _client.CompaniesAsync();
     }
 }

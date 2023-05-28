@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System;
+using RecruitmentAgencyServer.Dto;
+using System.ComponentModel;
 
 namespace RecruitmentAgency.Client.ViewModels;
 
@@ -68,6 +71,13 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeTitleCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteTitleCommand { get; set; }
     public Interaction<TitleViewModel, TitleViewModel?> ShowTitleDialog { get; }
+
+    public ObservableCollection<ApplicationsMatchesDto> Matches { get; } = new();
+    public ObservableCollection<EmployeeViewModel> EmployeesDuringTime { get; } = new();
+    public ObservableCollection<EmployeeViewModel> EmployeesForApplication { get; } = new();
+    public ObservableCollection<NumberApplicationsDto> NumberApplications { get; } = new();
+    public ObservableCollection<CompanyViewModel> CompaniesHighestWage { get; } = new();
+    public ObservableCollection<MostPopularCompaniesDto> MostPopularCompany { get; } = new();
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
@@ -78,6 +88,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
         ShowJobApplicationDialog = new Interaction<JobApplicationViewModel, JobApplicationViewModel?>();
         ShowTitleDialog = new Interaction<TitleViewModel, TitleViewModel?>();
+
 
         OnAddCompanyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -245,5 +256,36 @@ public class MainWindowViewModel : ViewModelBase
         {
             Titles.Add(_mapper.Map<TitleViewModel>(title));
         }
+        var query1 = await _apiClient.ShowMatches(1);
+        foreach (var employee in query1)
+        {
+            Matches.Add(_mapper.Map<ApplicationsMatchesDto>(employee));
+        }
+        var query2 = await _apiClient.ShowEmployeesDuringTime(DateTime.Parse("12-12-2002"), DateTime.Parse("12-5-2023"));
+        foreach(var employee in query2)
+        {
+            EmployeesDuringTime.Add(_mapper.Map<EmployeeViewModel>(employee));
+        }
+        var query3 = await _apiClient.ShowEmployeesForApplication(1);
+        foreach(var jobApplication in query3)
+        {
+            EmployeesForApplication.Add(_mapper.Map<EmployeeViewModel>(jobApplication));
+        }
+        var query4 = await _apiClient.ShowCompaniesWithHighestWage();
+        foreach(var company in query4)
+        {
+            CompaniesHighestWage.Add(_mapper.Map<CompanyViewModel>(company));
+        }
+        var query5 = await _apiClient.ShowNumberOfApplications();
+        foreach(var numberApplications in query5)
+        {
+            NumberApplications.Add(_mapper.Map<NumberApplicationsDto>(numberApplications));
+        }
+        var query6 = await _apiClient.ShowMostPopularCompanies();
+        foreach (var company in query6)
+        {
+            MostPopularCompany.Add(_mapper.Map<MostPopularCompaniesDto>(company));
+        }
     }
+
 }

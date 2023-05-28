@@ -1,4 +1,4 @@
-using Avalonia.ReactiveUI;
+﻿using Avalonia.ReactiveUI;
 using ReactiveUI;
 using RecruitmentAgency.Client.ViewModels;
 using System.Threading.Tasks;
@@ -15,7 +15,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowJobApplicationDialog.RegisterHandler(ShowJobApplicationDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowTitleDialog.RegisterHandler(ShowTitleDialogAsync)));
-
     }
     private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction)
     {

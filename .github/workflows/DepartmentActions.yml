@@ -23,8 +23,8 @@ jobs:
         dotnet add Department\Department.Server package Swashbuckle.AspNetCore --version 6.2.3
         dotnet add Department\Department.Server package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.15
         dotnet add Department\Department.Server package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.13
-        dotnet add Department\Department.Server package MySql.EntityFrameworkCore --version 7.0.2
+        dotnet add Department\Department.Domain package MySql.EntityFrameworkCore --version 7.0.2
     - name: Build with dotnet
-      run: dotnet build Department/DepartmentServer
+      run: dotnet build Department/Department.Server
     - name: Test with dotnet
       run: dotnet test Department

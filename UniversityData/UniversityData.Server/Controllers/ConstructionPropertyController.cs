@@ -85,7 +85,7 @@ public class ConstructionPropertyController : ControllerBase
     /// <param name="constructionPropertyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<ConstructionPropertyGetDto>> Put(int id, [FromBody] ConstructionPropertyPostDto constructionPropertyToPut)
+    public async Task<ActionResult<ConstructionPropertyPostDto>> Put(int id, [FromBody] ConstructionPropertyPostDto constructionPropertyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
@@ -99,7 +99,7 @@ public class ConstructionPropertyController : ControllerBase
             _mapper.Map<ConstructionPropertyPostDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update construction property with id: {0}", id);
-            return Ok(constructionProperty);
+            return Ok(constructionPropertyToPut);
         }
     }
     /// <summary>

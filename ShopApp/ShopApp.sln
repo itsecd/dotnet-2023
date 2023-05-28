@@ -11,19 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopsTest", "ShopTest\Shops
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopsClient", "ShopsClient\ShopsClient.csproj", "{8F916009-E2A5-414B-B4FB-AF17A5C665AB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopsClientScreenShots", "ShopsClientScreenShots", "{E8C42D6C-E5E8-4583-BB5F-ACA0E55BE192}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow1.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow1.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\CustomerWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\CustomerWindow.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow2.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow2.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow3.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\MainWindow3.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\ShopWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\ShopWindow.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\PurchaseRecordWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\PurchaseRecordWindow.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductQuantityWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductQuantityWindow.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductGroupWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductGroupWindow.jpg
-		..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductWindow.jpg = ..\..\..\..\OneDrive\Рабочий стол\Скрины\ProductWindow.jpg
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -39,9 +39,9 @@ public class EmployeeViewModel : ViewModelBase
         get => _patronymicName;
         set => this.RaiseAndSetIfChanged(ref _patronymicName, value);
     }
-    public DateTime _birthDate;
+    public DateTimeOffset? _birthDate;
     [Required]
-    public DateTime BirthDate
+    public DateTimeOffset? BirthDate
     {
         get => _birthDate;
         set => this.RaiseAndSetIfChanged(ref _birthDate, value);

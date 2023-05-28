@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using Organization.Client.ViewModels;
 using Organization.Client.Views;
 using Splat;
+using System;
 
 namespace Organization.Client;
 public partial class App : Application
@@ -24,10 +25,16 @@ public partial class App : Application
                 cfg.CreateMap<DepartmentViewModel, PostDepartmentDto>();
                 cfg.CreateMap<GetWorkshopDto, WorkshopViewModel>();
                 cfg.CreateMap<WorkshopViewModel, PostWorkshopDto>();
-                cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>()
-                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(source => source.BirthDate.DateTime));
+                cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>();
                 cfg.CreateMap<EmployeeViewModel, PostEmployeeDto>();
-            });
+                //.ForMember(destination => destination.BirthDate, 
+                //    options => options.MapFrom(source => source.BirthDate.ToString()));
+
+                //.ForMember(destination => destination.BirthDate,
+                //  options => options.MapFrom
+                //  (employee => Convert.ToUInt32(System.TimeSpan.Parse(employee.BirthDate).TotalSeconds)))
+            }
+                );
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             desktop.MainWindow = new MainWindow

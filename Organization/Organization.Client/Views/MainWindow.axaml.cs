@@ -28,6 +28,12 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
             .RegisterHandler(ShowEmployeeVacationVoucherDialogAsync)));
 
         this.WhenActivated(disposableObj =>
+            disposableObj(ViewModel!.ShowOccupationDialog.RegisterHandler(ShowOccupationDialogAsync)));
+
+        this.WhenActivated(disposableObj =>
+            disposableObj(ViewModel!.ShowVacationVoucherDialog.RegisterHandler(ShowVacationVoucherDialogAsync)));
+
+        this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowVoucherTypeDialog.RegisterHandler(ShowVoucherTypeDialogAsync)));
 
         this.WhenActivated(disposableObj =>
@@ -88,8 +94,30 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
+    private async Task ShowOccupationDialogAsync(InteractionContext<OccupationViewModel,
+    OccupationViewModel?> interaction)
+    {
+        var dialog = new OccupationWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<OccupationViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowVacationVoucherDialogAsync(InteractionContext<VacationVoucherViewModel,
+        VacationVoucherViewModel?> interaction)
+    {
+        var dialog = new VacationVoucherWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<VacationVoucherViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
     private async Task ShowVoucherTypeDialogAsync(InteractionContext<VoucherTypeViewModel,
-    VoucherTypeViewModel?> interaction)
+        VoucherTypeViewModel?> interaction)
     {
         var dialog = new VoucherTypeWindow
         {

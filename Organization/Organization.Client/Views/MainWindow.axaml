@@ -17,7 +17,7 @@
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>
-	<TabControl>
+	<TabControl HorizontalContentAlignment="Center">
 		<TabItem>
 			<TabItem.Header>
 				<TextBlock VerticalAlignment="Center">Departments</TextBlock>
@@ -184,7 +184,7 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">EmployeeOccupation</TextBlock>
+				<TextBlock VerticalAlignment="Center">Employee occupations</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
@@ -218,6 +218,34 @@
 
 		<TabItem>
 			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Vacation Vouchers</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddVacationVoucherCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteVacationVoucherCommand}">
+						Удалить											   
+					</Button>											   
+					<Button Classes="ToolButton" Command="{Binding OnChangeVacationVoucherCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding VacationVouchers}"
+						  SelectedItem="{Binding SelectedVacationVoucher}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Issue date" Binding="{Binding IssueDate}"/>
+						<DataGridTextColumn Header="Voucher type Id" Binding="{Binding VoucherTypeId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem>
+			<TabItem.Header>
 				<TextBlock VerticalAlignment="Center">VoucherTypes</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
@@ -236,6 +264,34 @@
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding VoucherTypes}"
 						  SelectedItem="{Binding SelectedVoucherType}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Occupations</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddOccupationCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteOccupationCommand}">
+						Удалить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeOccupationCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Occupations}"
+						  SelectedItem="{Binding SelectedOccupation}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
 					</DataGrid.Columns>

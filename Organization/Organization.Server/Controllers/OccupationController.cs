@@ -100,7 +100,7 @@ public class OccupationController : Controller
     /// <param name="id">An ID of the occupation</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<PostOccupationDto>> Delete(int id)
+    public async Task<ActionResult<GetOccupationDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE occupation method with ID: {id}", id);
         await using var ctx = await _contextFactory.CreateDbContextAsync();

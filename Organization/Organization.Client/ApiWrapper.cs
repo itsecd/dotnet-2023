@@ -124,6 +124,49 @@ public class ApiWrapper
         return _client.EmployeeVacationVoucherDELETEAsync(id);
     }
 
+
+    public Task<ICollection<GetOccupationDto>> GetOccupationsAsync()
+    {
+        return _client.OccupationAllAsync();
+    }
+
+    public Task<GetOccupationDto> AddOccupationAsync(PostOccupationDto occupation)
+    {
+        return _client.OccupationPOSTAsync(occupation);
+    }
+
+    public Task<GetOccupationDto> UpdateOccupationAsync(int id, PostOccupationDto occupation)
+    {
+        return _client.OccupationPUTAsync(id, occupation);
+    }
+
+    public Task<GetOccupationDto> DeleteOccupationAsync(int id)
+    {
+        return _client.OccupationDELETEAsync(id);
+    }
+
+
+
+    public Task<ICollection<GetVacationVoucherDto>> GetVacationVouchersAsync()
+    {
+        return _client.VacationVoucherAllAsync();
+    }
+
+    public Task<GetVacationVoucherDto> AddVacationVoucherAsync(PostVacationVoucherDto vacationVoucher)
+    {
+        return _client.VacationVoucherPOSTAsync(vacationVoucher);
+    }
+
+    public Task<GetVacationVoucherDto> UpdateVacationVoucherAsync(int id, PostVacationVoucherDto vacationVoucher)
+    {
+        return _client.VacationVoucherPUTAsync(id, vacationVoucher);
+    }
+
+    public Task<GetVacationVoucherDto> DeleteVacationVoucherAsync(int id)
+    {
+        return _client.VacationVoucherDELETEAsync(id);
+    }
+
     public Task<ICollection<GetVoucherTypeDto>> GetVoucherTypesAsync()
     {
         return _client.VoucherTypeAllAsync();

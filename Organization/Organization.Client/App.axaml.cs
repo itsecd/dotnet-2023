@@ -36,6 +36,12 @@ public partial class App : Application
                 cfg.CreateMap<GetEmployeeVacationVoucherDto, EmployeeVacationVoucherViewModel>();
                 cfg.CreateMap<EmployeeVacationVoucherViewModel, PostEmployeeVacationVoucherDto>();
 
+                cfg.CreateMap<GetOccupationDto, OccupationViewModel>();
+                cfg.CreateMap<OccupationViewModel, PostOccupationDto>();
+
+                cfg.CreateMap<GetVacationVoucherDto, VacationVoucherViewModel>();
+                cfg.CreateMap<VacationVoucherViewModel, PostVacationVoucherDto>();
+
                 cfg.CreateMap<GetVoucherTypeDto, VoucherTypeViewModel>();
                 cfg.CreateMap<VoucherTypeViewModel, PostVoucherTypeDto>();
 

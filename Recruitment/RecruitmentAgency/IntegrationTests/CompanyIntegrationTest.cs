@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.
-    ing;
-using RecruitmentAgencyServer;
+﻿using RecruitmentAgencyServer;
 using RecruitmentAgencyServer.Dto;
 using System.Net;
 using System.Text;

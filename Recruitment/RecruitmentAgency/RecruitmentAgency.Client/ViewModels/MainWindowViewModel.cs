@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using ReactiveUI;
+using RecruitmentAgencyServer.Dto;
 using Splat;
+using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System;
-using RecruitmentAgencyServer.Dto;
-using System.ComponentModel;
 
 namespace RecruitmentAgency.Client.ViewModels;
 
@@ -262,22 +261,22 @@ public class MainWindowViewModel : ViewModelBase
             Matches.Add(_mapper.Map<ApplicationsMatchesDto>(employee));
         }
         var query2 = await _apiClient.ShowEmployeesDuringTime(DateTime.Parse("12-12-2002"), DateTime.Parse("12-5-2023"));
-        foreach(var employee in query2)
+        foreach (var employee in query2)
         {
             EmployeesDuringTime.Add(_mapper.Map<EmployeeViewModel>(employee));
         }
         var query3 = await _apiClient.ShowEmployeesForApplication(1);
-        foreach(var jobApplication in query3)
+        foreach (var jobApplication in query3)
         {
             EmployeesForApplication.Add(_mapper.Map<EmployeeViewModel>(jobApplication));
         }
         var query4 = await _apiClient.ShowCompaniesWithHighestWage();
-        foreach(var company in query4)
+        foreach (var company in query4)
         {
             CompaniesHighestWage.Add(_mapper.Map<CompanyViewModel>(company));
         }
         var query5 = await _apiClient.ShowNumberOfApplications();
-        foreach(var numberApplications in query5)
+        foreach (var numberApplications in query5)
         {
             NumberApplications.Add(_mapper.Map<NumberApplicationsDto>(numberApplications));
         }

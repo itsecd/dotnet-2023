@@ -18,11 +18,11 @@ public class PurchaseRecordGetDto
     /// </summary>
     public int CustomerId { get; set; }
     /// <summary>
-    /// What bought (barcode)
+    /// What bought
     /// </summary>
     public int ProductId { get; set; }
     /// <summary>
-    /// What bought (barcode)
+    /// Quantity product
     /// </summary>
     public double Quantity { get; set; } = 0.0;
     /// <summary>

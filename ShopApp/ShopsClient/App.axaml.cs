@@ -27,13 +27,15 @@ public partial class App : Application
                 cfg.CreateMap<ProductGetDto, ProductViewModel>().ReverseMap();
                 cfg.CreateMap<ProductPostDto, ProductViewModel>().ReverseMap();
 
-                cfg.CreateMap<ProductGroupGetDto, ProductGroupViewModel>().ReverseMap();
+                cfg.CreateMap<ProductGroupGetDto, ProductGroupViewModel>();
+                cfg.CreateMap<ProductGroupViewModel, ProductGroupGetDto>();
                 cfg.CreateMap<ProductGroupPostDto, ProductGroupViewModel>().ReverseMap();
 
                 cfg.CreateMap<ProductQuantityGetDto, ProductQuantityViewModel>().ReverseMap();
                 cfg.CreateMap<ProductQuantityPostDto, ProductQuantityViewModel>().ReverseMap();
 
-                cfg.CreateMap<PurchaseRecordGetDto, PurchaseRecordViewModel>().ReverseMap();
+                cfg.CreateMap<PurchaseRecordGetDto, PurchaseRecordViewModel>();
+                cfg.CreateMap<PurchaseRecordViewModel, PurchaseRecordGetDto>();
                 cfg.CreateMap<PurchaseRecordPostDto, PurchaseRecordViewModel>().ReverseMap();
 
                 cfg.CreateMap<ShopGetDto, ShopViewModel>().ReverseMap();

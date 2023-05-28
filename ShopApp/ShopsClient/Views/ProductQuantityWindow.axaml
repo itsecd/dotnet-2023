@@ -6,8 +6,8 @@
         x:Class="ShopsClient.Views.ProductQuantityWindow"
         Title="ProductQuantityWindow"
         xmlns:vm="using:ShopsClient.ViewModels"
-		MinHeight="350" MinWidth="350"
-		MaxHeight="350" MaxWidth="350"
+		MinHeight="300" MinWidth="500"
+		MaxHeight="300" MaxWidth="500"
 		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:CustomerViewModel/>

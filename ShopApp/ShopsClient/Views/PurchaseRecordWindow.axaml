@@ -8,6 +8,7 @@
 		xmlns:vm="using:ShopsClient.ViewModels"
 		MinHeight="350" MinWidth="350"
 		MaxHeight="350" MaxWidth="350"
+
 		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:CustomerViewModel/>
@@ -17,21 +18,19 @@
 		<StyleInclude Source="/ShopsStyle.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
 		<Label Grid.Row="0" Grid.Column="0">Shop Id</Label>
 		<Label Grid.Row="1" Grid.Column="0">Customer Id</Label>
 		<Label Grid.Row="2" Grid.Column="0">Product Id</Label>
 		<Label Grid.Row="3" Grid.Column="0">Количество</Label>
 		<Label Grid.Row="4" Grid.Column="0">Дата покуки</Label>
-		<Label Grid.Row="5" Grid.Column="0">Сумма???</Label>
 
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ShopId}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CustomerId}"/>
 		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProductId}"/>
 		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Quantity}"/>
 		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DateSale}"/>
-		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Sum}"/>
-		<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
+		<StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

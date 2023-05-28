@@ -6,8 +6,9 @@
         x:Class="ShopsClient.Views.ProductGroupWindow"
         Title="ProductGroupWindow"
 		xmlns:vm="using:ShopsClient.ViewModels"
-	    MinHeight="350" MinWidth="350"
-	    MaxHeight="350" MaxWidth="350"
+	    MinHeight="300" MinWidth="450"
+		MaxHeight="300" MaxWidth="450"
+
 	    SizeToContent="Height">
 	<Design.DataContext>
 		<vm:CustomerViewModel/>
@@ -17,7 +18,7 @@
 		<StyleInclude Source="/ShopsStyle.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
 		<Label Grid.Row="0" Grid.Column="0">Название группы продуктов</Label>
 
 

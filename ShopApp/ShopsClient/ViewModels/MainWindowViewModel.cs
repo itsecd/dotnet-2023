@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ReactiveUI;
-using ShopsClient.ViewModels;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -17,6 +16,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ProductQuantityViewModel> ProductQuantitys { get; } = new();
     public ObservableCollection<PurchaseRecordViewModel> PurchaseRecords { get; } = new();
     public ObservableCollection<ShopViewModel> Shops { get; } = new();
+    public ObservableCollection<PurchaseRecordViewModel> Top5PurchaseRecords { get; } = new();
 
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
@@ -80,7 +80,7 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddShopCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeShopCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteShopCommand { get; set; }
-    public Interaction<CustomerViewModel, CustomerViewModel?> ShowCustomerDialog { get;}
+    public Interaction<CustomerViewModel, CustomerViewModel?> ShowCustomerDialog { get; }
     public Interaction<ProductViewModel, ProductViewModel?> ShowProductDialog { get; }
     public Interaction<ProductGroupViewModel, ProductGroupViewModel?> ShowProductGroupDialog { get; }
     public Interaction<ProductQuantityViewModel, ProductQuantityViewModel?> ShowProductQuantityDialog { get; }
@@ -123,16 +123,199 @@ public class MainWindowViewModel : ViewModelBase
             Customers.Remove(SelectedCustomer!);
         }, this.WhenAnyValue(va => va.SelectedCustomer).Select(selectedCustomer => selectedCustomer != null));
 
+        OnAddProductCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productViewModel = await ShowProductDialog.Handle(new ProductViewModel());
+            if (productViewModel != null)
+            {
+                var newProduct = await _apiClient.AddProductAsync(_mapper.Map<ProductPostDto>(productViewModel));
+                Products.Add(_mapper.Map<ProductViewModel>(newProduct));
+            }
+        });
+        OnChangeProductCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
+            if (productViewModel != null)
+            {
+                await _apiClient.UpdateProductAsync(SelectedProduct!.Id, _mapper.Map<ProductPostDto>(productViewModel));
+                _mapper.Map(productViewModel, SelectedProduct);
+            }
+        }, this.WhenAnyValue(va => va.SelectedProduct).Select(selectedProduct => selectedProduct != null));
+
+        OnDeleteProductCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteProductAsync(SelectedProduct!.Id);
+            Products.Remove(SelectedProduct!);
+        }, this.WhenAnyValue(va => va.SelectedProduct).Select(selectedProduct => selectedProduct != null));
+
+
+        OnAddProductGroupCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productGroupViewModel = await ShowProductGroupDialog.Handle(new ProductGroupViewModel());
+            if (productGroupViewModel != null)
+            {
+                var newProductGroup = await _apiClient.AddProductGroupAsync(_mapper.Map<ProductGroupPostDto>(productGroupViewModel));
+                ProductGroups.Add(_mapper.Map<ProductGroupViewModel>(newProductGroup));
+            }
+        });
+        OnChangeProductGroupCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productGroupViewModel = await ShowProductGroupDialog.Handle(SelectedProductGroup!);
+            if (productGroupViewModel != null)
+            {
+                await _apiClient.UpdateProductGroupAsync(SelectedProductGroup!.Id, _mapper.Map<ProductGroupPostDto>(productGroupViewModel));
+                _mapper.Map(productGroupViewModel, SelectedProductGroup);
+            }
+        }, this.WhenAnyValue(va => va.SelectedProductGroup).Select(selectedProductGroup => selectedProductGroup != null));
+
+        OnDeleteProductGroupCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteProductGroupAsync(SelectedProductGroup!.Id);
+            ProductGroups.Remove(SelectedProductGroup!);
+        }, this.WhenAnyValue(va => va.SelectedProductGroup).Select(selectedProductGroup => selectedProductGroup != null));
+
+
+        OnAddProductQuantityCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productQuantityViewModel = await ShowProductQuantityDialog.Handle(new ProductQuantityViewModel());
+            if (productQuantityViewModel != null)
+            {
+                var newProductQuantity = await _apiClient.AddProductQuantityAsync(_mapper.Map<ProductQuantityPostDto>(productQuantityViewModel));
+                ProductQuantitys.Add(_mapper.Map<ProductQuantityViewModel>(newProductQuantity));
+            }
+        });
+        OnChangeProductQuantityCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var productQuantityViewModel = await ShowProductQuantityDialog.Handle(SelectedProductQuantity!);
+            if (productQuantityViewModel != null)
+            {
+                await _apiClient.UpdateProductQuantityAsync(SelectedProductQuantity!.Id, _mapper.Map<ProductQuantityPostDto>(productQuantityViewModel));
+                _mapper.Map(productQuantityViewModel, SelectedProductQuantity);
+            }
+        }, this.WhenAnyValue(va => va.SelectedProductQuantity).Select(selectedProductQuantity => selectedProductQuantity != null));
+
+        OnDeleteProductQuantityCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteProductQuantityAsync(SelectedProductQuantity!.Id);
+            ProductQuantitys.Remove(SelectedProductQuantity!);
+        }, this.WhenAnyValue(va => va.SelectedProductQuantity).Select(selectedProductQuantity => selectedProductQuantity != null));
+
+
+        OnAddPurchaseRecordCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var purchaseRecordViewModel = await ShowPurchaseRecordDialog.Handle(new PurchaseRecordViewModel());
+            if (purchaseRecordViewModel != null)
+            {
+                var newPurchaseRecord = await _apiClient.AddPurchaseRecordAsync(_mapper.Map<PurchaseRecordPostDto>(purchaseRecordViewModel));
+                PurchaseRecords.Add(_mapper.Map<PurchaseRecordViewModel>(newPurchaseRecord));
+            }
+        });
+        OnChangePurchaseRecordCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var purchaseRecordViewModel = await ShowPurchaseRecordDialog.Handle(SelectedPurchaseRecord!);
+            if (purchaseRecordViewModel != null)
+            {
+                await _apiClient.UpdatePurchaseRecordAsync(SelectedPurchaseRecord!.Id, _mapper.Map<PurchaseRecordPostDto>(purchaseRecordViewModel));
+                _mapper.Map(purchaseRecordViewModel, SelectedPurchaseRecord);
+            }
+        }, this.WhenAnyValue(va => va.SelectedPurchaseRecord).Select(selectedPurchaseRecord => selectedPurchaseRecord != null));
+
+        OnDeletePurchaseRecordCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeletePurchaseRecordAsync(SelectedPurchaseRecord!.Id);
+            PurchaseRecords.Remove(SelectedPurchaseRecord!);
+        }, this.WhenAnyValue(va => va.SelectedPurchaseRecord).Select(selectedPurchaseRecord => selectedPurchaseRecord != null));
+
+
+        OnAddShopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var shopViewModel = await ShowShopDialog.Handle(new ShopViewModel());
+            if (shopViewModel != null)
+            {
+                var newShop = await _apiClient.AddShopAsync(_mapper.Map<ShopPostDto>(shopViewModel));
+                Shops.Add(_mapper.Map<ShopViewModel>(newShop));
+            }
+        });
+        OnChangeShopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var shopViewModel = await ShowShopDialog.Handle(SelectedShop!);
+            if (shopViewModel != null)
+            {
+                await _apiClient.UpdateShopAsync(SelectedShop!.Id, _mapper.Map<ShopPostDto>(shopViewModel));
+                _mapper.Map(shopViewModel, SelectedShop);
+            }
+        }, this.WhenAnyValue(va => va.SelectedShop).Select(selectedShop => selectedShop != null));
+
+        OnDeleteShopCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteShopAsync(SelectedShop!.Id);
+            Shops.Remove(SelectedShop!);
+        }, this.WhenAnyValue(va => va.SelectedShop).Select(selectedShop => selectedShop != null));
+
+
 
         RxApp.MainThreadScheduler.Schedule(LoadCustomersAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadProductsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadProductGroupsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadProductQuantityAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadPurchaseRecordsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadShopsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadTop5PurchaseRecordsAsync);
     }
-
     private async void LoadCustomersAsync()
     {
         var customers = await _apiClient.GetCusomersAsync();
         foreach (var customer in customers)
-        { 
+        {
             Customers.Add(_mapper.Map<CustomerViewModel>(customer));
+        }
+    }
+    private async void LoadProductsAsync()
+    {
+        var products = await _apiClient.GetProductsAsync();
+        foreach (var product in products)
+        {
+            Products.Add(_mapper.Map<ProductViewModel>(product));
+        }
+    }
+    private async void LoadProductGroupsAsync()
+    {
+        var productGroups = await _apiClient.GetProductGroupsAsync();
+        foreach (var productGroup in productGroups)
+        {
+            ProductGroups.Add(_mapper.Map<ProductGroupViewModel>(productGroup));
+        }
+    }
+    private async void LoadProductQuantityAsync()
+    {
+        var productQuantitys = await _apiClient.GetProductQuantitysAsync();
+        foreach (var productQuantity in productQuantitys)
+        {
+            ProductQuantitys.Add(_mapper.Map<ProductQuantityViewModel>(productQuantity));
+        }
+    }
+    private async void LoadPurchaseRecordsAsync()
+    {
+        var purchaseRecords = await _apiClient.GetPurchaseRecordsAsync();
+        foreach (var purchaseRecord in purchaseRecords)
+        {
+            PurchaseRecords.Add(_mapper.Map<PurchaseRecordViewModel>(purchaseRecord));
+        }
+    }
+    private async void LoadShopsAsync()
+    {
+        var shops = await _apiClient.GetShopsAsync();
+        foreach (var shop in shops)
+        {
+            Shops.Add(_mapper.Map<ShopViewModel>(shop));
+        }
+    }
+    private async void LoadTop5PurchaseRecordsAsync()
+    {
+        var top5PurchaseRecords = await _apiClient.Top5PurchasesAsync();
+        foreach (var purchaseRecord in top5PurchaseRecords)
+        {
+            Top5PurchaseRecords.Add(_mapper.Map<PurchaseRecordViewModel>(purchaseRecord));
         }
     }
 }

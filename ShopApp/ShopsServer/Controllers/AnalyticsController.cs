@@ -39,7 +39,7 @@ public class AnalyticsController : ControllerBase
     /// <param name="id"> Id of shop.</param>
     /// <returns>Ok(information about all products in shop by id)</returns>
     [HttpGet("information-product-in-shop")]
-    public async Task<ActionResult> Get(int id)
+    public async Task<ActionResult<ProductQuantityGetDto>> Get(int id)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var foundShop = await ctx.Shops.FirstOrDefaultAsync(fShop => fShop.Id == id);
@@ -119,7 +119,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Ok(information about top 5 purchases)</returns>
     [HttpGet("top-5-purchases")]
-    public async Task<ActionResult> GetTop5Purchases()
+    public async Task<ActionResult<IEnumerable<PurchaseRecordGetDto>>> GetTop5Purchases()
     {
         _logger.LogInformation("Get list of top 5 purchases");
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();

@@ -15,28 +15,194 @@
 	<Window.Styles>
 		<StyleInclude Source="/ShopsStyle.axaml"/>
 	</Window.Styles>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+		<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
+			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Label> Shops</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddShopCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangeShopCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeleteShopCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+					  Items="{Binding Shops}"
+					  SelectedItem="{Binding SelectedShop}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			
+			
+			<StackPanel Grid.Row="3" Orientation="Horizontal">
+				<Label> Products</Label>
+			</StackPanel>
+			
+			<StackPanel Grid.Row="4" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddProductCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangeProductCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeleteProductCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+			
+			<DataGrid Grid.Row="5" AutoGenerateColumns="False"
+					  Items="{Binding Products}"
+					  SelectedItem="{Binding SelectedProduct}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Штрих код" Binding="{Binding Barcode}"/>
+					<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="Id группы продукта" Binding="{Binding ProductGroupId}"/>
+					<DataGridTextColumn Header="Вес" Binding="{Binding Weight}"/>
+					<DataGridTextColumn Header="Тип продукта" Binding="{Binding ProductType}"/>
+					<DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
+					<DataGridTextColumn Header="Дата срока годности" Binding="{Binding StorageLimitDate}"/>
+				</DataGrid.Columns>
+			</DataGrid>
 	
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
-				<Image Source="/Assets/Post.png"/>
-			</Button>
-			<Button Classes="ToolButton"  Command="{Binding OnChangeCustomerCommand}">
-				<Image Source="/Assets/Put.png"/>
-			</Button>
-			<Button Classes="ToolButton"  Command="{Binding OnDeleteCustomerCommand}">
-				<Image Source="/Assets/Remove.png"/>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-				  Items="{Binding Customers}"
-				  SelectedItem="{Binding SelectedCustomer}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Номер карточки" Binding="{Binding CardCount}"/>
-				<DataGridTextColumn Header="Фамилия" Binding="{Binding FirstName}"/>
-				<DataGridTextColumn Header="Имя" Binding="{Binding LastName}"/>
-				<DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+
+			<StackPanel Grid.Row="6" Orientation="Horizontal">
+				<Label> Customer</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="7" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangeCustomerCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeleteCustomerCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="8" AutoGenerateColumns="False"
+					  Items="{Binding Customers}"
+					  SelectedItem="{Binding SelectedCustomer}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Номер карточки" Binding="{Binding CardCount}"/>
+					<DataGridTextColumn Header="Фамилия" Binding="{Binding FirstName}"/>
+					<DataGridTextColumn Header="Имя" Binding="{Binding LastName}"/>
+					<DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+
+			<StackPanel Grid.Row="9" Orientation="Horizontal">
+				<Label> ProductGroup</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="10" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddProductGroupCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangeProductGroupCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeleteProductGroupCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="11" AutoGenerateColumns="False"
+					  Items="{Binding ProductGroups}"
+					  SelectedItem="{Binding SelectedProductGroup}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Название группы продуктов" Binding="{Binding GroupName}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="12" Orientation="Horizontal">
+				<Label> Product quantity</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="13" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddProductQuantityCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangeProductQuantityrCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeleteProductQuantityCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="14" AutoGenerateColumns="False"
+					  Items="{Binding ProductQuantitys}"
+					  SelectedItem="{Binding SelectedProductQuantity}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Product Id" Binding="{Binding ProductId}"/>
+					<DataGridTextColumn Header="Shop Id" Binding="{Binding ShopId}"/>
+					<DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="15" Orientation="Horizontal">
+				<Label> PurchaseRecord</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="16" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddPurchaseRecordCommand}">
+					<Image Source="/Assets/Post.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnChangePurchaseRecordCommand}">
+					<Image Source="/Assets/Put.png"/>
+				</Button>
+				<Button Classes="ToolButton"  Command="{Binding OnDeletePurchaseRecordCommand}">
+					<Image Source="/Assets/Remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="17" AutoGenerateColumns="False"
+					  Items="{Binding PurchaseRecords}"
+					  SelectedItem="{Binding SelectedPurchaseRecord}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Shop Id" Binding="{Binding ShopId}"/>
+					<DataGridTextColumn Header="Customer Id" Binding="{Binding CustomerId}"/>
+					<DataGridTextColumn Header="Product Id" Binding="{Binding ProductId}"/>
+					<DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+					<DataGridTextColumn Header="Дата покупки" Binding="{Binding DateSale}"/>
+					<DataGridTextColumn Header="Сумма" Binding="{Binding Sum}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="18" Orientation="Horizontal">
+				<Label>Top 5 покупок</Label>
+			</StackPanel>
+			<StackPanel Grid.Row="19" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnRefreshTop5PurchaseRecordsCommand}">
+					<Image Source="/Assets/Refresh.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="20" AutoGenerateColumns="False"
+					  Items="{Binding Top5PurchaseRecords}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Shop Id" Binding="{Binding ShopId}"/>
+					<DataGridTextColumn Header="Customer Id" Binding="{Binding CustomerId}"/>
+					<DataGridTextColumn Header="Product Id" Binding="{Binding ProductId}"/>
+					<DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+					<DataGridTextColumn Header="Дата покупки" Binding="{Binding DateSale}"/>
+					<DataGridTextColumn Header="Сумма" Binding="{Binding Sum}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			
+		</Grid>
+	</ScrollViewer>
 </Window>

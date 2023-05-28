@@ -1,0 +1,2454 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "UniversityData.Server",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/Analytics/information_of_university{number}": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 1 - Вывести информацию о выбранном вузе.",
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Analytics/information_of_structure_of_university{number}": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.",
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/Analytics/top_five_specialties": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Analytics/university_with_max_departments": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Analytics/university_with_target_property": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.",
+                "parameters": [
+                    {
+                        "name": "universityPropertyId",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Analytics/count_departments": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ConstructionProperty": {
+            "get": {
+                "tags": [
+                    "ConstructionProperty"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ConstructionProperty"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ConstructionProperty/{id}": {
+            "get": {
+                "tags": [
+                    "ConstructionProperty"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ConstructionProperty"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConstructionPropertyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ConstructionProperty"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstructionPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Department": {
+            "get": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DepartmentGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DepartmentGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DepartmentGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Department/{id}": {
+            "get": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DepartmentPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DepartmentGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Faculty": {
+            "get": {
+                "tags": [
+                    "Faculty"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FacultyGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FacultyGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FacultyGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Faculty"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/Faculty/{id}": {
+            "get": {
+                "tags": [
+                    "Faculty"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Faculty"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacultyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Faculty"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Rector": {
+            "get": {
+                "tags": [
+                    "Rector"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RectorGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RectorGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RectorGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rector"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Rector/{id}": {
+            "get": {
+                "tags": [
+                    "Rector"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Rector"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RectorPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rector"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RectorGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Specialty": {
+            "get": {
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Specialty/{id}": {
+            "get": {
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SpecialtyTableNode": {
+            "get": {
+                "tags": [
+                    "SpecialtyTableNode"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "SpecialtyTableNode"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SpecialtyTableNode/{id}": {
+            "get": {
+                "tags": [
+                    "SpecialtyTableNode"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "SpecialtyTableNode"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodePostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SpecialtyTableNode"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpecialtyTableNodeGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/University": {
+            "get": {
+                "tags": [
+                    "University"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "University"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/University/{id}": {
+            "get": {
+                "tags": [
+                    "University"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "University"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "University"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/UniversityProperty": {
+            "get": {
+                "tags": [
+                    "UniversityProperty"
+                ],
+                "summary": "GET-запрос на получение всех элементов коллекции",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "UniversityProperty"
+                ],
+                "summary": "POST-запрос на добавление нового элемента в коллекцию",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/UniversityProperty/{id}": {
+            "get": {
+                "tags": [
+                    "UniversityProperty"
+                ],
+                "summary": "GET-запрос на получение элемента в соответствии с ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "UniversityProperty"
+                ],
+                "summary": "PUT-запрос на замену существующего элемента коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyPostDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "UniversityProperty"
+                ],
+                "summary": "DELETE-запрос на удаление элемента из коллекции",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityPropertyGetDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ConstructionPropertyGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "nameConstructionProperty": {
+                        "type": "string",
+                        "description": "Название собственности зданий университета",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Собственность зданий университета"
+            },
+            "ConstructionPropertyPostDto": {
+                "type": "object",
+                "properties": {
+                    "nameConstructionProperty": {
+                        "type": "string",
+                        "description": "Название собственности зданий университета",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Собственность зданий университета"
+            },
+            "DepartmentGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название кафедры",
+                        "nullable": true
+                    },
+                    "supervisorNumber": {
+                        "type": "string",
+                        "description": "Контактный телефон заведущего кафедрой",
+                        "nullable": true
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о кафедре"
+            },
+            "DepartmentPostDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Название кафедры",
+                        "nullable": true
+                    },
+                    "supervisorNumber": {
+                        "type": "string",
+                        "description": "Контактный телефон заведущего кафедрой",
+                        "nullable": true
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о кафедре"
+            },
+            "FacultyGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название факультета",
+                        "nullable": true
+                    },
+                    "workersCount": {
+                        "type": "integer",
+                        "description": "Количество сотрудников факультета",
+                        "format": "int32"
+                    },
+                    "studentsCount": {
+                        "type": "integer",
+                        "description": "Количество студентов факультета",
+                        "format": "int32"
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о факультете"
+            },
+            "FacultyPostDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Название факультета",
+                        "nullable": true
+                    },
+                    "workersCount": {
+                        "type": "integer",
+                        "description": "Количество сотрудников факультета",
+                        "format": "int32"
+                    },
+                    "studentsCount": {
+                        "type": "integer",
+                        "description": "Количество студентов факультета",
+                        "format": "int32"
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о факультете"
+            },
+            "RectorGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Имя ректора",
+                        "nullable": true
+                    },
+                    "surname": {
+                        "type": "string",
+                        "description": "Фамилия ректора",
+                        "nullable": true
+                    },
+                    "patronymic": {
+                        "type": "string",
+                        "description": "Отчество ректора",
+                        "nullable": true
+                    },
+                    "degree": {
+                        "type": "string",
+                        "description": "Степень ректора",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Звание ректора",
+                        "nullable": true
+                    },
+                    "position": {
+                        "type": "string",
+                        "description": "Должность ректора",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о ректоре"
+            },
+            "RectorPostDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Имя ректора",
+                        "nullable": true
+                    },
+                    "surname": {
+                        "type": "string",
+                        "description": "Фамилия ректора",
+                        "nullable": true
+                    },
+                    "patronymic": {
+                        "type": "string",
+                        "description": "Отчество ректора",
+                        "nullable": true
+                    },
+                    "degree": {
+                        "type": "string",
+                        "description": "Степень ректора",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Звание ректора",
+                        "nullable": true
+                    },
+                    "position": {
+                        "type": "string",
+                        "description": "Должность ректора",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о ректоре"
+            },
+            "SpecialtyGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название специальности",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Код-шифр специальности",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Специальность"
+            },
+            "SpecialtyPostDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Название специальности",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Код-шифр специальности",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Специальность"
+            },
+            "SpecialtyTableNodeGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "specialtyId": {
+                        "type": "integer",
+                        "description": "Специальность",
+                        "format": "int32"
+                    },
+                    "countGroups": {
+                        "type": "integer",
+                        "description": "Количество групп",
+                        "format": "int32"
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Узел таблицы связи специальности и количества групп"
+            },
+            "SpecialtyTableNodePostDto": {
+                "type": "object",
+                "properties": {
+                    "specialtyId": {
+                        "type": "integer",
+                        "description": "ID специальности",
+                        "format": "int32"
+                    },
+                    "countGroups": {
+                        "type": "integer",
+                        "description": "Количество групп",
+                        "format": "int32"
+                    },
+                    "universityId": {
+                        "type": "integer",
+                        "description": "ID университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Узел таблицы связи специальности и количества групп"
+            },
+            "UniversityGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "number": {
+                        "type": "string",
+                        "description": "Регистрационный номер",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название университета",
+                        "nullable": true
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Адрес университета",
+                        "nullable": true
+                    },
+                    "rectorId": {
+                        "type": "integer",
+                        "description": "ID ректора",
+                        "format": "int32"
+                    },
+                    "universityPropertyId": {
+                        "type": "integer",
+                        "description": "Сведения о ректоре",
+                        "format": "int32"
+                    },
+                    "constructionPropertyId": {
+                        "type": "integer",
+                        "description": "Собственность здания университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация об университете"
+            },
+            "UniversityPostDto": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "string",
+                        "description": "Регистрационный номер",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название университета",
+                        "nullable": true
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Адрес университета",
+                        "nullable": true
+                    },
+                    "rectorId": {
+                        "type": "integer",
+                        "description": "ID ректора",
+                        "format": "int32"
+                    },
+                    "universityPropertyId": {
+                        "type": "integer",
+                        "description": "ID собственности учреждения",
+                        "format": "int32"
+                    },
+                    "constructionPropertyId": {
+                        "type": "integer",
+                        "description": "ID собственности зданий университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация об университете"
+            },
+            "UniversityPropertyGetDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "nameUniversityProperty": {
+                        "type": "string",
+                        "description": "Название собственности университета",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Собственность университета"
+            },
+            "UniversityPropertyPostDto": {
+                "type": "object",
+                "properties": {
+                    "nameUniversityProperty": {
+                        "type": "string",
+                        "description": "Название собственности университета",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Собственность университета"
+            }
+        }
+    }
+}

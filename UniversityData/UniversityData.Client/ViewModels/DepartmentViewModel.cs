@@ -36,4 +36,11 @@ public class DepartmentViewModel : ViewModelBase
         get => _universityId;
         set => this.RaiseAndSetIfChanged(ref _universityId, value);
     }
+
+    public ReactiveCommand<Unit, DepartmentViewModel> OnSubmitCommand { get; }
+
+    public DepartmentViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

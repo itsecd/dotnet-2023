@@ -35,4 +35,11 @@ public class FacultyViewModel : ViewModelBase
         get => _universityId;
         set => this.RaiseAndSetIfChanged(ref _universityId, value);
     }
+
+    public ReactiveCommand<Unit, FacultyViewModel> OnSubmitCommand { get; }
+
+    public FacultyViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

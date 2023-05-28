@@ -29,4 +29,11 @@ public class SpecialtyViewModel : ViewModelBase
         get => _code;
         set => this.RaiseAndSetIfChanged(ref _code, value);
     }
+
+    public ReactiveCommand<Unit, SpecialtyViewModel> OnSubmitCommand { get; }
+
+    public SpecialtyViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

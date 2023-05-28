@@ -3,22 +3,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="UniversityData.Client.Views.ConstructionPropertyWindow"
+        x:Class="UniversityData.Client.Views.SpecialtyWindow"
         xmlns:vm="using:UniversityData.Client.ViewModels"
-		Title="Редактирование собственности зданий университета"
+		Title="Редактирование специальности"
 		MaxWidth="500"
 		SizeToContent="Height">
 	<Design.DataContext>
-		<vm:ConstructionPropertyViewModel/>
+		<vm:SpecialtyViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>
 		<StyleInclude Source="/UniversityDataStyles.axaml" />
 	</Window.Styles>
-	<Grid Classes ="MainGrid" RowDefinitions = "Auto, *" ColumnDefinitions="Auto, *">
-		<Label Grid.Row="0" VerticalAlignment="Center">Наименование собственности</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NameConstructionProperty}"/>
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+	<Grid Classes ="MainGrid" RowDefinitions = "Auto, Auto *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" VerticalAlignment="Center">Название</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+		<Label Grid.Row="1" VerticalAlignment="Center">Код специальности</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Code}"/>
+		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">ОК</Button>

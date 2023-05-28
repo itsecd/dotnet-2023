@@ -65,4 +65,11 @@ public class RectorViewModel : ViewModelBase
         get => _position;
         set => this.RaiseAndSetIfChanged(ref _position, value);
     }
+
+    public ReactiveCommand<Unit, RectorViewModel> OnSubmitCommand { get; }
+
+    public RectorViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

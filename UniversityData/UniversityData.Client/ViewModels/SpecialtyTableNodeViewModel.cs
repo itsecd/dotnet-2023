@@ -35,4 +35,11 @@ public class SpecialtyTableNodeViewModel : ViewModelBase
         get => _universityId;
         set => this.RaiseAndSetIfChanged(ref _universityId, value);
     }
+
+    public ReactiveCommand<Unit, SpecialtyTableNodeViewModel> OnSubmitCommand { get; }
+
+    public SpecialtyTableNodeViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

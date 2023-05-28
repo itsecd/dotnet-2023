@@ -20,4 +20,11 @@ public class UniversityPropertyViewModel : ViewModelBase
         get => _nameUniversityProperty;
         set => this.RaiseAndSetIfChanged(ref _nameUniversityProperty, value);
     }
+
+    public ReactiveCommand<Unit, UniversityPropertyViewModel> OnSubmitCommand { get; }
+
+    public UniversityPropertyViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
+    }
 }

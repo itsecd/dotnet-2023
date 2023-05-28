@@ -65,7 +65,6 @@ public class ShopRepository : IShopRepository
     {
         get
         {
-            var productQuantities = new List<List<ProductQuantity>>();
             var products = ListProducts;
             return new List<ProductQuantity>()
             {

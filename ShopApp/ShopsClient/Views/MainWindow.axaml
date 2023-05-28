@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ShopsClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ShopsClient.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ShopsClient">
+
+    <Design.DataContext>
+              <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/ShopsStyle.axaml"/>
+	</Window.Styles>
+	
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+				<Image Source="/Assets/Post.png"/>
+			</Button>
+			<Button Classes="ToolButton"  Command="{Binding OnChangeCustomerCommand}">
+				<Image Source="/Assets/Put.png"/>
+			</Button>
+			<Button Classes="ToolButton"  Command="{Binding OnDeleteCustomerCommand}">
+				<Image Source="/Assets/Remove.png"/>
+			</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+				  Items="{Binding Customers}"
+				  SelectedItem="{Binding SelectedCustomer}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Номер карточки" Binding="{Binding CardCount}"/>
+				<DataGridTextColumn Header="Фамилия" Binding="{Binding FirstName}"/>
+				<DataGridTextColumn Header="Имя" Binding="{Binding LastName}"/>
+				<DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>

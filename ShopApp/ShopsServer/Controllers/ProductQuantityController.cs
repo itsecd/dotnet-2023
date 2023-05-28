@@ -74,7 +74,7 @@ public class ProductQuantityController : ControllerBase
     /// <param name="product"> New product in shop</param>
     /// <returns>Ok(add new product in shop) </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ProductQuantityPostDto product)
+    public async Task<ActionResult<ProductQuantityGetDto>> Post([FromBody] ProductQuantityPostDto product)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
@@ -94,7 +94,7 @@ public class ProductQuantityController : ControllerBase
         await ctx.ProductQuantity.AddAsync(newProduct);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Post new record of product quantity, id = {newId}", newId);
-        return Ok();
+        return Ok(_mapper.Map<ProductQuantityGetDto>(newProduct));
     }
     /// <summary>
     /// Updates quantity product in shop information

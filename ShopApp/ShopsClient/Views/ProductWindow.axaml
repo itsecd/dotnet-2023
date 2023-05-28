@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ShopsClient.Views.ProductWindow"
+        Title="ProductWindow"
+		xmlns:vm="using:ShopsClient.ViewModels"
+		MinHeight="350" MinWidth="350"
+		MaxHeight="350" MaxWidth="350"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:CustomerViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/ShopsStyle.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Штрих код</Label>
+		<Label Grid.Row="1" Grid.Column="0">Название</Label>
+		<Label Grid.Row="2" Grid.Column="0">Id группы продукта</Label>
+		<Label Grid.Row="3" Grid.Column="0">Вес</Label>
+		<Label Grid.Row="4" Grid.Column="0">Тип продукта</Label>
+		<Label Grid.Row="5" Grid.Column="0">Цена</Label>
+		<Label Grid.Row="6" Grid.Column="0">Дата срока годности</Label>
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Barcode}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProductGroupId}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Weight}"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ProductType}"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Price}"/>
+		<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding StorageLimitDate}"/>
+		<StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

@@ -73,7 +73,7 @@ public class ShopController : ControllerBase
     /// <param name="shop"> New shop</param>
     /// <returns>Ok(add new shop) </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ShopPostDto shop)
+    public async Task<ActionResult<ShopGetDto>> Post([FromBody] ShopPostDto shop)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
@@ -86,7 +86,7 @@ public class ShopController : ControllerBase
         await ctx.Shops.AddAsync(newShop);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Post shop, id = {newId}", newId);
-        return Ok();
+        return Ok(_mapper.Map<ShopGetDto>(newShop));
     }
     /// <summary>
     /// Updates shop information

@@ -38,11 +38,11 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns>Ok(List of customer)</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomersGetDto>>> Get()
+    public async Task<ActionResult<IEnumerable<CustomerGetDto>>> Get()
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get list of customer");
-        return Ok(_mapper.Map<IEnumerable<CustomersGetDto>>(ctx.Customers));
+        return await _mapper.ProjectTo<CustomerGetDto>(ctx.Customers).ToListAsync();
     }
     /// <summary>
     /// Return customer by id
@@ -50,7 +50,7 @@ public class CustomerController : ControllerBase
     /// <param name="id"> Customer id</param>
     /// <returns>Ok (the customer found by specified id) or NotFound</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<CustomersGetDto>> Get(int id)
+    public async Task<ActionResult<CustomerGetDto>> Get(int id)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
@@ -63,7 +63,7 @@ public class CustomerController : ControllerBase
         else
         {
             _logger.LogInformation("Customer with id = {id}", id);
-            return Ok(_mapper.Map<CustomersGetDto>(customer));
+            return Ok(_mapper.Map<CustomerGetDto>(customer));
         }
     }
     /// <summary>
@@ -72,7 +72,7 @@ public class CustomerController : ControllerBase
     /// <param name="customer"> New customer</param>
     /// <returns>Ok(add new customer) </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CustomerPostDto customer)
+    public async Task<ActionResult<CustomerGetDto>> Post([FromBody] CustomerPostDto customer)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
@@ -85,7 +85,7 @@ public class CustomerController : ControllerBase
         await ctx.Customers.AddAsync(newCustomer);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Post customer, id = {newId}", newId);
-        return Ok();
+        return Ok(_mapper.Map<CustomerGetDto>(newCustomer));
     }
     /// <summary>
     /// Updates customer information

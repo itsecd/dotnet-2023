@@ -74,7 +74,7 @@ public class PurchaseRecordController : ControllerBase
     /// <param name="record"> New purchase record</param>
     /// <returns>Ok(add new product in shop) </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] PurchaseRecordPostDto record)
+    public async Task<ActionResult<PurchaseRecordGetDto>> Post([FromBody] PurchaseRecordPostDto record)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
 
@@ -97,7 +97,7 @@ public class PurchaseRecordController : ControllerBase
         await ctx.PurchaseRecords.AddAsync(newRecord);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Post new purchase record, id = {newId}", newId);
-        return Ok();
+        return Ok(_mapper.Map<PurchaseRecordGetDto>(newRecord));
     }
     /// <summary>
     /// Updates purchase record information

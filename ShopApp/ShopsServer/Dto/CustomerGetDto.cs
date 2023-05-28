@@ -1,8 +1,8 @@
 ﻿namespace Shops.Server.Dto;
 /// <summary>
-/// Class CustomersGetDto is used to make HTTP GET request.
+/// Class CustomerGetDto is used to make HTTP GET request.
 /// </summary>
-public class CustomersGetDto
+public class CustomerGetDto
 {
     /// <summary>
     /// Customer id

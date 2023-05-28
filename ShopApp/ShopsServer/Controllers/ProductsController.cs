@@ -73,7 +73,7 @@ public class ProductsController : ControllerBase
     /// <param name="product"> New product</param>
     /// <returns>Ok(add new product) </returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ProductPostDto product)
+    public async Task<ActionResult<ProductGetDto>> Post([FromBody] ProductPostDto product)
     {
         await using var ctx = await _dbContextFactory.CreateDbContextAsync();
         var foundProductGroup = await ctx.ProductGroups.FirstOrDefaultAsync(fProductGroup => fProductGroup.Id == product.ProductGroupId);
@@ -88,7 +88,7 @@ public class ProductsController : ControllerBase
         await ctx.Products.AddAsync(newProduct);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Post product, id = {newId}", newId);
-        return Ok();
+        return Ok(_mapper.Map<ProductGetDto>(newProduct));
     }
     /// <summary>
     /// Updates product information

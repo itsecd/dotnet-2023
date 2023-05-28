@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ShopsClient.Views.ProductQuantityWindow"
+        Title="ProductQuantityWindow"
+        xmlns:vm="using:ShopsClient.ViewModels"
+		MinHeight="350" MinWidth="350"
+		MaxHeight="350" MaxWidth="350"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:CustomerViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/ShopsStyle.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Product Id</Label>
+		<Label Grid.Row="1" Grid.Column="0">Shop Id</Label>
+		<Label Grid.Row="2" Grid.Column="0">Quantity</Label>
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProductId}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ShopId}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"/>
+		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

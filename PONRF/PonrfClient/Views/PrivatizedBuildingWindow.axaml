@@ -5,9 +5,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PonrfClient.Views.PrivatizedBuildingWindow"
         xmlns:vm="using:PonrfClient.ViewModels"
-		Title="Редактирование записей о приватизированных зданиях"
+		Icon="/Assets/logo3.png"
+		Title="Privatized building: editing data"
 		MaxWidth="500"
-		SizeToContent="Height">
+		SizeToContent="Height"
+		WindowStartupLocation="CenterOwner">
     <Design.DataContext>
 		<vm:PrivatizedBuildingViewModel/>
     </Design.DataContext>
@@ -15,27 +17,37 @@
 	<Window.Styles>
 		<StyleInclude Source="/PonrfStyles.axaml" />
 	</Window.Styles>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Date of sale: </Label>
+			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White">First cost: </Label>
+			<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Second cost: </Label>
+			<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Customer Id: </Label>
+			<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Auction Id: </Label>
+			<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Building Id: </Label>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Date of sale: </Label>
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">First cost: </Label>
-		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Second cost: </Label>
-		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">CustomerId: </Label>
-		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">AuctionId: </Label>
-		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">BuildingId: </Label>
+			<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DateOfSale}" Foreground="Black"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstCost}" Foreground="Black"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SecondCost}" Foreground="Black"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CustomerId}" Foreground="Black"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AuctionId}" Foreground="Black"/>
+			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding BuildingId}" Foreground="Black"/>
 
-		<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DateOfSale}" />
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstCost}" />
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SecondCost}" />
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CustomerId}" />
-		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AuctionId}"/>
-		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding BuildingId}" />
-		
-		<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
-					HorizontalAlignment="Right"
-					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
-			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-		</StackPanel>
-	</Grid>
+			<StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+				<Button Classes="ButtonWindow" IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+				<Button Classes="ButtonWindow" IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+			</StackPanel>
+		</Grid>
+	</Panel>
 </Window>

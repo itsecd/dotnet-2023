@@ -34,7 +34,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>CustomerGetDto</returns>
     [HttpGet("view_all_customers")]
-    public async Task<ActionResult<CustomerGetDto>> ViewAllCustomers()
+    public async Task<ActionResult<IEnumerable<CustomerGetDto>>> ViewAllCustomers()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var request = await (from customer in context.Customers
@@ -47,7 +47,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>AuctionGetDto</returns>
     [HttpGet("auctions_without_full_sales")]
-    public async Task<ActionResult<AuctionGetDto>> AuctionsWithoutFullSales()
+    public async Task<ActionResult<IEnumerable<AuctionGetDto>>> AuctionsWithoutFullSales()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var request = await (from auction in context.Auctions
@@ -110,7 +110,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Top-5 customers</returns>
     [HttpGet("top_five_customers")]
-    public async Task<IActionResult> TopFiveCustomers()
+    public async Task<ActionResult<IEnumerable<TopCustomerGetDto>>> TopFiveCustomers()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var request = await (from customer in context.Customers
@@ -130,7 +130,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Top-2 auctions</returns>
     [HttpGet("most_profitable_auctions")]
-    public async Task<IActionResult> MostProfitableAuctions()
+    public async Task<ActionResult<IEnumerable<TopAuctionGetDto>>> MostProfitableAuctions()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var request = await (from auction in context.Auctions

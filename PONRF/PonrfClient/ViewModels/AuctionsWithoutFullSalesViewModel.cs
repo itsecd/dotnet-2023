@@ -1,18 +1,11 @@
 ﻿using ReactiveUI;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
-using System;
 
 namespace PonrfClient.ViewModels;
-internal class AuctionsWithoutFullSalesViewModel : ViewModelBase
+public class AuctionsWithoutFullSalesViewModel : ViewModelBase
 {
-    private int _auctionId;
-    public int AuctionId
-    {
-        get => _auctionId;
-        set => this.RaiseAndSetIfChanged(ref _auctionId, value);
-    }
-
     private DateTimeOffset _date = DateTime.Now;
     [Required]
     public DateTimeOffset Date

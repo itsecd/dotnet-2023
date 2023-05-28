@@ -13,14 +13,23 @@
     <Compile Remove="ApiClient.cs" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Add.png" />
+    <None Remove="Assets\Auction.png" />
+    <None Remove="Assets\AuctionsWithoutFullSales.png" />
+    <None Remove="Assets\Building.png" />
     <None Remove="Assets\Change.png" />
+    <None Remove="Assets\Customer.png" />
     <None Remove="Assets\Delete.png" />
     <None Remove="Assets\logo3.png" />
-    <None Remove="swagger.json" />
+    <None Remove="Assets\PrivatizedBuilding.png" />
+    <None Remove="Assets\Run.png" />
+    <None Remove="Assets\TopAuctions.png" />
+    <None Remove="Assets\TopCustomers.png" />
+    <None Remove="Assets\ViewAllCustomers.png" />
+    <None Remove="swaggerNew.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="PonrfClient" ClassName="ApiClient" />
+    <OpenApiReference Include="swaggerNew.json" CodeGenerator="NSwagCSharp" Namespace="PonrfClient" ClassName="ApiClient" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,5 +64,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swagger.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

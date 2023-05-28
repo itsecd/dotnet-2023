@@ -5,9 +5,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PonrfClient.Views.BuildingWindow"
         xmlns:vm="using:PonrfClient.ViewModels"
-        Title="BuildingWindow"
+		Icon="/Assets/logo3.png"
+        Title="Building: editing data"
 		MaxWidth="500"
-	    SizeToContent="Height">
+	    SizeToContent="Height"
+		WindowStartupLocation="CenterOwner">
 	<Design.DataContext>
 		<vm:BuildingViewModel/>
 	</Design.DataContext>
@@ -16,28 +18,39 @@
 		<StyleInclude Source="/PonrfStyles.axaml" />
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Date of build: </Label>
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Registration number: </Label>
-		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">District: </Label>
-		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Street: </Label>
-		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">House number: </Label>
-		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Area: </Label>
-		<Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Floors: </Label>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*,*,*,*,*" ColumnDefinitions="Auto,*,*">
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Date of build: </Label>
+			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Registration number: </Label>
+			<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >District: </Label>
+			<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Street: </Label>
+			<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >House number: </Label>
+			<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Area: </Label>
+			<Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Floors: </Label>
 
-		<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DateOfBuild}" />
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RegistNum}" />
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding District}" />
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Street}" />
-		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding HouseNumber}"/>
-		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Area}" />
-		<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Floors}" />
+			<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding DateOfBuild}"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RegistNum}" Foreground="Black" Watermark="00:00:000000:00"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding District}" Foreground="Black" Watermark="Кировский"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Street}" Foreground="Black" Watermark="Успешная"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding HouseNumber}" Foreground="Black"/>
+			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Area}"  Foreground="Black"/>
+			<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Floors}"  Foreground="Black"/>
 
-		<StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
-					HorizontalAlignment="Right"
-					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
-			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-		</StackPanel>
-	</Grid>
+			<StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+				<Button Classes="ButtonWindow" IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+				<Button Classes="ButtonWindow" IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+			</StackPanel>
+		</Grid>
+	</Panel>
 </Window>

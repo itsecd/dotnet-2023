@@ -99,5 +99,25 @@ public class ApiWrapper
     {
         await _client.Customer4Async(id);
     }
+
+    public async Task<ICollection<CustomerGetDto>> ViewAllCustomers()
+    {
+        return await _client.ViewAllCustomersAsync();
+    }
+
+    public async Task<ICollection<AuctionGetDto>> AuctionWithoutFullSales()
+    {
+        return await _client.AuctionsWithoutFullSalesAsync();
+    }
+
+    public async Task<ICollection<TopCustomerGetDto>> TopCustomer()
+    {
+        return await _client.TopCustomersAsync();
+    }
+
+    public async Task<ICollection<TopAuctionGetDto>> TopAuction()
+    {
+        return await _client.TopAuctionsAsync();
+    }
 }
 

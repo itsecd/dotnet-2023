@@ -5,9 +5,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PonrfClient.Views.AuctionWindow"
 		xmlns:vm="using:PonrfClient.ViewModels"
-        Title="Редактирование записей о покупателях"
+		Icon="/Assets/logo3.png"
+        Title="Auction: editing data"
 		MaxWidth="500"
-		SizeToContent="Height">
+		SizeToContent="Height"
+		WindowStartupLocation="CenterOwner">
     <Design.DataContext>
 	    <vm:AuctionViewModel/>
     </Design.DataContext>
@@ -15,18 +17,29 @@
 		<StyleInclude Source="/PonrfStyles.axaml" />
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*" ColumnDefinitions="Auto,*,*">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Date: </Label>
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Organizer: </Label>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75"/>
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto,*,*" ColumnDefinitions="Auto,*,*">
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Date: </Label>
+			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White">Organizer: </Label>
 
-		<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Date}" />
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Organizer}" />
+			<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Date}" />
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Organizer}" Foreground="Black" Watermark="Название"/>
 
-		<StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-					HorizontalAlignment="Right"
-					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
-			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-		</StackPanel>
-	</Grid>
+			<StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+				<Button Classes="ButtonWindow" IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+				<Button Classes="ButtonWindow" IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+			</StackPanel>
+		</Grid>
+	</Panel>
 </Window>

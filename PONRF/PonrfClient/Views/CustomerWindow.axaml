@@ -5,9 +5,13 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PonrfClient.Views.CustomerWindow"
 		xmlns:vm="using:PonrfClient.ViewModels"
-        Title="Редактирование записей о покупателях"
+		Icon="/Assets/logo3.png"
+        Title="Customer: editing data"
 		MaxWidth="500"
-		SizeToContent="Height">
+		SizeToContent="Height"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		WindowStartupLocation="CenterOwner">
 	<Design.DataContext>
 		<vm:CustomerViewModel/>
 	</Design.DataContext>
@@ -16,20 +20,31 @@
 		<StyleInclude Source="/PonrfStyles.axaml" />
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*" ColumnDefinitions="Auto,*,*">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Fio: </Label>
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Passport: </Label>
-		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Address: </Label>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto,*,*,*" ColumnDefinitions="Auto,*,*">
+			<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Fio: </Label>
+			<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Passport: </Label>
+			<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="White" >Address: </Label>
 
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Fio}" />
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Passport}" />
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Address}" />
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Fio}" Foreground="Black" Watermark="Гудзима А. А."/>
+			<MaskedTextBox Mask="00 00 000000" Grid.Row="1" Grid.Column="1" Text="{Binding Passport}" Foreground="Black"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Address}" Foreground="Black" Watermark="ул. Успешная, 14"/>
 
-		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-					HorizontalAlignment="Right"
-					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
-			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
-		</StackPanel>
-	</Grid>
+			<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+				<Button Classes="ButtonWindow" IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+				<Button Classes="ButtonWindow" IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+			</StackPanel>
+		</Grid>
+	</Panel>
 </Window>

@@ -28,6 +28,9 @@ public partial class App : Application
                 cfg.CreateMap<BuildingViewModel, BuildingPostDto>();
                 cfg.CreateMap<CustomerGetDto, CustomerViewModel>();
                 cfg.CreateMap<CustomerViewModel, CustomerPostDto>();
+                cfg.CreateMap<AuctionsWithoutFullSalesViewModel, AuctionGetDto>().ReverseMap();
+                cfg.CreateMap<TopCustomerViewModel, TopCustomerGetDto>().ReverseMap();
+                cfg.CreateMap<TopAuctionViewModel, TopAuctionGetDto>().ReverseMap();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

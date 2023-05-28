@@ -14,6 +14,10 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<AuctionViewModel> Auctions { get; } = new();
     public ObservableCollection<BuildingViewModel> Buildings { get; } = new();
     public ObservableCollection<CustomerViewModel> Customers { get; } = new();
+    public ObservableCollection<CustomerViewModel> ViewAllCustomers { get; } = new();
+    public ObservableCollection<AuctionsWithoutFullSalesViewModel> AuctionWithoutFullSales { get; } = new();
+    public ObservableCollection<TopCustomerViewModel> TopCustomer { get; } = new();
+    public ObservableCollection<TopAuctionViewModel> TopAuction { get; } = new();
 
     private PrivatizedBuildingViewModel? _selectedPrivatizedBuilding;
     public PrivatizedBuildingViewModel? SelectedPrivatizedBuilding
@@ -62,6 +66,11 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddCustomerCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCustomerCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCustomerCommand { get; set; }
+
+    public ReactiveCommand<Unit, Unit> ShowViewAllCustomers { get; set; }
+    public ReactiveCommand<Unit, Unit> ShowAuctionWithoutFullSales { get; set; }
+    public ReactiveCommand<Unit, Unit> ShowTopCustomer { get; set; }
+    public ReactiveCommand<Unit, Unit> ShowTopAuction { get; set; }
 
     public Interaction<PrivatizedBuildingViewModel, PrivatizedBuildingViewModel?> ShowPrivatizedBuildingDialog { get; }
     public Interaction<AuctionViewModel, AuctionViewModel?> ShowAuctionDialog { get; }
@@ -200,6 +209,42 @@ public class MainWindowViewModel : ViewModelBase
             await _apiClient.DeleteCustomerAsync(SelectedCustomer!.Id);
             Customers.Remove(SelectedCustomer);
         }, this.WhenAnyValue(vm => vm.SelectedCustomer).Select(selectedCustomer => selectedCustomer != null));
+
+        ShowViewAllCustomers = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var requestCustomer = await _apiClient.ViewAllCustomers();
+            foreach (var customer in requestCustomer)
+            {
+                ViewAllCustomers.Add(_mapper.Map<CustomerViewModel>(customer));
+            }
+        });
+
+        ShowAuctionWithoutFullSales = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var requestAuction = await _apiClient.AuctionWithoutFullSales();
+            foreach (var auction in requestAuction)
+            {
+                AuctionWithoutFullSales.Add(_mapper.Map<AuctionsWithoutFullSalesViewModel>(auction));
+            }
+        });
+
+        ShowTopCustomer = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var requestCustomer = await _apiClient.TopCustomer();
+            foreach (var customer in requestCustomer)
+            {
+                TopCustomer.Add(_mapper.Map<TopCustomerViewModel>(customer));
+            }
+        });
+
+        ShowTopAuction = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var requestAuction = await _apiClient.TopAuction();
+            foreach (var auction in requestAuction)
+            {
+                TopAuction.Add(_mapper.Map<TopAuctionViewModel>(auction));
+            }
+        });
 
         RxApp.MainThreadScheduler.Schedule(LoadPrivatizedBuildingAsync);
         RxApp.MainThreadScheduler.Schedule(LoadAuctionAsync);

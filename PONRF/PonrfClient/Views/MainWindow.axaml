@@ -6,119 +6,68 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PonrfClient.Views.MainWindow"
         Icon="/Assets/logo3.png"
-        Title="PonrfClient">
+        Title="PonrfClient"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		ExtendClientAreaToDecorationsHint="True"
+		WindowStartupLocation="CenterScreen">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl>
-		<TabItem Header="Privatized buildings" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddPrivatizedBuildingCommand}">
-						<Image Source="/Assets/Add.png" />
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangePrivatizedBuildingCommand}">
-						<Image Source="/Assets/Change.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeletePrivatizedBuildingCommand}">
-						<Image Source="/Assets/Delete.png" />
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						  Items="{Binding	PrivatizedBuildings}"
-						  SelectedItem="{Binding SelectedPrivatizedBuilding}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Date of sale" Binding="{Binding DateOfSale}"/>
-						<DataGridTextColumn Header="First cost" Binding="{Binding FirstCost}"/>
-						<DataGridTextColumn Header="Second cost" Binding="{Binding SecondCost}"/>
-						<DataGridTextColumn Header="Customer's Id" Binding="{Binding CustomerId}"/>
-						<DataGridTextColumn Header="Auction's Id" Binding="{Binding AuctionId}"/>
-						<DataGridTextColumn Header="Building's Id" Binding="{Binding BuildingId}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Auctions" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddAuctionCommand}">
-						<Image Source="/Assets/Add.png" />
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeAuctionCommand}">
-						<Image Source="/Assets/Change.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteAuctionCommand}">
-						<Image Source="/Assets/Delete.png" />
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						  Items="{Binding	Auctions}"
-						  SelectedItem="{Binding SelectedAuction}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-						<DataGridTextColumn Header="Organizer" Binding="{Binding Organizer}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Buildings" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddBuildingCommand}">
-						<Image Source="/Assets/Add.png" />
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeBuildingCommand}">
-						<Image Source="/Assets/Change.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteBuildingCommand}">
-						<Image Source="/Assets/Delete.png" />
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						  Items="{Binding	Buildings}"
-						  SelectedItem="{Binding SelectedBuilding}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Date of build" Binding="{Binding DateOfBuild}"/>
-						<DataGridTextColumn Header="Registration number" Binding="{Binding RegistNum}"/>
-						<DataGridTextColumn Header="District" Binding="{Binding District}"/>
-						<DataGridTextColumn Header="Street" Binding="{Binding Street}"/>
-						<DataGridTextColumn Header="House number" Binding="{Binding HouseNumber}"/>
-						<DataGridTextColumn Header="Area" Binding="{Binding Area}"/>
-						<DataGridTextColumn Header="Floors" Binding="{Binding Floors}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Customers" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
-						<Image Source="/Assets/Add.png" />
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
-						<Image Source="/Assets/Change.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
-						<Image Source="/Assets/Delete.png" />
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						  Items="{Binding	Customers}"
-						  SelectedItem="{Binding SelectedCustomer}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}"/>
-						<DataGridTextColumn Header="Fio" Binding="{Binding Fio}"/>
-						<DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-	</TabControl>
-	
 	<Window.Styles>
 		<StyleInclude Source="/PonrfStyles.axaml"/>
 	</Window.Styles>
 
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*,*" ColumnDefinitions="Auto, *">
+				<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White" FontSize="30" Margin="80, 60, 0, 0">Tables</Label>
+				<Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Foreground="White" FontSize="30" Margin="120, 60, 0, 0">Requests</Label>
+				<StackPanel Grid.Row="1" Orientation="Horizontal">
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/PrivatizedBuilding.png"/>
+					</Button>
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/Building.png"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Grid.Row="2" Orientation="Horizontal">
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/Auction.png"/>
+					</Button>
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/Customer.png"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="40,0,0,0">
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/ViewAllCustomers.png"/>
+					</Button>
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/AuctionsWithoutFullSales.png"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="40,0,0,0">
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/TopCustomers.png"/>
+					</Button>
+					<Button Classes="MainButton" >
+						<Image Source="/Assets/TopAuctions.png"/>
+					</Button>
+				</StackPanel>
+			</Grid>
+			
+			
+	</Panel>
+	
 </Window>

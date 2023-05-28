@@ -16,9 +16,7 @@
 		<NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding DepartmentId}" Minimum="1"/>
 
 		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Employee Id</Label>
-		<NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding EmployeeId}" Minimum="1">
-			
-		</NumericUpDown>
+		<NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding EmployeeId}" Minimum="1"/>
 
 		<StackPanel Classes="StackPanelButtons" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"

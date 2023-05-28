@@ -12,13 +12,20 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         InitializeComponent();
 
         this.WhenActivated(disposableObj =>
-        disposableObj(ViewModel!.ShowDepartmentEmployeeDialog.RegisterHandler(ShowDepartmentEmployeeDialogAsync)));
+            disposableObj(ViewModel!.ShowDepartmentEmployeeDialog.RegisterHandler(ShowDepartmentEmployeeDialogAsync)));
+        
         this.WhenActivated(disposableObj => 
             disposableObj(ViewModel!.ShowDepartmentDialog.RegisterHandler(ShowDepartmentDialogAsync)));
+        
         this.WhenActivated(disposableObj =>
-        disposableObj(ViewModel!.ShowWorkshopDialog.RegisterHandler(ShowWorkshopDialogAsync)));
+            disposableObj(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
+        
         this.WhenActivated(disposableObj =>
-        disposableObj(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
+            disposableObj(ViewModel!.ShowEmployeeVacationVoucherDialog
+            .RegisterHandler(ShowEmployeeVacationVoucherDialogAsync)));
+
+        this.WhenActivated(disposableObj =>
+            disposableObj(ViewModel!.ShowWorkshopDialog.RegisterHandler(ShowWorkshopDialogAsync)));
     }
     private async Task ShowDepartmentEmployeeDialogAsync(InteractionContext<DepartmentEmployeeViewModel,
         DepartmentEmployeeViewModel?> interaction)
@@ -61,6 +68,17 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<EmployeeViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowEmployeeVacationVoucherDialogAsync
+        (InteractionContext<EmployeeVacationVoucherViewModel, EmployeeVacationVoucherViewModel?> interaction)
+    {
+        var dialog = new EmployeeVacationVoucherWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<EmployeeVacationVoucherViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

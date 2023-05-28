@@ -59,27 +59,6 @@ public class ApiWrapper
     {
         return _client.DepartmentDELETEAsync(id);
     }
-
-    public Task<ICollection<GetWorkshopDto>> GetWorkshopsAsync()
-    {
-        return _client.WorkshopAllAsync();
-    }
-
-    public Task<GetWorkshopDto> AddWorkshopAsync(PostWorkshopDto workshop)
-    {
-        return _client.WorkshopPOSTAsync(workshop);
-    }
-
-    public Task<GetWorkshopDto> UpdateWorkshopAsync(int id, PostWorkshopDto workshop)
-    {
-        return _client.WorkshopPUTAsync(id, workshop);
-    }
-
-    public Task<GetWorkshopDto> DeleteWorkshopAsync(int id)
-    {
-        return _client.WorkshopDELETEAsync(id);
-    }
-
     public Task<ICollection<GetEmployeeDto>> GetEmployeesAsync()
     {
         return _client.EmployeeAllAsync();
@@ -98,5 +77,46 @@ public class ApiWrapper
     public Task<GetEmployeeDto> DeleteEmployeeAsync(int id)
     {
         return _client.EmployeeDELETEAsync(id);
+    }
+
+    public Task<ICollection<GetEmployeeVacationVoucherDto>> GetEmployeeVacationVouchersAsync()
+    {
+        return _client.EmployeeVacationVoucherAllAsync();
+    }
+
+    public Task<GetEmployeeVacationVoucherDto> AddEmployeeVacationVoucherAsync
+        (PostEmployeeVacationVoucherDto employeeVacationVoucher)
+    {
+        return _client.EmployeeVacationVoucherPOSTAsync(employeeVacationVoucher);
+    }
+
+    public Task<GetEmployeeVacationVoucherDto> UpdateEmployeeVacationVoucherAsync
+        (int id, PostEmployeeVacationVoucherDto employeeVacationVoucher)
+    {
+        return _client.EmployeeVacationVoucherPUTAsync(id, employeeVacationVoucher);
+    }
+
+    public Task<GetEmployeeVacationVoucherDto> DeleteEmployeeVacationVoucherAsync(int id)
+    {
+        return _client.EmployeeVacationVoucherDELETEAsync(id);
+    }
+    public Task<ICollection<GetWorkshopDto>> GetWorkshopsAsync()
+    {
+        return _client.WorkshopAllAsync();
+    }
+
+    public Task<GetWorkshopDto> AddWorkshopAsync(PostWorkshopDto workshop)
+    {
+        return _client.WorkshopPOSTAsync(workshop);
+    }
+
+    public Task<GetWorkshopDto> UpdateWorkshopAsync(int id, PostWorkshopDto workshop)
+    {
+        return _client.WorkshopPUTAsync(id, workshop);
+    }
+
+    public Task<GetWorkshopDto> DeleteWorkshopAsync(int id)
+    {
+        return _client.WorkshopDELETEAsync(id);
     }
 }

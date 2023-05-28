@@ -22,6 +22,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<EmployeeViewModel> Employees { get; } = new();
 
+    public ObservableCollection<EmployeeVacationVoucherViewModel> EmployeeVacationVouchers { get; } = new();
+
     public DepartmentEmployeeViewModel? _selectedDepartmentEmployee;
     public DepartmentEmployeeViewModel? SelectedDepartmentEmployee
     {
@@ -50,6 +52,13 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedEmployee, value);
     }
 
+    public EmployeeVacationVoucherViewModel? _selectedEmployeeVacationVoucher;
+    public EmployeeVacationVoucherViewModel? SelectedEmployeeVacationVoucher
+    {
+        get => _selectedEmployeeVacationVoucher;
+        set => this.RaiseAndSetIfChanged(ref _selectedEmployeeVacationVoucher, value);
+    }
+
     private readonly ApiWrapper _apiClient;
 
     private readonly IMapper _mapper;
@@ -69,6 +78,10 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeEmployeeCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteEmployeeCommand { get; set; }
 
+    public ReactiveCommand<Unit, Unit> OnAddEmployeeVacationVoucherCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeEmployeeVacationVoucherCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteEmployeeVacationVoucherCommand { get; set; }
+
     public Interaction<DepartmentEmployeeViewModel, 
         DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog { get; }
 
@@ -78,18 +91,25 @@ public class MainWindowViewModel : ViewModelBase
 
     public Interaction<EmployeeViewModel, EmployeeViewModel?> ShowEmployeeDialog { get; }
 
+    public Interaction<EmployeeVacationVoucherViewModel, 
+        EmployeeVacationVoucherViewModel?> ShowEmployeeVacationVoucherDialog { get; }
+
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
-        ShowDepartmentEmployeeDialog = new Interaction<DepartmentEmployeeViewModel, DepartmentEmployeeViewModel?>();
+        ShowDepartmentEmployeeDialog = 
+            new Interaction<DepartmentEmployeeViewModel, DepartmentEmployeeViewModel?>();
 
         ShowDepartmentDialog = new Interaction<DepartmentViewModel, DepartmentViewModel?>();
 
         ShowWorkshopDialog = new Interaction<WorkshopViewModel, WorkshopViewModel?>();
 
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
+
+        ShowEmployeeVacationVoucherDialog = 
+            new Interaction<EmployeeVacationVoucherViewModel, EmployeeVacationVoucherViewModel?>();
 
         OnAddDepartmentEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -294,6 +314,61 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
+
+        OnAddEmployeeVacationVoucherCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var employeeVacationVoucherViewModel = 
+                await ShowEmployeeVacationVoucherDialog.Handle(new EmployeeVacationVoucherViewModel());
+            if (employeeVacationVoucherViewModel != null)
+            {
+                var newEmployeeVacationVoucher = await _apiClient.AddEmployeeVacationVoucherAsync(
+                    _mapper.Map<PostEmployeeVacationVoucherDto>(employeeVacationVoucherViewModel));
+                EmployeeVacationVouchers.Add
+                    (_mapper.Map<EmployeeVacationVoucherViewModel>(newEmployeeVacationVoucher));
+            }
+        });
+
+        OnAddEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
+        OnChangeEmployeeVacationVoucherCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var employeeVacationVoucherViewModel = await ShowEmployeeVacationVoucherDialog
+            .Handle(SelectedEmployeeVacationVoucher!);
+            if (employeeVacationVoucherViewModel != null)
+            {
+                var newEmployeeVacationVoucher = await _apiClient.UpdateEmployeeVacationVoucherAsync(
+                    _selectedEmployeeVacationVoucher!.Id,
+                    _mapper.Map<PostEmployeeVacationVoucherDto>(employeeVacationVoucherViewModel));
+                _mapper.Map(employeeVacationVoucherViewModel, SelectedEmployeeVacationVoucher);
+            }
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
+        .Select(selectProduct => selectProduct != null));
+
+        OnChangeEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
+        OnDeleteEmployeeVacationVoucherCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteEmployeeVacationVoucherAsync(_selectedEmployeeVacationVoucher!.Id);
+            EmployeeVacationVouchers.Remove(SelectedEmployeeVacationVoucher!);
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
+        .Select(selectProduct => selectProduct != null));
+
+        OnDeleteEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
         RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
     }
 
@@ -302,6 +377,7 @@ public class MainWindowViewModel : ViewModelBase
         DepartmentEmployees.Clear();
         Departments.Clear();
         Employees.Clear();
+        EmployeeVacationVouchers.Clear();
         Workshops.Clear();
 
         var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
@@ -319,6 +395,13 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var employee in employees)
         {
             Employees.Add(_mapper.Map<EmployeeViewModel>(employee));
+        }
+
+        var employeeVacationVouchers = await _apiClient.GetEmployeeVacationVouchersAsync();
+        foreach (var employeeVacationVoucher in employeeVacationVouchers)
+        {
+            EmployeeVacationVouchers
+                .Add(_mapper.Map<EmployeeVacationVoucherViewModel>(employeeVacationVoucher));
         }
 
         var workshops = await _apiClient.GetWorkshopsAsync();

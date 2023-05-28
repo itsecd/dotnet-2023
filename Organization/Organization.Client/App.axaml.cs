@@ -32,6 +32,9 @@ public partial class App : Application
 
                 cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>();
                 cfg.CreateMap<EmployeeViewModel, PostEmployeeDto>();
+
+                cfg.CreateMap<GetEmployeeVacationVoucherDto, EmployeeVacationVoucherViewModel>();
+                cfg.CreateMap<EmployeeVacationVoucherViewModel, PostEmployeeVacationVoucherDto>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

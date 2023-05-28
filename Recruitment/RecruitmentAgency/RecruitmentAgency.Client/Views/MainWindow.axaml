@@ -7,9 +7,7 @@
         x:Class="RecruitmentAgency.Client.Views.MainWindow"
         Icon="/Assets/MainWindowIcon.png"
         Title="RecruitmentAgency.Client"
-		SizeToContent="Height"
-		xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
-		xmlns:styles="clr-namespace:RecruitmentAgency.Client.Styles">
+		SizeToContent="Height">
 
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
@@ -17,10 +15,28 @@
 
 	<Window.Styles>
 		<StyleInclude Source="/RecruitmentAgencyStyles.axaml" />
-	</Window.Styles>
-	<Grid>
-	<TabControl>
+		<Style Selector="TabControl WrapPanel">
+			<Setter Property="Background" Value="#2B579A"/>
+		</Style>
+		<Style Selector="TabItem">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Height" Value="34"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Background" Value="#2B579A"/>
+			<Setter Property="Foreground" Value="#F0F0F0"/>
+			<Setter Property="Margin" Value="0 0 0 0"/>
+			<Setter Property="Padding" Value="10 0"/>
+		</Style>
 
+		<Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#33FFFF"/>
+		</Style>
+	</Window.Styles>
+	
+	<Grid>
+		
+	<TabControl>
+	
 		<TabItem Header="Queries" VerticalAlignment="Center" HorizontalAlignment="Center">
 
 			<Grid Classes="MainGrid" RowDefinitions="Auto, *">

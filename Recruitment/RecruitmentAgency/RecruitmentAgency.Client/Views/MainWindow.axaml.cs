@@ -9,13 +9,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     public MainWindow()
     {
         InitializeComponent();
-
         this.WhenActivated(d => d(ViewModel!.ShowCompanyDialog.RegisterHandler(ShowCompanyDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowCompanyApplicationDialog.RegisterHandler(ShowCompanyApplicationDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowJobApplicationDialog.RegisterHandler(ShowJobApplicationDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowTitleDialog.RegisterHandler(ShowTitleDialogAsync)));
     }
+
     private async Task ShowCompanyDialogAsync(InteractionContext<CompanyViewModel, CompanyViewModel?> interaction)
     {
         var dialog = new CompanyWindow

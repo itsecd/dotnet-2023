@@ -76,7 +76,7 @@ public class SpecialtyTableNodeController : ControllerBase
         ctx.SpecialtyTableNodes.Add(mappedSpecilatyTableNode);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new specialty table node");
-        return Ok(_mapper.Map<SpecialtyTableNodeGetDto>(mappedSpecilatyTableNode));
+        return CreatedAtAction("POST", _mapper.Map<SpecialtyTableNode>(mappedSpecilatyTableNode));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

@@ -77,7 +77,7 @@ public class RectorController : ControllerBase
         ctx.Rectors.Add(mappedRector);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new construction property");
-        return Ok(_mapper.Map<RectorGetDto>(mappedRector));
+        return CreatedAtAction("POST", _mapper.Map<RectorGetDto>(mappedRector));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

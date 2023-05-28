@@ -76,7 +76,7 @@ public class DepartmentController : ControllerBase
         ctx.Departments.Add(mappedDepartment);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new department");
-        return Ok(_mapper.Map<Department>(mappedDepartment));
+        return CreatedAtAction("POST", _mapper.Map<DepartmentGetDto>(mappedDepartment));
 
     }
     /// <summary>

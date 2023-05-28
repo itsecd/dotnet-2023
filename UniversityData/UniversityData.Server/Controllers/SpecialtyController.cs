@@ -77,7 +77,7 @@ public class SpecialtyController : ControllerBase
         ctx.Specialties.Add(mappedSpecialty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new specialty");
-        return Ok(_mapper.Map<SpecialtyGetDto>(mappedSpecialty));
+        return CreatedAtAction("POST", _mapper.Map<SpecialtyGetDto>(mappedSpecialty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

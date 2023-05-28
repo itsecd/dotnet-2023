@@ -76,7 +76,7 @@ public class FacultyController : ControllerBase
         ctx.Faculties.Add(mappedFaculty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new faculty");
-        return Ok(_mapper.Map<FacultyGetDto>(mappedFaculty));
+        return CreatedAtAction("POST", _mapper.Map<FacultyGetDto>(mappedFaculty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

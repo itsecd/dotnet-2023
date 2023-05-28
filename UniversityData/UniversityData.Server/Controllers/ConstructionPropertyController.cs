@@ -76,7 +76,7 @@ public class ConstructionPropertyController : ControllerBase
         ctx.ConstructionProperties.Add(mappedConstructionProperty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new construction property");
-        return Ok(_mapper.Map<ConstructionPropertyGetDto>(mappedConstructionProperty));
+        return CreatedAtAction("POST", _mapper.Map<ConstructionPropertyGetDto>(mappedConstructionProperty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

@@ -76,7 +76,7 @@ public class UniversityController : ControllerBase
         ctx.Universities.Add(mappedUniversity);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new university");
-        return Ok(_mapper.Map<UniversityGetDto>(mappedUniversity));
+        return CreatedAtAction("POST", _mapper.Map<UniversityGetDto>(mappedUniversity));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции

@@ -6,6 +6,7 @@
         x:Class="Fabrics.Client.Views.ProviderWindow"
 		xmlns:vm="using:Fabrics.Client.ViewModels"
         Title="Edit provider"
+		Icon="/Assets/icon.ico"
 		MaxWidth="500"
 		SizeToContent="Height">
 	<Design.DataContext>

@@ -6,6 +6,7 @@
         x:Class="Fabrics.Client.Views.FabricWindow"
 		xmlns:vm="using:Fabrics.Client.ViewModels"
 		Title="Edit fabric"
+		Icon="/Assets/icon.ico"
 		MaxWidth="500"
 		SizeToContent="Height">
 	<Design.DataContext>

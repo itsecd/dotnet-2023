@@ -68,13 +68,15 @@ public class UniversityController : ControllerBase
     /// </summary>
     /// <param name="university"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] UniversityPostDto university)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<UniversityGetDto>> Post([FromBody] UniversityPostDto university)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Universities.Add(_mapper.Map<University>(university));
+        var mappedUniversity= _mapper.Map<University>(university);
+        ctx.Universities.Add(mappedUniversity);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new university");
-        return Ok();
+        return Ok(_mapper.Map<UniversityGetDto>(mappedUniversity));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -83,7 +85,7 @@ public class UniversityController : ControllerBase
     /// <param name="universityToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] UniversityPostDto universityToPut)
+    public async Task<ActionResult<UniversityPostDto>> Put(int id, [FromBody] UniversityPostDto universityToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
@@ -97,7 +99,7 @@ public class UniversityController : ControllerBase
             _mapper.Map<UniversityPostDto, University>(universityToPut, university);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update university with id: {0}", id);
-            return Ok();
+            return Ok(universityToPut);
         }
     }
     /// <summary>
@@ -106,7 +108,7 @@ public class UniversityController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<UniversityGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var university = ctx.Universities.FirstOrDefault(university => university.Id == id);

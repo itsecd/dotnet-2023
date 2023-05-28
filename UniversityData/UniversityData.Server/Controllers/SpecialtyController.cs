@@ -69,14 +69,15 @@ public class SpecialtyController : ControllerBase
     /// </summary>
     /// <param name="specialty"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] SpecialtyPostDto specialty)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<SpecialtyGetDto>> Post([FromBody] SpecialtyPostDto specialty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Specialties.Add(_mapper.Map<Specialty>(specialty));
+        var mappedSpecialty = _mapper.Map<Specialty>(specialty);
+        ctx.Specialties.Add(mappedSpecialty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new specialty");
-        return Ok();
-
+        return Ok(_mapper.Map<SpecialtyGetDto>(mappedSpecialty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -85,7 +86,7 @@ public class SpecialtyController : ControllerBase
     /// <param name="specialtyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] SpecialtyPostDto specialtyToPut)
+    public async Task<ActionResult<SpecialtyPostDto>> Put(int id, [FromBody] SpecialtyPostDto specialtyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
@@ -99,7 +100,7 @@ public class SpecialtyController : ControllerBase
             _mapper.Map<SpecialtyPostDto, Specialty>(specialtyToPut, specialty);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update specialty with id: {0}", id);
-            return Ok();
+            return Ok(specialtyToPut);
         }
     }
     /// <summary>
@@ -108,7 +109,7 @@ public class SpecialtyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<SpecialtyGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);

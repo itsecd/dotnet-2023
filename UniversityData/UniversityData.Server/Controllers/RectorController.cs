@@ -69,14 +69,15 @@ public class RectorController : ControllerBase
     /// </summary>
     /// <param name="rector"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] RectorPostDto rector)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<RectorGetDto>> Post([FromBody] RectorPostDto rector)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Rectors.Add(_mapper.Map<Rector>(rector));
+        var mappedRector= _mapper.Map<Rector>(rector);
+        ctx.Rectors.Add(mappedRector);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation("Add new rector");
-        return Ok();
-
+        _logger.LogInformation("Add new construction property");
+        return Ok(_mapper.Map<RectorGetDto>(mappedRector));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -85,7 +86,7 @@ public class RectorController : ControllerBase
     /// <param name="rectorToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] RectorPostDto rectorToPut)
+    public async Task<ActionResult<RectorPostDto>> Put(int id, [FromBody] RectorPostDto rectorToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
@@ -99,7 +100,7 @@ public class RectorController : ControllerBase
             _mapper.Map<RectorPostDto, Rector>(rectorToPut, rector);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update rector with id: {0}", id);
-            return Ok();
+            return Ok(rectorToPut);
         }
     }
     /// <summary>
@@ -108,7 +109,7 @@ public class RectorController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<RectorGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);

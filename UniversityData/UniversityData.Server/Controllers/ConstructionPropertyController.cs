@@ -68,13 +68,15 @@ public class ConstructionPropertyController : ControllerBase
     /// </summary>
     /// <param name="constructionProperty"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] ConstructionPropertyPostDto constructionProperty)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<ConstructionPropertyGetDto>> Post([FromBody] ConstructionPropertyPostDto constructionProperty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.ConstructionProperties.Add(_mapper.Map<ConstructionProperty>(constructionProperty));
+        var mappedConstructionProperty = _mapper.Map<ConstructionProperty>(constructionProperty);
+        ctx.ConstructionProperties.Add(mappedConstructionProperty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new construction property");
-        return Ok();
+        return Ok(_mapper.Map<ConstructionPropertyGetDto>(mappedConstructionProperty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -83,7 +85,7 @@ public class ConstructionPropertyController : ControllerBase
     /// <param name="constructionPropertyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] ConstructionPropertyPostDto constructionPropertyToPut)
+    public async Task<ActionResult<ConstructionPropertyGetDto>> Put(int id, [FromBody] ConstructionPropertyPostDto constructionPropertyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
@@ -97,7 +99,7 @@ public class ConstructionPropertyController : ControllerBase
             _mapper.Map<ConstructionPropertyPostDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update construction property with id: {0}", id);
-            return Ok();
+            return Ok(constructionProperty);
         }
     }
     /// <summary>
@@ -106,7 +108,7 @@ public class ConstructionPropertyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<ConstructionPropertyGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);

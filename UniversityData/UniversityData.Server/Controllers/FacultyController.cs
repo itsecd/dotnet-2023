@@ -68,13 +68,15 @@ public class FacultyController : ControllerBase
     /// </summary>
     /// <param name="faculty"></param>
     [HttpPost]
+    [ProducesResponseType(201)]
     public async Task<ActionResult> Post([FromBody] FacultyPostDto faculty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.Faculties.Add(_mapper.Map<Faculty>(faculty));
+        var mappedFaculty = _mapper.Map<Faculty>(faculty);
+        ctx.Faculties.Add(mappedFaculty);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new faculty");
-        return Ok();
+        return Ok(_mapper.Map<FacultyGetDto>(mappedFaculty));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -83,7 +85,7 @@ public class FacultyController : ControllerBase
     /// <param name="facultyToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] FacultyPostDto facultyToPut)
+    public async Task<ActionResult<FacultyPostDto>> Put(int id, [FromBody] FacultyPostDto facultyToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
@@ -97,7 +99,7 @@ public class FacultyController : ControllerBase
             _mapper.Map<FacultyPostDto, Faculty>(facultyToPut, faculty);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update faculty with id: {0}", id);
-            return Ok();
+            return Ok(facultyToPut);
         }
     }
     /// <summary>
@@ -106,7 +108,7 @@ public class FacultyController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<FacultyGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);

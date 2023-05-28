@@ -68,14 +68,15 @@ public class SpecialtyTableNodeController : ControllerBase
     /// </summary>
     /// <param name="specialtyTableNode"></param>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<SpecialtyTableNodeGetDto>> Post([FromBody] SpecialtyTableNodePostDto specialtyTableNode)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        ctx.SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNode>(specialtyTableNode));
+        var mappedSpecilatyTableNode = _mapper.Map<SpecialtyTableNode>(specialtyTableNode);
+        ctx.SpecialtyTableNodes.Add(mappedSpecilatyTableNode);
         await ctx.SaveChangesAsync();
-        _logger.LogInformation("Add new specialtyTableNode");
-        return Ok();
-
+        _logger.LogInformation("Add new specialty table node");
+        return Ok(_mapper.Map<SpecialtyTableNodeGetDto>(mappedSpecilatyTableNode));
     }
     /// <summary>
     /// PUT-запрос на замену существующего элемента коллекции
@@ -84,7 +85,7 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <param name="specialtyTableNodeToPut"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] SpecialtyTableNodePostDto specialtyTableNodeToPut)
+    public async Task<ActionResult<SpecialtyTableNodePostDto>> Put(int id, [FromBody] SpecialtyTableNodePostDto specialtyTableNodeToPut)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
@@ -98,7 +99,7 @@ public class SpecialtyTableNodeController : ControllerBase
             _mapper.Map<SpecialtyTableNodePostDto, SpecialtyTableNode>(specialtyTableNodeToPut, specialtyTableNode);
             await ctx.SaveChangesAsync();
             _logger.LogInformation("Update specialtyTableNode with id: {0}", id);
-            return Ok();
+            return Ok(specialtyTableNodeToPut);
         }
     }
     /// <summary>
@@ -107,7 +108,7 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<ActionResult<SpecialtyTableNodeGetDto>> Delete(int id)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);

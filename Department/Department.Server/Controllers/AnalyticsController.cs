@@ -63,7 +63,7 @@ public class AnalyticsController : ControllerBase
         var request = await
             (from teacher in _context.Teachers
              join course in _context.Courses on teacher.FullName equals course.TeachersName
-             where course.CourseType == "Курсовой проект"
+             where course.CourseType == "Course project"
              select teacher).ToListAsync();
 
         if (request.Count == 0)

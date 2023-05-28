@@ -21,7 +21,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         var request =
             from teacher in _departmentFixture.Teachers
             join course in _departmentFixture.Courses on teacher.FullName equals course.TeachersName
-            where course.SubjectName == "Математический анализ"
+            where course.SubjectName == "Math"
             orderby teacher.FullName
             select teacher;
 
@@ -37,7 +37,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         var request =
             from teacher in _departmentFixture.Teachers
             join course in _departmentFixture.Courses on teacher.FullName equals course.TeachersName
-            where course.CourseType == "Курсовой проект"
+            where course.CourseType == "Course project"
             select teacher;
 
         Assert.Equal(2, request.Count());
@@ -90,16 +90,16 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
             (from studentGroup in _departmentFixture.Groups
              select studentGroup.StudentAmount).ToList();
 
-        Assert.Equal("Профессор", teacherInfo[0].type);
+        Assert.Equal("Professor", teacherInfo[0].type);
         Assert.Equal(2, teacherInfo[0].counter);
 
-        Assert.Equal("Доцент", teacherInfo[1].type);
+        Assert.Equal("Assistant professor", teacherInfo[1].type);
         Assert.Equal(1, teacherInfo[1].counter);
 
-        Assert.Equal("Лекции", courseInfo[0].type);
+        Assert.Equal("Lectures", courseInfo[0].type);
         Assert.Equal(2, courseInfo[0].counter);
 
-        Assert.Equal("Курсовой проект", courseInfo[1].type);
+        Assert.Equal("Course project", courseInfo[1].type);
         Assert.Equal(2, courseInfo[1].counter);
 
         Assert.Equal(3, totalGroups.Count());
@@ -124,7 +124,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
 
         var result = (from hoursCounter in totalHours orderby hoursCounter.totalTime descending select hoursCounter).Take(3).ToList();
 
-        Assert.Equal("Шашкова Татьяна Якубовна", result[0].name);
+        Assert.Equal("Shashkova Tatiana", result[0].name);
         Assert.Equal(623, result[0].totalTime);
     }
 

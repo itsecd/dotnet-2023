@@ -15,11 +15,11 @@ public class DepartmentFixture
     {
         _subjects = new List<Subject>
         {
-            new Subject {Name = "Математический анализ", Semester = 1, Id = 1},
-            new Subject {Name = "Промышленное программирование", Semester = 6, Id = 2},
-            new Subject {Name = "Статистический анализ данных", Semester = 5, Id = 3},
-            new Subject {Name = "Дискретная математика", Semester = 2, Id = 4},
-            new Subject {Name = "Физкультура", Semester = 3, Id = 4}
+            new Subject {Name = "Math", Semester = 1, Id = 1},
+            new Subject {Name = "Industrial programming", Semester = 6, Id = 2},
+            new Subject {Name = "Data analytics", Semester = 5, Id = 3},
+            new Subject {Name = "Algebra", Semester = 2, Id = 4},
+            new Subject {Name = "Physics", Semester = 3, Id = 4}
         };
 
         _groups = new List<Group>
@@ -31,17 +31,17 @@ public class DepartmentFixture
 
         _teachers = new List<Teacher>
         {
-            new Teacher {FullName = "Максимова Людмила Александровна", Degree = "Профессор", Id = 1},
-            new Teacher {FullName = "Шашкова Татьяна Якубовна", Degree = "Доцент", Id = 2},
-            new Teacher {FullName = "Аввакумова Тамара Николаевна", Degree = "Профессор", Id = 3}
+            new Teacher {FullName = "Maksimova Lyudmila", Degree = "Professor", Id = 1},
+            new Teacher {FullName = "Shashkova Tatiana", Degree = "Assistant professor", Id = 2},
+            new Teacher {FullName = "Belov Alexander", Degree = "Professor", Id = 3}
         };
 
         _courses = new List<Course>
         {
-            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 256, GroupId = 6312, TeachersName = "Максимова Людмила Александровна", Id = 1, SubjectId = 1, TeacherId = 1},
-            new Course {SubjectName = "Промышленное программирование", CourseType = "Курсовой проект", SemesterHours = 123, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна", Id = 2, TeacherId = 2, SubjectId = 2},
-            new Course {SubjectName = "Физкультура", CourseType = "Курсовой проект", SemesterHours = 14, GroupId = 6295, TeachersName = "Максимова Людмила Александровна", Id = 3, SubjectId = 4, TeacherId = 1 },
-            new Course {SubjectName = "Математический анализ", CourseType = "Лекции", SemesterHours = 500, GroupId = 6311, TeachersName = "Шашкова Татьяна Якубовна", Id = 4, SubjectId = 1, TeacherId = 2}
+            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 256, GroupId = 6312, TeachersName = "Maksimova Lyudmila", Id = 1, SubjectId = 1, TeacherId = 1},
+            new Course {SubjectName = "Industrial programming", CourseType = "Course project", SemesterHours = 123, GroupId = 6311, TeachersName = "Shashkova Tatiana", Id = 2, TeacherId = 2, SubjectId = 2},
+            new Course {SubjectName = "Physics", CourseType = "Course project", SemesterHours = 14, GroupId = 6295, TeachersName = "Maksimova Lyudmila", Id = 3, SubjectId = 4, TeacherId = 1 },
+            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 500, GroupId = 6311, TeachersName = "Shashkova Tatiana", Id = 4, SubjectId = 1, TeacherId = 2}
         };
     }
 

@@ -742,7 +742,24 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Success"
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacultyGetDto"
+                                }
+                            }
+                        }
                     }
                 }
             }

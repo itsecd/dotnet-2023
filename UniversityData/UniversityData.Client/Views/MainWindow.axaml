@@ -36,6 +36,142 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
+			<TabItem Header="Собственности университетов" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding UniversityProperties}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Наименование собственности" Binding="{Binding NameUniversityProperty}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Кафедры" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Departments}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Название кафедры" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Телефон заведущего" Binding="{Binding SupervisorNumber}"/>
+							<DataGridTextColumn Header="Id университета" Binding="{Binding UniversityId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Факультеты" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Faculties}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Название факультета" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Количество студентов" Binding="{Binding StudentsCount}"/>
+							<DataGridTextColumn Header="Id университета" Binding="{Binding UniversityId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Ректоры" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Rectors}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+							<DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+							<DataGridTextColumn Header="Научная степень" Binding="{Binding Degree}"/>
+							<DataGridTextColumn Header="Звание" Binding="{Binding Title}"/>
+							<DataGridTextColumn Header="Должность" Binding="{Binding Position}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Специальности" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Specialties}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Код специальности" Binding="{Binding Code}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Связи специальностей и университетов" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding SpecialtyTableNodes}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Id специальности" Binding="{Binding SpecialtyId}"/>
+							<DataGridTextColumn Header="Количество групп" Binding="{Binding CountGroups}"/>
+							<DataGridTextColumn Header="Id университета" Binding="{Binding UniversityId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Университеты" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
+						<Button Classes ="ToolButton" Command="{Binding OnAddCommand}">Добавить</Button>
+						<Button Classes ="ToolButton">Изменить</Button>
+						<Button Classes ="ToolButton">Удалить</Button>
+					</StackPanel>
+
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Universities}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}"/>
+							<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+							<DataGridTextColumn Header="Id ректора" Binding="{Binding RectorId}"/>
+							<DataGridTextColumn Header="Id собственности университета" Binding="{Binding UniversityPropertyId}"/>
+							<DataGridTextColumn Header="Id собственности зданий" Binding="{Binding ConstructionPropertyId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
 		</TabControl>
 	</Grid>
 

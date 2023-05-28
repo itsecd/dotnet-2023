@@ -39,8 +39,9 @@ public class SpecialtyTableNodeController : ControllerBase
     public async Task<IEnumerable<SpecialtyTableNodeGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var specialtyTableNodes = await ctx.SpecialtyTableNodes.ToArrayAsync();
         _logger.LogInformation("Get all specialtyTableNodes");
-        return ctx.SpecialtyTableNodes.Select(specialtyTableNode => _mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
+        return _mapper.Map<IEnumerable<SpecialtyTableNodeGetDto>>(specialtyTableNodes);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID

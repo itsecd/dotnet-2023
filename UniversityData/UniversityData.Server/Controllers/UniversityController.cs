@@ -39,8 +39,9 @@ public class UniversityController : ControllerBase
     public async Task<IEnumerable<UniversityGetDto>> Get()
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
+        var universities = await ctx.Universities.ToArrayAsync();
         _logger.LogInformation("Get all universities");
-        return ctx.Universities.Select(university => _mapper.Map<UniversityGetDto>(university));
+        return _mapper.Map<IEnumerable<UniversityGetDto>>(universities);
     }
     /// <summary>
     /// GET-запрос на получение элемента в соответствии с ID

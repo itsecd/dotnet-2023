@@ -11,7 +11,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         InitializeComponent();
 
-        this.WhenActivated(d => d(ViewModel!.ShowProductDialog.RegisterHandler(ShowDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowConstructionPropertyDialog.RegisterHandler(ShowDialogAsync)));
     }
     private async Task ShowDialogAsync(InteractionContext<ConstructionPropertyViewModel, ConstructionPropertyViewModel?> interaction)
     {

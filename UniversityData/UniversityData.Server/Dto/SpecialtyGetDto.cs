@@ -16,7 +16,4 @@ public class SpecialtyGetDto
     /// Код-шифр специальности 
     /// </summary>
     public string Code { get; set; }
-    /// <summary>
-    /// Записи в таблице связи
-    /// </summary>
 }

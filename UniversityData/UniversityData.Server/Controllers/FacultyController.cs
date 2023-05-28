@@ -69,7 +69,7 @@ public class FacultyController : ControllerBase
     /// <param name="faculty"></param>
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult> Post([FromBody] FacultyPostDto faculty)
+    public async Task<ActionResult<FacultyGetDto>> Post([FromBody] FacultyPostDto faculty)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
         var mappedFaculty = _mapper.Map<Faculty>(faculty);

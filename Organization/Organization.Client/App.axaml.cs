@@ -23,18 +23,17 @@ public partial class App : Application
             {
                 cfg.CreateMap<GetDepartmentDto, DepartmentViewModel>();
                 cfg.CreateMap<DepartmentViewModel, PostDepartmentDto>();
+
+                cfg.CreateMap<GetDepartmentEmployeeDto, DepartmentEmployeeViewModel>();
+                cfg.CreateMap<DepartmentEmployeeViewModel, PostDepartmentEmployeeDto>();
+
                 cfg.CreateMap<GetWorkshopDto, WorkshopViewModel>();
                 cfg.CreateMap<WorkshopViewModel, PostWorkshopDto>();
+
                 cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>();
                 cfg.CreateMap<EmployeeViewModel, PostEmployeeDto>();
-                //.ForMember(destination => destination.BirthDate, 
-                //    options => options.MapFrom(source => source.BirthDate.ToString()));
-
-                //.ForMember(destination => destination.BirthDate,
-                //  options => options.MapFrom
-                //  (employee => Convert.ToUInt32(System.TimeSpan.Parse(employee.BirthDate).TotalSeconds)))
             }
-                );
+            );
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             desktop.MainWindow = new MainWindow

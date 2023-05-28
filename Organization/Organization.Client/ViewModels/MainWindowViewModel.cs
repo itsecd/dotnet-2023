@@ -8,16 +8,26 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace Organization.Client.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    public ObservableCollection<DepartmentEmployeeViewModel> DepartmentEmployees { get; } = new();
+
     public ObservableCollection<DepartmentViewModel> Departments { get; } = new();
 
     public ObservableCollection<WorkshopViewModel> Workshops { get; } = new();
 
     public ObservableCollection<EmployeeViewModel> Employees { get; } = new();
+
+    public DepartmentEmployeeViewModel? _selectedDepartmentEmployee;
+    public DepartmentEmployeeViewModel? SelectedDepartmentEmployee
+    {
+        get => _selectedDepartmentEmployee;
+        set => this.RaiseAndSetIfChanged(ref _selectedDepartmentEmployee, value);
+    }
 
     public DepartmentViewModel? _selectedDepartment;
     public DepartmentViewModel? SelectedDepartment
@@ -43,6 +53,9 @@ public class MainWindowViewModel : ViewModelBase
     private readonly ApiWrapper _apiClient;
 
     private readonly IMapper _mapper;
+    public ReactiveCommand<Unit, Unit> OnAddDepartmentEmployeeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeDepartmentEmployeeCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteDepartmentEmployeeCommand { get; set; }
 
     public ReactiveCommand<Unit, Unit> OnAddDepartmentCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeDepartmentCommand { get; set; }
@@ -56,6 +69,9 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeEmployeeCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteEmployeeCommand { get; set; }
 
+    public Interaction<DepartmentEmployeeViewModel, 
+        DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog { get; }
+
     public Interaction<DepartmentViewModel, DepartmentViewModel?> ShowDepartmentDialog { get; }
 
     public Interaction<WorkshopViewModel, WorkshopViewModel?> ShowWorkshopDialog { get; }
@@ -67,11 +83,65 @@ public class MainWindowViewModel : ViewModelBase
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
+        ShowDepartmentEmployeeDialog = new Interaction<DepartmentEmployeeViewModel, DepartmentEmployeeViewModel?>();
+
         ShowDepartmentDialog = new Interaction<DepartmentViewModel, DepartmentViewModel?>();
 
         ShowWorkshopDialog = new Interaction<WorkshopViewModel, WorkshopViewModel?>();
 
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
+
+        OnAddDepartmentEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var departmentEmployeeViewModel = await ShowDepartmentEmployeeDialog
+                .Handle(new DepartmentEmployeeViewModel());
+            if (departmentEmployeeViewModel != null)
+            {
+                var newDepartmentEmployee = await _apiClient.AddDepartmentEmployeeAsync(
+                    _mapper.Map<PostDepartmentEmployeeDto>(departmentEmployeeViewModel));
+                DepartmentEmployees.Add(_mapper.Map<DepartmentEmployeeViewModel>(newDepartmentEmployee));
+            }
+        });
+
+        OnAddDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+        OnChangeDepartmentEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var departmentEmployeeViewModel = await ShowDepartmentEmployeeDialog
+                .Handle(SelectedDepartmentEmployee!);
+            if (departmentEmployeeViewModel != null)
+            {
+                var newDepartmentEmployee = await _apiClient.UpdateDepartmentEmployeeAsync
+                    (_selectedDepartmentEmployee!.Id,
+                    _mapper.Map<PostDepartmentEmployeeDto>(departmentEmployeeViewModel));
+                
+                _mapper.Map(departmentEmployeeViewModel, SelectedDepartmentEmployee);
+            }
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
+        .Select(selectProduct => selectProduct != null));
+
+        OnChangeDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+        OnDeleteDepartmentEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteDepartmentEmployeeAsync(_selectedDepartmentEmployee!.Id);
+            DepartmentEmployees.Remove(SelectedDepartmentEmployee!);
+        }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
+        .Select(selectProduct => selectProduct != null));
+
+        OnDeleteDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
 
         OnAddDepartmentCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -87,7 +157,7 @@ public class MainWindowViewModel : ViewModelBase
         OnAddDepartmentCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
@@ -106,7 +176,7 @@ public class MainWindowViewModel : ViewModelBase
         OnChangeDepartmentCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnDeleteDepartmentCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -119,7 +189,7 @@ public class MainWindowViewModel : ViewModelBase
         OnDeleteDepartmentCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
@@ -138,7 +208,7 @@ public class MainWindowViewModel : ViewModelBase
         OnAddWorkshopCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
@@ -157,7 +227,7 @@ public class MainWindowViewModel : ViewModelBase
         OnChangeWorkshopCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnDeleteWorkshopCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -170,7 +240,7 @@ public class MainWindowViewModel : ViewModelBase
         OnDeleteWorkshopCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
@@ -188,7 +258,7 @@ public class MainWindowViewModel : ViewModelBase
         OnAddEmployeeCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
 
@@ -208,7 +278,7 @@ public class MainWindowViewModel : ViewModelBase
         OnChangeEmployeeCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnDeleteEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -221,7 +291,7 @@ public class MainWindowViewModel : ViewModelBase
         OnDeleteEmployeeCommand.ThrownExceptions.Subscribe(error => {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
-            RxApp.MainThreadScheduler.Schedule(ReloadData);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -229,29 +299,17 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadDatabaseDataAsync()
     {
-        var departments = await _apiClient.GetDepartmentsAsync();
-        foreach (var department in departments)
-        {
-            Departments.Add(_mapper.Map<DepartmentViewModel>(department));
-        }
-        var employees = await _apiClient.GetEmployeesAsync();
-        foreach (var employee in employees)
-        {
-            Employees.Add(_mapper.Map<EmployeeViewModel>(employee));
-        }
-
-        var workshops = await _apiClient.GetWorkshopsAsync();
-        foreach (var workshop in workshops)
-        {
-            Workshops.Add(_mapper.Map<WorkshopViewModel>(workshop));
-        }
-    }
-
-    private async void ReloadData()
-    {
+        DepartmentEmployees.Clear();
         Departments.Clear();
         Employees.Clear();
         Workshops.Clear();
+
+        var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
+        foreach (var departmentEmployee in departmentEmployees)
+        {
+            DepartmentEmployees.Add(_mapper.Map<DepartmentEmployeeViewModel>(departmentEmployee));
+        }
+
         var departments = await _apiClient.GetDepartmentsAsync();
         foreach (var department in departments)
         {

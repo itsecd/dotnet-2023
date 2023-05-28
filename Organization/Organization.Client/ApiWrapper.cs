@@ -18,6 +18,27 @@ public class ApiWrapper
 
         _client = new ApiClient(serverUrl, new HttpClient());
     }
+    public Task<ICollection<GetDepartmentEmployeeDto>> GetDepartmentEmployeesAsync()
+    {
+        return _client.DepartmentEmployeeAllAsync();
+    }
+
+    public Task<GetDepartmentEmployeeDto> AddDepartmentEmployeeAsync
+        (PostDepartmentEmployeeDto departmentEmployee)
+    {
+        return _client.DepartmentEmployeePOSTAsync(departmentEmployee);
+    }
+
+    public Task<GetDepartmentEmployeeDto> UpdateDepartmentEmployeeAsync(int id, 
+        PostDepartmentEmployeeDto departmentEmployee)
+    {
+        return _client.DepartmentEmployeePUTAsync(id, departmentEmployee);
+    }
+
+    public Task<GetDepartmentEmployeeDto> DeleteDepartmentEmployeeAsync(int id)
+    {
+        return _client.DepartmentEmployeeDELETEAsync(id);
+    }
 
     public Task<ICollection<GetDepartmentDto>> GetDepartmentsAsync()
     {

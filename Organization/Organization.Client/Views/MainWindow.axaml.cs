@@ -11,12 +11,24 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
     {
         InitializeComponent();
 
+        this.WhenActivated(disposableObj =>
+        disposableObj(ViewModel!.ShowDepartmentEmployeeDialog.RegisterHandler(ShowDepartmentEmployeeDialogAsync)));
         this.WhenActivated(disposableObj => 
             disposableObj(ViewModel!.ShowDepartmentDialog.RegisterHandler(ShowDepartmentDialogAsync)));
         this.WhenActivated(disposableObj =>
         disposableObj(ViewModel!.ShowWorkshopDialog.RegisterHandler(ShowWorkshopDialogAsync)));
         this.WhenActivated(disposableObj =>
         disposableObj(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
+    }
+    private async Task ShowDepartmentEmployeeDialogAsync(InteractionContext<DepartmentEmployeeViewModel,
+        DepartmentEmployeeViewModel?> interaction)
+    {
+        var dialog = new DepartmentEmployeeWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<DepartmentEmployeeViewModel?>(this);
+        interaction.SetOutput(result);
     }
 
     private async Task ShowDepartmentDialogAsync(InteractionContext<DepartmentViewModel, 

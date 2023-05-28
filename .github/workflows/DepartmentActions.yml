@@ -1,0 +1,30 @@
+name: DepartmentActions
+run-name: ${{ github.actor }} is executing project
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install dependencies
+      run: |
+        dotnet add Department\Department.Server package AutoMapper --version 12.0.1
+        dotnet add Department\Department.Server package Microsoft.EntityFrameworkCore.Tools --version 6.0.15
+        dotnet add Department\Department.Server package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1
+        dotnet add Department\Department.Server package Swashbuckle.AspNetCore --version 6.2.3
+        dotnet add Department\Department.Server package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.15
+        dotnet add Department\Department.Server package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.13
+        dotnet add Department\Department.Domain package MySql.EntityFrameworkCore --version 7.0.2
+    - name: Build with dotnet
+      run: dotnet build Department/Department.Server
+    - name: Test with dotnet
+      run: dotnet test Department

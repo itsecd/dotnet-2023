@@ -61,10 +61,11 @@ public class EmployeeOccupationController : Controller
     /// The method adds a new EmployeeOccupation into organization
     /// </summary>
     /// <param name="employeeOccupation">A new EmployeeOccupation that needs to be added</param>
-    /// <returns>Code 200 and the added EmployeeOccupation is success; 404 code if department or occupation is not found
+    /// <returns>Code 201 and the added EmployeeOccupation is success; 404 code if department or occupation is not found
     /// </returns>
     [HttpPost]
-    public async Task<ActionResult<PostEmployeeOccupationDto>> Post
+    [ProducesResponseType(typeof(GetEmployeeOccupationDto), 201)]
+    public async Task<ActionResult<GetEmployeeOccupationDto>> Post
         ([FromBody] PostEmployeeOccupationDto employeeOccupation)
     {
         _logger.LogInformation("POST EmployeeOccupation method");
@@ -88,7 +89,7 @@ public class EmployeeOccupationController : Controller
         mappedEmployeeOccupation.Employee = employee;
         ctx.EmployeeOccupations.Add(mappedEmployeeOccupation);
         await ctx.SaveChangesAsync();
-        return Ok(employeeOccupation);
+        return CreatedAtAction("POST", _mapper.Map<GetEmployeeOccupationDto>(mappedEmployeeOccupation));
     }
     /// <summary>
     /// The method updates an EmployeeOccupation information by ID
@@ -97,7 +98,7 @@ public class EmployeeOccupationController : Controller
     /// <param name="newEmployeeOccupation">New information of the EmployeeOccupation</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostEmployeeOccupationDto>> Put
+    public async Task<ActionResult<GetEmployeeOccupationDto>> Put
         (int id, [FromBody] PostEmployeeOccupationDto newEmployeeOccupation)
     {
         _logger.LogInformation("PUT EmployeeOccupation method");
@@ -127,7 +128,7 @@ public class EmployeeOccupationController : Controller
         }
         ctx.EmployeeOccupations.Update(_mapper.Map(newEmployeeOccupation, employeeOccupation));
         await ctx.SaveChangesAsync();
-        return Ok(newEmployeeOccupation);
+        return Ok(_mapper.Map<GetEmployeeOccupationDto>(mappedEmployeeOccupation));
     }
     /// <summary>
     /// The method deletes a EmployeeOccupation by ID
@@ -135,7 +136,7 @@ public class EmployeeOccupationController : Controller
     /// <param name="id">An ID of the EmployeeOccupation</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<PostEmployeeOccupationDto>> Delete(int id)
+    public async Task<ActionResult<GetEmployeeOccupationDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE EmployeeOccupation method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -149,6 +150,6 @@ public class EmployeeOccupationController : Controller
         }
         ctx.EmployeeOccupations.Remove(employeeOccupation);
         await ctx.SaveChangesAsync();
-        return Ok();
+        return Ok(_mapper.Map<GetEmployeeOccupationDto>(employeeOccupation));
     }
 }

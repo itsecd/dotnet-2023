@@ -69,7 +69,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
@@ -298,22 +298,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               }
             }
@@ -405,17 +405,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               }
             }
@@ -445,17 +445,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostDepartmentEmployeeDto"
+                  "$ref": "#/components/schemas/GetDepartmentEmployeeDto"
                 }
               }
             }
@@ -527,22 +527,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               }
             }
@@ -634,17 +634,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               }
             }
@@ -674,17 +674,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeDto"
+                  "$ref": "#/components/schemas/GetEmployeeDto"
                 }
               }
             }
@@ -756,22 +756,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               }
             }
@@ -863,17 +863,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               }
             }
@@ -903,17 +903,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeOccupationDto"
+                  "$ref": "#/components/schemas/GetEmployeeOccupationDto"
                 }
               }
             }
@@ -985,22 +985,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               }
             }
@@ -1092,17 +1092,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               }
             }
@@ -1132,17 +1132,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostEmployeeVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetEmployeeVacationVoucherDto"
                 }
               }
             }
@@ -1214,22 +1214,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               }
             }
@@ -1321,17 +1321,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostOccupationDto"
+                  "$ref": "#/components/schemas/GetOccupationDto"
                 }
               }
             }
@@ -1689,22 +1689,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               }
             }
@@ -1796,17 +1796,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               }
             }
@@ -1836,17 +1836,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVacationVoucherDto"
+                  "$ref": "#/components/schemas/GetVacationVoucherDto"
                 }
               }
             }
@@ -1918,22 +1918,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               }
             }
@@ -2025,17 +2025,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               }
             }
@@ -2065,17 +2065,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostVoucherTypeDto"
+                  "$ref": "#/components/schemas/GetVoucherTypeDto"
                 }
               }
             }
@@ -2147,22 +2147,22 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               }
             }
@@ -2254,17 +2254,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               }
             }
@@ -2294,17 +2294,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostWorkshopDto"
+                  "$ref": "#/components/schemas/GetWorkshopDto"
                 }
               }
             }

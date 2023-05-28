@@ -59,16 +59,17 @@ public class WorkshopController : ControllerBase
     /// The method adds a new workshop into organization
     /// </summary>
     /// <param name="workshop">A new workshop that needs to be added</param>
-    /// <returns>Code 200 with an added workshop</returns>
+    /// <returns>Code 201 with an added workshop</returns>
     [HttpPost]
-    public async Task<ActionResult<PostWorkshopDto>> Post([FromBody] PostWorkshopDto workshop)
+    [ProducesResponseType(typeof(GetWorkshopDto), 201)]
+    public async Task<ActionResult<GetWorkshopDto>> Post([FromBody] PostWorkshopDto workshop)
     {
         _logger.LogInformation("POST workshop method");
         var mappedWorkshop = _mapper.Map<Workshop>(workshop);
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         ctx.Workshops.Add(mappedWorkshop);
         await ctx.SaveChangesAsync();
-        return Ok(workshop);
+        return CreatedAtAction("POST", _mapper.Map<GetWorkshopDto>(mappedWorkshop));
     }
     /// <summary>
     /// The method updates a workshop information by ID
@@ -78,7 +79,7 @@ public class WorkshopController : ControllerBase
     /// <returns>Code 200 and the updated workshop class if success; 
     /// 404 code if a workshop is not found;</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostWorkshopDto>> Put(int id, [FromBody] PostWorkshopDto newWorkshop)
+    public async Task<ActionResult<GetWorkshopDto>> Put(int id, [FromBody] PostWorkshopDto newWorkshop)
     {
         _logger.LogInformation("PUT workshop method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -90,7 +91,8 @@ public class WorkshopController : ControllerBase
         }
         ctx.Workshops.Update(_mapper.Map(newWorkshop, workshop));
         await ctx.SaveChangesAsync();
-        return Ok(newWorkshop);
+        var mappedWorkshop = _mapper.Map<Workshop>(newWorkshop);
+        return Ok(_mapper.Map<GetWorkshopDto>(mappedWorkshop));
     }
     /// <summary>
     /// The method deletes a workshop by ID
@@ -98,7 +100,7 @@ public class WorkshopController : ControllerBase
     /// <param name="id">An ID of the workshop</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<PostWorkshopDto>> Delete(int id)
+    public async Task<ActionResult<GetWorkshopDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE workshop method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -110,6 +112,6 @@ public class WorkshopController : ControllerBase
         }
         ctx.Workshops.Remove(workshop);
         await ctx.SaveChangesAsync();
-        return Ok();
+        return Ok(_mapper.Map<GetWorkshopDto>(workshop));
     }
 }

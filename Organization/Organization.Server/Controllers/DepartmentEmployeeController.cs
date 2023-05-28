@@ -61,10 +61,11 @@ public class DepartmentEmployeeController : Controller
     /// The method adds a new DepartmentEmployee into organization
     /// </summary>
     /// <param name="departmentEmployee">A new DepartmentEmployee that need to be added</param>
-    /// <returns>Code 200 and the added DepartmentEmployee is success; 404 code if department or employee is not found
+    /// <returns>Code 201 and the added DepartmentEmployee is success; 404 code if department or employee is not found
     /// </returns>
     [HttpPost]
-    public async Task<ActionResult<PostDepartmentEmployeeDto>> Post([FromBody] PostDepartmentEmployeeDto departmentEmployee)
+    [ProducesResponseType(typeof(GetDepartmentEmployeeDto), 201)]
+    public async Task<ActionResult<GetDepartmentEmployeeDto>> Post([FromBody] PostDepartmentEmployeeDto departmentEmployee)
     {
         _logger.LogInformation("POST DepartmentEmployee method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -91,7 +92,7 @@ public class DepartmentEmployeeController : Controller
         mappedDepartmentEmployee.Employee = employee;
         ctx.DepartmentEmployees.Add(mappedDepartmentEmployee);
         await ctx.SaveChangesAsync();
-        return Ok(departmentEmployee);
+        return CreatedAtAction("POST", _mapper.Map<GetDepartmentEmployeeDto>(mappedDepartmentEmployee));
     }
     /// <summary>
     /// The method updates a DepartmentEmployee information by ID
@@ -100,7 +101,7 @@ public class DepartmentEmployeeController : Controller
     /// <param name="newDepartmentEmployee">New information of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostDepartmentEmployeeDto>> Put
+    public async Task<ActionResult<GetDepartmentEmployeeDto>> Put
         (int id, [FromBody] PostDepartmentEmployeeDto newDepartmentEmployee)
     {
         _logger.LogInformation("PUT DepartmentEmployee method");
@@ -131,7 +132,7 @@ public class DepartmentEmployeeController : Controller
         }
         ctx.DepartmentEmployees.Update(_mapper.Map(newDepartmentEmployee, departmentEmployee));
         await ctx.SaveChangesAsync();
-        return Ok(newDepartmentEmployee);
+        return Ok(_mapper.Map<GetDepartmentEmployeeDto>(mappedDepartmentEmployee));
     }
     /// <summary>
     /// The method deletes a DepartmentEmployee by ID
@@ -139,7 +140,7 @@ public class DepartmentEmployeeController : Controller
     /// <param name="id">An ID of the DepartmentEmployee</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<PostDepartmentEmployeeDto>> Delete(int id)
+    public async Task<ActionResult<GetDepartmentEmployeeDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE DepartmentEmployee method with ID: {id}", id);
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -151,6 +152,6 @@ public class DepartmentEmployeeController : Controller
         }
         ctx.DepartmentEmployees.Remove(departmentEmployee);
         await ctx.SaveChangesAsync();
-        return Ok();
+        return Ok(_mapper.Map<GetDepartmentEmployeeDto>(departmentEmployee));
     }
 }

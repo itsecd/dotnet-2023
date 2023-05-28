@@ -59,7 +59,9 @@ public class DepartmentController : Controller
     /// The method adds a new department into organization
     /// </summary>
     /// <param name="department">A new department that need to be added</param>
+    /// <returns>Code 201 and added department, if operation is successful</returns>
     [HttpPost]
+    [ProducesResponseType(typeof(GetDepartmentDto), 201)]
     public async Task<ActionResult<GetDepartmentDto>> Post([FromBody] PostDepartmentDto department)
     {
         _logger.LogInformation("POST department method");
@@ -67,15 +69,17 @@ public class DepartmentController : Controller
         var mappedDepartment = _mapper.Map<Department>(department);
         ctx.Departments.Add(mappedDepartment);
         await ctx.SaveChangesAsync();
-        return Ok(_mapper.Map<GetDepartmentDto>(mappedDepartment));
+        return CreatedAtAction("POST", _mapper.Map<GetDepartmentDto>(mappedDepartment));
     }
     /// <summary>
     /// The method updates a department information by ID
     /// </summary>
     /// <param name="id">An ID of the department</param>
     /// <param name="newDepartment">New information of the department</param>
-    /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
+    /// <returns>Code 200 and updated department, if operation is successful, 
+    /// code 404 otherwise</returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(typeof(GetDepartmentDto), 200)]
     public async Task<ActionResult<GetDepartmentDto>> Put(int id, [FromBody] PostDepartmentDto newDepartment)
     {
         _logger.LogInformation("PUT department method with ID: {id}", id);
@@ -99,6 +103,7 @@ public class DepartmentController : Controller
     /// code 404 if the department wasn't found
     /// or code 409 if there are foreign key exception</returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(GetDepartmentDto), 200)]
     public async Task<ActionResult<GetDepartmentDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE department method with ID: {id}", id);
@@ -117,7 +122,7 @@ public class DepartmentController : Controller
         catch(DbUpdateException ex)
         {
             _logger.LogInformation("SQL exception while deleting the department, " +
-                "exception message", ex.Message);
+                "exception message: ", ex.Message);
             return Conflict("Can not remove the department because some rows " +
                 "in other tables are pointing on that department! " +
                 "Remove them first and then try again!");

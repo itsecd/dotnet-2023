@@ -59,16 +59,17 @@ public class OccupationController : Controller
     /// The method adds a new occupation into organization
     /// </summary>
     /// <param name="occupation">A new occupation that needs to be added</param>
-    /// <returns>Code 200 with an added occupation</returns>
+    /// <returns>Code 201 with an added occupation</returns>
     [HttpPost]
-    public async Task<ActionResult<PostOccupationDto>> Post([FromBody] PostOccupationDto occupation)
+    [ProducesResponseType(typeof(GetOccupationDto), 201)]
+    public async Task<ActionResult<GetOccupationDto>> Post([FromBody] PostOccupationDto occupation)
     {
         _logger.LogInformation("POST occupation method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedOccupation = _mapper.Map<Occupation>(occupation);
         ctx.Occupations.Add(mappedOccupation);
         await ctx.SaveChangesAsync();
-        return Ok(occupation);
+        return CreatedAtAction("POST", _mapper.Map<GetOccupationDto>(mappedOccupation));
     }
     /// <summary>
     /// The method updates an occupation information by ID
@@ -78,7 +79,7 @@ public class OccupationController : Controller
     /// <returns>Code 200 and the updated occupation class if success; 
     /// 404 code if an occupation is not found;</returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostOccupationDto>> Put(int id, [FromBody] PostOccupationDto newOccupation)
+    public async Task<ActionResult<GetOccupationDto>> Put(int id, [FromBody] PostOccupationDto newOccupation)
     {
         _logger.LogInformation("PUT occupation method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -90,7 +91,8 @@ public class OccupationController : Controller
         }
         ctx.Occupations.Update(_mapper.Map(newOccupation, occupation));
         await ctx.SaveChangesAsync();
-        return Ok(newOccupation);
+        var mappedOccupation = _mapper.Map<Occupation>(newOccupation);
+        return Ok(_mapper.Map<GetOccupationDto>(mappedOccupation));
     }
     /// <summary>
     /// The method deletes an occupation by ID
@@ -110,6 +112,6 @@ public class OccupationController : Controller
         }
         ctx.Occupations.Remove(occupation);
         await ctx.SaveChangesAsync();
-        return Ok();
+        return Ok(_mapper.Map<GetOccupationDto>(occupation));
     }
 }

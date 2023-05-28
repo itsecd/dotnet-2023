@@ -22,6 +22,11 @@ public partial class App : Application
             {
                 cfg.CreateMap<GetDepartmentDto, DepartmentViewModel>();
                 cfg.CreateMap<DepartmentViewModel, PostDepartmentDto>();
+                cfg.CreateMap<GetWorkshopDto, WorkshopViewModel>();
+                cfg.CreateMap<WorkshopViewModel, PostWorkshopDto>();
+                cfg.CreateMap<GetEmployeeDto, EmployeeViewModel>()
+                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(source => source.BirthDate.DateTime));
+                cfg.CreateMap<EmployeeViewModel, PostEmployeeDto>();
             });
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

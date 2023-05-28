@@ -17,17 +17,21 @@
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>
-	
+	<TabControl>
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Departments</TextBlock>
+			</TabItem.Header>
 	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnAddDepartmentCommand}">
 				Добавить
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteDepartmentCommand}">
 				Удалить
 			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
+			<Button Classes="ToolButton" Command="{Binding OnChangeDepartmentCommand}">
 				Изменить
 			</Button>
 		</StackPanel>
@@ -39,6 +43,84 @@
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
+		</TabItem>
+		
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Workshops</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddWorkshopCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteWorkshopCommand}">
+						Удалить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeWorkshopCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Workshops}"
+						  SelectedItem="{Binding SelectedWorkshop}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Employees</TextBlock>
+			</TabItem.Header>
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddEmployeeCommand}">
+						Добавить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeCommand}">
+						Удалить
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeCommand}">
+						Изменить
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Employees}"
+						  SelectedItem="{Binding SelectedEmployee}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Регистрац.номер" 
+											Binding="{Binding RegNumber}"/>
+						<DataGridTextColumn Header="Имя" 
+											Binding="{Binding FirstName}"/>
+						<DataGridTextColumn Header="Фамилия" 
+											Binding="{Binding LastName}"/>
+						<DataGridTextColumn Header="Отчество" 
+											Binding="{Binding PatronymicName}"/>
+						<DataGridTextColumn Header="Дата рождения" 
+											Binding="{Binding BirthDate}"/>
+						<DataGridTextColumn Header="Id цеха"
+											Binding="{Binding WorkshopId}"/>
+						<DataGridTextColumn Header="Домашний адрес" 
+											Binding="{Binding HomeAddress}"/>
+						<DataGridTextColumn Header="Домашний телефон" 
+											Binding="{Binding HomeTelephone}"/>
+						<DataGridTextColumn Header="Рабочий телефон" 
+											Binding="{Binding WorkTelephone}"/>
+						<DataGridTextColumn Header="Семейное положение" 
+											Binding="{Binding FamilyStatus}"/>
+						<DataGridTextColumn Header="Число человек в семье" 
+											Binding="{Binding FamilyMembersCount}"/>
+						<DataGridTextColumn Header="Число детей" 
+											Binding="{Binding ChildrenCount}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
 
 </Window>

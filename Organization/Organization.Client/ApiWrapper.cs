@@ -38,4 +38,44 @@ public class ApiWrapper
     {
         return _client.DepartmentDELETEAsync(id);
     }
+
+    public Task<ICollection<GetWorkshopDto>> GetWorkshopsAsync()
+    {
+        return _client.WorkshopAllAsync();
+    }
+
+    public Task<GetWorkshopDto> AddWorkshopAsync(PostWorkshopDto workshop)
+    {
+        return _client.WorkshopPOSTAsync(workshop);
+    }
+
+    public Task<GetWorkshopDto> UpdateWorkshopAsync(int id, PostWorkshopDto workshop)
+    {
+        return _client.WorkshopPUTAsync(id, workshop);
+    }
+
+    public Task<GetWorkshopDto> DeleteWorkshopAsync(int id)
+    {
+        return _client.WorkshopDELETEAsync(id);
+    }
+
+    public Task<ICollection<GetEmployeeDto>> GetEmployeesAsync()
+    {
+        return _client.EmployeeAllAsync();
+    }
+
+    public Task<GetEmployeeDto> AddEmployeeAsync(PostEmployeeDto employee)
+    {
+        return _client.EmployeePOSTAsync(employee);
+    }
+
+    public Task<GetEmployeeDto> UpdateEmployeeAsync(int id, PostEmployeeDto employee)
+    {
+        return _client.EmployeePUTAsync(id, employee);
+    }
+
+    public Task<GetEmployeeDto> DeleteEmployeeAsync(int id)
+    {
+        return _client.EmployeeDELETEAsync(id);
+    }
 }

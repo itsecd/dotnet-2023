@@ -59,16 +59,17 @@ public class VoucherTypeController : Controller
     /// The method adds a new VoucherType into organization
     /// </summary>
     /// <param name="voucherType">A new VoucherType that needs to be added</param>
-    /// <returns>Code 200 with an added VoucherType</returns>
+    /// <returns>Code 201 with an added VoucherType</returns>
     [HttpPost]
-    public async Task<ActionResult<PostVoucherTypeDto>> Post([FromBody] PostVoucherTypeDto voucherType)
+    [ProducesResponseType(typeof(GetVoucherTypeDto), 201)]
+    public async Task<ActionResult<GetVoucherTypeDto>> Post([FromBody] PostVoucherTypeDto voucherType)
     {
         _logger.LogInformation("POST voucher type method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var mappedVoucherType = _mapper.Map<VoucherType>(voucherType);
         ctx.VacationVouchersTypes.Add(mappedVoucherType);
         await ctx.SaveChangesAsync();
-        return Ok(voucherType);
+        return CreatedAtAction("POST", _mapper.Map<GetVoucherTypeDto>(mappedVoucherType));
     }
     /// <summary>
     /// The method updates an VoucherType information by ID
@@ -79,7 +80,7 @@ public class VoucherTypeController : Controller
     /// 404 code if an VoucherType is not found;</returns>
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<PostVoucherTypeDto>> Put(int id, [FromBody] PostVoucherTypeDto newVoucherType)
+    public async Task<ActionResult<GetVoucherTypeDto>> Put(int id, [FromBody] PostVoucherTypeDto newVoucherType)
     {
         _logger.LogInformation("PUT voucher type method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -91,7 +92,8 @@ public class VoucherTypeController : Controller
         }
         ctx.VacationVouchersTypes.Update(_mapper.Map(newVoucherType, voucherType));
         await ctx.SaveChangesAsync();
-        return Ok(newVoucherType);
+        var mappedVoucherType = _mapper.Map<VoucherType>(newVoucherType);
+        return Ok(_mapper.Map<GetVoucherTypeDto>(mappedVoucherType));
     }
     /// <summary>
     /// The method deletes an VoucherType by ID
@@ -99,7 +101,7 @@ public class VoucherTypeController : Controller
     /// <param name="id">An ID of the VoucherType</param>
     /// <returns>Code 200 if operation is successful, code 404 otherwise</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<PostVoucherTypeDto>> Delete(int id)
+    public async Task<ActionResult<GetVoucherTypeDto>> Delete(int id)
     {
         _logger.LogInformation("DELETE voucher type method");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
@@ -116,9 +118,12 @@ public class VoucherTypeController : Controller
         }
         catch (DbUpdateException exception)
         {
-            return StatusCode(500, exception.Message);
+            _logger.LogInformation("SQL exception while deleting the voucher type, " +
+                "exception message: ", exception.Message);
+            return Conflict("Can not remove the voucher type because some rows " +
+                "in other tables are pointing on that voucher type! " +
+                "Remove them first and then try again!");
         }
-
-        return Ok();
+        return Ok(_mapper.Map<GetVoucherTypeDto>(voucherType));
     }
 }

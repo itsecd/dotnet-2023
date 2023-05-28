@@ -112,5 +112,22 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		<TabItem Header="Analytics" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding TopProviders}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding
+									Name}"/>
+						<DataGridTextColumn Header="Type of goods" Binding="{Binding
+									TypeOfGoods}"/>
+						<DataGridTextColumn Header="Address" Binding="{Binding
+									Address}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
 	</TabControl>
 </Window>

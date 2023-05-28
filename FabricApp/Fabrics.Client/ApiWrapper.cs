@@ -80,4 +80,9 @@ public class ApiWrapper
     {
         await _client.Shipment4Async(id);
     }
+
+    public async Task<ICollection<ProviderGetDto>> GetTop5ProvidersAsync()
+    {
+        return await _client.Top5ProvidersAsync();
+    }
 }

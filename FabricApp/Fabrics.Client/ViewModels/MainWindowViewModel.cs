@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
@@ -30,6 +29,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<FabricViewModel> Fabrics { get; } = new();
     public ObservableCollection<ProviderViewModel> Providers { get; } = new();
     public ObservableCollection<ShipmentViewModel> Shipments { get; } = new();
+    public ObservableCollection<ProviderViewModel> TopProviders { get; } = new();
 
     private FabricViewModel? _selectedFabric;
     private ProviderViewModel? _selectedProvider;
@@ -161,12 +161,17 @@ public class MainWindowViewModel : ViewModelBase
         {
             Providers.Add(_mapper.Map<ProviderViewModel>(provider));
         }
-        
+
         var shipments = await _apiClient.GetShipmentAsync();
         foreach (var shipment in shipments)
         {
             Shipments.Add(_mapper.Map<ShipmentViewModel>(shipment));
         }
+        var topProviders = await _apiClient.GetTop5ProvidersAsync();
+        foreach (var provider in topProviders)
+        {
+            TopProviders.Add(_mapper.Map<ProviderViewModel>(provider));
+        }
     }
-    
+
 }

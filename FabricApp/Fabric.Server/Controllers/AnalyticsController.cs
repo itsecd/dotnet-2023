@@ -145,22 +145,14 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>List of pairs: id of provider - number of shipments.</returns>
     [HttpGet("top-5-providers")]
-    public async Task<IActionResult> GetTopProviders()
+    public async Task<IEnumerable<ProviderGetDto>> GetTopProviders()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get top 5 of providers by the number of shipments.");
         var result = await (from provider in context.Providers
                             orderby provider.Shipments.Count descending
-                            select new Tuple<ProviderGetDto, int>(_mapper.Map<Provider, ProviderGetDto>(provider), provider.Shipments.Count)).Take(5).ToListAsync();
-        if (result.Count == 0)
-        {
-            _logger.LogInformation("No information found");
-            return NotFound();
-        }
-        else
-        {
-            return Ok(result);
-        }
+                            select _mapper.Map<Provider, ProviderGetDto>(provider)).Take(5).ToListAsync();
+        return result;
     }
 
     /// <summary>

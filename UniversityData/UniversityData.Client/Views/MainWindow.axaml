@@ -23,12 +23,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddConstructionPropertyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeConstructionPropertyCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteConstructionPropertyCommand}">Удалить</Button>
 					</StackPanel>
 				
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding ConstructionProperties}">
+							  Items="{Binding ConstructionProperties}"
+							  SelectedItem="{Binding SelectedConstructionProperty}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Наименование собственности" Binding="{Binding NameConstructionProperty}"/>
@@ -40,12 +41,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityPropertyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">Удалить</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding UniversityProperties}">
+							  Items="{Binding UniversityProperties}"
+							  SelectedItem="{Binding SelectedUniversityProperty}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Наименование собственности" Binding="{Binding NameUniversityProperty}"/>
@@ -57,12 +59,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddDepartmentCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeDepartmentCommand}"> Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteDepartmentCommand}">Удалить</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding Departments}">
+							  Items="{Binding Departments}"
+							  SelectedItem="{Binding SelectedDepartment}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Название кафедры" Binding="{Binding Name}"/>
@@ -76,12 +79,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddFacultyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeFacultyCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteFacultyCommand}">Удалить</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding Faculties}">
+							  Items="{Binding Faculties}"
+							  SelectedItem="{Binding SelectedFaculty}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Название факультета" Binding="{Binding Name}"/>
@@ -95,12 +99,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Удалить</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding Rectors}">
+							  Items="{Binding Rectors}"
+							  SelectedItem="{Binding SelectedRector}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
@@ -117,12 +122,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyCommand}">Удалить"</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding Specialties}">
+							  Items="{Binding Specialties}"
+							  SelectedItem="{Binding SelectedSpecialty}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
@@ -135,12 +141,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyTableNodeCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyTableNodeCommand}">Изменить"></Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyTableNodeCommand}">далить"></Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding SpecialtyTableNodes}">
+							  Items="{Binding SpecialtyTableNodes}"
+							  SelectedItem="{Binding SelectedSpecialtyTableNode}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Id специальности" Binding="{Binding SpecialtyId}"/>
@@ -154,12 +161,13 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
 						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityCommand}">Добавить</Button>
-						<Button Classes ="ToolButton">Изменить</Button>
-						<Button Classes ="ToolButton">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">Изменить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">Удалить</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							  Items="{Binding Universities}">
+							  Items="{Binding Universities}"
+							  SelectedItem="{Binding University}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}"/>

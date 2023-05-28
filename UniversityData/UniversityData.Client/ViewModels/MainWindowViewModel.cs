@@ -4,6 +4,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using AutoMapper;
+using DynamicData;
 using ReactiveUI;
 using Splat;
 
@@ -16,13 +17,76 @@ public class MainWindowViewModel : ViewModelBase
     private readonly IMapper _mapper;
 
     public ObservableCollection<ConstructionPropertyViewModel> ConstructionProperties { get; } = new();
+
+    private ConstructionPropertyViewModel? _selectedConstructionProperty;
+    public ConstructionPropertyViewModel? SelectedConstructionProperty
+    {
+        get => _selectedConstructionProperty;
+        set => this.RaiseAndSetIfChanged(ref _selectedConstructionProperty, value);
+    }
+
     public ObservableCollection<UniversityPropertyViewModel> UniversityProperties { get; } = new();
+
+    private UniversityPropertyViewModel? _selectedUniversityProperty;
+    public UniversityPropertyViewModel? SelectedUniversityProperty
+    {
+        get => _selectedUniversityProperty;
+        set => this.RaiseAndSetIfChanged(ref _selectedUniversityProperty, value);
+    }
+
     public ObservableCollection<DepartmentViewModel> Departments { get; } = new();
+
+    private DepartmentViewModel? _selectedDepartment;
+    public DepartmentViewModel? SelectedDepartment
+    {
+        get => _selectedDepartment;
+        set => this.RaiseAndSetIfChanged(ref _selectedDepartment, value);
+    }
+
     public ObservableCollection<FacultyViewModel> Faculties { get; } = new();
+
+    private FacultyViewModel? _selectedFaculty;
+    public FacultyViewModel? SelectedFaculty
+    {
+        get => _selectedFaculty;
+        set => this.RaiseAndSetIfChanged(ref _selectedFaculty, value);
+    }
+
     public ObservableCollection<RectorViewModel> Rectors { get; } = new();
+
+    private RectorViewModel? _selectedRector;
+    public RectorViewModel? SelectedRector
+    {
+        get => _selectedRector;
+        set => this.RaiseAndSetIfChanged(ref _selectedRector, value);
+    }
+
     public ObservableCollection<SpecialtyViewModel> Specialties { get; } = new();
+
+    private SpecialtyViewModel? _selectedSpecialty;
+    public SpecialtyViewModel? SelectedSpecialty
+    {
+        get => _selectedSpecialty;
+        set => this.RaiseAndSetIfChanged(ref _selectedSpecialty, value);
+    }
+
     public ObservableCollection<SpecialtyTableNodeViewModel> SpecialtyTableNodes { get; } = new();
+
+    private SpecialtyTableNodeViewModel? _selectedSpecialtyTableNode;
+    public SpecialtyTableNodeViewModel? SelectedSpecialtyTableNode
+    {
+        get => _selectedSpecialtyTableNode;
+        set => this.RaiseAndSetIfChanged(ref _selectedSpecialtyTableNode, value);
+    }
+
     public ObservableCollection<UniversityViewModel> Universities { get; } = new();
+
+    private UniversityViewModel? _selectedUniversity;
+    public UniversityViewModel? SelectedUniversity
+    {
+        get => _selectedUniversity;
+        set => this.RaiseAndSetIfChanged(ref _selectedUniversity, value);
+    }
 
     public ReactiveCommand<Unit, Unit> OnAddConstructionPropertyCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeConstructionPropertyCommand { get; set; }
@@ -81,6 +145,22 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
+        OnChangeConstructionPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var constructionPropertyViewModel = await ShowConstructionPropertyDialog.Handle(SelectedConstructionProperty!);
+            if (constructionPropertyViewModel != null)
+            {
+                await _apiClient.UpdateConstructionPropertyAsync(SelectedConstructionProperty!.Id, _mapper.Map<ConstructionPropertyPostDto>(constructionPropertyViewModel));
+                _mapper.Map(constructionPropertyViewModel, SelectedConstructionProperty);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedConstructionProperty).Select(selectConstructionProperty => selectConstructionProperty != null));
+
+        OnDeleteConstructionPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteConstructionPropertyAsync(SelectedConstructionProperty!.Id);
+            ConstructionProperties.Remove(SelectedConstructionProperty!);
+        }, this.WhenAnyValue(vm => vm.SelectedConstructionProperty).Select(selectConstructionProperty => selectConstructionProperty != null));
+
         OnAddDepartmentCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var departmentViewModel = await ShowDepartmentDialog.Handle(new DepartmentViewModel());
@@ -90,6 +170,22 @@ public class MainWindowViewModel : ViewModelBase
                 Departments.Add(_mapper.Map<DepartmentViewModel>(newDepartment));
             }
         });
+
+        OnChangeDepartmentCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var departmentViewModel = await ShowDepartmentDialog.Handle(SelectedDepartment!);
+            if (departmentViewModel != null)
+            {
+                await _apiClient.UpdateDepartmentAsync(SelectedDepartment!.Id, _mapper.Map<DepartmentPostDto>(departmentViewModel));
+                _mapper.Map(departmentViewModel, SelectedDepartment);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedDepartment).Select(selectDepartment => selectDepartment != null));
+
+        OnDeleteDepartmentCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteDepartmentAsync(SelectedDepartment!.Id);
+            Departments.Remove(SelectedDepartment!);
+        }, this.WhenAnyValue(vm => vm.SelectedDepartment).Select(selectDepartment => selectDepartment != null));
 
         OnAddFacultyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -101,6 +197,22 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
+        OnChangeFacultyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var facultyViewModel = await ShowFacultyDialog.Handle(SelectedFaculty!);
+            if (facultyViewModel != null)
+            {
+                await _apiClient.UpdateFacultyAsync(SelectedFaculty!.Id, _mapper.Map<FacultyPostDto>(facultyViewModel));
+                _mapper.Map(facultyViewModel, SelectedFaculty);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedFaculty).Select(selectFaculty => selectFaculty != null));
+
+        OnDeleteFacultyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteDepartmentAsync(SelectedFaculty!.Id);
+            Faculties.Remove(SelectedFaculty!);
+        }, this.WhenAnyValue(vm => vm.SelectedFaculty).Select(selectFaculty => selectFaculty != null));
+
         OnAddRectorCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var rectorViewModel = await ShowRectorDialog.Handle(new RectorViewModel());
@@ -110,6 +222,22 @@ public class MainWindowViewModel : ViewModelBase
                 Rectors.Add(_mapper.Map<RectorViewModel>(newRector));
             }
         });
+
+        OnChangeRectorCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var rectorViewModel = await ShowRectorDialog.Handle(SelectedRector!);
+            if (rectorViewModel != null)
+            {
+                await _apiClient.UpdateRectorAsync(SelectedRector!.Id, _mapper.Map<RectorPostDto>(rectorViewModel));
+                _mapper.Map(rectorViewModel, SelectedRector);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedRector).Select(selectRector => selectRector != null));
+
+        OnDeleteRectorCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRectorAsync(SelectedRector!.Id);
+            Rectors.Remove(SelectedRector!);
+        }, this.WhenAnyValue(vm => vm.SelectedRector).Select(selectRector => selectRector != null));
 
         OnAddSpecialtyTableNodeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -121,6 +249,22 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
+        OnChangeSpecialtyTableNodeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var specialtyTableNodeViewModel = await ShowSpecialtyTableNodeDialog.Handle(SelectedSpecialtyTableNode!);
+            if (specialtyTableNodeViewModel != null)
+            {
+                await _apiClient.UpdateSpecialtyTableNodeAsync(SelectedSpecialtyTableNode!.Id, _mapper.Map<SpecialtyTableNodePostDto>(specialtyTableNodeViewModel));
+                _mapper.Map(specialtyTableNodeViewModel, SelectedSpecialtyTableNode);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedSpecialtyTableNode).Select(selectSpecialtyTableNode => selectSpecialtyTableNode != null));
+
+        OnDeleteSpecialtyTableNodeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRectorAsync(SelectedSpecialtyTableNode!.Id);
+            SpecialtyTableNodes.Remove(SelectedSpecialtyTableNode!);
+        }, this.WhenAnyValue(vm => vm.SelectedSpecialtyTableNode).Select(selectSpecialtyTableNode => selectSpecialtyTableNode != null));
+
         OnAddSpecialtyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var specialtyViewModel = await ShowSpecialtyDialog.Handle(new SpecialtyViewModel());
@@ -130,6 +274,22 @@ public class MainWindowViewModel : ViewModelBase
                 Specialties.Add(_mapper.Map<SpecialtyViewModel>(newSpecialty));
             }
         });
+
+        OnChangeSpecialtyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var specialtyViewModel = await ShowSpecialtyDialog.Handle(SelectedSpecialty!);
+            if (specialtyViewModel != null)
+            {
+                await _apiClient.UpdateSpecialtyAsync(SelectedSpecialty!.Id, _mapper.Map<SpecialtyPostDto>(specialtyViewModel));
+                _mapper.Map(specialtyViewModel, SelectedSpecialty);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedSpecialty).Select(selectRector => selectRector != null));
+
+        OnDeleteSpecialtyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRectorAsync(SelectedSpecialty!.Id);
+            Specialties.Remove(SelectedSpecialty!);
+        }, this.WhenAnyValue(vm => vm.SelectedSpecialty).Select(selectSpecialty => selectSpecialty != null));
 
         OnAddUniversityCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -141,6 +301,22 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
+        OnChangeUniversityCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var universityViewModel = await ShowUniversityDialog.Handle(SelectedUniversity!);
+            if (universityViewModel != null)
+            {
+                await _apiClient.UpdateUniversityAsync(SelectedUniversity!.Id, _mapper.Map<UniversityPostDto>(universityViewModel));
+                _mapper.Map(universityViewModel, SelectedUniversity);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedUniversity).Select(selectUniversity => selectUniversity != null));
+
+        OnDeleteUniversityCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRectorAsync(SelectedUniversity!.Id);
+            Universities.Remove(SelectedUniversity!);
+        }, this.WhenAnyValue(vm => vm.SelectedUniversity).Select(selectUniversity => selectUniversity != null));
+
         OnAddUniversityPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var universityPropertyViewModel = await ShowUniversityPropertyDialog.Handle(new UniversityPropertyViewModel());
@@ -150,6 +326,22 @@ public class MainWindowViewModel : ViewModelBase
                 UniversityProperties.Add(_mapper.Map<UniversityPropertyViewModel>(newUniversityProperty));
             }
         });
+
+        OnChangeUniversityPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var universityPropertyViewModel = await ShowUniversityPropertyDialog.Handle(SelectedUniversityProperty!);
+            if (universityPropertyViewModel != null)
+            {
+                await _apiClient.UpdateUniversityPropertyAsync(SelectedUniversityProperty!.Id, _mapper.Map<UniversityPropertyPostDto>(universityPropertyViewModel));
+                _mapper.Map(universityPropertyViewModel, SelectedUniversityProperty);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedUniversityProperty).Select(selectUniversityProperty => selectUniversityProperty != null));
+
+        OnDeleteUniversityPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRectorAsync(SelectedUniversityProperty!.Id);
+            UniversityProperties.Remove(SelectedUniversityProperty!);
+        }, this.WhenAnyValue(vm => vm.SelectedUniversityProperty).Select(selectUniversityProperty => selectUniversityProperty != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }

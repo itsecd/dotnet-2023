@@ -170,7 +170,7 @@ public class ApiWrapper
         return _client.UniversityAsync(university);
     }
 
-    public Task<UniversityPostDto> UniversityAsync(int id, UniversityPostDto university)
+    public Task<UniversityPostDto> UpdateUniversityAsync(int id, UniversityPostDto university)
     {
         return _client.University3Async(id, university);
     }

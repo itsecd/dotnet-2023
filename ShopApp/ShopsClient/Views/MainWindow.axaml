@@ -186,12 +186,7 @@
 			<StackPanel Grid.Row="18" Orientation="Horizontal">
 				<Label>Top 5 покупок</Label>
 			</StackPanel>
-			<StackPanel Grid.Row="19" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnRefreshTop5PurchaseRecordsCommand}">
-					<Image Source="/Assets/Refresh.png"/>
-				</Button>
-			</StackPanel>
-			<DataGrid Grid.Row="20" AutoGenerateColumns="False"
+			<DataGrid Grid.Row="19" AutoGenerateColumns="False"
 					  Items="{Binding Top5PurchaseRecords}">
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Shop Id" Binding="{Binding ShopId}"/>

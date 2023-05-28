@@ -46,7 +46,6 @@ public class Airplane
                LoadCapacity == param.LoadCapacity &&
                Perfomance == param.Perfomance &&
                PassengerCapacity == param.PassengerCapacity;
-
     }
 
     public override int GetHashCode()

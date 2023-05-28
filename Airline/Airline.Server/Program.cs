@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
-builder.Services.AddSingleton<IAirlineRepository, AirlineRepository>();
+//builder.Services.AddSingleton<IAirlineRepository, AirlineRepository>();
 builder.Services.AddControllers();
 builder.Services.AddDbContextFactory<AirlineContext>(optionsBuilder =>
 {

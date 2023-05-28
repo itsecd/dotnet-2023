@@ -32,11 +32,12 @@ public class TicketController : ControllerBase
     /// Return list all tickets
     /// </returns>
     [HttpGet]
-    public async Task<IEnumerable<Ticket>> Get()
+    public async Task<IEnumerable<TicketGetDto>> Get()
     {
         using var context = await _contextFactory.CreateDbContextAsync();
+        var ticket = await context.Tickets.ToArrayAsync();
         _logger.LogInformation("Get tickets");
-        return context.Tickets.Select(flight => flight);
+        return _mapper.Map<IEnumerable<TicketGetDto>>(ticket);
     }
 
     /// <summary>
@@ -50,16 +51,17 @@ public class TicketController : ControllerBase
     public async Task<ActionResult<Ticket>> Get(int id)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation($"Get ticket with id ({id})");
-        var ticket = context.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        _logger.LogInformation($"Get ticket: id ({id})");
+        var ticket = await context.FindAsync<Ticket>(id);
         if (ticket == null)
         {
-            _logger.LogInformation($"Not found ticket with id ({id})");
+            _logger.LogInformation($"Not found ticket: id ({id})");
             return NotFound();
         }
         else
         {
-            return Ok(ticket);
+            _logger.LogInformation($"Get ticket with id {id}");
+            return Ok(_mapper.Map<TicketGetDto>(ticket));
         }
     }
 
@@ -71,9 +73,9 @@ public class TicketController : ControllerBase
     public async Task<IActionResult> Post([FromBody] TicketPostDto ticket)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        _logger.LogInformation("Post(ticket)");
-        context.Tickets.Add(_mapper.Map<Ticket>(ticket));
-        context.SaveChanges();
+        _logger.LogInformation("Post ticket");
+        await context.Tickets.AddAsync(_mapper.Map<Ticket>(ticket));
+        await context.SaveChangesAsync();
         return Ok();
     }
 
@@ -88,7 +90,7 @@ public class TicketController : ControllerBase
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Put ticket: id {0}", id);
-        var ticket = context.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ticket = await context.FindAsync<Ticket>(id);
         if (ticket == null)
         {
             _logger.LogInformation("Not found ticket: id {0}", id);
@@ -96,8 +98,9 @@ public class TicketController : ControllerBase
         }
         else
         {
+            _logger.LogInformation($"Put ticket with id {id}");
             _mapper.Map(ticketToPut, ticket);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
@@ -112,7 +115,7 @@ public class TicketController : ControllerBase
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation($"Put ticket: id ({id})");
-        var ticket = context.Tickets.FirstOrDefault(ticket => ticket.Id == id);
+        var ticket = await context.FindAsync<Ticket>(id);
         if (ticket == null)
         {
             _logger.LogInformation($"Not found ticket: id ({id})");
@@ -121,7 +124,7 @@ public class TicketController : ControllerBase
         else
         {
             context.Tickets.Remove(ticket);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok();
         }
     }

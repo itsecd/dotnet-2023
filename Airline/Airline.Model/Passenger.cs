@@ -40,7 +40,6 @@ public class Passenger
         this.Name = name;
     }
 
-
     public override bool Equals(object? obj)
     {
         if (obj is not Passenger param)

@@ -10,3 +10,10 @@
 может иметь несколько поставщиков сырья и комплектующих, один поставщик
 может поставлять сырье нескольким предприятиям. База данных хранит
 информацию о поставках товара, включая количество единиц и дату поставки.
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/1.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/1_1.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/2.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/2_1.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/3.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/3_1.jpg)
+![image](https://github.com/Lesovin/dotnet-2023/blob/main/FabricApp/Fabrics.Client/Screenshots/4.jpg)

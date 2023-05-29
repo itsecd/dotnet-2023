@@ -34,7 +34,7 @@
 				<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="White" FontSize="30" Margin="80, 60, 0, 0">Tables</Label>
 				<Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Foreground="White" FontSize="30" Margin="120, 60, 0, 0">Requests</Label>
 				<StackPanel Grid.Row="1" Orientation="Horizontal">
-					<Button Classes="MainButton" >
+					<Button Classes="MainButton" Click="PrivatizedBuilding_Button_Click">
 						<Image Source="/Assets/PrivatizedBuilding.png"/>
 					</Button>
 					<Button Classes="MainButton" >

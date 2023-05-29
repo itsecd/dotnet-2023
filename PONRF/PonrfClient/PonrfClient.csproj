@@ -61,9 +61,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ShowPrivatizedBuildingWindow.axaml.cs">
+      <DependentUpon>ShowPrivatizedBuildingWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="swagger.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

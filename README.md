@@ -20,3 +20,14 @@
 с указанием магазина.
 6) Вывести список магазинов, в которых за месяц было продано товаров на
 сумму, превышающую заданную.
+
+# Клинетское приложение
+![MainWindow1](https://github.com/Hocyxa/dotnet-2023/assets/90681203/d37b126e-ba24-442d-bfcf-6369938efc57)
+![MainWindow2](https://github.com/Hocyxa/dotnet-2023/assets/90681203/93874c61-c4ea-4ae1-a4a7-8ebda893bc48)
+![MainWindow3](https://github.com/Hocyxa/dotnet-2023/assets/90681203/44639fe8-c864-4ed1-af93-1825cb747666)
+![CustomerWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/c160dfac-8ffc-4056-af00-a754133486fa)
+![ProductWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/111acf29-3cc9-4141-a484-1df7dea72f25)
+![ProductGroupWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/0740ec6f-6f4e-4497-ab6b-572b4ed51524)
+![ProductQuantityWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/7ad3cde8-0527-4db1-ab5a-71a81b1734f0)
+![PurchaseRecordWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/448b1062-44df-4e07-b92b-7aadc4362a79)
+![ShopWindow](https://github.com/Hocyxa/dotnet-2023/assets/90681203/b5bef524-3bad-44c8-9706-a8e61f7feccd)

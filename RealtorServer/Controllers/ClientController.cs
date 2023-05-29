@@ -1,41 +1,93 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Realtor;
+using RealtorServer.Dto;
+using RealtorServer.Repository;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace RealtorServer.Controllers;
+/// <summary>
+/// Client controller
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ClientController : ControllerBase
 {
-    // GET: api/<ClientController>
+    private readonly ILogger<ClientController> _logger;
+    private readonly IRealtorRepository _realtorRepository;
+    private readonly IMapper _mapper;
+    public ClientController(ILogger<ClientController> logger, IRealtorRepository realtorRepository, IMapper mapper)
+    {
+        _logger = logger;
+        _realtorRepository = realtorRepository;
+        _mapper = mapper;
+    }
+
     [HttpGet]
-    public IEnumerable<string> Get()
+    public IEnumerable<ClientGetDto> Get()
     {
-        return new string[] { "value1", "value2" };
+        _logger.LogInformation("Get clients");
+        return _realtorRepository.Clients.Select(client => _mapper.Map<ClientGetDto>(client));
     }
-
-    // GET api/<ClientController>/5
+    /// <summary>
+    /// Get client info by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ActionResult<Client> Get(int id)
     {
-        return "value";
+        var client = _realtorRepository.Clients.FirstOrDefault(Clients => Clients.Id == id);
+        if (client == null)
+        {
+            _logger.LogInformation("Not found client with id {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            return Ok(_mapper.Map<ClientGetDto>(client));
+        }
     }
 
-    // POST api/<ClientController>
+
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] ClientPostDto client)
     {
+        _realtorRepository.Clients.Add(_mapper.Map<Client>(client));
     }
 
-    // PUT api/<ClientController>/5
+
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] ClientPostDto clientToPut )
     {
+        var client = _realtorRepository.Clients.FirstOrDefault(Clients => Clients.Id == id);
+        if (client == null)
+        {
+            _logger.LogInformation("Not found client with id {id}",id);
+            return NotFound();
+        }
+        else
+        {
+            _mapper.Map(clientToPut,client);
+            return Ok();
+        }
     }
 
-    // DELETE api/<ClientController>/5
+
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var client = _realtorRepository.Clients.FirstOrDefault(Clients => Clients.Id == id);
+        if (client == null)
+        {
+            _logger.LogInformation("Not found client with id {id}",id);
+            return NotFound();
+        }
+        else
+        {
+            _realtorRepository.Clients.Remove(client);
+            return Ok();
+        }
     }
 }

@@ -1,41 +1,86 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Realtor;
+using RealtorServer.Dto;
+using RealtorServer.Repository;
+using AutoMapper;
 
 namespace RealtorServer.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ApplicationController : ControllerBase
 {
-    // GET: api/<ApplicationController>
+    private readonly ILogger<ApplicationController> _logger;
+    private readonly IRealtorRepository _realtorRepository;
+    private readonly IMapper _mapper;
+    public ApplicationController (ILogger<ApplicationController> logger, IRealtorRepository realtorRepository, IMapper mapper)
+    {
+        _logger = logger;
+        _realtorRepository = realtorRepository;
+        _mapper = mapper;
+    }
+    
     [HttpGet]
-    public IEnumerable<string> Get()
+    public IEnumerable<ApplicationGetDto> Get()
     {
-        return new string[] { "value1", "value2" };
+        _logger.LogInformation("Get applications");
+        return _realtorRepository.Applications.Select(application => _mapper.Map<ApplicationGetDto>(application));
     }
 
-    // GET api/<ApplicationController>/5
+    
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ActionResult<Application> Get(int id)
     {
-        return "value";
+        var application= _realtorRepository.Applications.FirstOrDefault(Application => Application.Id == id);
+        if (application == null)
+        {
+            _logger.LogInformation("Not found application with id {id}",id);
+            return NotFound();
+        }
+        else
+        {
+            return Ok(_mapper.Map<ApplicationGetDto>(application));
+        }
     }
 
-    // POST api/<ApplicationController>
+    
     [HttpPost]
-    public void Post([FromBody] string value)
+    public void Post([FromBody] ApplicationPostDto application)
     {
+        _realtorRepository.Applications.Add(_mapper.Map<Application>(application));
+
     }
 
-    // PUT api/<ApplicationController>/5
+    
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public IActionResult Put(int id, [FromBody] ApplicationPostDto applicationToPut)
     {
+        var application = _realtorRepository.Applications.FirstOrDefault(Application => Application.Id == id);
+        if (application == null)
+        {
+            _logger.LogInformation("Not found application with id {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _mapper.Map(applicationToPut, application);
+            return Ok();
+        }
     }
 
-    // DELETE api/<ApplicationController>/5
+    
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        var application = _realtorRepository.Applications.FirstOrDefault(Application => Application.Id == id);
+        if (application == null)
+        {
+            _logger.LogInformation("Not found application with id {id}", id);
+            return NotFound();
+        }
+        else
+        {
+            _realtorRepository.Applications.Remove(application);
+            return Ok();
+        }
     }
 }

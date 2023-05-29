@@ -1,8 +1,10 @@
-namespace Realtor;
-public class House
+﻿namespace RealtorServer.Dto;
+
+public class HouseGetDto
 {
+   
     /// <summary>
-    /// Id - guid typed value for storing Id of the houses
+    /// Id - int typed value for storing Id of the houses
     /// </summary>
     public int Id { get; set; } = int.MinValue;
     /// <summary>
@@ -21,14 +23,5 @@ public class House
     /// Rooms - uint value for storing an amount of rooms of this type
     /// </summary>
     public int Rooms { get; set; } = int.MinValue;
-    public List<Application> Applications { get; set; } = new();
-    public House() { }
-    public House(int id, string type, string address, int square, int rooms)
-    {
-        Id = id;
-        Type = type;
-        Address = address;
-        Square = square;
-        Rooms = rooms;
-    }
+   
 }

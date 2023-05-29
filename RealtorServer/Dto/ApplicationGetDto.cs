@@ -1,5 +1,6 @@
-namespace Realtor;
-public class Application
+﻿namespace RealtorServer.Dto;
+
+public class ApplicationGetDto
 {
     /// <summary>
     /// Id -int typed value for storing Id of the room
@@ -17,14 +18,4 @@ public class Application
     /// Data - DateTime typed value for storing a date of application
     /// </summary>
     public DateTime Data { get; set; } = DateTime.MinValue;
-    public List<Client> Clients { get; set; } = new();
-    public List<House> House { get; set; } = new();
-    public Application() { }
-    public Application(int id, string type, uint cost, DateTime data)
-    {
-        Id = id;
-        Type = type;
-        Cost = cost;
-        Data = data;
-    }
 }

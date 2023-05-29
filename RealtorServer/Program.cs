@@ -1,15 +1,25 @@
-var builder = WebApplication.CreateBuilder(args);
+using AutoMapper;
+using RealtorServer;
+using RealtorServer.Repository;
+using System.Reflection;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddSingleton<IRealtorRepository, RealtorRepository>(); 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options=>
+{
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +27,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

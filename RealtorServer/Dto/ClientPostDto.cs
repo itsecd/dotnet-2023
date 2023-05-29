@@ -1,13 +1,8 @@
-namespace Realtor;
-/// <summary>
-/// ClientType sellers and buyers of the real estate agency
-/// </summary>
-public class Client
+﻿namespace RealtorServer.Dto;
+
+public class ClientPostDto
 {
-    /// <summary>
-    /// Id - int typed value for storing Id of the client
-    /// </summary>
-    public int Id { get; set; } = int.MinValue;
+
     /// <summary>
     /// Passport - a string representing passport number
     /// </summary>
@@ -25,15 +20,4 @@ public class Client
     /// </summary> 
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
-    public List<Application> Applications { get; set; } = new();
-    public Client() { }
-    public Client(int id, string passport, string number, string registration, string name, string surname)
-    {
-        Id = id;
-        Passport = passport;
-        Number = number;
-        Registration = registration;
-        Name = name;
-        Surname = surname;
-    }
 }

@@ -16,7 +16,7 @@ public class ApiWrapper
         var serverUrl = configuration.GetSection("ServerUrl").Value;
         _client = new ApiClient(serverUrl, new HttpClient());
     }
-    
+
     public Task<ICollection<BuildingGetDto>> GetBuildingsAsync()
     {
         return _client.BuildingAllAsync();

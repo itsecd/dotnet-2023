@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NonResidentialFund.Model;
 using NonResidentialFund.Server.Dto;
-using System;
 
 namespace NonResidentialFund.Server.Controllers;
 

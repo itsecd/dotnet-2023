@@ -1,12 +1,7 @@
 ﻿using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NonResidentialFund.Client.ViewModels;
-public class AuctionIncomeViewModel: ViewModelBase
+public class AuctionIncomeViewModel : ViewModelBase
 {
     private int _auctionId;
     public int AuctionId

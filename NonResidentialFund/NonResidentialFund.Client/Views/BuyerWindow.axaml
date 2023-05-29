@@ -7,7 +7,8 @@
         xmlns:vm="using:NonResidentialFund.Client.ViewModels"
         Title="Редактирование покупателя"
         MaxWidth="500"
-        SizeToContent="Height">
+        SizeToContent="Height"
+		Icon="/Assets/buyer.png">
 	<Design.DataContext>
 		<vm:BuyerViewModel/>
 	</Design.DataContext>

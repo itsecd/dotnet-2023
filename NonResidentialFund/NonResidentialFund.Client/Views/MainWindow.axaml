@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NonResidentialFund.Client.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/court.png"
         Title="Приватизация нежилого фонда">
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
@@ -20,7 +20,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddOrganizationCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdateOrganizationCommand}">
 							<Image Source="/Assets/update.png"/>
@@ -44,7 +44,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddBuildingCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdateBuildingCommand}">
 							<Image Source="/Assets/update.png"/>
@@ -72,7 +72,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddAuctionCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdateAuctionCommand}">
 							<Image Source="/Assets/update.png"/>
@@ -97,7 +97,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddBuyerCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdateBuyerCommand}">
 							<Image Source="/Assets/update.png"/>
@@ -126,7 +126,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddPrivatizedCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdatePrivatizedCommand}">
 							<Image Source="/Assets/update.png"/>
@@ -154,7 +154,7 @@
 				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Button Classes="ToolButton" Command="{Binding OnAddDistrictCommand}">
-							<Image Source="/Assets/add96.ico"/>
+							<Image Source="/Assets/add.png"/>
 						</Button>
 						<Button Classes="ToolButton" Command="{Binding OnUpdateDistrictCommand}">
 							<Image Source="/Assets/update.png"/>

@@ -11,23 +11,23 @@ public class BuildingViewModel : ViewModelBase
     public int RegistrationNumber
     {
         get => _registrationNumber;
-        set => this.RaiseAndSetIfChanged(ref _registrationNumber, value); 
+        set => this.RaiseAndSetIfChanged(ref _registrationNumber, value);
     }
 
     private string _address = string.Empty;
     [Required]
     public string Address
-    { 
-        get => _address; 
-        set => this.RaiseAndSetIfChanged(ref _address, value); 
+    {
+        get => _address;
+        set => this.RaiseAndSetIfChanged(ref _address, value);
     }
 
     private int _districtId;
     [Required]
     public int DistrictId
-    { 
-        get => _districtId; 
-        set => this.RaiseAndSetIfChanged(ref _districtId, value); 
+    {
+        get => _districtId;
+        set => this.RaiseAndSetIfChanged(ref _districtId, value);
     }
 
     private double _area;
@@ -55,7 +55,7 @@ public class BuildingViewModel : ViewModelBase
     }
 
     public ReactiveCommand<Unit, BuildingViewModel> OnSubmitCommand { get; }
-    
+
     public BuildingViewModel()
     {
         OnSubmitCommand = ReactiveCommand.Create(() => this);

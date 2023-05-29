@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace NonResidentialFund.Model;
 /// <summary>
@@ -53,10 +52,12 @@ public sealed class NonResidentialFundContext : DbContext
     /// <param name="options">Parameter for NonResidentialFundContext</param>
     public NonResidentialFundContext(DbContextOptions options) : base(options)
     {
-        try{
+        try
+        {
             Database.EnsureCreated();
         }
-        catch{
+        catch
+        {
         }
     }
 

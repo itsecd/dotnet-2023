@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace NonResidentialFund.Client.Views;
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
-   public MainWindow()
+    public MainWindow()
     {
         InitializeComponent();
 

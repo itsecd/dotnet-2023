@@ -1,13 +1,8 @@
 ﻿using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NonResidentialFund.Client.ViewModels;
 
-public class BuyerExpensesViewModel: ViewModelBase
+public class BuyerExpensesViewModel : ViewModelBase
 {
     private int _buyerId;
     public int BuyerId

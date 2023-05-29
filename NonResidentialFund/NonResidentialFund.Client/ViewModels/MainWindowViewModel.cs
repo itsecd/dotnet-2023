@@ -2,7 +2,6 @@
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -33,9 +32,10 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedAuction;
         set => this.RaiseAndSetIfChanged(ref _selectedAuction, value);
     }
-    public BuildingViewModel? SelectedBuilding { 
-        get => _selectedBuilding; 
-        set => this.RaiseAndSetIfChanged(ref _selectedBuilding, value); 
+    public BuildingViewModel? SelectedBuilding
+    {
+        get => _selectedBuilding;
+        set => this.RaiseAndSetIfChanged(ref _selectedBuilding, value);
     }
     public BuyerViewModel? SelectedBuyer
     {
@@ -79,7 +79,7 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnAddPrivatizedCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnUpdatePrivatizedCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeletePrivatizedCommand { get; set; }
-    
+
     public Interaction<AuctionViewModel, AuctionViewModel?> ShowAuctionDialog { get; }
     public Interaction<BuildingViewModel, BuildingViewModel?> ShowBuildingDialog { get; }
     public Interaction<BuyerViewModel, BuyerViewModel?> ShowBuyerDialog { get; }
@@ -266,7 +266,7 @@ public class MainWindowViewModel : ViewModelBase
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
-    
+
     private async void LoadDataAsync()
     {
 
@@ -275,7 +275,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             Auctions.Add(_mapper.Map<AuctionViewModel>(auction));
         }
-        
+
         var buildings = await _apiClient.GetBuildingsAsync();
         foreach (var building in buildings)
         {

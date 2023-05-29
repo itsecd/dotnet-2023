@@ -7,6 +7,7 @@
         xmlns:vm="using:NonResidentialFund.Client.ViewModels"
         Title="Редактирование аукциона"
         MaxWidth="500"
+		Icon="/Assets/court.png"
         SizeToContent="Height">
 	<Design.DataContext>
 		<vm:AuctionViewModel/>

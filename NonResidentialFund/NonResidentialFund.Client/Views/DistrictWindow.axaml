@@ -7,7 +7,8 @@
         xmlns:vm="using:NonResidentialFund.Client.ViewModels"
         Title="Редактирование района"
         MaxWidth="500"
-        SizeToContent="Height">
+        SizeToContent="Height"
+		Icon="/Assets/district.png">
 	<Design.DataContext>
 		<vm:DistrictViewModel/>
 	</Design.DataContext>

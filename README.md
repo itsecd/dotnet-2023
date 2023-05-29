@@ -24,3 +24,16 @@
 	6) Вывести информацию об абитуриентах (и их приоритетных 
 	специальностях), которые набрали максимальный балл по каждому из 
 	предметов
+	
+# Добавление
+![image](https://github.com/YulianaIvanova/dotnet-2023/assets/92651224/9b9a27fa-a445-42e2-8821-981c0486cc0b)
+
+# Редактирование
+![image](https://github.com/YulianaIvanova/dotnet-2023/assets/92651224/058377c6-d9ce-4d97-b530-98d366996228)
+
+# Удаление
+![image](https://github.com/YulianaIvanova/dotnet-2023/assets/92651224/071df4c7-dc0d-4ca9-aad0-7a5d8a20513b)
+
+# Запросы
+![image](https://github.com/YulianaIvanova/dotnet-2023/assets/92651224/6b8a4fef-1ec4-4ad2-adb4-8f1855245e43)
+

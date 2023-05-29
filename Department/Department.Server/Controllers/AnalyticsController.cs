@@ -4,7 +4,7 @@ using Department.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BikeRental.Server.Controllers;
+namespace Department.Server.Controllers;
 
 /// <summary>
 /// Analytics controller for requests
@@ -15,14 +15,11 @@ public class AnalyticsController : ControllerBase
 {
     private readonly DepartmentDbContext _context;
 
-    private readonly IMapper _mapper;
-
     private readonly ILogger<AnalyticsController> _logger;
 
     public AnalyticsController(DepartmentDbContext context, IMapper mapper, ILogger<AnalyticsController> logger)
     {
         _context = context;
-        _mapper = mapper;
         _logger = logger;
     }
 
@@ -34,16 +31,13 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult<TeacherGetDto>> GetCourseTeachers(string courseName)
     {
         _logger.LogInformation("Get info about teachers on course");
-        if (_context.Courses == null || _context.Teachers == null)
-        {
-            return NotFound();
-        }
+
         var request = await
-    (from teacher in _context.Teachers
-     join course in _context.Courses on teacher.FullName equals course.TeachersName
-     where course.SubjectName == courseName
-     orderby teacher.FullName
-     select teacher).ToListAsync();
+             (from teacher in _context.Teachers
+             join course in _context.Courses on teacher.FullName equals course.TeachersName
+             where course.SubjectName == courseName
+             orderby teacher.FullName
+             select teacher).ToListAsync();
         return Ok(request);
     }
 
@@ -55,10 +49,6 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult<TeacherGetDto>> GetCourseProjectTeachers()
     {
         _logger.LogInformation("Give info about all teachers whose curriculum includes a course project");
-        if (_context.Teachers == null || _context.Courses == null)
-        {
-            return NotFound();
-        }
 
         var request = await
             (from teacher in _context.Teachers
@@ -85,10 +75,6 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult> GetGroupSubjects(int groupNumber)
     {
         _logger.LogInformation("Give info about all subjects for given group");
-        if (_context.Courses == null || _context.Groups == null)
-        {
-            return NotFound();
-        }
 
         var request = await
             (from subject in _context.Subjects
@@ -115,10 +101,6 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult> GetDepartmentInfo()
     {
         _logger.LogInformation("Give info about department");
-        if (_context.Courses == null || _context.Groups == null || _context.Teachers == null)
-        {
-            return NotFound();
-        }
 
         var teacherInfo = await
             (from teacher in _context.Teachers
@@ -165,10 +147,6 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult> TestMostBusy()
     {
         _logger.LogInformation("Get info about most busy teachers");
-        if (_context.Teachers == null || _context.Courses == null)
-        {
-            return NotFound();
-        }
 
         var totalHours = await
             (from courses in _context.Courses
@@ -192,18 +170,15 @@ public class AnalyticsController : ControllerBase
     public async Task<ActionResult> GetTimeValues()
     {
         _logger.LogInformation("Get info about subjects taught by different teachers");
-        if (_context.Teachers == null || _context.Courses == null)
-        {
-            return NotFound();
-        }
+
         var teachersCounter = await
-        (from courses in _context.Courses
-         group courses.TeachersName by courses.SubjectName into courseGroup
-         select new
-         {
-             subjectName = courseGroup.Key,
-             teachers = courseGroup.Distinct().Count()
-         }).ToListAsync();
+            (from courses in _context.Courses
+             group courses.TeachersName by courses.SubjectName into courseGroup
+             select new
+             {
+                 subjectName = courseGroup.Key,
+                 teachers = courseGroup.Distinct().Count()
+             }).ToListAsync();
 
         var resultSubjects = new List<string>();
         foreach (var subject in teachersCounter)

@@ -1,5 +1,8 @@
 ﻿namespace Department.Server.Dto;
 
+/// <summary>
+/// Class GroupGetDto has the info about all groups
+/// </summary>
 public class GroupGetDto
 {
     /// <summary>

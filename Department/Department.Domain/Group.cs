@@ -5,7 +5,6 @@ namespace Department.Domain;
 /// <summary>
 /// Class Group has the info about all groups
 /// </summary>
-
 [Table("group")]
 public class Group
 {

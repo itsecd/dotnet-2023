@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace Organization.Client.ViewModels;
-public class EmployeeWithFewDepartmentsViewModel : ViewModelBase
+public class EmployeeWorkExperienceViewModel : ViewModelBase
 {
     private uint _regNumber;
     [Required]
@@ -13,6 +13,7 @@ public class EmployeeWithFewDepartmentsViewModel : ViewModelBase
         get => _regNumber;
         set => this.RaiseAndSetIfChanged(ref _regNumber, value);
     }
+
     private string _firstName;
     [Required]
     public string FirstName
@@ -27,22 +28,16 @@ public class EmployeeWithFewDepartmentsViewModel : ViewModelBase
         get => _lastName;
         set => this.RaiseAndSetIfChanged(ref _lastName, value);
     }
-    private string _patronymicName;
-    [Required]
-    public string PatronymicName
+
+
+    private double _workExperience;
+    public double WorkExperience
     {
-        get => _patronymicName;
-        set => this.RaiseAndSetIfChanged(ref _patronymicName, value);
-    }
-    private uint _countDepart;
-    [Required]
-    public uint CountDepart
-    {
-        get => _countDepart;
-        set => this.RaiseAndSetIfChanged(ref _countDepart, value);
+        get => _workExperience;
+        set => this.RaiseAndSetIfChanged(ref _workExperience, value);
     }
 
-    public EmployeeWithFewDepartmentsViewModel()
+    public EmployeeWorkExperienceViewModel()
     {
     }
 }

@@ -7,6 +7,7 @@ namespace Organization.Client.ViewModels;
 public class EmployeeLastYearVoucherViewModel : ViewModelBase
 {
     private uint _regNumber;
+    [Required]
     public uint RegNumber
     {
         get => _regNumber;

@@ -13,6 +13,7 @@ public class EmployeeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private uint _regNumber;
+    [Required]
     public uint RegNumber
     {
         get => _regNumber;

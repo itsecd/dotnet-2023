@@ -52,6 +52,7 @@ public partial class App : Application
                 cfg.CreateMap<ArchiveOfDismissalsDto, ArchiveOfDismissalsViewModel>();
                 cfg.CreateMap<AverageAgeInDepartmentDto, AverageAgeInDepartmentViewModel>();
                 cfg.CreateMap<EmployeeLastYearVoucherDto, EmployeeLastYearVoucherViewModel>();
+                cfg.CreateMap<EmployeeWorkExperienceDto, EmployeeWorkExperienceViewModel>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

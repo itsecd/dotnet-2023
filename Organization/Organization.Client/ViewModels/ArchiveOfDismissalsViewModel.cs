@@ -7,6 +7,8 @@ namespace Organization.Client.ViewModels;
 public class ArchiveOfDismissalsViewModel : ViewModelBase
 {
     private uint _regNumber;
+
+    [Required]
     public uint RegNumber
     {
         get => _regNumber;

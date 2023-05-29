@@ -41,6 +41,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<EmployeeLastYearVoucherViewModel> EmployeesLastYearVoucher { get; } = new();
 
+    public ObservableCollection<EmployeeWorkExperienceViewModel> EmployeesWorkExperience { get; } = new();
+
     public ObservableCollection<EmployeeViewModel> EmployeesInDepartment { get; } = new();
 
     private int _departmentId;
@@ -714,6 +716,7 @@ public class MainWindowViewModel : ViewModelBase
         ArchiveOfDismissals.Clear();
         AverageAgeInDepartments.Clear();
         EmployeesLastYearVoucher.Clear();
+        EmployeesWorkExperience.Clear();
         EmployeesInDepartment.Clear();
 
         var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
@@ -817,6 +820,19 @@ public class MainWindowViewModel : ViewModelBase
             foreach (var employee in employeesLastYearVoucher)
             {
                 EmployeesLastYearVoucher.Add(_mapper.Map<EmployeeLastYearVoucherViewModel>(employee));
+            }
+        }
+        catch
+        {
+
+        }
+
+        try
+        {
+            var employeesWorkExperience = await _apiClient.GetEmployeesWithLongestWorkExperience();
+            foreach (var employee in employeesWorkExperience)
+            {
+                EmployeesWorkExperience.Add(_mapper.Map<EmployeeWorkExperienceViewModel>(employee));
             }
         }
         catch

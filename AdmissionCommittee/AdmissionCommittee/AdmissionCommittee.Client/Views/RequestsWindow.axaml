@@ -1,0 +1,104 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="600"
+        xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
+		        Width="1280"
+		        Height="500"
+		        CanResize="False"
+		        WindowStartupLocation="CenterScreen" 
+        x:Class="AdmissionCommittee.Client.Views.RequestsWindow"
+        Title="RequestsWindow">
+
+  <Design.DataContext>
+    <vm:RequestsViewModel/>
+  </Design.DataContext>
+  
+  <Window.Styles>
+    <StyleInclude Source="/AdmissionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Spacing="10">
+      <Button Classes="RequestsButtonTool"
+					Command="{Binding OnGetEntrantsFromCity}"
+					Content="Entrants from city"/>
+      <Button Classes="RequestsButtonTool"
+					Command="{Binding OnGetEntrantsOverTwentyYearsOlder}"
+					Content="Entrants over 20 y.o."/>
+      <Button Classes="RequestsButtonTool"
+					Command="{Binding OnGetEntrantsInSpecialty}"
+					Content="Entrants in specialty"/>
+      <Button Classes="RequestsButtonTool"
+					  Command="{Binding OnGetCountEntrantsInEachSpecialty}"
+					  Content="Count Entrants in each specialty"/>
+      <Button Classes="RequestsButtonTool"
+					  Command="{Binding OnGetEntrantsTopFive}"
+					  Content="Top 5 Entrants"/>
+    </StackPanel>
+    
+    <DataGrid Classes="MainGrid"
+				      Items="{Binding EntrantsFromCity}"
+              IsVisible="{Binding VisibleEntrantsFromCity}"
+				      IsReadOnly="True"
+				      Grid.Row="1">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="IdEntrant" Width="80" Binding="{Binding IdEntrant}"/>
+        <DataGridTextColumn Header="FullName" Width="230" Binding="{Binding FullName}"/>
+        <DataGridTextColumn Header="DateBirth" Width="130" Binding="{Binding DateBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+        <DataGridTextColumn Header="Country" Width="150" Binding="{Binding Country}"/>
+        <DataGridTextColumn Header="City" Width="150" Binding="{Binding City}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <DataGrid Classes="MainGrid"
+				      Items="{Binding EntrantsOverTwentyYearsOlder}"
+              IsVisible="{Binding VisibleEntrantsOverTwentyYearsOlder}"
+				      IsReadOnly="True"
+				      Grid.Row="1">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="IdEntrant" Width="80" Binding="{Binding IdEntrant}"/>
+        <DataGridTextColumn Header="FullName" Width="230" Binding="{Binding FullName}"/>
+        <DataGridTextColumn Header="DateBirth" Width="130" Binding="{Binding DateBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+        <DataGridTextColumn Header="Country" Width="150" Binding="{Binding Country}"/>
+        <DataGridTextColumn Header="City" Width="150" Binding="{Binding City}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <DataGrid Classes="MainGrid"
+				        Items="{Binding EntrantsInSpecialty}"
+                IsVisible="{Binding VisibleEntrantsInSpecialty}"
+				        IsReadOnly="True"
+				        Grid.Row="1">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="IdEntrant" Width="80" Binding="{Binding IdEntrant}"/>
+          <DataGridTextColumn Header="FullName" Width="230" Binding="{Binding FullName}"/>
+          <DataGridTextColumn Header="DateBirth" Width="130" Binding="{Binding DateBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+          <DataGridTextColumn Header="Country" Width="150" Binding="{Binding Country}"/>
+          <DataGridTextColumn Header="City" Width="150" Binding="{Binding City}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    <DataGrid Classes="MainGrid"
+				        Items="{Binding CountEntrantsInEachSpecialty}"
+                IsVisible="{Binding VisibleCountEntrants}"
+				        IsReadOnly="True"
+				        Grid.Row="1">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="NameSpecialty" Width="350" Binding="{Binding NameSpecialty}"/>
+          <DataGridTextColumn Header="CountEntrants" Width="120" Binding="{Binding CountEntrants}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    <DataGrid Classes="MainGrid"
+				        Items="{Binding EntrantsTopFive}"
+                IsVisible="{Binding VisibleEntrantsTopFive}"
+				        IsReadOnly="True"
+				        Grid.Row="1">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="IdEntrant" Width="80" Binding="{Binding IdEntrant}"/>
+          <DataGridTextColumn Header="FullName" Width="230" Binding="{Binding FullName}"/>
+          <DataGridTextColumn Header="DateBirth" Width="130" Binding="{Binding DateBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+          <DataGridTextColumn Header="Country" Width="150" Binding="{Binding Country}"/>
+          <DataGridTextColumn Header="City" Width="150" Binding="{Binding City}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+  </Grid>
+</Window>

@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
+        x:Class="AdmissionCommittee.Client.Views.StatementSpecialtyWindow"
+        xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
+        Title="Add StatementSpecialty"
+        SizeToContent="WidthAndHeight"
+		    WindowStartupLocation="CenterScreen"
+        Width="450"
+		    Height="260">
+
+  <Design.DataContext>
+    <vm:StatementSpecialtyViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+    <StyleInclude Source="/AdmissionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <Grid>
+    <StackPanel Orientation="Vertical" Margin="10" Spacing="10">
+      <StackPanel Orientation="Horizontal">
+        <Label Width="120" Content="StatementId"/>
+        <TextBox Width="300" Text="{Binding StatementId}"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Width="120" Content="SpecialtyId"/>
+        <TextBox Width="300" Text="{Binding SpecialtyId}"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Width="120" Content="Priority"/>
+        <TextBox Width="300" Text="{Binding Priority}"/>
+      </StackPanel>
+      <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="10" Spacing="10">
+        <Button Classes="SizeTool" Content="Set" Command="{Binding OnSubmitCommand}"/>
+        <Button Classes="SizeTool" Content="Cancel" Click="CancelButton_OnClick"/>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</Window>

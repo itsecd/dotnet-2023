@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
+        x:Class="AdmissionCommittee.Client.Views.StatementWindow"
+        xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
+        Title="Add Statement"
+        SizeToContent="WidthAndHeight"
+		    WindowStartupLocation="CenterScreen"
+        Width="450"
+		    Height="260">
+  
+  <Design.DataContext>
+    <vm:StatementViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+    <StyleInclude Source="/AdmissionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <Grid>
+    <StackPanel Orientation="Vertical" Margin="10" Spacing="10">
+      <StackPanel Orientation="Horizontal">
+        <Label Width="120" Content="EntrantId"/>
+        <TextBox Width="300" Text="{Binding EntrantId}"/>
+      </StackPanel>
+      <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="10" Spacing="10">
+        <Button Classes="SizeTool" Content="Set" Command="{Binding OnSubmitCommand}"/>
+        <Button Classes="SizeTool" Content="Cancel" Click="CancelButton_OnClick"/>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+
+</Window>

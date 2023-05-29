@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
+        xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
+		            Width="450"
+		            Height="260"
+		            SizeToContent="WidthAndHeight"
+		            WindowStartupLocation="CenterScreen"
+        x:Class="AdmissionCommittee.Client.Views.RequestCityWindow"
+        Title="RequestCityWindow">
+
+  <Design.DataContext>
+    <vm:RequestCityViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+    <StyleInclude Source="/AdmissionCommitteeStyles.axaml"/>
+  </Window.Styles>
+
+  <Grid>
+    <StackPanel Orientation="Vertical" Margin="10" Spacing="10">
+      <StackPanel Orientation="Horizontal">
+        <Label Width="120" Content="City"></Label>
+        <TextBox Width="300" Text="{Binding City}"></TextBox>
+      </StackPanel>
+      <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="10" Spacing="10">
+        <Button Classes="SizeTool" Content="Set" Command="{Binding OnSubmitCommand}"></Button>
+        <Button Classes="SizeTool" Content="Cancel" Click="BtnCloseWindow"></Button>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</Window>

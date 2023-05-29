@@ -125,13 +125,6 @@ public class StatementSpecialtyController : ControllerBase
             return BadRequest($"Specialty doesn't exist with this id {stSpecialtyToPut.SpecialtyId}");
         }
 
-        var checkStatementSpecialty = await ctx.StatementSpecialties.Where(stSpec => stSpec.StatementId == stSpecialtyToPut.StatementId).ToListAsync();
-        if (checkStatementSpecialty.Count == 3)
-        {
-            _logger.LogInformation("Can't work put:entrant already have 3 specialties");
-            return BadRequest("Entrant already have 3 specialties");
-        }
-
         _logger.LogInformation("Update StatementSpecialty by id {idSttSpecialty}", idStSpecialty);
         _mapper.Map(stSpecialtyToPut, stSpecialty);
         ctx.StatementSpecialties.Update(_mapper.Map<StatementSpecialty>(stSpecialty));

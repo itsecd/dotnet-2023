@@ -111,7 +111,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>list name of Specialties with count of Entrants</returns>
     [HttpGet("CountOfEntrantsEnteringEachSpecialty")]
-    public async Task<ActionResult<dynamic>> GetCountOfEntrantsEnteringEachSpecialty()
+    public async Task<List<CountEntrantsInEachSpecialtyGetDto>> GetCountOfEntrantsEnteringEachSpecialty()
     {
         _logger.LogInformation("Get information about count of Entrants entering each specialty");
 
@@ -121,7 +121,7 @@ public class AnalyticsController : ControllerBase
                                                   from stspec in entrant.Statement.StatementSpecialties
                                                   where stspec.Priority == 1
                                                   group stspec by stspec.Specialty.NameSpecialty into gstspec
-                                                  select new
+                                                  select new CountEntrantsInEachSpecialtyGetDto
                                                   {
                                                       NameSpecialty = gstspec.Key,
                                                       CountEntrants = (from entrant in ctx.Entrants

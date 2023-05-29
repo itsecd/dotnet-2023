@@ -1,0 +1,1645 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AdmissionCommittee.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/GetEntrantsFromSpecifiedCity": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Entrants from the specified city",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Name city",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/GetEntrantsOverTwentyYearsOlder": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Entrants older than 20 years, arrange by full name",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/GetEntrantsEnteringSpecifiedSpecialty": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Entrants entering the specified specialty\r\n(without taking into account priority)",
+        "parameters": [
+          {
+            "name": "specialty",
+            "in": "query",
+            "description": "name Specialty",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/CountOfEntrantsEnteringEachSpecialty": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Count of Entrants entering each specialty according to the first priority",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountEntrantsInEachSpecialtyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountEntrantsInEachSpecialtyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountEntrantsInEachSpecialtyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/TopFiveEntrants": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Top 5 Entrants who scored the highest number of marks for 3 subject",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/EntrantsMaxMarkEachSubject": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Output information about the entrants (and their priority specialities) who scored the maxmum mark in each of the subject",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/EntrantWithMaxMarkGet"
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/EntrantWithMaxMarkGet"
+                    }
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/EntrantWithMaxMarkGet"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Entrant": {
+      "get": {
+        "tags": [
+          "Entrant"
+        ],
+        "summary": "Get all Entrants",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Entrant"
+        ],
+        "summary": "Create new Entrant",
+        "requestBody": {
+          "description": "new Entrant",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Entrant/{idEntrant}": {
+      "get": {
+        "tags": [
+          "Entrant"
+        ],
+        "summary": "Get Entrant by id",
+        "parameters": [
+          {
+            "name": "idEntrant",
+            "in": "path",
+            "description": "id entrant",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Entrant"
+        ],
+        "summary": "Update information about Entrant",
+        "parameters": [
+          {
+            "name": "idEntrant",
+            "in": "path",
+            "description": "id Entrant",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Entrant that is updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Entrant"
+        ],
+        "summary": "Delete by id Entrant",
+        "parameters": [
+          {
+            "name": "idEntrant",
+            "in": "path",
+            "description": "id Entrant for delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EntrantResult": {
+      "get": {
+        "tags": [
+          "EntrantResult"
+        ],
+        "summary": "Get all EntrantResults",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantResultGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantResultGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntrantResultGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EntrantResult"
+        ],
+        "summary": "Create new EntrantResult",
+        "requestBody": {
+          "description": "new EntrantResult",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EntrantResult/{idEntrantRes}": {
+      "get": {
+        "tags": [
+          "EntrantResult"
+        ],
+        "summary": "Get EntrantResult by id",
+        "parameters": [
+          {
+            "name": "idEntrantRes",
+            "in": "path",
+            "description": "id EntrantResult",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantResultGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantResultGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntrantResultGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EntrantResult"
+        ],
+        "summary": "Update information about EntrantResult",
+        "parameters": [
+          {
+            "name": "idEntrantRes",
+            "in": "path",
+            "description": "id EntrantResult",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "EntrantResult that is update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntrantResultPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EntrantResult"
+        ],
+        "summary": "Delete by id EntrantResult",
+        "parameters": [
+          {
+            "name": "idEntrantRes",
+            "in": "path",
+            "description": "id EntrantResult",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Result": {
+      "get": {
+        "tags": [
+          "Result"
+        ],
+        "summary": "Get all Results",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResultGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResultGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResultGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Result"
+        ],
+        "summary": "Create new Result",
+        "requestBody": {
+          "description": "new result",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Result/{idResult}": {
+      "get": {
+        "tags": [
+          "Result"
+        ],
+        "summary": "Get Result by id",
+        "parameters": [
+          {
+            "name": "idResult",
+            "in": "path",
+            "description": "id Result",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Result"
+        ],
+        "summary": "Update information about Result",
+        "parameters": [
+          {
+            "name": "idResult",
+            "in": "path",
+            "description": "id Result",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Result that is updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Result"
+        ],
+        "summary": "Delete by id Result",
+        "parameters": [
+          {
+            "name": "idResult",
+            "in": "path",
+            "description": "id Result for delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Specialty": {
+      "get": {
+        "tags": [
+          "Specialty"
+        ],
+        "summary": "Get all Specialties",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecialtyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Specialty"
+        ],
+        "summary": "Create new Specialty",
+        "requestBody": {
+          "description": "new Specialty",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Specialty/{idSpecialty}": {
+      "get": {
+        "tags": [
+          "Specialty"
+        ],
+        "summary": "Get Specialty by id",
+        "parameters": [
+          {
+            "name": "idSpecialty",
+            "in": "path",
+            "description": "id Speciality",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialtyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialtyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecialtyGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Specialty"
+        ],
+        "summary": "Update information about Specialty",
+        "parameters": [
+          {
+            "name": "idSpecialty",
+            "in": "path",
+            "description": "id Specialty",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Specialty that is updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecialtyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Specialty"
+        ],
+        "summary": "Delete by id Specialty",
+        "parameters": [
+          {
+            "name": "idSpecialty",
+            "in": "path",
+            "description": "id Specialty for delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Statement": {
+      "get": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Get all Statements",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Create new Statement",
+        "requestBody": {
+          "description": "new Statement",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Statement/{idStatement}": {
+      "get": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Get Statement by id",
+        "parameters": [
+          {
+            "name": "idStatement",
+            "in": "path",
+            "description": "id Statement",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Update information about Statement",
+        "parameters": [
+          {
+            "name": "idStatement",
+            "in": "path",
+            "description": "id Statement",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Statement that is updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Delete by id Statement",
+        "parameters": [
+          {
+            "name": "idStatement",
+            "in": "path",
+            "description": "id Statement by delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/StatementSpecialty": {
+      "get": {
+        "tags": [
+          "StatementSpecialty"
+        ],
+        "summary": "Get all StatementSpecialty",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "StatementSpecialty"
+        ],
+        "summary": "Create new StatementSpecialty",
+        "requestBody": {
+          "description": "new StatementSpecialty",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/StatementSpecialty/{idStSpecialty}": {
+      "get": {
+        "tags": [
+          "StatementSpecialty"
+        ],
+        "summary": "Get StatementSpecialty by id",
+        "parameters": [
+          {
+            "name": "idStSpecialty",
+            "in": "path",
+            "description": "id StatementSpecialty",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementSpecialtyGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StatementSpecialty"
+        ],
+        "summary": "Update information about StatementSpecialty",
+        "parameters": [
+          {
+            "name": "idStSpecialty",
+            "in": "path",
+            "description": "id StatementSpecialty",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "StatementSpecialty that is updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementSpecialtyPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StatementSpecialty"
+        ],
+        "summary": "Delete by id StatementSpecialty",
+        "parameters": [
+          {
+            "name": "idStSpecialty",
+            "in": "path",
+            "description": "id StatementSpecialty",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CountEntrantsInEachSpecialtyGetDto": {
+        "type": "object",
+        "properties": {
+          "nameSpecialty": {
+            "type": "string",
+            "description": "NameSpecialty - name of specialty",
+            "nullable": true
+          },
+          "countEntrants": {
+            "type": "integer",
+            "description": "CountEntrants - the number of entrants in each specialty",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сlass to output the number of entrants for each specialty according to the first priority"
+      },
+      "EntrantGetDto": {
+        "type": "object",
+        "properties": {
+          "idEntrant": {
+            "type": "integer",
+            "description": "IdEntrant - int type value for storing the id entrant",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "FullName - string value for storing the entrant's full name",
+            "nullable": true
+          },
+          "dateBirth": {
+            "type": "string",
+            "description": "DateBirth - DateTime value for storing the entrant's date of birth",
+            "format": "date-time"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country - string value for storing the entrant's country",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "City - string value for storing the entrant's city",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about entrants"
+      },
+      "EntrantPostDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "FullName - string value for storing the entrant's full name",
+            "nullable": true
+          },
+          "dateBirth": {
+            "type": "string",
+            "description": "DateBirth - DateTime value for storing the entrant's date of birth",
+            "format": "date-time"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country - string value for storing the entrant's country",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "City - string value for storing the entrant's city",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about entrants"
+      },
+      "EntrantResultGetDto": {
+        "type": "object",
+        "properties": {
+          "idEntrantResult": {
+            "type": "integer",
+            "description": "IdEntrantResult - int type value for storing the id entrantresult",
+            "format": "int32"
+          },
+          "entrantId": {
+            "type": "integer",
+            "description": "EntrantId - int value for storing the id entrant",
+            "format": "int32"
+          },
+          "resultId": {
+            "type": "integer",
+            "description": "ResultId - int value for storing the id result",
+            "format": "int32"
+          },
+          "mark": {
+            "type": "integer",
+            "description": "Mark - int value for storing mark for the subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntrantResultPostDto": {
+        "type": "object",
+        "properties": {
+          "entrantId": {
+            "type": "integer",
+            "description": "EntrantId - int value for storing the id entrant",
+            "format": "int32"
+          },
+          "resultId": {
+            "type": "integer",
+            "description": "ResultId - int value for storing the id result",
+            "format": "int32"
+          },
+          "mark": {
+            "type": "integer",
+            "description": "Mark - int value for storing mark for the subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntrantWithMaxMarkGet": {
+        "type": "object",
+        "properties": {
+          "nameEntrant": {
+            "type": "string",
+            "description": "NameEntrant - name entrant",
+            "nullable": true
+          },
+          "nameSpecialty": {
+            "type": "string",
+            "description": "NameSpecialty - name speciality entrant's",
+            "nullable": true
+          },
+          "maxMark": {
+            "type": "integer",
+            "description": "MaxMark - max mark in the subject",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class to output entrants with maximum mark in each subject"
+      },
+      "ResultGetDto": {
+        "type": "object",
+        "properties": {
+          "idResult": {
+            "type": "integer",
+            "description": "IdResult - int value for storing the id result",
+            "format": "int32"
+          },
+          "nameSubject": {
+            "type": "string",
+            "description": "NameSubject - string value for storing the name of the subject(exam)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the result of the entrant's exam"
+      },
+      "ResultPostDto": {
+        "type": "object",
+        "properties": {
+          "nameSubject": {
+            "type": "string",
+            "description": "NameSubject - string value for storing the name of the subject(exam)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the result of the entrant's exam"
+      },
+      "SpecialtyGetDto": {
+        "type": "object",
+        "properties": {
+          "idSpecialty": {
+            "type": "integer",
+            "description": "IdSpeciality - int value for storing the id speciality",
+            "format": "int32"
+          },
+          "cypher": {
+            "type": "string",
+            "description": "Cypher - string value for storing a speciality cypher",
+            "nullable": true
+          },
+          "nameSpecialty": {
+            "type": "string",
+            "description": "NameSpeciality - string value for storing the name speciality",
+            "nullable": true
+          },
+          "faculty": {
+            "type": "string",
+            "description": "Faculty - string value for storing the name faculty",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the speciality"
+      },
+      "SpecialtyPostDto": {
+        "type": "object",
+        "properties": {
+          "cypher": {
+            "type": "string",
+            "description": "Cypher - string value for storing a speciality cypher",
+            "nullable": true
+          },
+          "nameSpeciality": {
+            "type": "string",
+            "description": "NameSpeciality - string value for storing the name speciality",
+            "nullable": true
+          },
+          "faculty": {
+            "type": "string",
+            "description": "Faculty - string value for storing the name faculty",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the speciality"
+      },
+      "StatementGetDto": {
+        "type": "object",
+        "properties": {
+          "idStatement": {
+            "type": "integer",
+            "description": "IdStatement - int value for storing the id statement",
+            "format": "int32"
+          },
+          "entrantId": {
+            "type": "integer",
+            "description": "EntrantId - int value for storing the id entrant",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the entrant's statement"
+      },
+      "StatementPostDto": {
+        "type": "object",
+        "properties": {
+          "entrantId": {
+            "type": "integer",
+            "description": "EntrantId - int value for storing the id entrant",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about the entrant's statement"
+      },
+      "StatementSpecialtyGetDto": {
+        "type": "object",
+        "properties": {
+          "idStatementSpecialty": {
+            "type": "integer",
+            "description": "IdStatementSpecialty - int value for storing the id StatementSpecialty",
+            "format": "int32"
+          },
+          "statementId": {
+            "type": "integer",
+            "description": "StatementId - int value for storing the id Statement",
+            "format": "int32"
+          },
+          "specialtyId": {
+            "type": "integer",
+            "description": "SpecialtyId - int value for storing the id Specialty",
+            "format": "int32"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Priority - int value storing priority of specialty",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Relationship between Statement and Specialty"
+      },
+      "StatementSpecialtyPostDto": {
+        "type": "object",
+        "properties": {
+          "statementId": {
+            "type": "integer",
+            "description": "StatementId - int value for storing the id Statement",
+            "format": "int32"
+          },
+          "specialtyId": {
+            "type": "integer",
+            "description": "SpecialtyId - int value for storing the id Specialty",
+            "format": "int32"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Priority - int value storing priority of specialty",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Relationship between Statement and Specialty"
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" WindowStartupLocation="CenterScreen"
+        x:Class="AdmissionCommittee.Client.Views.MainWindow"
+        Icon="/Assets/university.ico"
+        Title="AdmissionCommittee.Client">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <Window.Styles>
+    <StyleInclude Source="/AdmissionCommitteeStyles.axaml"/>
+  </Window.Styles>
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <Button Classes="ToolButton" Command="{Binding OnAddCommand}">
+        <Image Source="/Assets/add.png"/>
+      </Button>
+      <Button Classes="ToolButton" Command="{Binding OnUpdateCommand}">
+        <Image Source="/Assets/edit.png"/>
+      </Button>
+      <Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
+        <Image Source="/Assets/del.png"/>
+      </Button>
+    <Button Classes="ToolButton"  Command="{Binding OnRequestsCommand}">
+        <Image Source="/Assets/request.png"/>
+      </Button>
+    </StackPanel>
+    
+    
+    <Grid Grid.Row="1">
+      <TabControl SelectedIndex="{Binding SelectionHeader}">
+        <TabItem Header="Entrants">
+          <DataGrid Classes="MainGrid"
+                    Items="{Binding Entrants}"
+                    IsReadOnly="True"
+                    SelectedItem="{Binding SelectedEntrant, Mode=TwoWay}">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="IdEntrant" Width="80" Binding="{Binding IdEntrant}"/>
+              <DataGridTextColumn Header="FullName" Width="230" Binding="{Binding FullName}"/>
+              <DataGridTextColumn Header="DateBirth" Width="130" Binding="{Binding DateBirth, StringFormat={}{0:dd/MM/yyyy}}"/>
+              <DataGridTextColumn Header="Country" Width="150" Binding="{Binding Country}"/>
+              <DataGridTextColumn Header="City" Width="150" Binding="{Binding City}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+       </TabItem>
+       <TabItem Header="EntrantRes">
+         <DataGrid Classes="MainGrid"
+                   Items="{Binding EntResults}"
+                   IsReadOnly="True"
+                   SelectedItem="{Binding SelectedEntResult, Mode=TwoWay}">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="IdEntRes" Width="80" Binding="{Binding IdEntrantResult}"/>
+                <DataGridTextColumn Header="EntrantId" Width="80" Binding="{Binding EntrantId}"/>
+                <DataGridTextColumn Header="ResultId" Width="80" Binding="{Binding ResultId}"/>
+                <DataGridTextColumn Header="Mark" Width="100" Binding="{Binding Mark}"/>
+            </DataGrid.Columns>
+         </DataGrid>
+       </TabItem>
+      <TabItem Header="Result">
+          <DataGrid Classes="MainGrid"
+                    Items="{Binding Results}"
+                    IsReadOnly="True"
+                    SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="IdResult" Width="80" Binding="{Binding IdResult}"/>
+                <DataGridTextColumn Header="Subject" Width="200" Binding="{Binding NameSubject}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </TabItem>
+       <TabItem Header="Statement">
+          <DataGrid Classes="MainGrid"
+                    Items="{Binding Statements}"
+                    IsReadOnly="True"
+                    SelectedItem="{Binding SelectedStatement, Mode=TwoWay}">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="IdStatement" Width="80" Binding="{Binding IdStatement}"/>
+              <DataGridTextColumn Header="EntrantId" Width="80" Binding="{Binding EntrantId}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+       </TabItem>
+      <TabItem Header="StSpecialty">
+          <DataGrid Classes="MainGrid"
+                    Items="{Binding StSpecialties}"
+                    IsReadOnly="True"
+                    SelectedItem="{Binding SelectedStSpecialty, Mode=TwoWay}">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="IdStSpeciality" Width="90" Binding="{Binding IdStatementSpecialty}"/>
+                <DataGridTextColumn Header="StatementId" Width="90" Binding="{Binding StatementId}"/>
+                <DataGridTextColumn Header="SpecialtyId" Width="90" Binding="{Binding SpecialtyId}"/>
+                <DataGridTextColumn Header="Priority" Width="90" Binding="{Binding Priority}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </TabItem>
+      <TabItem Header="Specialty">
+          <DataGrid Classes="MainGrid"
+                    Items="{Binding Specialties}"
+                    IsReadOnly="True"
+                    SelectedItem="{Binding SelectedSpecialty, Mode=TwoWay}">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="IdSpeciality" Width="90" Binding="{Binding IdSpecialty}"/>
+                <DataGridTextColumn Header="Cypher" Width="100" Binding="{Binding Cypher}"/>
+                <DataGridTextColumn Header="Specialty" Width="300" Binding="{Binding NameSpecialty}"/>
+                <DataGridTextColumn Header="Faculty" Width="250" Binding="{Binding Faculty}"/>
+            </DataGrid.Columns>
+          </DataGrid>
+        </TabItem>
+      </TabControl>
+    </Grid>
+  </Grid>
+  
+
+</Window>

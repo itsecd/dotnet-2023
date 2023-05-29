@@ -124,14 +124,6 @@ public class EntrantResultController : ControllerBase
             return BadRequest($"Result doesn't exist with this id {entrantResultToPut.ResultId}");
         }
 
-
-        var checkEntrantResult = await ctx.EntrantResults.Where(entrRes => entrRes.EntrantId == entrantResultToPut.EntrantId).ToListAsync();
-        if (checkEntrantResult.Count == 3)
-        {
-            _logger.LogInformation("Can't work put:entrant already have 3 exam results");
-            return BadRequest("Entrant already have 3 exam results");
-        }
-
         _logger.LogInformation("Update EntrantResult by id {idEntrantRes}", idEntrantRes);
         _mapper.Map(entrantResultToPut, entrantRes);
 

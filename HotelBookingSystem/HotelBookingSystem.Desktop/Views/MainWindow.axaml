@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:HotelBookingSystem.Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="HotelBookingSystem.Desktop.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Система бронирования отелей"
+		MaxWidth="800" MaxHeight="450"
+		MinWidth="800" MinHeight="450">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/HotelBookingSystemStyles.axaml"/>	
+	</Window.Styles>
+	
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+				  Items="{Binding Hotels}"
+				  SelectedItem="{Binding Selected}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Город" Binding="{Binding City}"/>
+				<DataGridTextColumn Header="Адрес" Binding="{Binding Adress}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>

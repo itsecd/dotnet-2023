@@ -59,7 +59,7 @@ public class MainWindowViewModel : ViewModelBase
                 Cars.Add(carViewModel);
                 Cars.Clear();
                 RentalPoints.Clear();
-                LoadCarsAsync();
+                LoadAsync();
             }
         });
         OnChangeCarCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -88,7 +88,7 @@ public class MainWindowViewModel : ViewModelBase
                 RentalPoints.Add(rentalPointViewModel);
                 Cars.Clear();
                 RentalPoints.Clear();
-                LoadRentalPointsAsync();
+                LoadAsync();
             }
         });
         OnChangeRentalPointCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -106,10 +106,11 @@ public class MainWindowViewModel : ViewModelBase
             RentalPoints.Remove(SelectedRentalPoint);
         }, this.WhenAnyValue(vm => vm.SelectedRentalPoint).Select(selectRentalPoint => selectRentalPoint != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadCarsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadRentalPointsAsync);
+        /*RxApp.MainThreadScheduler.Schedule(LoadCarsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadRentalPointsAsync);*/
+        RxApp.MainThreadScheduler.Schedule(LoadAsync);
     }
-    private async void LoadCarsAsync()
+    /*private async void LoadCarsAsync()
     {
         var cars = await _apiClient.GetCarsAsync();
         foreach (var car in cars)
@@ -119,6 +120,19 @@ public class MainWindowViewModel : ViewModelBase
     }
      private async void LoadRentalPointsAsync()
     {
+        var rentalPoints = await _apiClient.GetRentalPointsAsync();
+        foreach (var rentalPoint in rentalPoints)
+        {
+            RentalPoints.Add(_mapper.Map<RentalPointViewModel>(rentalPoint));
+        }
+    }*/
+    private async void LoadAsync()
+    {
+        var cars = await _apiClient.GetCarsAsync();
+        foreach (var car in cars)
+        {
+            Cars.Add(_mapper.Map<CarViewModel>(car));
+        }
         var rentalPoints = await _apiClient.GetRentalPointsAsync();
         foreach (var rentalPoint in rentalPoints)
         {

@@ -37,6 +37,9 @@ public partial class App : Application
 
                 cfg.CreateMap<PrivatizedGetDto, PrivatizedViewModel>();
                 cfg.CreateMap<PrivatizedViewModel, PrivatizedPostDto>();
+
+                cfg.CreateMap<BuyerExpensesDto, BuyerExpensesViewModel>();
+                cfg.CreateMap<AuctionIncomeDto, AuctionIncomeViewModel>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

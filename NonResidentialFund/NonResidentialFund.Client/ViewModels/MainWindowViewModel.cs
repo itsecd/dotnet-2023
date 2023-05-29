@@ -17,6 +17,9 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<DistrictViewModel> Districts { get; } = new();
     public ObservableCollection<OrganizationViewModel> Organizations { get; } = new();
     public ObservableCollection<PrivatizedViewModel> Privatized { get; } = new();
+    public ObservableCollection<AuctionViewModel> AuctionsNotAllLotsSold { get; } = new();
+    public ObservableCollection<BuyerExpensesViewModel> TopBuyersByExpenses { get; } = new();
+    public ObservableCollection<AuctionIncomeViewModel> AuctionsWithHighestIncome { get; } = new();
 
     private AuctionViewModel? _selectedAuction;
     private BuildingViewModel? _selectedBuilding;
@@ -30,12 +33,10 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedAuction;
         set => this.RaiseAndSetIfChanged(ref _selectedAuction, value);
     }
-
     public BuildingViewModel? SelectedBuilding { 
         get => _selectedBuilding; 
         set => this.RaiseAndSetIfChanged(ref _selectedBuilding, value); 
     }
-
     public BuyerViewModel? SelectedBuyer
     {
         get => _selectedBuyer;
@@ -303,6 +304,24 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var privatized in allPrivatized)
         {
             Privatized.Add(_mapper.Map<PrivatizedViewModel>(privatized));
+        }
+
+        var auctionsNotAllLotsSold = await _apiClient.GetAuctionsNotAllLotsSoldAsync();
+        foreach (var auction in auctionsNotAllLotsSold)
+        {
+            AuctionsNotAllLotsSold.Add(_mapper.Map<AuctionViewModel>(auction));
+        }
+
+        var topBuyersByExpenses = await _apiClient.GetTopBuyersByExpensesAsync();
+        foreach (var buyer in topBuyersByExpenses)
+        {
+            TopBuyersByExpenses.Add(_mapper.Map<BuyerExpensesViewModel>(buyer));
+        }
+
+        var auctionsWithHighestIncome = await _apiClient.GetAuctionsWithHighestIncomeAsync();
+        foreach (var auction in auctionsWithHighestIncome)
+        {
+            AuctionsWithHighestIncome.Add(_mapper.Map<AuctionIncomeViewModel>(auction));
         }
     }
 }

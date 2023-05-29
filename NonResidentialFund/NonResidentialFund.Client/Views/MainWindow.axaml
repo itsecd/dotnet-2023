@@ -7,7 +7,6 @@
         x:Class="NonResidentialFund.Client.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Приватизация нежилого фонда">
-	
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
@@ -172,6 +171,52 @@
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
+			</DockPanel>
+		</TabItem>
+		<TabItem Header="Аналитика">
+			<DockPanel>
+				<TabControl>
+					<TabItem Header="Аукционы с непроданными лотами">
+						<DockPanel>
+							<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+								<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+											Items="{Binding AuctionsNotAllLotsSold}">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="ID" Binding="{Binding AuctionId}"/>
+										<DataGridTextColumn Header="Дата проведения" Binding="{Binding Date}"/>
+										<DataGridTextColumn Header="ID организации-организатора" Binding="{Binding OrganizationId}"/>
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</DockPanel>
+					</TabItem>
+					<TabItem Header="Топ покупателей по затратам">
+						<DockPanel>
+							<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+								<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+											Items="{Binding TopBuyersByExpenses}">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="ID покупателя" Binding="{Binding BuyerId}"/>
+										<DataGridTextColumn Header="Затраты" Binding="{Binding Expenses}"/>
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</DockPanel>
+					</TabItem>
+					<TabItem Header="Топ аукционов по доходу">
+						<DockPanel>
+							<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+								<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+											Items="{Binding AuctionsWithHighestIncome}">
+									<DataGrid.Columns>
+										<DataGridTextColumn Header="ID аукциона" Binding="{Binding AuctionId}"/>
+										<DataGridTextColumn Header="Доход" Binding="{Binding Income}"/>
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</DockPanel>
+					</TabItem>
+				</TabControl>
 			</DockPanel>
 		</TabItem>
 	</TabControl>

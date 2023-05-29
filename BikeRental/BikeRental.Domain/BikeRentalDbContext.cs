@@ -29,7 +29,7 @@ public class BikeRentalDbContext : DbContext
 
     public BikeRentalDbContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
+        Database.EnsureCreatedAsync();
     }
 
     /// <summary>
@@ -40,9 +40,9 @@ public class BikeRentalDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        var type1 = new BikeType { Id = 1, TypeName = "горный", RentCost = 300 };
-        var type2 = new BikeType { Id = 2, TypeName = "прогулочный", RentCost = 100 };
-        var type3 = new BikeType { Id = 3, TypeName = "спортивный", RentCost = 200 };
+        var type1 = new BikeType { Id = 1, TypeName = "mountain", RentCost = 300 };
+        var type2 = new BikeType { Id = 2, TypeName = "walking", RentCost = 100 };
+        var type3 = new BikeType { Id = 3, TypeName = "sport", RentCost = 200 };
 
         modelBuilder.Entity<BikeType>().HasData(new List<BikeType> { type1, type2, type3 });
 

@@ -48,6 +48,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\RentRecordWindow.axaml.cs">
+      <DependentUpon>RentRecordWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ClientWindow.axaml.cs">
+      <DependentUpon>ClientWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

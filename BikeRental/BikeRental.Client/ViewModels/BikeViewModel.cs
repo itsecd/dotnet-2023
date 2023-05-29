@@ -1,16 +1,15 @@
 ﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Reactive;
 
 namespace BikeRental.Client.ViewModels;
 public class BikeViewModel : ViewModelBase
 {
     private int _id;
-    public int Id 
-    { 
-        get => _id; 
-        set => this.RaiseAndSetIfChanged(ref _id, value); 
+    public int Id
+    {
+        get => _id;
+        set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
     private int _serialNumber;
@@ -41,7 +40,7 @@ public class BikeViewModel : ViewModelBase
     [Required]
     public int TypeId
     {
-        get => _typeId; 
+        get => _typeId;
         set => this.RaiseAndSetIfChanged(ref _typeId, value);
     }
 

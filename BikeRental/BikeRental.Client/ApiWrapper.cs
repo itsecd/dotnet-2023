@@ -20,23 +20,68 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public Task<ICollection<BikeGetDto>> GetBikesAsync()
+    public async Task<ICollection<BikeGetDto>> GetBikesAsync()
     {
-        return _client.BikesAllAsync();
+        return await _client.BikesAllAsync();
     }
 
-    public Task<BikeGetDto> AddBikeAsync(BikeSetDto bike)
+    public async Task<BikeGetDto> AddBikeAsync(BikeSetDto bike)
     {
-        return _client.BikesAsync(bike);
+        return await _client.BikesAsync(bike);
     }
 
-    public Task UpdateBikeAsync(int id, BikeSetDto bike)
+    public async Task UpdateBikeAsync(int id, BikeSetDto bike)
     {
-        return _client.Bikes3Async(id, bike);
+        await _client.Bikes3Async(id, bike);
     }
 
-    public Task DeleteBikeAsync(int id)
+    public async Task DeleteBikeAsync(int id)
     {
-        return _client.Bikes4Async(id);
+        await _client.Bikes4Async(id);
+    }
+
+    public async Task<ICollection<BikeTypeGetDto>> GetBikeTypesAsync()
+    {
+        return await _client.BikeTypesAllAsync();
+    }
+
+    public async Task<ICollection<ClientGetDto>> GetClientsAsync()
+    {
+        return await _client.ClientsAllAsync();
+    }
+
+    public async Task<ClientGetDto> AddClientAsync(ClientSetDto client)
+    {
+        return await _client.ClientsAsync(client);
+    }
+
+    public async Task UpdateClientAsync(int id, ClientSetDto client)
+    {
+        await _client.Clients3Async(id, client);
+    }
+
+    public async Task DeleteClientAsync(int id)
+    {
+        await _client.Clients4Async(id);
+    }
+
+    public async Task<ICollection<RentRecordGetDto>> GetRentRecordsAsync()
+    {
+        return await _client.RentRecordsAllAsync();
+    }
+
+    public async Task<RentRecordGetDto> AddRentRecordAsync(RentRecordSetDto rentRecord)
+    {
+        return await _client.RentRecordsAsync(rentRecord);
+    }
+
+    public async Task UpdateRentRecordAsync(int id, RentRecordSetDto rentRecord)
+    {
+        await _client.RentRecords3Async(id, rentRecord);
+    }
+
+    public async Task DeleteRentRecordAsync(int id)
+    {
+        await _client.RentRecords4Async(id);
     }
 }

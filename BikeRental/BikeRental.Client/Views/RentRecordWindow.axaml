@@ -3,14 +3,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="BikeRental.Client.Views.BikeWindow"
+        x:Class="BikeRental.Client.Views.RentRecordWindow"
 		xmlns:vm="using:BikeRental.Client.ViewModels"
-        Title="Bike add/edit"
+        Title="RentRecord add/edit"
 		MaxWidth="500"
 		SizeToContent="Height">
 	
 	<Design.DataContext>
-		<vm:BikeViewModel/>
+		<vm:RentRecordViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>
@@ -18,15 +18,15 @@
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-		<Label Grid.Row="0" Grid.Column="0">Serial Number</Label>
-		<Label Grid.Row="1" Grid.Column="0">Model</Label>
-		<Label Grid.Row="2" Grid.Column="0">Color</Label>
-		<Label Grid.Row="3" Grid.Column="0">Type Id</Label>
+		<Label Grid.Row="0" Grid.Column="0">Client Id</Label>
+		<Label Grid.Row="1" Grid.Column="0">Bike Id</Label>
+		<Label Grid.Row="2" Grid.Column="0">Rent Start Time</Label>
+		<Label Grid.Row="3" Grid.Column="0">Rent End Time</Label>
 		
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SerialNumber}"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Model}"/>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Color}"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TypeId}"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ClientId}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BikeId}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RentStartTime}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RentEndTime}"/>
 
 		<StackPanel Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"

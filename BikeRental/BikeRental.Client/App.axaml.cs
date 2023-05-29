@@ -22,6 +22,14 @@ public partial class App : Application
             {
                 cfg.CreateMap<BikeGetDto, BikeViewModel>();
                 cfg.CreateMap<BikeViewModel, BikeSetDto>();
+
+                cfg.CreateMap<BikeTypeGetDto, BikeTypeViewModel>();
+
+                cfg.CreateMap<ClientGetDto, ClientViewModel>();
+                cfg.CreateMap<ClientViewModel, ClientSetDto>();
+
+                cfg.CreateMap<RentRecordGetDto, RentRecordViewModel>();
+                cfg.CreateMap<RentRecordViewModel, RentRecordSetDto>();
             });
 
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

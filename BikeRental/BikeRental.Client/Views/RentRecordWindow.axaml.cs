@@ -5,9 +5,9 @@ using ReactiveUI;
 using System;
 
 namespace BikeRental.Client.Views;
-public partial class BikeWindow : ReactiveWindow<BikeViewModel>
+public partial class RentRecordWindow : ReactiveWindow<RentRecordViewModel>
 {
-    public BikeWindow()
+    public RentRecordWindow()
     {
         InitializeComponent();
 

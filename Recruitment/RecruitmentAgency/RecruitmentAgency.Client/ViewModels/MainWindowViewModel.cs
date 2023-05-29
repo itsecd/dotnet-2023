@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MessageBox.Avalonia;
 using ReactiveUI;
 using RecruitmentAgencyServer.Dto;
 using Splat;
@@ -125,7 +126,10 @@ public class MainWindowViewModel : ViewModelBase
                     var newCompanyApplication = await _apiClient.AddCompanyApplicationAsync(_mapper.Map<CompanyApplicationPostDto>(companyApplicationViewModel));
                     CompanyApplications.Add(_mapper.Map<CompanyApplicationViewModel>(newCompanyApplication));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    await MessageBoxManager.GetMessageBoxStandardWindow("Error: ", ex.Message).ShowDialog(App.MainWindow);
+                }
             }
         });
 
@@ -180,7 +184,10 @@ public class MainWindowViewModel : ViewModelBase
                     var newJobApplication = await _apiClient.AddJobApplicationAsync(_mapper.Map<JobApplicationPostDto>(jobApplicationViewModel));
                     JobApplications.Add(_mapper.Map<JobApplicationViewModel>(newJobApplication));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    await MessageBoxManager.GetMessageBoxStandardWindow("Error: ", ex.Message).ShowDialog(App.MainWindow);
+                }
             }
         });
 

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using RecruitmentAgency.Client.ViewModels;
@@ -9,6 +10,7 @@ using Splat;
 namespace RecruitmentAgency.Client;
 public partial class App : Application
 {
+    public static Window MainWindow { get; set; }
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -57,6 +59,7 @@ public partial class App : Application
             {
                 DataContext = new MainWindowViewModel(),
             };
+            App.MainWindow = desktop.MainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();

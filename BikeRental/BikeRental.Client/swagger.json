@@ -17,17 +17,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               }
             }
@@ -47,17 +56,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
                 }
               }
             }
@@ -120,17 +138,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BikeGetDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BikeGetDto"
+                  }
                 }
               }
             }

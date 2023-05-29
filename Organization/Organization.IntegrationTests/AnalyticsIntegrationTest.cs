@@ -31,7 +31,7 @@ public class AnalyticsIntegrationTest : IClassFixture<WebApplicationFactory<Prog
     /// <param name="departmentId">The ID of the Department</param>
     /// <param name="employeeCount">The correct number of employees in the department</param>
     [Theory]
-    [InlineData(1, 4)]
+    [InlineData(1, 3)]
     [InlineData(2, 4)]
     public async Task GetEmployeesOfDepartment(uint departmentId, int employeeCount)
     {

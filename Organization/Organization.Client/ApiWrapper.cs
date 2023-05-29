@@ -207,4 +207,9 @@ public class ApiWrapper
     {
         return _client.WorkshopDELETEAsync(id);
     }
+
+    public Task<ICollection<GetEmployeeDto>> GetEmployeesInDepartment(int id)
+    {
+        return _client.DepartmentIdAsync(id);
+    }
 }

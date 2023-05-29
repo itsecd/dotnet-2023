@@ -305,6 +305,66 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		
+		
+		<TabItem>
+			<TabItem.Header>
+				<TextBlock VerticalAlignment="Center">Statistics</TextBlock>
+			</TabItem.Header>
+			<TabControl HorizontalContentAlignment="Center" Margin="0, 15, 0, 0">
+				<TabItem>
+					<TabItem.Header>
+						<TextBlock VerticalAlignment="Center">Employees in the department</TextBlock>
+					</TabItem.Header>
+					<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+						<StackPanel Grid.Row="0" Orientation="Horizontal">
+							<Label>Department id</Label>
+							<NumericUpDown Margin="0,0,0,2" Value="{Binding DepartmentId}" Minimum="1"/>
+							<Button Command="{Binding GetEmployeesInDepartment}">Refresh</Button>
+						</StackPanel>
+
+							<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+								  Items="{Binding EmployeesInDepartment}"
+								  IsReadOnly="True">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+								<DataGridTextColumn Header="Registration number"
+													Binding="{Binding RegNumber}"/>
+								<DataGridTextColumn Header="First name"
+													Binding="{Binding FirstName}"/>
+								<DataGridTextColumn Header="Last name"
+													Binding="{Binding LastName}"/>
+								<DataGridTextColumn Header="Patronymic name"
+													Binding="{Binding PatronymicName}"/>
+								<DataGridTextColumn Header="Birth date"
+													Binding="{Binding BirthDate}"/>
+								<DataGridTextColumn Header="Workshop id"
+													Binding="{Binding WorkshopId}"/>
+								<DataGridTextColumn Header="Home address"
+													Binding="{Binding HomeAddress}"/>
+								<DataGridTextColumn Header="Home telephone"
+													Binding="{Binding HomeTelephone}"/>
+								<DataGridTextColumn Header="Work telephone"
+													Binding="{Binding WorkTelephone}"/>
+								<DataGridTextColumn Header="Family status"
+													Binding="{Binding FamilyStatus}"/>
+								<DataGridTextColumn Header="Number of family members"
+													Binding="{Binding FamilyMembersCount}"/>
+								<DataGridTextColumn Header="Number of children"
+													Binding="{Binding ChildrenCount}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</TabItem>
+				
+				<TabItem>
+					<TabItem.Header>
+						<TextBlock VerticalAlignment="Center">Employees with more than one department</TextBlock>
+					</TabItem.Header>
+					KY32
+				</TabItem>
+			</TabControl>
+		</TabItem>
 	</TabControl>
 
 </Window>

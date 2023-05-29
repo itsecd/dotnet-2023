@@ -32,6 +32,16 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<WorkshopViewModel> Workshops { get; } = new();
 
+    public ObservableCollection<EmployeeViewModel> EmployeesInDepartment { get; } = new();
+
+    private int _departmentId;
+
+    public int DepartmentId
+    {
+        get => _departmentId;
+        set => this.RaiseAndSetIfChanged(ref _departmentId, value);
+    }
+
     public DepartmentEmployeeViewModel? _selectedDepartmentEmployee;
     public DepartmentEmployeeViewModel? SelectedDepartmentEmployee
     {
@@ -134,6 +144,8 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeWorkshopCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteWorkshopCommand { get; set; }
 
+    public ReactiveCommand<Unit, Unit> GetEmployeesInDepartment { get; set; }
+
     public Interaction<DepartmentEmployeeViewModel, 
         DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog { get; }
 
@@ -191,6 +203,7 @@ public class MainWindowViewModel : ViewModelBase
                     _mapper.Map<PostDepartmentEmployeeDto>(departmentEmployeeViewModel));
                 DepartmentEmployees.Add(_mapper.Map<DepartmentEmployeeViewModel>(newDepartmentEmployee));
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnAddDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
@@ -211,6 +224,7 @@ public class MainWindowViewModel : ViewModelBase
                 
                 _mapper.Map(departmentEmployeeViewModel, SelectedDepartmentEmployee);
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
         .Select(selectProduct => selectProduct != null));
 
@@ -224,6 +238,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             await _apiClient.DeleteDepartmentEmployeeAsync(_selectedDepartmentEmployee!.Id);
             DepartmentEmployees.Remove(SelectedDepartmentEmployee!);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
         .Select(selectProduct => selectProduct != null));
 
@@ -293,6 +308,7 @@ public class MainWindowViewModel : ViewModelBase
                     _mapper.Map<PostEmployeeOccupationDto>(employeeOccupationViewModel));
                 EmployeeOccupations.Add(_mapper.Map<EmployeeOccupationViewModel>(newEmployeeOccupation));
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnAddEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
@@ -313,6 +329,7 @@ public class MainWindowViewModel : ViewModelBase
                     _mapper.Map<PostEmployeeOccupationDto>(employeeOccupationViewModel));
                 _mapper.Map(employeeOccupationViewModel, SelectedEmployeeOccupation);
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
@@ -326,6 +343,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             await _apiClient.DeleteEmployeeOccupationAsync(_selectedEmployeeOccupation!.Id);
             EmployeeOccupations.Remove(SelectedEmployeeOccupation!);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
@@ -366,6 +384,7 @@ public class MainWindowViewModel : ViewModelBase
                     _mapper.Map<PostEmployeeDto>(employeeViewModel));
                 _mapper.Map(employeeViewModel, SelectedEmployee);
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployee)
         .Select(selectProduct => selectProduct != null));
 
@@ -400,6 +419,7 @@ public class MainWindowViewModel : ViewModelBase
                 EmployeeVacationVouchers.Add
                     (_mapper.Map<EmployeeVacationVoucherViewModel>(newEmployeeVacationVoucher));
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
         OnAddEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
@@ -420,6 +440,7 @@ public class MainWindowViewModel : ViewModelBase
                     _mapper.Map<PostEmployeeVacationVoucherDto>(employeeVacationVoucherViewModel));
                 _mapper.Map(employeeVacationVoucherViewModel, SelectedEmployeeVacationVoucher);
             }
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
@@ -434,6 +455,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             await _apiClient.DeleteEmployeeVacationVoucherAsync(_selectedEmployeeVacationVoucher!.Id);
             EmployeeVacationVouchers.Remove(SelectedEmployeeVacationVoucher!);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
@@ -646,6 +668,23 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
+        GetEmployeesInDepartment = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var employees = await _apiClient.GetEmployeesInDepartment(_departmentId);
+            EmployeesInDepartment.Clear();
+            foreach (var employee in employees)
+            {
+                EmployeesInDepartment.Add(_mapper.Map<EmployeeViewModel>(employee));
+            }
+        });
+
+        GetEmployeesInDepartment.ThrownExceptions.Subscribe(error => {
+            var messageViewModel = new MessageViewModel(error.Message);
+            ShowMessage(messageViewModel);
+            RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
+        });
+
+
         RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
     }
 
@@ -660,6 +699,8 @@ public class MainWindowViewModel : ViewModelBase
         VacationVouchers.Clear();
         VoucherTypes.Clear();
         Workshops.Clear();
+
+        EmployeesInDepartment.Clear();
 
         var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
         foreach (var departmentEmployee in departmentEmployees)
@@ -714,6 +755,20 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var workshop in workshops)
         {
             Workshops.Add(_mapper.Map<WorkshopViewModel>(workshop));
+        }
+
+        
+        try
+        {
+            employees = await _apiClient.GetEmployeesInDepartment(_departmentId);
+            foreach (var employee in employees)
+            {
+                EmployeesInDepartment.Add(_mapper.Map<EmployeeViewModel>(employee));
+            }
+        }
+        catch
+        {
+
         }
     }
 }

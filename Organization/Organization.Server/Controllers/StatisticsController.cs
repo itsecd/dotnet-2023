@@ -36,10 +36,10 @@ public class StatisticsController : Controller
     {
         _logger.LogInformation("Get all employees of the given department");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var employeesInDepartment = (from employee in ctx.Employees
+        var employeesInDepartment = await (from employee in ctx.Employees
                                      from departmentEmployeeItem in employee.DepartmentEmployees
                                      where departmentEmployeeItem.Department.Id == departmentId
-                                     select _mapper.Map<GetEmployeeDto>(employee)).ToList();
+                                     select _mapper.Map<GetEmployeeDto>(employee)).Distinct().ToListAsync();
         if (employeesInDepartment.Count() == 0)
         {
             _logger.LogInformation("Employees with a given department id {id} don't exist", departmentId);
@@ -57,7 +57,7 @@ public class StatisticsController : Controller
     {
         _logger.LogInformation("Get all employees working in more than 1 department");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
-        var employeesWithFewDepartments =
+        var employeesWithFewDepartments = await
             (from employee in ctx.Employees
              orderby employee.LastName, employee.FirstName, employee.PatronymicName
              from departmentEmployeeItem in employee.DepartmentEmployees
@@ -77,7 +77,7 @@ public class StatisticsController : Controller
                  LastName = grp.Key.LastName,
                  PatronymicName = grp.Key.PatronymicName,
                  CountDepart = grp.Count()
-             }).ToList();
+             }).ToListAsync();
         return Ok(employeesWithFewDepartments);
     }
     /// <summary>

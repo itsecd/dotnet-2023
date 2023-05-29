@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PonrfClient.Views.ShowPrivatizedBuildingWindow"
+        xmlns:vm="using:PonrfClient.ViewModels"
+		Icon="/Assets/logo3.png"
+		Title="Privatized building"
+		MaxWidth="600"
+		SizeToContent="Height">
+    <Design.DataContext>
+		<vm:ShowPrivatizedBuildingViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PonrfStyles.axaml" />
+	</Window.Styles>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddPrivatizedBuildingCommand}">
+					<Image Source="/Assets/Add.png" />
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangePrivatizedBuildingCommand}">
+					<Image Source="/Assets/Change.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeletePrivatizedBuildingCommand}">
+					<Image Source="/Assets/Delete.png" />
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+					  Items="{Binding	PrivatizedBuildings}"
+					  SelectedItem="{Binding SelectedPrivatizedBuilding}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Date of sale" Binding="{Binding DateOfSale}"/>
+					<DataGridTextColumn Header="First cost" Binding="{Binding FirstCost}"/>
+					<DataGridTextColumn Header="Second cost" Binding="{Binding SecondCost}"/>
+					<DataGridTextColumn Header="Customer's Id" Binding="{Binding CustomerId}"/>
+					<DataGridTextColumn Header="Auction's Id" Binding="{Binding AuctionId}"/>
+					<DataGridTextColumn Header="Building's Id" Binding="{Binding BuildingId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Panel>
+</Window>

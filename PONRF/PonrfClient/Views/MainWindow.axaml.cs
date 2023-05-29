@@ -1,7 +1,6 @@
+using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using PonrfClient.ViewModels;
-using ReactiveUI;
-using System.Threading.Tasks;
 
 namespace PonrfClient.Views;
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
@@ -9,50 +8,77 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     public MainWindow()
     {
         InitializeComponent();
-
-        this.WhenActivated(d => d(ViewModel!.ShowPrivatizedBuildingDialog.RegisterHandler(ShowPrivatizedBuildingDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.ShowAuctionDialog.RegisterHandler(ShowAuctionDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.ShowBuildingDialog.RegisterHandler(ShowBuildingDialogAsync)));
-        this.WhenActivated(d => d(ViewModel!.ShowCustomerDialog.RegisterHandler(ShowCustomerDialogAsync)));
     }
 
-    private async Task ShowPrivatizedBuildingDialogAsync(InteractionContext<PrivatizedBuildingViewModel, PrivatizedBuildingViewModel?> interaction)
+    public void PrivatizedBuilding_Button_Click(object sender, RoutedEventArgs e)
     {
-        var dialogPrivatizedBuilding = new PrivatizedBuildingWindow
+        var showPrivatizedBuildingWindow = new ShowPrivatizedBuildingWindow
         {
-            DataContext = interaction.Input
+            DataContext = new ShowPrivatizedBuildingViewModel(),
         };
-        var result = await dialogPrivatizedBuilding.ShowDialog<PrivatizedBuildingViewModel?>(this);
-        interaction.SetOutput(result);
+        showPrivatizedBuildingWindow.Show();
     }
 
-    private async Task ShowAuctionDialogAsync(InteractionContext<AuctionViewModel, AuctionViewModel?> interaction)
+    public void Building_Button_Click(object sender, RoutedEventArgs e)
     {
-        var dialogAuction = new AuctionWindow
+        var showBuildingWindow = new ShowBuildingWindow
         {
-            DataContext = interaction.Input
+            DataContext = new ShowBuildingViewModel(),
         };
-        var result = await dialogAuction.ShowDialog<AuctionViewModel?>(this);
-        interaction.SetOutput(result);
+        showBuildingWindow.Show();
     }
 
-    private async Task ShowBuildingDialogAsync(InteractionContext<BuildingViewModel, BuildingViewModel?> interaction)
+    public void Auction_Button_Click(object sender, RoutedEventArgs e)
     {
-        var dialogBuilding = new BuildingWindow
+        var showAuctionWindow = new ShowAuctionWindow
         {
-            DataContext = interaction.Input
+            DataContext = new ShowAuctionViewModel(),
         };
-        var result = await dialogBuilding.ShowDialog<BuildingViewModel?>(this);
-        interaction.SetOutput(result);
+        showAuctionWindow.Show();
     }
 
-    private async Task ShowCustomerDialogAsync(InteractionContext<CustomerViewModel, CustomerViewModel?> interaction)
+    public void Customer_Button_Click(object sender, RoutedEventArgs e)
     {
-        var dialogCustomer = new CustomerWindow
+        var showCustomerWindow = new ShowCustomerWindow
         {
-            DataContext = interaction.Input
+            DataContext = new ShowCustomerViewModel(),
         };
-        var result = await dialogCustomer.ShowDialog<CustomerViewModel?>(this);
-        interaction.SetOutput(result);
+        showCustomerWindow.Show();
+    }
+
+    public void ViewAllCustomer_Button_Click(object sender, RoutedEventArgs e)
+    {
+        var showViewAllCustomerWindow = new ShowViewAllCustomerWindow
+        {
+            DataContext = new ShowViewAllCustomerViewModel(),
+        };
+        showViewAllCustomerWindow.Show();
+    }
+
+    public void AuctionsWithoutFullSales_Button_Click(object sender, RoutedEventArgs e)
+    {
+        var showAuctiosWithoutFullSalesnWindow = new ShowAuctionsWithoutFullSalesWindow
+        {
+            DataContext = new ShowAuctionsWithoutFullSalesViewModel(),
+        };
+        showAuctiosWithoutFullSalesnWindow.Show();
+    }
+
+    public void TopCustomer_Button_Click(object sender, RoutedEventArgs e)
+    {
+        var showTopCustomerWindow = new ShowTopCustomerWindow
+        {
+            DataContext = new ShowTopCustomerViewModel(),
+        };
+        showTopCustomerWindow.Show();
+    }
+
+    public void TopAuction_Button_Click(object sender, RoutedEventArgs e)
+    {
+        var showTopAuctionWindow = new ShowTopAuctionWindow
+        {
+            DataContext = new ShowTopAuctionViewModel(),
+        };
+        showTopAuctionWindow.Show();
     }
 }

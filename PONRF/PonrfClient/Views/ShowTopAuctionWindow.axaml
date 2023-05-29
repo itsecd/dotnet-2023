@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PonrfClient.Views.ShowTopAuctionWindow"
+		xmlns:vm="using:PonrfClient.ViewModels"
+        Title="Most profitable auctions"
+		Icon="/Assets/logo3.png"
+		MaxWidth="600"
+		SizeToContent="Height"
+		WindowStartupLocation="CenterOwner">
+
+	<Window.Styles>
+		<StyleInclude Source="/PonrfStyles.axaml" />
+	</Window.Styles>
+	
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.75" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding ShowTopAuction}">
+					<Image Source="/Assets/Run.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+					  Items="{Binding TopAuction}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Organizer" Binding="{Binding Organizer}"/>
+					<DataGridTextColumn Header="Profit" Binding="{Binding Profit}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Panel>
+</Window>

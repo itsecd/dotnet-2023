@@ -88,29 +88,20 @@ public class UnitTests : IClassFixture<UnitFixture>
     public void CountDepartments()
     {
         var result = (from university in _fixture.Universities
-                      group university by university.ConstructionProperty into universityConstGroup
-                      from universityPropGroup in
-                      (
-                          from university in universityConstGroup
-                          group university by university.UniversityProperty into universityPropGroup
-                          select new
-                          {
-                              UnivesityProp = universityPropGroup.Key
-                          }
-                      )
+                      group university by new { university.UniversityProperty.Id, university.ConstructionPropertyId } into universityConstGroup
                       select new
                       {
-                          ConstProp = universityConstGroup.Key,
-                          UniversityProp = universityPropGroup.UnivesityProp,
+                          ConstProp = universityConstGroup.Key.ConstructionPropertyId,
+                          UniversityProp = universityConstGroup.Key.Id,
                           Faculties = universityConstGroup.Sum(x => x.FacultiesData.Count),
                           Departments = universityConstGroup.Sum(x => x.DepartmentsData.Count),
                           Specialities = universityConstGroup.Sum(x => x.SpecialtyTable.Count)
                       }
                       ).ToList();
-        Assert.Equal("муниципальная", result[0].UniversityProp.NameUniversityProperty);
-        Assert.Equal("муниципальная", result[1].UniversityProp.NameUniversityProperty);
-        Assert.Equal("муниципальная", result[0].ConstProp.NameConstructionProperty);
-        Assert.Equal("федеральная", result[1].ConstProp.NameConstructionProperty);
+        Assert.Equal(0, result[0].UniversityProp);
+        Assert.Equal(0, result[1].UniversityProp);
+        Assert.Equal(0, result[0].ConstProp);
+        Assert.Equal(2, result[1].ConstProp);
         Assert.Equal(5, result[0].Faculties);
         Assert.Equal(1, result[1].Faculties);
         Assert.Equal(3, result[0].Departments);

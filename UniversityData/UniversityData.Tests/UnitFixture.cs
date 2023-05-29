@@ -13,6 +13,8 @@ public class UnitFixture
             {
                 data.Add(new UniversityProperty());
             }
+            data[0].Id = 0;
+            data[1].Id = 1;
             data[0].NameUniversityProperty = "муниципальная";
             data[1].NameUniversityProperty = "частная";
             return data;
@@ -28,6 +30,9 @@ public class UnitFixture
             {
                 data.Add(new ConstructionProperty());
             }
+            data[0].Id = 0;
+            data[1].Id = 1;
+            data[2].Id = 2;
             data[0].NameConstructionProperty = "муниципальная";
             data[1].NameConstructionProperty = "частная";
             data[2].NameConstructionProperty = "федеральная";
@@ -191,18 +196,24 @@ public class UnitFixture
             data[0].RectorData = Rectors[0];
             data[0].UniversityProperty = UniversityProperties[0];
             data[0].ConstructionProperty = ConstructionProperties[0];
+            data[0].UniversityPropertyId = 0;
+            data[0].ConstructionPropertyId = 0;
             data[1].Number = "56789";
             data[1].Name = "СамГТУ";
             data[1].Address = "Самара";
             data[1].RectorData = Rectors[1];
             data[1].UniversityProperty = UniversityProperties[0];
             data[1].ConstructionProperty = ConstructionProperties[0];
+            data[1].UniversityPropertyId = 0;
+            data[1].ConstructionPropertyId = 0;
             data[2].Number = "45678";
             data[2].Name = "ПГУТИ";
             data[2].Address = "Самара";
             data[2].RectorData = Rectors[2];
             data[2].UniversityProperty = UniversityProperties[0];
             data[2].ConstructionProperty = ConstructionProperties[2];
+            data[2].UniversityPropertyId = 0;
+            data[2].ConstructionPropertyId = 2;
             data[0].FacultiesData.AddRange(new Faculty[] { Faculties[0], Faculties[1], Faculties[2] });
             data[0].DepartmentsData.AddRange(new Department[] { Departments[0], Departments[1] });
             data[0].SpecialtyTable.AddRange(new SpecialtyTableNode[] { SpecialtyTableNodes[0], SpecialtyTableNodes[1], SpecialtyTableNodes[2] });

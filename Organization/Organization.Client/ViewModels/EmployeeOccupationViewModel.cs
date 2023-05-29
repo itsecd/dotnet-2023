@@ -27,7 +27,7 @@ public class EmployeeOccupationViewModel : ViewModelBase
         get => _employeeId;
         set => this.RaiseAndSetIfChanged(ref _employeeId, value);
     }
-    public DateTimeOffset? _hireDate;
+    public DateTimeOffset? _hireDate = DateTimeOffset.Now;
     [Required]
     public DateTimeOffset? HireDate
     {

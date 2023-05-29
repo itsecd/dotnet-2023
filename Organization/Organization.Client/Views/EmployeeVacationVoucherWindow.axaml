@@ -4,28 +4,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Organization.Client.Views.EmployeeVacationVoucherWindow"
-        
 		Title="EmployeeVacationVoucherWindow"
 		SizeToContent="Height"
-		MaxWidth="600">
+		MaxWidth="600"
+		WindowStartupLocation="CenterOwner"
+		Icon="/Assets/voucher.png">
 
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Employee Id</Label>
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Employee id</Label>
 		<NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding EmployeeId}" Minimum="1"/>
 
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Vacation Voucher Id </Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Vacation voucher id </Label>
 		<NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding VacationVoucherId}" Minimum="1"/>
 
 		
 		<StackPanel Classes="StackPanelButtons" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">ОК</Button>
-			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButtonOnClick">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

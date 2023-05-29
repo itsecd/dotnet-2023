@@ -111,7 +111,18 @@ public class OccupationController : Controller
             return NotFound("The occupation with given id is not found");
         }
         ctx.Occupations.Remove(occupation);
-        await ctx.SaveChangesAsync();
+        try
+        {
+            await ctx.SaveChangesAsync();
+        }
+        catch (DbUpdateException exception)
+        {
+            _logger.LogInformation("SQL exception while deleting the occupation, " +
+                "exception message: ", exception.Message);
+            return Conflict("Can not remove the occupation because some rows " +
+                "in other tables are pointing on that occupation! " +
+                "Remove them first and then try again!");
+        }
         return Ok(_mapper.Map<GetOccupationDto>(occupation));
     }
 }

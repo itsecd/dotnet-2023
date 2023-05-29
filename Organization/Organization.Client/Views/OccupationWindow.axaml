@@ -6,20 +6,22 @@
         x:Class="Organization.Client.Views.OccupationWindow"
         Title="OccupationWindow"
 		SizeToContent="Height"
-	    MaxWidth="500">
+	    MaxWidth="500"
+		WindowStartupLocation="CenterOwner"
+		Icon="/Assets/occupation.png">
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,*" ColumnDefinitions="Auto, *">
-		<Label VerticalAlignment="Center">Наименование</Label>
+		<Label VerticalAlignment="Center">Name</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"></TextBox>
 
 		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">ОК</Button>
-			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButtonOnClick">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

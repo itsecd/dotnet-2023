@@ -13,9 +13,10 @@ public class MessageViewModel : ViewModelBase
     public string Message { get; }
     public ReactiveCommand<Unit, Unit> OkCommand { get; }
 
-    public MessageViewModel(string message)
+    public MessageViewModel(string message, string title="Warning")
     {
         Message = message;
+        Title = title;
         OkCommand = ReactiveCommand.CreateFromTask(Ok);
     }
 

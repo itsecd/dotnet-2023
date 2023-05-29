@@ -5,14 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Organization.Client.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Organization.Client">
-
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+        Title="Organization.Client"
+		WindowStartupLocation="CenterScreen"
+		Icon="/Assets/organization.png">
 
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
@@ -26,20 +21,22 @@
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 			<Button Classes="ToolButton" Command="{Binding OnAddDepartmentCommand}">
-				Добавить
+				Add
 			</Button>
 			<Button Classes="ToolButton" Command="{Binding OnDeleteDepartmentCommand}">
-				Удалить
+				Delete
 			</Button>
 			<Button Classes="ToolButton" Command="{Binding OnChangeDepartmentCommand}">
-				Изменить
+				Edit
 			</Button>
 		</StackPanel>
 		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 				  Items="{Binding Departments}" 
-				  SelectedItem="{Binding SelectedDepartment}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+				  SelectedItem="{Binding SelectedDepartment}"
+				  IsReadOnly="True">
+			<DataGrid.Columns >
+				<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
@@ -53,20 +50,22 @@
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddWorkshopCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteWorkshopCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeWorkshopCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding Workshops}"
-						  SelectedItem="{Binding SelectedWorkshop}">
+						  SelectedItem="{Binding SelectedWorkshop}"
+						  IsReadOnly="True">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -80,42 +79,44 @@
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddEmployeeCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding Employees}"
-						  SelectedItem="{Binding SelectedEmployee}">
+						  SelectedItem="{Binding SelectedEmployee}"
+						  IsReadOnly="True">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Регистрац.номер" 
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Registration number" 
 											Binding="{Binding RegNumber}"/>
-						<DataGridTextColumn Header="Имя" 
+						<DataGridTextColumn Header="First name" 
 											Binding="{Binding FirstName}"/>
-						<DataGridTextColumn Header="Фамилия" 
+						<DataGridTextColumn Header="Last name" 
 											Binding="{Binding LastName}"/>
-						<DataGridTextColumn Header="Отчество" 
+						<DataGridTextColumn Header="Patronymic name" 
 											Binding="{Binding PatronymicName}"/>
-						<DataGridTextColumn Header="Дата рождения" 
+						<DataGridTextColumn Header="Birth date" 
 											Binding="{Binding BirthDate}"/>
-						<DataGridTextColumn Header="Id цеха"
+						<DataGridTextColumn Header="Workshop id"
 											Binding="{Binding WorkshopId}"/>
-						<DataGridTextColumn Header="Домашний адрес" 
+						<DataGridTextColumn Header="Home address" 
 											Binding="{Binding HomeAddress}"/>
-						<DataGridTextColumn Header="Домашний телефон" 
+						<DataGridTextColumn Header="Home telephone" 
 											Binding="{Binding HomeTelephone}"/>
-						<DataGridTextColumn Header="Рабочий телефон" 
+						<DataGridTextColumn Header="Work telephone" 
 											Binding="{Binding WorkTelephone}"/>
-						<DataGridTextColumn Header="Семейное положение" 
+						<DataGridTextColumn Header="Family status" 
 											Binding="{Binding FamilyStatus}"/>
-						<DataGridTextColumn Header="Число человек в семье" 
+						<DataGridTextColumn Header="Number of family members" 
 											Binding="{Binding FamilyMembersCount}"/>
-						<DataGridTextColumn Header="Число детей" 
+						<DataGridTextColumn Header="Number of children" 
 											Binding="{Binding ChildrenCount}"/>
 					</DataGrid.Columns>
 				</DataGrid>
@@ -124,28 +125,28 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">DepartmentEmployees</TextBlock>
+				<TextBlock VerticalAlignment="Center">Employee's departments</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddDepartmentEmployeeCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteDepartmentEmployeeCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeDepartmentEmployeeCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding DepartmentEmployees}"
 						  SelectedItem="{Binding SelectedDepartmentEmployee}">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="DepartmentId"
+						<DataGridTextColumn Header="Department id"
 											Binding="{Binding DepartmentId}"/>
-						<DataGridTextColumn Header="EmployeeId"
+						<DataGridTextColumn Header="Employee id"
 											Binding="{Binding EmployeeId}"/>
 					</DataGrid.Columns>
 				</DataGrid>
@@ -154,28 +155,28 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">EmployeeVacationVouchers</TextBlock>
+				<TextBlock VerticalAlignment="Center">Employee's vacation vouchers</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddEmployeeVacationVoucherCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeVacationVoucherCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeVacationVoucherCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding EmployeeVacationVouchers}"
 						  SelectedItem="{Binding SelectedEmployeeVacationVoucher}">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Employee Id"
+						<DataGridTextColumn Header="Employee id"
 											Binding="{Binding EmployeeId}"/>
-						<DataGridTextColumn Header="Vacation Voucher Id"
+						<DataGridTextColumn Header="Vacation voucher id"
 											Binding="{Binding VacationVoucherId}"/>
 					</DataGrid.Columns>
 				</DataGrid>
@@ -184,19 +185,19 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">Employee occupations</TextBlock>
+				<TextBlock VerticalAlignment="Center">Employee's occupations</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddEmployeeOccupationCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteEmployeeOccupationCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeEmployeeOccupationCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -207,9 +208,9 @@
 											Binding="{Binding HireDate}"/>
 						<DataGridTextColumn Header="Dismissal Date"
 											Binding="{Binding DismissalDate}"/>
-						<DataGridTextColumn Header="Occupation Id"
+						<DataGridTextColumn Header="Occupation id"
 											Binding="{Binding OccupationId}"/>
-						<DataGridTextColumn Header="Employee Id"
+						<DataGridTextColumn Header="Employee id"
 											Binding="{Binding EmployeeId}"/>
 					</DataGrid.Columns>
 				</DataGrid>
@@ -218,27 +219,29 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">Vacation Vouchers</TextBlock>
+				<TextBlock VerticalAlignment="Center">Vacation vouchers</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddVacationVoucherCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteVacationVoucherCommand}">
-						Удалить											   
+						Delete											   
 					</Button>											   
 					<Button Classes="ToolButton" Command="{Binding OnChangeVacationVoucherCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding VacationVouchers}"
-						  SelectedItem="{Binding SelectedVacationVoucher}">
+						  SelectedItem="{Binding SelectedVacationVoucher}"
+						  IsReadOnly="True">
 					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 						<DataGridTextColumn Header="Issue date" Binding="{Binding IssueDate}"/>
-						<DataGridTextColumn Header="Voucher type Id" Binding="{Binding VoucherTypeId}"/>
+						<DataGridTextColumn Header="Voucher type id" Binding="{Binding VoucherTypeId}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -246,26 +249,28 @@
 
 		<TabItem>
 			<TabItem.Header>
-				<TextBlock VerticalAlignment="Center">VoucherTypes</TextBlock>
+				<TextBlock VerticalAlignment="Center">Types of vacation voucher</TextBlock>
 			</TabItem.Header>
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddVoucherTypeCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteVoucherTypeCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeVoucherTypeCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding VoucherTypes}"
-						  SelectedItem="{Binding SelectedVoucherType}">
+						  SelectedItem="{Binding SelectedVoucherType}"
+						  IsReadOnly="True">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -280,20 +285,22 @@
 
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
 					<Button Classes="ToolButton" Command="{Binding OnAddOccupationCommand}">
-						Добавить
+						Add
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnDeleteOccupationCommand}">
-						Удалить
+						Delete
 					</Button>
 					<Button Classes="ToolButton" Command="{Binding OnChangeOccupationCommand}">
-						Изменить
+						Edit
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 						  Items="{Binding Occupations}"
-						  SelectedItem="{Binding SelectedOccupation}">
+						  SelectedItem="{Binding SelectedOccupation}"
+						  IsReadOnly="True">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

@@ -145,7 +145,18 @@ public class EmployeeController : Controller
             return NotFound();
         }
         ctx.Employees.Remove(employee);
-        await ctx.SaveChangesAsync();
+        try
+        {
+            await ctx.SaveChangesAsync();
+        }
+        catch (DbUpdateException exception)
+        {
+            _logger.LogInformation("SQL exception while deleting the employee, " +
+                "exception message: ", exception.Message);
+            return Conflict("Can not remove the employee because some rows " +
+                "in other tables are pointing on that employee! " +
+                "Remove them first and then try again!");
+        }
         return Ok(_mapper.Map<GetEmployeeDto>(employee));
     }
 }

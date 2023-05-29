@@ -6,31 +6,33 @@
         x:Class="Organization.Client.Views.EmployeeOccupationWindow"
         Title="EmployeeOccupationWindow"
 		SizeToContent="Height"
-		MaxWidth="600">
+		MaxWidth="600"
+		WindowStartupLocation="CenterOwner"
+		Icon="/Assets/occupation.png">
 
 	<Window.Styles>
 		<StyleInclude Source="/OrganizationClientStyles.axaml"/>
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
-		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Hire Date</Label>
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Hire date</Label>
 		<DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding HireDate}" />
 
-		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Dismissal Date</Label>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Dismissal date</Label>
 		<DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding DismissalDate}" />
 		
-		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Occupation Id</Label>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Occupation id</Label>
 		<NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding OccupationId}" Minimum="1"/>
 
-		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Employee Id </Label>
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Employee id </Label>
 		<NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding EmployeeId}" Minimum="1"/>
 
 
 		<StackPanel Classes="StackPanelButtons" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
-			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">ОК</Button>
-			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButtonOnClick">Cancel</Button>
 		</StackPanel>
 	</Grid>
 </Window>

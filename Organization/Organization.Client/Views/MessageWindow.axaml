@@ -2,13 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
         x:Class="Organization.Client.Views.MessageWindow"
 		Title="{Binding Title}"
 		CanResize="False"
-		MaxWidth="500"
+		MaxWidth="400"
 		MaxHeight="500"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		WindowStartupLocation="CenterOwner">
 	<DockPanel Margin="10">
 		<Button DockPanel.Dock="Bottom"
                 Classes="default"
@@ -16,9 +17,16 @@
                 Content="ОК"
                 HorizontalAlignment="Right"/>
 
-		<TextBlock Text="{Binding Message}"
+		<Image Source="/Assets/warningImage.png"
+               Width="128" Height="128"/>
+
+		<TextBlock HorizontalAlignment="Stretch" 
+				   Text="{Binding Message}"
                    TextWrapping="Wrap"
                    VerticalAlignment="Center"
                    Margin="20,0,0,0"/>
 	</DockPanel>
+
+
+	
 </Window>

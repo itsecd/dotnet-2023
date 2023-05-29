@@ -111,7 +111,18 @@ public class WorkshopController : ControllerBase
             return NotFound();
         }
         ctx.Workshops.Remove(workshop);
-        await ctx.SaveChangesAsync();
+        try
+        {
+            await ctx.SaveChangesAsync();
+        }
+        catch (DbUpdateException exception)
+        {
+            _logger.LogInformation("SQL exception while deleting the workshop, " +
+                "exception message: ", exception.Message);
+            return Conflict("Can not remove the workshop because some rows " +
+                "in other tables are pointing on that workshop! " +
+                "Remove them first and then try again!");
+        }
         return Ok(_mapper.Map<GetWorkshopDto>(workshop));
     }
 }

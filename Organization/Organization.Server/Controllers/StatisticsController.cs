@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Organization.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Organization.Domain;
 using Organization.Server.Dto;
 
 namespace Organization.Server.Controllers;
@@ -37,9 +37,9 @@ public class StatisticsController : Controller
         _logger.LogInformation("Get all employees of the given department");
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         var employeesInDepartment = await (from employee in ctx.Employees
-                                     from departmentEmployeeItem in employee.DepartmentEmployees
-                                     where departmentEmployeeItem.Department.Id == departmentId
-                                     select _mapper.Map<GetEmployeeDto>(employee)).Distinct().ToListAsync();
+                                           from departmentEmployeeItem in employee.DepartmentEmployees
+                                           where departmentEmployeeItem.Department.Id == departmentId
+                                           select _mapper.Map<GetEmployeeDto>(employee)).Distinct().ToListAsync();
         if (employeesInDepartment.Count() == 0)
         {
             _logger.LogInformation("Employees with a given department id {id} don't exist", departmentId);

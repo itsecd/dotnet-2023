@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 namespace Organization.Client;
 public class ApiWrapper
 {
@@ -29,7 +29,7 @@ public class ApiWrapper
         return _client.DepartmentEmployeePOSTAsync(departmentEmployee);
     }
 
-    public Task<GetDepartmentEmployeeDto> UpdateDepartmentEmployeeAsync(int id, 
+    public Task<GetDepartmentEmployeeDto> UpdateDepartmentEmployeeAsync(int id,
         PostDepartmentEmployeeDto departmentEmployee)
     {
         return _client.DepartmentEmployeePUTAsync(id, departmentEmployee);
@@ -71,7 +71,7 @@ public class ApiWrapper
         return _client.EmployeeOccupationPOSTAsync(employeeOccupation);
     }
 
-    public Task<GetEmployeeOccupationDto> UpdateEmployeeOccupationAsync(int id, 
+    public Task<GetEmployeeOccupationDto> UpdateEmployeeOccupationAsync(int id,
         PostEmployeeOccupationDto employeeOccupation)
     {
         return _client.EmployeeOccupationPUTAsync(id, employeeOccupation);

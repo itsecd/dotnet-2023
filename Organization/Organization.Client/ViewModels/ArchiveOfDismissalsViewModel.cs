@@ -1,7 +1,6 @@
 ﻿using ReactiveUI;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Reactive;
 
 namespace Organization.Client.ViewModels;
 public class ArchiveOfDismissalsViewModel : ViewModelBase

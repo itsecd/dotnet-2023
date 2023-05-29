@@ -55,8 +55,9 @@ public class EmployeeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _workshopId, value);
     }
     private WorkshopViewModel? _workshop;
-    public WorkshopViewModel? Workshop 
-    {   get => _workshop;
+    public WorkshopViewModel? Workshop
+    {
+        get => _workshop;
         set => this.RaiseAndSetIfChanged(ref _workshop, value);
     }
 

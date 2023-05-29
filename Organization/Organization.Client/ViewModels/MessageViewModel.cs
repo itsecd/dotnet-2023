@@ -1,7 +1,5 @@
 ﻿using ReactiveUI;
-using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +11,7 @@ public class MessageViewModel : ViewModelBase
     public string Message { get; }
     public ReactiveCommand<Unit, Unit> OkCommand { get; }
 
-    public MessageViewModel(string message, string title="Warning")
+    public MessageViewModel(string message, string title = "Warning")
     {
         Message = message;
         Title = title;

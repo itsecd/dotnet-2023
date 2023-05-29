@@ -1,8 +1,6 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.ReactiveUI;
-using ReactiveUI;
 using Organization.Client.ViewModels;
+using ReactiveUI;
 using System;
 
 namespace Organization.Client.Views;

@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-using Avalonia.ReactiveUI;
 using Organization.Client.ViewModels;
 using ReactiveUI;
 using System.Threading.Tasks;
@@ -13,8 +11,8 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
 
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowDepartmentEmployeeDialog.RegisterHandler(ShowDepartmentEmployeeDialogAsync)));
-        
-        this.WhenActivated(disposableObj => 
+
+        this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowDepartmentDialog.RegisterHandler(ShowDepartmentDialogAsync)));
 
         this.WhenActivated(disposableObj =>
@@ -22,7 +20,7 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
 
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowEmployeeDialog.RegisterHandler(ShowEmployeeDialogAsync)));
-        
+
         this.WhenActivated(disposableObj =>
             disposableObj(ViewModel!.ShowEmployeeVacationVoucherDialog
             .RegisterHandler(ShowEmployeeVacationVoucherDialogAsync)));
@@ -50,7 +48,7 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    private async Task ShowDepartmentDialogAsync(InteractionContext<DepartmentViewModel, 
+    private async Task ShowDepartmentDialogAsync(InteractionContext<DepartmentViewModel,
         DepartmentViewModel?> interaction)
     {
         var dialog = new DepartmentWindow
@@ -72,7 +70,7 @@ public partial class MainWindow : BaseWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    private async Task ShowEmployeeDialogAsync(InteractionContext<EmployeeViewModel, 
+    private async Task ShowEmployeeDialogAsync(InteractionContext<EmployeeViewModel,
         EmployeeViewModel?> interaction)
     {
         var dialog = new EmployeeWindow

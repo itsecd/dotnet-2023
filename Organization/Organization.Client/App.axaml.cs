@@ -5,7 +5,6 @@ using Avalonia.Markup.Xaml;
 using Organization.Client.ViewModels;
 using Organization.Client.Views;
 using Splat;
-using System;
 
 namespace Organization.Client;
 public partial class App : Application

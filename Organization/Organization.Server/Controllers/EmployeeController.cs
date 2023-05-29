@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Organization.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Organization.Domain;
 using Organization.Server.Dto;
 
 namespace Organization.Server.Controllers;

@@ -1,10 +1,5 @@
-using Avalonia.Controls;
-using Avalonia.ReactiveUI;
-using Organization.Client.ViewModels;
-using ReactiveUI;
-using System.Reactive;
-using System.Threading.Tasks;
 using Avalonia.Platform;
+using Organization.Client.ViewModels;
 
 namespace Organization.Client.Views;
 public partial class MessageWindow : BaseWindow<MessageViewModel>

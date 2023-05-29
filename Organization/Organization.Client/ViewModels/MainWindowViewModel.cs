@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DynamicData;
-using Microsoft.CodeAnalysis.Operations;
 using ReactiveUI;
 using Splat;
 using System;
@@ -8,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 
 namespace Organization.Client.ViewModels;
 
@@ -157,18 +154,21 @@ public class MainWindowViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> GetEmployeesInDepartment { get; set; }
 
-    public Interaction<DepartmentEmployeeViewModel, 
-        DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog { get; }
+    public Interaction<DepartmentEmployeeViewModel,
+        DepartmentEmployeeViewModel?> ShowDepartmentEmployeeDialog
+    { get; }
 
     public Interaction<DepartmentViewModel, DepartmentViewModel?> ShowDepartmentDialog { get; }
 
-    public Interaction<EmployeeOccupationViewModel, 
-        EmployeeOccupationViewModel?> ShowEmployeeOccupationDialog { get; }
+    public Interaction<EmployeeOccupationViewModel,
+        EmployeeOccupationViewModel?> ShowEmployeeOccupationDialog
+    { get; }
 
     public Interaction<EmployeeViewModel, EmployeeViewModel?> ShowEmployeeDialog { get; }
 
-    public Interaction<EmployeeVacationVoucherViewModel, 
-        EmployeeVacationVoucherViewModel?> ShowEmployeeVacationVoucherDialog { get; }
+    public Interaction<EmployeeVacationVoucherViewModel,
+        EmployeeVacationVoucherViewModel?> ShowEmployeeVacationVoucherDialog
+    { get; }
 
     public Interaction<OccupationViewModel, OccupationViewModel?> ShowOccupationDialog { get; }
 
@@ -183,17 +183,17 @@ public class MainWindowViewModel : ViewModelBase
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
-        ShowDepartmentEmployeeDialog = 
+        ShowDepartmentEmployeeDialog =
             new Interaction<DepartmentEmployeeViewModel, DepartmentEmployeeViewModel?>();
 
         ShowDepartmentDialog = new Interaction<DepartmentViewModel, DepartmentViewModel?>();
 
-        ShowEmployeeOccupationDialog = 
+        ShowEmployeeOccupationDialog =
             new Interaction<EmployeeOccupationViewModel, EmployeeOccupationViewModel?>();
 
         ShowEmployeeDialog = new Interaction<EmployeeViewModel, EmployeeViewModel?>();
 
-        ShowEmployeeVacationVoucherDialog = 
+        ShowEmployeeVacationVoucherDialog =
             new Interaction<EmployeeVacationVoucherViewModel, EmployeeVacationVoucherViewModel?>();
 
         ShowOccupationDialog = new Interaction<OccupationViewModel, OccupationViewModel?>();
@@ -217,7 +217,8 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
-        OnAddDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnAddDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -232,14 +233,15 @@ public class MainWindowViewModel : ViewModelBase
                 var newDepartmentEmployee = await _apiClient.UpdateDepartmentEmployeeAsync
                     (_selectedDepartmentEmployee!.Id,
                     _mapper.Map<PostDepartmentEmployeeDto>(departmentEmployeeViewModel));
-                
+
                 _mapper.Map(departmentEmployeeViewModel, SelectedDepartmentEmployee);
             }
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -253,7 +255,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartmentEmployee)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteDepartmentEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -270,7 +273,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddDepartmentCommand.ThrownExceptions.Subscribe(error => {
+        OnAddDepartmentCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -289,7 +293,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartment)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeDepartmentCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeDepartmentCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -302,7 +307,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedDepartment)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteDepartmentCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteDepartmentCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -322,7 +328,8 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
-        OnAddEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnAddEmployeeOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -344,7 +351,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeEmployeeOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -358,7 +366,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteEmployeeOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteEmployeeOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -378,7 +387,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnAddEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -399,7 +409,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployee)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -412,7 +423,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployee)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteEmployeeCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteEmployeeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -421,7 +433,7 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddEmployeeVacationVoucherCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var employeeVacationVoucherViewModel = 
+            var employeeVacationVoucherViewModel =
                 await ShowEmployeeVacationVoucherDialog.Handle(new EmployeeVacationVoucherViewModel());
             if (employeeVacationVoucherViewModel != null)
             {
@@ -433,7 +445,8 @@ public class MainWindowViewModel : ViewModelBase
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
         });
 
-        OnAddEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnAddEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -455,7 +468,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -470,7 +484,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedEmployeeVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteEmployeeVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -488,7 +503,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnAddOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -508,7 +524,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -521,7 +538,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedOccupation)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteOccupationCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteOccupationCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -539,7 +557,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnAddVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -560,7 +579,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -574,7 +594,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedVacationVoucher)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteVacationVoucherCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteVacationVoucherCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -592,7 +613,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+        OnAddVoucherTypeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -611,7 +633,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedVoucherType)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeVoucherTypeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -624,7 +647,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedVoucherType)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteVoucherTypeCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteVoucherTypeCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -642,7 +666,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        OnAddWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnAddWorkshopCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -661,7 +686,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
         .Select(selectProduct => selectProduct != null));
 
-        OnChangeWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnChangeWorkshopCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -674,7 +700,8 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(viewModel => viewModel.SelectedWorkshop)
         .Select(selectProduct => selectProduct != null));
 
-        OnDeleteWorkshopCommand.ThrownExceptions.Subscribe(error => {
+        OnDeleteWorkshopCommand.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -690,7 +717,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        GetEmployeesInDepartment.ThrownExceptions.Subscribe(error => {
+        GetEmployeesInDepartment.ThrownExceptions.Subscribe(error =>
+        {
             var messageViewModel = new MessageViewModel(error.Message);
             ShowMessage(messageViewModel);
             RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
@@ -774,7 +802,7 @@ public class MainWindowViewModel : ViewModelBase
             Workshops.Add(_mapper.Map<WorkshopViewModel>(workshop));
         }
 
-        
+
         try
         {
             employees = await _apiClient.GetEmployeesInDepartment(_departmentId);

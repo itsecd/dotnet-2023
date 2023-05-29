@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Organization.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Organization.Domain;
 using Organization.Server.Dto;
 
 namespace Organization.Server.Controllers;
@@ -119,7 +119,7 @@ public class DepartmentController : Controller
             ctx.Departments.Remove(department);
             await ctx.SaveChangesAsync();
         }
-        catch(DbUpdateException ex)
+        catch (DbUpdateException ex)
         {
             _logger.LogInformation("SQL exception while deleting the department, " +
                 "exception message: ", ex.Message);

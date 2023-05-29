@@ -1,5 +1,5 @@
-using Organization.Domain;
 using Microsoft.EntityFrameworkCore;
+using Organization.Domain;
 using Organization.Server;
 using Organization.Server.Repository;
 using System.Reflection;

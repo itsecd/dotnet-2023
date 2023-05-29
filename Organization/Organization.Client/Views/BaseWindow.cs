@@ -1,10 +1,9 @@
-﻿using System.Reactive;
+﻿using Avalonia.ReactiveUI;
+using Organization.Client.ViewModels;
+using ReactiveUI;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
-
-using Avalonia.ReactiveUI;
-using ReactiveUI;
-using Organization.Client.ViewModels;
 
 namespace Organization.Client.Views;
 

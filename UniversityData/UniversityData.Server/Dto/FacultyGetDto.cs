@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Информация о факультете
+/// GetDto факультета
 /// </summary>
 public class FacultyGetDto
 {

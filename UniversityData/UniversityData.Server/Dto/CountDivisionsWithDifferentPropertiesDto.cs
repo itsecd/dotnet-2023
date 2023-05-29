@@ -21,7 +21,7 @@ public class CountDivisionsWithDifferentProperties
     /// </summary>
     public int UniversityPropertyId { get; set; }
     /// <summary>
-    /// ID собственности зданий
+    /// ID собственности зданий университета
     /// </summary>
     public int ConstructionPropertyId { get; set; }
 

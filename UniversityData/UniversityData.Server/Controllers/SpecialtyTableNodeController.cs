@@ -34,7 +34,9 @@ public class SpecialtyTableNodeController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов SpecialtyTableNode
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<SpecialtyTableNodeGetDto>> Get()
     {
@@ -47,7 +49,9 @@ public class SpecialtyTableNodeController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект SpecialtyTableNode с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<SpecialtyTableNodeGetDto?>> Get(int id)
     {
@@ -55,12 +59,12 @@ public class SpecialtyTableNodeController : ControllerBase
         var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
-            _logger.LogInformation("Not found specialtyTableNode with id: {0}", id);
+            _logger.LogInformation("Not found specialtyTableNode with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get specialtyTableNode with id {0}", id);
+            _logger.LogInformation("Get specialtyTableNode with id {id}", id);
             return Ok(_mapper.Map<SpecialtyTableNodeGetDto>(specialtyTableNode));
         }
     }
@@ -92,14 +96,14 @@ public class SpecialtyTableNodeController : ControllerBase
         var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
-            _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
+            _logger.LogInformation("Not found specialtyTableNode with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<SpecialtyTableNodePostDto, SpecialtyTableNode>(specialtyTableNodeToPut, specialtyTableNode);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update specialtyTableNode with id: {0}", id);
+            _logger.LogInformation("Update specialtyTableNode with id: {id}", id);
             return Ok(specialtyTableNodeToPut);
         }
     }
@@ -115,14 +119,14 @@ public class SpecialtyTableNodeController : ControllerBase
         var specialtyTableNode = ctx.SpecialtyTableNodes.FirstOrDefault(specialtyTableNode => specialtyTableNode.Id == id);
         if (specialtyTableNode == null)
         {
-            _logger.LogInformation($"Not found specialtyTableNode with id: {id}");
+            _logger.LogInformation("Not found specialtyTableNode with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.SpecialtyTableNodes.Remove(specialtyTableNode);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete specialtyTableNode with id: {0}", id);
+            _logger.LogInformation("Delete specialtyTableNode with id: {id}", id);
             return Ok();
         }
     }

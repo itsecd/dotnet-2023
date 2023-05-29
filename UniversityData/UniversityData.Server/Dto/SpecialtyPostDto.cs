@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Специальность
+/// PostDto специальности
 /// </summary>
 public class SpecialtyPostDto
 {

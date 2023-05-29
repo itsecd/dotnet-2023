@@ -34,7 +34,9 @@ public class RectorController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов Rector
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<RectorGetDto>> Get()
     {
@@ -47,7 +49,9 @@ public class RectorController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект Rector с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<RectorGetDto?>> Get(int id)
     {
@@ -55,12 +59,12 @@ public class RectorController : ControllerBase
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
-            _logger.LogInformation("Not found rector with id: {0}", id);
+            _logger.LogInformation("Not found rector with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get rector with id {0}", id);
+            _logger.LogInformation("Get rector with id {id}", id);
             return Ok(_mapper.Map<RectorGetDto>(rector));
         }
     }
@@ -92,14 +96,14 @@ public class RectorController : ControllerBase
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
-            _logger.LogInformation($"Not found rector with id: {id}");
+            _logger.LogInformation("Not found rector with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<RectorPostDto, Rector>(rectorToPut, rector);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update rector with id: {0}", id);
+            _logger.LogInformation("Update rector with id: {id}", id);
             return Ok(rectorToPut);
         }
     }
@@ -115,14 +119,14 @@ public class RectorController : ControllerBase
         var rector = ctx.Rectors.FirstOrDefault(rector => rector.Id == id);
         if (rector == null)
         {
-            _logger.LogInformation("Not found rector with id: {0}", id);
+            _logger.LogInformation("Not found rector with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.Rectors.Remove(rector);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete rector with id: {0}", id);
+            _logger.LogInformation("Delete rector with id: {id}", id);
             return Ok();
         }
     }

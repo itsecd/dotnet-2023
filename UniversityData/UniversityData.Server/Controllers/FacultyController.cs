@@ -33,7 +33,9 @@ public class FacultyController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов Faculty
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<FacultyGetDto>> Get()
     {
@@ -46,7 +48,9 @@ public class FacultyController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект Faculty с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<FacultyGetDto?>> Get(int id)
     {
@@ -54,12 +58,12 @@ public class FacultyController : ControllerBase
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
-            _logger.LogInformation("Not found faculty with id: {0}", id);
+            _logger.LogInformation("Not found faculty with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get faculty with id {0}", id);
+            _logger.LogInformation("Get faculty with id {id}", id);
             return Ok(_mapper.Map<FacultyGetDto>(faculty));
         }
     }
@@ -91,14 +95,14 @@ public class FacultyController : ControllerBase
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
-            _logger.LogInformation("Not found faculty with id: {0}", id);
+            _logger.LogInformation("Not found faculty with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<FacultyPostDto, Faculty>(facultyToPut, faculty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update faculty with id: {0}", id);
+            _logger.LogInformation("Update faculty with id: {id}", id);
             return Ok(facultyToPut);
         }
     }
@@ -114,14 +118,14 @@ public class FacultyController : ControllerBase
         var faculty = ctx.Faculties.FirstOrDefault(faculty => faculty.Id == id);
         if (faculty == null)
         {
-            _logger.LogInformation("Not found faculty with id: {0}", id);
+            _logger.LogInformation("Not found faculty with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.Faculties.Remove(faculty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete faculty with id: {0}", id);
+            _logger.LogInformation("Delete faculty with id: {id}", id);
             return Ok();
         }
     }

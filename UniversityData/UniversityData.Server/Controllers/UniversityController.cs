@@ -34,7 +34,9 @@ public class UniversityController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов University
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<UniversityGetDto>> Get()
     {
@@ -47,7 +49,9 @@ public class UniversityController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект University с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<UniversityGetDto?>> Get(int id)
     {
@@ -55,12 +59,12 @@ public class UniversityController : ControllerBase
         var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
-            _logger.LogInformation("Not found university with id: {0}", id);
+            _logger.LogInformation("Not found university with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get university with id {0}", id);
+            _logger.LogInformation("Get university with id {id}", id);
             return Ok(_mapper.Map<UniversityGetDto>(university));
         }
     }
@@ -92,14 +96,14 @@ public class UniversityController : ControllerBase
         var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
-            _logger.LogInformation("Not found university with id: {0}", id);
+            _logger.LogInformation("Not found university with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<UniversityPostDto, University>(universityToPut, university);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update university with id: {0}", id);
+            _logger.LogInformation("Update university with id: {id}", id);
             return Ok(universityToPut);
         }
     }
@@ -115,14 +119,14 @@ public class UniversityController : ControllerBase
         var university = ctx.Universities.FirstOrDefault(university => university.Id == id);
         if (university == null)
         {
-            _logger.LogInformation("Not found university with id: {0}", id);
+            _logger.LogInformation("Not found university with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.Universities.Remove(university);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete university with id: {0}", id);
+            _logger.LogInformation("Delete university with id: {id}", id);
             return Ok();
         }
     }

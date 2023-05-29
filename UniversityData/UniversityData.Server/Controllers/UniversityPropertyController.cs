@@ -34,7 +34,9 @@ public class UniversityPropertyController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция элементов UniversityProperty
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<UniversityPropertyGetDto>> Get()
     {
@@ -47,7 +49,9 @@ public class UniversityPropertyController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект UniversityProperty с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<UniversityPropertyGetDto?>> Get(int id)
     {
@@ -55,12 +59,12 @@ public class UniversityPropertyController : ControllerBase
         var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
-            _logger.LogInformation("Not found university property with id: {0}", id);
+            _logger.LogInformation("Not found university property with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get university property with id {0}", id);
+            _logger.LogInformation("Get university property with id {id}", id);
             return Ok(_mapper.Map<UniversityPropertyGetDto>(universityProperty));
         }
     }
@@ -92,14 +96,14 @@ public class UniversityPropertyController : ControllerBase
         var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
-            _logger.LogInformation("Not found university property with id: {0}", id);
+            _logger.LogInformation("Not found university property with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<UniversityPropertyPostDto, UniversityProperty>(universityPropertyToPut, universityProperty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update university property with id: {0}", id);
+            _logger.LogInformation("Update university property with id: {id}", id);
             return Ok(universityPropertyToPut);
         }
     }
@@ -115,14 +119,14 @@ public class UniversityPropertyController : ControllerBase
         var universityProperty = ctx.UniversityProperties.FirstOrDefault(universityProperty => universityProperty.Id == id);
         if (universityProperty == null)
         {
-            _logger.LogInformation("Not found university property with id: {0}", id);
+            _logger.LogInformation("Not found university property with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.UniversityProperties.Remove(universityProperty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete university property with id: {0}", id);
+            _logger.LogInformation("Delete university property with id: {id}", id);
             return Ok();
         }
     }

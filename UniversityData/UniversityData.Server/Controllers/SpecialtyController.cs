@@ -34,7 +34,9 @@ public class SpecialtyController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов Specialty
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<SpecialtyGetDto>> Get()
     {
@@ -47,7 +49,9 @@ public class SpecialtyController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект Specialty с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<SpecialtyGetDto?>> Get(int id)
     {
@@ -55,12 +59,12 @@ public class SpecialtyController : ControllerBase
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
-            _logger.LogInformation("Not found specialty with id: {0}", id);
+            _logger.LogInformation("Not found specialty with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get specialty with id {0}", id);
+            _logger.LogInformation("Get specialty with id {id}", id);
             return Ok(_mapper.Map<SpecialtyGetDto>(specialty));
         }
     }
@@ -92,14 +96,14 @@ public class SpecialtyController : ControllerBase
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
-            _logger.LogInformation($"Not found specialty with id: {id}");
+            _logger.LogInformation("Not found specialty with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<SpecialtyPostDto, Specialty>(specialtyToPut, specialty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update specialty with id: {0}", id);
+            _logger.LogInformation("Update specialty with id: {id}", id);
             return Ok(specialtyToPut);
         }
     }
@@ -115,14 +119,14 @@ public class SpecialtyController : ControllerBase
         var specialty = ctx.Specialties.FirstOrDefault(specialty => specialty.Id == id);
         if (specialty == null)
         {
-            _logger.LogInformation($"Not found specialty with id: {id}");
+            _logger.LogInformation("Not found specialty with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.Specialties.Remove(specialty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete specialty with id: {0}", id);
+            _logger.LogInformation("Delete specialty with id: {id}", id);
             return Ok();
         }
     }

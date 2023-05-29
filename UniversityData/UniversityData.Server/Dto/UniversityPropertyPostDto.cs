@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Собственность университета
+/// PostDto собственности организации
 /// </summary>
 public class UniversityPropertyPostDto
 {

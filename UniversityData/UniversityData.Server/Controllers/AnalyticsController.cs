@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI.Common;
 using UniversityData.Domain;
 using UniversityData.Server.Dto;
 namespace UniversityData.Server.Controllers;
@@ -33,11 +32,13 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Запрос 1 - Вывести информацию о выбранном вузе.
+    /// Запрос 1 - Вывести информацию о выбранном вузе
     /// </summary>
     /// <param name="name"></param>
-    /// <returns></returns>
-    [HttpGet("information_of_university{name}")]
+    /// <returns>
+    /// Информация об университете
+    /// </returns>
+    [HttpGet("information_of_university/{name}")]
     public async Task<ActionResult<UniversityGetDto>> GetInformationOfUniversity(string name)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
@@ -51,20 +52,22 @@ public class AnalyticsController : ControllerBase
         }
         else
         {
-            
-            _logger.LogInformation("Not found university with name {0}", name);
+
+            _logger.LogInformation("Not found university with name {id}", name);
             return NotFound();
         }
 
     }
-    
-    
+
     /// <summary>
-    /// Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.
+    /// Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза
     /// </summary>
     /// <param name="name"></param>
-    /// <returns></returns>
-    [HttpGet("information_of_structure_of_university{name}")]
+    /// <returns>
+    /// Основная информация об университете
+    /// Количество структурных подразделений для данного университета
+    /// </returns>
+    [HttpGet("information_of_structure_of_university/{name}")]
     public async Task<ActionResult<UniversityStructureDto>> InformationOfStructure(string name)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
@@ -87,15 +90,17 @@ public class AnalyticsController : ControllerBase
         }
         else
         {
-            _logger.LogInformation("Not found university with name: {0}", name);
+            _logger.LogInformation("Not found university with name: {id}", name);
             return NotFound();
         }
     }
 
     /// <summary>
-    /// Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).
+    /// Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп)
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция специальностей с максимальным количеством групп
+    /// </returns>
     [HttpGet("top_five_specialties")]
     public async Task<IEnumerable<MostPopularSpecialtyDto>> MostPopularSpecialties()
     {
@@ -114,9 +119,11 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.
+    /// Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция университетов с максимальным количеством групп
+    /// </returns>
     [HttpGet("university_with_max_departments")]
     public async Task<IEnumerable<UniversityGetDto>> MaxCountDepartments()
     {
@@ -127,11 +134,13 @@ public class AnalyticsController : ControllerBase
                       select _mapper.Map<University, UniversityGetDto>(university)).ToListAsync();
     }
     /// <summary>
-    /// Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.
+    /// Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе
     /// </summary>
     /// <param name="universityPropertyId"></param>
-    /// <returns></returns>
-    [HttpGet("university_with_target_property")]
+    /// <returns>
+    /// Коллекция университетов с заданной собственностью организации
+    /// </returns>
+    [HttpGet("university_with_target_property/{universityPropertyId}")]
     public async Task<IEnumerable<UniversityWithGivenPropertyDto>> UniversityWithProperty(int universityPropertyId)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
@@ -149,9 +158,11 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания.
+    /// Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов, описываюищх общее количество подразделений университетов по всем комбинациям собственности зданий и собственности университета
+    /// </returns>
     [HttpGet("count_divisions")]
     public async Task<IEnumerable<CountDivisionsWithDifferentProperties>> CountDepartments()
     {

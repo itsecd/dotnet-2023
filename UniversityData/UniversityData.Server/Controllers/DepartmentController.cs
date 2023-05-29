@@ -33,7 +33,9 @@ public class DepartmentController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов Department
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<DepartmentGetDto>> Get()
     {
@@ -46,7 +48,9 @@ public class DepartmentController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект Department с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<DepartmentGetDto?>> Get(int id)
     {

@@ -33,7 +33,9 @@ public class ConstructionPropertyController : ControllerBase
     /// <summary>
     /// GET-запрос на получение всех элементов коллекции
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Коллекция объектов ConstructionProperty
+    /// </returns>
     [HttpGet]
     public async Task<IEnumerable<ConstructionPropertyGetDto>> Get()
     {
@@ -46,7 +48,9 @@ public class ConstructionPropertyController : ControllerBase
     /// GET-запрос на получение элемента в соответствии с ID
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// Объект ConstructionProperty с заданным ID
+    /// </returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ConstructionPropertyGetDto?>> Get(int id)
     {
@@ -54,12 +58,12 @@ public class ConstructionPropertyController : ControllerBase
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
         if (constructionProperty == null)
         {
-            _logger.LogInformation("Not found construction property with id: {0}", id);
+            _logger.LogInformation("Not found construction property with id: {id}", id);
             return NotFound();
         }
         else
         {
-            _logger.LogInformation("Get construction property with id: {0}", id);
+            _logger.LogInformation("Get construction property with id: {id}", id);
             return Ok(_mapper.Map<ConstructionPropertyGetDto>(constructionProperty));
         }
     }
@@ -91,14 +95,14 @@ public class ConstructionPropertyController : ControllerBase
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
         if (constructionProperty == null)
         {
-            _logger.LogInformation("Not found construction property with id: {0}", id);
+            _logger.LogInformation("Not found construction property with id: {id}", id);
             return NotFound();
         }
         else
         {
             _mapper.Map<ConstructionPropertyPostDto, ConstructionProperty>(constructionPropertyToPut, constructionProperty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Update construction property with id: {0}", id);
+            _logger.LogInformation("Update construction property with id: {id}", id);
             return Ok(constructionPropertyToPut);
         }
     }
@@ -114,14 +118,14 @@ public class ConstructionPropertyController : ControllerBase
         var constructionProperty = ctx.ConstructionProperties.FirstOrDefault(constructionProperty => constructionProperty.Id == id);
         if (constructionProperty == null)
         {
-            _logger.LogInformation("Not found construction property with id: {0}", id);
+            _logger.LogInformation("Not found construction property with id: {id}", id);
             return NotFound();
         }
         else
         {
             ctx.ConstructionProperties.Remove(constructionProperty);
             await ctx.SaveChangesAsync();
-            _logger.LogInformation("Delete construction property with id: {0}", id);
+            _logger.LogInformation("Delete construction property with id: {id}", id);
             return Ok();
         }
     }

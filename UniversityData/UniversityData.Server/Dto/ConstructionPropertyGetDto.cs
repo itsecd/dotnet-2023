@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Собственность зданий университета
+/// GetDto собственности зданий университета
 /// </summary>
 public class ConstructionPropertyGetDto
 {

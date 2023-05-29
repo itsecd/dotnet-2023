@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Информация об университете
+/// PostDto университета
 /// </summary>
 public class UniversityPostDto
 {
@@ -21,7 +21,7 @@ public class UniversityPostDto
     /// </summary>
     public int RectorId { get; set; }
     /// <summary>
-    /// ID собственности учреждения
+    /// ID собственности организации
     /// </summary>
     public int UniversityPropertyId { get; set; }
     /// <summary>

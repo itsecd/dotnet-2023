@@ -1,6 +1,6 @@
 ﻿namespace UniversityData.Server.Dto;
 /// <summary>
-/// Информация о ректоре
+/// PostDto ректора
 /// </summary>
 public class RectorPostDto
 {

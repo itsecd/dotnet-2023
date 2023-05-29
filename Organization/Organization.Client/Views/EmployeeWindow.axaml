@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
         x:Class="Organization.Client.Views.EmployeeWindow"
-        Title="EmployeeWindow"
+        Title="Add/Edit employee"
 		SizeToContent="Height"
 		MaxWidth="600"
 		WindowStartupLocation="CenterOwner"

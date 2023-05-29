@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Organization.Client.Views.MainWindow"
-        Title="Organization.Client"
+        Title="Organization management"
 		WindowStartupLocation="CenterScreen"
 		Icon="/Assets/organization.png">
 
@@ -311,7 +311,7 @@
 			<TabItem.Header>
 				<TextBlock VerticalAlignment="Center">Statistics</TextBlock>
 			</TabItem.Header>
-			<TabControl HorizontalContentAlignment="Center" Margin="0, 15, 0, 0">
+			<TabControl HorizontalContentAlignment="Center" Margin="0, 10, 0, 30">
 				<TabItem>
 					<TabItem.Header>
 						<TextBlock VerticalAlignment="Center">Employees in the department</TextBlock>

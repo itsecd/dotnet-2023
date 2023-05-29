@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Organization.Client.Views.DepartmentWindow"
-        Title="DepartmentWindow"
+        Title="Add/Edit department"
 		SizeToContent="Height"
 		MaxWidth="500"
 		WindowStartupLocation="CenterOwner"

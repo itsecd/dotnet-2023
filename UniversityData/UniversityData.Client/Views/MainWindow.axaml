@@ -20,11 +20,17 @@
 	<Grid>
 		<TabControl>
 			<TabItem Header="Собственности зданий" HorizontalAlignment="Center">
-				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddConstructionPropertyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeConstructionPropertyCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteConstructionPropertyCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddConstructionPropertyCommand}">
+							<Image Source="/Assets/node_add.png"/>
+							</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeConstructionPropertyCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteConstructionPropertyCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 				
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -40,9 +46,15 @@
 			<TabItem Header="Собственности университетов" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityPropertyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityPropertyCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -58,9 +70,15 @@
 			<TabItem Header="Кафедры" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddDepartmentCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeDepartmentCommand}"> Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteDepartmentCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddDepartmentCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeDepartmentCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteDepartmentCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -78,9 +96,15 @@
 			<TabItem Header="Факультеты" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddFacultyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeFacultyCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteFacultyCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddFacultyCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeFacultyCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteFacultyCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -98,9 +122,15 @@
 			<TabItem Header="Ректоры" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddRectorCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeRectorCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteRectorCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -121,9 +151,15 @@
 			<TabItem Header="Специальности" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyCommand}">Удалить"</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -140,9 +176,15 @@
 			<TabItem Header="Связи специальностей и университетов" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyTableNodeCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyTableNodeCommand}">Изменить"></Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyTableNodeCommand}">далить"></Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddSpecialtyTableNodeCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeSpecialtyTableNodeCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteSpecialtyTableNodeCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -160,9 +202,15 @@
 			<TabItem Header="Университеты" HorizontalAlignment="Center">
 				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 					<StackPanel Grid.Row= "0" Orientation= "Horizontal">
-						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityCommand}">Добавить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">Изменить</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">Удалить</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityCommand}">
+							<Image Source="/Assets/node_add.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">
+							<Image Source="/Assets/node_change.png"/>
+						</Button>
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">
+							<Image Source="/Assets/node_delete.png"/>
+						</Button>
 					</StackPanel>
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
@@ -178,6 +226,107 @@
 							<DataGridTextColumn Header="Id собственности зданий" Binding="{Binding ConstructionPropertyId}"/>
 						</DataGrid.Columns>
 					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Статистика" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<ScrollViewer Grid.Row="0">
+						<Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto,Auto, Auto,Auto,Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto *">
+							<StackPanel Grid.Row="0" Orientation="Horizontal">
+								<Label>Информация об университете (Самарский университет):</Label>
+							</StackPanel>
+							<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+									  Items="{Binding FirstQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+									<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}" />
+									<DataGridTextColumn Header="Название" Binding="{Binding Name}" />
+									<DataGridTextColumn Header="Адрес университета" Binding="{Binding Address}" />
+									<DataGridTextColumn Header="Id ректора" Binding="{Binding RectorId}" />
+									<DataGridTextColumn Header="Id собственности университета" Binding="{Binding UniversityPropertyId}" />
+									<DataGridTextColumn Header="Id собственности зданий" Binding="{Binding ConstructionPropertyId}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<StackPanel Grid.Row="2" Orientation="Horizontal">
+								<Label>Информация о факультетах, кафедрах и специальностях вуза (СамГТУ):</Label>
+							</StackPanel>
+
+							<DataGrid Grid.Row="3" AutoGenerateColumns="False"
+									  Items="{Binding SecondQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+									<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}" />
+									<DataGridTextColumn Header="Название" Binding="{Binding Name}" />
+									<DataGridTextColumn Header="Количество кафедр" Binding="{Binding CountDepartment}" />
+									<DataGridTextColumn Header="Количество факультетов" Binding="{Binding CountFaculties}" />
+									<DataGridTextColumn Header="Количество специальностей" Binding="{Binding CountSpecialties}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<StackPanel Grid.Row="4" Orientation="Horizontal">
+								<Label>Информация о топ 5 популярных специальностях (с максимальным количеством групп):</Label>
+							</StackPanel>
+
+							<DataGrid Grid.Row="5" AutoGenerateColumns="False"
+									  Items="{Binding ThirdQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+									<DataGridTextColumn Header="Название специальности" Binding="{Binding Name}" />
+									<DataGridTextColumn Header="Код-шифр специальности" Binding="{Binding Code}" />
+									<DataGridTextColumn Header="Количество групп" Binding="{Binding CountGroups}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<StackPanel Grid.Row="10" Orientation="Horizontal">
+								<Label>Информация о ВУЗах с максимальным количеством кафедр, упорядоченная по названию:</Label>
+							</StackPanel>
+
+							<DataGrid Grid.Row="11" AutoGenerateColumns="False"
+									  Items="{Binding FourthQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+									<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}" />
+									<DataGridTextColumn Header="Название" Binding="{Binding Name}" />
+									<DataGridTextColumn Header="Адрес университета" Binding="{Binding Address}" />
+									<DataGridTextColumn Header="Id ректора" Binding="{Binding RectorId}" />
+									<DataGridTextColumn Header="Id собственности университета" Binding="{Binding UniversityPropertyId}" />
+									<DataGridTextColumn Header="Id собственности зданий" Binding="{Binding ConstructionPropertyId}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<StackPanel Grid.Row="14" Orientation="Horizontal">
+								<Label>Информация о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе:</Label>
+							</StackPanel>
+
+							<DataGrid Grid.Row="15" AutoGenerateColumns="False"
+									  Items="{Binding FifthQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+									<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}" />
+									<DataGridTextColumn Header="Название университета" Binding="{Binding Name}" />
+									<DataGridTextColumn Header="Количество групп" Binding="{Binding CountGroups}" />
+									<DataGridTextColumn Header="Id собственности университета" Binding="{Binding UniversityPropertyId}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+							<StackPanel Grid.Row="18" Orientation="Horizontal">
+								<Label>Информация о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания:</Label>
+							</StackPanel>
+
+							<DataGrid Grid.Row="19" AutoGenerateColumns="False"
+									  Items="{Binding SixthQuery}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="Количество кафедр" Binding="{Binding CountDepartments}" />
+									<DataGridTextColumn Header="Количество факультетов" Binding="{Binding CountFaculties}" />
+									<DataGridTextColumn Header="Количество специальностей" Binding="{Binding CountSpecialties}" />
+									<DataGridTextColumn Header="Id собственности университета" Binding="{Binding UniversityPropertyId}" />
+									<DataGridTextColumn Header="Id собственности зданий" Binding="{Binding ConstructionPropertyId}" />
+								</DataGrid.Columns>
+							</DataGrid>
+
+						</Grid>
+					</ScrollViewer>
 				</Grid>
 			</TabItem>
 		</TabControl>

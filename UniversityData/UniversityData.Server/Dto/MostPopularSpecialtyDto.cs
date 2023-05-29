@@ -17,7 +17,7 @@ public class MostPopularSpecialtyDto
     /// </summary>
     public string Code { get; set; }
     /// <summary>
-    /// Количество специальностей
+    /// Количество групп
     /// </summary>
-    public int CountSpecialties { get; set; }
+    public int CountGroups { get; set; }
 }

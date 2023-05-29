@@ -5,7 +5,7 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/Analytics/information_of_university{number}": {
+        "/api/Analytics/information_of_university{name}": {
             "get": {
                 "tags": [
                     "Analytics"
@@ -13,7 +13,7 @@
                 "summary": "Запрос 1 - Вывести информацию о выбранном вузе.",
                 "parameters": [
                     {
-                        "name": "number",
+                        "name": "name",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -46,7 +46,7 @@
                 }
             }
         },
-        "/api/Analytics/information_of_structure_of_university{number}": {
+        "/api/Analytics/information_of_structure_of_university{name}": {
             "get": {
                 "tags": [
                     "Analytics"
@@ -54,7 +54,7 @@
                 "summary": "Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.",
                 "parameters": [
                     {
-                        "name": "number",
+                        "name": "name",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -65,7 +65,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityStructureDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityStructureDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UniversityStructureDto"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -83,19 +100,25 @@
                             "text/plain": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/MostPopularSpecialtyDto"
+                                    }
                                 }
                             },
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/MostPopularSpecialtyDto"
+                                    }
                                 }
                             },
                             "text/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/MostPopularSpecialtyDto"
+                                    }
                                 }
                             }
                         }
@@ -166,19 +189,25 @@
                             "text/plain": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityWithGivenPropertyDto"
+                                    }
                                 }
                             },
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityWithGivenPropertyDto"
+                                    }
                                 }
                             },
                             "text/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/UniversityWithGivenPropertyDto"
+                                    }
                                 }
                             }
                         }
@@ -186,7 +215,7 @@
                 }
             }
         },
-        "/api/Analytics/count_departments": {
+        "/api/Analytics/count_divisions": {
             "get": {
                 "tags": [
                     "Analytics"
@@ -199,19 +228,25 @@
                             "text/plain": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/CountDivisionsWithDifferentProperties"
+                                    }
                                 }
                             },
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/CountDivisionsWithDifferentProperties"
+                                    }
                                 }
                             },
                             "text/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {}
+                                    "items": {
+                                        "$ref": "#/components/schemas/CountDivisionsWithDifferentProperties"
+                                    }
                                 }
                             }
                         }
@@ -2083,6 +2118,38 @@
                 "additionalProperties": false,
                 "description": "Собственность зданий университета"
             },
+            "CountDivisionsWithDifferentProperties": {
+                "type": "object",
+                "properties": {
+                    "countDepartments": {
+                        "type": "integer",
+                        "description": "Количество кафедр",
+                        "format": "int32"
+                    },
+                    "countFaculties": {
+                        "type": "integer",
+                        "description": "Количество факультетов",
+                        "format": "int32"
+                    },
+                    "countSpecialties": {
+                        "type": "integer",
+                        "description": "Количество специальностей",
+                        "format": "int32"
+                    },
+                    "universityPropertyId": {
+                        "type": "integer",
+                        "description": "ID собственности университета",
+                        "format": "int32"
+                    },
+                    "constructionPropertyId": {
+                        "type": "integer",
+                        "description": "ID собственности зданий",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о количестве подразделений университета с заданным собственностями организации и зданий"
+            },
             "DepartmentGetDto": {
                 "type": "object",
                 "properties": {
@@ -2190,6 +2257,33 @@
                 },
                 "additionalProperties": false,
                 "description": "Информация о факультете"
+            },
+            "MostPopularSpecialtyDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название специальности",
+                        "nullable": true
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Код-шифр специальности",
+                        "nullable": true
+                    },
+                    "countGroups": {
+                        "type": "integer",
+                        "description": "Количество групп",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Специальность с максимальным количеством групп"
             },
             "RectorGetDto": {
                 "type": "object",
@@ -2465,6 +2559,75 @@
                 },
                 "additionalProperties": false,
                 "description": "Собственность университета"
+            },
+            "UniversityStructureDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "number": {
+                        "type": "string",
+                        "description": "Регистрационный номер",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название университета",
+                        "nullable": true
+                    },
+                    "countDepartments": {
+                        "type": "integer",
+                        "description": "Количество кафедр",
+                        "format": "int32"
+                    },
+                    "countFaculties": {
+                        "type": "integer",
+                        "description": "Количество факультетов",
+                        "format": "int32"
+                    },
+                    "countSpecialties": {
+                        "type": "integer",
+                        "description": "Количество специальностей",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация о структуре университета"
+            },
+            "UniversityWithGivenPropertyDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID",
+                        "format": "int32"
+                    },
+                    "number": {
+                        "type": "string",
+                        "description": "Регистрационный номер",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Название университета",
+                        "nullable": true
+                    },
+                    "countGroups": {
+                        "type": "integer",
+                        "description": "Количество групп",
+                        "format": "int32"
+                    },
+                    "universityPropertyId": {
+                        "type": "integer",
+                        "description": "ID собственности университета",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Информация об университете с заданной собственностью"
             }
         }
     }

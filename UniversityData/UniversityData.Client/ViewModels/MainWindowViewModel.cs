@@ -121,6 +121,13 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnDeleteUniversityPropertyCommand { get; set; }
     public Interaction<UniversityPropertyViewModel, UniversityPropertyViewModel?> ShowUniversityPropertyDialog { get; }
 
+    public ObservableCollection<UniversityGetDto> FirstQuery { get; } = new();
+    public ObservableCollection<UniversityStructureDto> SecondQuery { get; } = new();
+    public ObservableCollection<MostPopularSpecialtyDto> ThirdQuery { get; } = new();
+    public ObservableCollection<UniversityGetDto> FourthQuery { get; } = new();
+    public ObservableCollection<UniversityWithGivenPropertyDto> FifthQuery { get; } = new();
+    public ObservableCollection<CountDivisionsWithDifferentProperties> SixthQuery { get; } = new();
+
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
@@ -387,6 +394,41 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var university in universitites)
         {
             Universities.Add(_mapper.Map<UniversityViewModel>(university));
+        }
+
+        var paramFirstQuery = "Самарский университет";
+        var firstQueryObject = await _apiClient.GetInformationOfUniversityAsync(paramFirstQuery);
+        FirstQuery.Add(firstQueryObject);
+
+        var paramSecondQuery = "СамГТУ";
+        var secondQueryObject = await _apiClient.InformationOfStructureAsync(paramSecondQuery);
+        SecondQuery.Add(secondQueryObject);
+
+        var thirdQueryObjects = await _apiClient.MostPopularSpecialtiesAsync();
+        foreach (var thirdQueryObject in thirdQueryObjects)
+        {
+            ThirdQuery.Add(thirdQueryObject);
+        }
+
+        
+        var fourthQueryObjects = await _apiClient.MaxCountDepartmentsAsync();
+        foreach (var fourthQueryObject in fourthQueryObjects)
+        {
+            FourthQuery.Add(fourthQueryObject);
+        }
+
+        
+        var paramFifthQuery = 1;
+        var fifthQueryObjects = await _apiClient.UniversityWithPropertyAsync(paramFifthQuery);
+        foreach (var fifthQueryObject in fifthQueryObjects)
+        {
+            FifthQuery.Add(fifthQueryObject);
+        }
+
+        var sixthQueryObjects = await _apiClient.CountDepartmentsAsync();
+        foreach (var sixthQueryObject in sixthQueryObjects)
+        {
+            SixthQuery.Add(sixthQueryObject);
         }
     }
 }

@@ -11,6 +11,9 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\node_add.png" />
+    <None Remove="Assets\node_change.png" />
+    <None Remove="Assets\node_delete.png" />
     <None Remove="swagger.json" />
   </ItemGroup>
 

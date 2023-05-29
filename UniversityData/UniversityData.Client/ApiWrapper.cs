@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -178,5 +179,34 @@ public class ApiWrapper
     public Task<UniversityGetDto> DeleteUniversityAsync(int id)
     {
         return _client.University4Async(id);
+    }
+
+    public Task<UniversityGetDto> GetInformationOfUniversityAsync(string name)
+    {
+        return _client.AnalyticsAsync(name);
+    }
+    public Task<UniversityStructureDto> InformationOfStructureAsync(string name)
+    {
+        return _client.Analytics2Async(name);
+    }
+    
+    public Task<ICollection<MostPopularSpecialtyDto>> MostPopularSpecialtiesAsync()
+    {
+        return _client.SpecialtiesAsync();
+    }
+
+    public Task<ICollection<UniversityGetDto>> MaxCountDepartmentsAsync()
+    {
+        return _client.DepartmentsAsync();
+    }
+
+    public Task<ICollection<UniversityWithGivenPropertyDto>> UniversityWithPropertyAsync(int universityPropertyId)
+    {
+        return _client.PropertyAsync(universityPropertyId);
+    }
+
+    public Task<ICollection<CountDivisionsWithDifferentProperties>> CountDepartmentsAsync()
+    {
+        return _client.DivisionsAsync();
     }
 }

@@ -27,7 +27,7 @@ public class Car
     /// </summary>
     [Key]
     [Column("id")]
-    public uint Id { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Default constructor
     /// </summary>
@@ -39,7 +39,7 @@ public class Car
     /// <param name="model"></param>
     /// <param name="colour"></param>
     /// <param name="number"></param>
-    public Car(uint id, string model, string colour, string number)
+    public Car(int id, string model, string colour, string number)
     {
         Id = id;
         Model = model;

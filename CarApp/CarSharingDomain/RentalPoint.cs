@@ -22,7 +22,7 @@ public class RentalPoint
     /// </summary>
     [Key]
     [Column("id")]
-    public uint Id { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// Default constructor
     /// </summary>
@@ -33,7 +33,7 @@ public class RentalPoint
     /// <param name="id"></param>
     /// <param name="pointName"></param>
     /// <param name="pointAddress"></param>
-    public RentalPoint(uint id, string pointName, string pointAddress)
+    public RentalPoint(int id, string pointName, string pointAddress)
     {
         Id = id;
         PointName = pointName;

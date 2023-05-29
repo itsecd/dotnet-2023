@@ -10,10 +10,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSharingTests", "CarShari
 		{87525FE2-2042-4F27-8EF8-68855F7B11B5} = {87525FE2-2042-4F27-8EF8-68855F7B11B5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSharingServer", "CarSharingServer\CarSharingServer.csproj", "{14C7EABA-E52F-456B-B133-06E7C79552B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSharingServer", "CarSharingServer\CarSharingServer.csproj", "{14C7EABA-E52F-456B-B133-06E7C79552B5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{87525FE2-2042-4F27-8EF8-68855F7B11B5} = {87525FE2-2042-4F27-8EF8-68855F7B11B5}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSharingClient", "CarSharingClient\CarSharingClient.csproj", "{3BC73185-9AE7-47C0-A485-F984E0475852}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{14C7EABA-E52F-456B-B133-06E7C79552B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14C7EABA-E52F-456B-B133-06E7C79552B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14C7EABA-E52F-456B-B133-06E7C79552B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC73185-9AE7-47C0-A485-F984E0475852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC73185-9AE7-47C0-A485-F984E0475852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC73185-9AE7-47C0-A485-F984E0475852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC73185-9AE7-47C0-A485-F984E0475852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

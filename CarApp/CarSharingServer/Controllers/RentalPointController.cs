@@ -54,7 +54,7 @@ public class RentalPointController : ControllerBase
     /// Rental point by id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<RentalPointPostDto>> Get(uint id)
+    public async Task<ActionResult<RentalPointPostDto>> Get(int id)
     {
         _logger.LogInformation("Get the rental point with id {id} ", id);
         var ctx = await _contextFactory.CreateDbContextAsync();
@@ -103,7 +103,7 @@ public class RentalPointController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentalPointToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] RentalPointPostDto rentalPointToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentalPoints == null)
@@ -136,7 +136,7 @@ public class RentalPointController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(uint id)
+    public async Task<IActionResult> Delete(int id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentalPoints == null)

@@ -55,7 +55,7 @@ public class ClientController : ControllerBase
     /// Client by id 
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ClientGetDto>> Get(uint id)
+    public async Task<ActionResult<ClientGetDto>> Get(int id)
     {
         _logger.LogInformation("Get the client with id {id} ", id);
         var ctx = await _contextFactory.CreateDbContextAsync();
@@ -103,7 +103,7 @@ public class ClientController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(uint id, [FromBody] ClientPostDto clientToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] ClientPostDto clientToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.Clients == null)
@@ -135,7 +135,7 @@ public class ClientController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(uint id)
+    public async Task<IActionResult> Delete(int id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.Clients == null)

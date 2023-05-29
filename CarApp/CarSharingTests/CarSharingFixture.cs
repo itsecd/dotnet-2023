@@ -64,15 +64,15 @@ public class CarFixture
             var rentalPoint = FixtureRentalPoint;
             var rentedCar = new List<RentedCar>()
             {
-                new RentedCar(1, 1, 1,  1,  DateTime.Parse("2023-02-21"), 5),
-                new RentedCar(2, 3,  1, 2, DateTime.Parse("2023-03-02"), 3),
-                new RentedCar(3, 2,  1,  1, DateTime.Parse("2023-02-25"), 1),
-                new RentedCar(4, 4,  3,  3, DateTime.Parse("2023-03-21"), 2),
-                new RentedCar(5, 1,  4,  1 , DateTime.Parse("2023-03-01"), 5),
-                new RentedCar(6, 2,  2,  1, DateTime.Parse("2023-03-11"), 9),
-                new RentedCar(7, 1,  1,  4, DateTime.Parse("2023-03-04"), 4),
-                new RentedCar(8, 1, 2,  5, DateTime.Parse("2023-03-05"), 2),
-                new RentedCar(9, 1, 1,  5, DateTime.Parse("2023-04-04"), 5)
+                new RentedCar(1, clients[0], rentalPoint[0], allCars[0],  DateTime.Parse("2023-02-21"), 5, DateTime.Parse("2023-02-26")),
+                new RentedCar(2, clients[2], rentalPoint[0], allCars[1], DateTime.Parse("2023-03-02"), 3, DateTime.Parse("2023-02-26")),
+                new RentedCar(3, clients[1], rentalPoint[0], allCars[0], DateTime.Parse("2023-02-25"), 1, DateTime.Parse("2023-02-26")),
+                new RentedCar(4, clients[3], rentalPoint[2], allCars[2], DateTime.Parse("2023-03-21"), 2, DateTime.Parse("2023-02-26")),
+                new RentedCar(5, clients[0], rentalPoint[3], allCars[0] , DateTime.Parse("2023-03-01"), 5, DateTime.Parse("2023-02-26")),
+                new RentedCar(6, clients[1], rentalPoint[1], allCars[0], DateTime.Parse("2023-03-11"), 9, DateTime.Parse("2023-02-26")),
+                new RentedCar(7, clients[0], rentalPoint[0], allCars[3], DateTime.Parse("2023-03-04"), 4, DateTime.Parse("2023-02-26")),
+                new RentedCar(8, clients[0], rentalPoint[1], allCars[4], DateTime.Parse("2023-03-05"), 2, DateTime.Parse("2023-02-26")),
+                new RentedCar(9, clients[0], rentalPoint[0], allCars[4], DateTime.Parse("2023-04-04"), 5, DateTime.Parse("2023-02-26"))
             };
             return rentedCar;
         }

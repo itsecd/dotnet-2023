@@ -32,7 +32,7 @@ public class Client
     /// </summary>
     [Key]
     [Column("id")]
-    public uint Id { set; get; }
+    public int Id { set; get; }
     /// <summary>
     /// Default constructor
     /// </summary>
@@ -45,7 +45,7 @@ public class Client
     /// <param name="birthDate"></param>
     /// <param name="firstName"></param>
     /// <param name="lastName"></param>
-    public Client(uint id, string passport, DateTime birthDate, string firstName, string lastName)
+    public Client(int id, string passport, DateTime birthDate, string firstName, string lastName)
     {
         Id = id;
         Passport = passport;

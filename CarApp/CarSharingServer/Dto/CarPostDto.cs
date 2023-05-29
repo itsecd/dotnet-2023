@@ -7,13 +7,13 @@ public class CarPostDto
     /// <summary>
     /// model of the car
     /// </summary>
-    public string Model { get; set; } = string.Empty;
+    public string? Model { get; set; } 
     /// <summary>
     /// colour of the car
     /// </summary>
-    public string Colour { get; set; } = string.Empty;
+    public string? Colour { get; set; }
     /// <summary>
     /// number of the car
     /// </summary>
-    public string Number { get; set; } = string.Empty;
+    public string? Number { get; set; }
 }

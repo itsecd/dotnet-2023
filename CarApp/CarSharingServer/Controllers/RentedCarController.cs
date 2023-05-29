@@ -55,7 +55,7 @@ public class RentedCarController : ControllerBase
     /// Rented car by id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<RentedCarGetDto>> Get(uint id)
+    public async Task<ActionResult<RentedCarGetDto>> Get(int id)
     {
         _logger.LogInformation("Get the rented car with id {id} ", id);
         var ctx = await _contextFactory.CreateDbContextAsync();
@@ -102,7 +102,7 @@ public class RentedCarController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(uint id, [FromBody] RentalPointPostDto rentedCarToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] RentalPointPostDto rentedCarToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)
@@ -134,7 +134,7 @@ public class RentedCarController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(uint id)
+    public async Task<IActionResult> Delete(int id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)

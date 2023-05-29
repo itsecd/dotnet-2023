@@ -16,7 +16,7 @@ public class RentedCar
     /// </summary>
     [ForeignKey("Client")]
     [Column("clientId")]
-    public uint ClientId { get; set; }
+    public int ClientId { get; set; }
     /// <summary>
     ///connection to other class, represents a point, where client rented a car
     /// </summary>
@@ -26,7 +26,7 @@ public class RentedCar
     /// </summary>
     [ForeignKey("RentalPoint")]
     [Column("pointId")]
-    public uint RentalPointId { get; set; }
+    public int RentalPointId { get; set; }
     /// <summary>
     /// connection to other class, represents a car rented by the client
     /// </summary>
@@ -36,13 +36,13 @@ public class RentedCar
     /// </summary>
     [ForeignKey("Car")]
     [Column("carId")]
-    public uint CarId { get; set; }
+    public int CarId { get; set; }
     /// <summary>
     /// id of rented car
     /// </summary>
     [Key]
     [Column("id")]
-    public uint Id { get; set; }
+    public int Id { get; set; }
     /// <summary>
     /// date and time when client rented a car
     /// </summary>
@@ -73,7 +73,7 @@ public class RentedCar
     /// <param name="timeOfRent"></param>
     /// <param name="rentPeriod"></param>
     /// <param name="timeOfReturn"></param>
-    public RentedCar(uint id, Client client, RentalPoint point, Car car, DateTime timeOfRent, uint rentPeriod, DateTime timeOfReturn)
+    public RentedCar(int id, Client client, RentalPoint point, Car car, DateTime timeOfRent,uint rentPeriod, DateTime timeOfReturn)
     {
         Id = id;
         Client = client;

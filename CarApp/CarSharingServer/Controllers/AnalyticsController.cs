@@ -58,7 +58,7 @@ public class AnalyticsController : ControllerBase
     /// List of clients who ever rented a car by id
     /// </returns>
     [HttpGet("clients_who_rented_model_by_id")]
-    public async Task<IActionResult> GetClientsRentedCar(uint id)
+    public async Task<IActionResult> GetClientsRentedCar(int id)
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)

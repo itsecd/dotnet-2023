@@ -55,7 +55,7 @@ public class CarController : ControllerBase
     /// Car with required id
     /// </returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<CarGetDto>> Get(uint id)
+    public async Task<ActionResult<CarGetDto>> Get(int id)
     {
         _logger.LogInformation("Get the car with id {id} ", id);
         var ctx = await _contextFactory.CreateDbContextAsync();
@@ -102,7 +102,7 @@ public class CarController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(uint id, [FromBody] CarPostDto carToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] CarPostDto carToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.Cars == null)
@@ -134,7 +134,7 @@ public class CarController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(uint id)
+    public async Task<IActionResult> Delete(int id)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.Cars == null)

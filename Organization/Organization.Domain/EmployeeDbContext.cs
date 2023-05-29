@@ -381,7 +381,7 @@ public class EmployeeDbContext : DbContext
                     FirstName = "Удаленный",
                     LastName = "Пользователь",
                     PatronymicName = "Сотрудник",
-                    BirthDate = new DateTime(10,10,10),
+                    BirthDate = new DateTime(1945,5,9),
                     WorkshopId = null,
                     HomeAddress =  "неизвестно",
                     HomeTelephone = "89633154365",

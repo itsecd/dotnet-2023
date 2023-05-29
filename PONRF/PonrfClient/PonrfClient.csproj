@@ -10,7 +10,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Compile Remove="ApiClient.cs" />
+    <None Remove="ApiClient.cs" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Add.png" />
     <None Remove="Assets\Auction.png" />
@@ -25,11 +25,6 @@
     <None Remove="Assets\TopAuctions.png" />
     <None Remove="Assets\TopCustomers.png" />
     <None Remove="Assets\ViewAllCustomers.png" />
-    <None Remove="swaggerNew.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="swaggerNew.json" CodeGenerator="NSwagCSharp" Namespace="PonrfClient" ClassName="ApiClient" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,5 +59,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swaggerNew.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

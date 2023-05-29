@@ -12,11 +12,6 @@
     <AvaloniaResource Include="Assets\**" />
     <Folder Include="ExampleImages\" />
     <None Remove=".gitignore" />
-    <None Remove="swagger.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="Organization.Client" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,5 +59,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swagger.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

@@ -14,8 +14,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContextFactory<ShopsContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString(nameof(ShopsServer));
-    optionsBuilder.UseMySQL(connectionString);
+    optionsBuilder.UseMySQL(builder.Configuration.GetConnectionString("Shops")!);
 });
 
 builder.Services.AddEndpointsApiExplorer();

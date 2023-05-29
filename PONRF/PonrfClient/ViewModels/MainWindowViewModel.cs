@@ -250,8 +250,6 @@ public class MainWindowViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadAuctionAsync);
         RxApp.MainThreadScheduler.Schedule(LoadBuildingAsync);
         RxApp.MainThreadScheduler.Schedule(LoadCustomerAsync);
-
-        //RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
 
     private async void LoadPrivatizedBuildingAsync()
@@ -289,30 +287,4 @@ public class MainWindowViewModel : ViewModelBase
             Customers.Add(_mapper.Map<CustomerViewModel>(customer));
         }
     }
-
-    //private async void LoadDataAsync()
-    //{
-    //    var privatizedBuildings = await _apiClient.GetPrivatizedBuildingAsync();
-    //    foreach (var privatizedBuilding in privatizedBuildings)
-    //    {
-    //        PrivatizedBuildings.Add(_mapper.Map<PrivatizedBuildingViewModel>(privatizedBuilding));
-    //    }
-
-    //    var auctions = await _apiClient.GetAuctionAsync();
-    //    foreach (var auction in auctions)
-    //    {
-    //        Auctions.Add(_mapper.Map<AuctionViewModel>(auction));
-    //    }
-
-    //    var buildings = await _apiClient.GetBuildingAsync();
-    //    foreach (var building in buildings)
-    //    {
-    //        Buildings.Add(_mapper.Map<BuildingViewModel>(building));
-    //    }
-    //    var customers = await _apiClient.GetCustomerAsync();
-    //    foreach (var customer in customers)
-    //    {
-    //        Customers.Add(_mapper.Map<CustomerViewModel>(customer));
-    //    }
-    //}
 }

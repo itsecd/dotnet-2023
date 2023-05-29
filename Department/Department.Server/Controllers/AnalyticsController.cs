@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Department.Domain;
+﻿using Department.Domain;
 using Department.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,7 @@ public class AnalyticsController : ControllerBase
 
     private readonly ILogger<AnalyticsController> _logger;
 
-    public AnalyticsController(DepartmentDbContext context, IMapper mapper, ILogger<AnalyticsController> logger)
+    public AnalyticsController(DepartmentDbContext context, ILogger<AnalyticsController> logger)
     {
         _context = context;
         _logger = logger;
@@ -27,17 +26,17 @@ public class AnalyticsController : ControllerBase
     /// 1st request: give info about all teachers on given course
     /// </summary>
     /// <returns> List of teachers on course </returns>
-    [HttpGet("course_teachers")]
-    public async Task<ActionResult<TeacherGetDto>> GetCourseTeachers(string courseName)
+    [HttpGet("courseTeachers")]
+    public async Task<ActionResult<ICollection<TeacherGetDto>>> GetCourseTeachers(string courseName)
     {
         _logger.LogInformation("Get info about teachers on course");
 
         var request = await
              (from teacher in _context.Teachers
-             join course in _context.Courses on teacher.FullName equals course.TeachersName
-             where course.SubjectName == courseName
-             orderby teacher.FullName
-             select teacher).ToListAsync();
+              join course in _context.Courses on teacher.FullName equals course.TeachersName
+              where course.SubjectName == courseName
+              orderby teacher.FullName
+              select teacher).ToListAsync();
         return Ok(request);
     }
 
@@ -45,8 +44,8 @@ public class AnalyticsController : ControllerBase
     /// 2nd request: give info about all teachers whose curriculum includes a course project
     /// </summary>
     /// <returns> List of teachers </returns>
-    [HttpGet("course_project_teachers")]
-    public async Task<ActionResult<TeacherGetDto>> GetCourseProjectTeachers()
+    [HttpGet("courseProjectTeachers")]
+    public async Task<ActionResult<ICollection<TeacherGetDto>>> GetCourseProjectTeachers()
     {
         _logger.LogInformation("Give info about all teachers whose curriculum includes a course project");
 
@@ -71,8 +70,8 @@ public class AnalyticsController : ControllerBase
     /// 3rd request: give info about all subjects for given group
     /// </summary>
     /// <returns>List of subjects</returns>
-    [HttpGet("group_subjects")]
-    public async Task<ActionResult> GetGroupSubjects(int groupNumber)
+    [HttpGet("groupSubjects")]
+    public async Task<ActionResult<ICollection<SubjectGetDto>>> GetGroupSubjects(int groupNumber)
     {
         _logger.LogInformation("Give info about all subjects for given group");
 
@@ -97,7 +96,7 @@ public class AnalyticsController : ControllerBase
     /// 4th request: summary information about the department (amount of teachers, amount of groups, amount of students, etc.)
     /// </summary>
     /// <returns>Department info</returns>
-    [HttpGet("department_summary")]
+    [HttpGet("departmentSummary")]
     public async Task<ActionResult> GetDepartmentInfo()
     {
         _logger.LogInformation("Give info about department");
@@ -143,7 +142,7 @@ public class AnalyticsController : ControllerBase
     /// 5th request: give info about most busy teacher
     /// </summary>
     /// <returns>Teachers info</returns>
-    [HttpGet("most_busy_teachers")]
+    [HttpGet("mostBusyTeachers")]
     public async Task<ActionResult> TestMostBusy()
     {
         _logger.LogInformation("Get info about most busy teachers");
@@ -166,7 +165,7 @@ public class AnalyticsController : ControllerBase
     /// 6th request: give info about subjects taught by different teachers
     /// </summary>
     /// <returns>List of subjects</returns>
-    [HttpGet("different_teacher_subjects")]
+    [HttpGet("differentTeacherSubjects")]
     public async Task<ActionResult> GetTimeValues()
     {
         _logger.LogInformation("Get info about subjects taught by different teachers");

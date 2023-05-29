@@ -33,10 +33,6 @@ public class GroupsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GroupGetDto>>> GetGroups()
     {
-        if (_context.Groups == null)
-        {
-            return NotFound();
-        }
         return await _mapper.ProjectTo<GroupGetDto>(_context.Groups).ToListAsync();
     }
 
@@ -48,10 +44,6 @@ public class GroupsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<GroupGetDto>> GetGroup(int id)
     {
-        if (_context.Groups == null)
-        {
-            return NotFound();
-        }
         var group = await _context.Groups.FindAsync(id);
 
         if (group == null)
@@ -72,10 +64,6 @@ public class GroupsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutGroup(int id, GroupSetDto group)
     {
-        if (_context.Groups == null)
-        {
-            return NotFound();
-        }
         var groupToModify = await _context.Groups.FindAsync(id);
         if (groupToModify == null)
         {
@@ -101,10 +89,6 @@ public class GroupsController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<GroupGetDto>> PostGroup(GroupSetDto group)
     {
-        if (_context.Groups == null)
-        {
-            return Problem("Entity set 'DepartmentDbContext.Groups'  is null.");
-        }
         var mappedGroup = _mapper.Map<Group>(group);
 
         _context.Groups.Add(mappedGroup);
@@ -124,11 +108,6 @@ public class GroupsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteGroup(int id)
     {
-        if (_context.Groups == null)
-        {
-            _logger.LogInformation("Group not found");
-            return NotFound();
-        }
         var group = await _context.Groups.FindAsync(id);
         if (group == null)
         {

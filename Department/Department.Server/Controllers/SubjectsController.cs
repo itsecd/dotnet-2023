@@ -33,10 +33,6 @@ public class SubjectsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<SubjectGetDto>>> GetSubjects()
     {
-        if (_context.Subjects == null)
-        {
-            return NotFound();
-        }
         _logger.LogInformation("Get subjects list");
         return await _mapper.ProjectTo<SubjectGetDto>(_context.Subjects).ToListAsync();
     }
@@ -50,10 +46,6 @@ public class SubjectsController : ControllerBase
     public async Task<ActionResult<SubjectGetDto>> GetSubject(int id)
     {
         _logger.LogInformation("Get the subject by id");
-        if (_context.Subjects == null)
-        {
-            return NotFound();
-        }
         var subject = await _context.Subjects.FindAsync(id);
 
         if (subject == null)
@@ -74,11 +66,6 @@ public class SubjectsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutSubject(int id, SubjectSetDto subject)
     {
-        if (_context.Subjects == null)
-        {
-            return NotFound();
-        }
-
         var subjectToModify = await _context.Subjects.FindAsync(id);
         if (subjectToModify == null)
         {
@@ -104,10 +91,6 @@ public class SubjectsController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<SubjectGetDto>> PostSubject(SubjectSetDto subject)
     {
-        if (_context.Subjects == null)
-        {
-            return Problem("Entity set 'DepartmentDbContext.Subjects'  is null.");
-        }
         var mappedSubject = _mapper.Map<Subject>(subject);
 
         _context.Subjects.Add(mappedSubject);
@@ -127,10 +110,6 @@ public class SubjectsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSubject(int id)
     {
-        if (_context.Subjects == null)
-        {
-            return NotFound();
-        }
         var subject = await _context.Subjects.FindAsync(id);
         if (subject == null)
         {

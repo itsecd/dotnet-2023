@@ -30,10 +30,6 @@ public class CoursesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CourseGetDto>>> GetCourses()
     {
-        if (_context.Courses == null)
-        {
-            return NotFound();
-        }
         _logger.LogInformation("Get courses list");
         return await _mapper.ProjectTo<CourseGetDto>(_context.Courses).ToListAsync();
     }
@@ -47,10 +43,7 @@ public class CoursesController : ControllerBase
     public async Task<ActionResult<CourseGetDto>> GetCourse(int id)
     {
         _logger.LogInformation("Get the course by id");
-        if (_context.Courses == null)
-        {
-            return NotFound();
-        }
+
         var course = await _context.Courses.FindAsync(id);
 
         if (course == null)
@@ -71,11 +64,6 @@ public class CoursesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCourse(int id, CourseSetDto course)
     {
-        if (_context.Courses == null)
-        {
-            return NotFound();
-        }
-
         var courseToModify = await _context.Courses.FindAsync(id);
         if (courseToModify == null)
         {
@@ -101,11 +89,6 @@ public class CoursesController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<CourseGetDto>> PostCourse(CourseSetDto course)
     {
-        if (_context.Courses == null)
-        {
-            return Problem("Entity set 'DepartmentDbContext.Courses'  is null.");
-        }
-
         var mappedCourse = _mapper.Map<Course>(course);
 
         _context.Courses.Add(mappedCourse);
@@ -125,10 +108,6 @@ public class CoursesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCourse(int id)
     {
-        if (_context.Courses == null)
-        {
-            return NotFound();
-        }
         var course = await _context.Courses.FindAsync(id);
         if (course == null)
         {

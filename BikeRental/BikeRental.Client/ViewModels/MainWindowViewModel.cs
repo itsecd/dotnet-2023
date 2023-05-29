@@ -152,53 +152,37 @@ public class MainWindowViewModel : ViewModelBase
             RentRecords.Remove(SelectedRentRecord);
         }, this.WhenAnyValue(vm => vm.SelectedRentRecord).Select(selectedRentRecord => selectedRentRecord != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadBikeTypesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadBikesAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadClientsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadRentRecordsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadSportBikesAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllInfoAsync);
     }
 
-    private async void LoadBikeTypesAsync()
+    private async void LoadAllInfoAsync()
     {
         var bikeTypes = await _apiClient.GetBikeTypesAsync();
         foreach (var bikeType in bikeTypes)
         {
             BikeTypes.Add(_mapper.Map<BikeTypeViewModel>(bikeType));
         }
-    }
 
-    private async void LoadBikesAsync()
-    {
         var bikes = await _apiClient.GetBikesAsync();
         foreach (var bike in bikes)
         {
             Bikes.Add(_mapper.Map<BikeViewModel>(bike));
         }
-    }
 
-    private async void LoadClientsAsync()
-    {
         var clients = await _apiClient.GetClientsAsync();
         foreach (var client in clients)
         {
             Clients.Add(_mapper.Map<ClientViewModel>(client));
         }
-    }
 
-    private async void LoadRentRecordsAsync()
-    {
         var rentRecords = await _apiClient.GetRentRecordsAsync();
         foreach (var rentRecord in rentRecords)
         {
             RentRecords.Add(_mapper.Map<RentRecordViewModel>(rentRecord));
         }
-    }
 
-    private async void LoadSportBikesAsync()
-    {
-        var bikes = await _apiClient.GetSportBikesAsync();
-        foreach (var bike in bikes)
+        var bikesInfo = await _apiClient.GetSportBikesAsync();
+        foreach (var bike in bikesInfo)
         {
             SportBikes.Add(_mapper.Map<BikeViewModel>(bike));
         }

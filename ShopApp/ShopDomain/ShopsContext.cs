@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Shops.Domain;
+namespace ShopsDomain;
 
 /// <summary>
 /// Class ShopsContext is used to work with database

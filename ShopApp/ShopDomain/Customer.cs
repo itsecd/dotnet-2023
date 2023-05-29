@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shops.Domain;
+namespace ShopsDomain;
 /// <summary>
 /// Customer -  class describes the buyers
 /// </summary>

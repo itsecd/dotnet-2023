@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shops.Domain;
-using Shops.Server.Dto;
+using ShopsDomain;
+using ShopsServer.Dto;
 
 /// <summary>
 /// Analytics controller

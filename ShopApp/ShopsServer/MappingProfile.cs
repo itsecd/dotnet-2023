@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Shops.Domain;
-using Shops.Server.Dto;
+using ShopsDomain;
+using ShopsServer.Dto;
 
-namespace Shops.Server;
+namespace ShopsServer;
 
 public class MappingProfile : Profile
 {

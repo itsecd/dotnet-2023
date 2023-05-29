@@ -1,5 +1,4 @@
-﻿
-namespace Shops.Server.Dto;
+﻿namespace ShopsServer.Dto;
 /// <summary>
 /// Class PurchaseRecordGetDto is used to make HTTP GET request.
 /// </summary>

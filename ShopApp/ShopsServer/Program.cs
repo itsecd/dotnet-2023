@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Shops.Domain;
-using Shops.Server;
+using ShopsDomain;
+using ShopsServer;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

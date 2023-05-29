@@ -1,6 +1,6 @@
-﻿using Shops.Domain;
+﻿using ShopsDomain;
 
-namespace Shops.Server.Repository;
+namespace ShopsServer.Repository;
 
 public class ShopRepository : IShopRepository
 {

@@ -1,4 +1,4 @@
-namespace Shops.Test;
+namespace ShopsTest;
 
 public class TestShop : IClassFixture<ShopFixture>
 {

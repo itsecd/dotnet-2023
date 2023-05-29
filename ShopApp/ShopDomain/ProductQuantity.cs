@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shops.Domain;
+namespace ShopsDomain;
 /// <summary>
 /// ProductQuantity - class describing quantity of products in stores
 /// </summary>

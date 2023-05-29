@@ -1,6 +1,6 @@
-﻿using Shops.Domain;
+﻿using ShopsDomain;
 
-namespace Shops.Test;
+namespace ShopsTest;
 public class ShopFixture
 {
     private readonly List<Shop> _shop;

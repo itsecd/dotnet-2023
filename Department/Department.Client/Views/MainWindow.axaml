@@ -8,12 +8,42 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Department.Client">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+  <Window.Styles>
+    <StyleInclude Source="/DepartmentStyles.axaml"/>
+  </Window.Styles>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,*">
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <Label>Coures</Label>
+    </StackPanel>
+
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <Button Classes="ToolButton" Command="{Binding OnAddCourseCommand}">
+      </Button>
+      <Button Classes="ToolButton" Command="{Binding OnEditCourseCommand}">
+      </Button>
+      <Button Classes="ToolButton" Command="{Binding OnDeleteCourseCommand}">
+      </Button>
+    </StackPanel>
+
+    <DataGrid></DataGrid>
+    
+    <DataGrid Grid.Row="2" AutoGenerateColumns="False"
+          Items="{Binding Courses}"
+          SelectedItem="{Binding SelectedCourse}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="SubjectName" Binding="{Binding SubjectName}"/>
+        <DataGridTextColumn Header="SubjectId" Binding="{Binding SubjectId}"/>
+        <DataGridTextColumn Header="CourseType" Binding="{Binding CourseType}"/>
+        <DataGridTextColumn Header="SemesterHours" Binding="{Binding SemesterHours}"/>
+        <DataGridTextColumn Header="GroupId" Binding="{Binding GroupId}"/>
+        <DataGridTextColumn Header="TeachersName" Binding="{Binding TeachersName}"/>
+        <DataGridTextColumn Header="TeacherId" Binding="{Binding TeacherId}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+
+   
 
 </Window>

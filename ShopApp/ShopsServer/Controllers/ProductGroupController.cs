@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopsDomain;
 using ShopsServer.Dto;
 
-namespace Shops.Server.Controllers;
+namespace ShopsServer.Controllers;
 /// <summary>
 /// Controller for product group
 /// </summary>

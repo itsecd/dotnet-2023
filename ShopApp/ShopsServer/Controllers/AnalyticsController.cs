@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopsDomain;
 using ShopsServer.Dto;
 
+namespace ShopsServer.Controllers;
 /// <summary>
 /// Analytics controller
 /// </summary>

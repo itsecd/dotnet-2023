@@ -16,18 +16,31 @@
 Приватизация нежилого фонда - privatization of non-residential fund (PONRF).
 
 # Скриншоты клиентского приложения
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/daa7e701-078e-498f-816e-89d5ddb083c3)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f8198b0b-d942-4e8d-8993-4c79fe99fbd5)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/09befe27-00cc-44a8-936a-822e84aa64fd)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/bc351a6a-af12-4e65-be74-3570505992bd)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/d19dba4c-64a2-4816-a56e-5b6f6ef8246a)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/0867dfd3-17db-46d1-964e-28c12d61ac05)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/03f02eca-4d96-445a-b8f1-8f4993527a34)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/0d6bb436-a93d-4d03-ad87-41066ec63e31)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/394f0612-4429-4b92-868c-3fed7b13a354)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/e34d59fb-19a8-483c-9e40-dc47e70e2471)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/a4c1865a-d548-4410-a0f2-eb3985354698)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/df0da0d6-d83e-49bc-ba5b-dc30e83e99d8)
-![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/41cc41e0-06cd-4a62-b633-04b478e08f7e)
-
-
+Главное окно:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f33cfb9c-087b-4338-8cec-bc9c73071487)
+Данные о приватизированных зданиях:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/7a9fe4bf-73f5-4973-8ceb-ca27a728aa52)
+Окно создания или изменения записи о приватизированном здании:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/73981374-76e7-4554-835b-73cccf17e484)
+Данные о зданиях:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/003d7638-baf3-44cb-9c62-15f76eabb9c9)
+Окно создания или изменения записи о здании:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/e28f06c5-4d06-47d0-8d42-67105eab5a73)
+Данные об аукционах:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/0fae164f-8f7c-4152-ac8a-971028c2297b)
+Окно создания или изменения записи об аукционе:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/c0c8993f-40a5-46db-852f-c7cc71113a8a)
+Данные о покупателях:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/93c4dfe3-c030-48d1-92f2-ae31233ee646)
+Окно создания или изменения записи о покупателе:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f8d64321-b025-4a92-be0c-50008180a87f)
+Начальное окно запроса на примере окна запроса о выводе всех покупателей:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/a483c5ba-7d51-4dba-a3be-c9ce5a8fc73d)
+Запрос о выводе данных обо всех покупателях:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/6d01f340-6500-4e89-8c8d-1f09428ea87c)
+Запрос о выводе данных аукционов, на которых были проданы не все здания:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/34cf95a5-4eb6-48ca-b792-c966205a8b7d)
+Запрос о выводе топ-5 покупателей, потративших наибольшую сумму денег на аукционах:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/290204d6-f003-4aef-83a3-7e085a099aab)
+Запрос о выводе аукционов, принесших наибольшую прибыль:
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/c5305cd2-1603-4ebe-b7dd-b676b3bb6b84)

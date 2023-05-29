@@ -20,7 +20,23 @@ jobs:
         dotnet add PONRF\PonrfServer package Swashbuckle.AspNetCore --version 6.2.3
         dotnet add PONRF\PonrfDomain package Microsoft.EntityFrameworkCore --version 6.0.16
         dotnet add PONRF\PonrfDomain package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0.8
+        dotnet add PONRF\PonrfClient package AutoMapper --version 12.0.1
+        dotnet add PONRF\PonrfClient package Avalonia --version 0.10.18
+        dotnet add PONRF\PonrfClient package Avalonia.Desktop --version 0.10.18
+        dotnet add PONRF\PonrfClient package Avalonia.Diagnostics --version 0.10.18
+        dotnet add PONRF\PonrfClient package Avalonia.ReactiveUI --version 0.10.18
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.ApiDescription.Client --version 3.0.0
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.Configuration --version 7.0.0
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.Configuration.Abstractions --version 7.0.0
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.Configuration.FileExtensions --version 7.0.0
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.Configuration.Json --version 7.0.0
+        dotnet add PONRF\PonrfClient package Microsoft.Extensions.Configuration.UserSecrets --version 7.0.0
+        dotnet add PONRF\PonrfClient package Newtonsoft.Json --version 13.0.1
+        dotnet add PONRF\PonrfClient package NSwag.ApiDescription.Client --version 13.0.5
+        dotnet add PONRF\PonrfClient package XamlNameReferenceGenerator --version 1.5.1
     - name: Build with dotnet
-      run: dotnet build PONRF\PonrfServer
+      run: |
+        dotnet build PONRF\PonrfServer
+        dotnet build PONRF\PonrfClient
     - name: Test with dotnet
       run: dotnet test PONRF

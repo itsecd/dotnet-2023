@@ -23,7 +23,9 @@ jobs:
         dotnet add ShopApp/ShopsServer package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 6.0.13        
         dotnet add ShopApp/ShopsServer package Microsoft.EntityFrameworkCore --version 6.0.15
         dotnet add ShopApp/ShopsServer package Swashbuckle.AspNetCore --version 6.2.3
-    - name: Build with dotnet
+    - name: Build server with dotnet
       run: dotnet build ShopApp/ShopsServer
+    - name: Build client with dotnet
+      run: dotnet build ShopApp/ShopsClient
     - name: Test with dotnet
       run: dotnet test ShopApp

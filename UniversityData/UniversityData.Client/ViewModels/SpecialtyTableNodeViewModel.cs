@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reactive;
+﻿using System.Reactive;
 using ReactiveUI;
 
 namespace UniversityData.Client.ViewModels;

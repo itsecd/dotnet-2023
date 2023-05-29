@@ -77,7 +77,7 @@ public class UniversityController : ControllerBase
     public async Task<ActionResult<UniversityGetDto>> Post([FromBody] UniversityPostDto university)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        var mappedUniversity= _mapper.Map<University>(university);
+        var mappedUniversity = _mapper.Map<University>(university);
         ctx.Universities.Add(mappedUniversity);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new university");

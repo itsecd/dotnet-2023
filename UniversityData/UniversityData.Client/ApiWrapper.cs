@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -189,7 +188,7 @@ public class ApiWrapper
     {
         return _client.Analytics2Async(name);
     }
-    
+
     public Task<ICollection<MostPopularSpecialtyDto>> MostPopularSpecialtiesAsync()
     {
         return _client.SpecialtiesAsync();

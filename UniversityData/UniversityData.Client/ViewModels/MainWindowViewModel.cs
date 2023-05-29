@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 
@@ -144,8 +142,8 @@ public class MainWindowViewModel : ViewModelBase
 
         OnAddConstructionPropertyCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-        var constructionPropertyViewModel = await ShowConstructionPropertyDialog.Handle(new ConstructionPropertyViewModel());
-        if (constructionPropertyViewModel != null)
+            var constructionPropertyViewModel = await ShowConstructionPropertyDialog.Handle(new ConstructionPropertyViewModel());
+            if (constructionPropertyViewModel != null)
             {
                 var newConstructionProperty = await _apiClient.AddConstructionPropertyAsync(_mapper.Map<ConstructionPropertyPostDto>(constructionPropertyViewModel));
                 ConstructionProperties.Add(_mapper.Map<ConstructionPropertyViewModel>(newConstructionProperty));
@@ -410,14 +408,14 @@ public class MainWindowViewModel : ViewModelBase
             ThirdQuery.Add(thirdQueryObject);
         }
 
-        
+
         var fourthQueryObjects = await _apiClient.MaxCountDepartmentsAsync();
         foreach (var fourthQueryObject in fourthQueryObjects)
         {
             FourthQuery.Add(fourthQueryObject);
         }
 
-        
+
         var paramFifthQuery = 1;
         var fifthQueryObjects = await _apiClient.UniversityWithPropertyAsync(paramFifthQuery);
         foreach (var fifthQueryObject in fifthQueryObjects)

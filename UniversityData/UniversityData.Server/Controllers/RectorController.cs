@@ -77,7 +77,7 @@ public class RectorController : ControllerBase
     public async Task<ActionResult<RectorGetDto>> Post([FromBody] RectorPostDto rector)
     {
         await using UniversityDataDbContext ctx = await _contextFactory.CreateDbContextAsync();
-        var mappedRector= _mapper.Map<Rector>(rector);
+        var mappedRector = _mapper.Map<Rector>(rector);
         ctx.Rectors.Add(mappedRector);
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Add new construction property");

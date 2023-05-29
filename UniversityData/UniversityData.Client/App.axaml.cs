@@ -2,7 +2,6 @@ using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SkiaSharp;
 using Splat;
 using UniversityData.Client.ViewModels;
 using UniversityData.Client.Views;

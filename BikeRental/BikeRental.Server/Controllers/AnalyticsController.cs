@@ -31,7 +31,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns> List of sport bikes </returns>
     [HttpGet("sportBikes")]
-    public async Task<ActionResult<BikeGetDto>> GetSportBikes()
+    public async Task<ActionResult<ICollection<BikeGetDto>>> GetSportBikes()
     {
         _logger.LogInformation("Get info about sport bikes");
         if (_context.Bikes == null)
@@ -60,7 +60,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns> Ordered by name list of clients who rented mountain bikes </returns>
     [HttpGet("mountaiBikesClients")]
-    public async Task<ActionResult<BikeGetDto>> GetMountainBikesClients()
+    public async Task<ActionResult<ICollection<ClientGetDto>>> GetMountainBikesClients()
     {
         _logger.LogInformation("Give info about clients who rented mountain bikes");
         if (_context.RentRecords == null || _context.Bikes == null)
@@ -165,7 +165,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Top 5 most rented bikes</returns>
     [HttpGet("topFiveBikes")]
-    public async Task<ActionResult<BikeGetDto>> GetTopFiveBikes()
+    public async Task<ActionResult<ICollection<BikeGetDto>>> GetTopFiveBikes()
     {
         _logger.LogInformation("Give info about 5 most rented bikes");
         if (_context.RentRecords == null)

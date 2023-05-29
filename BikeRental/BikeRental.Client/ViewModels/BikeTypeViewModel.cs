@@ -26,11 +26,4 @@ public class BikeTypeViewModel : ViewModelBase
         get => _rentCost;
         set => this.RaiseAndSetIfChanged(ref _rentCost, value);
     }
-
-    //public ReactiveCommand<Unit, BikeTypeViewModel> OnSubmitCommand { get; }
-
-    //public BikeTypeViewModel()
-    //{
-    //    OnSubmitCommand = ReactiveCommand.Create(() => this);
-    //}
 }

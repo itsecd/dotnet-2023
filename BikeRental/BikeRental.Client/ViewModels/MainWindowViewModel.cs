@@ -18,6 +18,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<BikeTypeViewModel> BikeTypes { get; } = new();
     public ObservableCollection<ClientViewModel> Clients { get; } = new();
     public ObservableCollection<RentRecordViewModel> RentRecords { get; } = new();
+    public ObservableCollection<BikeViewModel> SportBikes { get; } = new();
 
 
     private BikeViewModel? _selectedBike;
@@ -155,6 +156,7 @@ public class MainWindowViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadBikesAsync);
         RxApp.MainThreadScheduler.Schedule(LoadClientsAsync);
         RxApp.MainThreadScheduler.Schedule(LoadRentRecordsAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadSportBikesAsync);
     }
 
     private async void LoadBikeTypesAsync()
@@ -190,6 +192,15 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var rentRecord in rentRecords)
         {
             RentRecords.Add(_mapper.Map<RentRecordViewModel>(rentRecord));
+        }
+    }
+
+    private async void LoadSportBikesAsync()
+    {
+        var bikes = await _apiClient.GetSportBikesAsync();
+        foreach (var bike in bikes)
+        {
+            SportBikes.Add(_mapper.Map<BikeViewModel>(bike));
         }
     }
 }

@@ -84,4 +84,9 @@ public class ApiWrapper
     {
         await _client.RentRecords4Async(id);
     }
+
+    public async Task<ICollection<BikeGetDto>> GetSportBikesAsync()
+    {
+        return await _client.SportBikesAsync();
+    }
 }

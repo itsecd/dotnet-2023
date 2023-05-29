@@ -18,7 +18,8 @@
 	
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 		
-		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, 
+			  Auto, Auto, Auto, Auto, Auto, Auto, *">
 
 			<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<Label>Bike Types</Label>
@@ -39,9 +40,9 @@
 			</StackPanel>
 			
 			<StackPanel Grid.Row="3" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnAddBikeCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnChangeBikeCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnDeleteBikeCommand}">Aboba</Button>
+				<Button Classes="ToolButton" Command="{Binding OnAddBikeCommand}">Add</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeBikeCommand}">Edit</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteBikeCommand}">Delete</Button>
 			</StackPanel>
 			
 			<DataGrid Grid.Row="4" AutoGenerateColumns="False"
@@ -57,13 +58,13 @@
 			</DataGrid>
 
 			<StackPanel Grid.Row="5" Orientation="Horizontal">
-				<Label>Client</Label>
+				<Label>Clients</Label>
 			</StackPanel>
 
 			<StackPanel Grid.Row="6" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnAddClientCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnChangeClientCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnDeleteClientCommand}">Aboba</Button>
+				<Button Classes="ToolButton" Command="{Binding OnAddClientCommand}">Add</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeClientCommand}">Edit</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteClientCommand}">Delete</Button>
 			</StackPanel>
 
 			<DataGrid Grid.Row="7" AutoGenerateColumns="False"
@@ -78,12 +79,16 @@
 			</DataGrid>
 
 			<StackPanel Grid.Row="8" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnAddRentRecordCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnChangeRentRecordCommand}">Aboba</Button>
-				<Button Classes="ToolButton" Command="{Binding OnDeleteRentRecordCommand}">Aboba</Button>
+				<Label>Rent Records</Label>
 			</StackPanel>
 
-			<DataGrid Grid.Row="9" AutoGenerateColumns="False"
+			<StackPanel Grid.Row="9" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddRentRecordCommand}">Add</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeRentRecordCommand}">Edit</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteRentRecordCommand}">Delete</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="10" AutoGenerateColumns="False"
 					  Items="{Binding RentRecords}"
 					  SelectedItem="{Binding SelectedRentRecord}">
 				<DataGrid.Columns>
@@ -92,6 +97,21 @@
 					<DataGridTextColumn Header="Bike Id" Binding="{Binding BikeId}"/>
 					<DataGridTextColumn Header="Rent Start Time" Binding="{Binding RentStartTime}"/>
 					<DataGridTextColumn Header="Rent End Time" Binding="{Binding RentEndTime}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="11" Orientation="Horizontal">
+				<Label>Info about all sport bikes</Label>
+			</StackPanel>
+
+			<DataGrid Grid.Row="12" AutoGenerateColumns="False"
+					  Items="{Binding SportBikes}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
+					<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+					<DataGridTextColumn Header="Color" Binding="{Binding Color}"/>
+					<DataGridTextColumn Header="TypeId" Binding="{Binding TypeId}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 			

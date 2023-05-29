@@ -25,4 +25,4 @@
 ## Окно добавления и редактирования покупателя
 ![BuyerWindow.png](Screenshots/BuyerWindow.png)
 ## Окно добавления и редактирования здания
-![BuildingWIndow.png](Screenshots/BuldingWIndow.png)
+![BuildingWindow.png](Screenshots/BuildingWindow.png)

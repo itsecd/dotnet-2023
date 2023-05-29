@@ -14,11 +14,6 @@
     <None Remove="Assets\node_add.png" />
     <None Remove="Assets\node_change.png" />
     <None Remove="Assets\node_delete.png" />
-    <None Remove="swagger.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="UniversityData.Client" ClassName="ApiClient" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,5 +49,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swagger.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

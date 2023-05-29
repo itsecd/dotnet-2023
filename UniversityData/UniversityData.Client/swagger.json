@@ -5,12 +5,12 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/Analytics/information_of_university{name}": {
+        "/api/Analytics/information_of_university/{name}": {
             "get": {
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 1 - Вывести информацию о выбранном вузе.",
+                "summary": "Запрос 1 - Вывести информацию о выбранном вузе",
                 "parameters": [
                     {
                         "name": "name",
@@ -46,12 +46,12 @@
                 }
             }
         },
-        "/api/Analytics/information_of_structure_of_university{name}": {
+        "/api/Analytics/information_of_structure_of_university/{name}": {
             "get": {
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза.",
+                "summary": "Запрос 2 - Вывести информацию о факультетах, кафедрах и специальностях данного вуза",
                 "parameters": [
                     {
                         "name": "name",
@@ -92,7 +92,7 @@
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп).",
+                "summary": "Запрос 3 - Вывести информацию о топ 5 популярных специальностях (с максимальным количеством групп)",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -131,7 +131,7 @@
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию.",
+                "summary": "Запрос 4 - Вывести информацию о ВУЗах с максимальным количеством кафедр, упорядочить по названию",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -165,17 +165,18 @@
                 }
             }
         },
-        "/api/Analytics/university_with_target_property": {
+        "/api/Analytics/university_with_target_property/{universityPropertyId}": {
             "get": {
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе.",
+                "summary": "Запрос 5 - Вывести информацию о ВУЗах с заданной собственностью учреждения, и количество групп в ВУЗе",
                 "parameters": [
                     {
                         "name": "universityPropertyId",
-                        "in": "query",
+                        "in": "path",
                         "description": "",
+                        "required": true,
                         "schema": {
                             "type": "integer",
                             "format": "int32"
@@ -220,7 +221,7 @@
                 "tags": [
                     "Analytics"
                 ],
-                "summary": "Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания.",
+                "summary": "Запрос 6 - Вывести информацию о количестве факультетов, кафедр, специальностей по каждому типу собственности учреждения и собственности здания",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -2104,7 +2105,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Собственность зданий университета"
+                "description": "GetDto собственности зданий университета"
             },
             "ConstructionPropertyPostDto": {
                 "type": "object",
@@ -2116,7 +2117,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Собственность зданий университета"
+                "description": "PostDto собственности зданий университета"
             },
             "CountDivisionsWithDifferentProperties": {
                 "type": "object",
@@ -2143,7 +2144,7 @@
                     },
                     "constructionPropertyId": {
                         "type": "integer",
-                        "description": "ID собственности зданий",
+                        "description": "ID собственности зданий университета",
                         "format": "int32"
                     }
                 },
@@ -2175,7 +2176,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о кафедре"
+                "description": "GetDto кафедры"
             },
             "DepartmentPostDto": {
                 "type": "object",
@@ -2197,7 +2198,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о кафедре"
+                "description": "PostDto кафедры"
             },
             "FacultyGetDto": {
                 "type": "object",
@@ -2229,7 +2230,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о факультете"
+                "description": "GetDto факультета"
             },
             "FacultyPostDto": {
                 "type": "object",
@@ -2256,7 +2257,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о факультете"
+                "description": "PostDto факультета"
             },
             "MostPopularSpecialtyDto": {
                 "type": "object",
@@ -2325,7 +2326,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о ректоре"
+                "description": "GetDto ректора"
             },
             "RectorPostDto": {
                 "type": "object",
@@ -2362,7 +2363,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация о ректоре"
+                "description": "PostDto ректора"
             },
             "SpecialtyGetDto": {
                 "type": "object",
@@ -2384,7 +2385,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Специальность"
+                "description": "GetDto специальности"
             },
             "SpecialtyPostDto": {
                 "type": "object",
@@ -2401,7 +2402,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Специальность"
+                "description": "PostDto специальности"
             },
             "SpecialtyTableNodeGetDto": {
                 "type": "object",
@@ -2428,7 +2429,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Узел таблицы связи специальности и количества групп"
+                "description": "GetDto узла таблицы связи специальности и количества групп"
             },
             "SpecialtyTableNodePostDto": {
                 "type": "object",
@@ -2450,7 +2451,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Узел таблицы связи специальности и количества групп"
+                "description": "PostDto узла таблицы связи специальности и количества групп"
             },
             "UniversityGetDto": {
                 "type": "object",
@@ -2482,17 +2483,17 @@
                     },
                     "universityPropertyId": {
                         "type": "integer",
-                        "description": "Сведения о ректоре",
+                        "description": "ID собственности организации",
                         "format": "int32"
                     },
                     "constructionPropertyId": {
                         "type": "integer",
-                        "description": "Собственность здания университета",
+                        "description": "ID собственности зданий университета",
                         "format": "int32"
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация об университете"
+                "description": "GetDto университета"
             },
             "UniversityPostDto": {
                 "type": "object",
@@ -2519,7 +2520,7 @@
                     },
                     "universityPropertyId": {
                         "type": "integer",
-                        "description": "ID собственности учреждения",
+                        "description": "ID собственности организации",
                         "format": "int32"
                     },
                     "constructionPropertyId": {
@@ -2529,7 +2530,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Информация об университете"
+                "description": "PostDto университета"
             },
             "UniversityPropertyGetDto": {
                 "type": "object",
@@ -2546,7 +2547,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Собственность университета"
+                "description": "GetDto собственности организации"
             },
             "UniversityPropertyPostDto": {
                 "type": "object",
@@ -2558,7 +2559,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "description": "Собственность университета"
+                "description": "PostDto собственности организации"
             },
             "UniversityStructureDto": {
                 "type": "object",

@@ -51,7 +51,7 @@ public class ProviderController : ControllerBase
     /// <summary>
     /// Get provider by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Id of provider to get</param>
     /// <returns>Provider</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ProviderGetDto>> Get(int id)
@@ -71,7 +71,8 @@ public class ProviderController : ControllerBase
     /// <summary>
     /// Post new provider
     /// </summary>
-    /// <param name="provider"></param>
+    /// <param name="provider">Provider to post</param>
+    /// <returns>ProviderGetDto</returns>
     [HttpPost]
     public async Task<ActionResult<ProviderGetDto>> Post([FromBody] ProviderPostDto provider)
     {
@@ -86,9 +87,9 @@ public class ProviderController : ControllerBase
     /// <summary>
     /// Put provider
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="providerToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of provider to put</param>
+    /// <param name="providerToPut">Provider to put</param>
+    /// <returns>Resutl</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ProviderPostDto providerToPut)
     {
@@ -109,8 +110,8 @@ public class ProviderController : ControllerBase
     /// <summary>
     /// Delete provider
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of provider to delete</param>
+    /// <returns>Result</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

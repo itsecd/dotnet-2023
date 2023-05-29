@@ -48,7 +48,7 @@ public class ShipmentController : ControllerBase
     /// <summary>
     /// Get shipment by id
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Id of shipment to get</param>
     /// <returns>Shipment</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ShipmentGetDto>> Get(int id)
@@ -68,7 +68,8 @@ public class ShipmentController : ControllerBase
     /// <summary>
     /// Post new shipment
     /// </summary>
-    /// <param name="shipment"></param>
+    /// <param name="shipment">Shipment to post</param>
+    /// <returns>ShipmentGetDto</returns>
     [HttpPost]
     public async Task<ActionResult<ShipmentGetDto>> Post([FromBody] ShipmentPostDto shipment)
     {
@@ -83,9 +84,9 @@ public class ShipmentController : ControllerBase
     /// <summary>
     /// Put shipment
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="shipmentToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of shipment to put</param>
+    /// <param name="shipmentToPut">Shipment to put</param>
+    /// <returns>Result</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ShipmentPostDto shipmentToPut)
     {
@@ -106,8 +107,8 @@ public class ShipmentController : ControllerBase
     /// <summary>
     /// Delete shipment
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of shipment to delete</param>
+    /// <returns>Result</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

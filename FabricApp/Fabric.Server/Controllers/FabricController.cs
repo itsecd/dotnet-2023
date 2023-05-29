@@ -51,8 +51,8 @@ public class FabricController : ControllerBase
     /// <summary>
     /// Get fabric by id
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Fabric</returns>
+    /// <param name="id">Id of fabric to get</param>
+    /// <returns>FabricGetDto</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<FabricGetDto>> Get(int id)
     {
@@ -71,7 +71,8 @@ public class FabricController : ControllerBase
     /// <summary>
     /// Post new Fabric
     /// </summary>
-    /// <param name="fabric"></param>
+    /// <param name="fabric">Fabric to post</param>
+    /// <returns>FabricGetDto</returns>
     [HttpPost]
     public async Task<ActionResult<FabricGetDto>> Post([FromBody] FabricPostDto fabric)
     {
@@ -86,9 +87,9 @@ public class FabricController : ControllerBase
     /// <summary>
     /// Put fabric
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="fabricToPut"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of fabric to put</param>
+    /// <param name="fabricToPut">Fabric to put</param>
+    /// <returns>Result</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] FabricPostDto fabricToPut)
     {
@@ -109,8 +110,8 @@ public class FabricController : ControllerBase
     /// <summary>
     /// Delete fabric by id.
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Id of fabric to delete</param>
+    /// <returns>Result</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

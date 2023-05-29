@@ -22,6 +22,8 @@ In the next phase of the project, the data warehouse was migrated to the databas
 Finally, a client application was created using avalonia, which communicates with the server application.
 
 # Screenshots
+## Catching exceptions
+![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/CatchingExceptions.png)
 ## Application
 ![](/Recruitment/RecruitmentAgency/RecruitmentAgency.Client/Assets/MainWindow.png)
 ## Company buttons

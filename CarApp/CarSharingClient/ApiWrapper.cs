@@ -20,9 +20,9 @@ public class ApiWrapper
         _client = new ApiClient(serverUrl, new HttpClient());
     }
 
-    public async Task<ICollection<CarGetDto>> GetCarsAsync()
+    public Task<ICollection<CarGetDto>> GetCarsAsync()
     {
-        return await _client.CarAllAsync();
+        return _client.CarAllAsync();
     }
     public async Task AddCarsAsync(CarPostDto car)
     {
@@ -37,9 +37,9 @@ public class ApiWrapper
         await _client.Car4Async(id);
     }
 
-    public async Task<ICollection<RentalPointPostDto>> GetRentalPointsAsync()
+    public Task<ICollection<RentalPointPostDto>> GetRentalPointsAsync()
     {
-        return await _client.RentalPointAllAsync();
+        return _client.RentalPointAllAsync();
     }
     public async Task AddRentalPointsAsync(RentalPointPostDto rentalPoint)
     {

@@ -23,6 +23,8 @@ public partial class App : Application
             {
                 cfg.CreateMap<CarGetDto, CarViewModel>();
                 cfg.CreateMap<CarViewModel, CarPostDto>();
+                cfg.CreateMap<CarPostDto, CarViewModel>();
+                cfg.CreateMap<CarViewModel, CarGetDto>();
                 cfg.CreateMap<RentalPointViewModel, RentalPointPostDto>();
                 cfg.CreateMap<RentalPointPostDto, RentalPointViewModel>();
             }

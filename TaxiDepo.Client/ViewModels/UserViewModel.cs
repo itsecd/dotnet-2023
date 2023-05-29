@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 using TaxiDepo.Client.ViewModels;
 
@@ -7,45 +8,17 @@ namespace TaxiDepo.Client.ViewModels;
 
 public class UserViewModel : ViewModelBase
 {
-    private int _id;
+    [Required] public int Id { get; set; }
 
-    public int Id
-    {
-        get => _id;
-        set => this.RaiseAndSetIfChanged(ref _id, value);
-    }
+    [Required] public string UserSurname { get; set; } = string.Empty;
 
-    private string _userSurname = string.Empty;
+    [Required] public string UserName { get; set; } = string.Empty;
 
-    public string UserSurname
-    {
-        get => _userSurname;
-        set => this.RaiseAndSetIfChanged(ref _userSurname, value);
-    }
+    [Required] public string UserPatronymic { get; set; } = string.Empty;
 
-    private string _userName = string.Empty;
+    [Required] public string UserPhoneNumber { get; set; } = string.Empty;
 
-    public string UserName
-    {
-        get => _userName;
-        set => this.RaiseAndSetIfChanged(ref _userName, value);
-    }
-
-    private string _userPatronymic = string.Empty;
-
-    public string UserPatronymic
-    {
-        get => _userPatronymic;
-        set => this.RaiseAndSetIfChanged(ref _userPatronymic, value);
-    }
-
-    private string _userPhoneNumber = string.Empty;
-
-    public string UserPhoneNumber
-    {
-        get => _userPhoneNumber;
-        set => this.RaiseAndSetIfChanged(ref _userPhoneNumber, value);
-    }
+    [Required] public DateTime UserDate { get; set; }
 
     public ReactiveCommand<Unit, UserViewModel> OnSubmitCommand { get; set; }
 

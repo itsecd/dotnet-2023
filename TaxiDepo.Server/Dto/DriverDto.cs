@@ -39,5 +39,10 @@ public class DriverDto
     /// Driver phone number
     /// </summary>
     public string DriverPhoneNumber { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Driver amount rides  
+    /// </summary>
+    public int AmountRides { get; set; }
 }
 

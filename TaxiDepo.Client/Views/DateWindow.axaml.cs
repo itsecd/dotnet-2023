@@ -1,4 +1,4 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -6,9 +6,9 @@ using System;
 using TaxiDepo.Client.ViewModels;
 
 namespace TaxiDepo.Client.Views;
-public partial class CarWindow : ReactiveWindow<CarViewModel>
+public partial class DateWindow : ReactiveWindow<DateViewModel>
 {
-    public CarWindow()
+    public DateWindow()
     {
         InitializeComponent();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace TaxiDepo.Client;
 public class ApiWrapper
 {
-    private readonly ApiClient _client;
+    private readonly swaggerClient _client;
 
     public ApiWrapper()
     {
@@ -16,7 +17,7 @@ public class ApiWrapper
             .AddJsonFile("appsettings.json")
             .Build();
 
-        _client = new ApiClient(configuration.GetSection("ServerUrl").Value,
+        _client = new swaggerClient(configuration.GetSection("ServerUrl").Value,
             new HttpClient());
     }
 
@@ -82,5 +83,36 @@ public class ApiWrapper
     public async Task DeleteUser(int id)
     {
         await _client.UsersDELETEAsync(id);
+    }
+
+    public async Task<ICollection<CarAndDriverDto>> GetCarAndDriverAsync(int id)//1
+    {
+        return await _client.GetCarAndDriverAsync(id);//delete view 
+    }
+
+    public async Task<ICollection<CountUserRidesDto>> UserByDateAsync(DateTimeOffset minDate, DateTimeOffset maxDate)//2
+    {
+        return await _client.GetUsersByDateAsync(minDate, maxDate);
+    }
+
+    public async Task<ICollection<CountUserRidesDto>> CountUserRidesAsync()//3
+    {
+        return await _client.GetUserRidesAsync();
+    }
+
+    public async Task<ICollection<DriverDto>> TopDriverAsync()//4
+    {
+        return await _client.TopFiveDriversAsync();
+    }
+
+    public async Task<ICollection<DriverRidesInfoDto>> InfoAboutRidesAsync()//5
+    {
+        return await _client.DriversTripTimeAsync();
+    }
+
+    public async Task<ICollection<CountUserRidesDto>> MaxUserRidesAsync(DateTimeOffset? minDate,
+        DateTimeOffset? maxDate)//6
+    {
+        return await _client.UserWithAmountRidesByDateAsync(minDate, maxDate);
     }
 }

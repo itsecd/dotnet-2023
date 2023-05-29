@@ -2,6 +2,9 @@
 
 namespace TaxiDepo.Server.Dto;
 
+/// <summary>
+/// Driver car pair dto
+/// </summary>
 public class CarAndDriverDto
 {
     /// <summary>

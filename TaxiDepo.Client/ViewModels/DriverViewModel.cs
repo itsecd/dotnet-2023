@@ -1,65 +1,26 @@
 ﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace TaxiDepo.Client.ViewModels;
 
 public class DriverViewModel : ViewModelBase
 {
-    private int _id;
+    [Required] public int Id { get; set; }
 
-    public int Id
-    {
-        get => _id;
-        set => this.RaiseAndSetIfChanged(ref _id, value);
-    }
+    [Required] public string DriverSurname { get; set; } = string.Empty;
 
-    private string _driverSurname = string.Empty;
+    [Required] public string DriverName { get; set; } = string.Empty;
 
-    public string DriverSurname
-    {
-        get => _driverSurname;
-        set => this.RaiseAndSetIfChanged(ref _driverSurname, value);
-    }
+    [Required] public string DriverPatronymic { get; set; } = string.Empty;
 
-    private string _driverName = string.Empty;
+    [Required] public string DriverAddress { get; set; } = string.Empty;
 
-    public string DriverName
-    {
-        get => _driverName;
-        set => this.RaiseAndSetIfChanged(ref _driverName, value);
-    }
+    [Required] public string DriverPhoneNumber { get; set; } = string.Empty;
 
-    private string _driverPatronymic = string.Empty;
+    [Required] public int AmountRides { get; set; } = 0;
 
-    public string DriverPatronymic
-    {
-        get => _driverPatronymic;
-        set => this.RaiseAndSetIfChanged(ref _driverPatronymic, value);
-    }
-
-    private string _driverAddress = string.Empty;
-
-    public string DriverAddress
-    {
-        get => _driverAddress;
-        set => this.RaiseAndSetIfChanged(ref _driverAddress, value);
-    }
-
-    private string _driverPhoneNumber;
-
-    public string DriverPhoneNumber
-    {
-        get => _driverPhoneNumber;
-        set => this.RaiseAndSetIfChanged(ref _driverPhoneNumber, value);
-    }
-
-    private int _driverPassportId;
-
-    public int DriverPassportId
-    {
-        get => _driverPassportId;
-        set => this.RaiseAndSetIfChanged(ref _driverPassportId, value);
-    }
+    [Required] public int DriverPassportId { get; set; } = 0;
 
     public ReactiveCommand<Unit, DriverViewModel> OnSubmitCommand { get; set; }
 

@@ -469,7 +469,8 @@
             "in": "query",
             "description": "date before for filter",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -477,7 +478,8 @@
             "in": "query",
             "description": "date after for filter",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             }
           }
         ],
@@ -489,7 +491,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDto"
+                    "$ref": "#/components/schemas/CountUserRidesDto"
                   }
                 }
               },
@@ -497,7 +499,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDto"
+                    "$ref": "#/components/schemas/CountUserRidesDto"
                   }
                 }
               },
@@ -505,7 +507,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserDto"
+                    "$ref": "#/components/schemas/CountUserRidesDto"
                   }
                 }
               }
@@ -565,17 +567,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Driver"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Driver"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Driver"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverDto"
+                  }
                 }
               }
             }
@@ -648,7 +659,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountUserRidesDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountUserRidesDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountUserRidesDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1116,7 +1153,8 @@
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Driver car pair dto"
       },
       "CarDto": {
         "type": "object",
@@ -1168,54 +1206,24 @@
             "description": "User patronymic",
             "nullable": true
           },
+          "userPhoneNumber": {
+            "type": "string",
+            "description": "User patronymic",
+            "nullable": true
+          },
           "amountRides": {
             "type": "integer",
             "description": "Amount user rides",
             "format": "int32"
+          },
+          "userDate": {
+            "type": "string",
+            "description": "User trip date",
+            "format": "date-time"
           }
         },
-        "additionalProperties": false
-      },
-      "Driver": {
-        "required": [
-          "driverAddress",
-          "driverName",
-          "driverPassportId",
-          "driverPatronymic",
-          "driverPhoneNumber",
-          "driverSurname"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "driverSurname": {
-            "maxLength": 45,
-            "type": "string"
-          },
-          "driverName": {
-            "maxLength": 45,
-            "type": "string"
-          },
-          "driverPatronymic": {
-            "maxLength": 45,
-            "type": "string"
-          },
-          "driverPassportId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "driverAddress": {
-            "maxLength": 45,
-            "type": "string"
-          },
-          "driverPhoneNumber": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Count user rides dto"
       },
       "DriverDto": {
         "type": "object",
@@ -1254,6 +1262,11 @@
             "type": "string",
             "description": "Driver phone number",
             "nullable": true
+          },
+          "amountRides": {
+            "type": "integer",
+            "description": "Driver amount rides",
+            "format": "int32"
           }
         },
         "additionalProperties": false,
@@ -1283,13 +1296,18 @@
             "format": "int32"
           },
           "averageTime": {
-            "$ref": "#/components/schemas/TimeSpan"
+            "type": "number",
+            "description": "Average trip time",
+            "format": "double"
           },
           "maxTime": {
-            "$ref": "#/components/schemas/TimeSpan"
+            "type": "number",
+            "description": "Max trip time",
+            "format": "double"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Driver rides dto"
       },
       "RideDto": {
         "type": "object",
@@ -1337,61 +1355,6 @@
         },
         "additionalProperties": false,
         "description": "Dto ride class"
-      },
-      "TimeSpan": {
-        "type": "object",
-        "properties": {
-          "ticks": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "days": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "hours": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "milliseconds": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "minutes": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "seconds": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalDays": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalHours": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalMilliseconds": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalMinutes": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "totalSeconds": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
       },
       "UserDto": {
         "type": "object",

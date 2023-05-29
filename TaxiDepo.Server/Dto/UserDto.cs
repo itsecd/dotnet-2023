@@ -29,4 +29,5 @@ public class UserDto
     /// User phone number
     /// </summary>
     public string UserPhoneNumber { get; set; } = string.Empty;
+
 }

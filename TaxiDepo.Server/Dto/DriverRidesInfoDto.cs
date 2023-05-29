@@ -2,6 +2,9 @@
 
 namespace TaxiDepo.Server.Dto;
 
+/// <summary>
+/// Driver rides dto
+/// </summary>
 public class DriverRidesInfoDto
 {
     /// <summary>
@@ -27,10 +30,10 @@ public class DriverRidesInfoDto
     /// <summary>
     /// Average trip time
     /// </summary>
-    public TimeSpan AverageTime { get; set; } = new();
+    public double AverageTime { get; set; } = new();
 
     /// <summary>
     /// Max trip time
     /// </summary>
-    public TimeSpan MaxTime { get; set; } = new();
+    public double MaxTime { get; set; } = new();
 }

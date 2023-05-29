@@ -1,5 +1,72 @@
-﻿<Properties StartupConfiguration="{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}|Default" GitUserInfo="UsingGIT">
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="Multiple Projects">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
+      <Items>
+        <StartupItem ItemId="{C5B26610-3B03-46BA-AAEA-5FFA5DF78AF6}" ItemName="TaxiDepo.Client" ConfigurationId="Default" />
+        <StartupItem ItemId="{CCC1F1A1-DCEF-49C5-BBA5-0C5484772F4B}" ItemName="TaxiDepo.Server" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
   <MonoDevelop.Ide.ItemProperties.TaxiDepo.Server PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.TaxiDepo.Client PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TaxiDepo.Client/Views/MainWindow.axaml">
+    <Files>
+      <File FileName="TaxiDepo.Client/ViewModels/MainWindowViewModel.cs" Line="135" Column="1" IsPinned="True" />
+      <File FileName="TaxiDepo.Client/App.axaml.cs" Line="9" Column="22" IsPinned="True" />
+      <File FileName="TaxiDepo.Client/Views/MainWindow.axaml" Line="15" Column="12" IsPinned="True" />
+      <File FileName="TaxiDepo.Client/ApiWrapper.cs" Line="116" Column="16" IsPinned="True" />
+      <File FileName="TaxiDepo.Client/ViewModels/UserViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/RideViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/DriverViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/DriverRidesViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/CountUserRidesViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/CarViewModel.cs" />
+      <File FileName="TaxiDepo.Client/ViewModels/CarAndDriverViewModel.cs" />
+      <File FileName="TaxiDepo.Server/Controllers/RequiredTasksController.cs" />
+      <File FileName="TaxiDepo.Server/Dto/CountUserRidesDto.cs" />
+      <File FileName="TaxiDepo.Client/Program.cs" />
+      <File FileName="TaxiDepo.Model/Ride.cs" />
+      <File FileName="TaxiDepo.Server/Dto/RideDto.cs" />
+      <File FileName="TaxiDepo.Server/Dto/DriverRidesInfoDto.cs" />
+      <File FileName="TaxiDepo.Server/Controllers/RidesController.cs" />
+      <File FileName="TaxiDepo.Client/obj/swaggerClient.cs" />
+      <File FileName="TaxiDepo.Server/Dto/UserDto.cs" />
+      <File FileName="TaxiDepo.Model/User.cs" />
+      <File FileName="TaxiDepo.Client/Views/CarWindow.axaml" />
+      <File FileName="TaxiDepo.Client/Views/CarWindow.axaml.cs" />
+      <File FileName="TaxiDepo.Server/Dto/DriverDto.cs" />
+      <File FileName="TaxiDepo.Server/Dto/CarDto.cs" />
+      <File FileName="TaxiDepo.Server/Dto/CarAndDriverDto.cs" />
+      <File FileName="TaxiDepo.Server/Controllers/UsersController.cs" />
+      <File FileName="TaxiDepo.Model/Car.cs" />
+      <File FileName="TaxiDepo.Model/Driver.cs" />
+      <File FileName="TaxiDepo.Client/Views/RideWindow.axaml.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="dotnet-2023" expanded="True">
+            <Node name="TaxiDepo.Client" expanded="True">
+              <Node name="ConnectedServicesFolder" expanded="True" />
+              <Node name="ViewModels" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="MainWindow.axaml" selected="True" />
+              </Node>
+              <Node name="App.axaml" expanded="True" />
+            </Node>
+            <Node name="TaxiDepo.Server" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Dto" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.TaxiDepo.Model PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>

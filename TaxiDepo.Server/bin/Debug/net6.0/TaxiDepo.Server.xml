@@ -164,7 +164,7 @@
             </summary>
             <returns>CarDto object</returns>
         </member>
-        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.String,System.String)">
+        <member name="M:TaxiDepo.Server.Controllers.RequiredController.GetUsersByDate(System.DateTime,System.DateTime)">
             <summary>
             Task 2 - Print info about user who driven in date range sort by surname
             </summary>
@@ -322,6 +322,11 @@
             <param name="id">Needed id to delete</param>
             <returns>No content</returns>
         </member>
+        <member name="T:TaxiDepo.Server.Dto.CarAndDriverDto">
+            <summary>
+            Driver car pair dto
+            </summary>
+        </member>
         <member name="P:TaxiDepo.Server.Dto.CarAndDriverDto.Id">
             <summary>
             Car id
@@ -403,6 +408,11 @@
             Assigned driver Id
             </summary>
         </member>
+        <member name="T:TaxiDepo.Server.Dto.CountUserRidesDto">
+            <summary>
+            Count user rides dto
+            </summary>
+        </member>
         <member name="P:TaxiDepo.Server.Dto.CountUserRidesDto.UserSurname">
             <summary>
             User surname
@@ -418,9 +428,19 @@
             User patronymic
             </summary>
         </member>
+        <member name="P:TaxiDepo.Server.Dto.CountUserRidesDto.UserPhoneNumber">
+            <summary>
+            User patronymic
+            </summary>
+        </member>
         <member name="P:TaxiDepo.Server.Dto.CountUserRidesDto.AmountRides">
             <summary>
             Amount user rides
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.CountUserRidesDto.UserDate">
+            <summary>
+            User trip date
             </summary>
         </member>
         <member name="T:TaxiDepo.Server.Dto.DriverDto">
@@ -461,6 +481,16 @@
         <member name="P:TaxiDepo.Server.Dto.DriverDto.DriverPhoneNumber">
             <summary>
             Driver phone number
+            </summary>
+        </member>
+        <member name="P:TaxiDepo.Server.Dto.DriverDto.AmountRides">
+            <summary>
+            Driver amount rides  
+            </summary>
+        </member>
+        <member name="T:TaxiDepo.Server.Dto.DriverRidesInfoDto">
+            <summary>
+            Driver rides dto
             </summary>
         </member>
         <member name="P:TaxiDepo.Server.Dto.DriverRidesInfoDto.DriverSurname">

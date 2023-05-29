@@ -9,8 +9,9 @@
 		<Setter Property="Width" Value="100"></Setter>
 		<Setter Property="Height" Value="40"></Setter>
 		<Setter Property="Margin" Value="4, 4, 4, 17"></Setter>
-		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="Background" Value="Black"></Setter>
 		<Setter Property="CornerRadius" Value="5"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
 	</Style>
 	<Style Selector="Grid.MainGrid">
 		<Setter Property="Background" Value="DarkGray"></Setter>
@@ -28,7 +29,8 @@
 		<Setter Property="Margin" Value="7, 17, 7, 17"></Setter>
 		<Setter Property="Width" Value="500"></Setter>
 		<Setter Property="Height" Value="30"></Setter>
-		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="Background" Value="Black"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
 		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
 		<Setter Property="CornerRadius" Value="5"></Setter>
 	</Style>
@@ -47,12 +49,12 @@
 	<Style Selector="DataGrid">
 		<Setter Property="CornerRadius" Value="5"></Setter>
 		<Setter Property="Foreground" Value="White"></Setter>
-		<Setter Property="Background" Value="RoyalBlue"></Setter>
+		<Setter Property="Background" Value="Black"></Setter>
 		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
 		<Setter Property="Margin" Value="0, 10, 0, 10"></Setter>
 	</Style>
 	<Style Selector="DataGrid.Columns">
-		<Setter Property="Background" Value="RoyalBlue"></Setter>
-		<Setter Property="Foreground" Value="Blue"></Setter>
+		<Setter Property="Background" Value="Black"></Setter>
+		<Setter Property="Foreground" Value="Black"></Setter>
 	</Style>
 </Styles>

@@ -11,6 +11,7 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="swagger.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,5 +58,13 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaxiDepo.Model\TaxiDepo.Model.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <OpenApiReference Include="swagger.json" Namespace="TaxiDepo.Client">
+      <Link>OpenAPIs\swagger.json</Link>
+    </OpenApiReference>
   </ItemGroup>
 </Project>

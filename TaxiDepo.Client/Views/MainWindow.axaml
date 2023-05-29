@@ -9,7 +9,7 @@
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
 
 			<StackPanel Grid.Row="0" Orientation="Vertical">
 				<Label>
@@ -103,6 +103,118 @@
 					<DataGridTextColumn Header="PhoneNumber" Binding="{Binding UserPhoneNumber}"/>
 				</DataGrid.Columns>
 			</DataGrid>
+
+			<StackPanel Grid.Row="8" Orientation="Horizontal" Classes="Buttons">
+                    <Button Classes="ToolButton" Command="{Binding OnUpdateAnalytics}">Clear tasks</Button>
+            </StackPanel>
+
+			<StackPanel Grid.Row="9" Orientation="Vertical">
+                <Label>
+					<TextBlock Classes="h1">Get car and driver - Task 1</TextBlock>
+				</Label>
+            </StackPanel>
+
+            <DataGrid Grid.Row="10" AutoGenerateColumns="False"
+				      Items="{Binding CarAndDrivers}">
+				<DataGrid.Columns>
+				    <DataGridTextColumn Header="CarModel" Binding="{Binding CarModel}" />
+				    <DataGridTextColumn Header="CarColor" Binding="{Binding CarColour}" />
+				    <DataGridTextColumn Header="CarNumber" Binding="{Binding CarNumber}" />
+					<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}" />
+				    <DataGridTextColumn Header="DriverSurname" Binding="{Binding DriverSurname}" />
+				    <DataGridTextColumn Header="DriverName" Binding="{Binding DriverName}" />
+				    <DataGridTextColumn Header="DriverPatronymic" Binding="{Binding DriverPatronymic}" />
+					<DataGridTextColumn Header="DriverPassportId" Binding="{Binding DriverPassportId}" />
+				    <DataGridTextColumn Header="DriverPhoneNumber" Binding="{Binding DriverPhoneNumber}" />
+				    <DataGridTextColumn Header="DriverAddress" Binding="{Binding DriverAddress}" />
+				</DataGrid.Columns>
+            </DataGrid>
+
+			<StackPanel Grid.Row="11" Orientation="Vertical">
+                <Label>
+					<TextBlock Classes="h1">Get users with date - Task 2</TextBlock>
+				</Label>
+            </StackPanel>
+
+			<DataGrid Grid.Row="12" AutoGenerateColumns="False"
+				      Items="{Binding UsersByDate}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="UserSurname" Binding="{Binding UserSurname}"/>
+					<DataGridTextColumn Header="UserName" Binding="{Binding UserName}"/>
+					<DataGridTextColumn Header="UserPatronymic" Binding="{Binding UserPatronymic}"/>
+					<DataGridTextColumn Header="UserPhoneNumber" Binding="{Binding UserPhoneNumber}"/>
+					<DataGridTextColumn Header="UserDate" Binding="{Binding UserDate}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="13" Orientation="Vertical">
+                <Label>
+					<TextBlock Classes="h1">Count user rides - Task 3</TextBlock>
+				</Label>
+            </StackPanel>
+
+            <DataGrid Grid.Row="14" AutoGenerateColumns="False"
+                    Items="{Binding CountUserRides}">
+                 <DataGrid.Columns>
+                     <DataGridTextColumn Header="UserSurname" Binding="{Binding UserSurname}" />
+                     <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" />
+                     <DataGridTextColumn Header="UserPatronymic" Binding="{Binding UserPatronymic}" />
+                     <DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}" />
+                 </DataGrid.Columns>
+            </DataGrid>
+
+			<StackPanel Grid.Row="15" Orientation="Vertical">
+                <Label>
+					<TextBlock Classes="h1">Get top five drivers - Task 4</TextBlock>
+				</Label>
+            </StackPanel>
+
+            <DataGrid Grid.Row="16" AutoGenerateColumns="False"
+                    Items="{Binding TopDrivers}">
+                 <DataGrid.Columns>
+                     <DataGridTextColumn Header="DriverSurname" Binding="{Binding DriverSurname}" />
+                     <DataGridTextColumn Header="DriverName" Binding="{Binding DriverName}" />
+                     <DataGridTextColumn Header="DriverPatronymic" Binding="{Binding DriverPatronymic}" />
+                     <DataGridTextColumn Header="DriverPhoneNumber" Binding="{Binding DriverPhoneNumber}" />
+					 <DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}" />
+                 </DataGrid.Columns>
+            </DataGrid>
+
+			<StackPanel Grid.Row="17" Orientation="Vertical">
+                <Label>
+					<TextBlock Classes="h1">Drivers amount rides, average trip time, max trip time - Task 5</TextBlock>
+				</Label>
+            </StackPanel>
+
+            <DataGrid Grid.Row="18" AutoGenerateColumns="False"
+                      Items="{Binding DriverRides}">
+				<DataGrid.Columns>
+                    <DataGridTextColumn Header="DriverSurname" Binding="{Binding DriverSurname}" />
+                    <DataGridTextColumn Header="DriverName" Binding="{Binding DriverName}" />
+                    <DataGridTextColumn Header="DriverPatronymic" Binding="{Binding DriverPatronymic}" />
+					<DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}" />
+                    <DataGridTextColumn Header="AverageTime" Binding="{Binding AverageTime}" />
+                    <DataGridTextColumn Header="MaxTime" Binding="{Binding MaxTime}" />
+                </DataGrid.Columns>
+            </DataGrid>
+		
+			<StackPanel Grid.Row="19" Orientation="Vertical">
+                    <Label>
+						<TextBlock Classes="h1">Max user rides - Task 6</TextBlock>
+					</Label>
+            </StackPanel>
+
+            <DataGrid Grid.Row="20" AutoGenerateColumns="False"
+                    Items="{Binding MaxUserRides}">
+                 <DataGrid.Columns>
+                     <DataGridTextColumn Header="UserSurname" Binding="{Binding UserSurname}" />
+                     <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" />
+                     <DataGridTextColumn Header="UserPatronymic" Binding="{Binding UserPatronymic}" />
+                     <DataGridTextColumn Header="AmountRides" Binding="{Binding AmountRides}" />
+					 <DataGridTextColumn Header="UserDate" Binding="{Binding UserDate}" />
+                 </DataGrid.Columns>
+            </DataGrid>
+
 		</Grid>
 	</ScrollViewer>
 </Window>

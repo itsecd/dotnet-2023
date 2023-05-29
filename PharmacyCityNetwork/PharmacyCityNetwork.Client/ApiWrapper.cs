@@ -15,7 +15,6 @@ public class ApiWrapper
             .AddJsonFile("appsettings.json")
             .Build();
         var serverUrl = configuration.GetSection("ServerUrl").Value;
-
         _client = new ApiClient(serverUrl, new HttpClient());
     }
     public Task<ICollection<ProductGetDto>> GetProductsAsync()
@@ -33,5 +32,39 @@ public class ApiWrapper
     public async Task DeleteProductAsync(int id)
     {
         await _client.Product4Async(id);
+    }
+
+    public Task<ICollection<GroupGetDto>> GetGroupsAsync()
+    {
+        return _client.GroupAllAsync();
+    }
+    public async Task AddGroupAsync(GroupPostDto group)
+    {
+        await _client.GroupAsync(group);
+    }
+    public async Task UpdateGroupAsync(int id, GroupPostDto group)
+    {
+        await _client.Group3Async(id, group);
+    }
+    public async Task DeleteGroupAsync(int id)
+    {
+        await _client.Group4Async(id);
+    }
+
+    public Task<ICollection<PharmacyGetDto>> GetPharmacysAsync()
+    {
+        return _client.PharmacyAllAsync();
+    }
+    public async Task AddPharmacyAsync(PharmacyPostDto pharmacy)
+    {
+        await _client.PharmacyAsync(pharmacy);
+    }
+    public async Task UpdatePharmacyAsync(int id, PharmacyPostDto pharmacy)
+    {
+        await _client.Pharmacy3Async(id, pharmacy);
+    }
+    public async Task DeletePharmacyAsync(int id)
+    {
+        await _client.Pharmacy4Async(id);
     }
 }

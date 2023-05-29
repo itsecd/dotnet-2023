@@ -5,12 +5,12 @@ using ReactiveUI;
 using System;
 
 namespace PharmacyCityNetwork.Client.Views;
-public partial class ProductWindow : ReactiveWindow<ProductViewModel>
+public partial class GroupWindow : ReactiveWindow<GroupViewModel>
 {
-    public ProductWindow()
+    public GroupWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d =>  d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
+        this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {

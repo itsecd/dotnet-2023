@@ -22,6 +22,12 @@ public partial class App : Application
             {
                 cfg.CreateMap<ProductGetDto, ProductViewModel>();
                 cfg.CreateMap<ProductViewModel, ProductPostDto>();
+
+                cfg.CreateMap<GroupGetDto, GroupViewModel>();
+                cfg.CreateMap<GroupViewModel, GroupPostDto>();
+
+                cfg.CreateMap<PharmacyGetDto, PharmacyViewModel>();
+                cfg.CreateMap<PharmacyViewModel, PharmacyPostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

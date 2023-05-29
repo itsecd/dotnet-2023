@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive;
 using System.Text;
@@ -16,18 +17,21 @@ public class ProductViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private string _productName = string.Empty;
+    [Required]
     public string ProductName
     {
         get => _productName;
         set => this.RaiseAndSetIfChanged(ref _productName, value);
     }
     private int _groupId;
+    [Required]
     public int GroupId
     {
         get => _groupId;
         set => this.RaiseAndSetIfChanged(ref _groupId, value);
     }
     private int _manufacturerId;
+    [Required]
     public int ManufacturerId
     {
         get => _manufacturerId;

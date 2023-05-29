@@ -68,12 +68,14 @@ public class TransportController : ControllerBase
     /// </summary>
     /// <param name="transport"> Added transport </param>
     [HttpPost]
-    public async Task Post([FromBody] TransportPostDto transport)
+    public async Task<ActionResult<TransportGetDto>> Post([FromBody] TransportPostDto transport)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Transports.AddAsync(_mapper.Map<Transport>(transport));
+        var newTransport = _mapper.Map<Transport>(transport);
+        await context.Transports.AddAsync(newTransport);
         _logger.LogInformation("Successfully added");
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<TransportGetDto>(newTransport));
     }
     /// <summary>
     /// Put method which allows change the data of transport with a specific id

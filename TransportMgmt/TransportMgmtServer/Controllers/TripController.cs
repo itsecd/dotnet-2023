@@ -68,12 +68,14 @@ public class TripController : ControllerBase
     /// </summary>
     /// <param name="trip"> Added trip </param>
     [HttpPost]
-    public async Task Post([FromBody] TripPostDto trip)
+    public async Task<ActionResult<TripGetDto>> Post([FromBody] TripPostDto trip)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Trips.AddAsync(_mapper.Map<Trip>(trip));
+        var newTrip = _mapper.Map<Trip>(trip);
+        await context.Trips.AddAsync(newTrip);
         _logger.LogInformation("Successfully added");
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<TripGetDto>(newTrip));
     }
     /// <summary>
     /// Put method which allows change the data of trip with a specific id

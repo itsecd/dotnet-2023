@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportMgmt.Domain", "Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportMgmt.Tests", "TransportMgmt.Tests\TransportMgmt.Tests.csproj", "{BB98F033-4148-42AB-ADD5-8A3BBE793474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportMgmtServer", "TransportMgmtServer\TransportMgmtServer.csproj", "{61E29687-73D9-46A9-BACC-A52D2F18510D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportMgmtServer", "TransportMgmtServer\TransportMgmtServer.csproj", "{61E29687-73D9-46A9-BACC-A52D2F18510D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportMgmt.Client", "TransportMgmt.Client\TransportMgmt.Client.csproj", "{E59239C5-CB7D-4D60-AAF9-8EB738C92FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61E29687-73D9-46A9-BACC-A52D2F18510D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59239C5-CB7D-4D60-AAF9-8EB738C92FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59239C5-CB7D-4D60-AAF9-8EB738C92FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59239C5-CB7D-4D60-AAF9-8EB738C92FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59239C5-CB7D-4D60-AAF9-8EB738C92FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

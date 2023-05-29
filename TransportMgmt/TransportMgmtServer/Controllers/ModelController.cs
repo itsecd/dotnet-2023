@@ -68,12 +68,14 @@ public class ModelController : ControllerBase
     /// </summary>
     /// <param name="model"> Added model </param>
     [HttpPost]
-    public async Task Post([FromBody] ModelPostDto model)
+    public async Task<ActionResult<ModelGetDto>> Post ([FromBody] ModelPostDto model)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Models.AddAsync(_mapper.Map<Model>(model));
+        var newModel = _mapper.Map<Model>(model);
+        await context.Models.AddAsync(newModel);
         _logger.LogInformation("Successfully added");
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<ModelGetDto>(newModel));
     }
     /// <summary>
     /// Put method which allows change the data of model with a specific id

@@ -68,12 +68,14 @@ public class DriverController : ControllerBase
     /// </summary>
     /// <param name="driver"> Added driver </param>
     [HttpPost]
-    public async Task Post([FromBody] DriverPostDto driver)
+    public async Task<ActionResult<DriverGetDto>> Post([FromBody] DriverPostDto driver)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Drivers.AddAsync(_mapper.Map<Driver>(driver));
+        var newDriver = _mapper.Map<Driver>(driver);
+        await context.Drivers.AddAsync(newDriver);
         _logger.LogInformation("Successfully added");
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<DriverGetDto>(newDriver));
     }
     /// <summary>
     /// Put method which allows change the data of driver with a specific id
@@ -81,7 +83,7 @@ public class DriverController : ControllerBase
     /// <param name="id"> Driver id whose data will change </param>
     /// <param name="driverToPut"> New driver data </param>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] DriverPostDto driverToPut)
+    public async Task<ActionResult> Put(int id, [FromBody] DriverPostDto driverToPut)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var driver = await context.Drivers.FirstOrDefaultAsync(driver => driver.Id == id);

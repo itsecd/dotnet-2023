@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
         x:Class="AdmissionCommittee.Client.Views.EntrantResultWindow"
         xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
-        Title="Add EntrantResult"
+        Title="EntrantResult"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Width="450"

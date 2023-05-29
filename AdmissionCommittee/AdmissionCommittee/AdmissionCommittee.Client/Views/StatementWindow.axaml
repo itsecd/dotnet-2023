@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
         x:Class="AdmissionCommittee.Client.Views.StatementWindow"
         xmlns:vm="using:AdmissionCommittee.Client.ViewModels"
-        Title="Add Statement"
+        Title="Statement"
         SizeToContent="WidthAndHeight"
 		    WindowStartupLocation="CenterScreen"
         Width="450"

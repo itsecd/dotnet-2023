@@ -6,9 +6,17 @@ using System.Reactive;
 using System.Reactive.Linq;
 
 namespace AdmissionCommittee.Client.ViewModels;
+
+/// <summary>
+/// ViewModel of Result
+/// </summary>
 public class ResultViewModel : ViewModelBase
 {
     private int _idResult;
+
+    /// <summary>
+    /// Id of Result
+    /// </summary>
     public int IdResult
     {
         get => _idResult;
@@ -18,6 +26,9 @@ public class ResultViewModel : ViewModelBase
 
     private string _nameSubject = string.Empty;
 
+    /// <summary>
+    /// Name subject of Entrant
+    /// </summary>
     [Required]
     public string NameSubject
     {
@@ -27,6 +38,9 @@ public class ResultViewModel : ViewModelBase
 
     private IObservable<bool> CanSubmit { get; }
 
+    /// <summary>
+    /// Command binding for button submit
+    /// </summary>
     public ReactiveCommand<Unit, ResultViewModel> OnSubmitCommand { get; set; }
 
     public ResultViewModel()

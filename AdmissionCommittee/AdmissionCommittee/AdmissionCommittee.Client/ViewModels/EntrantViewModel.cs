@@ -4,9 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace AdmissionCommittee.Client.ViewModels;
+/// <summary>
+/// ViewModel of Entrant
+/// </summary>
 public class EntrantViewModel : ViewModelBase
 {
     private int _idEntrant;
+
+    /// <summary>
+    /// Id of Entrant
+    /// </summary>
     public int IdEntrant
     {
         get => _idEntrant;
@@ -15,6 +22,9 @@ public class EntrantViewModel : ViewModelBase
 
     private string _fullName = string.Empty;
 
+    /// <summary>
+    /// FullName of Entrant
+    /// </summary>
     [Required]
     public string FullName
     {
@@ -24,6 +34,9 @@ public class EntrantViewModel : ViewModelBase
 
     private DateTimeOffset? _dateBirth;
 
+    /// <summary>
+    /// Entrant's Birthday
+    /// </summary>
     public DateTimeOffset? DateBirth
     {
         get => _dateBirth;
@@ -31,6 +44,10 @@ public class EntrantViewModel : ViewModelBase
     }
 
     private string _country = string.Empty;
+
+    /// <summary>
+    /// Entrant's country
+    /// </summary>
     public string Country
     {
         get => _country;
@@ -39,6 +56,9 @@ public class EntrantViewModel : ViewModelBase
 
     private string _city = string.Empty;
 
+    /// <summary>
+    /// Entrant's city
+    /// </summary>
     [Required]
     public string City
     {
@@ -48,6 +68,9 @@ public class EntrantViewModel : ViewModelBase
 
     private IObservable<bool> CanSubmit { get; }
 
+    /// <summary>
+    /// Command binding for button submit
+    /// </summary>
     public ReactiveCommand<Unit, EntrantViewModel> OnSubmitCommand { get; set; }
 
     public EntrantViewModel()

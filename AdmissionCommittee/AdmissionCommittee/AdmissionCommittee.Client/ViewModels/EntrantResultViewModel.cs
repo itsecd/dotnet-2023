@@ -2,9 +2,16 @@
 using System.Reactive;
 
 namespace AdmissionCommittee.Client.ViewModels;
+/// <summary>
+/// ViewModel of EntrantResult
+/// </summary>
 public class EntrantResultViewModel : ViewModelBase
 {
     private int _idEntrantResult;
+
+    /// <summary>
+    /// Id of EntrantResult
+    /// </summary>
     public int IdEntrantResult
     {
         get => _idEntrantResult;
@@ -12,7 +19,9 @@ public class EntrantResultViewModel : ViewModelBase
     }
 
     private int _entrantId;
-
+    /// <summary>
+    /// Id of Entrant
+    /// </summary>
     public int EntrantId
     {
         get => _entrantId;
@@ -21,7 +30,9 @@ public class EntrantResultViewModel : ViewModelBase
 
 
     private int _resultId;
-
+    /// <summary>
+    /// Id of Result
+    /// </summary>
     public int ResultId
     {
         get => _resultId;
@@ -30,13 +41,18 @@ public class EntrantResultViewModel : ViewModelBase
 
 
     private int _mark;
-
+    /// <summary>
+    /// Exam mark
+    /// </summary>
     public int Mark
     {
         get => _mark;
         set => this.RaiseAndSetIfChanged(ref _mark, value);
     }
 
+    /// <summary>
+    /// Binding command for button Submit
+    /// </summary>
     public ReactiveCommand<Unit, EntrantResultViewModel> OnSubmitCommand { get; set; }
 
     public EntrantResultViewModel()

@@ -9,35 +9,82 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace AdmissionCommittee.Client.ViewModels;
+
+/// <summary>
+/// ViewModel of window Requests
+/// </summary>
 public class RequestsViewModel : ViewModelBase
 {
 
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// List information about Entrants from specifiс city (Request)
+    /// </summary>
     public ObservableCollection<EntrantViewModel> EntrantsFromCity { get; } = new();
+
+    /// <summary>
+    /// List information about Entrants over twenty years older (Request)
+    /// </summary>
     public ObservableCollection<EntrantViewModel> EntrantsOverTwentyYearsOlder { get; } = new();
+
+    /// <summary>
+    /// List information about Entrants in specialty (Request)
+    /// </summary>
     public ObservableCollection<EntrantViewModel> EntrantsInSpecialty { get; } = new();
+
+    /// <summary>
+    /// List information about count Entrants in each specialty (Request)
+    /// </summary>
     public ObservableCollection<CountEntrantsInEachSpecialtyGetDto> CountEntrantsInEachSpecialty { get; } = new();
+
+    /// <summary>
+    /// List information about Entrants in top 5 in mark for three subjects (Request)
+    /// </summary>
     public ObservableCollection<EntrantViewModel> EntrantsTopFive { get; } = new();
 
-
+    /// <summary>
+    /// Command binding for button request Entrants from city
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnGetEntrantsFromCity { get; set; }
 
+    /// <summary>
+    /// Command binding for button request Entrants over 20 years older
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnGetEntrantsOverTwentyYearsOlder { get; set; }
 
+    /// <summary>
+    /// Command binding for button request Entrants in specialty
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnGetEntrantsInSpecialty { get; set; }
 
+    /// <summary>
+    /// Command binding for button request Count Entrants in each specialty
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnGetCountEntrantsInEachSpecialty { get; set; }
 
+    /// <summary>
+    /// Command binding for button request Top 5 Entrants
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnGetEntrantsTopFive { get; set; }
 
-
+    /// <summary>
+    /// Open window get city for request
+    /// </summary>
     public Interaction<RequestCityViewModel, RequestCityViewModel?> ShowEntrantsFromCityDialog { get; set; }
 
+    /// <summary>
+    /// Open window get specialty for request
+    /// </summary>
     public Interaction<RequestSpecialtyViewModel, RequestSpecialtyViewModel?> ShowEntrantsInSpecialtyDialog { get; set; }
 
+
     private bool _visibleEntrantsFromCity;
+
+    /// <summary>
+    /// Visible result request Entrants from specifiс city
+    /// </summary>
     public bool VisibleEntrantsFromCity
     {
         get => _visibleEntrantsFromCity;
@@ -45,6 +92,10 @@ public class RequestsViewModel : ViewModelBase
     }
 
     private bool _visibleEntrantsOverTwentyYearsOlder;
+
+    /// <summary>
+    /// Visible result request Entrants over twenty years older
+    /// </summary>
     public bool VisibleEntrantsOverTwentyYearsOlder
     {
         get => _visibleEntrantsOverTwentyYearsOlder;
@@ -52,6 +103,10 @@ public class RequestsViewModel : ViewModelBase
     }
 
     private bool _visibleEntrantsInSpecialty;
+
+    /// <summary>
+    /// Visible result request Entrants in specialty
+    /// </summary>
     public bool VisibleEntrantsInSpecialty
     {
         get => _visibleEntrantsInSpecialty;
@@ -59,6 +114,10 @@ public class RequestsViewModel : ViewModelBase
     }
 
     private bool _visibleCountEntrants;
+
+    /// <summary>
+    /// Visible result request Count Entrants in each specialty
+    /// </summary>
     public bool VisibleCountEntrants
     {
         get => _visibleCountEntrants;
@@ -66,6 +125,10 @@ public class RequestsViewModel : ViewModelBase
     }
 
     private bool _visibleEntrantsTopFive;
+
+    /// <summary>
+    /// Visible result request Top 5 Entrants
+    /// </summary>
     public bool VisibleEntrantsTopFive
     {
         get => _visibleEntrantsTopFive;

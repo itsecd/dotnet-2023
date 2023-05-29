@@ -12,26 +12,56 @@ using System.Threading.Tasks;
 
 
 namespace AdmissionCommittee.Client.ViewModels;
-
+/// <summary>
+/// ViewModel of Main Window
+/// </summary>
 public class MainWindowViewModel : ViewModelBase
 {
     private readonly ApiWrapper _apiClient;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// List information about Entrants
+    /// </summary>
     public ObservableCollection<EntrantViewModel> Entrants { get; } = new();
+
+    /// <summary>
+    /// List information about EntrantResults
+    /// </summary>
     public ObservableCollection<EntrantResultViewModel> EntResults { get; } = new();
 
+    /// <summary>
+    /// List information about Results
+    /// </summary>
     public ObservableCollection<ResultViewModel> Results { get; } = new();
 
+    /// <summary>
+    /// List information about Statements
+    /// </summary>
     public ObservableCollection<StatementViewModel> Statements { get; } = new();
 
+    /// <summary>
+    /// List information about StatementSpecialties
+    /// </summary>
     public ObservableCollection<StatementSpecialtyViewModel> StSpecialties { get; } = new();
 
+    /// <summary>
+    /// List information about Specialties
+    /// </summary>
     public ObservableCollection<SpecialtyViewModel> Specialties { get; } = new();
 
+    /// <summary>
+    /// Selected an element in table or not
+    /// </summary>
     public IObservable<bool> CanUpdateOrDelete { get; set; }
 
+
+
     private EntrantViewModel? _selectedEntrant;
+
+    /// <summary>
+    /// Selected Entrant in list Entrants
+    /// </summary>
     public EntrantViewModel? SelectedEntrant
     {
         get => _selectedEntrant;
@@ -40,6 +70,10 @@ public class MainWindowViewModel : ViewModelBase
 
 
     private EntrantResultViewModel? _selectedEntResult;
+
+    /// <summary>
+    /// Selected EntrantResult in list EntrantResults
+    /// </summary>
     public EntrantResultViewModel? SelectedEntResult
     {
         get => _selectedEntResult;
@@ -49,6 +83,10 @@ public class MainWindowViewModel : ViewModelBase
 
 
     private ResultViewModel? _selectedResult;
+
+    /// <summary>
+    /// Selected Result in list Results
+    /// </summary>
     public ResultViewModel? SelectedResult
     {
         get => _selectedResult;
@@ -57,6 +95,10 @@ public class MainWindowViewModel : ViewModelBase
 
 
     private StatementViewModel? _selectedStatement;
+
+    /// <summary>
+    /// Selected Statement in list Statements
+    /// </summary>
     public StatementViewModel? SelectedStatement
     {
         get => _selectedStatement;
@@ -65,6 +107,10 @@ public class MainWindowViewModel : ViewModelBase
 
 
     private StatementSpecialtyViewModel? _selectedStSpecialty;
+
+    /// <summary>
+    /// Selected StatementSpecialty in list StatementSpecialties
+    /// </summary>
     public StatementSpecialtyViewModel? SelectedStSpecialty
     {
         get => _selectedStSpecialty;
@@ -73,6 +119,10 @@ public class MainWindowViewModel : ViewModelBase
 
 
     private SpecialtyViewModel? _selectedSpecialty;
+
+    /// <summary>
+    /// Selected Specialty in list Specialties
+    /// </summary>
     public SpecialtyViewModel? SelectedSpecialty
     {
         get => _selectedSpecialty;
@@ -80,21 +130,61 @@ public class MainWindowViewModel : ViewModelBase
     }
 
 
+    /// <summary>
+    /// Command binding for button Add
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnAddCommand { get; set; }
+
+    /// <summary>
+    /// Command binding for button Update
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnUpdateCommand { get; set; }
+
+    /// <summary>
+    /// Command binding for button Delete
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnDeleteCommand { get; set; }
 
+    /// <summary>
+    /// Command binding for button open window with requests
+    /// </summary>
     public ReactiveCommand<Unit, Unit> OnRequestsCommand { get; set; }
 
 
 
-
+    /// <summary>
+    /// Open Entrant View in dialog
+    /// </summary>
     public Interaction<EntrantViewModel, EntrantViewModel?> ShowEntrantDialog { get; }
+
+    /// <summary>
+    /// Open EntrantResult View in dialog
+    /// </summary>
     public Interaction<EntrantResultViewModel, EntrantResultViewModel?> ShowEntResultDialog { get; }
+
+    /// <summary>
+    /// Open Result View in dialog
+    /// </summary>
     public Interaction<ResultViewModel, ResultViewModel?> ShowResultDialog { get; }
+
+    /// <summary>
+    /// Open Statement View in dialog
+    /// </summary>
     public Interaction<StatementViewModel, StatementViewModel?> ShowStatementDialog { get; }
+
+    /// <summary>
+    /// Open SpecialtyStatement View in dialog
+    /// </summary>
     public Interaction<StatementSpecialtyViewModel, StatementSpecialtyViewModel?> ShowStSpecialtyDialog { get; }
+
+    /// <summary>
+    /// Open Specialty View in dialog
+    /// </summary>
     public Interaction<SpecialtyViewModel, SpecialtyViewModel?> ShowSpecialtyDialog { get; }
+
+    /// <summary>
+    /// Open Requests View in dialog
+    /// </summary>
     public Interaction<RequestsViewModel, RequestsViewModel?> ShowRequestsDialog { get; }
 
     private int _selectionHeader;
@@ -241,7 +331,10 @@ public class MainWindowViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadEntrantsAsync);
     }
 
-
+    /// <summary>
+    /// Open requests window
+    /// </summary>
+    /// <returns></returns>
     public async Task OpenRequestsAsync()
     {
         await ShowRequestsDialog.Handle(new RequestsViewModel(_apiClient));
@@ -372,7 +465,10 @@ public class MainWindowViewModel : ViewModelBase
     }
 
 
-
+    /// <summary>
+    /// Add data async to database
+    /// </summary>
+    /// <returns>Task or throw exception</returns>
     public async Task AddDataAsync()
     {
         if (_visibleItems["visibleEntrants"])
@@ -485,6 +581,10 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Update data async to database
+    /// </summary>
+    /// <returns>Task or throw exception</returns>
     public async Task UpdateDataAsync()
     {
         if (SelectedEntrant != null)
@@ -603,7 +703,10 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-
+    /// <summary>
+    /// Delete data async to database
+    /// </summary>
+    /// <returns>Task or throw exception</returns>
     public async Task DeleteDataAsync()
     {
         if (SelectedEntrant != null)

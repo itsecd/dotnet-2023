@@ -4,9 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace AdmissionCommittee.Client.ViewModels;
+
+/// <summary>
+/// ViewModel of Specialty
+/// </summary>
 public class SpecialtyViewModel : ViewModelBase
 {
     private int _idSpecialty;
+
+    /// <summary>
+    /// Id of Specialty
+    /// </summary>
     public int IdSpecialty
     {
         get => _idSpecialty;
@@ -15,6 +23,9 @@ public class SpecialtyViewModel : ViewModelBase
 
     private string _cypher = string.Empty;
 
+    /// <summary>
+    /// Specialty cipher
+    /// </summary>
     public string Cypher
     {
         get => _cypher;
@@ -23,6 +34,9 @@ public class SpecialtyViewModel : ViewModelBase
 
     private string _nameSpecialty = string.Empty;
 
+    /// <summary>
+    /// Name specialty
+    /// </summary>
     [Required]
     public string NameSpecialty
     {
@@ -31,6 +45,10 @@ public class SpecialtyViewModel : ViewModelBase
     }
 
     private string _faculty = string.Empty;
+
+    /// <summary>
+    /// Аaculty that includes the specialty
+    /// </summary>
     public string Faculty
     {
         get => _faculty;
@@ -39,6 +57,9 @@ public class SpecialtyViewModel : ViewModelBase
 
     private IObservable<bool> CanSubmit { get; }
 
+    /// <summary>
+    /// Command binding for button submit
+    /// </summary>
     public ReactiveCommand<Unit, SpecialtyViewModel> OnSubmitCommand { get; set; }
 
     public SpecialtyViewModel()

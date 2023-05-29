@@ -1,5 +1,8 @@
 ﻿namespace Department.Server.Dto;
 
+/// <summary>
+/// Class SubjectSetDto has the info about all subjects
+/// </summary>
 public class SubjectSetDto
 {
     /// <summary>

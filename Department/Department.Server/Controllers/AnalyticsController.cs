@@ -54,7 +54,7 @@ public class AnalyticsController : ControllerBase
     [HttpGet("course_project_teachers")]
     public async Task<ActionResult<TeacherGetDto>> GetCourseProjectTeachers()
     {
-        _logger.LogInformation("Give info about clients who rented mountain bikes");
+        _logger.LogInformation("Give info about all teachers whose curriculum includes a course project");
         if (_context.Teachers == null || _context.Courses == null)
         {
             return NotFound();
@@ -80,11 +80,11 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// 3rd request: give info about all subjects for given group
     /// </summary>
-    /// <returns>Total rent time for each type in minutes</returns>
+    /// <returns>List of subjects</returns>
     [HttpGet("group_subjects")]
     public async Task<ActionResult> GetGroupSubjects(int groupNumber)
     {
-        _logger.LogInformation("Get total rent time for each bike type");
+        _logger.LogInformation("Give info about all subjects for given group");
         if (_context.Courses == null || _context.Groups == null)
         {
             return NotFound();
@@ -110,7 +110,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// 4th request: summary information about the department (amount of teachers, amount of groups, amount of students, etc.)
     /// </summary>
-    /// <returns>Clients who rented bikes the most</returns>
+    /// <returns>Department info</returns>
     [HttpGet("department_summary")]
     public async Task<ActionResult> GetDepartmentInfo()
     {
@@ -160,7 +160,7 @@ public class AnalyticsController : ControllerBase
     /// <summary>
     /// 5th request: give info about most busy teacher
     /// </summary>
-    /// <returns>Top 5 most rented bikes</returns>
+    /// <returns>Teachers info</returns>
     [HttpGet("most_busy_teachers")]
     public async Task<ActionResult> TestMostBusy()
     {

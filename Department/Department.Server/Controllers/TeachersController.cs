@@ -70,7 +70,7 @@ public class TeachersController : ControllerBase
     /// </summary>
     /// <param name="id">Teacher id</param>
     /// <param name="teacher">Changing teacher</param>
-    /// <returns></returns>
+    /// <returns>Action result</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutTeacher(int id, TeacherSetDto teacher)
     {

@@ -1,5 +1,8 @@
 ﻿namespace Department.Server.Dto;
 
+/// <summary>
+/// Class CourseGetDto has info about all courses at the department
+/// </summary>
 public class CourseGetDto
 {
     /// <summary>

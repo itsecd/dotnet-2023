@@ -26,7 +26,7 @@ public class CoursesController : ControllerBase
     /// <summary>
     /// View all courses
     /// </summary>
-    /// <returns>Subjects list</returns>
+    /// <returns>Courses list</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CourseGetDto>>> GetCourses()
     {

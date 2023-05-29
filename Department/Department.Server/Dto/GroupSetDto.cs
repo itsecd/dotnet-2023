@@ -1,11 +1,14 @@
 ﻿namespace Department.Server.Dto;
 
+/// <summary>
+/// Class GroupSetDto has the info about all groups
+/// </summary>
 public class GroupSetDto
 {
     /// <summary>
     /// Group number
     /// </summary>
-    public int Id { get; set; }
+    public int GroupNumber { get; set; }
 
     /// <summary>
     /// Amount of students

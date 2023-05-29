@@ -3,9 +3,14 @@
 public class GroupGetDto
 {
     /// <summary>
-    /// Group number
+    /// Group id
     /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Group number
+    /// </summary>
+    public int GroupNumber { get; set; }
 
     /// <summary>
     /// Amount of students

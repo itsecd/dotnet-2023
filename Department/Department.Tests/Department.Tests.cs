@@ -4,9 +4,6 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
 {
     private readonly DepartmentFixture _departmentFixture;
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
     public DepartmentTests(DepartmentFixture departmentFixture)
     {
         _departmentFixture = departmentFixture;
@@ -52,7 +49,7 @@ public class DepartmentTests : IClassFixture<DepartmentFixture>
         var request =
             from subject in _departmentFixture.Subjects
             join course in _departmentFixture.Courses on subject.Name equals course.SubjectName
-            where course.GroupId == 6311
+            where course.GroupId == 1
             select subject;
 
         Assert.Equal(2, request.Count());

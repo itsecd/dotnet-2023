@@ -24,9 +24,9 @@ public class DepartmentFixture
 
         _groups = new List<Group>
         {
-            new Group {Id = 6311, StudentAmount = 25, EducationType = "D"},
-            new Group {Id = 6312, StudentAmount = 16, EducationType = "D"},
-            new Group {Id = 6295, StudentAmount = 25, EducationType = "V"}
+            new Group {Id = 1, GroupNumber = 6311, StudentAmount = 25, EducationType = "D"},
+            new Group {Id = 2, GroupNumber = 6312, StudentAmount = 16, EducationType = "D"},
+            new Group {Id = 3, GroupNumber = 6295, StudentAmount = 25, EducationType = "V"}
         };
 
         _teachers = new List<Teacher>
@@ -38,10 +38,10 @@ public class DepartmentFixture
 
         _courses = new List<Course>
         {
-            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 256, GroupId = 6312, TeachersName = "Maksimova Lyudmila", Id = 1, SubjectId = 1, TeacherId = 1},
-            new Course {SubjectName = "Industrial programming", CourseType = "Course project", SemesterHours = 123, GroupId = 6311, TeachersName = "Shashkova Tatiana", Id = 2, TeacherId = 2, SubjectId = 2},
-            new Course {SubjectName = "Physics", CourseType = "Course project", SemesterHours = 14, GroupId = 6295, TeachersName = "Maksimova Lyudmila", Id = 3, SubjectId = 4, TeacherId = 1 },
-            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 500, GroupId = 6311, TeachersName = "Shashkova Tatiana", Id = 4, SubjectId = 1, TeacherId = 2}
+            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 256, GroupId = 2, TeachersName = "Maksimova Lyudmila", Id = 1, SubjectId = 1, TeacherId = 1},
+            new Course {SubjectName = "Industrial programming", CourseType = "Course project", SemesterHours = 123, GroupId = 1, TeachersName = "Shashkova Tatiana", Id = 2, TeacherId = 2, SubjectId = 2},
+            new Course {SubjectName = "Physics", CourseType = "Course project", SemesterHours = 14, GroupId = 3, TeachersName = "Maksimova Lyudmila", Id = 3, SubjectId = 4, TeacherId = 1 },
+            new Course {SubjectName = "Math", CourseType = "Lectures", SemesterHours = 500, GroupId = 1, TeachersName = "Shashkova Tatiana", Id = 4, SubjectId = 1, TeacherId = 2}
         };
     }
 

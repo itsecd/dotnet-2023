@@ -10,10 +10,16 @@ namespace Department.Domain;
 public class Group
 {
     /// <summary>
-    /// Group number
+    /// Group id
     /// </summary>
     [Column("id")]
     public int Id { get; set; }
+
+    /// <summary>
+    /// Group number
+    /// </summary>
+    [Column("group_number")]
+    public int GroupNumber { get; set; }
 
     /// <summary>
     /// Amount of students

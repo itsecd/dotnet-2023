@@ -15,6 +15,7 @@
 
 Приватизация нежилого фонда - privatization of non-residential fund (PONRF).
 
+# Скриншоты клиентского приложения
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/daa7e701-078e-498f-816e-89d5ddb083c3)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f8198b0b-d942-4e8d-8993-4c79fe99fbd5)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/09befe27-00cc-44a8-936a-822e84aa64fd)
@@ -25,6 +26,7 @@
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/0d6bb436-a93d-4d03-ad87-41066ec63e31)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/394f0612-4429-4b92-868c-3fed7b13a354)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/e34d59fb-19a8-483c-9e40-dc47e70e2471)
+![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/a4c1865a-d548-4410-a0f2-eb3985354698)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/df0da0d6-d83e-49bc-ba5b-dc30e83e99d8)
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/41cc41e0-06cd-4a62-b633-04b478e08f7e)
 

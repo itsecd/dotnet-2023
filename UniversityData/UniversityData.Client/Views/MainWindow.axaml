@@ -49,10 +49,10 @@
 						<Button Classes ="ToolButton" Command="{Binding OnAddUniversityPropertyCommand}">
 							<Image Source="/Assets/node_add.png"/>
 						</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityCommand}">
+						<Button Classes ="ToolButton" Command="{Binding OnChangeUniversityPropertyCommand}">
 							<Image Source="/Assets/node_change.png"/>
 						</Button>
-						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityCommand}">
+						<Button Classes ="ToolButton" Command="{Binding OnDeleteUniversityPropertyCommand}">
 							<Image Source="/Assets/node_delete.png"/>
 						</Button>
 					</StackPanel>
@@ -215,7 +215,7 @@
 
 					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
 							  Items="{Binding Universities}"
-							  SelectedItem="{Binding University}">
+							  SelectedItem="{Binding SelectedUniversity}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Регистрационный номер" Binding="{Binding Number}"/>

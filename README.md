@@ -14,3 +14,15 @@
 4) Найти адреса всех покупателей, участвующих в аукционе указанного числа(даты).
 5) Вывести топ 5 покупателей, потративших больше всего денежных средств.
 6) Вывести данные об аукционах, принесших наибольшую прибыль(суммарную разницу между первоначальной и конечной стоимостью).
+
+### Реализация клиентского приложения
+## Главное окно с отображением здания
+![MainWindowBuildings.png](Screenshots/MainWindowBuildings.png)
+## Главное окно с отображением покупателя
+![MainWindowBuyers.png](Screenshots/MainWindowBuyers.png)
+## Главное окно с аналитикой
+![MainWindowAnalytics.png](Screenshots/MainWindowAnalytics.png)
+## Окно добавления и редактирования покупателя
+![BuyerWindow.png](Screenshots/BuyerWindow.png)
+## Окно добавления и редактирования здания
+![BuildingWindow.png](Screenshots/BuildingWindow.png)

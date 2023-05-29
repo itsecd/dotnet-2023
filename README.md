@@ -17,30 +17,57 @@
 
 # Скриншоты клиентского приложения
 Главное окно:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f33cfb9c-087b-4338-8cec-bc9c73071487)
+
 Данные о приватизированных зданиях:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/7a9fe4bf-73f5-4973-8ceb-ca27a728aa52)
+
 Окно создания или изменения записи о приватизированном здании:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/73981374-76e7-4554-835b-73cccf17e484)
+
 Данные о зданиях:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/003d7638-baf3-44cb-9c62-15f76eabb9c9)
+
 Окно создания или изменения записи о здании:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/e28f06c5-4d06-47d0-8d42-67105eab5a73)
+
 Данные об аукционах:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/0fae164f-8f7c-4152-ac8a-971028c2297b)
+
 Окно создания или изменения записи об аукционе:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/c0c8993f-40a5-46db-852f-c7cc71113a8a)
+
 Данные о покупателях:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/93c4dfe3-c030-48d1-92f2-ae31233ee646)
+
 Окно создания или изменения записи о покупателе:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/f8d64321-b025-4a92-be0c-50008180a87f)
+
 Начальное окно запроса на примере окна запроса о выводе всех покупателей:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/a483c5ba-7d51-4dba-a3be-c9ce5a8fc73d)
+
 Запрос о выводе данных обо всех покупателях:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/6d01f340-6500-4e89-8c8d-1f09428ea87c)
+
 Запрос о выводе данных аукционов, на которых были проданы не все здания:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/34cf95a5-4eb6-48ca-b792-c966205a8b7d)
+
 Запрос о выводе топ-5 покупателей, потративших наибольшую сумму денег на аукционах:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/290204d6-f003-4aef-83a3-7e085a099aab)
+
 Запрос о выводе аукционов, принесших наибольшую прибыль:
+
 ![image](https://github.com/WinterJupiter/dotnet-2023/assets/90478585/c5305cd2-1603-4ebe-b7dd-b676b3bb6b84)

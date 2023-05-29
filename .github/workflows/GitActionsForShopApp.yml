@@ -26,6 +26,6 @@ jobs:
     - name: Build server with dotnet
       run: dotnet build ShopApp/ShopsServer
     - name: Build client with dotnet
-      run: dotnet build ShopApp/ShopClient
+      run: dotnet build ShopApp/ShopsClient
     - name: Test with dotnet
       run: dotnet test ShopApp

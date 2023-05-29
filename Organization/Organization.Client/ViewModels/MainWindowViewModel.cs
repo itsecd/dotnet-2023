@@ -32,6 +32,15 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<WorkshopViewModel> Workshops { get; } = new();
 
+
+    public ObservableCollection<EmployeeWithFewDepartmentsViewModel> EmployeesWithFewDepartments { get; } = new();
+
+    public ObservableCollection<ArchiveOfDismissalsViewModel> ArchiveOfDismissals { get; } = new();
+
+    public ObservableCollection<AverageAgeInDepartmentViewModel> AverageAgeInDepartments { get; } = new();
+
+    public ObservableCollection<EmployeeLastYearVoucherViewModel> EmployeesLastYearVoucher { get; } = new();
+
     public ObservableCollection<EmployeeViewModel> EmployeesInDepartment { get; } = new();
 
     private int _departmentId;
@@ -544,6 +553,7 @@ public class MainWindowViewModel : ViewModelBase
                 (_selectedVacationVoucher!.Id,
                     _mapper.Map<PostVacationVoucherDto>(vacationVoucherViewModel));
                 _mapper.Map(vacationVoucherViewModel, SelectedVacationVoucher);
+                RxApp.MainThreadScheduler.Schedule(LoadDatabaseDataAsync);
             }
         }, this.WhenAnyValue(viewModel => viewModel.SelectedVacationVoucher)
         .Select(selectProduct => selectProduct != null));
@@ -700,6 +710,10 @@ public class MainWindowViewModel : ViewModelBase
         VoucherTypes.Clear();
         Workshops.Clear();
 
+        EmployeesWithFewDepartments.Clear();
+        ArchiveOfDismissals.Clear();
+        AverageAgeInDepartments.Clear();
+        EmployeesLastYearVoucher.Clear();
         EmployeesInDepartment.Clear();
 
         var departmentEmployees = await _apiClient.GetDepartmentEmployeesAsync();
@@ -764,6 +778,58 @@ public class MainWindowViewModel : ViewModelBase
             foreach (var employee in employees)
             {
                 EmployeesInDepartment.Add(_mapper.Map<EmployeeViewModel>(employee));
+            }
+        }
+        catch
+        {
+
+        }
+
+        try
+        {
+            var archive = await _apiClient.GetArchiveofDismissals();
+            foreach (var record in archive)
+            {
+                ArchiveOfDismissals.Add(_mapper.Map<ArchiveOfDismissalsViewModel>(record));
+            }
+        }
+        catch
+        {
+
+        }
+
+        try
+        {
+            var avgAgeInDepartments = await _apiClient.GetAverageAgeInDepartments();
+            foreach (var record in avgAgeInDepartments)
+            {
+                AverageAgeInDepartments.Add(_mapper.Map<AverageAgeInDepartmentViewModel>(record));
+            }
+        }
+        catch
+        {
+
+        }
+
+        try
+        {
+            var employeesLastYearVoucher = await _apiClient.GetEmployeesWithLastYearVoucher();
+            foreach (var employee in employeesLastYearVoucher)
+            {
+                EmployeesLastYearVoucher.Add(_mapper.Map<EmployeeLastYearVoucherViewModel>(employee));
+            }
+        }
+        catch
+        {
+
+        }
+
+        try
+        {
+            var employeesDto = await _apiClient.GetEmployeesWithFewDepartments();
+            foreach (var employee in employeesDto)
+            {
+                EmployeesWithFewDepartments.Add(_mapper.Map<EmployeeWithFewDepartmentsViewModel>(employee));
             }
         }
         catch

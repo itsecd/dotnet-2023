@@ -208,6 +208,31 @@ public class ApiWrapper
         return _client.WorkshopDELETEAsync(id);
     }
 
+    public Task<ICollection<EmployeeWithFewDepartmentsDto>> GetEmployeesWithFewDepartments()
+    {
+        return _client.EmployeesWithFewDepartmentsAsync();
+    }
+
+    public Task<ICollection<ArchiveOfDismissalsDto>> GetArchiveofDismissals()
+    {
+        return _client.ArchiveOfDismissalsAsync();
+    }
+
+    public Task<ICollection<AverageAgeInDepartmentDto>> GetAverageAgeInDepartments()
+    {
+        return _client.AvgAgeInDepartmentsAsync();
+    }
+
+    public Task<ICollection<EmployeeLastYearVoucherDto>> GetEmployeesWithLastYearVoucher()
+    {
+        return _client.EmployeeLastYearVoucherAsync();
+    }
+
+    public Task<ICollection<EmployeeWorkExperienceDto>> GetEmployeesWithLongestWorkExperience()
+    {
+        return _client.EmployeeWithLongestWorkExperienceAsync();
+    }
+
     public Task<ICollection<GetEmployeeDto>> GetEmployeesInDepartment(int id)
     {
         return _client.DepartmentIdAsync(id);

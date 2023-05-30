@@ -13,13 +13,7 @@ public class ViewModelBase : ReactiveObject
     {
         RxApp.MainThreadScheduler.Schedule(async () =>
         {
-            try
-            {
-                await ShowMessageInteraction.Handle(messageViewModel);
-            }
-            catch
-            {
-            }
+            await ShowMessageInteraction.Handle(messageViewModel);
         });
     }
 }

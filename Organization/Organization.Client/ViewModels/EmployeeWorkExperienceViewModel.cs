@@ -34,8 +34,4 @@ public class EmployeeWorkExperienceViewModel : ViewModelBase
         get => _workExperience;
         set => this.RaiseAndSetIfChanged(ref _workExperience, value);
     }
-
-    public EmployeeWorkExperienceViewModel()
-    {
-    }
 }

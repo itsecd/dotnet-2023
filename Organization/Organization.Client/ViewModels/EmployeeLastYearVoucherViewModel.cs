@@ -33,9 +33,4 @@ public class EmployeeLastYearVoucherViewModel : ViewModelBase
         get => _voucherTypeName;
         set => this.RaiseAndSetIfChanged(ref _voucherTypeName, value);
     }
-
-
-    public EmployeeLastYearVoucherViewModel()
-    {
-    }
 }

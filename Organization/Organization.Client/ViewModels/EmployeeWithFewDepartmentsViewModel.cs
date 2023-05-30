@@ -39,8 +39,4 @@ public class EmployeeWithFewDepartmentsViewModel : ViewModelBase
         get => _countDepart;
         set => this.RaiseAndSetIfChanged(ref _countDepart, value);
     }
-
-    public EmployeeWithFewDepartmentsViewModel()
-    {
-    }
 }

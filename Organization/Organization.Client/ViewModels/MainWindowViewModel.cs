@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DynamicData.Kernel;
 using ReactiveUI;
 using Splat;
 using System;
@@ -42,7 +43,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<EmployeeViewModel> EmployeesInDepartment { get; } = new();
 
-    private int _departmentId;
+    private int _departmentId = 1;
 
     public int DepartmentId
     {
@@ -811,9 +812,11 @@ public class MainWindowViewModel : ViewModelBase
                 EmployeesInDepartment.Add(_mapper.Map<EmployeeViewModel>(employee));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading employees in department:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
 
         try
@@ -824,9 +827,11 @@ public class MainWindowViewModel : ViewModelBase
                 ArchiveOfDismissals.Add(_mapper.Map<ArchiveOfDismissalsViewModel>(record));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading archive of dismissals:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
 
         try
@@ -837,9 +842,11 @@ public class MainWindowViewModel : ViewModelBase
                 AverageAgeInDepartments.Add(_mapper.Map<AverageAgeInDepartmentViewModel>(record));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading average age in departments:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
 
         try
@@ -850,9 +857,11 @@ public class MainWindowViewModel : ViewModelBase
                 EmployeesLastYearVoucher.Add(_mapper.Map<EmployeeLastYearVoucherViewModel>(employee));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading employee's last year voucher:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
 
         try
@@ -863,9 +872,11 @@ public class MainWindowViewModel : ViewModelBase
                 EmployeesWorkExperience.Add(_mapper.Map<EmployeeWorkExperienceViewModel>(employee));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading employee's work experience:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
 
         try
@@ -876,9 +887,11 @@ public class MainWindowViewModel : ViewModelBase
                 EmployeesWithFewDepartments.Add(_mapper.Map<EmployeeWithFewDepartmentsViewModel>(employee));
             }
         }
-        catch
+        catch (Exception error)
         {
-
+            var messageViewModel = new MessageViewModel("Error while loading employees with few departments:\n"
+                + error.Message);
+            ShowMessage(messageViewModel);
         }
     }
 }

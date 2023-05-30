@@ -18,9 +18,4 @@ public class AverageAgeInDepartmentViewModel : ViewModelBase
         get => _departmentName;
         set => this.RaiseAndSetIfChanged(ref _departmentName, value);
     }
-
-
-    public AverageAgeInDepartmentViewModel()
-    {
-    }
 }

@@ -64,9 +64,4 @@ public class ArchiveOfDismissalsViewModel : ViewModelBase
         get => _occupationName;
         set => this.RaiseAndSetIfChanged(ref _occupationName, value);
     }
-
-
-    public ArchiveOfDismissalsViewModel()
-    {
-    }
 }

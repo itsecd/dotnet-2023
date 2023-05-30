@@ -22,6 +22,8 @@ public class BookedRoomsController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<BookedRoomsGetDto>>> GetBrooms()
     {
         _logger.LogInformation("GetBrooms");
@@ -33,6 +35,8 @@ public class BookedRoomsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BookedRoomsGetDto>> GetBroom(int id)
     {
         _logger.LogInformation("GetBroom");
@@ -51,6 +55,8 @@ public class BookedRoomsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutBroom(int id, BookedRoomsPostDto broom)
     {
         _logger.LogInformation("PutBroom");
@@ -69,7 +75,7 @@ public class BookedRoomsController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<BookedRoomsGetDto>> PostBroom(BookedRoomsPostDto broom)
     {
         _logger.LogInformation("PostBroom");
@@ -84,6 +90,8 @@ public class BookedRoomsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteBroom(int id)
     {
         _logger.LogInformation("DeleteBroom");

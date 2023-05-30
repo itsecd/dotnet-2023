@@ -22,6 +22,8 @@ public class RoomController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<RoomGetDto>>> GetRooms()
     {
         _logger.LogInformation("GetRooms");
@@ -33,6 +35,8 @@ public class RoomController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RoomGetDto>> GetRoom(int id)
     {
         _logger.LogInformation("GetRoom");
@@ -51,6 +55,8 @@ public class RoomController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutRoom(int id, RoomPostDto room)
     {
         _logger.LogInformation("PutRoom");
@@ -69,7 +75,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<RoomGetDto>> PostRoom(RoomPostDto room)
     {
         _logger.LogInformation("PostRoom");
@@ -84,6 +90,8 @@ public class RoomController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRoom(int id)
     {
         _logger.LogInformation("DeleteRoom");

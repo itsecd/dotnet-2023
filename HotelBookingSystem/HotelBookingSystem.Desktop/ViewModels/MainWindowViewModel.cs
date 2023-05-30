@@ -56,7 +56,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedRoom;
         set => this.RaiseAndSetIfChanged(ref _selectedRoom, value);
     }
-    private LodgerViewModel? Selectedlodger
+    private LodgerViewModel? SelectedLodger
     {
         get => _selectedLodger;
         set => this.RaiseAndSetIfChanged(ref _selectedLodger, value);
@@ -87,9 +87,7 @@ public class MainWindowViewModel : ViewModelBase
         var brooms = await _apiClient.GetBroomsAsync();
         foreach (var broom in brooms)
         {
-            try
-            { Brooms.Add(_mapper.Map<BookedRoomsViewModel>(broom)); }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            Brooms.Add(_mapper.Map<BookedRoomsViewModel>(broom));
         }
     }
 
@@ -99,6 +97,13 @@ public class MainWindowViewModel : ViewModelBase
         _mapper = Locator.Current.GetService<IMapper>();
 
         ShowHotelDialog = new Interaction<HotelViewModel, HotelViewModel?>();
+        ShowRoomDialog = new Interaction<RoomViewModel, RoomViewModel?>();
+        ShowLodgerDialog = new Interaction<LodgerViewModel, LodgerViewModel?>();
+        ShowBroomDialog = new Interaction<BookedRoomsViewModel, BookedRoomsViewModel?>();
+
+        /// <summary>
+        /// Hotel ADD, EDIT and DELETE actions
+        /// </summary>
 
         HotelAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -131,6 +136,117 @@ public class MainWindowViewModel : ViewModelBase
             Hotels.Remove(SelectedHotel);
         },
         this.WhenAnyValue(vm => vm.SelectedHotel).Select(_selected => _selected != null)
+        );
+
+        /// <summary>
+        /// Room ADD, EDIT and DELETE actions
+        /// </summary>
+
+        RoomAddCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var roomViewModel = await ShowRoomDialog.Handle(new RoomViewModel());
+            if (roomViewModel != null)
+            {
+                var newRoom = await _apiClient.PostRoomsAsync(_mapper.Map<RoomPostDto>(roomViewModel));
+                Rooms.Add(_mapper.Map<RoomViewModel>(newRoom));
+            }
+        });
+
+        RoomEditCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (SelectedRoom != null)
+            {
+                var roomViewModel = await ShowRoomDialog.Handle(SelectedRoom);
+                if (roomViewModel != null)
+                {
+                    await _apiClient.PutRoomsAsync(SelectedRoom!.Id, _mapper.Map<RoomPostDto>(roomViewModel));
+                    _mapper.Map(roomViewModel, SelectedRoom);
+                }
+            }
+        },
+        this.WhenAnyValue(vm => vm.SelectedRoom).Select(_selected => _selected != null)
+        );
+
+        RoomDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRoomsAsync(SelectedRoom!.Id);
+            Rooms.Remove(SelectedRoom);
+        },
+        this.WhenAnyValue(vm => vm.SelectedRoom).Select(_selected => _selected != null)
+        );
+
+        /// <summary>
+        /// Lodger ADD, EDIT and DELETE actions
+        /// </summary>
+
+        LodgerAddCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var lodgerViewModel = await ShowLodgerDialog.Handle(new LodgerViewModel());
+            if (lodgerViewModel != null)
+            {
+                var newLodger = await _apiClient.PostLodgersAsync(_mapper.Map<LodgerPostDto>(lodgerViewModel));
+                Lodgers.Add(_mapper.Map<LodgerViewModel>(newLodger));
+            }
+        });
+
+        LodgerEditCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (SelectedLodger != null)
+            {
+                var lodgerViewModel = await ShowLodgerDialog.Handle(SelectedLodger);
+                if (lodgerViewModel != null)
+                {
+                    await _apiClient.PutLodgersAsync(SelectedLodger!.Id, _mapper.Map<LodgerPostDto>(lodgerViewModel));
+                    _mapper.Map(lodgerViewModel, SelectedLodger);
+                }
+            }
+        },
+        this.WhenAnyValue(vm => vm.SelectedLodger).Select(_selected => _selected != null)
+        );
+
+        LodgerDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteLodgersAsync(SelectedLodger!.Id);
+            Lodgers.Remove(SelectedLodger);
+        },
+        this.WhenAnyValue(vm => vm.SelectedLodger).Select(_selected => _selected != null)
+        );
+
+        /// <summary>
+        /// BookedRooms ADD, EDIT and DELETE actions
+        /// </summary>
+
+        BroomsAddCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var broomsViewModel = await ShowBroomDialog.Handle(new BookedRoomsViewModel());
+            if (broomsViewModel != null)
+            {
+                var newBroom = await _apiClient.PostBroomsAsync(_mapper.Map<BookedRoomsPostDto>(broomsViewModel));
+                Brooms.Add(_mapper.Map<BookedRoomsViewModel>(newBroom));
+            }
+        });
+
+        BroomsEditCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (SelectedBroom != null)
+            {
+                var broomsViewModel = await ShowBroomDialog.Handle(SelectedBroom);
+                if (broomsViewModel != null)
+                {
+                    await _apiClient.PutBroomsAsync(SelectedBroom!.Id, _mapper.Map<BookedRoomsPostDto>(broomsViewModel));
+                    _mapper.Map(broomsViewModel, SelectedBroom);
+                }
+            }
+        },
+        this.WhenAnyValue(vm => vm.SelectedBroom).Select(_selected => _selected != null)
+        );
+
+        BroomsDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteBroomsAsync(SelectedBroom!.Id);
+            Brooms.Remove(SelectedBroom);
+        },
+        this.WhenAnyValue(vm => vm.SelectedBroom).Select(_selected => _selected != null)
         );
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);

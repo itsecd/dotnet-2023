@@ -22,6 +22,8 @@ public class LodgerController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<LodgerGetDto>>> GetLodgers()
     {
         _logger.LogInformation("GetLodgers");
@@ -33,6 +35,8 @@ public class LodgerController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LodgerGetDto>> GetLodger(int id)
     {
         _logger.LogInformation("GetLodger");
@@ -51,6 +55,8 @@ public class LodgerController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutLodger(int id, LodgerPostDto lodger)
     {
         _logger.LogInformation("PutLodger");
@@ -69,7 +75,7 @@ public class LodgerController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<LodgerGetDto>> PostLodger(LodgerPostDto lodger)
     {
         _logger.LogInformation("PostLodger");
@@ -84,6 +90,8 @@ public class LodgerController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteLodger(int id)
     {
         _logger.LogInformation("DeleteLodger");

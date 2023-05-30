@@ -1,4 +1,5 @@
 using HotelBookingSystem.Classes;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingSystem.Tests;
 
@@ -161,15 +162,16 @@ public class Tests
         List<BookedRooms> brooms = ListOfBookedRooms();
         var rooms = ListOfRooms();
 
-        var min = (from room in rooms
-                   group room by room.Placement into minres
-                   select minres.Min(x => x.Cost)).ToList();
+        var result = rooms.GroupBy(b => b.Placement)
+        .Select(g => new
+        {
+            hotel = g.First().Placement.Name,
+            min = g.Min(b => b.Cost),
+            avg = g.Average(b => b.Cost),
+            max = g.Max(b => b.Cost),
+        }).ToList();
 
-        var max = (from room in rooms
-                   group room by room.Placement into minres
-                   select minres.Max(x => x.Cost)).ToList();
-
-        Assert.Equal(1000, min[0]);
-        Assert.Equal(2300, max[0]);
+        Assert.Equal(1000, result.First().min);
+        Assert.Equal(2300, result.First().max);
     }
 }

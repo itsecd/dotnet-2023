@@ -142,6 +142,7 @@ public class AnalyticsController : ControllerBase
         {
             hotel = g.First().Placement.Name,
             min = g.Min(b => b.Cost),
+            avg = g.Average(b => b.Cost),
             max = g.Max(b => b.Cost),
         }).ToListAsync();
         return Ok(result);

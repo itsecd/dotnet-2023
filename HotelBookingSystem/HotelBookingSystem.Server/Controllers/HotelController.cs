@@ -22,6 +22,8 @@ public class HotelController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<HotelGetDto>>> GetHotels()
     {
         _logger.LogInformation("GetHotels");
@@ -33,6 +35,8 @@ public class HotelController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<HotelGetDto>> GetHotel(int id)
     {
         _logger.LogInformation("GetHotel");
@@ -51,6 +55,8 @@ public class HotelController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutHotel(int id, HotelPostDto hotel)
     {
         _logger.LogInformation("PutHotel");
@@ -69,7 +75,7 @@ public class HotelController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<HotelGetDto>> PostHotel(HotelPostDto hotel)
     {
         _logger.LogInformation("PostHotel");
@@ -84,6 +90,8 @@ public class HotelController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteHotel(int id)
     {
         _logger.LogInformation("DeleteHotel");

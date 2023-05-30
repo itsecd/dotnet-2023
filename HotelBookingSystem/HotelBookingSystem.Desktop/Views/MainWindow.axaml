@@ -67,14 +67,14 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
-			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
+			<Button Classes="ToolButton" Command="{Binding LodgerAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding LodgerEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding LodgerDeleteCommand}">Удалить</Button>
 		</StackPanel>
 
 		<DataGrid Classes="SingleGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False"
 				  Items="{Binding Brooms}"
-				  SelectedItem="{Binding SelectedRoom}">
+				  SelectedItem="{Binding SelectedBroom}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="ID Записи" Binding="{Binding Id}"/>
 				<DataGridTextColumn Header="ID Комнаты" Binding="{Binding BookedRoomId}"/>
@@ -86,9 +86,9 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
-			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
+			<Button Classes="ToolButton" Command="{Binding BroomsAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding BroomsEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding BroomsDeleteCommand}">Удалить</Button>
 		</StackPanel>
 		
 	</Grid>

@@ -36,7 +36,7 @@ public class ClientViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _passport, value);
     }
 
-    private DateTimeOffset _birthdate;
+    private DateTimeOffset _birthdate = DateTime.Now;
     public DateTimeOffset Birthdate
     {
         get => _birthdate;

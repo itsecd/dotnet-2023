@@ -6,7 +6,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CarSharingClient.Views.CarWindow"
 		MaxWidth="500"
-        Title="Edit the car" SizeToContent="Height">
+        Title="Edit the car" 
+		Icon="/Assets/car.ico"
+		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:CarViewModel/>
 	</Design.DataContext>

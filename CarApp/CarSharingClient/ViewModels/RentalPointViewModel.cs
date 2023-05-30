@@ -24,7 +24,7 @@ public class RentalPointViewModel : ViewModelBase
 
     private string _address = string.Empty;
     
-    public string Address
+    public string Addr
     {
         get => _address;
         set => this.RaiseAndSetIfChanged(ref _address, value);

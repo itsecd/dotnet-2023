@@ -5,7 +5,10 @@
         xmlns:vm="using:CarSharingClient.ViewModels"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CarSharingClient.Views.RentedCarWindow"
-        Title="Edit the rented car">
+        MaxWidth="500"
+        Title="Edit the rented car"
+		Icon="/Assets/car.ico"
+		SizeToContent="Height">
 
 	<Design.DataContext>
 		<vm:RentedCarViewModel/>

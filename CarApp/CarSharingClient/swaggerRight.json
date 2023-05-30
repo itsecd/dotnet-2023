@@ -80,7 +80,33 @@
         "summary": "Get top five cars by the number of rents",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "contetnt": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "scema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarGetDto"
+                  }
+                }
+              }
+            }
           }
         }
       }

@@ -5,7 +5,10 @@
         xmlns:vm="using:CarSharingClient.ViewModels"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CarSharingClient.Views.ClientWindow"
-        Title="Edit the client">
+		MaxWidth="500"
+        Title="Edit the client"
+		Icon="/Assets/car.ico"
+		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:ClientViewModel/>
 	</Design.DataContext>
@@ -20,7 +23,7 @@
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Lastname</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Lastname}"/>
 		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Birthdate</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Birthdate}"/>
+		<DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Birthdate}"/>
 		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Passport</Label>
 		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Passport}"/>
 

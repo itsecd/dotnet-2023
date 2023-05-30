@@ -19,6 +19,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<RentalPointViewModel> RentalPoints { get; } = new();
     public ObservableCollection<ClientViewModel> Clients { get; } = new();
     public ObservableCollection<RentedCarViewModel> RentedCars { get; } = new();
+    public ObservableCollection<CarViewModel> TopCars { get; }= new();
 
     private CarViewModel? _selectedCar;
     public CarViewModel? SelectedCar
@@ -223,6 +224,12 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var rentedCar in rentedCars)
         {
             RentedCars.Add(_mapper.Map<RentedCarViewModel>(rentedCar));
+        }
+
+        var topCars = await _apiClient.TopFiveCars();
+        foreach (var topCar in topCars)
+        {
+            TopCars.Add(_mapper.Map<CarViewModel>(topCar));
         }
     }
 }

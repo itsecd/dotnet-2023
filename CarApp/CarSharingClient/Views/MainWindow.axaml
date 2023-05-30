@@ -42,29 +42,6 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
-		<TabItem Header="Rental Point" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddRentalPointCommand}">
-						<Image Source="/Assets/add.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeRentalPointCommand}">
-						<Image Source="/Assets/edit.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteRentalPointCommand}">
-						<Image Source="/Assets/delete.png"/>
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						Items="{Binding RentalPoints}" SelectedItem="{Binding SelectedRentalPoint}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Point Name" Binding="{Binding PointName}"/>
-						<DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
-						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
 		<TabItem Header="Client" VerticalContentAlignment="Center">
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -110,6 +87,16 @@
 						<DataGridTextColumn Header="TimeOfRent" Binding="{Binding TimeOfRent}"/>
 						<DataGridTextColumn Header="TimeOfReturn" Binding="{Binding TimeOfReturn}"/>
 						<DataGridTextColumn Header="RentPeriod" Binding="{Binding RentPeriod}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Query" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						Items="{Binding TopCars}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

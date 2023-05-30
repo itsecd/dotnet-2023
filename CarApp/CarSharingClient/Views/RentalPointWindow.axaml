@@ -5,7 +5,10 @@
 		xmlns:vm="using:CarSharingClient.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CarSharingClient.Views.RentalPointWindow"
-         Title="Edit the rental point" SizeToContent="Height">
+         MaxWidth="500"
+        Title="Edit the rental point"
+		Icon="/Assets/car.ico"
+		SizeToContent="Height">
 	<Design.DataContext>
 		<vm:RentalPointViewModel/>
 	</Design.DataContext>
@@ -18,7 +21,7 @@
 		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Point Name</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PointName}"/>
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Address</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Addr}"/>
 
 
 		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"

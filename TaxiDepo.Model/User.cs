@@ -6,7 +6,7 @@ namespace TaxiDepo.Model;
 /// <summary>
 /// User class
 /// </summary>
-[Table("users")]
+[Table("Users")]
 public class User
 {
     /// <summary>
@@ -41,7 +41,7 @@ public class User
     public string UserPatronymic { get; set; } = string.Empty;
 
     /// <summary>
-    /// User phone number
+    /// User phonenumber
     /// </summary>
     [Column("UserPhoneNumber")]
     [Required]

@@ -6,7 +6,7 @@ namespace TaxiDepo.Model;
 /// <summary>
 /// Class car
 /// </summary>
-[Table("cars")]
+[Table("Cars")]
 public class Car
 {
     /// <summary>
@@ -17,7 +17,7 @@ public class Car
     public int Id { get; set; }
 
     /// <summary>
-    /// Car government number
+    /// Car gov number
     /// </summary>
     [Column("CarNumber")]
     [Required]

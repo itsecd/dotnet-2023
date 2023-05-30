@@ -6,7 +6,7 @@ namespace TaxiDepo.Model;
 /// <summary>
 /// Ride class
 /// </summary>
-[Table("rides")]
+[Table("Rides")]
 public class Ride
 {
     /// <summary>
@@ -54,14 +54,14 @@ public class Ride
     public double TripPrice { get; set; } = 0.0;
 
     /// <summary>
-    /// Trip car Id 
+    /// Trip carId 
     /// </summary>
     [Column("CarId")]
     [ForeignKey("Car")]
     public int CarId { get; set; }
 
     /// <summary>
-    /// Trip user Id 
+    /// Trip userId 
     /// </summary>
     [Column("UserId")]
     [ForeignKey("User")]

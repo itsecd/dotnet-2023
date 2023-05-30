@@ -6,7 +6,7 @@ namespace TaxiDepo.Model;
 /// <summary>
 /// Driver class
 /// </summary>
-[Table("drivers")]
+[Table("Drivers")]
 public class Driver
 {
     /// <summary>
@@ -41,7 +41,7 @@ public class Driver
     public string DriverPatronymic { get; set; } = string.Empty;
 
     /// <summary>
-    /// Driver passport ID
+    /// Driver passport Id
     /// </summary>
     [Column("DriverPassportId")]
     [Required]

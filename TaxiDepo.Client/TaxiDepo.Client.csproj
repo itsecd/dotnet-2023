@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <None Remove=".gitignore" />
     <None Remove="swagger.json" />
   </ItemGroup>
 

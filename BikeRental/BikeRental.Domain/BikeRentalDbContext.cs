@@ -29,7 +29,7 @@ public class BikeRentalDbContext : DbContext
 
     public BikeRentalDbContext(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreatedAsync();
+        Database.EnsureCreated();
     }
 
     /// <summary>

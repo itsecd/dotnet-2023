@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="HotelBookingSystem.Desktop.Views.Top5MostBookedWindow"
         Title="Top5MostBookedWindow"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		CanResize="False">
 
 	<Design.DataContext>
 		<vm:Top5MostBookedViewModel/>

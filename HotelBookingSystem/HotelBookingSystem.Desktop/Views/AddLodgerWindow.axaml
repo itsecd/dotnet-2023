@@ -8,7 +8,8 @@
         Title="Добавить или редактировать"
 		SizeToContent="Height"
 		MinWidth="400"
-		MaxWidth="400">
+		MaxWidth="400"
+		CanResize="False">
 	
 	<Design.DataContext>
 		<vm:LodgerViewModel/>

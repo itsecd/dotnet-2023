@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="HotelBookingSystem.Desktop.Views.InfoHotelsWindow"
         Title="InfoHotelsWindow"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		CanResize="False">
 
 	<Design.DataContext>
 		<vm:InfoHotelsViewModel/>

@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="HotelBookingSystem.Desktop.Views.AvailableRoomsWindow"
         Title="AvailableRoomsWindow"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		CanResize="False">
 	
 	<Design.DataContext>
 		<vm:AvailableRoomsViewModel/>
@@ -20,7 +21,7 @@
 		<TextBox Grid.Row="0" Grid.Column="0" Margin="4, 4, 4, 4" Text="{Binding NameOfCity}"/>
 		<Button Classes="ToolButton" Grid.Row="0" Grid.Column="1"
 				Margin="4, 4, 4, 4"
-				HorizontalAlignment="Right" Command="{Binding SearchByCityCommand}">Найти</Button>
+				Command="{Binding SearchByCityCommand}">Найти</Button>
 		<DataGrid Classes="SingleGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="500" AutoGenerateColumns="False"
 			  Items="{Binding AvailableRoomsResult}">
 			<DataGrid.Columns>

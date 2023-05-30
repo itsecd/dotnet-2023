@@ -7,7 +7,8 @@
         x:Class="HotelBookingSystem.Desktop.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Система бронирования отелей"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		CanResize="False">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -93,10 +94,9 @@
 		<StackPanel Classes="ButtonStack" Grid.Row="0" Grid.Column="2" Orientation="Vertical">
 			<Button Classes="AnalyticsButton" Command="{Binding InfoHotelsCommand}">Инфо обо всех отелях</Button>
 			<Button Classes="AnalyticsButton" Command="{Binding InfoClientsInHotelCommand}">Инфо обо всех постояльцах в отеле</Button>
-			<Button Classes="AnalyticsButton" Command="{Binding Top5MostBookedCommand}">Топ 5 отелей</Button>
+			<Button Classes="AnalyticsButton" Command="{Binding Top5MostBookedCommand}">Топ 5 отелей по бронированиям</Button>
 			<Button Classes="AnalyticsButton" Command="{Binding AvailableRoomsCommand}">Свободные номера в городе</Button>
 			<Button Classes="AnalyticsButton" Command="{Binding ClientsWithMostDaysCommand}">Постояльцы с наибольшим сроком</Button>
-			<Button Classes="AnalyticsButton">Мин., ср. и макс. стоимость номеров</Button>
 		</StackPanel>
 		
 	</Grid>

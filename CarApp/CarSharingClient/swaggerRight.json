@@ -838,6 +838,11 @@
             "type": "string",
             "description": "colour of the car",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "identification number of car",
+            "format": "int32"
           }
         },
         "additionalProperties": false,
@@ -882,6 +887,11 @@
             "type": "string",
             "description": "client's last name",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "identification number of client",
+            "format": "int32"
           }
         },
         "additionalProperties": false,
@@ -926,6 +936,11 @@
             "type": "string",
             "description": "address of the rental point",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "identification number of rental point",
+            "format": "int32"
           }
         },
         "additionalProperties": false,
@@ -934,6 +949,11 @@
       "RentedCarGetDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "description": "identification number of rented car",
+            "format": "int32"
+          },
           "rentalPointId": {
             "type": "integer",
             "description": "id of rental point, where a car was rented",

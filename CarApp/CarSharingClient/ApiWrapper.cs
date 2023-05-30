@@ -26,7 +26,7 @@ public class ApiWrapper
     }
     public async Task AddCarsAsync(CarPostDto car)
     {
-         await _client.CarAsync(car);
+        await _client.CarAsync(car);
     }
     public async Task UpdateCarsAsync(int id, CarPostDto car)
     {

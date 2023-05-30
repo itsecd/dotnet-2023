@@ -4,14 +4,19 @@
 /// </summary>
 public class RentedCarGetDto
 {
+
+    /// <summary>
+    /// identification number of rented car
+    /// </summary>
+    public int Id { get; set; }
     /// <summary>
     /// id of rental point, where a car was rented
     /// </summary>
-    public uint RentalPointId { get; set; }
+    public int RentalPointId { get; set; }
     /// <summary>
     /// id of model of rented car
     /// </summary>
-    public uint CarId { get; set; }
+    public int CarId { get; set; }
     /// <summary>
     /// date and time when client rented a car
     /// </summary>
@@ -19,7 +24,7 @@ public class RentedCarGetDto
     /// <summary>
     /// period of time when the client can use a rented car 
     /// </summary>
-    public uint RentPeriod { get; set; } = 0;
+    public int RentPeriod { get; set; } = 0;
     /// <summary>
     /// a day when car must be returned to the rental point
     /// </summary>

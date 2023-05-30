@@ -1,5 +1,4 @@
-﻿
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
@@ -20,7 +19,7 @@ public class ClientViewModel : ViewModelBase
     public string Firstname
     {
         get => _firstname;
-        set=> this.RaiseAndSetIfChanged(ref _firstname, value);
+        set => this.RaiseAndSetIfChanged(ref _firstname, value);
     }
 
     private string _lastname = string.Empty;
@@ -30,11 +29,11 @@ public class ClientViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _lastname, value);
     }
 
-    private string _passport=string.Empty;
+    private string _passport = string.Empty;
     public string Passport
     {
         get => _passport;
-        set=> this.RaiseAndSetIfChanged(ref _passport, value);
+        set => this.RaiseAndSetIfChanged(ref _passport, value);
     }
 
     private DateTimeOffset _birthdate;

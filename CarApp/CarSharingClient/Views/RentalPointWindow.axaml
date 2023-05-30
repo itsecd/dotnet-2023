@@ -9,7 +9,7 @@
 	<Design.DataContext>
 		<vm:RentalPointViewModel/>
 	</Design.DataContext>
-	
+
 	<Window.Styles>
 		<StyleInclude Source="/CarSharingStyles.axaml"/>
 	</Window.Styles>
@@ -19,8 +19,8 @@
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PointName}"/>
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Address</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}"/>
-		
-		
+
+
 		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
@@ -28,4 +28,3 @@
 		</StackPanel>
 	</Grid>
 </Window>
-

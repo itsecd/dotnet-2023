@@ -16,4 +16,8 @@ public class ClientGetDto
     /// client's last name
     /// </summary>
     public string? LastName { set; get; }
+    /// <summary>
+    /// identification number of client
+    /// </summary>
+    public int Id { get; set; }
 }

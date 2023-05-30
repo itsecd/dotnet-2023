@@ -1,5 +1,5 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:CarSharingClient.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,11 +8,11 @@
         Icon="/Assets/car.ico"
         Title="CarSharingClient">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 	<Window.Styles>
 		<StyleInclude Source="/CarSharingStyles.axaml"/>
 	</Window.Styles>
@@ -32,8 +32,9 @@
 					</Button>
 				</StackPanel>
 				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						Items="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
+					Items="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
 					<DataGrid.Columns>
+						
 						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
 						<DataGridTextColumn Header="Colour" Binding="{Binding Colour}"/>
 						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
@@ -83,6 +84,7 @@
 						<DataGridTextColumn Header="FirstName" Binding="{Binding Firstname}"/>
 						<DataGridTextColumn Header="LastName" Binding="{Binding Lastname}"/>
 						<DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate}"/>
+						<DataGridTextColumn Header="Id" Binding="{Binding ClientId}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
@@ -114,3 +116,5 @@
 		</TabItem>
 	</TabControl>
 </Window>
+
+

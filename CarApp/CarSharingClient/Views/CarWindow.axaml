@@ -20,8 +20,7 @@
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Model}"/>
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Colour</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Colour}"/>
-		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Id</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Id}"/>
+		
 		
 		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">

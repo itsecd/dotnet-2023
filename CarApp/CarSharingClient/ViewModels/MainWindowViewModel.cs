@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Xml.Linq;
 
 namespace CarSharingClient.ViewModels;
 
@@ -106,7 +107,7 @@ public class MainWindowViewModel : ViewModelBase
         }, this.WhenAnyValue(vm => vm.SelectedCar).Select(selectCar => selectCar != null));
 
 
-        OnAddRentalPointCommand = ReactiveCommand.CreateFromTask(async () =>
+       OnAddRentalPointCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var rentalPointViewModel = await ShowRentalPointDialog.Handle(new RentalPointViewModel());
             if (rentalPointViewModel != null)
@@ -212,8 +213,8 @@ public class MainWindowViewModel : ViewModelBase
             RentalPoints.Add(_mapper.Map<RentalPointViewModel>(rentalPoint));
         }
 
-        var clients= await _apiClient.GetClientsAsync();
-        foreach(var client in clients)
+        var clients = await _apiClient.GetClientsAsync();
+        foreach (var client in clients)
         {
             Clients.Add(_mapper.Map<ClientViewModel>(client));
         }
@@ -225,4 +226,3 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 }
-

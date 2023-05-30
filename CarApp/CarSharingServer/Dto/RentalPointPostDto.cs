@@ -12,4 +12,8 @@ public class RentalPointPostDto
     /// address of the rental point
     /// </summary>
     public string? PointAddress { get; set; }
+    /// <summary>
+    /// identification number of rental point
+    /// </summary>
+    public int Id { get; set; }
 }

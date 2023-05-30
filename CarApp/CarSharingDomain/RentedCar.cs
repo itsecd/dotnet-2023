@@ -52,7 +52,7 @@ public class RentedCar
     /// period of time when the client can use a rented car 
     /// </summary>
     [Column("rentPeriod")]
-    public uint RentPeriod { get; set; } = 0;
+    public int RentPeriod { get; set; } = 0;
     /// <summary>
     /// a day when car must be returned to the rental point
     /// </summary>
@@ -73,7 +73,7 @@ public class RentedCar
     /// <param name="timeOfRent"></param>
     /// <param name="rentPeriod"></param>
     /// <param name="timeOfReturn"></param>
-    public RentedCar(int id, Client client, RentalPoint point, Car car, DateTime timeOfRent,uint rentPeriod, DateTime timeOfReturn)
+    public RentedCar(int id, Client client, RentalPoint point, Car car, DateTime timeOfRent,int rentPeriod, DateTime timeOfReturn)
     {
         Id = id;
         Client = client;

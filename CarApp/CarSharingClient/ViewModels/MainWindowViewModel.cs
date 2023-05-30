@@ -16,6 +16,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<CarViewModel> Cars { get; } = new();
     public ObservableCollection<RentalPointViewModel> RentalPoints { get; } = new();
+    public ObservableCollection<ClientViewModel> Clients { get; } = new();
+    public ObservableCollection<RentedCarViewModel> RentedCars { get; } = new();
 
     private CarViewModel? _selectedCar;
     public CarViewModel? SelectedCar
@@ -30,6 +32,18 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedRentalPoint, value);
     }
 
+    private ClientViewModel? _selectedClient;
+    public ClientViewModel? SelectedClient
+    {
+        get => _selectedClient;
+        set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
+    }
+    private RentedCarViewModel? _selectedRentedCar;
+    public RentedCarViewModel? SelectedRentedCar
+    {
+        get => _selectedRentedCar;
+        set => this.RaiseAndSetIfChanged(ref _selectedRentedCar, value);
+    }
     public ReactiveCommand<Unit, Unit> OnAddCarCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnChangeCarCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteCarCommand { get; set; }
@@ -38,27 +52,41 @@ public class MainWindowViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> OnChangeRentalPointCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OnDeleteRentalPointCommand { get; set; }
 
-    public Interaction<CarViewModel, CarViewModel?> ShowCarDialog { get;}
-    public Interaction<RentalPointViewModel, RentalPointViewModel?> ShowRentalPointDialog { get; }
-    
+    public ReactiveCommand<Unit, Unit> OnAddClientCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeClientCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteClientCommand { get; set; }
 
-    public MainWindowViewModel() { 
-        _apiClient=Locator.Current.GetService<ApiWrapper>();
+    public ReactiveCommand<Unit, Unit> OnAddRentedCarCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnChangeRentedCarCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> OnDeleteRentedCarCommand { get; set; }
+
+    public Interaction<CarViewModel, CarViewModel?> ShowCarDialog { get; }
+    public Interaction<RentalPointViewModel, RentalPointViewModel?> ShowRentalPointDialog { get; }
+    public Interaction<ClientViewModel, ClientViewModel?> ShowClientDialog { get; }
+    public Interaction<RentedCarViewModel, RentedCarViewModel?> ShowRentedCarDialog { get; }
+
+    public MainWindowViewModel()
+    {
+        _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
         ShowCarDialog = new Interaction<CarViewModel, CarViewModel?>();
         ShowRentalPointDialog = new Interaction<RentalPointViewModel, RentalPointViewModel?>();
+        ShowClientDialog = new Interaction<ClientViewModel, ClientViewModel?>();
+        ShowRentedCarDialog = new Interaction<RentedCarViewModel, RentedCarViewModel?>();
 
         OnAddCarCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var carViewModel = await ShowCarDialog.Handle(new CarViewModel());
-            if (carViewModel!=null)
+            if (carViewModel != null)
             {
                 var newCar = _mapper.Map<CarPostDto>(carViewModel);
                 await _apiClient.AddCarsAsync(newCar);
                 Cars.Add(carViewModel);
                 Cars.Clear();
                 RentalPoints.Clear();
+                Clients.Clear();
+                RentedCars.Clear();
                 LoadAsync();
             }
         });
@@ -88,6 +116,8 @@ public class MainWindowViewModel : ViewModelBase
                 RentalPoints.Add(rentalPointViewModel);
                 Cars.Clear();
                 RentalPoints.Clear();
+                Clients.Clear();
+                RentedCars.Clear();
                 LoadAsync();
             }
         });
@@ -106,26 +136,68 @@ public class MainWindowViewModel : ViewModelBase
             RentalPoints.Remove(SelectedRentalPoint);
         }, this.WhenAnyValue(vm => vm.SelectedRentalPoint).Select(selectRentalPoint => selectRentalPoint != null));
 
-        /*RxApp.MainThreadScheduler.Schedule(LoadCarsAsync);
-        RxApp.MainThreadScheduler.Schedule(LoadRentalPointsAsync);*/
+        OnAddClientCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var clientViewModel = await ShowClientDialog.Handle(new ClientViewModel());
+            if (clientViewModel != null)
+            {
+                var newClient = _mapper.Map<ClientPostDto>(clientViewModel);
+                await _apiClient.AddClientAsync(newClient);
+                Clients.Add(clientViewModel);
+                Cars.Clear();
+                RentalPoints.Clear();
+                Clients.Clear();
+                RentedCars.Clear();
+                LoadAsync();
+            }
+        });
+        OnChangeClientCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var clientViewModel = await ShowClientDialog.Handle(SelectedClient!);
+            if (clientViewModel != null)
+            {
+                await _apiClient.UpdateClientsAsync(SelectedClient!.ClientId, _mapper.Map<ClientPostDto>(clientViewModel));
+                _mapper.Map(clientViewModel, SelectedClient);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectClient => selectClient != null));
+        OnDeleteClientCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteClientsAsync(SelectedClient!.ClientId);
+            Clients.Remove(SelectedClient);
+        }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectClient => selectClient != null));
+
+        OnAddRentedCarCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var rentedCarViewModel = await ShowRentedCarDialog.Handle(new RentedCarViewModel());
+            if (rentedCarViewModel != null)
+            {
+                var newRentedCar = _mapper.Map<RentedCarPostDto>(rentedCarViewModel);
+                await _apiClient.AddRentedCarsAsync(newRentedCar);
+                RentedCars.Add(rentedCarViewModel);
+                Cars.Clear();
+                RentalPoints.Clear();
+                Clients.Clear();
+                RentedCars.Clear();
+                LoadAsync();
+            }
+        });
+        OnChangeRentedCarCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var rentedCarViewModel = await ShowRentedCarDialog.Handle(SelectedRentedCar!);
+            if (rentedCarViewModel != null)
+            {
+                await _apiClient.UpdateRentedCarsAsync(SelectedRentedCar!.Id, _mapper.Map<RentedCarPostDto>(rentedCarViewModel));
+                _mapper.Map(rentedCarViewModel, SelectedRentedCar);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedRentedCar).Select(selectRentedCar => selectRentedCar != null));
+        OnDeleteRentedCarCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await _apiClient.DeleteRentedCarsAsync(SelectedRentedCar!.Id);
+            RentedCars.Remove(SelectedRentedCar);
+        }, this.WhenAnyValue(vm => vm.SelectedRentedCar).Select(selectRentedCar => selectRentedCar != null));
         RxApp.MainThreadScheduler.Schedule(LoadAsync);
     }
-    /*private async void LoadCarsAsync()
-    {
-        var cars = await _apiClient.GetCarsAsync();
-        foreach (var car in cars)
-        {
-            Cars.Add(_mapper.Map<CarViewModel>(car));
-        }
-    }
-     private async void LoadRentalPointsAsync()
-    {
-        var rentalPoints = await _apiClient.GetRentalPointsAsync();
-        foreach (var rentalPoint in rentalPoints)
-        {
-            RentalPoints.Add(_mapper.Map<RentalPointViewModel>(rentalPoint));
-        }
-    }*/
+
     private async void LoadAsync()
     {
         var cars = await _apiClient.GetCarsAsync();
@@ -133,10 +205,23 @@ public class MainWindowViewModel : ViewModelBase
         {
             Cars.Add(_mapper.Map<CarViewModel>(car));
         }
+
         var rentalPoints = await _apiClient.GetRentalPointsAsync();
         foreach (var rentalPoint in rentalPoints)
         {
             RentalPoints.Add(_mapper.Map<RentalPointViewModel>(rentalPoint));
+        }
+
+        var clients= await _apiClient.GetClientsAsync();
+        foreach(var client in clients)
+        {
+            Clients.Add(_mapper.Map<ClientViewModel>(client));
+        }
+
+        var rentedCars = await _apiClient.GetRentedCarsAsync();
+        foreach (var rentedCar in rentedCars)
+        {
+            RentedCars.Add(_mapper.Map<RentedCarViewModel>(rentedCar));
         }
     }
 }

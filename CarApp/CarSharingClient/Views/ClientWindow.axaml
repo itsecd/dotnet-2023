@@ -2,8 +2,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:vm="using:CarSharingClient.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CarSharingClient.Views.ClientWindow"
-        Title="ClientWindow">
-  Welcome to Avalonia!
+        Title="Edit the client">
+	<Design.DataContext>
+		<vm:ClientViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/CarSharingStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto, *" ColumnDefinitions="Auto,Auto,Auto,Auto,*" >
+		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Firstname</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Firstname}"/>
+		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Lastname</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Lastname}"/>
+		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Birthdate</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Birthdate}"/>
+		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Passport</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Passport}"/>
+
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
 </Window>
+

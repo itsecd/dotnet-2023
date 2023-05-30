@@ -7,11 +7,12 @@ public class CarViewModel : ViewModelBase
 {
 
     private int _id;
-    [Required]
+    
     public int Id
     {
-        get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
+        get => _id;
+        
     }
     
     private string _model = string.Empty;
@@ -33,8 +34,9 @@ public class CarViewModel : ViewModelBase
     private string _number = string.Empty;
     public string Number
     {
-        get => _number;
         set => this.RaiseAndSetIfChanged(ref _number, value);
+        get => _number;
+        
     }
 
     public ReactiveCommand<Unit, CarViewModel> OnSubmitCommand { get; }

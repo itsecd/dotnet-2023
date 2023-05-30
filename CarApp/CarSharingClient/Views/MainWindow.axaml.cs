@@ -12,6 +12,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         InitializeComponent();
         this.WhenActivated(d => d(ViewModel!.ShowCarDialog.RegisterHandler(ShowCarDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowRentalPointDialog.RegisterHandler(ShowRentalPointDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowClientDialog.RegisterHandler(ShowClientDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowRentedCarDialog.RegisterHandler(ShowRentedCarDialogAsync)));
     }
     private async Task ShowCarDialogAsync(InteractionContext<CarViewModel, CarViewModel?> interaction)
     {
@@ -30,6 +32,26 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             DataContext = interaction.Input
         };
         var result = await dialog.ShowDialog<RentalPointViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowClientDialogAsync(InteractionContext<ClientViewModel, ClientViewModel?> interaction)
+    {
+        var dialog = new ClientWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<ClientViewModel?>(this);
+        interaction.SetOutput(result);
+    }
+
+    private async Task ShowRentedCarDialogAsync(InteractionContext<RentedCarViewModel, RentedCarViewModel?> interaction)
+    {
+        var dialog = new RentedCarWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<RentedCarViewModel?>(this);
         interaction.SetOutput(result);
     }
 }

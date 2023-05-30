@@ -25,8 +25,19 @@ public partial class App : Application
                 cfg.CreateMap<CarViewModel, CarPostDto>();
                 cfg.CreateMap<CarPostDto, CarViewModel>();
                 cfg.CreateMap<CarViewModel, CarGetDto>();
+
                 cfg.CreateMap<RentalPointViewModel, RentalPointPostDto>();
                 cfg.CreateMap<RentalPointPostDto, RentalPointViewModel>();
+
+                cfg.CreateMap<ClientGetDto, ClientViewModel>();
+                cfg.CreateMap<ClientViewModel, ClientPostDto>();
+                cfg.CreateMap<ClientPostDto, ClientViewModel>();
+                cfg.CreateMap<ClientViewModel, ClientGetDto>();
+
+                cfg.CreateMap<RentedCarGetDto, RentedCarViewModel>();
+                cfg.CreateMap<RentedCarViewModel, RentedCarPostDto>();
+                cfg.CreateMap<RentedCarPostDto, RentedCarViewModel>();
+                cfg.CreateMap<RentedCarViewModel, RentedCarGetDto>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

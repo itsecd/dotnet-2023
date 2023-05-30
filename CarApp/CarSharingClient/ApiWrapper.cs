@@ -53,4 +53,38 @@ public class ApiWrapper
     {
         await _client.RentalPoint4Async(id);
     }
+
+    public Task<ICollection<ClientGetDto>> GetClientsAsync()
+    {
+        return _client.ClientAllAsync();
+    }
+    public async Task AddClientAsync(ClientPostDto client)
+    {
+        await _client.ClientAsync(client);
+    }
+    public async Task UpdateClientsAsync(int id, ClientPostDto client)
+    {
+        await _client.Client3Async(id, client);
+    }
+    public async Task DeleteClientsAsync(int id)
+    {
+        await _client.Client4Async(id);
+    }
+
+    public Task<ICollection<RentedCarGetDto>> GetRentedCarsAsync()
+    {
+        return _client.RentedCarAllAsync();
+    }
+    public async Task AddRentedCarsAsync(RentedCarPostDto rentedCar)
+    {
+        await _client.RentedCarAsync(rentedCar);
+    }
+    public async Task UpdateRentedCarsAsync(int id, RentedCarPostDto rentedCar)
+    {
+        await _client.RentedCar3Async(id, rentedCar);
+    }
+    public async Task DeleteRentedCarsAsync(int id)
+    {
+        await _client.RentedCar4Async(id);
+    }
 }

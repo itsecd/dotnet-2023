@@ -6,9 +6,9 @@ using ReactiveUI;
 using System;
 
 namespace CarSharingClient.Views;
-public partial class ClientWindow : ReactiveWindow<ClientViewModel>
+public partial class RentedCarWindow : ReactiveWindow<RentedCarViewModel>
 {
-    public ClientWindow()
+    public RentedCarWindow()
     {
         InitializeComponent();
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));

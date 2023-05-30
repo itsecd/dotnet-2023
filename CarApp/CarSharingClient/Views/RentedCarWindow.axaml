@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:CarSharingClient.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CarSharingClient.Views.RentedCarWindow"
+        Title="Edit the rented car">
+
+	<Design.DataContext>
+		<vm:RentedCarViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/CarSharingStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" >
+		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">ClientId</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ClientId}"/>
+		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">RentalPointId</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RentalPointId}"/>
+		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">CarId</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CarId}"/>
+		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">TimeOfRent</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TimeOfRent}"/>
+		<Label VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">RentPeriod</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RentPeriod}"/>
+		<Label VerticalAlignment="Center" Grid.Row="5" Grid.Column="0">TimeOfReturn</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TimeOfReturn}"/>
+
+		<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

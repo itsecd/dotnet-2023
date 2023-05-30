@@ -115,7 +115,7 @@ public class RequestsController : ControllerBase
                          NumJobApplications = jobApplicationsGroup.Count(),
                          NumCompanyApplications = titles.CompanyApplications.Count()
                      }).ToList();
-        _logger.LogInformation("Get the number of requests}");
+        _logger.LogInformation("Get the number of requests");
         return _mapper.Map<IEnumerable<NumberApplicationsDto>>(query);
     }
 

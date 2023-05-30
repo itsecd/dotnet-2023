@@ -76,12 +76,6 @@ public class JobApplicationController : ControllerBase
             return BadRequest("Title or Employee does not exist");
         }
 
-        if (jobApplication == null)
-        {
-            _logger.LogInformation("Posting nullable object");
-            return NotFound();
-        }
-
         await ctx.JobApplications.AddAsync(_mapper.Map<JobApplication>(jobApplication));
         await ctx.SaveChangesAsync();
 

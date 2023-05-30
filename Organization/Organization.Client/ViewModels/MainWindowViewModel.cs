@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DynamicData.Kernel;
 using ReactiveUI;
 using Splat;
 using System;

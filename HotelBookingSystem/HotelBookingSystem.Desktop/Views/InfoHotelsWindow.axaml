@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:HotelBookingSystem.Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="HotelBookingSystem.Desktop.Views.InfoHotelsWindow"
+        Title="InfoHotelsWindow"
+		SizeToContent="WidthAndHeight">
+
+	<Design.DataContext>
+		<vm:InfoHotelsViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/HotelBookingSystemStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="250,Auto" ColumnDefinitions="500">
+		
+		<DataGrid Classes="SingleGrid" Grid.Row="0" Grid.Column="0" AutoGenerateColumns="False"
+			  Items="{Binding InfoHotelsResult}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID Отеля" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Город" Binding="{Binding City}"/>
+				<DataGridTextColumn Header="Адрес" Binding="{Binding Adress}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button Classes="ToolButton" Grid.Row="1" Grid.Column="0" 
+				Margin="4, 4, 4, 4"
+				HorizontalAlignment="Right"
+				Click="CancelButtonOnClick">Назад</Button>
+	</Grid>
+</Window>

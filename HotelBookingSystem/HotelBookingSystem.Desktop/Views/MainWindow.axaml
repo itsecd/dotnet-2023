@@ -3,12 +3,11 @@
         xmlns:vm="using:HotelBookingSystem.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="HotelBookingSystem.Desktop.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Система бронирования отелей"
-		SizeToContent="WidthAndHeight"
-		>
+		SizeToContent="WidthAndHeight">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -18,7 +17,7 @@
 		<StyleInclude Source="/HotelBookingSystemStyles.axaml"/>	
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="250,Auto,250,Auto" ColumnDefinitions="500,500">
+	<Grid Classes="MainGrid" RowDefinitions="250,Auto,250,Auto" ColumnDefinitions="500,500,Auto">
 		
 		<DataGrid Classes="SingleGrid" Grid.Row="0" Grid.Column="0" AutoGenerateColumns="False"
 					  Items="{Binding Hotels}"
@@ -32,8 +31,8 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding HotelAddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding HotelEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding HotelAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding HotelEditCommand}">Редактировать</Button>
 			<Button Classes="ToolButton" Command="{Binding HotelDeleteCommand}">Удалить</Button>
 		</StackPanel>
 
@@ -50,8 +49,8 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding RoomAddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding RoomEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding RoomAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding RoomEditCommand}">Редактировать</Button>
 			<Button Classes="ToolButton" Command="{Binding RoomDeleteCommand}">Удалить</Button>
 		</StackPanel>
 
@@ -67,8 +66,8 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding LodgerAddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding LodgerEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding LodgerAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding LodgerEditCommand}">Редактировать</Button>
 			<Button Classes="ToolButton" Command="{Binding LodgerDeleteCommand}">Удалить</Button>
 		</StackPanel>
 
@@ -86,9 +85,18 @@
 		</DataGrid>
 
 		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding BroomsAddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding BroomsEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding BroomsAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Margin="0,0,4,0" Command="{Binding BroomsEditCommand}">Редактировать</Button>
 			<Button Classes="ToolButton" Command="{Binding BroomsDeleteCommand}">Удалить</Button>
+		</StackPanel>
+
+		<StackPanel Classes="ButtonStack" Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+			<Button Classes="AnalyticsButton" Command="{Binding InfoHotelsCommand}">Инфо обо всех отелях</Button>
+			<Button Classes="AnalyticsButton" Command="{Binding InfoClientsInHotelCommand}">Инфо обо всех постояльцах в отеле</Button>
+			<Button Classes="AnalyticsButton" Command="{Binding Top5MostBookedCommand}">Топ 5 отелей</Button>
+			<Button Classes="AnalyticsButton" Command="{Binding AvailableRoomsCommand}">Свободные номера в городе</Button>
+			<Button Classes="AnalyticsButton" Command="{Binding ClientsWithMostDaysCommand}">Постояльцы с наибольшим сроком</Button>
+			<Button Classes="AnalyticsButton">Мин., ср. и макс. стоимость номеров</Button>
 		</StackPanel>
 		
 	</Grid>

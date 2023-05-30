@@ -82,7 +82,7 @@ public class ApiWrapper
     }
     public Task DeleteLodgersAsync(int id)
     {
-        return _client.BookedRoomsDELETEAsync(id);
+        return _client.LodgerDELETEAsync(id);
     }
 
 
@@ -103,5 +103,30 @@ public class ApiWrapper
     public Task DeleteBroomsAsync(int id)
     {
         return _client.BookedRoomsDELETEAsync(id);
+    }
+
+    public Task<ICollection<HotelGetDto>> InfoHotelsAsync()
+    {
+        return _client.InfoHotelsAsync();
+    }
+
+    public Task<ICollection<LodgerGetDto>> InfoClientsInHotelsAsync(string name)
+    {
+        return _client.InfoClientsInHotelsAsync(name);
+    }
+
+    public Task<ICollection<HotelGetDto>> Top5MostBookedAsync()
+    {
+        return _client.Top5MostBookedAsync();
+    }
+
+    public Task<ICollection<RoomGetDto>> AvailableRoomsAsync(string city)
+    {
+        return _client.AvailableRoomsAsync(city);
+    }
+
+    public Task<ICollection<LodgerGetDto>> ClientsWithMostDaysAsync()
+    {
+        return _client.ClientsWithMostDaysAsync();
     }
 }

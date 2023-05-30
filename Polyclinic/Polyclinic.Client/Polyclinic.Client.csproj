@@ -11,6 +11,9 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\1.png" />
+    <None Remove="Assets\2.png" />
+    <None Remove="Assets\3.png" />
     <None Remove="Assets\AddIcon.png" />
     <None Remove="Assets\ChangeIcon.png" />
     <None Remove="Assets\DeleteIcon.png" />

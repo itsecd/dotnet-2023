@@ -70,7 +70,7 @@ public class BookedRoomsController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<HotelGetDto>> PostBroom(BookedRoomsPostDto broom)
+    public async Task<ActionResult<BookedRoomsGetDto>> PostBroom(BookedRoomsPostDto broom)
     {
         _logger.LogInformation("PostBroom");
         if (_context.Brooms == null)
@@ -80,7 +80,7 @@ public class BookedRoomsController : ControllerBase
         var temp = _mapper.Map<BookedRooms>(broom);
         _context.Brooms.Add(temp);
         await _context.SaveChangesAsync();
-        return CreatedAtAction("PostBookedRoom", new { id = temp.Id }, _mapper.Map<BookedRoomsGetDto>(temp));
+        return CreatedAtAction("PostBroom", new { id = temp.Id }, _mapper.Map<BookedRoomsGetDto>(temp));
     }
 
     [HttpDelete("{id}")]

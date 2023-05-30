@@ -18,15 +18,15 @@ public class BookedRoomsPostDto
     /// <summary>
     /// The date on which the lodger booked the room
     /// </summary>
-    public DateTime EntryDate { get; set; }
+    public DateTimeOffset EntryDate { get; set; }
 
     /// <summary>
     /// The date on which booking ends
     /// </summary>
-    public DateTime BookingTerm { get; set; }
+    public DateTimeOffset BookingTerm { get; set; }
 
     /// <summary>
     /// The date on which the lodger departed from the room
     /// </summary>
-    public DateTime DepartmentDate { get; set; }
+    public DateTimeOffset DepartmentDate { get; set; }
 }

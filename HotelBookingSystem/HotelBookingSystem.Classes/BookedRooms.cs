@@ -40,17 +40,17 @@ public class BookedRooms
     /// The date on which the lodger booked the room
     /// </summary>
     [Column("entryDate")]
-    public DateTime EntryDate { get; set; }
+    public DateTimeOffset EntryDate { get; set; }
 
     /// <summary>
     /// The date on which booking ends
     /// </summary>
     [Column("bookingTerm")]
-    public DateTime BookingTerm { get; set; }
+    public DateTimeOffset BookingTerm { get; set; }
 
     /// <summary>
     /// The date on which the lodger departed from the room
     /// </summary>
     [Column("departmentDate")]
-    public DateTime DepartmentDate { get; set; }
+    public DateTimeOffset DepartmentDate { get; set; }
 }

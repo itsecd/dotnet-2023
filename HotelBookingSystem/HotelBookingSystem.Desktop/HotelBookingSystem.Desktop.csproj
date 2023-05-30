@@ -16,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" Namespace="HotelBookingSystem.Desktop" ClassName="ApiClient">
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
-    </OpenApiReference>
+    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="HotelBookingSystem.Desktop" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,8 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\HotelDialogWindow.axaml.cs">
-      <DependentUpon>HotelDialogWindow.axaml</DependentUpon>
+    <Compile Update="Views\AddHotelWindow.axaml.cs">
+      <DependentUpon>AddHotelWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

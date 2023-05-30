@@ -7,8 +7,8 @@
         x:Class="HotelBookingSystem.Desktop.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Система бронирования отелей"
-		MaxWidth="800" MaxHeight="450"
-		MinWidth="800" MinHeight="450">
+		SizeToContent="WidthAndHeight"
+		>
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -17,21 +17,79 @@
 	<Window.Styles>
 		<StyleInclude Source="/HotelBookingSystemStyles.axaml"/>	
 	</Window.Styles>
-	
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
-			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
-			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False" 
-				  Items="{Binding Hotels}"
-				  SelectedItem="{Binding Selected}">
+
+	<Grid Classes="MainGrid" RowDefinitions="250,Auto,250,Auto" ColumnDefinitions="500,500">
+		
+		<DataGrid Classes="SingleGrid" Grid.Row="0" Grid.Column="0" AutoGenerateColumns="False"
+					  Items="{Binding Hotels}"
+					  SelectedItem="{Binding SelectedHotel}">
 			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID Отеля" Binding="{Binding Id}"/>
 				<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
 				<DataGridTextColumn Header="Город" Binding="{Binding City}"/>
 				<DataGridTextColumn Header="Адрес" Binding="{Binding Adress}"/>
 			</DataGrid.Columns>
 		</DataGrid>
+
+		<StackPanel Classes="ButtonStack" Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding HotelAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding HotelEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding HotelDeleteCommand}">Удалить</Button>
+		</StackPanel>
+
+		<DataGrid Classes="SingleGrid" Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False"
+				  Items="{Binding Rooms}"
+				  SelectedItem="{Binding SelectedRoom}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID Комнаты" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Тип" Binding="{Binding TypeOfRoom}"/>
+				<DataGridTextColumn Header="ID Отеля" Binding="{Binding PlacementId}"/>
+				<DataGridTextColumn Header="Кол-во комнат" Binding="{Binding NumberOfRooms}"/>
+				<DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<StackPanel Classes="ButtonStack" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding RoomAddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding RoomEditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding RoomDeleteCommand}">Удалить</Button>
+		</StackPanel>
+
+		<DataGrid Classes="SingleGrid" Grid.Row="2" Grid.Column="0" AutoGenerateColumns="False"
+			  Items="{Binding Lodgers}"
+			  SelectedItem="{Binding SelectedLodger}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID Постояльца" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Номер паспорта" Binding="{Binding Passport}"/>
+				<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthdate}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
+		</StackPanel>
+
+		<DataGrid Classes="SingleGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False"
+				  Items="{Binding Brooms}"
+				  SelectedItem="{Binding SelectedRoom}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID Записи" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="ID Комнаты" Binding="{Binding BookedRoomId}"/>
+				<DataGridTextColumn Header="ID Постояльца" Binding="{Binding ClientId}"/>
+				<DataGridTextColumn Header="Дата въезда" Binding="{Binding EntryDate}"/>
+				<DataGridTextColumn Header="Срок бронирования" Binding="{Binding BookingTerm}"/>
+				<DataGridTextColumn Header="Дата выезда" Binding="{Binding DepartmentDate}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<StackPanel Classes="ButtonStack" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+			<Button Classes="ToolButton" Command="{Binding AddCommand}">Добавить</Button>
+			<Button Classes="ToolButton" Command="{Binding EditCommand}">Редактировать</Button>
+			<Button Classes="ToolButton" Command="{Binding DeleteCommand}">Удалить</Button>
+		</StackPanel>
+		
 	</Grid>
 </Window>

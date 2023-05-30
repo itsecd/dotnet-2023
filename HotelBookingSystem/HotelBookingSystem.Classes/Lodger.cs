@@ -30,7 +30,7 @@ public class Lodger
     /// The bithdate of the lodger
     /// </summary>
     [Column("birthdate")]
-    public DateTime Birthdate { get; set; }
+    public DateTimeOffset Birthdate { get; set; }
 
     /// <summary>
     /// The collection of BookedRooms objects

@@ -23,5 +23,5 @@ public class LodgerGetDto
     /// <summary>
     /// The bithdate of the lodger
     /// </summary>
-    public DateTime Birthdate { get; set; }
+    public DateTimeOffset Birthdate { get; set; }
 }

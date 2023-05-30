@@ -32,7 +32,7 @@ public class GradeController : ControllerBase
     /// Получение всех оценок
     /// </summary>
     /// <returns>Список всех оценок</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetGrades")]
     public async Task<ActionResult<IEnumerable<GradeGetDto>>> GetGrades()
     {
         if (_context.Grades == null)
@@ -47,7 +47,7 @@ public class GradeController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор оценки</param>
     /// <returns>Оценка</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetGrade")]
     public async Task<ActionResult<GradeGetDto>> GetGrade(int id)
     {
         if (_context.Grades == null)
@@ -70,7 +70,7 @@ public class GradeController : ControllerBase
     /// <param name="id">Идентификатор класса</param>
     /// <param name="grade">Изменяемая оценка</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "PutGrade")]
     public async Task<IActionResult> PutGrade(int id, GradePostDto grade)
     {
         if (_context.Grades == null)
@@ -88,7 +88,7 @@ public class GradeController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 
     /// <summary>
@@ -96,8 +96,8 @@ public class GradeController : ControllerBase
     /// </summary>
     /// <param name="grade">оценка</param>
     /// <returns>Созданная оценка</returns>
-    [HttpPost]
-    public async Task<ActionResult<GradeGetDto>> PostGrade(GradePostDto grade)
+    [HttpPost(Name = "PostGrade")]
+    public async Task<ActionResult<int>> PostGrade(GradePostDto grade)
     {
         if (_context.Grades == null)
         {
@@ -108,7 +108,7 @@ public class GradeController : ControllerBase
         _context.Grades.Add(mappedGrade);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("PostGrade", new { id = mappedGrade.Id }, _mapper.Map<GradeGetDto>(mappedGrade));
+        return Ok(mappedGrade.Id);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class GradeController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор удаляемой оценки</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteGrade")]
     public async Task<IActionResult> DeleteGrade(int id)
     {
         if (_context.Grades == null)
@@ -132,6 +132,6 @@ public class GradeController : ControllerBase
         _context.Grades.Remove(grade);
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 }

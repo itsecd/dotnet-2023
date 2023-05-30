@@ -32,7 +32,7 @@ public class ClassController : ControllerBase
     /// Получение всех классов
     /// </summary>
     /// <returns>Список всех классов</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetClasses")]
     public async Task<ActionResult<IEnumerable<ClassGetDto>>> GetClasses()
     {
         if (_context.Classes == null)
@@ -47,7 +47,7 @@ public class ClassController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор класса</param>
     /// <returns>Класс</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetClass")]
     public async Task<ActionResult<ClassGetDto>> GetClass(int id)
     {
         if (_context.Classes == null)
@@ -69,7 +69,7 @@ public class ClassController : ControllerBase
     /// <param name="id">Идентификатор класса</param>
     /// <param name="class">Изменяемый класс</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "PutClass")]
     public async Task<IActionResult> PutClass(int id, ClassPostDto @class)
     {
         if (_context.Classes == null)
@@ -87,7 +87,7 @@ public class ClassController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 
     /// <summary>
@@ -95,8 +95,8 @@ public class ClassController : ControllerBase
     /// </summary>
     /// <param name="class">класс</param>
     /// <returns>Созданный класс</returns>
-    [HttpPost]
-    public async Task<ActionResult<ClassGetDto>> PostClass(ClassPostDto @class)
+    [HttpPost(Name = "PostClass")]
+    public async Task<ActionResult<int>> PostClass(ClassPostDto @class)
     {
         if (_context.Classes == null)
         {
@@ -107,7 +107,7 @@ public class ClassController : ControllerBase
         _context.Classes.Add(mappedClass);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("PostClass", new { id = mappedClass.Id }, _mapper.Map<ClassGetDto>(mappedClass));
+        return Ok(mappedClass.Id);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class ClassController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор удаляемого класса</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteClass")]
     public async Task<IActionResult> DeleteClass(int id)
     {
         if (_context.Classes == null)
@@ -131,7 +131,7 @@ public class ClassController : ControllerBase
         _context.Classes.Remove(@class);
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 }
 

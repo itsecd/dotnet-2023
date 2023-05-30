@@ -11,6 +11,7 @@
           "Class"
         ],
         "summary": "Получение всех классов",
+        "operationId": "GetClasses",
         "responses": {
           "200": {
             "description": "Success",
@@ -48,6 +49,7 @@
           "Class"
         ],
         "summary": "Добавление нового класса",
+        "operationId": "PostClass",
         "requestBody": {
           "description": "класс",
           "content": {
@@ -74,17 +76,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClassGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClassGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClassGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -98,6 +103,7 @@
           "Class"
         ],
         "summary": "Получение класса по id",
+        "operationId": "GetClass",
         "parameters": [
           {
             "name": "id",
@@ -138,6 +144,7 @@
           "Class"
         ],
         "summary": "Изменение данных о классе",
+        "operationId": "PutClass",
         "parameters": [
           {
             "name": "id",
@@ -181,6 +188,7 @@
           "Class"
         ],
         "summary": "Удаление класса",
+        "operationId": "DeleteClass",
         "parameters": [
           {
             "name": "id",
@@ -206,6 +214,7 @@
           "Grade"
         ],
         "summary": "Получение всех оценок",
+        "operationId": "GetGrades",
         "responses": {
           "200": {
             "description": "Success",
@@ -243,6 +252,7 @@
           "Grade"
         ],
         "summary": "Добавление новой оценки",
+        "operationId": "PostGrade",
         "requestBody": {
           "description": "оценка",
           "content": {
@@ -269,17 +279,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GradeGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GradeGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GradeGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -293,6 +306,7 @@
           "Grade"
         ],
         "summary": "Получение оценки по id",
+        "operationId": "GetGrade",
         "parameters": [
           {
             "name": "id",
@@ -333,6 +347,7 @@
           "Grade"
         ],
         "summary": "Изменение данных об оценке",
+        "operationId": "PutGrade",
         "parameters": [
           {
             "name": "id",
@@ -376,6 +391,7 @@
           "Grade"
         ],
         "summary": "Удаление оценки",
+        "operationId": "DeleteGrade",
         "parameters": [
           {
             "name": "id",
@@ -401,6 +417,7 @@
           "Requests"
         ],
         "summary": "Выведите информацию обо всех элементах. Проверьте количество элементов",
+        "operationId": "GetAllSubjects",
         "responses": {
           "200": {
             "description": "Success",
@@ -440,6 +457,7 @@
           "Requests"
         ],
         "summary": "Отобразить информацию обо всех учащихся в указанном классе, отсортировать по имени.",
+        "operationId": "GetAllStudentByClassId",
         "parameters": [
           {
             "name": "classId",
@@ -491,6 +509,7 @@
           "Requests"
         ],
         "summary": "Выведите информацию обо всех учащихся, получивших оценки в указанный день.",
+        "operationId": "StudentsGetsGradesByDay",
         "parameters": [
           {
             "name": "date",
@@ -542,6 +561,7 @@
           "Requests"
         ],
         "summary": "Выделите 5 лучших студентов по среднему баллу",
+        "operationId": "Top5StudentsAvrMark",
         "responses": {
           "200": {
             "description": "Success",
@@ -581,6 +601,7 @@
           "Requests"
         ],
         "summary": "Вывод студентов с максимальным средним баллом за указанный период",
+        "operationId": "MaxAvrGradeStudentsByPeriod",
         "parameters": [
           {
             "name": "first",
@@ -638,6 +659,7 @@
           "Requests"
         ],
         "summary": "Выведите информацию о минимальном, среднем и максимальном балле по каждому предмету",
+        "operationId": "MinMaxAvrGradeBySubject",
         "responses": {
           "200": {
             "description": "Success"
@@ -651,6 +673,7 @@
           "Student"
         ],
         "summary": "Получение всех студентов",
+        "operationId": "GetStudents",
         "responses": {
           "200": {
             "description": "Success",
@@ -688,6 +711,7 @@
           "Student"
         ],
         "summary": "Добавление нового студента",
+        "operationId": "PostStudent",
         "requestBody": {
           "description": "студент",
           "content": {
@@ -714,17 +738,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudentGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudentGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudentGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -738,6 +765,7 @@
           "Student"
         ],
         "summary": "Получение студента по id",
+        "operationId": "GetStudent",
         "parameters": [
           {
             "name": "id",
@@ -778,6 +806,7 @@
           "Student"
         ],
         "summary": "Изменение данных выбранного студента",
+        "operationId": "PutStudent",
         "parameters": [
           {
             "name": "id",
@@ -821,6 +850,7 @@
           "Student"
         ],
         "summary": "Удаление студента",
+        "operationId": "DeleteStudent",
         "parameters": [
           {
             "name": "id",
@@ -846,6 +876,7 @@
           "Subject"
         ],
         "summary": "Получение всех предметов",
+        "operationId": "GetSubjects",
         "responses": {
           "200": {
             "description": "Success",
@@ -883,6 +914,7 @@
           "Subject"
         ],
         "summary": "Добавление нового предмета",
+        "operationId": "PostSubject",
         "requestBody": {
           "description": "предмет",
           "content": {
@@ -909,17 +941,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubjectGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubjectGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubjectGetDto"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -933,6 +968,7 @@
           "Subject"
         ],
         "summary": "Получение предмета по id",
+        "operationId": "GetSubject",
         "parameters": [
           {
             "name": "id",
@@ -973,6 +1009,7 @@
           "Subject"
         ],
         "summary": "Изменение данных о школьном предмете",
+        "operationId": "PutSubject",
         "parameters": [
           {
             "name": "id",
@@ -1016,6 +1053,7 @@
           "Subject"
         ],
         "summary": "Удаление предмета",
+        "operationId": "DeleteSubject",
         "parameters": [
           {
             "name": "id",

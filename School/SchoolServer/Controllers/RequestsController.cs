@@ -33,7 +33,7 @@ public class RequestsController : ControllerBase
     /// Выведите информацию обо всех элементах. Проверьте количество элементов
     /// </summary>
     /// <returns>Список предметов</returns>
-    [HttpGet("GetAllSubject")]
+    [HttpGet("GetAllSubject", Name = "GetAllSubjects")]
     public async Task<ActionResult<IEnumerable<SubjectGetDto>>> GetAllSubject()
     {
         if (_context.Subjects == null)
@@ -48,7 +48,7 @@ public class RequestsController : ControllerBase
     /// </summary>
     /// <param name="classId">Идентификатор класса</param>
     /// <returns></returns>
-    [HttpGet("GetAllStudentByClassId/{classId}")]
+    [HttpGet("GetAllStudentByClassId/{classId}", Name = "GetAllStudentByClassId")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetAllStudentByClassId(int classId)
     {
         if (_context.Students == null)
@@ -74,7 +74,7 @@ public class RequestsController : ControllerBase
     /// </summary>
     /// <param name="date">День выставления оценки</param>
     /// <returns>Список студентов</returns>
-    [HttpGet("StudentsGetsGradesByDay/{date:DateTime}")]
+    [HttpGet("StudentsGetsGradesByDay/{date:DateTime}", Name = "StudentsGetsGradesByDay")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> StudentsGetsGradesByDay(DateTime date)
     {
         if (_context.Grades == null || _context.Students == null)
@@ -98,7 +98,7 @@ public class RequestsController : ControllerBase
     /// Выделите 5 лучших студентов по среднему баллу
     /// </summary>
     /// <returns>Результат операции</returns>
-    [HttpGet("Top5StudentsAvrMark")]
+    [HttpGet("Top5StudentsAvrMark", Name = "Top5StudentsAvrMark")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> Top5StudentsAvrMark()
     {
         if (_context.Grades == null || _context.Students == null)
@@ -127,7 +127,7 @@ public class RequestsController : ControllerBase
     /// Вывод студентов с максимальным средним баллом за указанный период
     /// </summary>
     /// <returns></returns>
-    [HttpGet("MaxAvrGradeStudentsByPeriod")]
+    [HttpGet("MaxAvrGradeStudentsByPeriod", Name = "MaxAvrGradeStudentsByPeriod")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> MaxAvrGradeStudentsByPeriod(DateTime first, DateTime second)
     {
         if (first > second)
@@ -169,7 +169,7 @@ public class RequestsController : ControllerBase
     /// Выведите информацию о минимальном, среднем и максимальном балле по каждому предмету
     /// </summary>
     /// <returns></returns>
-    [HttpGet("StatisticSubjects")]
+    [HttpGet("StatisticSubjects", Name = "MinMaxAvrGradeBySubject")]
     public async Task<dynamic> MinMaxAvrGradeBySubject()
     {
         if (_context.Grades == null)

@@ -32,7 +32,7 @@ public class StudentController : ControllerBase
     /// Получение всех студентов
     /// </summary>
     /// <returns>Список всех студентов</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetStudents")]
     public async Task<ActionResult<IEnumerable<StudentGetDto>>> GetStudents()
     {
         if (_context.Students == null)
@@ -47,7 +47,7 @@ public class StudentController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор студента</param>
     /// <returns>Студент</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetStudent")]
     public async Task<ActionResult<StudentGetDto>> GetStudent(int id)
     {
         if (_context.Students == null)
@@ -70,7 +70,7 @@ public class StudentController : ControllerBase
     /// <param name="id">Идентификатор студента</param>
     /// <param name="student">Студент, данные которого нужно изменить</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "PutStudent")]
     public async Task<IActionResult> PutStudent(int id, StudentPostDto student)
     {
         if (_context.Students == null)
@@ -88,7 +88,7 @@ public class StudentController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 
     /// <summary>
@@ -96,8 +96,8 @@ public class StudentController : ControllerBase
     /// </summary>
     /// <param name="student">студент</param>
     /// <returns>Добавленный студент</returns>
-    [HttpPost]
-    public async Task<ActionResult<StudentGetDto>> PostStudent(StudentPostDto student)
+    [HttpPost(Name = "PostStudent")]
+    public async Task<ActionResult<int>> PostStudent(StudentPostDto student)
     {
         if (_context.Students == null)
         {
@@ -109,7 +109,7 @@ public class StudentController : ControllerBase
         _context.Students.Add(mappedStudent);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("PostStudent", new { id = mappedStudent.Id }, _mapper.Map<StudentGetDto>(mappedStudent));
+        return Ok(mappedStudent.Id);
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public class StudentController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор студента </param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteStudent")]
     public async Task<IActionResult> DeleteStudent(int id)
     {
         if (_context.Students == null)
@@ -133,7 +133,7 @@ public class StudentController : ControllerBase
         _context.Students.Remove(student);
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 
 }

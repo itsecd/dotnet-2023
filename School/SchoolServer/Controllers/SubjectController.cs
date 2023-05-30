@@ -32,7 +32,7 @@ public class SubjectController : ControllerBase
     /// Получение всех предметов
     /// </summary>
     /// <returns>Список всех предметов</returns>
-    [HttpGet]
+    [HttpGet(Name = "GetSubjects")]
     public async Task<ActionResult<IEnumerable<SubjectGetDto>>> GetSubjects()
     {
         if (_context.Subjects == null)
@@ -47,7 +47,7 @@ public class SubjectController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор предмета</param>
     /// <returns>Школьный предмет</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetSubject")]
     public async Task<ActionResult<SubjectGetDto>> GetSubject(int id)
     {
         if (_context.Subjects == null)
@@ -70,7 +70,7 @@ public class SubjectController : ControllerBase
     /// <param name="id">Идентификатор предмета</param>
     /// <param name="subject">Изменяемый предмет</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "PutSubject")]
     public async Task<IActionResult> PutSubject(int id, SubjectPostDto subject)
     {
         if (_context.Subjects == null)
@@ -88,7 +88,7 @@ public class SubjectController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 
     /// <summary>
@@ -96,8 +96,8 @@ public class SubjectController : ControllerBase
     /// </summary>
     /// <param name="subject">предмет</param>
     /// <returns>Созданный предмет</returns>
-    [HttpPost]
-    public async Task<ActionResult<SubjectGetDto>> PostSubject(SubjectPostDto subject)
+    [HttpPost(Name = "PostSubject")]
+    public async Task<ActionResult<int>> PostSubject(SubjectPostDto subject)
     {
         if (_context.Subjects == null)
         {
@@ -108,7 +108,7 @@ public class SubjectController : ControllerBase
         _context.Subjects.Add(mappedSubject);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("PostSubject", new { id = mappedSubject.Id }, _mapper.Map<SubjectGetDto>(mappedSubject));
+        return Ok(mappedSubject.Id);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class SubjectController : ControllerBase
     /// </summary>
     /// <param name="id">Идентификатор удаляемого предмета</param>
     /// <returns>Результат выполнения операции</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteSubject")]
     public async Task<IActionResult> DeleteSubject(int id)
     {
         if (_context.Subjects == null)
@@ -132,6 +132,6 @@ public class SubjectController : ControllerBase
         _context.Subjects.Remove(subject);
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok();
     }
 }

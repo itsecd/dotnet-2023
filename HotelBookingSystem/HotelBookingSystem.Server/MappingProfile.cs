@@ -6,7 +6,7 @@ namespace HotelBookingSystem.Server;
 
 public class MappingProfile : Profile
 {
-    public MappingProfile() 
+    public MappingProfile()
     {
         CreateMap<Hotel, HotelGetDto>();
         CreateMap<HotelPostDto, Hotel>();

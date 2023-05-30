@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-using System;
 using System.Reactive;
 
 namespace HotelBookingSystem.Desktop.ViewModels;

@@ -3,9 +3,8 @@ using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Reactive.Concurrency;
-using System;
+using System.Reactive.Linq;
 
 namespace HotelBookingSystem.Desktop.ViewModels;
 
@@ -63,7 +62,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private HotelViewModel? SelectedHotel
     {
-        get => _selectedHotel; 
+        get => _selectedHotel;
         set => this.RaiseAndSetIfChanged(ref _selectedHotel, value);
     }
     private RoomViewModel? SelectedRoom
@@ -106,8 +105,8 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public MainWindowViewModel() 
-    { 
+    public MainWindowViewModel()
+    {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
         _mapper = Locator.Current.GetService<IMapper>();
 
@@ -130,7 +129,7 @@ public class MainWindowViewModel : ViewModelBase
         HotelAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var hotelViewModel = await ShowHotelDialog.Handle(new HotelViewModel());
-            if (hotelViewModel != null) 
+            if (hotelViewModel != null)
             {
                 var newHotel = await _apiClient.PostHotelsAsync(_mapper.Map<HotelPostDto>(hotelViewModel));
                 Hotels.Add(_mapper.Map<HotelViewModel>(newHotel));

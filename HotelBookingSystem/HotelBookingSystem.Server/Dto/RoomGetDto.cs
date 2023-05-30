@@ -9,7 +9,7 @@ public class RoomGetDto
     /// Room id
     /// </summary>
     public int Id { get; set; }
-    
+
     /// <summary>
     /// The type of room
     /// </summary>

@@ -1,14 +1,13 @@
 ﻿using ReactiveUI;
-using System;
 using System.Reactive;
 
 namespace HotelBookingSystem.Desktop.ViewModels;
 public class HotelViewModel : ViewModelBase
 {
     private int _id;
-    public int Id 
-    { 
-        get => _id; 
+    public int Id
+    {
+        get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
@@ -33,7 +32,7 @@ public class HotelViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _adress, value);
     }
 
-    public ReactiveCommand<Unit, HotelViewModel> OkCommand { get;}
+    public ReactiveCommand<Unit, HotelViewModel> OkCommand { get; }
 
     public HotelViewModel()
     {

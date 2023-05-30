@@ -1,6 +1,4 @@
 ﻿using HotelBookingSystem.Classes;
-using Microsoft.Extensions.Hosting;
-using System.Xml.Linq;
 
 namespace HotelBookingSystem.Server.Repository;
 

@@ -1,11 +1,9 @@
 using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
 using HotelBookingSystem.Desktop.ViewModels;
 using HotelBookingSystem.Desktop.Views;
-using HotelBookingSystem.Server.Dto;
 using Splat;
 using System;
 

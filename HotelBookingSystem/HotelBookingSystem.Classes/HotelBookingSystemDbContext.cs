@@ -68,9 +68,9 @@ public class HotelBookingSystemDbContext : DbContext
                 EntryDate = new DateTime(2002, 02, 02), BookingTerm = new DateTime(2022, 02, 02), DepartmentDate = new DateTime(2012, 02, 02)},
             new BookedRooms{Id = 3, ClientId = 3, BookedRoomId = 4,
                 EntryDate = new DateTime(2003, 03, 02), BookingTerm = new DateTime(2024, 03, 02), DepartmentDate = new DateTime(2013, 03, 03)},
-            new BookedRooms{Id = 4, ClientId = 4, BookedRoomId = 6, 
+            new BookedRooms{Id = 4, ClientId = 4, BookedRoomId = 6,
                 EntryDate = new DateTime(2004, 04, 02), BookingTerm = new DateTime(2024, 04, 02), DepartmentDate = new DateTime(2014, 04, 04)},
-            new BookedRooms{Id = 5, ClientId = 5, BookedRoomId = 9, 
+            new BookedRooms{Id = 5, ClientId = 5, BookedRoomId = 9,
                 EntryDate = new DateTime(2005, 05, 02), BookingTerm = new DateTime(2025, 05, 02), DepartmentDate = new DateTime(2015, 05, 05)},
         };
 

@@ -1,6 +1,3 @@
-using HotelBookingSystem.Classes;
-using Microsoft.EntityFrameworkCore;
-
 namespace HotelBookingSystem.Tests;
 
 public class Tests

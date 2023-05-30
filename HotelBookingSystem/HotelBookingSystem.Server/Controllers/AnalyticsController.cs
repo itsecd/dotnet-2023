@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Classes;
 using HotelBookingSystem.Server.Dto;
-using HotelBookingSystem.Server.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HotelBookingSystem.Server.Controllers;
 [ApiController]
@@ -53,8 +50,8 @@ public class AnalyticsController : ControllerBase
         }
         var brooms = _context.Brooms;
         var result = await (from broom in brooms
-                      where broom.BookedRoom.Placement.Name == name
-                      select broom.Client).Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToListAsync();
+                            where broom.BookedRoom.Placement.Name == name
+                            select broom.Client).Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToListAsync();
         return result;
     }
 
@@ -97,8 +94,8 @@ public class AnalyticsController : ControllerBase
         var tmp = (from broom in brooms
                    select broom.BookedRoom).ToList();
         var result = await (from room in rooms
-                      where !tmp.Contains(room) && room.Placement.City == city
-                      select room)
+                            where !tmp.Contains(room) && room.Placement.City == city
+                            select room)
                       .Select(room => _mapper.Map<RoomGetDto>(room))
                       .ToListAsync();
         return result;
@@ -118,8 +115,8 @@ public class AnalyticsController : ControllerBase
         }
         var brooms = _context.Brooms;
         var result = await (from broom in brooms
-                      orderby (broom.BookingTerm - broom.EntryDate) descending
-                      select broom.Client)
+                            orderby (broom.BookingTerm - broom.EntryDate) descending
+                            select broom.Client)
                       .Select(lodger => _mapper.Map<LodgerGetDto>(lodger)).ToListAsync();
         return result;
     }

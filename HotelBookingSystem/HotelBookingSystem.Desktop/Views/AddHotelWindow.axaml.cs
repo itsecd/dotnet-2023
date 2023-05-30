@@ -1,8 +1,7 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using ReactiveUI;
 using HotelBookingSystem.Desktop.ViewModels;
+using ReactiveUI;
 using System;
 
 namespace HotelBookingSystem.Desktop.Views;

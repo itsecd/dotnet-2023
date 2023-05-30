@@ -1,23 +1,27 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
-        </Border>
-    </Design.PreviewWith>
+	<Design.PreviewWith>
+		<Border Padding="20">
+
+		</Border>
+	</Design.PreviewWith>
 
 	<Style Selector="Button.ToolButton">
-		<Setter Property="Width" Value="32" />
-		<Setter Property="Height" Value="32" />
-		<Setter Property="Margin" Value="0,4,0,4" />
+		<Setter Property="Width" Value="32"></Setter>
 	</Style>
 
-	<Style Selector="Button">
-		<Setter Property="Width" Value="100" />
-	</Style>
-	
 	<Style Selector="Grid.MainGrid">
 		<Setter Property="Margin" Value="8"/>
 	</Style>
-</Styles>
 
+	<Style Selector="DataGrid.ResponseTable">
+		<Setter Property="Margin" Value="0,10,0,10"/>
+	</Style>
+
+	<Style Selector="Button">
+		<Setter Property="Foreground" Value="#FFFFFFFF" />
+		<Setter Property="BorderThickness" Value="2" />
+		<Setter Property="Background" Value="#FFDD4812" />
+		<Setter Property="BorderBrush" Value="#FFFFFFFF" />
+	</Style>
+</Styles>

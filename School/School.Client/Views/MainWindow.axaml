@@ -1,49 +1,93 @@
-
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:School.Client.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="School.Client.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="School.Client">
+        Title="Школа">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-	
-		<Window.Styles>
+	<Window.Styles>
 		<StyleInclude Source="/SchoolStyles.axaml"/>
-		</Window.Styles>
+	</Window.Styles>
 
-	
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}" > 
-				<Image Source="/Assets/add.png"/>
-			</Button>
-			
-			<Button Classes="ToolButton">
-				<Image Source="/Assets/redact.png"/>
-			</Button>			
-			<Button Classes="ToolButton">
-				<Image Source="/Assets/del.png"/>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-				  Items="{Binding Classes}"
-				  SelectedItem="{Binding SelectedClasses}">
-			
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Школа" Binding="{Binding Number}"/>
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">
+
+			<StackPanel Grid.Row="0" Orientation="Vertical">
+				<Label>Классы</Label>
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Command="{Binding OnAddClassCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeClassCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteClassCommand}">Удалить</Button>
+				</StackPanel>
+				<TextBlock Text="{Binding ClassExceptionValue}"></TextBlock>
+			</StackPanel>
+
+			<DataGrid Classes="ResponseTable" Grid.Row="1" AutoGenerateColumns="False" Items="{Binding Classes}"
+						  SelectedItem="{Binding SelectedClass}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Номер" Binding="{Binding Number}"/>
+					<DataGridTextColumn Header="Литера" Binding="{Binding Letter}"/>
 				</DataGrid.Columns>
-			
-		</DataGrid>
-		
-	</Grid>
+			</DataGrid>
 
+			<StackPanel Grid.Row="2" Orientation="Vertical">
+				<Label>Оценки</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddGradeCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeGradeCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteGradeCommand}">Удалить</Button>
+				</StackPanel>
+				<TextBlock Text="{Binding GradeExceptionValue}"></TextBlock>
+			</StackPanel>
+
+			<DataGrid Classes="ResponseTable" Grid.Row="3" AutoGenerateColumns="False" Items="{Binding Grades}"
+							SelectedItem="{Binding SelectedGrade}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Идентификатор предмета" Binding="{Binding SubjectId}"/>
+					<DataGridTextColumn Header="Идентификатор ученика" Binding="{Binding StudentId}"/>
+					<DataGridTextColumn Header="Оценка" Binding="{Binding Mark}"/>
+					<DataGridTextColumn Header="Дата" Binding="{Binding Date}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="4" Orientation="Vertical">
+				<Label>Ученики</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddStudentCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeStudentCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteStudentCommand}">Удалить</Button>
+				</StackPanel>
+				<TextBlock Text="{Binding StudentExceptionValue}"></TextBlock>
+			</StackPanel>
+
+			<DataGrid Classes="ResponseTable" Grid.Row="5" AutoGenerateColumns="False" Items="{Binding Students}"
+							SelectedItem="{Binding SelectedStudent}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+					<DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+					<DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+					<DataGridTextColumn Header="Паспорт" Binding="{Binding Passport}"/>
+					<DataGridTextColumn Header="Идентификатор класса" Binding="{Binding ClassId}"/>
+					<DataGridTextColumn Header="Дата рождения" Binding="{Binding BirthDate}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="6" Orientation="Vertical">
+				<Label>Предметы</Label>
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding OnAddSubjectCommand}">Добавить</Button>
+					<Button Command="{Binding OnChangeSubjectCommand}">Редактировать</Button>
+					<Button Command="{Binding OnDeleteSubjectCommand}">Удалить</Button>
+				</StackPanel>
+				<TextBlock Text="{Binding SubjectExceptionValue}"></TextBlock>
+			</StackPanel>
+
+			<DataGrid Classes="ResponseTable" Grid.Row="7" AutoGenerateColumns="False" Items="{Binding Subjects}"
+							SelectedItem="{Binding SelectedSubject}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="Год преподавания" Binding="{Binding Year}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
 </Window>
-

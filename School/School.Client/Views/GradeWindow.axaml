@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="School.Client.Views.GradeWindow"
+		xmlns:vm="using:School.Client.ViewModels"
+        Title="Редактирование оценки"
+		SizeToContent="Height"
+		MaxWidth="1000">
+	<Design.DataContext>
+		<vm:GradeViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/SchoolStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, *">
+		<Label Grid.Row="0" Grid.Column="0">Идентификатор предмета</Label>
+		<Label Grid.Row="0" Grid.Column="1">Идентификатор ученика</Label>
+		<Label Grid.Row="0" Grid.Column="2">Оценка</Label>
+		<Label Grid.Row="0" Grid.Column="3">Дата</Label>
+
+		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding SubjectId}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StudentId}"/>
+		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Mark}"/>
+		<DatePicker x:Name="date" Grid.Row="1" Grid.Column="3" SelectedDateChanged="ChangedMarkDateEvent"/>
+
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+
+
+</Window>

@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="School.Client.Views.StudentWindow"
+		xmlns:vm="using:School.Client.ViewModels"
+        Title="Редактирование студента"
+		SizeToContent="Height"
+		MaxWidth="1000">
+	<Design.DataContext>
+		<vm:StudentViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/SchoolStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+		<Label Grid.Row="0" Grid.Column="0">Имя</Label>
+		<Label Grid.Row="0" Grid.Column="1">Фамилия</Label>
+		<Label Grid.Row="0" Grid.Column="2">Отчество</Label>
+		<Label Grid.Row="0" Grid.Column="3">Паспорт</Label>
+		<Label Grid.Row="0" Grid.Column="4">Идентификатор класса</Label>
+		<Label Grid.Row="0" Grid.Column="5">Дата рождения</Label>
+
+		<TextBox Grid.Row="1" Grid.Column="0" Text="{Binding FirstName}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}"/>
+		<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Patronymic}"/>
+		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Passport}"/>
+		<TextBox Grid.Row="1" Grid.Column="4" Text="{Binding ClassId}"/>
+		<DatePicker x:Name="studentBirthDate" Grid.Row="1" Grid.Column="5" SelectedDateChanged="ChangedStudentBirthDateEvent"/>
+
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+
+
+</Window>

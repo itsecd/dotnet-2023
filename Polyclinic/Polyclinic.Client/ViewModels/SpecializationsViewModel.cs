@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System.Reactive;
 using ReactiveUI;
-using System.Reactive;
-using Poluclinic.Client;
 
 namespace Polyclinic.Client.ViewModels;
 public class SpecializationsViewModel : ViewModelBase

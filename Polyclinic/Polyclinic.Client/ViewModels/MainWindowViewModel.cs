@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using AutoMapper;
+using Poluclinic.Client;
 using ReactiveUI;
 using Splat;
-using Poluclinic.Client;
 
 namespace Polyclinic.Client.ViewModels;
 
@@ -121,8 +121,8 @@ public class MainWindowViewModel : ViewModelBase
     private async void LoadAllAsync()
     {
         var patients = await _apiClient.GetPatientsAsync();
-        foreach(var pat in patients) 
-        { 
+        foreach (var pat in patients)
+        {
             Patients.Add(_mapper.Map<PatientViewModel>(pat));
         }
 

@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System;
-using ReactiveUI;
+﻿using System;
 using System.Reactive;
+using ReactiveUI;
 
 namespace Polyclinic.Client.ViewModels;
 public class PatientViewModel : ViewModelBase
 {
     private int _passportNumber;
-    public int PassportNumber 
+    public int PassportNumber
     {
         get => _passportNumber;
         set => this.RaiseAndSetIfChanged(ref _passportNumber, value);
     }
-    
+
     private string _fullName = string.Empty;
-    public string FullName 
+    public string FullName
     {
         get => _fullName;
         set => this.RaiseAndSetIfChanged(ref _fullName, value);
@@ -26,7 +24,7 @@ public class PatientViewModel : ViewModelBase
         get;
         set;
     } = DateTime.Today;
-    
+
     private string _address = string.Empty;
     public string Address
     {
@@ -35,7 +33,7 @@ public class PatientViewModel : ViewModelBase
     }
 
     private int _id;
-    public int Id 
+    public int Id
     {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);

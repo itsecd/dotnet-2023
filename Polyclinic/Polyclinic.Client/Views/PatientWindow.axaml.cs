@@ -1,5 +1,4 @@
 using System;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using Polyclinic.Client.ViewModels;
@@ -14,7 +13,7 @@ public partial class PatientWindow : ReactiveWindow<PatientViewModel>
 
         this.WhenActivated(d => d(ViewModel!.OnSumbitCommand.Subscribe(Close)));
     }
-    
+
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Close();

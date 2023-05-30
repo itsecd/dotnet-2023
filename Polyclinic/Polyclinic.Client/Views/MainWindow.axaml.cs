@@ -1,8 +1,5 @@
 using System.Threading.Tasks;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using Microsoft.VisualBasic;
 using Polyclinic.Client.ViewModels;
 using ReactiveUI;
 
@@ -36,4 +33,4 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         var result = await dialog.ShowDialog<DoctorViewModel?>(this);
         interaction.SetOutput(result);
     }
-}   
+}

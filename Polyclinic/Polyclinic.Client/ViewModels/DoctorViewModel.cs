@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System;
-using ReactiveUI;
+﻿using System;
 using System.Reactive;
+using ReactiveUI;
 
 namespace Polyclinic.Client.ViewModels;
 public class DoctorViewModel : ViewModelBase

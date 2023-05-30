@@ -18,9 +18,9 @@
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
-		<Label Grid.Row="0" Grid.Column="0">GroupName</Label>
+		<Label Grid.Row="0" Grid.Column="0">Group name</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GroupName}"/>
-		<Label Grid.Row="1" Grid.Column="0">Id</Label>
+		<Label Grid.Row="1" Grid.Column="0">Group id</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}"/>
 
 		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"

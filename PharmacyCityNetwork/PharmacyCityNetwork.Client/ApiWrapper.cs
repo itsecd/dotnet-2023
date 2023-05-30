@@ -19,7 +19,7 @@ public class ApiWrapper
     }
     public Task<ICollection<ProductGetDto>> GetProductsAsync()
     {
-       return _client.ProductAllAsync();
+        return _client.ProductAllAsync();
     }
     public async Task AddProductAsync(ProductPostDto product)
     {
@@ -66,5 +66,9 @@ public class ApiWrapper
     public async Task DeletePharmacyAsync(int id)
     {
         await _client.Pharmacy4Async(id);
+    }
+    public Task<ICollection<ProductGetDto>> AllProductsFromPharmacy(int pharmacyId)
+    {
+        return _client.AllProductsFromPharmacyAsync(pharmacyId);
     }
 }

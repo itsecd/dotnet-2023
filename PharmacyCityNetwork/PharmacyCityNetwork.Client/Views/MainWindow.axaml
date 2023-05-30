@@ -35,13 +35,12 @@
 				  Items="{Binding Products}"
 				  SelectedItem="{Binding SelectedProduct}">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}"/>
-				<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-				<DataGridTextColumn Header="GroupId" Binding="{Binding GroupId}"/>
-				<DataGridTextColumn Header="ManufacturerId" Binding="{Binding ManufacturerId}"/>
+				<DataGridTextColumn Header="Product name" Binding="{Binding ProductName}"/>
+				<DataGridTextColumn Header="Product id" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Group id" Binding="{Binding GroupId}"/>
+				<DataGridTextColumn Header="Manufacturer id" Binding="{Binding ManufacturerId}"/>
 			</DataGrid.Columns>
 		</DataGrid>
-
 
 			<StackPanel Grid.Row="4" Orientation="Horizontal">
 				<Label>Groups</Label>
@@ -61,8 +60,8 @@
 					  Items="{Binding Groups}"
 					  SelectedItem="{Binding SelectedGroup}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="GroupName" Binding="{Binding GroupName}"/>
-					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Group name" Binding="{Binding GroupName}"/>
+					<DataGridTextColumn Header="Group id" Binding="{Binding Id}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 
@@ -89,6 +88,19 @@
 					<DataGridTextColumn Header="Pharmacy Phone" Binding="{Binding PharmacyPhone}"/>
 					<DataGridTextColumn Header="Pharmacy Address" Binding="{Binding PharmacyAddress}"/>
 					<DataGridTextColumn Header="Pharmacy Director" Binding="{Binding PharmacyDirector}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="10" Orientation="Horizontal">
+				<Label>All products from first pharmacy "Vita"</Label>
+			</StackPanel>
+			<DataGrid Grid.Row="11" AutoGenerateColumns="False"
+					   Items="{Binding AllProductsFromPharmacy}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Product name" Binding="{Binding ProductName}"/>
+					<DataGridTextColumn Header="Product id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Group id" Binding="{Binding GroupId}"/>
+					<DataGridTextColumn Header="Manufacturer id" Binding="{Binding ManufacturerId}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>

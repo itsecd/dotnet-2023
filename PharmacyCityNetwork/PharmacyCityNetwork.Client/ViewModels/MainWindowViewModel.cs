@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using DynamicData;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Text.RegularExpressions;
 
 namespace PharmacyCityNetwork.Client.ViewModels;
 
@@ -17,7 +15,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ProductViewModel> Products { get; } = new();
     public ObservableCollection<GroupViewModel> Groups { get; } = new();
     public ObservableCollection<PharmacyViewModel> Pharmacys { get; } = new();
-    //public ObservableCollection<PharmacyViewModel> Pharmacys { get; } = new();
+    public ObservableCollection<ProductViewModel> AllProductsFromPharmacy { get; set; } = new();
 
     private ProductViewModel? _selectedProduct;
     public ProductViewModel? SelectedProduct
@@ -52,6 +50,7 @@ public class MainWindowViewModel : ViewModelBase
     public Interaction<ProductViewModel, ProductViewModel?> ShowProductDialog { get; set; }
     public Interaction<GroupViewModel, GroupViewModel?> ShowGroupDialog { get; set; }
     public Interaction<PharmacyViewModel, PharmacyViewModel?> ShowPharmacyDialog { get; set; }
+    public ReactiveCommand<Unit, Unit> ShowAllProductsFromPharmacy { get; set; }
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
@@ -84,8 +83,8 @@ public class MainWindowViewModel : ViewModelBase
 
         OnDeleteCommandProduct = ReactiveCommand.CreateFromTask(async () =>
         {
-                await _apiClient.DeleteProductAsync(SelectedProduct!.Id);
-                Products.Remove(SelectedProduct);
+            await _apiClient.DeleteProductAsync(SelectedProduct!.Id);
+            Products.Remove(SelectedProduct);
 
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));
 
@@ -151,7 +150,7 @@ public class MainWindowViewModel : ViewModelBase
     private async void LoadAllAsync()
     {
         var products = await _apiClient.GetProductsAsync();
-        foreach (var product in products) 
+        foreach (var product in products)
         {
             Products.Add(_mapper.Map<ProductViewModel>(product));
         }
@@ -164,6 +163,11 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var pharmacy in pharmacys)
         {
             Pharmacys.Add(_mapper.Map<PharmacyViewModel>(pharmacy));
+        }
+        var analiticsProducts = await _apiClient.AllProductsFromPharmacy(1);
+        foreach (var analiticsProduct in analiticsProducts)
+        {
+            AllProductsFromPharmacy.Add(_mapper.Map<ProductViewModel>(analiticsProduct));
         }
     }
 }

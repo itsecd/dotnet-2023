@@ -10,7 +10,7 @@ public partial class ProductWindow : ReactiveWindow<ProductViewModel>
     public ProductWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d =>  d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
+        this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {

@@ -18,13 +18,13 @@
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
-		<Label Grid.Row="0" Grid.Column="0">ProductName</Label>
+		<Label Grid.Row="0" Grid.Column="0">Product name</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProductName}"/>
-		<Label Grid.Row="1" Grid.Column="0">Id</Label>
+		<Label Grid.Row="1" Grid.Column="0">Product id</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}"/>
-		<Label Grid.Row="2" Grid.Column="0">GroupId</Label>
+		<Label Grid.Row="2" Grid.Column="0">Group id</Label>
 		<TextBox Grid.Row="2" Grid.Column="1" Text ="{Binding GroupId}"/>
-		<Label Grid.Row="3" Grid.Column="0">ManufacturerId</Label>
+		<Label Grid.Row="3" Grid.Column="0">Manufacturer id</Label>
 		<TextBox Grid.Row="3" Grid.Column="1" Text ="{Binding ManufacturerId}"/>
 
 		<StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"

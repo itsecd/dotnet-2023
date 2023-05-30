@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polyclinic.Domain", "Polyclinic.Domain\Polyclinic.Domain.csproj", "{285903F8-11AF-4D3C-A5C2-249F23FC200F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polyclinic.Model", "Polyclinic.Domain\Polyclinic.Model.csproj", "{285903F8-11AF-4D3C-A5C2-249F23FC200F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polyclinic.Test", "Polyclinic.Test\Polyclinic.Test.csproj", "{622E774F-841E-4320-852D-B5D293D9B45C}"
 EndProject

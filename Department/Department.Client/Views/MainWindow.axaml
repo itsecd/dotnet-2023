@@ -14,9 +14,9 @@
 
   <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
     <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
-			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+			  Auto,Auto,Auto,*">
       <StackPanel Grid.Row="0" Orientation="Horizontal">
-        <Label>Coures</Label>
+        <Label>Courses</Label>
       </StackPanel>
 
       <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -93,7 +93,34 @@
           <DataGridTextColumn Header="Degree" Binding="{Binding Degree}"/>
         </DataGrid.Columns>
       </DataGrid>
+
+      <StackPanel Grid.Row="9" Orientation="Horizontal">
+        <Label>Subjects</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="10" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddSubjectCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditSubjectCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteSubjectCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="11" AutoGenerateColumns="False"
+            Items="{Binding Subjects}"
+            SelectedItem="{Binding SelectedSubject}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+          <DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+      
     </Grid>
+    
+    
   </ScrollViewer>
       
 

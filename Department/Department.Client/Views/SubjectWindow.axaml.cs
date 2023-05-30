@@ -5,9 +5,9 @@ using ReactiveUI;
 using System;
 
 namespace Department.Client.Views;
-public partial class TeacherWindow : ReactiveWindow<TeacherViewModel>
+public partial class SubjectWindow : ReactiveWindow<SubjectViewModel>
 {
-    public TeacherWindow()
+    public SubjectWindow()
     {
         InitializeComponent();
 

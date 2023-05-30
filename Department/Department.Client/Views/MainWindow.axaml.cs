@@ -13,7 +13,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowCourseDialog.RegisterHandler(ShowCourseDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowGroupDialog.RegisterHandler(ShowGroupDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowTeacherDialog.RegisterHandler(ShowTeacherDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowSubjectDialog.RegisterHandler(ShowReaderDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowSubjectDialog.RegisterHandler(ShowSubjectDialogAsync)));
     }
 
     private async Task ShowCourseDialogAsync(InteractionContext<CourseViewModel, CourseViewModel?> interaction)
@@ -46,13 +46,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    //private async Task ShowReaderDialogAsync(InteractionContext<ReaderViewModel, ReaderViewModel?> interaction)
-    //{
-    //    var dialog = new ReaderWindow
-    //    {
-    //        DataContext = interaction.Input
-    //    };
-    //    var result = await dialog.ShowDialog<ReaderViewModel?>(this);
-    //    interaction.SetOutput(result);
-    //}
+    private async Task ShowSubjectDialogAsync(InteractionContext<SubjectViewModel, SubjectViewModel?> interaction)
+    {
+        var dialog = new SubjectWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<SubjectViewModel?>(this);
+        interaction.SetOutput(result);
+    }
 }

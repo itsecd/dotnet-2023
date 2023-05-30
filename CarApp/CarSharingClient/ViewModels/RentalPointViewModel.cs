@@ -20,6 +20,8 @@ public class RentalPointViewModel : ViewModelBase
         get => _pointName;
         set => this.RaiseAndSetIfChanged(ref _pointName, value);
     }
+
+
     private string _address = string.Empty;
     
     public string Address

@@ -23,11 +23,12 @@
 		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">CarId</Label>
 		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CarId}"/>
 		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">TimeOfRent</Label>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TimeOfRent}"/>
+		<DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding TimeOfRent}"/>
 		<Label VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">RentPeriod</Label>
 		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RentPeriod}"/>
 		<Label VerticalAlignment="Center" Grid.Row="5" Grid.Column="0">TimeOfReturn</Label>
-		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TimeOfReturn}"/>
+		<DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding TimeOfReturn}"/>
+		
 
 		<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">

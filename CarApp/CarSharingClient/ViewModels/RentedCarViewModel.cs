@@ -40,14 +40,14 @@ public class RentedCarViewModel : ViewModelBase
         get => _rentPeriod;
     }
 
-    private DateTimeOffset _timeOfRent;
+    private DateTimeOffset _timeOfRent=DateTime.Now;
     public DateTimeOffset TimeOfRent
     {
         set => this.RaiseAndSetIfChanged(ref _timeOfRent, value);
         get => _timeOfRent;
     }
 
-    private DateTimeOffset _timeOfReturn;
+    private DateTimeOffset _timeOfReturn= DateTime.Now;
     public DateTimeOffset TimeOfReturn
     {
         set => this.RaiseAndSetIfChanged(ref _timeOfReturn, value);

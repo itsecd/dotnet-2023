@@ -9,7 +9,7 @@ public class ClientViewModel : ViewModelBase
 
     private int _id;
 
-    public int ClientId
+    public int Id
     {
         set => this.RaiseAndSetIfChanged(ref _id, value);
         get => _id;

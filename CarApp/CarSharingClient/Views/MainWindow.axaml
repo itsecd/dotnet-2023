@@ -84,7 +84,7 @@
 						<DataGridTextColumn Header="FirstName" Binding="{Binding Firstname}"/>
 						<DataGridTextColumn Header="LastName" Binding="{Binding Lastname}"/>
 						<DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate}"/>
-						<DataGridTextColumn Header="Id" Binding="{Binding ClientId}"/>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

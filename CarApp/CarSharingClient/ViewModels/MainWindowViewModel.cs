@@ -157,13 +157,13 @@ public class MainWindowViewModel : ViewModelBase
             var clientViewModel = await ShowClientDialog.Handle(SelectedClient!);
             if (clientViewModel != null)
             {
-                await _apiClient.UpdateClientsAsync(SelectedClient!.ClientId, _mapper.Map<ClientPostDto>(clientViewModel));
+                await _apiClient.UpdateClientsAsync(SelectedClient!.Id, _mapper.Map<ClientPostDto>(clientViewModel));
                 _mapper.Map(clientViewModel, SelectedClient);
             }
         }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectClient => selectClient != null));
         OnDeleteClientCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _apiClient.DeleteClientsAsync(SelectedClient!.ClientId);
+            await _apiClient.DeleteClientsAsync(SelectedClient!.Id);
             Clients.Remove(SelectedClient);
         }, this.WhenAnyValue(vm => vm.SelectedClient).Select(selectClient => selectClient != null));
 

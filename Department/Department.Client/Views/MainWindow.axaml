@@ -12,37 +12,90 @@
     <StyleInclude Source="/DepartmentStyles.axaml"/>
   </Window.Styles>
 
-  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,*">
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
+			  Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+      <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Label>Coures</Label>
+      </StackPanel>
 
-    <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <Label>Coures</Label>
-    </StackPanel>
+      <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddCourseCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditCourseCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteCourseCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
 
-    <StackPanel Grid.Row="1" Orientation="Horizontal">
-      <Button Classes="ToolButton" Command="{Binding OnAddCourseCommand}">
-      </Button>
-      <Button Classes="ToolButton" Command="{Binding OnEditCourseCommand}">
-      </Button>
-      <Button Classes="ToolButton" Command="{Binding OnDeleteCourseCommand}">
-      </Button>
-    </StackPanel>
+      <DataGrid Grid.Row="2" AutoGenerateColumns="False"
+            Items="{Binding Courses}"
+            SelectedItem="{Binding SelectedCourse}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="SubjectName" Binding="{Binding SubjectName}"/>
+          <DataGridTextColumn Header="SubjectId" Binding="{Binding SubjectId}"/>
+          <DataGridTextColumn Header="CourseType" Binding="{Binding CourseType}"/>
+          <DataGridTextColumn Header="SemesterHours" Binding="{Binding SemesterHours}"/>
+          <DataGridTextColumn Header="GroupId" Binding="{Binding GroupId}"/>
+          <DataGridTextColumn Header="TeachersName" Binding="{Binding TeachersName}"/>
+          <DataGridTextColumn Header="TeacherId" Binding="{Binding TeacherId}"/>
+        </DataGrid.Columns>
+      </DataGrid>
 
-    <DataGrid></DataGrid>
-    
-    <DataGrid Grid.Row="2" AutoGenerateColumns="False"
-          Items="{Binding Courses}"
-          SelectedItem="{Binding SelectedCourse}">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="SubjectName" Binding="{Binding SubjectName}"/>
-        <DataGridTextColumn Header="SubjectId" Binding="{Binding SubjectId}"/>
-        <DataGridTextColumn Header="CourseType" Binding="{Binding CourseType}"/>
-        <DataGridTextColumn Header="SemesterHours" Binding="{Binding SemesterHours}"/>
-        <DataGridTextColumn Header="GroupId" Binding="{Binding GroupId}"/>
-        <DataGridTextColumn Header="TeachersName" Binding="{Binding TeachersName}"/>
-        <DataGridTextColumn Header="TeacherId" Binding="{Binding TeacherId}"/>
-      </DataGrid.Columns>
-    </DataGrid>
-  </Grid>
+      <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <Label>Groups</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddGroupCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditGroupCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteGroupCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="5" AutoGenerateColumns="False"
+            Items="{Binding Groups}"
+            SelectedItem="{Binding SelectedGroup}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="GroupNumber" Binding="{Binding GroupNumber}"/>
+          <DataGridTextColumn Header="StudentAmount" Binding="{Binding StudentAmount}"/>
+          <DataGridTextColumn Header="EducationType" Binding="{Binding EducationType}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Row="6" Orientation="Horizontal">
+        <Label>Teacher</Label>
+      </StackPanel>
+
+      <StackPanel Grid.Row="7" Orientation="Horizontal">
+        <Button Classes="ToolButton" Command="{Binding OnAddTeacherCommand}">
+          <Image Source="/Assets/task-add.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnEditTeacherCommand}">
+          <Image Source="/Assets/task-edit.png"/>
+        </Button>
+        <Button Classes="ToolButton" Command="{Binding OnDeleteTeacherCommand}">
+          <Image Source="/Assets/task-delete.png"/>
+        </Button>
+      </StackPanel>
+      <DataGrid Grid.Row="8" AutoGenerateColumns="False"
+            Items="{Binding Teachers}"
+            SelectedItem="{Binding SelectedTeacher}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="FullName" Binding="{Binding FullName}"/>
+          <DataGridTextColumn Header="Degree" Binding="{Binding Degree}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </ScrollViewer>
+      
 
    
 

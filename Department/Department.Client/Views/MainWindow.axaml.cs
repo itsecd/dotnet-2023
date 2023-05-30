@@ -11,8 +11,8 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         InitializeComponent();
 
         this.WhenActivated(d => d(ViewModel!.ShowCourseDialog.RegisterHandler(ShowCourseDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowGroupDialog.RegisterHandler(ShowCardDialogAsync)));
-        //this.WhenActivated(d => d(ViewModel!.ShowTeacherDialog.RegisterHandler(ShowDepartmentDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowGroupDialog.RegisterHandler(ShowGroupDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowTeacherDialog.RegisterHandler(ShowTeacherDialogAsync)));
         //this.WhenActivated(d => d(ViewModel!.ShowSubjectDialog.RegisterHandler(ShowReaderDialogAsync)));
     }
 
@@ -26,25 +26,25 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         interaction.SetOutput(result);
     }
 
-    //private async Task ShowCardDialogAsync(InteractionContext<CardViewModel, CardViewModel?> interaction)
-    //{
-    //    var dialog = new CardWindow
-    //    {
-    //        DataContext = interaction.Input
-    //    };
-    //    var result = await dialog.ShowDialog<CardViewModel?>(this);
-    //    interaction.SetOutput(result);
-    //}
+    private async Task ShowGroupDialogAsync(InteractionContext<GroupViewModel, GroupViewModel?> interaction)
+    {
+        var dialog = new GroupWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<GroupViewModel?>(this);
+        interaction.SetOutput(result);
+    }
 
-    //private async Task ShowDepartmentDialogAsync(InteractionContext<DepartmentViewModel, DepartmentViewModel?> interaction)
-    //{
-    //    var dialog = new DepartmentWindow
-    //    {
-    //        DataContext = interaction.Input
-    //    };
-    //    var result = await dialog.ShowDialog<DepartmentViewModel?>(this);
-    //    interaction.SetOutput(result);
-    //}
+    private async Task ShowTeacherDialogAsync(InteractionContext<TeacherViewModel, TeacherViewModel?> interaction)
+    {
+        var dialog = new TeacherWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<TeacherViewModel?>(this);
+        interaction.SetOutput(result);
+    }
 
     //private async Task ShowReaderDialogAsync(InteractionContext<ReaderViewModel, ReaderViewModel?> interaction)
     //{

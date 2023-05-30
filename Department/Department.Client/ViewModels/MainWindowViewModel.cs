@@ -202,11 +202,11 @@ public class MainWindowViewModel : ViewModelBase
             Courses.Add(_mapper.Map<CourseViewModel>(course));
         }
 
-        //var groups = await _apiClient.GetGroupAsync();
-        //foreach (var group in groups)
-        //{
-        //    Groups.Add(_mapper.Map<GroupViewModel>(group));
-        //}
+        var groups = await _apiClient.GetGroupAsync();
+        foreach (var group in groups)
+        {
+            Groups.Add(_mapper.Map<GroupViewModel>(group));
+        }
 
         //var teachers = await _apiClient.GetTeachersAsync();
         //foreach (var teacher in teachers)

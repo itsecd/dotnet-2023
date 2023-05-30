@@ -73,6 +73,18 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		<TabItem Header="Specializations" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							  Items="{Binding Specializations}"
+							  SelectedItem="{Binding SelectedSpecializations}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+							<DataGridTextColumn Header="Name specialization" Binding="{Binding NameSpecialization}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
 	</TabControl>
 
 </Window>

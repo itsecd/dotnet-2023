@@ -59,4 +59,9 @@ public class ApiWrapper
     {
         return _client.Doctors4Async(id);
     }
+
+    public Task<ICollection<SpecializationsGetDto>> GetSpecializationsAsync()
+    {
+        return _client.SpecializationsAllAsync();
+    }
 }

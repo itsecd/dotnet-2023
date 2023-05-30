@@ -31,6 +31,9 @@ public partial class App : Application
                 cfg.CreateMap<DoctorViewModel, DoctorGetDto>();
                 cfg.CreateMap<DoctorViewModel, DoctorPostDto>();
                 cfg.CreateMap<DoctorPostDto, DoctorViewModel>();
+
+                cfg.CreateMap<SpecializationsGetDto, SpecializationsViewModel>();
+                cfg.CreateMap<SpecializationsViewModel, SpecializationsGetDto>();
             });
 
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

@@ -13,7 +13,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<PatientViewModel> Patients { get; } = new();
     public ObservableCollection<DoctorViewModel> Doctors { get; } = new();
-    //public ObservableCollection<SpecializationsViewModel> Specializations { get; } = new();
+    public ObservableCollection<SpecializationsViewModel> Specializations { get; } = new();
 
     private PatientViewModel? _selectedPatient;
     public PatientViewModel? SelectedPatient
@@ -29,6 +29,12 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedDoctor, value);
     }
 
+    private SpecializationsViewModel? _selectedSpecialization;
+    public SpecializationsViewModel? SelectedSpecialization
+    {
+        get => _selectedSpecialization;
+        set => this.RaiseAndSetIfChanged(ref _selectedSpecialization, value);
+    }
 
     private readonly ApiWrapper _apiClient;
 
@@ -124,6 +130,12 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var doc in doctors)
         {
             Doctors.Add(_mapper.Map<DoctorViewModel>(doc));
+        }
+
+        var specializations = await _apiClient.GetSpecializationsAsync();
+        foreach (var spec in specializations)
+        {
+            Specializations.Add(_mapper.Map<SpecializationsViewModel>(spec));
         }
     }
 }

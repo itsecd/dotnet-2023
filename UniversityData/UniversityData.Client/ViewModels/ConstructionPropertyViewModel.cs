@@ -11,13 +11,13 @@ public class ConstructionPropertyViewModel : ViewModelBase
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
-    private string _nameConsturctionProperty = string.Empty;
+    private string _nameConstructionProperty = string.Empty;
 
     [Required]
     public string NameConstructionProperty
     {
-        get => _nameConsturctionProperty;
-        set => this.RaiseAndSetIfChanged(ref _nameConsturctionProperty, value);
+        get => _nameConstructionProperty;
+        set => this.RaiseAndSetIfChanged(ref _nameConstructionProperty, value);
     }
 
     public ReactiveCommand<Unit, ConstructionPropertyViewModel> OnSubmitCommand { get; }

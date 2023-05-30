@@ -388,8 +388,8 @@ public class MainWindowViewModel : ViewModelBase
         {
             SpecialtyTableNodes.Add(_mapper.Map<SpecialtyTableNodeViewModel>(specialtyTableNode));
         }
-        var universitites = await _apiClient.GetUniversityAsync();
-        foreach (var university in universitites)
+        var universities = await _apiClient.GetUniversityAsync();
+        foreach (var university in universities)
         {
             Universities.Add(_mapper.Map<UniversityViewModel>(university));
         }

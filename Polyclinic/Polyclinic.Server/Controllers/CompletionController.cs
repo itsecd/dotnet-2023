@@ -54,7 +54,7 @@ public class CompletionController : ControllerBase
         else
         {
             _logger.LogInformation($"Get completion with id {id}");
-            return Ok(completion);
+            return Ok(_mapper.Map<CompletionGetDto>(completion));
         }
     }
 

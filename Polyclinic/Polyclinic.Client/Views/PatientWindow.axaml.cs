@@ -1,0 +1,22 @@
+using System;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.ReactiveUI;
+using Polyclinic.Client.ViewModels;
+using ReactiveUI;
+
+namespace Polyclinic.Client.Views;
+public partial class PatientWindow : ReactiveWindow<PatientViewModel>
+{
+    public PatientWindow()
+    {
+        InitializeComponent();
+
+        this.WhenActivated(d => d(ViewModel!.OnSumbitCommand.Subscribe(Close)));
+    }
+    
+    public void CancelButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Close();
+    }
+}

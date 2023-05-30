@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Polyclinic.Client.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Polyclinic.Client.Views.DoctorWindow"
+        Title="Добавление"
+		MaxWidth="500"
+		SizeToContent="Height">
+
+
+	<Design.DataContext>
+		<vm:PatientViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PolyclinicStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Id</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
+
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Passport number</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PassportNumber}"/>
+
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Full name</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FullName}"/>
+
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Date birth</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DateBirth}"/>
+
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Id specialization</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding IdSpecialization}"/>
+
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Work experience</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WorkExperience}"/>
+		
+		<StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					 Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+
+
+	</Grid>
+
+</Window>
+

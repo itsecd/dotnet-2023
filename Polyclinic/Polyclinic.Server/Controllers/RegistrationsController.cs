@@ -54,7 +54,7 @@ public class RegistrationsController : ControllerBase
         else
         {
             _logger.LogInformation($"Get registration with id {id}");
-            return Ok(registration);
+            return Ok(_mapper.Map<RegistrationGetDto>(registration));
         }
     }
 

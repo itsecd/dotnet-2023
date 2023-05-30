@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Polyclinic.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Polyclinic.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Polyclinic.Client">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PolyclinicStyles.axaml"/>
+	</Window.Styles>
+
+	<TabControl>
+		<TabItem Header="Patients" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddPatientCommand}">
+						<Image Source="/Assets/AddIcon.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnPatientCommand}">
+						<Image Source="/Assets/ChangeIcon.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeletePatientCommand}">
+						<Image Source="/Assets/DeleteIcon.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Patients}"
+						  SelectedItem="{Binding SelectedPatient}">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Passport number" Binding="{Binding PassportNumber}"/>
+						<DataGridTextColumn Header="Full name" Binding="{Binding FullName}"/>
+						<DataGridTextColumn Header="Date birth" Binding="{Binding DateBirth}"/>
+						<DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+					
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	
+		<TabItem Header="Doctors" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddDoctorCommand}">
+						<Image Source="/Assets/AddIcon.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeDoctorCommand}">
+						<Image Source="/Assets/ChangeIcon.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteDoctorCommand}">
+						<Image Source="/Assets/DeleteIcon.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Doctors}"
+						  SelectedItem="{Binding SelectedDoctors}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Passport number" Binding="{Binding PassportNumber}"/>
+						<DataGridTextColumn Header="Full name" Binding="{Binding FullName}"/>
+						<DataGridTextColumn Header="Date birth" Binding="{Binding DateBirth}"/>
+						<DataGridTextColumn Header="Id specialization" Binding="{Binding IdSpecialization}"/>
+						<DataGridTextColumn Header="Work experience" Binding="{Binding WorkExperience}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+
+</Window>

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polyclinic.Test", "Polyclin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polyclinic.Server", "Polyclinic.Server\Polyclinic.Server.csproj", "{D728423E-B97D-4EE0-A728-4132C3739F51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Client", "Polyclinic.Client\Polyclinic.Client.csproj", "{490F6A08-E672-46BA-87F6-E2A7775E1C8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyclinic.Client", "Polyclinic.Client\Polyclinic.Client.csproj", "{A28BE4A8-D76A-499F-817C-54FDA8675B86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{D728423E-B97D-4EE0-A728-4132C3739F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D728423E-B97D-4EE0-A728-4132C3739F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D728423E-B97D-4EE0-A728-4132C3739F51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{490F6A08-E672-46BA-87F6-E2A7775E1C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{490F6A08-E672-46BA-87F6-E2A7775E1C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{490F6A08-E672-46BA-87F6-E2A7775E1C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{490F6A08-E672-46BA-87F6-E2A7775E1C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28BE4A8-D76A-499F-817C-54FDA8675B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28BE4A8-D76A-499F-817C-54FDA8675B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28BE4A8-D76A-499F-817C-54FDA8675B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28BE4A8-D76A-499F-817C-54FDA8675B86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

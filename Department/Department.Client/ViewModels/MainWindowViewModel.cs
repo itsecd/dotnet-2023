@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Department.Client.ViewModels;
 

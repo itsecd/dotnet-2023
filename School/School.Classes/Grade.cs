@@ -26,7 +26,7 @@ public class Grade
     /// Предмет для внешнего ключа
     /// </summary>
     [ForeignKey("SubjectId")]
-    public Subject Subject { get; set; } = null;
+    public Subject Subject { get; set; }
 
     /// <summary>
     /// Идентификатор студента с данной оценкой
@@ -38,7 +38,7 @@ public class Grade
     /// Студент для внешнего ключа
     /// </summary>
     [ForeignKey("StudentId")]
-    public Student Student { get; set; } = null;
+    public Student Student { get; set; }
 
     /// <summary>
     /// Оценка

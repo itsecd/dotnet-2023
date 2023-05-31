@@ -1,5 +1,8 @@
 ﻿namespace SchoolServer.Dto;
 
+/// <summary>
+/// Dto для метода Post класса Student  
+/// </summary>
 public class StudentPostDto
 {
     /// <summary>	

@@ -33,12 +33,12 @@ public class ApplicationsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ApplicationGetDto>>> GetApplications()
     {
-      if (_context.Applications == null)
-      {
+        if (_context.Applications == null)
+        {
           return NotFound();
-      }
-      _logger.LogInformation("Get applications");
-      return await _mapper.ProjectTo<ApplicationGetDto>(_context.Applications).ToListAsync();
+        }
+        _logger.LogInformation("Get applications");
+        return await _mapper.ProjectTo<ApplicationGetDto>(_context.Applications).ToListAsync();
     }
     /// <summary>
     ///     Get by id method for application table
@@ -52,9 +52,9 @@ public class ApplicationsController : ControllerBase
     {
         _logger.LogInformation("Get application with id {id}", id);
         if (_context.Applications == null)
-      {
+        {
           return NotFound();
-      }
+        }
         var application = await _context.Applications.FindAsync(id);
         if (application == null)
         {

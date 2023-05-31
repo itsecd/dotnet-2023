@@ -13,8 +13,7 @@ public class RealtorDbContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        
+        base.OnModelCreating(modelBuilder);       
 
         var firstHouse = new House(1, "Uninhabited", "Prosp. Fatiha Amirkhana, 1b", 594, 100);
         var secondHouse = new House(2, "Residential", "Profsoyuznaya, 22", 48, 3);
@@ -27,10 +26,7 @@ public class RealtorDbContext : DbContext
         var thirdClient = new Client(3, "59143", "265-89-77", "Communist, 90", "Ivan", "Terrible");
         var fourthClient = new Client(4, "91245", "880-05-55", "Aerodromnaya, 47a", "Michael", "Gorshnev");
         var fifthClient = new Client(5, "57504", "964-98-70", "Lesnaya, 23", "Stiven", "King");
-
-        
-
-
+             
         var firstApplication = new Application(1, "Purchase", 2, DateTime.Parse("1973-04-13"), fourthClient.Id);
         var secondApplication = new Application(2, "Sale", 48000000, DateTime.Parse("1111-07-26"),fifthClient.Id);
         var thirdApplication = new Application(3, "Purchase", 48000000, DateTime.Parse("1530-08-25"),firstClient.Id );
@@ -60,7 +56,6 @@ public class RealtorDbContext : DbContext
                     .HasOne(applicationHasHouse => applicationHasHouse.Houses)
                     .WithMany(house => house.ApplicationHasHouses)
                     .OnDelete(DeleteBehavior.Cascade);
-
 
         modelBuilder.Entity<ApplicationHasHouse>().HasData(new List<ApplicationHasHouse> { firstApplicationHasHouse,secondApplicationHasHouse,thirdApplicationHasHouse,fourthApplicationHasHouse,fifthApplicationHasHouse,sixthApplicationHasHouse,seventhApplicationHasHouse,eighthApplicationHasHouse });
         modelBuilder.Entity<Client>().HasData(new List<Client> { firstClient,secondClient,thirdClient,fourthClient, fifthClient});

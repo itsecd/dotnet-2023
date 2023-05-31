@@ -5,7 +5,6 @@ using Realtor;
 using RealtorServer.Dto;
 
 namespace RealtorServer.Controllers;
-
 [Route("api/[controller]")]
 [ApiController]
 public class ApplicationHasHousesController : ControllerBase
@@ -68,13 +67,13 @@ public class ApplicationHasHousesController : ControllerBase
     /// <param name="applicationHasHouses">Changing ApplicationHasHouses</param>
     /// <returns>Action result</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutApplication(int id, Application applicationHasHouses)
+    public async Task<IActionResult> PutApplication(int id, ApplicationHasHouse applicationHasHouses)
     {
-        if (_context.Applications == null)
+        if (_context.ApplicationHasHouses == null)
         {
             return NotFound();
         }
-        var applicationHasHousesToPut = await _context.Applications.FindAsync(id);
+        var applicationHasHousesToPut = await _context.ApplicationHasHouses.FindAsync(id);
         if (applicationHasHousesToPut == null)
         {
             _logger.LogInformation("Not found applicationConnection with id {id}", id);
@@ -93,14 +92,14 @@ public class ApplicationHasHousesController : ControllerBase
     ///     Create ApplicationHasHouses
     /// </returns>
     [HttpPost]
-    public async Task<ActionResult<ApplicationHasHouseDto>> PostApplication(Application applicationHasHouses)
+    public async Task<ActionResult<ApplicationHasHouseDto>> PostApplication(ApplicationHasHouse applicationHasHouses)
     {
         if (_context.ApplicationHasHouses == null)
         {
             return Problem("Entity set 'RealtorDbContext.Applications'  is null.");
         }
-        var newApplicationHasHouse = _mapper.Map<Application>(applicationHasHouses);
-        _context.Applications.Add(newApplicationHasHouse);
+        var newApplicationHasHouse = _mapper.Map<ApplicationHasHouse>(applicationHasHouses);
+        _context.ApplicationHasHouses.Add(newApplicationHasHouse);
         _logger.LogInformation("Added");
         await _context.SaveChangesAsync();
         return CreatedAtAction("Post Connection", new { id = newApplicationHasHouse.Id }, _mapper.Map<ApplicationHasHouseDto>(newApplicationHasHouse));

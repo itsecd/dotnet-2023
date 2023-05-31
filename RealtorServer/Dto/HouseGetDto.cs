@@ -1,8 +1,9 @@
 ﻿namespace RealtorServer.Dto;
-
+/// <summary>
+/// HouseGetDto for HTTP GET request
+/// </summary>
 public class HouseGetDto
-{
-   
+{   
     /// <summary>
     /// Id - int typed value for storing Id of the houses
     /// </summary>
@@ -22,6 +23,5 @@ public class HouseGetDto
     /// <summary>
     /// Rooms - uint value for storing an amount of rooms of this type
     /// </summary>
-    public int Rooms { get; set; } = int.MinValue;
-   
+    public int Rooms { get; set; } = int.MinValue;   
 }

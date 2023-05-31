@@ -13,6 +13,7 @@ public class MappingProfile:Profile
         CreateMap<Client, ClientPostDto>();
         CreateMap<Application, ApplicationGetDto>();
         CreateMap<Application, ApplicationPostDto>();
+        CreateMap<ApplicationHasHouse, ApplicationHasHouseDto>();
 
         CreateMap<HouseGetDto, House>();
         CreateMap<HousePostDto, House>();
@@ -20,5 +21,6 @@ public class MappingProfile:Profile
         CreateMap<ClientGetDto, Client>();
         CreateMap<ApplicationPostDto, Application>();
         CreateMap<ApplicationGetDto, Application>();
+        CreateMap<ApplicationHasHouseDto, ApplicationHasHouse>();
     }
 }

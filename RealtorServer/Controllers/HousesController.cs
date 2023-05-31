@@ -33,12 +33,12 @@ public class HousesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<HouseGetDto>>> GetHouses()
     {
-      if (_context.Houses == null)
-      {
-          return NotFound();
-      }
-      _logger.LogInformation("Get houses");
-      return await _mapper.ProjectTo<HouseGetDto>(_context.Houses).ToListAsync();
+        if (_context.Houses == null)
+        {
+            return NotFound();
+        }
+        _logger.LogInformation("Get houses");
+        return await _mapper.ProjectTo<HouseGetDto>(_context.Houses).ToListAsync();
     }
     /// <summary>
     ///     Get by id method for houses table
@@ -97,10 +97,10 @@ public class HousesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<HouseGetDto>> PostHouse(HousePostDto house)
     {
-      if (_context.Houses == null)
-      {
-          return Problem("Entity set 'RealtorDbContext.Houses'  is null.");
-      }
+        if (_context.Houses == null)
+        {
+            return Problem("Entity set 'RealtorDbContext.Houses'  is null.");
+        }
         var newHouse = _mapper.Map<House>(house);
         _context.Houses.Add(newHouse);
         _logger.LogInformation("Added");

@@ -1,8 +1,9 @@
 ﻿namespace RealtorServer.Dto;
-
+/// <summary>
+/// ClientPostDto for HTTP GET request
+/// </summary>
 public class ClientPostDto
 {
-
     /// <summary>
     /// Passport - a string representing passport number
     /// </summary>

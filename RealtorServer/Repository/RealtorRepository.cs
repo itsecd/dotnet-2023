@@ -23,24 +23,21 @@ public class RealtorRepository : IRealtorRepository
         var fourthClient = new Client(4, "91245", "880-05-55", "Aerodromnaya, 47a", "Michael", "Gorshnev");
         var fifthClient = new Client(5, "57504", "964-98-70", "Lesnaya, 23", "Stiven", "King");
 
-        
-
-
         var firstApplication = new Application(1, "Purchase", 2, DateTime.Parse("1973-04-13"), fourthClient.Id);
-        var secondApplication = new Application(2, "Sale", 48000000, DateTime.Parse("1111-07-26"),fifthClient.Id);
-        var thirdApplication = new Application(3, "Purchase", 48000000, DateTime.Parse("1530-08-25"),firstClient.Id );
-        var fourthApplication = new Application(4, "Purchase", 48000000, DateTime.Parse("1530-08-25"),thirdClient.Id );
-        var fifthApplication = new Application(5, "Purchase", 2000, DateTime.Parse("1973-08-07"),secondClient.Id );
-        var sixthApplication = new Application(6, "Sale", 1, DateTime.Parse("1947-09-21"),fifthClient.Id );
+        var secondApplication = new Application(2, "Sale", 48000000, DateTime.Parse("1111-07-26"), fifthClient.Id);
+        var thirdApplication = new Application(3, "Purchase", 48000000, DateTime.Parse("1530-08-25"), firstClient.Id);
+        var fourthApplication = new Application(4, "Purchase", 48000000, DateTime.Parse("1530-08-25"), thirdClient.Id);
+        var fifthApplication = new Application(5, "Purchase", 2000, DateTime.Parse("1973-08-07"), secondClient.Id);
+        var sixthApplication = new Application(6, "Sale", 1, DateTime.Parse("1947-09-21"), fifthClient.Id);
         var seventhApplication = new Application(7, "Purchase", 5, DateTime.Parse("1973-05-13"), firstClient.Id);
 
-        var firstApplicationHasHouse = new ApplicationHasHouse(1,1,1);
-        var secondApplicationHasHouse = new ApplicationHasHouse(2,1,5);
-        var thirdApplicationHasHouse = new ApplicationHasHouse(3,2,2);
-        var fourthApplicationHasHouse = new ApplicationHasHouse(4,3,3);
-        var fifthApplicationHasHouse = new ApplicationHasHouse(5,4,4);
-        var sixthApplicationHasHouse = new ApplicationHasHouse(6,5,3);
-        var seventhApplicationHasHouse = new ApplicationHasHouse(7,6,5);
+        var firstApplicationHasHouse = new ApplicationHasHouse(1, 1, 1);
+        var secondApplicationHasHouse = new ApplicationHasHouse(2, 1, 5);
+        var thirdApplicationHasHouse = new ApplicationHasHouse(3, 2, 2);
+        var fourthApplicationHasHouse = new ApplicationHasHouse(4, 3, 3);
+        var fifthApplicationHasHouse = new ApplicationHasHouse(5, 4, 4);
+        var sixthApplicationHasHouse = new ApplicationHasHouse(6, 5, 3);
+        var seventhApplicationHasHouse = new ApplicationHasHouse(7, 6, 5);
         var eighthApplicationHasHouse = new ApplicationHasHouse(8, 7, 1);
 
         _clients = new List<Client>
@@ -60,7 +57,6 @@ public class RealtorRepository : IRealtorRepository
     public List<House> Houses => _houses;
     public List<Application> Applications => _applications;
     public List<ApplicationHasHouse> ApplicationHasHouse => _applicationHasHouse;
-
     public List<ApplicationHasHouse> ApplicationsHasHouses => throw new NotImplementedException();
 }
 

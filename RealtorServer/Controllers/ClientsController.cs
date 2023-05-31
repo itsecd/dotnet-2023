@@ -33,10 +33,10 @@ public class ClientsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ClientGetDto>>> GetClients()
     {
-      if (_context.Clients == null)
-      {
+        if (_context.Clients == null)
+        {
           return NotFound();
-      }
+        }
         _logger.LogInformation("Get clients");
         return await _mapper.ProjectTo<ClientGetDto>(_context.Clients).ToListAsync();
     }
@@ -95,15 +95,14 @@ public class ClientsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ClientGetDto>> PostClient(ClientPostDto client)
     {
-      if (_context.Clients == null)
-      {
+        if (_context.Clients == null)
+        {
           return Problem("Entity set 'RealtorDbContext.Clients'  is null.");
-      }
+        }
         var newClient = _mapper.Map<Client>(client);
         _context.Clients.Add(newClient);
         _logger.LogInformation("Added");
         await _context.SaveChangesAsync();
-
         return CreatedAtAction("GetClient", new { id = newClient.Id }, _mapper.Map<ClientGetDto>(newClient));
     }
     /// <summary>

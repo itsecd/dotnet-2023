@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
 using Realtor;
 using RealtorServer.Dto;
-using System;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RealtorServer.Controllers;
 /// <summary>
@@ -34,12 +30,12 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("Give information about all clients looking for real estate of a given type ");
         var buyerList = await
-        (from clients in _context.Clients
-         join applications in _context.Applications on clients.Id equals applications.ClientId
-         join connect in _context.ApplicationHasHouses on applications.Id equals connect.ApplicationId
-         join house in _context.Houses on connect.HouseId equals house.Id
-         where applications.Type == "Purchase" && house.Type == "Uninhabited"
-         select _mapper.Map<Realtor.Client, ClientGetDto>(clients)).Distinct().ToListAsync();
+            (from clients in _context.Clients
+             join applications in _context.Applications on clients.Id equals applications.ClientId
+             join connect in _context.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+             join house in _context.Houses on connect.HouseId equals house.Id
+             where applications.Type == "Purchase" && house.Type == "Uninhabited"
+             select _mapper.Map<Realtor.Client, ClientGetDto>(clients)).Distinct().ToListAsync();
 
         var request =
             (from req in buyerList
@@ -65,15 +61,14 @@ public class AnalyticsController : ControllerBase
     {
         _logger.LogInformation("all sellers who left orders for a given period");
         var sellerList = await
-        (from clients in _context.Clients
-         join applications in _context.Applications on clients.Id equals applications.ClientId
-         where applications.Data < new DateTime(2023, 02, 01) && applications.Data > new DateTime(1234, 01, 01) && applications.Type == "Sale"
-         select _mapper.Map<Realtor.Client, ClientGetDto>(clients)).Distinct().ToListAsync();
+            (from clients in _context.Clients
+             join applications in _context.Applications on clients.Id equals applications.ClientId
+             where applications.Data < new DateTime(2023, 02, 01) && applications.Data > new DateTime(1234, 01, 01) && applications.Type == "Sale"
+             select _mapper.Map<Realtor.Client, ClientGetDto>(clients)).Distinct().ToListAsync();
 
-        var request =
-            (from req in sellerList
-             orderby req.Surname
-             select req).ToList();
+        var request =(from req in sellerList
+                      orderby req.Surname
+                      select req).ToList();
         if (request.Count == 0)
         {
             _logger.LogInformation("Clients not found");
@@ -119,13 +114,13 @@ public class AnalyticsController : ControllerBase
     [HttpGet("count application")]
     public async Task<ActionResult<ClientGetDto>> GetCountApplication()
     {
-        _logger.LogInformation("all sellers who left orders for a given period");        
-         var listUninhabited = await
-            (from applications in _context.Applications
-             join connect in _context.ApplicationHasHouses on applications.Id equals connect.ApplicationId
-             join house in _context.Houses on connect.HouseId equals house.Id
-             where house.Type == "Uninhabited"
-             select applications).ToListAsync();
+        _logger.LogInformation("all sellers who left orders for a given period");
+        var listUninhabited = await
+           (from applications in _context.Applications
+            join connect in _context.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+            join house in _context.Houses on connect.HouseId equals house.Id
+            where house.Type == "Uninhabited"
+            select applications).ToListAsync();
         var counterUninhabited = listUninhabited.Count;
         var listResidential = await
             (from applications in _context.Applications
@@ -134,7 +129,7 @@ public class AnalyticsController : ControllerBase
              where house.Type == "Residential"
              select applications).ToListAsync();
         var countResidential = listResidential.Count;
-        return Ok(new { counterUninhabited , countResidential });        
+        return Ok(new { counterUninhabited, countResidential });
     }
     /// <summary>
     /// fifth request - Display the top 5 clients by the number of applications
@@ -182,7 +177,7 @@ public class AnalyticsController : ControllerBase
         var result1 = (from client in listPurchase
                        orderby listPurchase.Count descending
                        select client).Take(5).ToList();
-        return Ok(new { result1, result2 });        
+        return Ok(new { result1, result2 });
     }
 
     /// <summary>
@@ -218,6 +213,6 @@ public class AnalyticsController : ControllerBase
         var result1 = (from client in sellerList
                        orderby client.Cost
                        select client).Take(1).ToList();
-        return Ok(result1);       
+        return Ok(result1);
     }
 }

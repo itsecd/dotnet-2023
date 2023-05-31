@@ -1,5 +1,7 @@
 ﻿namespace RealtorServer.Dto;
-
+/// <summary>
+/// ApplicationPostDto for HTTP GET request
+/// </summary>
 public class ApplicationPostDto
 {
     /// <summary>
@@ -14,5 +16,8 @@ public class ApplicationPostDto
     /// Data - DateTime typed value for storing a date of application
     /// </summary>
     public DateTime Data { get; set; } = DateTime.MinValue;
+    /// <summary>
+    /// ClientId - int typed value for storing Id of the client
+    /// </summary>
     public int ClientId { get; set; }= int.MinValue;
 }

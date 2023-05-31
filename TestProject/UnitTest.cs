@@ -12,18 +12,19 @@ public class UnitTest : IClassFixture<FixtureRealt>
     [Fact]
     public void AllClients()
     {
-        var allApplication = _fixture.FixtureApplication;
-        var resultList = (from application in allApplication
-                          from client in application.Clients
-                          from house in application.House
-                          where application.Type == "Purchase" && house.Type == "Uninhabited"
-                          group client by new
+
+        var resultList = (from clients in _fixture.Clients
+                          join applications in _fixture.Applications on clients.Id equals applications.ClientId
+                          join connect in _fixture.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+                          join house in _fixture.Houses on connect.HouseId equals house.Id
+                          where applications.Type == "Purchase" && house.Type == "Uninhabited"
+                          group clients by new
                           {
-                              client.Surname,
-                              client.Name,
-                              client.Number,
-                              client.Registration,
-                              client.Passport
+                              clients.Surname,
+                              clients.Name,
+                              clients.Number,
+                              clients.Registration,
+                              clients.Passport
                           } into grp
                           select new
                           {
@@ -56,16 +57,16 @@ public class UnitTest : IClassFixture<FixtureRealt>
     [Fact]
     public void ApplicationsForThePeriod()
     {
-        var query = (from application in _fixture.FixtureApplication
-                     from client in application.Clients
-                     where application.Data < new DateTime(2023, 02, 01) && application.Data > new DateTime(1234, 01, 01) && application.Type == "Sale"
-                     group client by new
+        var query = (from clients in _fixture.Clients
+                     join applications in _fixture.Applications on clients.Id equals applications.ClientId
+                     where applications.Data < new DateTime(2023, 02, 01) && applications.Data > new DateTime(1234, 01, 01) && applications.Type == "Sale"
+                     group clients by new
                      {
-                         client.Surname,
-                         client.Name,
-                         client.Number,
-                         client.Registration,
-                         client.Passport
+                         clients.Surname,
+                         clients.Name,
+                         clients.Number,
+                         clients.Registration,
+                         clients.Passport
                      } into grp
                      select new
                      {
@@ -88,22 +89,22 @@ public class UnitTest : IClassFixture<FixtureRealt>
     [Fact]
     public void BuyerRequest()
     {
-        var query = (from applications in _fixture.FixtureApplication
-                     from client in applications.Clients
-                     from house in applications.House
+        var query = (from clients in _fixture.Clients
+                     join applications in _fixture.Applications on clients.Id equals applications.ClientId
+                     join connect in _fixture.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+                     join house in _fixture.Houses on connect.HouseId equals house.Id
                      where applications.Type == "Sale" && applications.Cost == 1
                      select new
                      {
-                         client.Surname,
-                         client.Name,
-                         client.Number,
-                         client.Registration,
-                         client.Passport,
+                         clients.Surname,
+                         clients.Name,
+                         clients.Number,
+                         clients.Registration,
+                         clients.Passport,
                          house.Square,
                          house.Type,
                          house.Rooms,
                          house.Address
-
                      }).ToList();
         Assert.Single(query);
         Assert.Equal("King", query[0].Surname);
@@ -120,16 +121,18 @@ public class UnitTest : IClassFixture<FixtureRealt>
     /// fourth request - information about the number of applications for each type of property    
     /// </summary>
     [Fact]
-    public void QuantityHousesOfOneType() 
+    public void QuantityHousesOfOneType()
     {
-        var query1 = (from application in _fixture.FixtureApplication
-                      from house in application.House
+        var query1 = (from applications in _fixture.Applications
+                      join connect in _fixture.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+                      join house in _fixture.Houses on connect.HouseId equals house.Id
                       where house.Type == "Uninhabited"
-                      select application).Count();
-        var query2 = (from application in _fixture.FixtureApplication
-                      from house in application.House
+                      select applications).Count();
+        var query2 = (from applications in _fixture.Applications
+                      join connect in _fixture.ApplicationHasHouses on applications.Id equals connect.ApplicationId
+                      join house in _fixture.Houses on connect.HouseId equals house.Id
                       where house.Type == "Residential"
-                      select application).Count();
+                      select applications).Count();
         Assert.Equal(5, query1);
         Assert.Equal(2, query2);
     }
@@ -139,14 +142,14 @@ public class UnitTest : IClassFixture<FixtureRealt>
     [Fact]
     public void TopFive()
     {
-        var query1 = (from application in _fixture.FixtureApplication
-                      from client in application.Clients
-                      where application.Type == "Purchase"
-                      group client by new
+        var query1 = (from clien in _fixture.Clients
+                      join applications in _fixture.Applications on clien.Id equals applications.ClientId
+                      where applications.Type == "Purchase"
+                      group clien by new
                       {
-                          client.Surname,
-                          client.Name,
-                          client.Applications.Count
+                          clien.Surname,
+                          clien.Name,
+                          clien.Applications.Count
                       } into grp
                       select new
                       {
@@ -157,18 +160,18 @@ public class UnitTest : IClassFixture<FixtureRealt>
         var result = (from client in query1
                       orderby query1.Count descending
                       select client).Take(5).ToList();
-        Assert.Equal(4, result.Count);
+        Assert.Equal(4, result.Count());
         Assert.Equal(1, result[0].Count);
         Assert.Equal("Gorshnev", result[0].Surname);
         Assert.Equal("Terrible", result[3].Surname);
-        var query2 = (from application in _fixture.FixtureApplication
-                      from client in application.Clients
-                      where application.Type == "Sale"
-                      group client by new
+        var query2 = (from clien in _fixture.Clients
+                      join applications in _fixture.Applications on clien.Id equals applications.ClientId
+                      where applications.Type == "Sale"
+                      group clien by new
                       {
-                          client.Surname,
-                          client.Name,
-                          client.Applications.Count                          
+                          clien.Surname,
+                          clien.Name,
+                          clien.Applications.Count
                       } into grp
                       select new
                       {
@@ -189,17 +192,16 @@ public class UnitTest : IClassFixture<FixtureRealt>
     [Fact]
     public void MinimumCost()
     {
-        var query = (from application in _fixture.FixtureApplication
-                     from client in application.Clients
-
-                     group client by new
+        var query = (from clients in _fixture.Clients
+                     join applications in _fixture.Applications on clients.Id equals applications.ClientId
+                     group clients by new
                      {
-                         client.Surname,
-                         client.Name,
-                         client.Number,
-                         client.Registration,
-                         client.Passport,
-                         application.Cost
+                         clients.Surname,
+                         clients.Name,
+                         clients.Number,
+                         clients.Registration,
+                         clients.Passport,
+                         applications.Cost
                      } into grp
                      select new
                      {

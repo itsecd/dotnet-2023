@@ -5,7 +5,7 @@ using ReactiveUI;
 using System;
 
 namespace Department.Client.Views;
-public partial class GroupWindow : ReactiveWindow<CourseViewModel>
+public partial class GroupWindow : ReactiveWindow<GroupViewModel>
 {
     public GroupWindow()
     {

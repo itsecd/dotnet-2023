@@ -1,4 +1,6 @@
-﻿namespace Department.Server.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Department.Server.Dto;
 
 /// <summary>
 /// Class CourseGetDto has info about all courses at the department
@@ -14,6 +16,11 @@ public class CourseGetDto
     /// Subject
     /// </summary>
     public string SubjectName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Id of subject
+    /// </summary>
+    public int SubjectId { get; set; }
 
     /// <summary>
     /// Type of course (lectures, practices, laboratory work, etc.)
@@ -34,4 +41,9 @@ public class CourseGetDto
     /// Teacher
     /// </summary>
     public string TeachersName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Teacher's id
+    /// </summary>
+    public int TeacherId { get; set; }
 }

@@ -1,15 +1,20 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingSystem.Classes", "HotelBookingSystem.Classes\HotelBookingSystem.Classes.csproj", "{FD267590-23A7-482C-898F-09534A975447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingSystem.Model", "HotelBookingSystem.Model\HotelBookingSystem.Model.csproj", "{FD267590-23A7-482C-898F-09534A975447}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingSystem.Tests", "HotelBookingSystem.Tests\HotelBookingSystem.Tests.csproj", "{B754AFC2-95F6-4FD5-9D30-C5A798815472}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD267590-23A7-482C-898F-09534A975447} = {FD267590-23A7-482C-898F-09534A975447}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingSystem.Server", "HotelBookingSystem.Server\HotelBookingSystem.Server.csproj", "{05932732-A788-43FB-8878-6036088AAB29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD267590-23A7-482C-898F-09534A975447} = {FD267590-23A7-482C-898F-09534A975447}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBookingSystem.Desktop", "HotelBookingSystem.Desktop\HotelBookingSystem.Desktop.csproj", "{C1094272-F20C-4EB2-AF9A-681DA0B3DA30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingSystem.Desktop", "HotelBookingSystem.Desktop\HotelBookingSystem.Desktop.csproj", "{C1094272-F20C-4EB2-AF9A-681DA0B3DA30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

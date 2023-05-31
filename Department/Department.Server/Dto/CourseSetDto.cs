@@ -1,10 +1,17 @@
-﻿namespace Department.Server.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Department.Server.Dto;
 
 /// <summary>
 /// Class CourseSetDto has info about all courses at the department
 /// </summary>
 public class CourseSetDto
 {
+    /// <summary>
+    /// Subject
+    /// </summary>
+    public string SubjectName { get; set; } = string.Empty;
+
     /// <summary>
     /// Subject
     /// </summary>
@@ -24,6 +31,11 @@ public class CourseSetDto
     /// Group
     /// </summary>
     public int GroupId { get; set; }
+
+    /// <summary>
+    /// Teacher
+    /// </summary>
+    public string TeachersName { get; set; } = string.Empty;
 
     /// <summary>
     /// Teacher

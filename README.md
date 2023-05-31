@@ -26,5 +26,14 @@
     6) Вывести информацию о транспортных средствах, совершивших
     максимальное число поездок за указанный период.
 # Демонстрация клиентского приложения:
+
 ![1](TransportMgmt/TransportMgmtScreens/1.jpg)
 ![2](TransportMgmt/TransportMgmtScreens/2.jpg)
+![3](TransportMgmt/TransportMgmtScreens/3.jpg)
+![4](TransportMgmt/TransportMgmtScreens/4.jpg)
+![5](TransportMgmt/TransportMgmtScreens/5.jpg)
+![6](TransportMgmt/TransportMgmtScreens/6.jpg)
+![7](TransportMgmt/TransportMgmtScreens/7.jpg)
+![8](TransportMgmt/TransportMgmtScreens/8.jpg)
+![9](TransportMgmt/TransportMgmtScreens/9.jpg)
+![10](TransportMgmt/TransportMgmtScreens/10.jpg)

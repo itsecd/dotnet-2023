@@ -68,7 +68,7 @@ public class ModelController : ControllerBase
     /// </summary>
     /// <param name="model"> Added model </param>
     [HttpPost]
-    public async Task<ActionResult<ModelGetDto>> Post ([FromBody] ModelPostDto model)
+    public async Task<ActionResult<ModelGetDto>> Post([FromBody] ModelPostDto model)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         var newModel = _mapper.Map<Model>(model);

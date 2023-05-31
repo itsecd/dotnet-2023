@@ -5,14 +5,13 @@ using System;
 using TransportMgmt.Client.ViewModels;
 
 namespace TransportMgmt.Client.Views;
-
-public partial class DriverWindow : ReactiveWindow<DriverViewModel>
+public partial class TransportWindow : ReactiveWindow<TransportViewModel>
 {
-    public DriverWindow()
+    public TransportWindow()
     {
         InitializeComponent();
 
-        this.WhenActivated(d => d(ViewModel!.DriverOnSubmitCommand.Subscribe(Close)));
+        this.WhenActivated(d => d(ViewModel!.TransportOnSubmitCommand.Subscribe(Close)));
     }
 
     public void CancelButton_OnClick(object? sender, RoutedEventArgs e)

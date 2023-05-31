@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TransportMgmt.Client.Views.TripWindow"
+        xmlns:vm="using:TransportMgmt.Client.ViewModels"
+		Title="Редактирование данных о рейсе"
+		MaxWidth="500"
+		SizeToContent="Height">
+
+	<Design.DataContext>
+		<vm:DriverViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/TransportMgmtStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Дата</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Date}" />
+
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Начало рейса</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TimeOn}" />
+
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Конец рейса</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TimeOff}"/>
+
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Id маршрута</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RouteId}"/>
+
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Id ТС</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TransportId}"/>
+
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Id водителя</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding DriverId}"/>
+
+		<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding TripOnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

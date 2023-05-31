@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TransportMgmt.Client.ViewModels;
 
-public class RoutesViewModel : ViewModelBase
+public class TransportTypesViewModel : ViewModelBase
 {
     private int _id;
     public int Id
@@ -12,12 +12,11 @@ public class RoutesViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
 
-    private string _routeNumber = string.Empty;
+    private string _typeName = string.Empty;
     [Required]
-    public string RouteNumber
+    public string TypeName
     {
-        get => _routeNumber;
-        set => this.RaiseAndSetIfChanged(ref _routeNumber, value);
+        get => _typeName;
+        set => this.RaiseAndSetIfChanged(ref _typeName, value);
     }
-
 }

@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TransportMgmt.Client.Views.TransportWindow"
+        xmlns:vm="using:TransportMgmt.Client.ViewModels"
+		Title="Редактирование данных о ТС"
+		MaxWidth="500"
+		SizeToContent="Height">
+
+	<Design.DataContext>
+		<vm:DriverViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/TransportMgmtStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Гос. номер</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StateNumber}" />
+
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Id типа ТС</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TypeId}" />
+
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Id модели ТС</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ModelId}"/>
+
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Дата производства</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DateMake}"/>
+
+		<StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding TransportOnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

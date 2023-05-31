@@ -21,9 +21,25 @@ public partial class App : Application
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RoutesGetDto, RoutesViewModel>();
+
                 cfg.CreateMap<DriverGetDto, DriverViewModel>();
                 cfg.CreateMap<DriverViewModel, DriverGetDto>();
                 cfg.CreateMap<DriverViewModel, DriverPostDto>();
+
+                cfg.CreateMap<ModelGetDto, ModelViewModel>();
+                cfg.CreateMap<ModelPostDto, ModelViewModel>();
+                cfg.CreateMap<ModelViewModel, ModelPostDto>();
+
+                cfg.CreateMap<TransportGetDto, TransportViewModel>();
+                cfg.CreateMap<TransportPostDto, TransportViewModel>();
+                cfg.CreateMap<TransportViewModel, TransportPostDto>();
+
+                cfg.CreateMap<TransportTypesGetDto, TransportTypesViewModel>();
+
+                cfg.CreateMap<TripGetDto, TripViewModel>();
+                cfg.CreateMap<TripPostDto, TripViewModel>();
+                cfg.CreateMap<TripViewModel, TripPostDto>();
+
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

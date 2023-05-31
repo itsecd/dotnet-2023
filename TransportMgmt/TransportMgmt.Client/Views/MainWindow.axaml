@@ -11,8 +11,148 @@
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
+    
 	<Window.Styles>
 		<StyleInclude Source="/TransportMgmtStyles.axaml"/>
 	</Window.Styles>
+
+	<TabControl>
+		<TabItem Header="Рассписание рейсов" VerticalAlignment="Center" HorizontalAlignment="Center">
+		<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddTripCommand}">
+					<Image Source="/Assets/Edit.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeTripCommand}">
+					<Image Source="/Assets/Settings.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteTripCommand}">
+					<Image Source="/Assets/Wrong.png"/>
+				</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Trips}"
+							SelectedItem="{Binding SelectedTrip}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Дата" Binding="{Binding Date}" />
+						<DataGridTextColumn Header="Начало рейса" Binding="{Binding TimeOn}" />
+						<DataGridTextColumn Header="Конец рейса" Binding="{Binding TimeOff}" />
+						<DataGridTextColumn Header="Id маршрута" Binding="{Binding RouteId}" />
+						<DataGridTextColumn Header="Id ТС" Binding="{Binding TransportId}" />
+						<DataGridTextColumn Header="Id водителя" Binding="{Binding DriverId}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Водители" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddDriverCommand}">
+						<Image Source="/Assets/Edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeDriverCommand}">
+						<Image Source="/Assets/Settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteDriverCommand}">
+						<Image Source="/Assets/Wrong.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Drivers}"
+						  SelectedItem="{Binding SelectedDriver}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" />
+						<DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" />
+						<DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" />
+						<DataGridTextColumn Header="Серия и номер паспорта" Binding="{Binding Passport}" />
+						<DataGridTextColumn Header="Серия и номер водительского удостоверения" Binding="{Binding DriverLicense}" />
+						<DataGridTextColumn Header="Домашний адресс" Binding="{Binding Address}" />
+						<DataGridTextColumn Header="Номер телефона" Binding="{Binding PhoneNumber}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		<TabItem Header="Модели ТС" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddModelCommand}">
+						<Image Source="/Assets/Edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeModelCommand}">
+						<Image Source="/Assets/Settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteModelCommand}">
+						<Image Source="/Assets/Wrong.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Models}"
+						  SelectedItem="{Binding SelectedModel}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Название" Binding="{Binding ModelName}" />
+						<DataGridTextColumn Header="Уровень пола" Binding="{Binding FloorLevel}" />
+						<DataGridTextColumn Header="Максимальная вместимость" Binding="{Binding MaxCapacity}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Маршруты" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Routes}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Номер маршрута" Binding="{Binding RouteNumber}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Транспортные средства" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddTransportCommand}">
+						<Image Source="/Assets/Edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeTransportCommand}">
+						<Image Source="/Assets/Settings.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteTransportCommand}">
+						<Image Source="/Assets/Wrong.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Transports}"
+						  SelectedItem="{Binding SelectedTransport}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Гос. номер" Binding="{Binding StateNumber}" />
+						<DataGridTextColumn Header="Id типа ТС" Binding="{Binding TypeId}" />
+						<DataGridTextColumn Header="Id модели ТС" Binding="{Binding ModelId}" />
+						<DataGridTextColumn Header="Дата производства" Binding="{Binding DateMake}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Типы ТС" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding TransportTypes}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+						<DataGridTextColumn Header="Тип ТС" Binding="{Binding TypeName}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	
+	
+	</TabControl>
 </Window>

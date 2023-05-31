@@ -5,11 +5,10 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TransportMgmt.Client.Views.DriverWindow"
 		xmlns:vm="using:TransportMgmt.Client.ViewModels"
-        Title="Редакимрование данных о водителе"
+        Title="Редактирование данных о водителе"
 		MaxWidth="500"
-		SizeToContent="Height"
-		>
-		
+		SizeToContent="Height">
+
 	<Design.DataContext>
 		<vm:DriverViewModel/>
 	</Design.DataContext>
@@ -18,17 +17,26 @@
 		<StyleInclude Source="/TransportMgmtStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions= "Auto,*" ColumnDefinitions="Auto,*">
-		<Label VerticalAlignment="Center">Имя</Label>>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}"/>
-
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Фамилия</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}" />
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Имя</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}" />
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Отчество</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MiddleName}" />
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Серия и номер паспорта</Label>
+		<MaskedTextBox Mask="0000 000000" Grid.Row="3" Grid.Column="1" Text="{Binding Passport}" />
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Серия и номер водительского удостоверения</Label>
+		<MaskedTextBox Mask="0000 000000" Grid.Row="4" Grid.Column="1" Text="{Binding DriverLicense}" />
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Домашний адресс</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Address}" />
+		<Label Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Номер телефона</Label>
+		<MaskedTextBox Mask="+0-000-000-00-00" Grid.Row="6" Grid.Column="1" Text="{Binding PhoneNumber}" />
+		<StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="1"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
-			<Button>OK</Button>
-			<Button Click="">Отмена</Button>
+			<Button IsDefault="True" Command="{Binding DriverOnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
 		</StackPanel>
 	</Grid>
-	
-	
 </Window>

@@ -11,7 +11,11 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\Edit.png" />
+    <None Remove="Assets\Profile.png" />
+    <None Remove="Assets\Settings.png" />
     <None Remove="Assets\Trash.png" />
+    <None Remove="Assets\Wrong.png" />
     <None Remove="swagger.json" />
   </ItemGroup>
 
@@ -48,6 +52,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TransportMgmt.Domain\TransportMgmt.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HotelBookingSystem.Classes;
+namespace HotelBookingSystem.Model;
 public class HotelBookingSystemDbContext : DbContext
 {
     public DbSet<Hotel>? Hotels { get; set; }

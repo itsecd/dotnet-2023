@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HotelBookingSystem.Classes;
+namespace HotelBookingSystem.Model;
 
 /// <summary>
 /// Class that contains info about hotel

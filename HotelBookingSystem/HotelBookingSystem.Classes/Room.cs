@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HotelBookingSystem.Classes;
+namespace HotelBookingSystem.Model;
 
 [Table("room")]
 public class Room

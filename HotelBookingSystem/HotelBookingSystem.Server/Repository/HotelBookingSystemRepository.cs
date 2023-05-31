@@ -1,4 +1,4 @@
-﻿using HotelBookingSystem.Classes;
+﻿using HotelBookingSystem.Model;
 
 namespace HotelBookingSystem.Server.Repository;
 

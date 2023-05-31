@@ -189,12 +189,12 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadDataAsync()
     {
-        //CourseProjectTeachers.Clear();
-        //var courseProjectTeachers = await _apiClient.CourseProjectTeachersAsync();
-        //foreach (var teacher in courseProjectTeachers)
-        //{
-        //    CourseProjectTeachers.Add(_mapper.Map<TeacherViewModel>(teacher));
-        //}
+        CourseProjectTeachers.Clear();
+        var courseProjectTeachers = await _apiClient.CourseProjectTeachersAsync();
+        foreach (var teacher in courseProjectTeachers)
+        {
+            CourseProjectTeachers.Add(_mapper.Map<TeacherViewModel>(teacher));
+        }
 
         var courses = await _apiClient.GetCoursesAsync();
         foreach (var course in courses)

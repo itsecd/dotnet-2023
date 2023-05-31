@@ -18,14 +18,14 @@
     <StyleInclude Source="/DepartmentStyles.axaml"/>
   </Window.Styles>
 
-  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto, *" ColumnDefinitions="Auto,*">
+  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto *" ColumnDefinitions="Auto,*">
     <Label Grid.Row="0" Grid.Column="0">FullName</Label>
     <Label Grid.Row="1" Grid.Column="0">Degree</Label>
 
     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FullName}"/>
     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Degree}"/>
 
-    <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+    <StackPanel Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
       <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

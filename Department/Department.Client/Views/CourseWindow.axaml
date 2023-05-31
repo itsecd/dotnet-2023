@@ -18,7 +18,7 @@
     <StyleInclude Source="/DepartmentStyles.axaml"/>
   </Window.Styles>
 
-  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+  <Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
     <Label Grid.Row="0" Grid.Column="0">SubjectName</Label>
     <Label Grid.Row="1" Grid.Column="0">SubjectId</Label>
     <Label Grid.Row="2" Grid.Column="0">CourseType</Label>
@@ -35,7 +35,7 @@
     <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TeachersName}"/>
     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding TeacherId}"/>
 
-    <StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+    <StackPanel Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
       <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

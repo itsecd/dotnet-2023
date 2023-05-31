@@ -22,14 +22,12 @@
     <Label Grid.Row="0" Grid.Column="0">GroupNumber</Label>
     <Label Grid.Row="1" Grid.Column="0">StudentAmount</Label>
     <Label Grid.Row="2" Grid.Column="0">EducationType</Label>
-    <Label Grid.Row="3" Grid.Column="0">SemesterHours</Label>
 
     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GroupNumber}"/>
     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StudentAmount}"/>
     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EducationType}"/>
-    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SemesterHours}"/>
 
-    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+    <StackPanel Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal">
       <Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>

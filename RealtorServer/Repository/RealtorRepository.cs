@@ -7,6 +7,7 @@ public class RealtorRepository : IRealtorRepository
     private readonly List<House> _houses;
     private readonly List<Client> _clients;
     private readonly List<Application> _applications;
+    private readonly List<ApplicationHasHouse> _applicationHasHouse;
     public RealtorRepository()
 
     {
@@ -22,50 +23,25 @@ public class RealtorRepository : IRealtorRepository
         var fourthClient = new Client(4, "91245", "880-05-55", "Aerodromnaya, 47a", "Michael", "Gorshnev");
         var fifthClient = new Client(5, "57504", "964-98-70", "Lesnaya, 23", "Stiven", "King");
 
-        var firstApplication = new Application(1, "Purchase", 2, DateTime.Parse("1973-04-13"));
-        var secondApplication = new Application(2, "Sale", 48000000, DateTime.Parse("1111-07-26"));
-        var thirdApplication = new Application(3, "Purchase", 48000000, DateTime.Parse("1530-08-25"));
-        var fourthApplication = new Application(4, "Purchase", 48000000, DateTime.Parse("1530-08-25"));
-        var fifthApplication = new Application(5, "Purchase", 2000, DateTime.Parse("1973-08-07"));
-        var sixthApplication = new Application(6, "Sale", 1, DateTime.Parse("1947-09-21"));
-        var seventhApplication = new Application(7, "Purchase", 5, DateTime.Parse("1973-05-13"));
+        
 
-        firstApplication.House.Add(fifthHouse);
-        firstApplication.House.Add(firstHouse);
-        firstApplication.Clients.Add(fourthClient);
 
-        secondApplication.House.Add(secondHouse);
-        secondApplication.Clients.Add(fifthClient);
+        var firstApplication = new Application(1, "Purchase", 2, DateTime.Parse("1973-04-13"), fourthClient.Id);
+        var secondApplication = new Application(2, "Sale", 48000000, DateTime.Parse("1111-07-26"),fifthClient.Id);
+        var thirdApplication = new Application(3, "Purchase", 48000000, DateTime.Parse("1530-08-25"),firstClient.Id );
+        var fourthApplication = new Application(4, "Purchase", 48000000, DateTime.Parse("1530-08-25"),thirdClient.Id );
+        var fifthApplication = new Application(5, "Purchase", 2000, DateTime.Parse("1973-08-07"),secondClient.Id );
+        var sixthApplication = new Application(6, "Sale", 1, DateTime.Parse("1947-09-21"),fifthClient.Id );
+        var seventhApplication = new Application(7, "Purchase", 5, DateTime.Parse("1973-05-13"), firstClient.Id);
 
-        thirdApplication.House.Add(thirdHouse);
-        thirdApplication.Clients.Add(firstClient);
-
-        fourthApplication.House.Add(fourthHouse);
-        fourthApplication.Clients.Add(thirdClient);
-
-        fifthApplication.House.Add(thirdHouse);
-        firstApplication.Clients.Add(secondClient);
-
-        sixthApplication.House.Add(fifthHouse);
-        sixthApplication.Clients.Add(fifthClient);
-        seventhApplication.Clients.Add(firstClient);
-        seventhApplication.House.Add(firstHouse);
-
-        firstClient.Applications.Add(firstApplication);
-        firstClient.Applications.Add(secondApplication);
-        secondClient.Applications.Add(thirdApplication);
-        thirdClient.Applications.Add(fourthApplication);
-        fourthClient.Applications.Add(fifthApplication);
-        fifthClient.Applications.Add(sixthApplication);
-        firstClient.Applications.Add(seventhApplication);
-
-        firstHouse.Applications.Add(secondApplication);
-        secondHouse.Applications.Add(secondApplication);
-        thirdHouse.Applications.Add(thirdApplication);
-        thirdHouse.Applications.Add(fifthApplication);
-        fourthHouse.Applications.Add(fifthApplication);
-        fifthHouse.Applications.Add(firstApplication);
-        fifthHouse.Applications.Add(sixthApplication);
+        var firstApplicationHasHouse = new ApplicationHasHouse(1,1,1);
+        var secondApplicationHasHouse = new ApplicationHasHouse(2,1,5);
+        var thirdApplicationHasHouse = new ApplicationHasHouse(3,2,2);
+        var fourthApplicationHasHouse = new ApplicationHasHouse(4,3,3);
+        var fifthApplicationHasHouse = new ApplicationHasHouse(5,4,4);
+        var sixthApplicationHasHouse = new ApplicationHasHouse(6,5,3);
+        var seventhApplicationHasHouse = new ApplicationHasHouse(7,6,5);
+        var eighthApplicationHasHouse = new ApplicationHasHouse(8, 7, 1);
 
         _clients = new List<Client>
             {
@@ -78,9 +54,13 @@ public class RealtorRepository : IRealtorRepository
             {
                 firstApplication, secondApplication, thirdApplication, fourthApplication, fifthApplication, sixthApplication
             };
+        _applicationHasHouse = new List<ApplicationHasHouse> { firstApplicationHasHouse, secondApplicationHasHouse, thirdApplicationHasHouse, fourthApplicationHasHouse, fifthApplicationHasHouse, sixthApplicationHasHouse, seventhApplicationHasHouse, eighthApplicationHasHouse };
     }
     public List<Client> Clients => _clients;
     public List<House> Houses => _houses;
     public List<Application> Applications => _applications;
+    public List<ApplicationHasHouse> ApplicationHasHouse => _applicationHasHouse;
+
+    public List<ApplicationHasHouse> ApplicationsHasHouses => throw new NotImplementedException();
 }
 

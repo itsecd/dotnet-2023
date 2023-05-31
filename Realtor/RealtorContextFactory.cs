@@ -7,8 +7,7 @@ public class RealtorContextFactory : IDesignTimeDbContextFactory<RealtorDbContex
     public RealtorDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<RealtorDbContext>();
-        optionsBuilder.UseMySQL("Realtor");
-
+        optionsBuilder.UseMySQL("Server=127.0.0.1;Uid=root;Database=Realtor;Pwd=7032");
         return new RealtorDbContext(optionsBuilder.Options);
     }
 }

@@ -7,4 +7,5 @@ public interface IRealtorRepository
     List<House> Houses { get; }
     List<Client> Clients { get; }
     List<Application> Applications { get; }
+    List<ApplicationHasHouse> ApplicationsHasHouses { get; }
 }

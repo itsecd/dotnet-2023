@@ -18,4 +18,6 @@ public class ApplicationGetDto
     /// Data - DateTime typed value for storing a date of application
     /// </summary>
     public DateTime Data { get; set; } = DateTime.MinValue;
+    public int ClientId { get; set; }=int.MinValue;
+
 }

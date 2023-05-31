@@ -26,19 +26,19 @@
     6) Вывести информацию о транспортных средствах, совершивших
     максимальное число поездок за указанный период.
 # Демонстрация клиентского приложения:
-Окно вывода информации о расписании рейсов:
+## Окно вывода информации о расписании рейсов:
 ![1](TransportMgmt/TransportMgmtScreens/1.jpg)
-Окно вывода информации о водителях:
+## Окно вывода информации о водителях:
 ![2](TransportMgmt/TransportMgmtScreens/2.jpg)
-Окно вывода информации о моделях ТС:
+## Окно вывода информации о моделях ТС:
 ![3](TransportMgmt/TransportMgmtScreens/3.jpg)
-Окно вывода информации о маршрутах:
+## Окно вывода информации о маршрутах:
 ![4](TransportMgmt/TransportMgmtScreens/4.jpg)
-Окно вывода информации о транспортных средствах:
+## Окно вывода информации о транспортных средствах:
 ![5](TransportMgmt/TransportMgmtScreens/5.jpg)
-Окно вывода информации о типах ТС:
+## Окно вывода информации о типах ТС:
 ![6](TransportMgmt/TransportMgmtScreens/6.jpg)
-Окна для изменения/добавления записей
+## Окна для изменения/добавления записей
 ![7](TransportMgmt/TransportMgmtScreens/7.jpg)
 ![8](TransportMgmt/TransportMgmtScreens/8.jpg)
 ![9](TransportMgmt/TransportMgmtScreens/9.jpg)

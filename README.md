@@ -18,3 +18,14 @@
 количество дней.
 6) Вывести информацию о минимальной, средней и максимальной стоимости 
 номера в каждом отеле
+
+***Скриншоты:***
+
+![image](https://github.com/guccipanama/DotNet2023/assets/90642918/6af5240d-614a-4d3b-94d3-fb3fe399ed2b)
+
+![image](https://github.com/guccipanama/DotNet2023/assets/90642918/88af59df-2ec7-4996-b116-a9f4b258918f)
+
+![image](https://github.com/guccipanama/DotNet2023/assets/90642918/dd2502f2-8d92-496b-b19a-40e7d7d70901)
+
+![image](https://github.com/guccipanama/DotNet2023/assets/90642918/a0710ee0-92ef-49ee-a204-15efa6d0862c)
+

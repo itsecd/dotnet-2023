@@ -188,7 +188,6 @@ public class MainWindowViewModel : ViewModelBase
 
     private async void LoadDataAsync()
     {
-        CourseProjectTeachers.Clear();
         var courseProjectTeachers = await _apiClient.CourseProjectTeachersAsync();
         foreach (var teacher in courseProjectTeachers)
         {

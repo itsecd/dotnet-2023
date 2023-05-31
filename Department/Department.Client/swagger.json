@@ -976,6 +976,11 @@
             "description": "Subject",
             "nullable": true
           },
+          "subjectId": {
+            "type": "integer",
+            "description": "Id of subject",
+            "format": "int32"
+          },
           "courseType": {
             "type": "string",
             "description": "Type of course (lectures, practices, laboratory work, etc.)",
@@ -995,6 +1000,11 @@
             "type": "string",
             "description": "Teacher",
             "nullable": true
+          },
+          "teacherId": {
+            "type": "integer",
+            "description": "Teacher's id",
+            "format": "int32"
           }
         },
         "additionalProperties": false,
@@ -1003,6 +1013,11 @@
       "CourseSetDto": {
         "type": "object",
         "properties": {
+          "subjectName": {
+            "type": "string",
+            "description": "Subject",
+            "nullable": true
+          },
           "subjectId": {
             "type": "integer",
             "description": "Subject",
@@ -1022,6 +1037,11 @@
             "type": "integer",
             "description": "Group",
             "format": "int32"
+          },
+          "teachersName": {
+            "type": "string",
+            "description": "Teacher",
+            "nullable": true
           },
           "teacherId": {
             "type": "integer",

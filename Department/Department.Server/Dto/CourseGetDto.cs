@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Department.Server.Dto;
+﻿namespace Department.Server.Dto;
 
 /// <summary>
 /// Class CourseGetDto has info about all courses at the department

@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using CarSharingClient.ViewModels;
 using ReactiveUI;
@@ -14,6 +13,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowRentalPointDialog.RegisterHandler(ShowRentalPointDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowClientDialog.RegisterHandler(ShowClientDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowRentedCarDialog.RegisterHandler(ShowRentedCarDialogAsync)));
+
     }
     private async Task ShowCarDialogAsync(InteractionContext<CarViewModel, CarViewModel?> interaction)
     {
@@ -54,4 +54,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         var result = await dialog.ShowDialog<RentedCarViewModel?>(this);
         interaction.SetOutput(result);
     }
+
+
 }

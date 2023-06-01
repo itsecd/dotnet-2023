@@ -11,11 +11,11 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
-    <None Remove="swaggerRight.json" />
+    <None Remove="swaggerNew.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swaggerRight.json" CodeGenerator="NSwagCSharp" Namespace="CarSharingClient" ClassName="ApiClient" />
+    <OpenApiReference Include="swaggerNew.json" CodeGenerator="NSwagCSharp" Namespace="CarSharingClient" ClassName="ApiClient" />
   </ItemGroup>
 
   <ItemGroup>

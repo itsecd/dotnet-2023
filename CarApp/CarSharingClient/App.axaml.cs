@@ -39,7 +39,8 @@ public partial class App : Application
                 cfg.CreateMap<RentedCarPostDto, RentedCarViewModel>();
                 cfg.CreateMap<RentedCarViewModel, RentedCarGetDto>();
 
-                
+                cfg.CreateMap<QueryViewModel, TopCarsGetDto>();
+                cfg.CreateMap< TopCarsGetDto, QueryViewModel>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

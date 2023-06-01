@@ -13,12 +13,12 @@ public class RentalPointViewModel : ViewModelBase
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
-    private string _pointName = string.Empty;
+    private string _name = string.Empty;
     [Required]
-    public string PointName
+    public string Name
     {
-        get => _pointName;
-        set => this.RaiseAndSetIfChanged(ref _pointName, value);
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
 

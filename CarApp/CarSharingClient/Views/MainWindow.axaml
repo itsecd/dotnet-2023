@@ -66,6 +66,7 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		
 		<TabItem Header="RentedCar" VerticalContentAlignment="Center">
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
 				<StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -91,16 +92,17 @@
 				</DataGrid>
 			</Grid>
 		</TabItem>
-		<TabItem Header="Query" VerticalContentAlignment="Center">
+		<TabItem Header="Top-5 Cars" VerticalContentAlignment="Center">
 			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-						Items="{Binding TopCars}">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" Items="{Binding TopCars}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+						<DataGridTextColumn Header="Number of rents" Binding="{Binding Rating}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
 		</TabItem>
+		
 	</TabControl>
 </Window>
 

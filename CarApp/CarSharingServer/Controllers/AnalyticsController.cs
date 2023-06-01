@@ -104,7 +104,7 @@ public class AnalyticsController : ControllerBase
     /// List of five most popular car models ordered by number of rents
     /// </returns>
     [HttpGet("top_five_rented_cars")]
-    public async Task<IActionResult> GetTopFiveCars()
+    public async Task<ActionResult<TopCarsGetDto>> TopFiveCars()
     {
         await using var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)

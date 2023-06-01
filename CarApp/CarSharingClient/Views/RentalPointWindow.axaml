@@ -19,7 +19,7 @@
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,Auto,Auto,*" >
 		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Point Name</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PointName}"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Address</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Addr}"/>
 

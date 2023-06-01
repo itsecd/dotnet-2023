@@ -87,9 +87,9 @@ public class ApiWrapper
     {
         await _client.RentedCar4Async(id);
     }
-
-    public async Task<ICollection<CarGetDto>> TopFiveCars()
+    public async  Task <ICollection<TopCarsGetDto>> TopFiveCars() 
     {
-        return await _client.CarsAsync();
+        return await _client.TopCarsAsync();
     }
+    
 }

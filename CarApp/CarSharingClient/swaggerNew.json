@@ -81,20 +81,20 @@
         "responses": {
           "200": {
             "description": "Success",
-            "contetnt": {
+            "content": {
               "text/plain": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CarGetDto"
+                    "$ref": "#/components/schemas/TopCarsGetDto"
                   }
                 }
               },
               "application/json": {
-                "scema": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CarGetDto"
+                    "$ref": "#/components/schemas/TopCarsGetDto"
                   }
                 }
               },
@@ -102,7 +102,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CarGetDto"
+                    "$ref": "#/components/schemas/TopCarsGetDto"
                   }
                 }
               }
@@ -953,12 +953,12 @@
       "RentalPointPostDto": {
         "type": "object",
         "properties": {
-          "pointName": {
+          "name": {
             "type": "string",
             "description": "name of the rental point",
             "nullable": true
           },
-          "pointAddress": {
+          "address": {
             "type": "string",
             "description": "address of the rental point",
             "nullable": true
@@ -1045,6 +1045,22 @@
         },
         "additionalProperties": false,
         "description": "RentedCarPostDto for HTTP POST request"
+      },
+      "TopCarsGetDto": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "model of the car",
+            "nullable": true
+          },
+          "rating": {
+            "type": "integer",
+            "description": "number of rents for each model",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       }
     }
   }

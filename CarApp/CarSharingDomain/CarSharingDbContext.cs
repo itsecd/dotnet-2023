@@ -70,7 +70,7 @@ public class CarSharingDbContext : DbContext
              new RentedCar{ Id = 7, CarId=4, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-03-11"), RentPeriod = 4, TimeOfReturn = DateTime.Parse("2023-03-13")},
              new RentedCar{ Id = 8, CarId=5, ClientId = 2, RentalPointId=3 , TimeOfRent=DateTime.Parse("2023-04-02"), RentPeriod = 2, TimeOfReturn = DateTime.Parse("2023-04-04")},
              new RentedCar{ Id = 9, CarId=5, ClientId = 1, RentalPointId=1 , TimeOfRent=DateTime.Parse("2023-05-01"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-05-06")},
-             new RentedCar{ Id = 10, CarId=2, ClientId = 5,RentalPointId=5, TimeOfRent=DateTime.Parse("2023-05-01"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-05-06")}
+             new RentedCar{ Id = 10, CarId=2, ClientId = 5,RentalPointId=5, TimeOfRent=DateTime.Parse("2023-05-31"), RentPeriod = 5, TimeOfReturn = DateTime.Parse("2023-06-06")}
         });
     }
 }

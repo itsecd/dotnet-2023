@@ -23,3 +23,7 @@
 среди пациентов.
 6) Вывести информацию о пациентах старше 30 лет, которые записаны на
 прием к нескольким врачам, упорядочить по дате рождения. 
+
+![image](https://github.com/danilovpage/dotnet-2023/blob/main/Polyclinic/Polyclinic.Client/Assets/1.png)
+![image](https://github.com/danilovpage/dotnet-2023/blob/main/Polyclinic/Polyclinic.Client/Assets/2.png)
+![image](https://github.com/danilovpage/dotnet-2023/blob/main/Polyclinic/Polyclinic.Client/Assets/3.png)

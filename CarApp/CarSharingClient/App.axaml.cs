@@ -1,10 +1,10 @@
+using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CarSharingClient.ViewModels;
 using CarSharingClient.Views;
 using Splat;
-using AutoMapper;
 
 namespace CarSharingClient;
 public partial class App : Application
@@ -40,7 +40,7 @@ public partial class App : Application
                 cfg.CreateMap<RentedCarViewModel, RentedCarGetDto>();
 
                 cfg.CreateMap<QueryViewModel, TopCarsGetDto>();
-                cfg.CreateMap< TopCarsGetDto, QueryViewModel>();
+                cfg.CreateMap<TopCarsGetDto, QueryViewModel>();
             }
             );
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());

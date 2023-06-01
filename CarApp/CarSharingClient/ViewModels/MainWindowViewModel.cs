@@ -18,7 +18,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ClientViewModel> Clients { get; } = new();
     public ObservableCollection<RentedCarViewModel> RentedCars { get; } = new();
     public ObservableCollection<QueryViewModel> TopCars { get; } = new();
-    
+
 
     private CarViewModel? _selectedCar;
     public CarViewModel? SelectedCar
@@ -235,6 +235,6 @@ public class MainWindowViewModel : ViewModelBase
             TopCars.Add(_mapper.Map<QueryViewModel>(topCar));
         }
 
-        
+
     }
 }

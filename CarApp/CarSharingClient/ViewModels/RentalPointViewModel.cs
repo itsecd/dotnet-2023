@@ -23,7 +23,7 @@ public class RentalPointViewModel : ViewModelBase
 
 
     private string _address = string.Empty;
-    
+
     public string Addr
     {
         get => _address;

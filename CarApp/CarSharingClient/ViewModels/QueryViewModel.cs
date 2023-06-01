@@ -11,7 +11,7 @@ public class QueryViewModel : ViewModelBase
         get => _rating;
         set => this.RaiseAndSetIfChanged(ref _rating, value);
     }
-    
+
     private string _model = string.Empty;
     [Required]
     public string Model

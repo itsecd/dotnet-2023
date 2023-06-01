@@ -11,11 +11,6 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
-    <None Remove="swaggerNew.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <OpenApiReference Include="swaggerNew.json" CodeGenerator="NSwagCSharp" Namespace="CarSharingClient" ClassName="ApiClient" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +46,7 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="swaggerNew.json" ClassName="ApiClient" />
     <None Update="swaggerRightVersion.json" ClassName="ApiClient" />
   </ItemGroup>
 </Project>

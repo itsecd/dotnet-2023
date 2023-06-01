@@ -3,6 +3,8 @@ using CarSharingDomain;
 using CarSharingServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 
 namespace CarSharingServer.Controllers;
 /// <summary>
@@ -104,24 +106,30 @@ public class AnalyticsController : ControllerBase
     /// List of five most popular car models ordered by number of rents
     /// </returns>
     [HttpGet("top_five_rented_cars")]
-    public async Task<ActionResult<TopCarsGetDto>> TopFiveCars()
+    public async Task<ActionResult<IEnumerable<TopCarsGetDto>>> TopFiveCars()
     {
-        await using var ctx = await _contextFactory.CreateDbContextAsync();
+         await using var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)
         {
             return NotFound();
         }
         _logger.LogInformation("Get info about top five rented cars");
-        var counter = await (from car in ctx.RentedCars
+    var counter = await (from car in ctx.RentedCars
                              group car by car.Car.Model into carGroup
-                             select new
+                             select new TopCarsGetDto
                              {
-                                 carmodel = carGroup.Key,
-                                 count = carGroup.Count()
+                                 // carmodel = carGroup.Key,
+                               Model=carGroup.Key,
+                                 Rating =carGroup.Count()
                              }).ToListAsync();
-        var result = (from rents in counter orderby rents.count descending select rents).Take(5).ToList();
+     
+        var result = (from rents in counter orderby rents.Rating descending  select rents).Take(5).ToList();
         return Ok(result);
     }
+
+  
+       
+    
     /// <summary>
     ///Get info about how much each car was rented
     /// </summary>

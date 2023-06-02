@@ -151,7 +151,7 @@ public class InvoiceController : ControllerBase
             return CreatedAtAction("Post", invoice.Id);
         }
         else
-            return Problem("Entity set 'EnterpriseWarehouseDbContext.Invoices is null.");
+            return Problem("Entity set invoices is null.");
     }
 
     /// <summary>
@@ -194,7 +194,7 @@ public class InvoiceController : ControllerBase
                         return NotFound();
                 }
                 else
-                    return Problem("Entity set 'EnterpriseWarehouseDbContext.Products or 'EnterpriseWarehouseDbContext.InvoicesContent is null.");
+                    return Problem("Entity set products or invoices content is null.");
             }
             await _context.SaveChangesAsync();
             return NoContent();
@@ -235,10 +235,10 @@ public class InvoiceController : ControllerBase
                     return NoContent();
                 }
                 else
-                    return Problem("Entity set 'EnterpriseWarehouseDbContext.InvoicesContent is null.");
+                    return Problem("Entity set invoices content is null.");
             }
         }
         else
-            return NotFound();
+            return Problem("Entity set invoices is null.");
     }
 }

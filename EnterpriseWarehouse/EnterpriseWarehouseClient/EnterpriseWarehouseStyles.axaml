@@ -2,7 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
         </Border>
     </Design.PreviewWith>
 
@@ -18,5 +17,10 @@
 
 	<Style Selector="Grid.MainGrid">
 		<Setter Property="Margin" Value="8"/>
+	</Style>
+
+	<Style Selector="Label.LabelAlignment">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
 	</Style>
 </Styles>

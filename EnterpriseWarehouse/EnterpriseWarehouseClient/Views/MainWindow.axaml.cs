@@ -4,6 +4,7 @@ using ReactiveUI;
 using System.Threading.Tasks;
 
 namespace EnterpriseWarehouseClient.Views;
+
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
     public MainWindow()

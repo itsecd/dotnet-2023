@@ -106,7 +106,7 @@ public class StorageCellController : ControllerBase
                 return Problem("Such a cell already exists.");
         }
         else
-            return Problem("Entity set 'EnterpriseWarehouseDbContext.Products is null.");
+            return Problem("Entity set storage cells or products is null.");
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public class StorageCellController : ControllerBase
                 storageCellToModify.Number = storageCellToPut.Number;
                 storageCellToModify.ProductID = newProduct.Id;
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
             else
                 return Problem("Such a cell already exists.");
@@ -162,10 +162,10 @@ public class StorageCellController : ControllerBase
                 _logger.LogInformation("Delete storage cell with {cellNumber}.", cellNumber);
                 _context.StorageCells.Remove(storageCell);
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
         }
         else
-            return NoContent();
+            return Problem("Entity set storage cells is null.");
     }
 }

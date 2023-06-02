@@ -29,13 +29,13 @@ internal class ApiWrapper
         return _client.ProductPOSTAsync(product);
     }
 
-    public Task UpdateProductAsync(int id, ProductPostDto product)
+    public Task UpdateProductAsync(int itemNumber, ProductPostDto product)
     {
-        return _client.ProductPUTAsync(id, product);
+        return _client.ProductPUTAsync(itemNumber, product);
     }
 
-    public Task DeleteProductAsync(int id)
+    public Task DeleteProductAsync(int itemNumber)
     {
-        return _client.ProductDELETEAsync(id);
+        return _client.ProductDELETEAsync(itemNumber);
     }
 }

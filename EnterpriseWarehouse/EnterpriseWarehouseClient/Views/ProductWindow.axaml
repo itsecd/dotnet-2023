@@ -8,7 +8,8 @@
         Title="Редактирование продукта"
 		MaxHeight="500"
 		MaxWidth="500"
-		SizeToContent="Height">
+		SizeToContent="Height"
+		Icon="/Assets/edit-product-icon.png">
 	<Design.DataContext>
 		<vm:ProductViewModel/>
 	</Design.DataContext>
@@ -16,14 +17,28 @@
 	<Window.Styles>
 		<StyleInclude Source="/EnterpriseWarehouseStyles.axaml"/>
 	</Window.Styles>
-
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *" ColumnDefinitions="Auto, *">
-		<Label VerticalAlignment="Center">Наименование</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}"/>
-
-		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+	<Grid ShowGridLines="True" Margin="4">
+		<Grid.RowDefinitions>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+	
+		<Label Classes="LabelAlignment" Grid.Row="0" Grid.Column="0">Код товара</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ItemNumber}"/>
+		<Label Classes="LabelAlignment" Grid.Row="1" Grid.Column="0">Наименование</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Title}"/>
+		<Label Classes="LabelAlignment" Grid.Row="2" Grid.Column="0">Количество</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"/>
+		<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
-					Orientation="Horizontal">
+					Orientation="Horizontal"
+					Margin="5">
 			<Button Command="{Binding OnSubmitCommand}">ОК</Button>
 			<Button Click="CancelButton_onClick">Отмена</Button>
 		</StackPanel>

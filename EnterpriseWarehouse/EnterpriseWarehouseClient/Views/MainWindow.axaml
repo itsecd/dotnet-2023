@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EnterpriseWarehouseClient.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="EnterpriseWarehouseClient">
+        Icon="/Assets/products-icon.png"
+        Title="Продукты">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -20,9 +20,6 @@
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
 			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
 				<Image Source="/Assets/add-icon.png"/>
-			</Button>
-		    <Button Classes="ToolButton">
-				<Image Source="/Assets/update-icon.png"/>
 			</Button>
 			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
 				<Image Source="/Assets/edit-icon.png"/>

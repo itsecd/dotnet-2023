@@ -6,13 +6,7 @@ namespace EnterpriseWarehouseClient.ViewModels;
 
 public class ProductViewModel : ViewModelBase
 {
-    private int _id;
-    public int Id
-    {
-        get => _id;
-        set => this.RaiseAndSetIfChanged(ref _id, value);
-    }
-
+    [Required]
     private int _itemNumber;
     public int ItemNumber
     {
@@ -28,6 +22,7 @@ public class ProductViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _title, value);
     }
 
+    [Required]
     private int _quantity;
     public int Quantity
     {

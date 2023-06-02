@@ -527,14 +527,14 @@
         }
       }
     },
-    "/api/Product/{id}": {
+    "/api/Product/{itemNumber}": {
       "get": {
         "tags": [
           "Product"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "itemNumber",
             "in": "path",
             "required": true,
             "schema": {
@@ -572,7 +572,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "itemNumber",
             "in": "path",
             "required": true,
             "schema": {
@@ -612,7 +612,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "itemNumber",
             "in": "path",
             "required": true,
             "schema": {

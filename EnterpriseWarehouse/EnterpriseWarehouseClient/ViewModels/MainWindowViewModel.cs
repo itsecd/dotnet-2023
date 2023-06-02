@@ -44,7 +44,7 @@ public class MainWindowViewModel : ViewModelBase
             if (productViewModel != null)
             {
                 var newProduct = await _apiClient.AddProductAsync(_mapper.Map<ProductPostDto>(productViewModel));
-                Products.Add(_mapper.Map<ProductViewModel>(newProduct));
+                Products.Add(_mapper.Map<ProductViewModel>(productViewModel));
             }
         });
 
@@ -53,7 +53,7 @@ public class MainWindowViewModel : ViewModelBase
             var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
             if (productViewModel != null)
             {
-                await _apiClient.UpdateProductAsync(SelectedProduct!.Id, _mapper.Map<ProductPostDto>(productViewModel));
+                await _apiClient.UpdateProductAsync(SelectedProduct!.ItemNumber, _mapper.Map<ProductPostDto>(productViewModel));
                 _mapper.Map(productViewModel, SelectedProduct);
             }
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));
@@ -63,7 +63,7 @@ public class MainWindowViewModel : ViewModelBase
             var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
             if (productViewModel != null)
             {
-                await _apiClient.DeleteProductAsync(SelectedProduct!.Id);
+                await _apiClient.DeleteProductAsync(SelectedProduct!.ItemNumber);
                 Products.Remove(SelectedProduct);
             }
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));

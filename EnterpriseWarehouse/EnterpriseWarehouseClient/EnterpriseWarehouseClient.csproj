@@ -16,12 +16,14 @@
     <None Remove="Assets\add-icon.png" />
     <None Remove="Assets\delete-icon.png" />
     <None Remove="Assets\edit-icon.png" />
+    <None Remove="Assets\edit-product-icon.png" />
+    <None Remove="Assets\products-icon.png" />
     <None Remove="Assets\update-icon.png" />
     <None Remove="swagger.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="EnterpriseWarehouseClient" ClassName="ApiClient" />
+    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="EnterpriseWarehouseClient" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,5 +52,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\ProductWindow.axaml.cs">
+      <DependentUpon>ProductWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

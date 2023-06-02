@@ -25,10 +25,10 @@ public class InvoiceContent
     public Invoice Invoices { get; set; }
 
     /// <summary>
-    ///     ProductItemNumber - item number of the product
+    ///     ProductID - item number of the product
     /// </summary>
-    public int ProductItemNumber { get; set; }
-    [ForeignKey("ProductItemNumber")]
+    public int ProductID { get; set; }
+    [ForeignKey("ProductID")]
     [Column("product_id")]
     public Product Product { get; set; }
 

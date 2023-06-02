@@ -31,33 +31,33 @@ public class EnterpriseWarehouseDbContext : DbContext
         var product_8 = new Product { Id = 8, ItemNumber = 101700, Title = "Кувшин для воды из стекла 4л", Quantity = 10 };
         var product_9 = new Product { Id = 9, ItemNumber = 103700, Title = "Кувшин для воды из стекла 3л", Quantity = 15 };
 
-        var storageCell_1 = new StorageCell { Id = 1, Number = 1, ProductIN = 102302 };
-        var storageCell_2 = new StorageCell { Id = 2, Number = 2, ProductIN = 104302 };
-        var storageCell_3 = new StorageCell { Id = 3, Number = 3, ProductIN = 106302 };
-        var storageCell_4 = new StorageCell { Id = 4, Number = 4, ProductIN = 108302 };
-        var storageCell_5 = new StorageCell { Id = 5, Number = 5, ProductIN = 310510 };
-        var storageCell_6 = new StorageCell { Id = 6, Number = 6, ProductIN = 310510 };
-        var storageCell_7 = new StorageCell { Id = 7, Number = 7, ProductIN = 310510 };
-        var storageCell_8 = new StorageCell { Id = 8, Number = 8, ProductIN = 312510 };
-        var storageCell_9 = new StorageCell { Id = 9, Number = 9, ProductIN = 312510 };
-        var storageCell_10 = new StorageCell { Id = 10, Number = 10, ProductIN = 320510 };
-        var storageCell_11 = new StorageCell { Id = 11, Number = 11, ProductIN = 101700 };
-        var storageCell_12 = new StorageCell { Id = 12, Number = 12, ProductIN = 101700 };
-        var storageCell_13 = new StorageCell { Id = 13, Number = 13, ProductIN = 101700 };
-        var storageCell_14 = new StorageCell { Id = 14, Number = 14, ProductIN = 101700 };
-        var storageCell_15 = new StorageCell { Id = 15, Number = 15, ProductIN = 103700 };
-        var storageCell_16 = new StorageCell { Id = 16, Number = 16, ProductIN = 103700 };
+        var storageCell_1 = new StorageCell { Id = 1, Number = 1, ProductID = 1 };
+        var storageCell_2 = new StorageCell { Id = 2, Number = 2, ProductID = 2 };
+        var storageCell_3 = new StorageCell { Id = 3, Number = 3, ProductID = 3 };
+        var storageCell_4 = new StorageCell { Id = 4, Number = 4, ProductID = 4 };
+        var storageCell_5 = new StorageCell { Id = 5, Number = 5, ProductID = 5 };
+        var storageCell_6 = new StorageCell { Id = 6, Number = 6, ProductID = 5 };
+        var storageCell_7 = new StorageCell { Id = 7, Number = 7, ProductID = 5 };
+        var storageCell_8 = new StorageCell { Id = 8, Number = 8, ProductID = 6 };
+        var storageCell_9 = new StorageCell { Id = 9, Number = 9, ProductID = 6 };
+        var storageCell_10 = new StorageCell { Id = 10, Number = 10, ProductID = 7 };
+        var storageCell_11 = new StorageCell { Id = 11, Number = 11, ProductID = 8 };
+        var storageCell_12 = new StorageCell { Id = 12, Number = 12, ProductID = 8 };
+        var storageCell_13 = new StorageCell { Id = 13, Number = 13, ProductID = 8 };
+        var storageCell_14 = new StorageCell { Id = 14, Number = 14, ProductID = 8 };
+        var storageCell_15 = new StorageCell { Id = 15, Number = 15, ProductID = 9 };
+        var storageCell_16 = new StorageCell { Id = 16, Number = 16, ProductID = 9 };
 
         var invoice_1 = new Invoice { Id = 1, NameOrganization = "СамараПласт", AddressOrganization = "г. Самара, ул. Луцкая, 16.", ShipmentDate = new DateTime(2023, 2, 10) };
         var invoice_2 = new Invoice { Id = 2, NameOrganization = "Посуда Центр", AddressOrganization = "г. Самара, ул. Партизанская, 17.", ShipmentDate = new DateTime(2023, 2, 11) };
         var invoice_3 = new Invoice { Id = 3, NameOrganization = "Посуда Центр", AddressOrganization = "г. самара, ул. Партизанская, 17.", ShipmentDate = new DateTime(2023, 2, 15) };
 
-        var invoiceContent_1 = new InvoiceContent { Id = 1, InvoiceId = 1, ProductItemNumber = 102302, Quantity = 10 };
-        var invoiceContent_2 = new InvoiceContent { Id = 2, InvoiceId = 2, ProductItemNumber = 101700, Quantity = 5 };
-        var invoiceContent_3 = new InvoiceContent { Id = 3, InvoiceId = 2, ProductItemNumber = 320510, Quantity = 10 };
-        var invoiceContent_4 = new InvoiceContent { Id = 4, InvoiceId = 3, ProductItemNumber = 103700, Quantity = 10 };
+        var invoiceContent_1 = new InvoiceContent { Id = 1, InvoiceId = 1, ProductID = 1, Quantity = 10 };
+        var invoiceContent_2 = new InvoiceContent { Id = 2, InvoiceId = 2, ProductID = 8, Quantity = 5 };
+        var invoiceContent_3 = new InvoiceContent { Id = 3, InvoiceId = 2, ProductID = 7, Quantity = 10 };
+        var invoiceContent_4 = new InvoiceContent { Id = 4, InvoiceId = 3, ProductID = 9, Quantity = 10 };
 
-        modelBuilder.Entity<Product>().HasKey(x => x.ItemNumber);
+        modelBuilder.Entity<Product>().HasKey(x => x.Id);
         modelBuilder.Entity<Invoice>().HasKey(x => x.Id);
 
         modelBuilder.Entity<Product>().HasData(new List<Product>

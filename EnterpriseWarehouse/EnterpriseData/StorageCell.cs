@@ -22,10 +22,10 @@ public class StorageCell
     public int Number { get; set; }
 
     /// <summary>
-    ///     ProductIN - unique identifier of the product 
+    ///     ProductID - unique identifier of the product 
     /// </summary>
-    public int ProductIN { get; set; }
-    [ForeignKey("ProductIN")]
+    public int ProductID { get; set; }
+    [ForeignKey("ProductID")]
     [Column("product_id")]
     public Product Product { get; set; }
 

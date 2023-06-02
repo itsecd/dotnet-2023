@@ -51,9 +51,8 @@ public class InvoiceController : ControllerBase
             {
                 var products = await (from invoice in _context.Invoices
                                       from invoiceContent in invoice.InvoicesContent
-                                      join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
                                       where invoice.Id == item.Id
-                                      select new { invoiceContent.ProductItemNumber, invoiceContent.Quantity }).ToDictionaryAsync(x => x.ProductItemNumber, x => x.Quantity);
+                                      select new { invoiceContent.Product.ItemNumber, invoiceContent.Quantity }).ToDictionaryAsync(x => x.ItemNumber, x => x.Quantity);
                 result.Add(new InvoiceGetDto
                 {
                     Id = item.Id,
@@ -95,7 +94,7 @@ public class InvoiceController : ControllerBase
                     AdressOrganization = invoice.AddressOrganization,
                     ShipmentDate = invoice.ShipmentDate.ToShortDateString(),
                     Products = _context.InvoicesContent.Where(res => res.InvoiceId == id).Select(result =>
-                    new { result.ProductItemNumber, result.Quantity }).ToDictionary(x => x.ProductItemNumber, x => x.Quantity)
+                    new { result.Product.ItemNumber, result.Quantity }).ToDictionary(x => x.ItemNumber, x => x.Quantity)
                 });
             }
         }
@@ -135,8 +134,9 @@ public class InvoiceController : ControllerBase
                         var new_invoiceContent = new InvoiceContent
                         {
                             InvoiceId = new_invoice.Id,
-                            ProductItemNumber = product.ItemNumber,
-                            Quantity = elem.Value
+                            ProductID = product.Id,
+                            Quantity = elem.Value,
+                            Product = product
                         };
                         var mappedInvoiceContent = _mapper.Map<InvoiceContent>(new_invoiceContent);
                         _context.InvoicesContent.Add(mappedInvoiceContent);
@@ -176,18 +176,19 @@ public class InvoiceController : ControllerBase
             invoice.Id = invoice_.Id;
             invoice.NameOrganization = invoice_.NameOrganization;
             invoice.AddressOrganization = invoice_.AdressOrganization;
-            invoice.ShipmentDate = DateTime.ParseExact(invoice_.ShipmentDate, "dd.mm.yyyy", null).Date;
+            invoice.ShipmentDate = DateTime.Parse(invoice_.ShipmentDate);
             foreach (var elem in invoice_.Products)
             {
                 if (_context.InvoicesContent != null && _context.Products != null)
                 {
-                    var product = await _context.InvoicesContent.FirstOrDefaultAsync(product => (product.InvoiceId == invoice.Id && product.ProductItemNumber == elem.Key));
-                    if (product != null)
+                    var invoicesContent = await _context.InvoicesContent.Where(product => (product.InvoiceId == invoice.Id)).FirstAsync();
+                    if (invoicesContent != null)
                     {
-                        product.Product = await _context.Products.FirstOrDefaultAsync(_product => _product.ItemNumber == product.ProductItemNumber);
-                        product.InvoiceId = invoice_.Id;
-                        product.ProductItemNumber = elem.Key;
-                        product.Quantity = elem.Value;
+                        var newProduct = await _context.Products.FirstOrDefaultAsync(_product => _product.ItemNumber == elem.Key);
+                        invoicesContent.Product = newProduct;
+                        invoicesContent.InvoiceId = invoice_.Id;
+                        invoicesContent.ProductID = newProduct.Id;
+                        invoicesContent.Quantity = elem.Value;
                     }
                     else
                         return NotFound();

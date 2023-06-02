@@ -9,8 +9,6 @@
         Title="EnterpriseWarehouseClient">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 	
@@ -20,30 +18,30 @@
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
 		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
 				<Image Source="/Assets/add-icon.png"/>
 			</Button>
 		    <Button Classes="ToolButton">
 				<Image Source="/Assets/update-icon.png"/>
 			</Button>
-			<Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
 				<Image Source="/Assets/edit-icon.png"/>
 			</Button>
-		    <Button Classes="ToolButton">
+			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
 				<Image Source="/Assets/delete-icon.png"/>
 			</Button>
 		</StackPanel>
 		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-				  Items="{Binding Products}">
+				  Items="{Binding Products}" SelectedItem="{Binding	SelectedProduct}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Код товара" Binding="{Binding ItemNumber}"/>
 			</DataGrid.Columns>
 			<DataGrid.Columns>
 			    <DataGridTextColumn Header="Наименование" Binding="{Binding	Title}"/>
 			</DataGrid.Columns>
-			<DataGrid.Column>
+			<DataGrid.Columns>
 				<DataGridTextColumn Header="Количество товара" Binding="{Binding Quantity}"/>
-			</DataGrid.Column>
+			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
 

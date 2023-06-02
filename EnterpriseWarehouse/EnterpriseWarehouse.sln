@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enterprise.Data.Tests", "En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enterprise.Data", "EnterpriseData\Enterprise.Data.csproj", "{603E637C-4773-4F7C-A5DE-7DD0DCA65802}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Server", "EnterpriseWarehouseServer\EnterpriseWarehouse.Server.csproj", "{B4657AE8-DD8A-4B92-A324-43E301C9A831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouseServer", "EnterpriseWarehouseServer\EnterpriseWarehouseServer.csproj", "{B4657AE8-DD8A-4B92-A324-43E301C9A831}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Client", "EnterpriseWarehouseClient\EnterpriseWarehouse.Client.csproj", "{033E68E3-C4B3-4E62-80B0-8E932B578001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouseClient", "EnterpriseWarehouseClient\EnterpriseWarehouseClient.csproj", "{033E68E3-C4B3-4E62-80B0-8E932B578001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

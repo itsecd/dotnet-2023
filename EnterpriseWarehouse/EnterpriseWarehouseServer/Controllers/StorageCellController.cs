@@ -30,7 +30,13 @@ public class StorageCellController : ControllerBase
     {
         _logger.LogInformation("Get storage cell.");
         if (_context.StorageCells != null)
-            return await _mapper.ProjectTo<StorageCellGetDto>(_context.StorageCells.OrderBy(x => x.Number)).ToListAsync();
+        {
+            return await _context.StorageCells.Select(cell => new StorageCellGetDto
+            {
+                Number = cell.Number,
+                ProductIN = cell.Product.ItemNumber
+            }).OrderBy(x => x.Number).ToListAsync();
+        }
         else
             return NotFound();
     }
@@ -45,11 +51,15 @@ public class StorageCellController : ControllerBase
     {
         if (_context.StorageCells != null)
         {
-            var storageCell = await _context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == cellNumber);
+            var storageCell = await _context.StorageCells.Select(cell => new StorageCellGetDto
+            {
+                Number = cell.Number,
+                ProductIN = cell.Product.ItemNumber
+            }).Where(cell => cell.Number == cellNumber).ToListAsync();
             if (storageCell != null)
             {
                 _logger.LogInformation("Get storage cell with {cellNumber}.", cellNumber);
-                return Ok(_mapper.Map<StorageCellGetDto>(storageCell));
+                return Ok(storageCell);
             }
             else
             {
@@ -72,14 +82,25 @@ public class StorageCellController : ControllerBase
     [ProducesResponseType(201)]
     public async Task<ActionResult<int>> Post([FromBody] StorageCellPostDto storageCell)
     {
-        if (_context.StorageCells != null)
+        if (_context.StorageCells != null && _context.Products != null)
         {
-            if (_context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == storageCell.Number) == null)
+            var newProduct = await _context.Products.Where(product => product.ItemNumber == storageCell.ProductIN).FirstAsync();
+            if (_context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == storageCell.Number).Result == null)
             {
-                var mapperStorageCell = _mapper.Map<StorageCell>(storageCell);
-                _context.Add(mapperStorageCell);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction("Post", storageCell.Number);
+                if (newProduct != null)
+                {
+                    var newStorageCell = new StorageCell
+                    {
+                        Number = storageCell.Number,
+                        ProductID = newProduct.Id,
+                        Product = newProduct
+                    };
+                    _context.Add(newStorageCell);
+                    await _context.SaveChangesAsync();
+                    return CreatedAtAction("Post", storageCell.Number);
+                }
+                else
+                    return Problem("Product not found.");
             }
             else
                 return Problem("Such a cell already exists.");
@@ -96,9 +117,9 @@ public class StorageCellController : ControllerBase
     [HttpPut("{cellNumber}")]
     public async Task<IActionResult> Put(int cellNumber, [FromBody] StorageCellPostDto storageCellToPut)
     {
-        if (_context.StorageCells == null)
+        if (_context.StorageCells == null || _context.Products == null)
             return NotFound();
-        var storageCellToModify = await _context.StorageCells.FirstOrDefaultAsync(cell => cell.Number == cellNumber);
+        var storageCellToModify = await _context.StorageCells.Where(cell => cell.Number == cellNumber).FirstAsync();
         if (storageCellToModify == null)
         {
             _logger.LogInformation("Not found storage cell with {cellNumber}.", cellNumber);
@@ -106,9 +127,17 @@ public class StorageCellController : ControllerBase
         }
         else
         {
-            _mapper.Map(storageCellToPut, storageCellToModify);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            var newProduct = await _context.Products.Where(product => product.ItemNumber == storageCellToPut.ProductIN).FirstAsync();
+            if (newProduct != null)
+            {
+                storageCellToModify.Product = newProduct;
+                storageCellToModify.Number = storageCellToPut.Number;
+                storageCellToModify.ProductID = newProduct.Id;
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            else
+                return Problem("Such a cell already exists.");
         }
     }
 

@@ -48,7 +48,7 @@ public class AnalyticsController : ControllerBase
         {
             _logger.LogInformation("Get information product received on certain day.");
             var query = await (from invoice in _context.Invoices
-                               where invoice.ShipmentDate == DateTime.Parse(date).Date
+                               where invoice.ShipmentDate == DateTime.Parse(date)
                                from invoiceContent in invoice.InvoicesContent
                                select new ProductGetDto
                                {
@@ -73,14 +73,13 @@ public class AnalyticsController : ControllerBase
         {
             _logger.LogInformation("Get current state warehouse with cell numbers.");
             var query = await (from warehouse in _context.StorageCells
-                               join product in _context.Products on warehouse.ProductIN equals product.ItemNumber
                                orderby warehouse.Number
                                select new StatusStorageCellGetDto
                                {
                                    Number = warehouse.Number,
-                                   ItemNumberProducts = warehouse.ProductIN,
-                                   Title = product.Title,
-                                   Quantity = product.Quantity,
+                                   ItemNumberProducts = warehouse.Product.ItemNumber,
+                                   Title = warehouse.Product.Title,
+                                   Quantity = warehouse.Product.Quantity
                                }).ToListAsync();
             return query;
         }
@@ -98,10 +97,10 @@ public class AnalyticsController : ControllerBase
         if (_context.StorageCells != null && _context.Products != null && _context.Invoices != null && _context.InvoicesContent != null)
         {
             _logger.LogInformation("Get info organizations received max volume products for given period.");
+            Console.WriteLine(DateTime.Parse(date_begin));
             var query = await (from invoice in _context.Invoices
                                join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
-                               join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
-                               where invoice.ShipmentDate >= DateTime.Parse(date_begin).Date && invoice.ShipmentDate <= DateTime.Parse(date_end).Date
+                               where invoice.ShipmentDate >= DateTime.Parse(date_begin) && invoice.ShipmentDate <= DateTime.Parse(date_end)
                                group invoiceContent by new
                                {
                                    invoice.NameOrganization,
@@ -156,7 +155,7 @@ public class AnalyticsController : ControllerBase
             _logger.LogInformation("Get info about the quantity goods delivered.");
             var query = await (from invoice in _context.Invoices
                                join invoiceContent in _context.InvoicesContent on invoice.Id equals invoiceContent.InvoiceId
-                               join product in _context.Products on invoiceContent.ProductItemNumber equals product.ItemNumber
+                               join product in _context.Products on invoiceContent.ProductID equals product.Id
                                group invoiceContent by new
                                {
                                    invoice.NameOrganization,

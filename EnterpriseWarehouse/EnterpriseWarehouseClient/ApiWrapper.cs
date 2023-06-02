@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace EnterpriseWarehouse.Client;
+namespace EnterpriseWarehouseClient;
 
 internal class ApiWrapper
 {
@@ -26,16 +26,16 @@ internal class ApiWrapper
 
     public Task<int> AddProductAsync(ProductPostDto product)
     {
-        return _client.ProductAsync(product);
+        return _client.ProductPOSTAsync(product);
     }
 
     public Task UpdateProductAsync(int id, ProductPostDto product)
     {
-        return _client.Product3Async(id, product);
+        return _client.ProductPUTAsync(id, product);
     }
 
     public Task DeleteProductAsync(int id)
     {
-        return _client.Product4Async(id);
+        return _client.ProductDELETEAsync(id);
     }
 }

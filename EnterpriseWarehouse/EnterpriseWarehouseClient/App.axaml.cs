@@ -2,8 +2,6 @@ using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using EnterpriseWarehouse.Client;
-using EnterpriseWarehouse.Client.ViewModels;
 using EnterpriseWarehouseClient.ViewModels;
 using EnterpriseWarehouseClient.Views;
 using Splat;

@@ -1,7 +1,8 @@
-﻿using EnterpriseWarehouseClient.ViewModels;
-using ReactiveUI;
+﻿using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
+using System.Reactive;
 
-namespace EnterpriseWarehouse.Client.ViewModels;
+namespace EnterpriseWarehouseClient.ViewModels;
 
 public class ProductViewModel : ViewModelBase
 {
@@ -19,6 +20,7 @@ public class ProductViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _itemNumber, value);
     }
 
+    [Required]
     private string _title;
     public string Title
     {
@@ -31,5 +33,12 @@ public class ProductViewModel : ViewModelBase
     {
         get => _quantity;
         set => this.RaiseAndSetIfChanged(ref _quantity, value);
+    }
+
+    public ReactiveCommand<Unit, ProductViewModel> OnSubmitCommand { get; }
+
+    public ProductViewModel()
+    {
+        OnSubmitCommand = ReactiveCommand.Create(() => this);
     }
 }

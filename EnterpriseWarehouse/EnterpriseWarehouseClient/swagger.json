@@ -878,7 +878,7 @@
             "type": "string",
             "nullable": true
           },
-          "adressOrganization": {
+          "addressOrganization": {
             "type": "string",
             "nullable": true
           },
@@ -908,7 +908,7 @@
             "type": "string",
             "nullable": true
           },
-          "adressOrganization": {
+          "addressOrganization": {
             "type": "string",
             "nullable": true
           },

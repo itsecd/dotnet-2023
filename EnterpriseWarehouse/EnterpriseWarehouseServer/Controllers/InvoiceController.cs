@@ -57,7 +57,7 @@ public class InvoiceController : ControllerBase
                 {
                     Id = item.Id,
                     NameOrganization = item.NameOrganization,
-                    AdressOrganization = item.AdressOrganization,
+                    AddressOrganization = item.AdressOrganization,
                     ShipmentDate = item.ShipmentDate,
                     Products = products
                 });
@@ -91,7 +91,7 @@ public class InvoiceController : ControllerBase
                 {
                     Id = invoice.Id,
                     NameOrganization = invoice.NameOrganization,
-                    AdressOrganization = invoice.AddressOrganization,
+                    AddressOrganization = invoice.AddressOrganization,
                     ShipmentDate = invoice.ShipmentDate.ToShortDateString(),
                     Products = _context.InvoicesContent.Where(res => res.InvoiceId == id).Select(result =>
                     new { result.Product.ItemNumber, result.Quantity }).ToDictionary(x => x.ItemNumber, x => x.Quantity)
@@ -119,7 +119,7 @@ public class InvoiceController : ControllerBase
             var new_invoice = new Invoice(
                 invoice.Id,
                 invoice.NameOrganization,
-                invoice.AdressOrganization,
+                invoice.AddressOrganization,
                 DateTime.Parse(invoice.ShipmentDate).Date
                 );
             var mappedInvoice = _mapper.Map<Invoice>(new_invoice);
@@ -175,7 +175,7 @@ public class InvoiceController : ControllerBase
             _logger.LogInformation("Put invoice with {id}.", id);
             invoice.Id = invoice_.Id;
             invoice.NameOrganization = invoice_.NameOrganization;
-            invoice.AddressOrganization = invoice_.AdressOrganization;
+            invoice.AddressOrganization = invoice_.AddressOrganization;
             invoice.ShipmentDate = DateTime.Parse(invoice_.ShipmentDate);
             foreach (var elem in invoice_.Products)
             {
@@ -197,7 +197,7 @@ public class InvoiceController : ControllerBase
                     return Problem("Entity set products or invoices content is null.");
             }
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok();
         }
     }
 
@@ -232,7 +232,7 @@ public class InvoiceController : ControllerBase
                     }
                     _context.Invoices.Remove(invoice);
                     await _context.SaveChangesAsync();
-                    return NoContent();
+                    return Ok();
                 }
                 else
                     return Problem("Entity set invoices content is null.");

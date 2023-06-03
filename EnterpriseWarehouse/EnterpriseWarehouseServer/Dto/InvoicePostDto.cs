@@ -18,7 +18,7 @@ public class InvoicePostDto
     /// <summary>
     ///     AdressOrganization - address of the organization to which the shipment was made
     /// </summary>
-	public string AdressOrganization { get; set; } = string.Empty;
+	public string AddressOrganization { get; set; } = string.Empty;
 
     /// <summary>
     ///     ShipmentDate - shipment date

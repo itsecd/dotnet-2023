@@ -70,6 +70,36 @@
 					<DataGridTextColumn Width="200" Header="Код товара" Binding="{Binding ProductIN}"/>
 				</DataGrid.Columns>
 			</DataGrid>
+			<StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+				<Label FontSize="20" VerticalAlignment="Center">Cчет-фактуры</Label>
+				<Image Source="/Assets/invoice-icon.png"/>
+			</StackPanel>
+			<StackPanel Grid.Row="7" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceAddCommand}">
+					<Image Source="/Assets/add-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceChangeCommand}">
+					<Image Source="/Assets/edit-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceDeleteCommand}">
+					<Image Source="/Assets/delete-icon.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="8" AutoGenerateColumns="False"
+					  Items="{Binding Invoices}" SelectedItem="{Binding SelectedInvoice}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding Id}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Название организации" Binding="{Binding NameOrganization}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Адрес организации" Binding="{Binding AddressOrganization}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Дата" Binding="{Binding ShipmentDate}"/>
+				</DataGrid.Columns>
+			</DataGrid>
 		</Grid>
 	</ScrollViewer>
 </Window>

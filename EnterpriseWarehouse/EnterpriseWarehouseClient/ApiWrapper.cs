@@ -38,4 +38,24 @@ internal class ApiWrapper
     {
         return _client.ProductDELETEAsync(itemNumber);
     }
+
+    public Task<ICollection<StorageCellGetDto>> GetStorageCellsAsync()
+    {
+        return _client.StorageCellAllAsync();
+    }
+
+    public Task<int> AddStorageCellAsync(StorageCellPostDto storageCell)
+    {
+        return _client.StorageCellPOSTAsync(storageCell);
+    }
+
+    public Task UpdateStorageCellAsync(int cellNumber, StorageCellPostDto storageCell)
+    {
+        return _client.StorageCellPUTAsync(cellNumber, storageCell);
+    }
+
+    public Task DeleteStorageCellAsync(int cellNumber)
+    {
+        return _client.StorageCellDELETEAsync(cellNumber);
+    }
 }

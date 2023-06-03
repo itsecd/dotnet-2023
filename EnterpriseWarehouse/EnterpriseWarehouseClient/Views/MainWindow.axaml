@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EnterpriseWarehouseClient.Views.MainWindow"
-        Icon="/Assets/products-icon.png"
-        Title="Продукты">
+        Icon="/Assets/enterprise-icon.png"
+        Title="Предприятие">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -16,30 +16,60 @@
 		<StyleInclude Source="/EnterpriseWarehouseStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-		<StackPanel Grid.Row="0" Orientation="Horizontal">
-			<Button Classes="ToolButton" Command="{Binding OnAddCommand}">
-				<Image Source="/Assets/add-icon.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnChangeCommand}">
-				<Image Source="/Assets/edit-icon.png"/>
-			</Button>
-			<Button Classes="ToolButton" Command="{Binding OnDeleteCommand}">
-				<Image Source="/Assets/delete-icon.png"/>
-			</Button>
-		</StackPanel>
-		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-				  Items="{Binding Products}" SelectedItem="{Binding	SelectedProduct}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Код товара" Binding="{Binding ItemNumber}"/>
-			</DataGrid.Columns>
-			<DataGrid.Columns>
-			    <DataGridTextColumn Header="Наименование" Binding="{Binding	Title}"/>
-			</DataGrid.Columns>
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Количество товара" Binding="{Binding Quantity}"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
-
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, 
+			  Auto, Auto, Auto, Auto, Auto, Auto, *">
+			<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+				<Label FontSize="20" VerticalAlignment="Center">Продукты</Label>
+				<Image Source="/Assets/products-icon.png"/>
+			</StackPanel>
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnProductAddCommand}">
+					<Image Source="/Assets/add-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnProductChangeCommand}">
+					<Image Source="/Assets/edit-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnProductDeleteCommand}">
+					<Image Source="/Assets/delete-icon.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+					  Items="{Binding Products}" SelectedItem="{Binding	SelectedProduct}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ItemNumber}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Наименование" Binding="{Binding	Title}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Количество товара" Binding="{Binding Quantity}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+				<Label FontSize="20" VerticalAlignment="Center">Склад</Label>
+				<Image Source="/Assets/storage-cell-icon.png"/>
+			</StackPanel>
+			<StackPanel Grid.Row="4" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnStorageCellAddCommand}">
+					<Image Source="/Assets/add-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnStorageCellChangeCommand}">
+					<Image Source="/Assets/edit-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnStorageCellDeleteCommand}">
+					<Image Source="/Assets/delete-icon.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="5" AutoGenerateColumns="False"
+					  Items="{Binding StorageCells}" SelectedItem="{Binding SelectedStorageCell}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="150" Header="Номер ячейки" Binding="{Binding Number}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="200" Header="Код товара" Binding="{Binding ProductIN}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
 </Window>

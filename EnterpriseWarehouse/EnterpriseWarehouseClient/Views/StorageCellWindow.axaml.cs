@@ -5,11 +5,12 @@ using ReactiveUI;
 using System;
 
 namespace EnterpriseWarehouseClient.Views;
-public partial class EditableProductWindow : ReactiveWindow<ProductViewModel>
+public partial class StorageCellWindow : ReactiveWindow<StorageCellViewModel>
 {
-    public EditableProductWindow()
+    public StorageCellWindow()
     {
         InitializeComponent();
+
         this.WhenActivated(d => d(ViewModel!.OnSubmitCommand.Subscribe(Close)));
     }
 

@@ -17,7 +17,9 @@
     <None Remove="Assets\delete-icon.png" />
     <None Remove="Assets\edit-icon.png" />
     <None Remove="Assets\edit-product-icon.png" />
+    <None Remove="Assets\enterprise-icon.png" />
     <None Remove="Assets\products-icon.png" />
+    <None Remove="Assets\storage-cell-icon.png" />
     <None Remove="Assets\update-icon.png" />
     <None Remove="swagger.json" />
   </ItemGroup>

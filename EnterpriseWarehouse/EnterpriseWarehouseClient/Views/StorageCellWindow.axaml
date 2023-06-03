@@ -3,23 +3,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="EnterpriseWarehouseClient.Views.ProductWindow"
+        x:Class="EnterpriseWarehouseClient.Views.StorageCellWindow"
 		xmlns:vm="using:EnterpriseWarehouseClient.ViewModels"
-        Title="Редактирование продукта"
+        Title="Редактирование ячейки склада"
 		MaxHeight="500"
 		MaxWidth="500"
 		SizeToContent="Height"
-		Icon="/Assets/edit-product-icon.png">
+		Icon="/Assets/storage-cell-icon.png">
+	
 	<Design.DataContext>
-		<vm:ProductViewModel/>
+		<vm:StorageCellViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>
 		<StyleInclude Source="/EnterpriseWarehouseStyles.axaml"/>
 	</Window.Styles>
+	
 	<Grid ShowGridLines="True" Margin="4">
 		<Grid.RowDefinitions>
-			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
@@ -29,13 +30,11 @@
 			<ColumnDefinition></ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<Label Classes="LabelAlignment" Grid.Row="0" Grid.Column="0">Код товара</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ItemNumber}"/>
-		<Label Classes="LabelAlignment" Grid.Row="1" Grid.Column="0">Наименование</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Title}"/>
-		<Label Classes="LabelAlignment" Grid.Row="2" Grid.Column="0">Количество</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"/>
-		<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+		<Label Classes="LabelAlignment" Grid.Row="0" Grid.Column="0">Номер ячейки</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Number}"/>
+		<Label Classes="LabelAlignment" Grid.Row="1" Grid.Column="0">Код товара</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProductIN}"/>
+		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal"
 					Margin="5">

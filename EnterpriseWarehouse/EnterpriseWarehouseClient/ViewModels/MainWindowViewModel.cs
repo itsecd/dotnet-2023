@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ReactiveUI;
 using Splat;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -83,6 +84,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public Interaction<InvoiceContentViewModel, InvoiceContentViewModel?> ShowInvoiceContentDialog { get; }
 
+    public Interaction<MessageViewModel, MessageViewModel?> ShowMessageDialog { get; }
+
     public MainWindowViewModel()
     {
         _apiClient = Locator.Current.GetService<ApiWrapper>();
@@ -92,144 +95,241 @@ public class MainWindowViewModel : ViewModelBase
         ShowStorageCellDialog = new Interaction<StorageCellViewModel, StorageCellViewModel?>();
         ShowInvoiceDialog = new Interaction<InvoiceViewModel, InvoiceViewModel?>();
         ShowInvoiceContentDialog = new Interaction<InvoiceContentViewModel, InvoiceContentViewModel?>();
+        ShowMessageDialog = new Interaction<MessageViewModel, MessageViewModel?>();
 
         OnProductAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var productViewModel = await ShowProductDialog.Handle(new ProductViewModel());
-            if (productViewModel != null)
+            try
             {
-                var newProduct = await _apiClient.AddProductAsync(_mapper.Map<ProductPostDto>(productViewModel));
-                Products.Add(productViewModel);
+                var productViewModel = await ShowProductDialog.Handle(new ProductViewModel());
+                if (productViewModel != null)
+                {
+                    var newProduct = await _apiClient.AddProductAsync(_mapper.Map<ProductPostDto>(productViewModel));
+                    Products.Add(productViewModel);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         });
 
         OnProductChangeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
-            if (productViewModel != null)
+            try
             {
-                await _apiClient.UpdateProductAsync(SelectedProduct!.ItemNumber, _mapper.Map<ProductPostDto>(productViewModel));
-                _mapper.Map(productViewModel, SelectedProduct);
+                var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
+                if (productViewModel != null)
+                {
+                    await _apiClient.UpdateProductAsync(SelectedProduct!.ItemNumber, _mapper.Map<ProductPostDto>(productViewModel));
+                    _mapper.Map(productViewModel, SelectedProduct);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));
 
         OnProductDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
-            if (productViewModel != null)
+            try
             {
-                await _apiClient.DeleteProductAsync(SelectedProduct!.ItemNumber);
-                while (StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber) != null)
-                    StorageCells.Remove(StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber));
-                Products.Remove(SelectedProduct);
+                var productViewModel = await ShowProductDialog.Handle(SelectedProduct!);
+                if (productViewModel != null)
+                {
+                    await _apiClient.DeleteProductAsync(SelectedProduct!.ItemNumber);
+                    while (StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber) != null)
+                        StorageCells.Remove(StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber));
+                    Products.Remove(SelectedProduct);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));
 
         OnStorageCellAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var storageCellViewModel = await ShowStorageCellDialog.Handle(new StorageCellViewModel());
-            if (storageCellViewModel != null)
+            try
             {
-                var newProduct = await _apiClient.AddStorageCellAsync(_mapper.Map<StorageCellPostDto>(storageCellViewModel));
-                StorageCells.Add(storageCellViewModel);
+                var storageCellViewModel = await ShowStorageCellDialog.Handle(new StorageCellViewModel());
+                if (storageCellViewModel != null)
+                {
+                    var newProduct = await _apiClient.AddStorageCellAsync(_mapper.Map<StorageCellPostDto>(storageCellViewModel));
+                    StorageCells.Add(storageCellViewModel);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         });
 
         OnStorageCellChangeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var storageCellViewModel = await ShowStorageCellDialog.Handle(SelectedStorageCell!);
-            if (storageCellViewModel != null)
+            try
             {
-                await _apiClient.UpdateStorageCellAsync(SelectedStorageCell!.Number, _mapper.Map<StorageCellPostDto>(storageCellViewModel));
-                _mapper.Map(storageCellViewModel, SelectedStorageCell);
+                var storageCellViewModel = await ShowStorageCellDialog.Handle(SelectedStorageCell!);
+                if (storageCellViewModel != null)
+                {
+                    await _apiClient.UpdateStorageCellAsync(SelectedStorageCell!.Number, _mapper.Map<StorageCellPostDto>(storageCellViewModel));
+                    _mapper.Map(storageCellViewModel, SelectedStorageCell);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedStorageCell).Select(selectedStorageCell => selectedStorageCell != null));
 
         OnStorageCellDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var storageCellViewModel = await ShowStorageCellDialog.Handle(SelectedStorageCell!);
-            if (storageCellViewModel != null)
+            try
             {
-                await _apiClient.DeleteStorageCellAsync(SelectedStorageCell!.Number);
-                StorageCells.Remove(SelectedStorageCell);
+                var storageCellViewModel = await ShowStorageCellDialog.Handle(SelectedStorageCell!);
+                if (storageCellViewModel != null)
+                {
+                    await _apiClient.DeleteStorageCellAsync(SelectedStorageCell!.Number);
+                    StorageCells.Remove(SelectedStorageCell);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedStorageCell).Select(selectedStorageCell => selectedStorageCell != null));
 
         OnInvoiceAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceViewModel = await ShowInvoiceDialog.Handle(new InvoiceViewModel());
-            if (invoiceViewModel != null)
+            try
             {
-                var newProduct = await _apiClient.AddInvoiceAsync(_mapper.Map<InvoicePostDto>(invoiceViewModel));
-                Invoices.Add(invoiceViewModel);
+                var invoiceViewModel = await ShowInvoiceDialog.Handle(new InvoiceViewModel());
+                if (invoiceViewModel != null)
+                {
+                    var newProduct = await _apiClient.AddInvoiceAsync(_mapper.Map<InvoicePostDto>(invoiceViewModel));
+                    Invoices.Add(invoiceViewModel);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         });
 
         OnInvoiceChangeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceViewModel = await ShowInvoiceDialog.Handle(SelectedInvoice!);
-            if (invoiceViewModel != null)
+            try
             {
-                if (invoiceViewModel.Info != null)
+                var invoiceViewModel = await ShowInvoiceDialog.Handle(SelectedInvoice!);
+                if (invoiceViewModel != null)
                 {
-                    var modifiedInvoice = new InvoicePostDto
+                    if (invoiceViewModel.Info != null)
                     {
-                        Id = invoiceViewModel.Id,
-                        NameOrganization = invoiceViewModel.NameOrganization,
-                        AddressOrganization = invoiceViewModel.AddressOrganization,
-                        ShipmentDate = invoiceViewModel.ShipmentDate,
-                        Products = invoiceViewModel.Info
-                    };
-                    await _apiClient.UpdateInvoiceAsync(SelectedInvoice!.Id, modifiedInvoice);
-                    _mapper.Map(invoiceViewModel, SelectedInvoice);
+                        var modifiedInvoice = new InvoicePostDto
+                        {
+                            Id = invoiceViewModel.Id,
+                            NameOrganization = invoiceViewModel.NameOrganization,
+                            AddressOrganization = invoiceViewModel.AddressOrganization,
+                            ShipmentDate = invoiceViewModel.ShipmentDate,
+                            Products = invoiceViewModel.Info
+                        };
+                        await _apiClient.UpdateInvoiceAsync(SelectedInvoice!.Id, modifiedInvoice);
+                        _mapper.Map(invoiceViewModel, SelectedInvoice);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedInvoice).Select(selectedInvoice => selectedInvoice != null));
 
         OnInvoiceDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceViewModel = await ShowInvoiceDialog.Handle(SelectedInvoice!);
-            if (invoiceViewModel != null)
+            try
             {
-                await _apiClient.DeleteInvoiceAsync(SelectedInvoice!.Id);
-                if (SelectedInvoice.Info != null)
+                var invoiceViewModel = await ShowInvoiceDialog.Handle(SelectedInvoice!);
+                if (invoiceViewModel != null)
                 {
-                    foreach (var elem in SelectedInvoice.Info)
+                    await _apiClient.DeleteInvoiceAsync(SelectedInvoice!.Id);
+                    if (SelectedInvoice.Info != null)
                     {
-                        InvoicesContent.Remove(InvoicesContent.FirstOrDefault(x => x.InvoiceId == SelectedInvoice.Id));
+                        foreach (var elem in SelectedInvoice.Info)
+                        {
+                            InvoicesContent.Remove(InvoicesContent.FirstOrDefault(x => x.InvoiceId == SelectedInvoice.Id));
+                        }
                     }
+                    Invoices.Remove(SelectedInvoice);
                 }
-                Invoices.Remove(SelectedInvoice);
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedInvoice).Select(selectedInvoice => selectedInvoice != null));
 
         OnInvoiceContentAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(new InvoiceContentViewModel());
-            if (invoiceContentViewModel != null)
+            try
             {
-                var newProduct = await _apiClient.AddInvoiceContentAsync(_mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
-                InvoicesContent.Add(invoiceContentViewModel);
+                var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(new InvoiceContentViewModel());
+                if (invoiceContentViewModel != null)
+                {
+                    var newProduct = await _apiClient.AddInvoiceContentAsync(_mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
+                    InvoicesContent.Add(invoiceContentViewModel);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         });
 
         OnInvoiceContentChangeCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
-            if (invoiceContentViewModel != null)
+            try
             {
-                await _apiClient.UpdateInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId, _mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
-                _mapper.Map(invoiceContentViewModel, SelectedInvoiceContent);
+                var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
+                if (invoiceContentViewModel != null)
+                {
+                    await _apiClient.UpdateInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId, _mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
+                    _mapper.Map(invoiceContentViewModel, SelectedInvoiceContent);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedInvoiceContent).Select(selectedInvoiceContent => selectedInvoiceContent != null));
 
         OnInvoiceContentDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
-            if (invoiceContentViewModel != null)
+            try
             {
-                await _apiClient.DeleteInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId);
-                InvoicesContent.Remove(SelectedInvoiceContent);
+                var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
+                if (invoiceContentViewModel != null)
+                {
+                    await _apiClient.DeleteInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId);
+                    InvoicesContent.Remove(SelectedInvoiceContent);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = new MessageViewModel(e.Message);
+                await ShowMessageDialog.Handle(message!);
             }
         }, this.WhenAnyValue(vm => vm.SelectedInvoiceContent).Select(selectedInvoiceContent => selectedInvoiceContent != null));
 

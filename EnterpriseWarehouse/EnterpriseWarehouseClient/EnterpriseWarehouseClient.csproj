@@ -20,9 +20,11 @@
     <None Remove="Assets\enterprise-icon.png" />
     <None Remove="Assets\invoice-content-icon.png" />
     <None Remove="Assets\invoice-icon.png" />
+    <None Remove="Assets\message-icon.gif" />
     <None Remove="Assets\products-icon.png" />
     <None Remove="Assets\storage-cell-icon.png" />
     <None Remove="Assets\update-icon.png" />
+    <None Remove="Assets\warning-icon.png" />
     <None Remove="swagger.json" />
   </ItemGroup>
 

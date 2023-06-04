@@ -15,6 +15,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.WhenActivated(d => d(ViewModel!.ShowStorageCellDialog.RegisterHandler(ShowStorageCellDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowInvoiceDialog.RegisterHandler(ShowInvoiceDialogAsync)));
         this.WhenActivated(d => d(ViewModel!.ShowInvoiceContentDialog.RegisterHandler(ShowInvoicContentDialogAsync)));
+        this.WhenActivated(d => d(ViewModel!.ShowMessageDialog.RegisterHandler(ShowMessageDialogAsync)));
     }
 
     private async Task ShowProductDialogAsync(InteractionContext<ProductViewModel, ProductViewModel?> interaction)
@@ -55,5 +56,15 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         };
         var result = await dialog.ShowDialog<InvoiceContentViewModel?>(this);
         interaction.SetOutput(result);
+    }
+
+    private async Task ShowMessageDialogAsync(InteractionContext<MessageViewModel, MessageViewModel?> interaction)
+    {
+        var dialog = new MessageWindow
+        {
+            DataContext = interaction.Input
+        };
+        var result = await dialog.ShowDialog<MessageViewModel?>(this);
+        interaction.SetOutput(null);
     }
 }

@@ -26,6 +26,8 @@ public partial class App : Application
                 cfg.CreateMap<StorageCellViewModel, StorageCellPostDto>();
                 cfg.CreateMap<InvoiceGetDto, InvoiceViewModel>();
                 cfg.CreateMap<InvoiceViewModel, InvoicePostDto>();
+                cfg.CreateMap<InvoiceContentGetDto, InvoiceContentViewModel>();
+                cfg.CreateMap<InvoiceContentViewModel, InvoiceContentPostDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

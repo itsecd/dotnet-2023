@@ -17,6 +17,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<InvoiceViewModel> Invoices { get; } = new();
 
+    public ObservableCollection<InvoiceContentViewModel> InvoicesContent { get; } = new();
+
     private ProductViewModel? _selectedProduct;
     public ProductViewModel? SelectedProduct
     {
@@ -36,6 +38,13 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _selectedInvoice;
         set => this.RaiseAndSetIfChanged(ref _selectedInvoice, value);
+    }
+
+    private InvoiceContentViewModel? _selectedInvoiceContent;
+    public InvoiceContentViewModel? SelectedInvoiceContent
+    {
+        get => _selectedInvoiceContent;
+        set => this.RaiseAndSetIfChanged(ref _selectedInvoiceContent, value);
     }
 
     private readonly ApiWrapper _apiClient;
@@ -60,11 +69,19 @@ public class MainWindowViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> OnInvoiceDeleteCommand { get; set; }
 
+    public ReactiveCommand<Unit, Unit> OnInvoiceContentAddCommand { get; set; }
+
+    public ReactiveCommand<Unit, Unit> OnInvoiceContentChangeCommand { get; set; }
+
+    public ReactiveCommand<Unit, Unit> OnInvoiceContentDeleteCommand { get; set; }
+
     public Interaction<ProductViewModel, ProductViewModel?> ShowProductDialog { get; }
 
     public Interaction<StorageCellViewModel, StorageCellViewModel?> ShowStorageCellDialog { get; }
 
     public Interaction<InvoiceViewModel, InvoiceViewModel?> ShowInvoiceDialog { get; }
+
+    public Interaction<InvoiceContentViewModel, InvoiceContentViewModel?> ShowInvoiceContentDialog { get; }
 
     public MainWindowViewModel()
     {
@@ -74,6 +91,7 @@ public class MainWindowViewModel : ViewModelBase
         ShowProductDialog = new Interaction<ProductViewModel, ProductViewModel?>();
         ShowStorageCellDialog = new Interaction<StorageCellViewModel, StorageCellViewModel?>();
         ShowInvoiceDialog = new Interaction<InvoiceViewModel, InvoiceViewModel?>();
+        ShowInvoiceContentDialog = new Interaction<InvoiceContentViewModel, InvoiceContentViewModel?>();
 
         OnProductAddCommand = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -101,6 +119,8 @@ public class MainWindowViewModel : ViewModelBase
             if (productViewModel != null)
             {
                 await _apiClient.DeleteProductAsync(SelectedProduct!.ItemNumber);
+                while (StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber) != null)
+                    StorageCells.Remove(StorageCells.FirstOrDefault(storageCell => storageCell.ProductIN == SelectedProduct.ItemNumber));
                 Products.Remove(SelectedProduct);
             }
         }, this.WhenAnyValue(vm => vm.SelectedProduct).Select(selectedProduct => selectedProduct != null));
@@ -172,9 +192,46 @@ public class MainWindowViewModel : ViewModelBase
             if (invoiceViewModel != null)
             {
                 await _apiClient.DeleteInvoiceAsync(SelectedInvoice!.Id);
+                if (SelectedInvoice.Info != null)
+                {
+                    foreach (var elem in SelectedInvoice.Info)
+                    {
+                        InvoicesContent.Remove(InvoicesContent.FirstOrDefault(x => x.InvoiceId == SelectedInvoice.Id));
+                    }
+                }
                 Invoices.Remove(SelectedInvoice);
             }
         }, this.WhenAnyValue(vm => vm.SelectedInvoice).Select(selectedInvoice => selectedInvoice != null));
+
+        OnInvoiceContentAddCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(new InvoiceContentViewModel());
+            if (invoiceContentViewModel != null)
+            {
+                var newProduct = await _apiClient.AddInvoiceContentAsync(_mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
+                InvoicesContent.Add(invoiceContentViewModel);
+            }
+        });
+
+        OnInvoiceContentChangeCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
+            if (invoiceContentViewModel != null)
+            {
+                await _apiClient.UpdateInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId, _mapper.Map<InvoiceContentPostDto>(invoiceContentViewModel));
+                _mapper.Map(invoiceContentViewModel, SelectedInvoiceContent);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedInvoiceContent).Select(selectedInvoiceContent => selectedInvoiceContent != null));
+
+        OnInvoiceContentDeleteCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var invoiceContentViewModel = await ShowInvoiceContentDialog.Handle(SelectedInvoiceContent!);
+            if (invoiceContentViewModel != null)
+            {
+                await _apiClient.DeleteInvoiceContentAsync(SelectedInvoiceContent!.InvoiceId);
+                InvoicesContent.Remove(SelectedInvoiceContent);
+            }
+        }, this.WhenAnyValue(vm => vm.SelectedInvoiceContent).Select(selectedInvoiceContent => selectedInvoiceContent != null));
 
         RxApp.MainThreadScheduler.Schedule(LoadDataAsync);
     }
@@ -209,6 +266,12 @@ public class MainWindowViewModel : ViewModelBase
                 ShipmentDate = invoice.ShipmentDate,
                 Info = tempInfo
             });
+        }
+
+        var invoicesContent = await _apiClient.GetInvoiceContentAsync();
+        foreach (var invoiceContent in invoicesContent)
+        {
+            InvoicesContent.Add(_mapper.Map<InvoiceContentViewModel>(invoiceContent));
         }
     }
 }

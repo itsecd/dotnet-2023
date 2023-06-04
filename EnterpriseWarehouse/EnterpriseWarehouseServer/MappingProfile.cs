@@ -11,5 +11,7 @@ public class MappingProfile : Profile
         CreateMap<ProductPostDto, Product>();
         CreateMap<ProductPostDto, ProductGetDto>();
         CreateMap<InvoiceGetDto, InvoicePostDto>();
+        CreateMap<InvoiceContent, InvoiceContentGetDto>();
+        CreateMap<InvoiceContentPostDto, InvoiceContent>();
     }
 }

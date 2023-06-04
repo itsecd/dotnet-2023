@@ -78,4 +78,24 @@ internal class ApiWrapper
     {
         return _client.InvoiceDELETEAsync(id);
     }
+
+    public Task<ICollection<InvoiceContentGetDto>> GetInvoiceContentAsync()
+    {
+        return _client.InvoiceContentAllAsync();
+    }
+
+    public Task<int> AddInvoiceContentAsync(InvoiceContentPostDto invoiceContent)
+    {
+        return _client.InvoiceContentPOSTAsync(invoiceContent);
+    }
+
+    public Task UpdateInvoiceContentAsync(int id, InvoiceContentPostDto invoiceContent)
+    {
+        return _client.InvoiceContentPUTAsync(id, invoiceContent);
+    }
+
+    public Task DeleteInvoiceContentAsync(int id)
+    {
+        return _client.InvoiceContentDELETEAsync(id);
+    }
 }

@@ -3,15 +3,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="EnterpriseWarehouseClient.Views.InvoiceWindow"
+        x:Class="EnterpriseWarehouseClient.Views.InvoiceContentWindow"
         xmlns:vm="using:EnterpriseWarehouseClient.ViewModels"
-        Title="Редактирование счет-фактуры"
+        Title="Редактирование информации о счет-фактуре"
 		MaxHeight="500"
 		MaxWidth="500"
 		SizeToContent="Height"
-		Icon="/Assets/invoice-icon.png">
+		Icon="/Assets/invoice-content-icon.png">
 	<Design.DataContext>
-		<vm:InvoiceViewModel/>
+		<vm:InvoiceContentViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>
@@ -23,7 +23,6 @@
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
-			<RowDefinition></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition></ColumnDefinition>
@@ -31,14 +30,12 @@
 		</Grid.ColumnDefinitions>
 
 		<Label Classes="LabelAlignment" Grid.Row="0" Grid.Column="0">Номер счет-фактуры</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
-		<Label Classes="LabelAlignment" Grid.Row="1" Grid.Column="0">Название организации</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NameOrganization}"/>
-		<Label Classes="LabelAlignment" Grid.Row="2" Grid.Column="0">Адрес организации</Label>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AddressOrganization}"/>
-		<Label Classes="LabelAlignment" Grid.Row="3" Grid.Column="0">Дата</Label>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ShipmentDate}"/>
-		<StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InvoiceId}"/>
+		<Label Classes="LabelAlignment" Grid.Row="1" Grid.Column="0">Код товара</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProductIN}"/>
+		<Label Classes="LabelAlignment" Grid.Row="2" Grid.Column="0">Количество купленного товара</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"/>
+		<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right"
 					Orientation="Horizontal"
 					Margin="5">

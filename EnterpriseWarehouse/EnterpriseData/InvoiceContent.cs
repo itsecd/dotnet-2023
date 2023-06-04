@@ -17,7 +17,7 @@ public class InvoiceContent
     public int Id { get; set; }
 
     /// <summary>
-    ///     Id - number of the invoice
+    ///     InvoiceId - number of the invoice
     /// </summary>
     public int InvoiceId { get; set; }
     [ForeignKey("InvoiceId")]

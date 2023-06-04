@@ -18,7 +18,7 @@
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, 
-			  Auto, Auto, Auto, Auto, Auto, Auto, *">
+			  Auto, Auto, Auto, Auto, Auto, Auto, AUto, Auto, Auto *">
 			<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
 				<Label FontSize="20" VerticalAlignment="Center">Продукты</Label>
 				<Image Source="/Assets/products-icon.png"/>
@@ -98,6 +98,33 @@
 				</DataGrid.Columns>
 				<DataGrid.Columns>
 					<DataGridTextColumn Width="Auto" Header="Дата" Binding="{Binding ShipmentDate}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+				<Label FontSize="20" VerticalAlignment="Center">Информация о счет-фактуре</Label>
+				<Image Source="/Assets/invoice-content-icon.png"/>
+			</StackPanel>
+			<StackPanel Grid.Row="10" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentAddCommand}">
+					<Image Source="/Assets/add-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentChangeCommand}">
+					<Image Source="/Assets/edit-icon.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentDeleteCommand}">
+					<Image Source="/Assets/delete-icon.png"/>
+				</Button>
+			</StackPanel>
+			<DataGrid Grid.Row="11" AutoGenerateColumns="False"
+					  Items="{Binding InvoicesContent}" SelectedItem="{Binding SelectedInvoiceContent}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding InvoiceId}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ProductIN}"/>
+				</DataGrid.Columns>
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Header="Количество купленного товара" Binding="{Binding Quantity}"/>
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>

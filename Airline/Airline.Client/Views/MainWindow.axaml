@@ -1,0 +1,95 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Airline.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Airline.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Airline.Client">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/AirlineStyles.axaml"/>
+	</Window.Styles>
+	
+	<TabControl>
+		<TabItem Header="Airplane" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnAddAirplaneCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnChangeAirplaneCommand}">
+						<Image Source="/Assets/settings.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnDeleteAirplaneCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Airplanes}"
+						  SelectedItem="{Binding SelectedAirplane}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+						<DataGridTextColumn Header="Load capacity" Binding="{Binding LoadCapacity}"/>
+						<DataGridTextColumn Header="Perfomance" Binding="{Binding Perfomance}"/>
+						<DataGridTextColumn Header="Passenger capacity" Binding="{Binding PassengerCapacity}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Passenger" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnAddPassengerCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnChangePassengerCommand}">
+						<Image Source="/Assets/settings.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnDeletePassengerCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Passengers}"
+						  SelectedItem="{Binding SelectedPassenger}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Passport number" Binding="{Binding PassportNumber}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Ticket" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnAddTicketCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnChangeTicketCommand}">
+						<Image Source="/Assets/settings.png"/>
+					</Button>
+					<Button Height="32" Width="32" Classes="ToolButton" Command="{Binding OnDeleteTicketCommand}">
+						<Image Source="/Assets/remove.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Tickets}"
+						  SelectedItem="{Binding SelectedTicket}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+						<DataGridTextColumn Header="Seat number" Binding="{Binding SeatNumber}"/>
+						<DataGridTextColumn Header="Baggage weight" Binding="{Binding BaggageWeight}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+
+
+</Window>

@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Airline.Client.Views.Airplane"
+        xmlns:vm="using:Airline.Client.ViewModels"
+        Title="Редактирование самолета"
+		MaxWidth="500"
+		SizeToContent="Height">
+  <Design.DataContext>
+    <vm:AirplaneViewModel/>
+  </Design.DataContext>
+
+  <Window.Styles>
+	<StyleInclude Source="/AirlineStyles.axaml"/>
+  </Window.Styles>
+
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Model</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Model}"/>
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">LoadCapacity</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LoadCapacity}"/>
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Perfomance</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Perfomance}"/>
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">PassengerCapacity</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PassengerCapacity}"/>
+		
+
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					 Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitAirplaneCommand}">Ok</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Отмена</Button>
+		</StackPanel>
+
+
+	</Grid>
+</Window>

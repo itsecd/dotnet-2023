@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MusicMarket;
 using MusicMarketplace;
 using MusicMarketServer.Dto;
+using Ubiety.Dns.Core.Records.NotUsed;
 
 namespace MusicMarketServer.Controllers;
 
@@ -80,11 +81,13 @@ public class PurchaseController : ControllerBase
     /// </summary>
     /// <param name="purchase"> New purchase</param>
     [HttpPost]
-    public async void Post([FromBody] PurchasePostDto purchase)
+    public async Task<ActionResult<PurchaseGetDto>> Post([FromBody] PurchasePostDto purchase)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Purchases.AddAsync(_mapper.Map<Purchase>(purchase));
+        var newPurchase = _mapper.Map<Purchase>(purchase);
+        await context.Purchases.AddAsync(newPurchase);
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<PurchaseGetDto>(newPurchase));
     }
 
     /// <summary>
@@ -105,7 +108,7 @@ public class PurchaseController : ControllerBase
         }
         else
         {
-            context.Update(_mapper.Map(purchaseToPut, purchase));
+            _mapper.Map(purchaseToPut, purchase);
             await context.SaveChangesAsync();
             return Ok();
         }

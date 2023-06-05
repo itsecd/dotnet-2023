@@ -1,0 +1,168 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MusicMarket.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MusicMarket.Client.Views.MainWindow"
+        Icon="/Assets/note.png"
+        Title="MusicMarket"
+	    TransparencyLevelHint="AcrylicBlur"
+		Background="#708090">
+		
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/MusicMarketStyles.axaml"/>
+	</Window.Styles>
+
+	<TabControl>
+		<TabItem Header="Product" VerticalContentAlignment="Center">
+			
+	<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			
+			<Button Classes="ToolButton"  Command="{Binding OnAddProductCommand}">
+				<Image Source="/Assets/icon-add.png"> </Image>
+			</Button>
+			<Button Classes="ToolButton" Command="{Binding OnChangeProductCommand}">
+				<Image Source="/Assets/icon-setting.png"> </Image>
+			</Button>
+			<Button Classes="ToolButton" Command="{Binding OnDeleteProductCommand}">
+				<Image Source="/Assets/icon-close.png"> </Image>
+			</Button>
+		</StackPanel>
+		
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+			Items="{Binding Products}"
+			SelectedItem="{Binding SelectedProduct}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id" Binding="{Binding Id}" 
+									FontSize="13"
+                                    FontWeight="Bold"/>
+				<DataGridTextColumn Header="Name" Binding="{Binding Name}"
+								    FontFamily="Comic Sans" />
+				<DataGridTextColumn Header="TypeOfCarrier" Binding="{Binding
+									TypeOfCarrier}"/>
+				<DataGridTextColumn Header="PublicationType" Binding="{Binding
+									PublicationType}"/>
+				<DataGridTextColumn Header="Creator" Binding="{Binding
+									Creator}"/>
+				<DataGridTextColumn Header="MadeIn" Binding="{Binding
+									MadeIn}"/>
+				<DataGridTextColumn Header="MediaStatus" Binding="{Binding
+									MediaStatus}"/>
+				<DataGridTextColumn Header="PackagingCondition" Binding="{Binding
+									PackagingCondition}"/>
+				<DataGridTextColumn Header="Price" Binding="{Binding
+									Price}"/>
+				<DataGridTextColumn Header="Status" Binding="{Binding
+									Status}"/>
+				<DataGridTextColumn Header="IdSeller" Binding="{Binding
+									IdSeller}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+	</TabItem>
+		
+		
+		<TabItem Header="Seller" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+
+					<Button Classes="ToolButton" Command="{Binding OnAddSellerCommand}">
+						<Image Source="/Assets/icon-add.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeSellerCommand}">
+						<Image Source="/Assets/icon-setting.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteSellerCommand}">
+						<Image Source="/Assets/icon-close.png"> </Image>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Sellers}"
+						  SelectedItem="{Binding SelectedSeller}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="ShopName" Binding="{Binding
+									ShopName}"/>
+						<DataGridTextColumn Header="CountryOfDelivery" Binding="{Binding
+									CountryOfDelivery}"/>
+						<DataGridTextColumn Header="Price" Binding="{Binding
+									Price}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		
+		<TabItem Header="Customer" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+
+					<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+						<Image Source="/Assets/icon-add.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
+						<Image Source="/Assets/icon-setting.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
+						<Image Source="/Assets/icon-close.png"> </Image>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Shipments}"
+						  SelectedItem="{Binding SelectedShipment}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding
+									Name}"/>
+						<DataGridTextColumn Header="Country" Binding="{Binding
+									Country}"/>
+						<DataGridTextColumn Header="Address" Binding="{Binding
+									Address}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Purchase" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+
+					<Button Classes="ToolButton" Command="{Binding OnAddPurchaseCommand}">
+						<Image Source="/Assets/icon-add.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangePurchaseCommand}">
+						<Image Source="/Assets/icon-setting.png"> </Image>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeletePurchaseCommand}">
+						<Image Source="/Assets/icon-close.png"> </Image>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Purchases}"
+						  SelectedItem="{Binding SelectedPurchase}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id"  Binding="{Binding
+									Id}"/>
+						<DataGridTextColumn Header="IdSeller" Binding="{Binding
+									IdSeller}"/>
+						<DataGridTextColumn Header="IdCustomer" Binding="{Binding
+									IdCustomer}"/>
+						<DataGridTextColumn Header="Date" Binding="{Binding
+									Date}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		</TabControl>
+</Window>

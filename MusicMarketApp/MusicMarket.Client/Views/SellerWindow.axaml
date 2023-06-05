@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MusicMarket.Client.Views.SellerWindow"
+        Title="SellerWindow"
+	xmlns:vm="using:MusicMarket.Client.ViewModels"
+	MinHeight="350" MinWidth="350"
+	MaxHeight="350" MaxWidth="350"
+	SizeToContent="Height">
+	<Design.DataContext>
+		<vm:CustomerViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/MusicMarketStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Название магазина</Label>
+		<Label Grid.Row="1" Grid.Column="0">Страна</Label>
+		<Label Grid.Row="2" Grid.Column="0">Стоимость доставки</Label>>
+
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ShopName}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CountryOfDelivery}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Price}"/>
+
+		<StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+
+</Window>

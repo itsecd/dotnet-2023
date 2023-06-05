@@ -47,7 +47,7 @@ public class AnalyticsController : ControllerBase
     /// Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.
     /// </summary>
     /// <returns>Ok(information about all sold vinyl records)</returns>
-    [HttpGet("information_about_vinyl_records")]
+    [HttpGet("InformationAboutVinylRecords")]
     public async Task<ActionResult<ProductGetDto>> GetSoldVinylRecords()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -73,7 +73,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <param name="id">Seller id</param>
     /// <returns>Ok(information about products by seller  with id)</returns>
-    [HttpGet("All_products_by_seller_id")]
+    [HttpGet("AllProductsBySllerId")]
     public async Task<ActionResult<ProductGetDto>> ProductsBySeller(int id)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -100,7 +100,7 @@ public class AnalyticsController : ControllerBase
     /// которых не хуже "хорошее".
     /// </summary>
     /// <returns>Ok(Information about sale good and better disks)</returns>
-    [HttpGet("Good_disks_by_singer")]
+    [HttpGet("GoodDisksBySinger")]
     public async Task<ActionResult<ProductGetDto>> GoodDisksInfo(string name)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -127,7 +127,7 @@ public class AnalyticsController : ControllerBase
     /// Запрос 4 - Вывести информацию о количестве проданных на торговой площадке товаров каждого типа аудионосителя.
     /// </summary>
     /// <returns>Ok(Count of sold audio carriers each type)</returns>
-    [HttpGet("Sold_audio_carriers")]
+    [HttpGet("SoldAudioCarriers")]
     public async Task<ActionResult> SoldAudioCarriers()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -148,7 +148,7 @@ public class AnalyticsController : ControllerBase
     /// по средней стоимости совершенных покупок с учетом стоимости доставки.
     /// </summary>
     /// <returns>Top 5 customers</returns>
-    [HttpGet("Top_5_customers")]
+    [HttpGet("Top5Customers")]
     public async Task<IActionResult> TopFiveСustomer()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
@@ -190,7 +190,7 @@ public class AnalyticsController : ControllerBase
     /// Запрос 6 - Вывести информацию о количестве проданных товаров каждым продавцом за последние две недели.
     /// </summary>
     /// <returns> Information about sold products in two weeks</returns>
-    [HttpGet("sold_products")]
+    [HttpGet("SoldProducts")]
     public async Task<IActionResult> SoldProductsInTwoWeeks()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();

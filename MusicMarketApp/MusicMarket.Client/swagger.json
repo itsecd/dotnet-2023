@@ -1,0 +1,1208 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MusicMarketServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/InformationAboutVinylRecords": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 1 - Вывести информацию о всех проданных виниловых пластинках.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/AllProductsBySllerId": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 2 - Вывести информацию о всех товарах указанного продавца, упорядочить по цене.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Seller id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/GoodDisksBySinger": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 3 - Вывести информацию о продаваемых дисковых изданиях       \r\nальбомов указанного исполнителя, состояние аудионосителя и упаковки \r\nкоторых не хуже \"хорошее\".",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/SoldAudioCarriers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 4 - Вывести информацию о количестве проданных на торговой площадке товаров каждого типа аудионосителя.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/Top5Customers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 5 - Вывести информацию о топ 5 покупателях \r\nпо средней стоимости совершенных покупок с учетом стоимости доставки.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/SoldProducts": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Запрос 6 - Вывести информацию о количестве проданных товаров каждым продавцом за последние две недели.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Customer": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "GET-запрос на получение всех элементов коллекции",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "POST-запрос на добавление нового элемента в коллекцию",
+        "requestBody": {
+          "description": "New customer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/{id}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "GET-запрос на получение элемента в соответствии с ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "CustomerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "PUT-запрос на замену существующего элемента коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "CustomerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New customer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "DELETE-запрос на удаление элемента из коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "CustomerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Product": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "GET-запрос на получение всех товаров коллекции",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "POST-запрос на добавление нового элемента в коллекцию",
+        "requestBody": {
+          "description": "New product",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Product/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "GET-запрос на получение элемента в соответствии с ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ProductId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "PUT-запрос на замену существующего элемента коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ProductId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New product",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "DELETE-запрос на удаление элемента из коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ProductId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Purchase": {
+      "get": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "GET-запрос на получение всех элементов коллекции",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PurchaseGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PurchaseGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PurchaseGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "POST-запрос на добавление нового элемента в коллекцию",
+        "requestBody": {
+          "description": "New purchase",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Purchase/{id}": {
+      "get": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "GET-запрос на получение элемента в соответствии с ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "PurchaseId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "PUT-запрос на замену существующего элемента коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "PurchaseId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New purchase",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "DELETE-запрос на удаление элемента из коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "PurchaseId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Seller": {
+      "get": {
+        "tags": [
+          "Seller"
+        ],
+        "summary": "GET-запрос на получение всех элементов коллекции",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SellerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SellerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SellerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Seller"
+        ],
+        "summary": "POST-запрос на добавление нового элемента в коллекцию",
+        "requestBody": {
+          "description": "New seller",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Seller/{id}": {
+      "get": {
+        "tags": [
+          "Seller"
+        ],
+        "summary": "GET-запрос на получение элемента в соответствии с ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "SellerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Seller"
+        ],
+        "summary": "PUT-запрос на замену существующего элемента коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "SellerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New seller",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Seller"
+        ],
+        "summary": "DELETE-запрос на удаление элемента из коллекции",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "SellerId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CustomerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID Покупателя.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Ф.И.О.",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "Страна проживания.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Адрес.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о покупателе"
+      },
+      "CustomerPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Ф.И.О.",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "Страна проживания.",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Адрес.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о покупателе"
+      },
+      "ProductGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID Товара.",
+            "format": "int32"
+          },
+          "typeOfCarrier": {
+            "type": "string",
+            "description": "Тип аудионосителя: диск|кассета|виниловая пластинка.",
+            "nullable": true
+          },
+          "publicationType": {
+            "type": "string",
+            "description": "Тип издания: альбом|сингл.",
+            "nullable": true
+          },
+          "creator": {
+            "type": "string",
+            "description": "Исполнитель",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Название",
+            "nullable": true
+          },
+          "madeIn": {
+            "type": "string",
+            "description": "Страна издания.",
+            "nullable": true
+          },
+          "mediaStatus": {
+            "type": "string",
+            "description": "Cостояние аудионосителя: новое || отличное || хорошее || удовлетворительное || плохое.",
+            "nullable": true
+          },
+          "packagingCondition": {
+            "type": "string",
+            "description": "Cостояние упаковки: новое || отличное || хорошее || удовлетворительное || плохое.",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "description": "Цена",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "description": "Cтатус: в продаже || продан.",
+            "nullable": true
+          },
+          "sellerId": {
+            "type": "integer",
+            "description": "ID Продавца.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о товаре"
+      },
+      "ProductPostDto": {
+        "type": "object",
+        "properties": {
+          "typeOfCarrier": {
+            "type": "string",
+            "description": "Тип аудионосителя: диск|кассета|виниловая пластинка.",
+            "nullable": true
+          },
+          "publicationType": {
+            "type": "string",
+            "description": "Тип издания: альбом|сингл.",
+            "nullable": true
+          },
+          "creator": {
+            "type": "string",
+            "description": "Исполнитель",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Название",
+            "nullable": true
+          },
+          "madeIn": {
+            "type": "string",
+            "description": "Страна издания.",
+            "nullable": true
+          },
+          "mediaStatus": {
+            "type": "string",
+            "description": "Cостояние аудионосителя: новое || отличное || хорошее || удовлетворительное || плохое.",
+            "nullable": true
+          },
+          "packagingCondition": {
+            "type": "string",
+            "description": "Cостояние упаковки: новое || отличное || хорошее || удовлетворительное || плохое.",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "description": "Цена",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "description": "Cтатус: в продаже || продан.",
+            "nullable": true
+          },
+          "sellerId": {
+            "type": "integer",
+            "description": "ID Продавца.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о товаров"
+      },
+      "PurchaseGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID Покупки.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Дата совершения покупки.",
+            "format": "date-time"
+          },
+          "idProduct": {
+            "type": "integer",
+            "description": "ID Товара.",
+            "format": "int32"
+          },
+          "idCustomer": {
+            "type": "integer",
+            "description": "ID Покупателя.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о покупке"
+      },
+      "PurchasePostDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Дата совершения покупки.",
+            "format": "date-time"
+          },
+          "idProduct": {
+            "type": "integer",
+            "description": "ID Товара.",
+            "format": "int32"
+          },
+          "idCustomer": {
+            "type": "integer",
+            "description": "ID Покупателя.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о покупке"
+      },
+      "SellerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID Продавца.",
+            "format": "int32"
+          },
+          "shopName": {
+            "type": "string",
+            "description": "Название магазина.",
+            "nullable": true
+          },
+          "countryOfDelivery": {
+            "type": "string",
+            "description": "Страна доставки.",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "description": "Стоимость доставки за 1 товар.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о продавце"
+      },
+      "SellerPostDto": {
+        "type": "object",
+        "properties": {
+          "shopName": {
+            "type": "string",
+            "description": "Название магазина.",
+            "nullable": true
+          },
+          "countryOfDelivery": {
+            "type": "string",
+            "description": "Страна доставки.",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "description": "Стоимость доставки за 1 товар.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о продавце"
+      }
+    }
+  }
+}

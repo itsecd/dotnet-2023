@@ -83,11 +83,13 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="customer">New customer</param>
     [HttpPost]
-    public async void Post([FromBody] CustomerPostDto customer)
+    public async Task<ActionResult<CustomerGetDto>> Post([FromBody] CustomerPostDto customer)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        await context.Customers.AddAsync(_mapper.Map<Customer>(customer));
+        var newCustomer = _mapper.Map<Customer>(customer);
+        await context.Customers.AddAsync(_mapper.Map<Customer>(newCustomer));
         await context.SaveChangesAsync();
+        return Ok(_mapper.Map<CustomerGetDto>(newCustomer));
 
     }
 
@@ -111,7 +113,7 @@ public class CustomerController : ControllerBase
         }
         else
         {
-            context.Update(_mapper.Map(customerToPut, customer));
+            _mapper.Map(customerToPut, customer);
             await context.SaveChangesAsync();
             return Ok();
         }

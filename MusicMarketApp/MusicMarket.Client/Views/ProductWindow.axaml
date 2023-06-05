@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MusicMarket.Client.Views.ProductWindow"
+        Title="ProductWindow"
+		xmlns:vm="using:MusicMarket.Client.ViewModels"
+	    MinHeight="300" MinWidth="450"
+		MaxHeight="300" MaxWidth="450"
+
+	    SizeToContent="Height">
+	<Design.DataContext>
+		<vm:CustomerViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/ShopsStyle.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
+		<Label Grid.Row="0" Grid.Column="0">Id</Label>
+		<Label Grid.Row="1" Grid.Column="0">Тип аудионосителя: диск|кассета|виниловая пластинка</Label>
+		<Label Grid.Row="2" Grid.Column="0">Тип издания: альбом|сингл</Label>
+		<Label Grid.Row="3" Grid.Column="0">Исполнитель</Label>
+		<Label Grid.Row="4" Grid.Column="0">Наименование товара</Label>
+		<Label Grid.Row="5" Grid.Column="0">Страна издания</Label>
+		<Label Grid.Row="6" Grid.Column="0">Cостояние аудионосителя: новое || отличное || хорошее || удовлетворительное || плохое</Label>
+		<Label Grid.Row="7" Grid.Column="0">Cостояние упаковки: новое || отличное || хорошее || удовлетворительное || плохое</Label>
+		<Label Grid.Row="8" Grid.Column="0">Цена</Label>
+		<Label Grid.Row="9" Grid.Column="0">Cтатус: в продаже || продан</Label>
+		<Label Grid.Row="10" Grid.Column="0">ID Продавца</Label>
+
+
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TypeOfCarrier}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PublicationType}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Creator}"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Name}"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding MadeIn}"/>
+		<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding MediaStatus}"/>
+		<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding PackagingCondition}"/>
+		<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Price}"/>
+		<TextBox Grid.Row="9" Grid.Column="1" Text="{Binding Status}"/>
+		<TextBox Grid.Row="10" Grid.Column="1" Text="{Binding IdSeller}"/>
+		
+		<StackPanel Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+	
+</Window>

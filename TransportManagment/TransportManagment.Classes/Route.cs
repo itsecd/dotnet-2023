@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-namespace TransportManagment.Classes;
+
+namespace TransportManagment.Model;
 /// <summary>
 /// Class of routes
 /// </summary>
@@ -16,11 +17,11 @@ public class Route
     /// <summary>
     /// Time when transport drive out of route
     /// </summary>
-    public TimeSpan TimeTo { get; set; } = new TimeSpan();
+    public double TimeTo { get; set; } = 0;
     /// <summary>
     /// Time when transport drive in of route
     /// </summary>
-    public TimeSpan TimeFrom { get; set; } = new TimeSpan();
+    public double TimeFrom { get; set; } = 0;
     /// <summary>
     /// TransportId - Unique key of transport
     /// </summary>
@@ -40,14 +41,12 @@ public class Route
     /// </summary>
     public Driver? Driver { get; set; } = null!;
     public Route() { }
-    public Route(int routeId, DateTime date, TimeSpan timeTo, TimeSpan timeFrom, int transportId, int driverId)//, Transport transport, Driver driver
+    public Route(int routeId, DateTime date, double timeTo, double timeFrom, int transportId, int driverId)
     {
         RouteId = routeId;
         Date = date;
         TimeTo = timeTo;
         TimeFrom = timeFrom;
-        //Transport = transport;
-        //Driver = driver;
         TransportId = transportId;
         DriverId = driverId;
     }

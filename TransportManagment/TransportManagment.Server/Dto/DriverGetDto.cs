@@ -5,6 +5,10 @@
 public class DriverGetDto
 {
     /// <summary>
+    /// Id of driver
+    /// </summary>
+    public int DriverId { get; set; } = 0;
+    /// <summary>
     /// First name of driver
     /// </summary>
     public string FirstName { get; set; } = string.Empty;

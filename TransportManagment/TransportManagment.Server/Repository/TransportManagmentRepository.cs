@@ -1,11 +1,12 @@
-﻿using TransportManagment.Classes;
+﻿using TransportManagment.Model;
+
 namespace TransportManagment.Server.Repository;
 
 public class TransportManagmentRepository : ITransportManagmentRepository
 {
     private readonly List<Transport> _transports;
     private readonly List<Driver> _drivers;
-    private readonly List<Classes.Route> _routes;
+    private readonly List<Model.Route> _routes;
     public TransportManagmentRepository()
     {
         _transports = new List<Transport>()
@@ -26,15 +27,15 @@ public class TransportManagmentRepository : ITransportManagmentRepository
              new Driver (15, "Adry", "Tarasov", "Sergeivich", 199321, 2784, 2522290),
              new Driver (16, "Bill", "Pechorin", "Andeivich", 300965, 1234, 3668090),
         };
-        _routes = new List<Classes.Route>()
+        _routes = new List<Model.Route>()
         {
-            new Classes.Route(100, new DateTime(2022, 02, 11), new TimeSpan(08, 00, 00), new TimeSpan(17, 30, 00), 1, 11),//, _transports[0], _drivers[0]
-            new Classes.Route(111, new DateTime(2022, 02, 11), new TimeSpan(09, 00, 00), new TimeSpan(16, 00, 00), 2, 12),//, _transports[1], _drivers[1]
-            new Classes.Route(112, new DateTime(2022, 02, 11), new TimeSpan(16, 30, 00), new TimeSpan(22, 30, 00), 2, 13),//, _transports[1], _drivers[2]
-            new Classes.Route(123, new DateTime(2022, 02, 11), new TimeSpan(07, 30, 00), new TimeSpan(14, 30, 00), 3, 14),//, _transports[2], _drivers[3]
-            new Classes.Route(133, new DateTime(2022, 02, 11), new TimeSpan(15, 00, 00), new TimeSpan(23, 00, 00), 4, 14),//, _transports[3], _drivers[3]
-            new Classes.Route(144, new DateTime(2022, 02, 11), new TimeSpan(06, 00, 00), new TimeSpan(18, 00, 00), 5, 15),//, _transports[4], _drivers[4]
-            new Classes.Route(155, new DateTime(2022, 02, 12), new TimeSpan(06, 30, 00), new TimeSpan(18, 00, 00), 6, 16),//, _transports[5], _drivers[5]
+            new Classes.Route(100, new DateTime(2022, 02, 11), 480, 1050, 1, 11),
+            new Classes.Route(111, new DateTime(2022, 02, 11), 540, 960, 2, 12),
+            new Classes.Route(112, new DateTime(2022, 02, 11), 960, 1350, 2, 13),
+            new Classes.Route(123, new DateTime(2022, 02, 11), 450, 870, 3, 14),
+            new Classes.Route(133, new DateTime(2022, 02, 11), 900, 1380, 4, 14),
+            new Classes.Route(144, new DateTime(2022, 02, 11), 360, 1080, 5, 15),
+            new Classes.Route(155, new DateTime(2022, 02, 12), 390, 1080, 6, 16),
         };
         _routes[0].Driver = _drivers[0];
         _routes[0].Transport = _transports[0];
@@ -67,5 +68,5 @@ public class TransportManagmentRepository : ITransportManagmentRepository
     }
     public List<Transport> Transports => _transports;
     public List<Driver> Drivers => _drivers;
-    public List<Classes.Route> Routes => _routes;
+    public List<Model.Route> Routes => _routes;
 }

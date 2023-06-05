@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
-using TransportManagment.Classes;
+using TransportManagment.Model;
 using TransportManagment.Server.Dto;
 namespace TransportManagment.Server.Controllers;
 /// <summary>
@@ -68,7 +68,7 @@ public class RequestsController : ControllerBase
                          Model = res.First().Model,
                          Time = (from route in _context.Routes
                                  where route.TransportId == res.Single().TransportId
-                                 select route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes).ToImmutableList().Sum(),
+                                 select route.TimeFrom - route.TimeTo).Sum(),
                      };
         return await result.ToListAsync();
     }
@@ -100,19 +100,14 @@ public class RequestsController : ControllerBase
     [HttpGet("GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravel")]
     public async Task<IEnumerable<DriverPropertiesRouteDto>> GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravelAsync()
     {
-        var result = await (from driver in _context.Drivers
+        var result = await (from route in _context.Routes
+                            group route by route.DriverId into res 
                             select new DriverPropertiesRouteDto
                             {
-                                DriverId = driver.Routes.Single().DriverId,
-                                SumTime = (from route in _context.Routes
-                                           where route.DriverId == driver.DriverId
-                                           select (route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes)).ToImmutableList().Sum(),
-                                AvgTime = (from route in _context.Routes
-                                           where route.DriverId == driver.DriverId
-                                           select (route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes)).ToImmutableList().Average(),
-                                MaxTime = (from route in _context.Routes
-                                           where route.DriverId == driver.DriverId
-                                           select (route.TimeFrom.TotalMinutes - route.TimeTo.TotalMinutes)).ToImmutableList().Max()
+                                DriverId = res.Single().DriverId,
+                                SumTime = res.Sum(t => t.TimeFrom - t.TimeTo),
+                                AvgTime = res.Average(t => t.TimeFrom - t.TimeTo),
+                                MaxTime = res.Max(t => t.TimeFrom - t.TimeTo)
                             }).ToListAsync();
         return result;
     }

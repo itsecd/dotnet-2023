@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace TransportManagment.Classes;
+
+namespace TransportManagment.Model;
 /// <summary>
 /// Class of drivers
 /// </summary>

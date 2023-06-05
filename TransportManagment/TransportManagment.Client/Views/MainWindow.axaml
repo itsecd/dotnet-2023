@@ -1,0 +1,195 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TransportManagment.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TransportManagment.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TransportManagment.Client">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/TransportManagmentStyles.axaml"/>
+	</Window.Styles>
+
+	<TabControl>
+		<TabItem Header="Drivers" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddDriverCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeDriverCommand}">
+						<Image Source="/Assets/chg.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteDriverCommand}">
+						<Image Source="/Assets/del.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Drivers}"
+							SelectedItem="{Binding SelectedDriver}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}" />
+						<DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" />
+						<DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" />
+						<DataGridTextColumn Header="DriverCard" Binding="{Binding DriverCard}" />
+						<DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Transports" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddTransportCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeTransportCommand}">
+						<Image Source="/Assets/chg.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteTransportCommand}">
+						<Image Source="/Assets/del.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Transports}"
+							SelectedItem="{Binding SelectedTransport}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="TransportId" Binding="{Binding TransportId}" />
+						<DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+						<DataGridTextColumn Header="DateMake" Binding="{Binding DateMake}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="Routes" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddRouteCommand}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeRouteCommand}">
+						<Image Source="/Assets/chg.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteRouteCommand}">
+						<Image Source="/Assets/del.png"/>
+					</Button>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Routes}"
+							SelectedItem="{Binding SelectedRoute}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="RouteId" Binding="{Binding RouteId}" />
+						<DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+						<DataGridTextColumn Header="TimeTo" Binding="{Binding TimeTo}" />
+						<DataGridTextColumn Header="TimeFrom" Binding="{Binding TimeFrom}" />
+						<DataGridTextColumn Header="TransportId" Binding="{Binding TransportId}" />
+						<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		
+		<TabItem Header="DriverPropertiesRoute" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding RoutesOfDrivers}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}" />
+						<DataGridTextColumn Header="AvgTime" Binding="{Binding AvgTime}" />
+						<DataGridTextColumn Header="SumTime" Binding="{Binding SumTime}" />
+						<DataGridTextColumn Header="MaxTime" Binding="{Binding MaxTime}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="TopDrivers" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding TopDrivers}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" />
+						<DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" />
+						<DataGridTextColumn Header="DriverCard" Binding="{Binding DriverCard}" />
+						<DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+						<DataGridTextColumn Header="Count" Binding="{Binding Count}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="TransportsInfo" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding TransportsInfo}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+						<DataGridTextColumn Header="DateMake" Binding="{Binding DateMake}" />
+						<DataGridTextColumn Header="Count" Binding="{Binding Count}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="TransportsTime" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding TransportsTime}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="TransportId" Binding="{Binding TransportId}" />
+						<DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+						<DataGridTextColumn Header="DateMake" Binding="{Binding DateMake}" />
+						<DataGridTextColumn Header="Time" Binding="{Binding Time}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="TransportsWithId" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding TransportsWithId}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="TransportId" Binding="{Binding TransportId}" />
+						<DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+						<DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+						<DataGridTextColumn Header="DateMake" Binding="{Binding DateMake}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+
+		<TabItem Header="DriversWithDate" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding DriversWithDate}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="DriverId" Binding="{Binding DriverId}" />
+						<DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}" />
+						<DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}" />
+						<DataGridTextColumn Header="Passport" Binding="{Binding Passport}" />
+						<DataGridTextColumn Header="DriverCard" Binding="{Binding DriverCard}" />
+						<DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+						<DataGridTextColumn Header="Count" Binding="{Binding Count}" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+</Window>

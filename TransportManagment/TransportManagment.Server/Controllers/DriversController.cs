@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TransportManagment.Classes;
+using TransportManagment.Model;
 using TransportManagment.Server.Dto;
 namespace TransportManagment.Server.Controllers;
 /// <summary>

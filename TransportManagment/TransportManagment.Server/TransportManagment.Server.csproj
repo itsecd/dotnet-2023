@@ -21,7 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransportManagment.Classes\TransportManagment.Classes.csproj" />
+    <ProjectReference Include="..\TransportManagment.Classes\TransportManagment.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dto\DriverGetDto.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>

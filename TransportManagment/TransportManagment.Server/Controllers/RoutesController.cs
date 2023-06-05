@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TransportManagment.Classes;
+using TransportManagment.Model;
 using TransportManagment.Server.Dto;
 namespace TransportManagment.Server.Controllers;
 /// <summary>
@@ -102,7 +102,7 @@ public class RoutesController : ControllerBase
             _logger.LogInformation("There is no route");
             return Problem("Entity set 'RouteManagmentDbContext.Routes'  is null.");
         }
-        var addedRoute = _mapper.Map<Classes.Route>(route);
+        var addedRoute = _mapper.Map<Model.Route>(route);
         _context.Routes.Add(addedRoute);
         await _context.SaveChangesAsync();
         _logger.LogInformation("New route recorded");

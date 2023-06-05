@@ -1,0 +1,1305 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TransportManagment.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Drivers": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get all drivers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Method posts a new driver",
+        "requestBody": {
+          "description": "New driver",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Drivers/{id}": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get driver for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Changing information about driver",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changed information about driver",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Deleting driver for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAllTransportInfo": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 1 - Output all information about a specific vehicle.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetAllDriversWithSpecificDate": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 2 - Output all drivers who have made trips for a given period, sort by full name.",
+        "parameters": [
+          {
+            "name": "firstDateTime",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "secondDateTime",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetTotalTimeTravelEveryTypeAndModel": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 3 - Output the total travel time of the vehicle of each type and model.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportTimeModelDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportTimeModelDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportTimeModelDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/TopFiveDrivers": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 4 - Output the top 5 drivers by the number of trips made.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TopDriversDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TopDriversDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TopDriversDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravel": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 5 - Display information about the number of trips, average time and maximum travel time for each driver.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverPropertiesRouteDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverPropertiesRouteDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DriverPropertiesRouteDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/GetTransportInfoWithMaxCountForSpecificDate": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Task 6 - Display information about vehicles that have made the maximum number of trips during the specified period.",
+        "parameters": [
+          {
+            "name": "firstDateTime",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "secondDateTime",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportInfoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportInfoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportInfoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Routes": {
+      "get": {
+        "tags": [
+          "Routes"
+        ],
+        "summary": "Get all routes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Routes"
+        ],
+        "summary": "Method posts a new route",
+        "requestBody": {
+          "description": "New route",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Routes/{id}": {
+      "get": {
+        "tags": [
+          "Routes"
+        ],
+        "summary": "Get route for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Routes"
+        ],
+        "summary": "Changing information about route",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changed information about route",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Routes"
+        ],
+        "summary": "Deleting route for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Transports": {
+      "get": {
+        "tags": [
+          "Transports"
+        ],
+        "summary": "Get all transports",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transports"
+        ],
+        "summary": "Method posts a new transport",
+        "requestBody": {
+          "description": "New transport",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Transports/{id}": {
+      "get": {
+        "tags": [
+          "Transports"
+        ],
+        "summary": "Get transport for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Transports"
+        ],
+        "summary": "Changing information about transport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changed information about transport",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transports"
+        ],
+        "summary": "Deleting transport for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Driver": {
+        "type": "object",
+        "properties": {
+          "driverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "nullable": true
+          },
+          "passport": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "driverCard": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Route"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DriverGetDto": {
+        "type": "object",
+        "properties": {
+          "driverId": {
+            "type": "integer",
+            "description": "Id of driver",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of driver",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic of driver",
+            "nullable": true
+          },
+          "passport": {
+            "type": "integer",
+            "description": "Number of passport driver",
+            "format": "int32"
+          },
+          "driverCard": {
+            "type": "integer",
+            "description": "Number of driver's card",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Telephon number of driver",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class of drivers for method Get"
+      },
+      "DriverPostDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name of driver",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic of driver",
+            "nullable": true
+          },
+          "passport": {
+            "type": "integer",
+            "description": "Number of passport driver",
+            "format": "int32"
+          },
+          "driverCard": {
+            "type": "integer",
+            "description": "Number of driver's card",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Telephon number of driver",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for method Post"
+      },
+      "DriverPropertiesRouteDto": {
+        "type": "object",
+        "properties": {
+          "driverId": {
+            "type": "integer",
+            "description": "Unique key of driver",
+            "format": "int32"
+          },
+          "avgTime": {
+            "type": "number",
+            "description": "Average time in routes",
+            "format": "double"
+          },
+          "sumTime": {
+            "type": "number",
+            "description": "Total time in routes",
+            "format": "double"
+          },
+          "maxTime": {
+            "type": "number",
+            "description": "Maximum time in route",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for method GetInfoAboutCountTravelAvgTimeTranvelMaxTimeTravel"
+      },
+      "Route": {
+        "type": "object",
+        "properties": {
+          "routeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeTo": {
+            "type": "number",
+            "format": "double"
+          },
+          "timeFrom": {
+            "type": "number",
+            "format": "double"
+          },
+          "transportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transport": {
+            "$ref": "#/components/schemas/Transport"
+          },
+          "driverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/Driver"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RouteGetDto": {
+        "type": "object",
+        "properties": {
+          "routeId": {
+            "type": "integer",
+            "description": "Id of route",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of route",
+            "format": "date-time"
+          },
+          "timeTo": {
+            "type": "number",
+            "description": "Time when transport drive out of route",
+            "format": "double"
+          },
+          "timeFrom": {
+            "type": "number",
+            "description": "Time when transport drive in of route",
+            "format": "double"
+          },
+          "transportId": {
+            "type": "integer",
+            "description": "TransportInRoute - Unique key of transport",
+            "format": "int32"
+          },
+          "driverId": {
+            "type": "integer",
+            "description": "Driver - Unique key of driver",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class of routes for method Get"
+      },
+      "RoutePostDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date of route",
+            "format": "date-time"
+          },
+          "timeTo": {
+            "type": "number",
+            "description": "Time when transport drive out of route",
+            "format": "double"
+          },
+          "timeFrom": {
+            "type": "number",
+            "description": "Time when transport drive in of route",
+            "format": "double"
+          },
+          "transportInRoute": {
+            "$ref": "#/components/schemas/Transport"
+          },
+          "driverInRoute": {
+            "$ref": "#/components/schemas/Driver"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class of routes for method Post"
+      },
+      "TopDriversDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name of driver",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of driver",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Patronymic of driver",
+            "nullable": true
+          },
+          "passport": {
+            "type": "integer",
+            "description": "Number of passport driver",
+            "format": "int32"
+          },
+          "driverCard": {
+            "type": "integer",
+            "description": "Number of driver's card",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Telephon number of driver",
+            "format": "int32"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count of routes for this drivers",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for more info about driver"
+      },
+      "Transport": {
+        "type": "object",
+        "properties": {
+          "transportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateMake": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Route"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransportGetDto": {
+        "type": "object",
+        "properties": {
+          "transportId": {
+            "type": "integer",
+            "description": "Id of transport",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "description": "type of transport",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of transport",
+            "nullable": true
+          },
+          "dateMake": {
+            "type": "string",
+            "description": "Date when make transport",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class of transports for method Get"
+      },
+      "TransportInfoDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "type of transport",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of transport",
+            "nullable": true
+          },
+          "dateMake": {
+            "type": "string",
+            "description": "Date when make transport",
+            "format": "date-time"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Count of routes for this transport",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for more info about transport"
+      },
+      "TransportPostDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "type of transport",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of transport",
+            "nullable": true
+          },
+          "dateMake": {
+            "type": "string",
+            "description": "Date when make transport",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class of transports for method Post"
+      },
+      "TransportTimeModelDto": {
+        "type": "object",
+        "properties": {
+          "transportId": {
+            "type": "integer",
+            "description": "Unique key of transport",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "description": "type of transport",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "Model of transport",
+            "nullable": true
+          },
+          "time": {
+            "type": "number",
+            "description": "The time when the transport was on the trip",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for method GetTotalTimeTravelEveryTypeAndModel"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-namespace TransportManagment.Classes;
+
+namespace TransportManagment.Model;
 /// <summary>
 /// Pattern for creating database
 /// </summary>

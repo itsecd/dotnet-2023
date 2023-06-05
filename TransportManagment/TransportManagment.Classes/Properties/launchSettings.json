@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "TransportManagment.Classes": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:20305;http://localhost:20306"
+    }
+  }
+}

@@ -5,17 +5,21 @@
 public class RouteGetDto
 {
     /// <summary>
+    /// Id of route
+    /// </summary>
+    public int RouteId { get; set; } = 0;
+    /// <summary>
     /// Date of route
     /// </summary>
     public DateTime Date { get; set; } = new DateTime();
     /// <summary>
     /// Time when transport drive out of route
     /// </summary>
-    public TimeSpan TimeTo { get; set; } = new TimeSpan();
+    public double TimeTo { get; set; } = 0;
     /// <summary>
     /// Time when transport drive in of route
     /// </summary>
-    public TimeSpan TimeFrom { get; set; } = new TimeSpan();
+    public double TimeFrom { get; set; } = 0;
     /// <summary>
     /// TransportInRoute - Unique key of transport
     /// </summary>

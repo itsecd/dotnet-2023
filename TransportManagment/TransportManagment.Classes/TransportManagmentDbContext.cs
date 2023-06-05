@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-namespace TransportManagment.Classes;
+
+namespace TransportManagment.Model;
 /// <summary>
 /// Class for mapping database on local classes
 /// </summary>
@@ -21,7 +22,7 @@ public class TransportManagmentDbContext : DbContext
     /// Constructor
     /// </summary>
     /// <param name="options"></param>
-    public TransportManagmentDbContext(DbContextOptions options) : base(options) 
+    public TransportManagmentDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
@@ -54,15 +55,15 @@ public class TransportManagmentDbContext : DbContext
              new Driver { DriverId = 15, FirstName = "Adry", LastName = "Tarasov", Patronymic = "Sergeivich", Passport = 199321, DriverCard = 2784, Number = 2522290 },
              new Driver { DriverId = 16, FirstName = "Bill", LastName = "Pechorin", Patronymic = "Andeivich", Passport = 300965, DriverCard = 1234, Number = 3668090 },
         };
-        var routes = new List<Classes.Route>
-        { 
-            new Classes.Route{ RouteId = 100, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("08:00:00"), TimeFrom = TimeSpan.Parse("17:30:00"), TransportId = 1, DriverId = 11},//, transports[0], drivers[0]
-            new Classes.Route{ RouteId = 111, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("09:00:00"), TimeFrom = TimeSpan.Parse("16:00:00"), TransportId = 2, DriverId = 12},//, transports[1], drivers[1]
-            new Classes.Route{ RouteId = 112, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("16:30:00"), TimeFrom = TimeSpan.Parse("22:30:00"), TransportId = 2, DriverId = 13},//, transports[1], drivers[2]
-            new Classes.Route{ RouteId = 123, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("07:30:00"), TimeFrom = TimeSpan.Parse("14:30:00"), TransportId = 3, DriverId = 14},//, transports[2], drivers[3]
-            new Classes.Route{ RouteId = 133, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("15:00:00"), TimeFrom = TimeSpan.Parse("23:00:00"), TransportId = 4, DriverId = 14},//, transports[3], drivers[3]
-            new Classes.Route{ RouteId = 144, Date = new DateTime(2022, 02, 11), TimeTo = TimeSpan.Parse("06:00:00"), TimeFrom = TimeSpan.Parse("18:00:00"), TransportId = 5, DriverId = 15},//, transports[4], drivers[4]
-            new Classes.Route{ RouteId = 155, Date = new DateTime(2022, 02, 12), TimeTo = TimeSpan.Parse("06:30:00"), TimeFrom = TimeSpan.Parse("18:00:00"), TransportId = 6, DriverId = 16},//, transports[5], drivers[5]
+        var routes = new List<Route>
+        {
+            new Classes.Route{ RouteId = 100, Date = new DateTime(2022, 02, 11), TimeTo = 480, TimeFrom = 1050, TransportId = 1, DriverId = 11},//, transports[0], drivers[0]
+            new Classes.Route{ RouteId = 111, Date = new DateTime(2022, 02, 11), TimeTo = 540, TimeFrom = 960, TransportId = 2, DriverId = 12},//, transports[1], drivers[1]
+            new Classes.Route{ RouteId = 112, Date = new DateTime(2022, 02, 11), TimeTo = 960, TimeFrom = 1350, TransportId = 2, DriverId = 13},//, transports[1], drivers[2]
+            new Classes.Route{ RouteId = 123, Date = new DateTime(2022, 02, 11), TimeTo = 450, TimeFrom = 870, TransportId = 3, DriverId = 14},//, transports[2], drivers[3]
+            new Classes.Route{ RouteId = 133, Date = new DateTime(2022, 02, 11), TimeTo = 900, TimeFrom = 1380, TransportId = 4, DriverId = 14},//, transports[3], drivers[3]
+            new Classes.Route{ RouteId = 144, Date = new DateTime(2022, 02, 11), TimeTo = 360, TimeFrom = 1080, TransportId = 5, DriverId = 15},//, transports[4], drivers[4]
+            new Classes.Route{ RouteId = 155, Date = new DateTime(2022, 02, 12), TimeTo = 390, TimeFrom = 1080, TransportId = 6, DriverId = 16},//, transports[5], drivers[5]
         };
         modelBuilder.Entity<Driver>().HasData(drivers);
         modelBuilder.Entity<Transport>().HasData(transports);

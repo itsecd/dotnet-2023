@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AirlineModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AirLine.Model;
 public class Airline
@@ -18,13 +19,24 @@ public class Airline
     /// </summary>
     [Required] public List<Passenger> Passengers { get; set; } = new List<Passenger>();
 
+    /// <summary>
+    /// List flightAirplaneTickets in airline
+    /// </summary>
+    [Required] public List<FlightAirplaneTicket> FlightAirplaneTickets { get; set; } = new List<FlightAirplaneTicket>();
+    /// <summary>
+    /// List Tickets in airline
+    /// </summary>
+    [Required] public List<Ticket> Tickets { get; set; } = new List<Ticket>();
+
     public Airline() { }
-    public Airline(int id, List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers)
+    public Airline(int id, List<Airplane> airplanes, List<Flight> flights, List<Passenger> passengers, List<FlightAirplaneTicket> flightAirplaneTickets, List<Ticket> tickets)
     {
         Id = id;
         Airplanes = airplanes;
         Flights = flights;
         Passengers = passengers;
+        FlightAirplaneTickets = flightAirplaneTickets;
+        Tickets = tickets;
     }
 
     /// <summary>

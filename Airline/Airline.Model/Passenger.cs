@@ -29,16 +29,6 @@ public class Passenger
         this.PassportNumber = passport_number;
         this.Name = name;
     }
-    /// <summary>
-    /// Create passenger object by name, passport ID, ticket number, seat number and baggage weight
-    /// for registered on flight passengers
-    /// </summary>
-    public Passenger(int id, int passport_number, string name, List<Ticket> tickets)
-    {
-        this.Id = id;
-        PassportNumber = passport_number;
-        this.Name = name;
-    }
 
     public override bool Equals(object? obj)
     {

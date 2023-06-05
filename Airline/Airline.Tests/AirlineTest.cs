@@ -1,4 +1,5 @@
 using AirLine.Model;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,13 +56,55 @@ public class AirlineTest
     {
         return new List<Passenger>()
         {
-            new Passenger(1, 0001, "Petrovskaya Kira Viktorovna", new List<Ticket>(){new Ticket(1, 1000, "5A", 7.5), new Ticket(2, 1320, "2B", 7.5)}),
-            new Passenger(2, 0002, "Fedotov Saveliy Vladimirovich", new List<Ticket>(){new Ticket(3, 1001, "5B", 2.3), new Ticket(4, 1231, "7C", 2.3)}),
-            new Passenger(3, 0003, "Panov Timur Daniilovich", new List<Ticket>(){new Ticket(5, 1002, "10C", 0)}),
-            new Passenger(4, 0004, "Karpova Daria Ivanovna", new List<Ticket>(){new Ticket(6, 1003, "7A", 0)}),
-            new Passenger(5, 0005, "Eliseev Daniil Romanovich", new List<Ticket>(){new Ticket(7, 1004, "13F", 5), new Ticket(8, 1441, "5B", 5), new Ticket(9, 1373, "6A", 5)}),
-            new Passenger(6, 0006, "Nikolaev David Alexandrovich", new List<Ticket>(){new Ticket(10, 1005, "9F", 1)})
+            new Passenger(1, 0001, "Petrovskaya Kira Viktorovna"),
+            new Passenger(2, 0002, "Fedotov Saveliy Vladimirovich"),
+            new Passenger(3, 0003, "Panov Timur Daniilovich"),
+            new Passenger(4, 0004, "Karpova Daria Ivanovna"),
+            new Passenger(5, 0005, "Eliseev Daniil Romanovich"),
+            new Passenger(6, 0006, "Nikolaev David Alexandrovich")
         };
+    }
+
+
+    /// <summary>
+    /// Initializes standart list of Ticket objects
+    /// </summary>
+    private List<Ticket> DefaultTickets()
+    {
+        return new List<Ticket>()
+        {
+            new Ticket(1, 1000, "5A", 7.5, 1),
+            new Ticket(2, 1320, "2B", 7.5, 1),
+            new Ticket(3, 1001, "5B", 2.3, 2),
+            new Ticket(4, 1231, "7C", 2.3, 2),
+            new Ticket(5, 1002, "10C", 0, 3),
+            new Ticket(6, 1003, "7A", 0, 3),
+            new Ticket(7, 1004, "13F", 5, 4),
+            new Ticket(8, 1441, "5B", 5, 4),
+            new Ticket(9, 1373, "6A", 5, 5),
+            new Ticket(10, 1005, "9F", 1, 6)
+        };
+    }
+   
+
+    /// <summary>
+    /// Initializes standart list of FlightAirplaneTicket objects
+    /// </summary>
+    private List<FlightAirplaneTicket> DefaultFlightAirplaneTickets()
+    {
+        return new List<FlightAirplaneTicket>()
+        {
+            new FlightAirplaneTicket(1, 1, 1, 1),
+            new FlightAirplaneTicket(2, 1, 2, 1),
+            new FlightAirplaneTicket(3, 1, 3, 4),
+            new FlightAirplaneTicket(4, 1, 4, 4),
+            new FlightAirplaneTicket(5, 2, 5, 2),
+            new FlightAirplaneTicket(6, 2, 6, 2),
+            new FlightAirplaneTicket(7, 4, 7, 3),
+            new FlightAirplaneTicket(8, 4, 8, 3),
+            new FlightAirplaneTicket(9, 4, 9, 5),
+            new FlightAirplaneTicket(10, 4, 10, 6)
+    };
     }
 
     /// <summary>
@@ -72,7 +115,7 @@ public class AirlineTest
     /// </returns>
     private Airline CreateDefaultAirline()
     {
-        return new Airline(1, DefaultAirplanes(), DefaultFlights(), DefaultPassengers());
+        return new Airline(1, DefaultAirplanes(), DefaultFlights(), DefaultPassengers(), DefaultFlightAirplaneTickets(), DefaultTickets());
     }
 
     /// <summary>
@@ -133,7 +176,7 @@ public class AirlineTest
     [Fact]
     public void PassengerConstructorTest()
     {
-        var passenger = new Passenger(1, 0001, "Petrovskaya Kira Viktorovna", new List<Ticket>() { new Ticket(1, 1000, "5A", 7.5), new Ticket(2, 1320, "2B", 7.5) });
+        var passenger = new Passenger(1, 0001, "Petrovskaya Kira Viktorovna");
         Assert.Equal(0001, passenger.PassportNumber);
         Assert.Equal("Petrovskaya Kira Viktorovna", passenger.Name);
     }
@@ -161,13 +204,14 @@ public class AirlineTest
     public void CountPassengersWithoutBaggage()
     {
         Airline air = CreateDefaultAirline();
-        /*var request = (from flight in air.Flights
-                       from ticket in flight.Tickets
+
+        var request = (from flight in air.Flights
                        from passenger in air.Passengers
-                       from t in passenger.Tickets
-                       where (flight.Cipher == "CH-0510") && (ticket.BaggageWeight == 0) && (t.Number == ticket.Number)
+                       from ticket in air.Tickets
+                       from FAT in air.FlightAirplaneTickets
+                       where (flight.Cipher == "CH-0510") && (ticket.BaggageWeight == 0) && (FAT.TicketId == ticket.Id)
                        select passenger).Count();
-        Assert.Equal(2, request);                     */
+        Assert.Equal(2, request);                     
     }
 
 
@@ -178,15 +222,15 @@ public class AirlineTest
     public void FlightWithSpecificDate()
     {
         Airline air = CreateDefaultAirline();
-        /*var first_date = new DateTime(2019, 5, 10, 00, 00, 00);
+
+        var first_date = new DateTime(2019, 5, 10, 00, 00, 00);
         var second_date = new DateTime(2024, 5, 11, 10, 00, 00);
         var plane = new Airplane(1, "Boeing-777", 400, 70, 235);
         var request = (from flight in air.Flights
-                       where (flight.Airplane.Equals(plane)) &&
-                       (flight.DepartureDate >= first_date) &&
+                       where(flight.DepartureDate >= first_date) &&
                        (flight.DepartureDate <= second_date)
                        select flight).Count();
-        Assert.Equal(1, request);*/
+        Assert.Equal(1, request);
     }
 
 
@@ -196,11 +240,12 @@ public class AirlineTest
     [Fact]
     public void TopFiveFlights()
     {
-        /* Airline air = CreateDefaultAirline();
+         Airline air = CreateDefaultAirline();
          var request = (from flight in air.Flights
+                        from ticket in air.Tickets
                         where flight != null
-                        select flight.Tickets.Count).Take(5).Count();
-         Assert.Equal(5, request);      */
+                        select air.Tickets.Count).Take(5).Count();
+         Assert.Equal(5, request);      
     }
 
 
@@ -211,13 +256,13 @@ public class AirlineTest
     public void FlightWithMinFlightTime()
     {
         Airline air = CreateDefaultAirline();
-        /* var min_time = (from flight in air.Flights
+         var min_time = (from flight in air.Flights
                          orderby flight.FlightTime
                          select flight.FlightTime).Min();
          var request = (from flight in air.Flights
                         where flight.FlightTime == min_time
                         select flight.Cipher).Count();
-         Assert.Equal(1, request);    */
+         Assert.Equal(1, request);    
     }
 
 
@@ -227,14 +272,14 @@ public class AirlineTest
     [Fact]
     public void MaxAverageBaggageWeight()
     {
-        /* Airline air = CreateDefaultAirline();
+         Airline air = CreateDefaultAirline();
          var request = (from flight in air.Flights
-                        from ticket in flight.Tickets
+                        from ticket in air.Tickets
                         where flight.DeparturePlace == "Moscow"
                         select ticket.BaggageWeight).ToList();
          var max = request.Max();
          var avg = request.Average();
          Assert.Equal(7.5, max);
-         Assert.Equal(4.9, avg);   */
+         Assert.Equal(4.9, avg);   
     }
 }

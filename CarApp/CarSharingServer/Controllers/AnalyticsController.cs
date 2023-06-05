@@ -165,7 +165,7 @@ public class AnalyticsController : ControllerBase
             return NotFound();
         }
         var counter = await (from rentalPoint in ctx.RentedCars
-                             group rentalPoint by rentalPoint.Point.PointName into rentalPointGroup
+                             group rentalPoint by rentalPoint.Point.Name into rentalPointGroup
                              select new
                              {
                                  name = rentalPointGroup.Key,

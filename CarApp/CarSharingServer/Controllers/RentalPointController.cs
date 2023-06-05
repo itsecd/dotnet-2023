@@ -81,7 +81,7 @@ public class RentalPointController : ControllerBase
     {
         _logger.LogInformation("Post a new rental point");
         var ctx = await _contextFactory.CreateDbContextAsync();
-        if (ctx.RentalPoints!= null)
+        if (ctx.RentalPoints == null)
         {
             return NotFound();
         }

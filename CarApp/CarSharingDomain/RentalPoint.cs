@@ -11,12 +11,12 @@ public class RentalPoint
     /// name of the rental point
     /// </summary>
     [Column("name")]
-    public string PointName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// address of the rental point
     /// </summary>
     [Column("address")]
-    public string PointAddress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
     /// <summary>
     /// id of the rental point
     /// </summary>
@@ -36,7 +36,7 @@ public class RentalPoint
     public RentalPoint(int id, string pointName, string pointAddress)
     {
         Id = id;
-        PointName = pointName;
-        PointAddress = pointAddress;
+        Name = pointName;
+        Address = pointAddress;
     }
 }

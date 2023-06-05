@@ -102,7 +102,7 @@ public class RentedCarController : ControllerBase
     /// Success or error code
     /// </returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] RentalPointPostDto rentedCarToPut)
+    public async Task<IActionResult> Put(int id, [FromBody] RentedCarPostDto rentedCarToPut)
     {
         var ctx = await _contextFactory.CreateDbContextAsync();
         if (ctx.RentedCars == null)

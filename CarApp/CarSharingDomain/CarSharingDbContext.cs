@@ -52,11 +52,11 @@ public class CarSharingDbContext : DbContext
         var client5 = new Client { Passport = "21209897", BirthDate = DateTime.Parse("2002-06-24"), FirstName = "Rui", LastName = "Kamishiro", Id = 5 };
         modelBuilder.Entity<Client>().HasData(new List<Client> { client1, client2, client3, client4, client5 });
 
-        var rentalPoint1 = new RentalPoint { PointName = "Kchau", PointAddress = "445 Bowman Lane", Id = 1 };
-        var rentalPoint2 = new RentalPoint { PointName = "Julys", PointAddress = "7411 Kent Ave.", Id = 2 };
-        var rentalPoint3 = new RentalPoint { PointName = "YandexIsEverywhere", PointAddress = "525 Elmwood Lane", Id = 3 };
-        var rentalPoint4 = new RentalPoint { PointName = "TachkiNaProkat", PointAddress = "7901 East Sussex St.", Id = 4 };
-        var rentalPoint5 = new RentalPoint { PointName = "AAA", PointAddress = "4170 Gregory Road", Id = 5 };
+        var rentalPoint1 = new RentalPoint { Name = "Kchau", Address = "445 Bowman Lane", Id = 1 };
+        var rentalPoint2 = new RentalPoint { Name = "Julys", Address = "7411 Kent Ave.", Id = 2 };
+        var rentalPoint3 = new RentalPoint { Name = "YandexIsEverywhere", Address = "525 Elmwood Lane", Id = 3 };
+        var rentalPoint4 = new RentalPoint { Name = "TachkiNaProkat", Address = "7901 East Sussex St.", Id = 4 };
+        var rentalPoint5 = new RentalPoint { Name = "AAA", Address = "4170 Gregory Road", Id = 5 };
         modelBuilder.Entity<RentalPoint>().HasData(new List<RentalPoint> { rentalPoint1, rentalPoint2, rentalPoint3, rentalPoint4, rentalPoint5 });
 
         modelBuilder.Entity<RentedCar>().HasData(new List<RentedCar>

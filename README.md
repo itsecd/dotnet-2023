@@ -28,3 +28,15 @@
 6) Вывести информацию о транспортных средствах, совершивших
 максимальное число поездок за указанный период.
 
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/80c444fe-3668-4b93-8652-b9907407146a)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/a9642a01-a8f9-4d63-a8dd-9737d611e587)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/21d46c47-77a8-426b-b09c-c3cf5a8215b0)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/b5b60d19-691f-49bc-9d3f-a9d1b0191831)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/27d09d74-d936-403c-982f-5b32505013df)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/d01efe7f-124d-4d63-9948-5c50b3839c31)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/a88c68dc-b775-4434-a602-4afd35c82810)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/87dc6219-99dc-4747-8211-450faf0d608f)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/212df702-744e-4dff-aa88-6fbe206659eb)
+![image](https://github.com/gudzen2517/dotnet-2023/assets/119973938/bd7ea5ac-4a29-4f1f-8894-7f5f57f236a0)
+
+

@@ -1,4 +1,4 @@
-﻿namespace EnterpriseWarehouseServer.Dto;
+﻿namespace EnterpriseWarehouse.Server.Dto;
 
 /// <summary>
 ///     StorageCellGetDto - used to represent the StorageCell object in the get-request

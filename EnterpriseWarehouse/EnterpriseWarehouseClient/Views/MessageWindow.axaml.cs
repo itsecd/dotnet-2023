@@ -1,8 +1,8 @@
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using EnterpriseWarehouseClient.ViewModels;
+using EnterpriseWarehouse.Client.ViewModels;
 
-namespace EnterpriseWarehouseClient.Views;
+namespace EnterpriseWarehouse.Client.Views;
 public partial class MessageWindow : ReactiveWindow<MessageViewModel>
 {
     public MessageWindow()

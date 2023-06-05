@@ -1,10 +1,10 @@
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using EnterpriseWarehouseClient.ViewModels;
+using EnterpriseWarehouse.Client.ViewModels;
 using ReactiveUI;
 using System;
 
-namespace EnterpriseWarehouseClient.Views;
+namespace EnterpriseWarehouse.Client.Views;
 public partial class InvoiceContentWindow : ReactiveWindow<InvoiceContentViewModel>
 {
     public InvoiceContentWindow()

@@ -1,6 +1,6 @@
 using AutoMapper;
 using Enterprise.Data;
-using EnterpriseWarehouseServer;
+using EnterpriseWarehouse.Server;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

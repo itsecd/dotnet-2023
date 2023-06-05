@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EnterpriseWarehouse.Client;
+using EnterpriseWarehouseClient;
 using ReactiveUI;
 using Splat;
 using System;
@@ -8,7 +10,7 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
-namespace EnterpriseWarehouseClient.ViewModels;
+namespace EnterpriseWarehouse.Client.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {

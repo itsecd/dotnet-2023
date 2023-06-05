@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Enterprise.Data;
-using EnterpriseWarehouseServer.Dto;
+using EnterpriseWarehouse.Server.Dto;
 
-namespace EnterpriseWarehouseServer;
+namespace EnterpriseWarehouse.Server;
 public class MappingProfile : Profile
 {
     public MappingProfile()

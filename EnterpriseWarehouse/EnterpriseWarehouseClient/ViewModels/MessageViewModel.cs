@@ -1,4 +1,4 @@
-﻿namespace EnterpriseWarehouseClient.ViewModels;
+﻿namespace EnterpriseWarehouse.Client.ViewModels;
 public class MessageViewModel : ViewModelBase
 {
     public string Message { get; }

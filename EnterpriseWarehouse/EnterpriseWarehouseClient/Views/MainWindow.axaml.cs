@@ -1,9 +1,9 @@
 using Avalonia.ReactiveUI;
-using EnterpriseWarehouseClient.ViewModels;
+using EnterpriseWarehouse.Client.ViewModels;
 using ReactiveUI;
 using System.Threading.Tasks;
 
-namespace EnterpriseWarehouseClient.Views;
+namespace EnterpriseWarehouse.Client.Views;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {

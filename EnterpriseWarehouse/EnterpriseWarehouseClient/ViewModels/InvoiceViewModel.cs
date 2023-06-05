@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
-namespace EnterpriseWarehouseClient.ViewModels;
+namespace EnterpriseWarehouse.Client.ViewModels;
 public class InvoiceViewModel : ViewModelBase
 {
     [Required]

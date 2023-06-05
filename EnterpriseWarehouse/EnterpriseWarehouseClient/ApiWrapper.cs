@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EnterpriseWarehouseClient;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace EnterpriseWarehouseClient;
+namespace EnterpriseWarehouse.Client;
 
 internal class ApiWrapper
 {

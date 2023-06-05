@@ -2,11 +2,12 @@ using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using EnterpriseWarehouseClient.ViewModels;
-using EnterpriseWarehouseClient.Views;
+using EnterpriseWarehouse.Client.ViewModels;
+using EnterpriseWarehouse.Client.Views;
+using EnterpriseWarehouseClient;
 using Splat;
 
-namespace EnterpriseWarehouseClient;
+namespace EnterpriseWarehouse.Client;
 public partial class App : Application
 {
     public override void Initialize()

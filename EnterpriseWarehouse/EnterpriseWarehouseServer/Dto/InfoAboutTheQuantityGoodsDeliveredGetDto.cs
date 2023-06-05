@@ -1,4 +1,4 @@
-﻿namespace EnterpriseWarehouseServer.Dto;
+﻿namespace EnterpriseWarehouse.Server.Dto;
 
 /// <summary>
 ///     InfoAboutTheQuantityGoodsDeliveredGetDto - used to represent the Invoices and Product objects in the get-request

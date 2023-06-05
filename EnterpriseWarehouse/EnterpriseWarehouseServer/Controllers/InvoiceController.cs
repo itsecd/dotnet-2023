@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Enterprise.Data;
-using EnterpriseWarehouseServer.Dto;
+using EnterpriseWarehouse.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnterpriseWarehouseServer.Controllers;
+namespace EnterpriseWarehouse.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class InvoiceController : ControllerBase

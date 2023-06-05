@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace CarSharingClient.ViewModels;
@@ -13,6 +14,7 @@ public class RentedCarViewModel : ViewModelBase
     }
 
     private int _carId;
+    [Required]
     public int CarId
     {
         set => this.RaiseAndSetIfChanged(ref _carId, value);
@@ -20,6 +22,7 @@ public class RentedCarViewModel : ViewModelBase
     }
 
     private int _clientId;
+    [Required]
     public int ClientId
     {
         set => this.RaiseAndSetIfChanged(ref _clientId, value);
@@ -27,6 +30,7 @@ public class RentedCarViewModel : ViewModelBase
     }
 
     private int _rentalPointId;
+    [Required]
     public int RentalPointId
     {
         set => this.RaiseAndSetIfChanged(ref _rentalPointId, value);
@@ -41,6 +45,7 @@ public class RentedCarViewModel : ViewModelBase
     }
 
     private DateTimeOffset _timeOfRent = DateTime.Now;
+    [Required]
     public DateTimeOffset TimeOfRent
     {
         set => this.RaiseAndSetIfChanged(ref _timeOfRent, value);

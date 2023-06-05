@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
 namespace CarSharingClient.ViewModels;
@@ -14,14 +15,17 @@ public class ClientViewModel : ViewModelBase
         get => _id;
 
     }
+    
     private string _firstname = string.Empty;
+    [Required]
     public string Firstname
     {
         get => _firstname;
         set => this.RaiseAndSetIfChanged(ref _firstname, value);
     }
-
+    
     private string _lastname = string.Empty;
+    [Required]
     public string Lastname
     {
         get => _lastname;
@@ -29,6 +33,7 @@ public class ClientViewModel : ViewModelBase
     }
 
     private string _passport = string.Empty;
+    [Required]
     public string Passport
     {
         get => _passport;

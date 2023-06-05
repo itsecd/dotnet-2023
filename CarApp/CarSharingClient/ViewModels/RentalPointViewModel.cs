@@ -7,13 +7,13 @@ public class RentalPointViewModel : ViewModelBase
 {
 
     private int _id;
-    [Required]
     public int Id
     {
         get => _id;
         set => this.RaiseAndSetIfChanged(ref _id, value);
     }
     private string _name = string.Empty;
+    [Required]
     public string Name
     {
         get => _name;
@@ -22,6 +22,7 @@ public class RentalPointViewModel : ViewModelBase
 
 
     private string _address = string.Empty;
+    [Required]
     public string Address
     {
         get => _address;

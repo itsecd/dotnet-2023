@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PoliclinicClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PoliclinicClient.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="PoliclinicClient"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		ExtendClientAreaToDecorationsHint="True"
+		WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PoliclinicStyles.axaml"/>
+	</Window.Styles>
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Green"
+					TintOpacity="1"
+					MaterialOpacity="0.5" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, *">		
+			<Button Classes="MainButton" Grid.Row="1" Margin="400, 50, 0, 0" Click="PatientTable_Button_Click">Show patients</Button>
+			<Button Classes="MainButton" Grid.Row="2" Margin="400, 0, 0, 0" Click="DoctorTable_Button_Click">Show doctors</Button>
+			<Button Classes="MainButton" Grid.Row="3" Margin="400, 0, 0, 0" Click="ReceptionTable_Button_Click">Show receptions</Button>
+			<Button Classes="MainButton" Grid.Row="4" Margin="400, 0, 0, 0" Click="SpecializationTable_Button_Click">Show specializations</Button>
+			<Button Classes="MainButton" Grid.Row="5" Margin="400, 0, 0, 0" Click="ExperiencedDoctors_Button_Click">Experienced doctors</Button>
+			<Button Classes="MainButton" Grid.Row="6" Margin="400, 0, 0, 0" Click="CurrentHealthPatients_Button_Click">Current health patients</Button>
+			<Button Classes="MainButton" Grid.Row="7" Margin="400, 0, 0, 0" Click="CountOfPatients_Button_Click">Count of patients</Button>
+			<Button Classes="MainButton" Grid.Row="8" Margin="400, 0, 0, 0" Click="Top5Diseases_Button_Click">Top 5 diseases</Button>
+		</Grid>
+	</Panel>
+</Window>

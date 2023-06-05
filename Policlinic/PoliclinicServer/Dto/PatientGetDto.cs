@@ -5,6 +5,14 @@
 public class PatientGetDto
 {
     /// <summary>
+    /// Id is an int typed value of the patient's id
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
+    /// Passport is a long int typed value of the passport series and number
+    /// </summary>
+    public long Passport { get; set; }
+    /// <summary>
     ///  Fio is a string typed value for storing the name, surname and patronymic of the patient
     /// </summary>
     public string Fio { get; set; } = string.Empty;

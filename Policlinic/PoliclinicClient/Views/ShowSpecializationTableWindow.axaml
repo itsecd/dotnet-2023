@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PoliclinicClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PoliclinicClient.Views.ShowSpecializationTableWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="PoliclinicClient">
+
+	<Design.DataContext>
+		<vm:ShowSpecializationTableViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/PoliclinicStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+		</StackPanel>
+		<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+				  Items="{Binding Specializations}">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Специализация" Binding="{Binding NameSpecialization}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+
+</Window>

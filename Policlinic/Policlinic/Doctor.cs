@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Policlinic;
+﻿namespace Policlinic;
 /// <summary>
 /// Doctor describes a doctor
 /// </summary>
@@ -9,7 +7,6 @@ public class Doctor
     /// <summary>
     /// Id is an int typed value of the doctor's id
     /// </summary>
-    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Fio is a string typed value for storing the name, surname and patronymic of the doctor

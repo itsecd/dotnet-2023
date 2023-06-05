@@ -5,7 +5,7 @@
 public class PatientPostDto
 {
     /// <summary>
-    ///  Fio is a string typed value for storing the name, surname and patronymic of the patient
+    /// Passport is a long int typed value of the passport series and number
     /// </summary>
     public long Passport { get; set; }
     /// <summary>

@@ -5,6 +5,10 @@
 public class ReceptionDto
 {
     /// <summary>
+    /// Id is an int typed value of the reception's id
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// DateAndTime is a datetime value of the reception's date and time
     /// </summary>
     public DateTime DateAndTime { get; set; }

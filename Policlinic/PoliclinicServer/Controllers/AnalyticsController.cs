@@ -65,7 +65,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Code of operation</returns>
     [HttpGet("Currently_healthy_patients")]
-    public async Task<IActionResult> GetHealthyPatients()
+    public async Task<ActionResult<IEnumerable<PatientGetDto>>> GetHealthyPatients()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Currently healthy patients");
@@ -80,7 +80,7 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Code of operation</returns>
     [HttpGet("The_number_of_patient_for_the_last_month")]
-    public async Task<IActionResult> GetCountByDoctors()
+    public async Task<ActionResult<IEnumerable<CountPatientDto>>> GetCountByDoctors()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Information about the number of patient appointments by doctors for the last month");
@@ -91,7 +91,7 @@ public class AnalyticsController : ControllerBase
                                                       select new
                                                       {
                                                           count = doctor.Receptions.Count,
-                                                          key = doctor.Fio
+                                                          fio = doctor.Fio
                                                       }).Distinct().ToListAsync();
         return Ok(requestCountReceptionsInOneMonth);
     }
@@ -100,14 +100,17 @@ public class AnalyticsController : ControllerBase
     /// </summary>
     /// <returns>Code of operation</returns>
     [HttpGet("Top_5_most_diseases")]
-    public async Task<IActionResult> GetTopFiveDisease()
+    public async Task<ActionResult<IEnumerable<Top5DiseasesDto>>> GetTopFiveDisease()
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Information about the top 5 most common diseases among patients");
         var requestTopDiseases = await (from reception in context.Receptions
                                         where reception.Conclusion != ""
                                         orderby reception.Conclusion
-                                        select reception.Conclusion).Take(5).ToListAsync();
+                                        select new
+                                        {
+                                            conclusion = reception.Conclusion
+                                        }).Take(5).ToListAsync();
         return Ok(requestTopDiseases);
     }
     /// <summary>

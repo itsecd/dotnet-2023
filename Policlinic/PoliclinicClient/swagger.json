@@ -1,0 +1,1078 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PoliclinicServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/Doctors_10_years": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about all doctors whose work experience is at least 10 years",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/Patients_with_the_specified_doctor": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about all patients who have made an appointment with the specified doctor, arrange by name",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Doctor's id",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Analytics/Currently_healthy_patients": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about currently healthy patients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/The_number_of_patient_for_the_last_month": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about the number of patient appointments by doctors for the last month",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPatientDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPatientDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountPatientDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/Top_5_most_diseases": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about the top 5 most common diseases among patients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Top5DiseasesDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Top5DiseasesDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Top5DiseasesDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/Patients_over_30": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Display information about patients over the age of 30 who have an appointment with several doctors, arrange by date of birth",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Doctors": {
+      "get": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Get all doctors",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoctorGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Add new doctor",
+        "requestBody": {
+          "description": "Doctor",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorPostDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorPostDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorPostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Doctors/{id}": {
+      "get": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Get doctor with given id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Doctor's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoctorGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Change data about doctor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Doctor's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changeable doctor",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Deletion a doctor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Doctor's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Patients": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get all patients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PatientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Add new patient",
+        "requestBody": {
+          "description": "Patient",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientPostDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientPostDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientPostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Patients/{id}": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get patient with given id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Patient's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Change data about patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Patient's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changeable patient",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Deletion a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Patient's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Receptions": {
+      "get": {
+        "tags": [
+          "Receptions"
+        ],
+        "summary": "Get all receptions",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReceptionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReceptionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReceptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Receptions"
+        ],
+        "summary": "Add new reception",
+        "requestBody": {
+          "description": "Reception",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Receptions/{id}": {
+      "get": {
+        "tags": [
+          "Receptions"
+        ],
+        "summary": "Get reception with given id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reception's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceptionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Receptions"
+        ],
+        "summary": "Change data about reception",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reception's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changeable reception",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Receptions"
+        ],
+        "summary": "Deletion a reception",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reception's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Specializations": {
+      "get": {
+        "tags": [
+          "Specializations"
+        ],
+        "summary": "Get all specializations",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecializationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecializationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpecializationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Specializations/{id}": {
+      "get": {
+        "tags": [
+          "Specializations"
+        ],
+        "summary": "Get specialization with given id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Specialization's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecializationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecializationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecializationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CountPatientDto": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fioDoctor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DoctorGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is an int typed value of the doctor's id",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "integer",
+            "description": "Passport is a long int typed value of the passport series and number",
+            "format": "int64"
+          },
+          "fio": {
+            "type": "string",
+            "description": "Fio is a string typed value for storing the name, surname and patronymic of the doctor",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate is a datetime value of a doctor's birthday",
+            "format": "date-time"
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience is an int typed value of the doctor's work experience",
+            "format": "int32"
+          },
+          "specializationId": {
+            "type": "integer",
+            "description": "SpecializationId is an int typed value for storing the id of a specialization",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DoctorGetDto is for HTTP GET request"
+      },
+      "DoctorPostDto": {
+        "type": "object",
+        "properties": {
+          "passport": {
+            "type": "integer",
+            "description": "Passport is a long int typed value of the passport series and number",
+            "format": "int64"
+          },
+          "fio": {
+            "type": "string",
+            "description": "Fio is a string typed value for storing the name, surname and patronymic of the doctor",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate is a datetime value of a doctor's birthday",
+            "format": "date-time"
+          },
+          "workExperience": {
+            "type": "integer",
+            "description": "WorkExperience is an int typed value of the doctor's work experience",
+            "format": "int32"
+          },
+          "specializationId": {
+            "type": "integer",
+            "description": "SpecializationId is an int typed value for storing the id of a specialization",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DoctorPostDto is for HTTP POST request"
+      },
+      "PatientGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is an int typed value of the patient's id",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "integer",
+            "description": "Passport is a long int typed value of the passport series and number",
+            "format": "int64"
+          },
+          "fio": {
+            "type": "string",
+            "description": "Fio is a string typed value for storing the name, surname and patronymic of the patient",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate is a datetime value of a doctor's birthday",
+            "format": "date-time"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address is a string typed value of the patient's address",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Patient is for HTTP GET request"
+      },
+      "PatientPostDto": {
+        "type": "object",
+        "properties": {
+          "passport": {
+            "type": "integer",
+            "description": "Passport is a long int typed value of the passport series and number",
+            "format": "int64"
+          },
+          "fio": {
+            "type": "string",
+            "description": "Fio is a string typed value for storing the name, surname and patronymic of the patient",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate is a datetime value of a doctor's birthday",
+            "format": "date-time"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address is a string typed value of the patient's address",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "PatientPostDto is for HTTP POST request"
+      },
+      "ReceptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is an int typed value of the reception's id",
+            "format": "int32"
+          },
+          "dateAndTime": {
+            "type": "string",
+            "description": "DateAndTime is a datetime value of the reception's date and time",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status is a string typed value of the reception's status (\"On treatment\" or \"Healthy\")",
+            "nullable": true
+          },
+          "doctorId": {
+            "type": "integer",
+            "description": "DoctorId is an int typed value for storing the id of the doctor",
+            "format": "int32"
+          },
+          "patientId": {
+            "type": "integer",
+            "description": "PatientId is an int typed value for storing the id of the Patient",
+            "format": "int32"
+          },
+          "conclusion": {
+            "type": "string",
+            "description": "Conclusion is a string typed value of the conclusion (if status == \"Healthy\", this will be empty)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ReceptionDto is for HTTP GET and POST requests"
+      },
+      "SpecializationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id is an int typed value for storing Id of the specialization",
+            "format": "int32"
+          },
+          "nameSpecialization": {
+            "type": "string",
+            "description": "NameSpecialization is a string typed value representing the name of specialization",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "SpecializationDto is for HTTP GET requests"
+      },
+      "Top5DiseasesDto": {
+        "type": "object",
+        "properties": {
+          "nameDisease": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 using AutoMapper;
-using Enterprise.Data;
+using EnterpriseWarehouse.Model;
 using EnterpriseWarehouse.Server;
 using Microsoft.EntityFrameworkCore;
 

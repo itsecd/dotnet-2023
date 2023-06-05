@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Enterprise.Data;
+namespace EnterpriseWarehouse.Model;
 
 /// <summary>
 ///     StorageCell - is a class linking the cell number and the product stored in it

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Enterprise.Data;
+namespace EnterpriseWarehouse.Model;
 
 /// <summary>
 ///     InvoicesContent - is the class that links the quantity of goods purchased to the invoice

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Enterprise.Data;
+namespace EnterpriseWarehouse.Model;
 
 public class EnterpriseWarehouseDbContext : DbContext
 {

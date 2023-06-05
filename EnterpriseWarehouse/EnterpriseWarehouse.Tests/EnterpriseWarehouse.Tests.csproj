@@ -22,7 +22,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\EnterpriseData\Enterprise.Data.csproj" />
+		<ProjectReference Include="..\EnterpriseData\Enterprise.Model.csproj" />
+		<ProjectReference Include="..\EnterpriseWarehouse.Model\EnterpriseWarehouse.Model.csproj" />
 	</ItemGroup>
 
 </Project>

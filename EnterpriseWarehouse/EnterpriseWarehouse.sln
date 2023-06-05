@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enterprise.Data.Tests", "EnterpriseTests\Enterprise.Data.Tests.csproj", "{DF7E849E-335F-427C-8F2D-6AFBA2F89F2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Model", "EnterpriseWarehouse.Model\EnterpriseWarehouse.Model.csproj", "{603E637C-4773-4F7C-A5DE-7DD0DCA65802}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enterprise.Data", "EnterpriseData\Enterprise.Data.csproj", "{603E637C-4773-4F7C-A5DE-7DD0DCA65802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Tests", "EnterpriseWarehouse.Tests\EnterpriseWarehouse.Tests.csproj", "{DF7E849E-335F-427C-8F2D-6AFBA2F89F2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Server", "EnterpriseWarehouseServer\EnterpriseWarehouse.Server.csproj", "{B4657AE8-DD8A-4B92-A324-43E301C9A831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Server", "EnterpriseWarehouse.Server\EnterpriseWarehouse.Server.csproj", "{B4657AE8-DD8A-4B92-A324-43E301C9A831}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Client", "EnterpriseWarehouseClient\EnterpriseWarehouse.Client.csproj", "{033E68E3-C4B3-4E62-80B0-8E932B578001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnterpriseWarehouse.Client", "EnterpriseWarehouse.Client\EnterpriseWarehouse.Client.csproj", "{033E68E3-C4B3-4E62-80B0-8E932B578001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

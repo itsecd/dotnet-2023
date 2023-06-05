@@ -1,6 +1,6 @@
-namespace Enterprise.Data.Tests;
-using Enterprise.Data;
+using EnterpriseWarehouse.Model;
 
+namespace EnterpriseWarehouse.Tests;
 /// <summary>
 ///     EnterpriseFixture - class that generates the test data
 /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Enterprise.Data;
+namespace EnterpriseWarehouse.Model;
 
 /// <summary>
 ///     Product - is a class that stores information about a product

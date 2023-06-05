@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using Enterprise.Data;
+using EnterpriseWarehouse.Model;
 using EnterpriseWarehouse.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace EnterpriseWarehouse.Server.Controllers;
 [Route("api/[controller]")]

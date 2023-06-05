@@ -1,4 +1,4 @@
-﻿namespace Enterprise.Data.Tests;
+﻿namespace EnterpriseWarehouse.Tests;
 
 using System.Linq;
 

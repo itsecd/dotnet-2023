@@ -23,33 +23,33 @@
 ## Графический интерфейс
 # Основные окна
 ### Окно отображения всех продуктов предприятия
-![Окно отображения всех продуктов предприятия](EnterpriseWarehouseClient/Assets/readme_all_products.png)
+![Окно отображения всех продуктов предприятия](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_all_products.png)
 ### Окно отображения состояние склада
-![Окно отображения состояние склада](EnterpriseWarehouseClient/Assets/readme_all_storage_cell.png)
+![Окно отображения состояние склада](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_all_storage_cell.png)
 ### Окно отображения всех счет-фактур
-![Окно отображения всех счет-фактур](EnterpriseWarehouseClient/Assets/readme_all_invoices.png)
+![Окно отображения всех счет-фактур](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_all_invoices.png)
 ### Окно отображения дополнительной информации о счет-фактуре
-![Окно отображения дополнительной информации о счет-фактуре](EnterpriseWarehouseClient/Assets/readme_all_invoices_content.png)
+![Окно отображения дополнительной информации о счет-фактуре](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_all_invoices_content.png)
 ### Окно отображения аналитических данных о предприятии
-![Окно отображения аналитических данных о предприятии](EnterpriseWarehouseClient/Assets/readme_analytic.png)
+![Окно отображения аналитических данных о предприятии](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_analytic.png)
 
 ## Окна добавлнеия новых записей
 ### Окно добавления нового продукта
-![Окно добавления нового продукта](EnterpriseWarehouseClient/Assets/readme_add_product.png)
+![Окно добавления нового продукта](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_add_product.png)
 ### Окно добавления новой ячейки на складе
-![Окно добавления новой ячейки на складе](EnterpriseWarehouseClient/Assets/readme_add_storage_cell.png.png)
+![Окно добавления новой ячейки на складе](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_add_storage_cell.png.png)
 ### Окно добавления новой счет-фактуры
-![Окно добавления новой счет-фактуры](EnterpriseWarehouseClient/Assets/readme_add_invoice.png)
+![Окно добавления новой счет-фактуры](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_add_invoice.png)
 ### Окно добавления новой информации о существующей счет-фактуре
-![Окно добавления новой информации о существующей счет-фактуре](EnterpriseWarehouseClient/Assets/readme_add_invoice_content.png)
+![Окно добавления новой информации о существующей счет-фактуре](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_add_invoice_content.png)
 
 
 ## Окна редактирования и удаления
 ### Окно редактирования и удаления продукта
-![Окно добавления нового продукта](EnterpriseWarehouseClient/Assets/readme_edit_product.png)
+![Окно добавления нового продукта](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_edit_product.png)
 ### Окно редактирования и удаления ячейки на складе
-![Окно добавления нового ячейки на складе](EnterpriseWarehouseClient/Assets/readme_edit_storage_cell.png)
+![Окно добавления нового ячейки на складе](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_edit_storage_cell.png)
 ### Окно редактирования и удаления счет-фактуры
-![Окно добавления нового счет-фактуры](EnterpriseWarehouseClient/Assets/readme_edit_invoice.png)
+![Окно добавления нового счет-фактуры](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_edit_invoice.png)
 ### Окно редактирования и удаления информации о существующей счет-фактуре
-![Окно добавления нового информации о существующей счет-фактуре](EnterpriseWarehouseClient/Assets/readme_edit_invoice_content.png)
+![Окно добавления нового информации о существующей счет-фактуре](EnterpriseWarehouse/EnterpriseWarehouseClient/Assets/readme_edit_invoice_content.png)

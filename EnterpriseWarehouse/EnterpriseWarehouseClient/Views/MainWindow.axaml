@@ -16,117 +16,160 @@
 		<StyleInclude Source="/EnterpriseWarehouseStyles.axaml"/>
 	</Window.Styles>
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, 
-			  Auto, Auto, Auto, Auto, Auto, Auto, AUto, Auto, Auto *">
-			<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-				<Label FontSize="20" VerticalAlignment="Center">Продукты</Label>
-				<Image Source="/Assets/products-icon.png"/>
-			</StackPanel>
-			<StackPanel Grid.Row="1" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnProductAddCommand}">
-					<Image Source="/Assets/add-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnProductChangeCommand}">
-					<Image Source="/Assets/edit-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnProductDeleteCommand}">
-					<Image Source="/Assets/delete-icon.png"/>
-				</Button>
-			</StackPanel>
-			<DataGrid Grid.Row="2" AutoGenerateColumns="False"
-					  Items="{Binding Products}" SelectedItem="{Binding	SelectedProduct}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ItemNumber}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Наименование" Binding="{Binding	Title}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Количество товара" Binding="{Binding Quantity}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-			<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-				<Label FontSize="20" VerticalAlignment="Center">Склад</Label>
-				<Image Source="/Assets/storage-cell-icon.png"/>
-			</StackPanel>
-			<StackPanel Grid.Row="4" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnStorageCellAddCommand}">
-					<Image Source="/Assets/add-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnStorageCellChangeCommand}">
-					<Image Source="/Assets/edit-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnStorageCellDeleteCommand}">
-					<Image Source="/Assets/delete-icon.png"/>
-				</Button>
-			</StackPanel>
-			<DataGrid Grid.Row="5" AutoGenerateColumns="False"
-					  Items="{Binding StorageCells}" SelectedItem="{Binding SelectedStorageCell}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="150" Header="Номер ячейки" Binding="{Binding Number}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="200" Header="Код товара" Binding="{Binding ProductIN}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-			<StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-				<Label FontSize="20" VerticalAlignment="Center">Cчет-фактуры</Label>
-				<Image Source="/Assets/invoice-icon.png"/>
-			</StackPanel>
-			<StackPanel Grid.Row="7" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceAddCommand}">
-					<Image Source="/Assets/add-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceChangeCommand}">
-					<Image Source="/Assets/edit-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceDeleteCommand}">
-					<Image Source="/Assets/delete-icon.png"/>
-				</Button>
-			</StackPanel>
-			<DataGrid Grid.Row="8" AutoGenerateColumns="False"
-					  Items="{Binding Invoices}" SelectedItem="{Binding SelectedInvoice}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding Id}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Название организации" Binding="{Binding NameOrganization}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Адрес организации" Binding="{Binding AddressOrganization}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Дата" Binding="{Binding ShipmentDate}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-			<StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-				<Label FontSize="20" VerticalAlignment="Center">Информация о счет-фактуре</Label>
-				<Image Source="/Assets/invoice-content-icon.png"/>
-			</StackPanel>
-			<StackPanel Grid.Row="10" Orientation="Horizontal">
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentAddCommand}">
-					<Image Source="/Assets/add-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentChangeCommand}">
-					<Image Source="/Assets/edit-icon.png"/>
-				</Button>
-				<Button Classes="ToolButton" Command="{Binding OnInvoiceContentDeleteCommand}">
-					<Image Source="/Assets/delete-icon.png"/>
-				</Button>
-			</StackPanel>
-			<DataGrid Grid.Row="11" AutoGenerateColumns="False"
-					  Items="{Binding InvoicesContent}" SelectedItem="{Binding SelectedInvoiceContent}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding InvoiceId}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ProductIN}"/>
-				</DataGrid.Columns>
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Header="Количество купленного товара" Binding="{Binding Quantity}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-		</Grid>
-	</ScrollViewer>
+	<Grid>
+		<TabControl>
+			<TabItem Header="Продукты" HorizontalAlignment="Center">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+							<Image Source="/Assets/products-icon.png" Classes="SmallImage"/>
+						</StackPanel>
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Button Classes="ToolButton" Command="{Binding OnProductAddCommand}">
+								<Image Source="/Assets/add-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnProductChangeCommand}">
+								<Image Source="/Assets/edit-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnProductDeleteCommand}">
+								<Image Source="/Assets/delete-icon.png"/>
+							</Button>
+						</StackPanel>
+						<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+								  Items="{Binding Products}" SelectedItem="{Binding	SelectedProduct}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ItemNumber}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Наименование" Binding="{Binding Title}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Количество товара" Binding="{Binding Quantity}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="Склад" HorizontalAlignment="Center">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+							<Image Source="/Assets/storage-cell-icon.png" Classes="SmallImage"/>
+						</StackPanel>
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Button Classes="ToolButton" Command="{Binding OnStorageCellAddCommand}">
+								<Image Source="/Assets/add-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnStorageCellChangeCommand}">
+								<Image Source="/Assets/edit-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnStorageCellDeleteCommand}">
+								<Image Source="/Assets/delete-icon.png"/>
+							</Button>
+						</StackPanel>
+						<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+								  Items="{Binding StorageCells}" SelectedItem="{Binding SelectedStorageCell}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="150" Header="Номер ячейки" Binding="{Binding Number}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="200" Header="Код товара" Binding="{Binding ProductIN}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="Cчет-фактуры" HorizontalAlignment="Center">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+							<Image Source="/Assets/invoice-icon.png" Classes="SmallImage"/>
+						</StackPanel>
+						<StackPanel Grid.Row="2" Orientation="Horizontal">
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceAddCommand}">
+								<Image Source="/Assets/add-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceChangeCommand}">
+								<Image Source="/Assets/edit-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceDeleteCommand}">
+								<Image Source="/Assets/delete-icon.png"/>
+							</Button>
+						</StackPanel>
+						<DataGrid Grid.Row="3" AutoGenerateColumns="False"
+								  Items="{Binding Invoices}" SelectedItem="{Binding SelectedInvoice}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding Id}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Название организации" Binding="{Binding NameOrganization}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Адрес организации" Binding="{Binding AddressOrganization}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Дата" Binding="{Binding ShipmentDate}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="Информация о счет-фактуре" HorizontalAlignment="Center">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+							<Image Source="/Assets/invoice-content-icon.png" Classes="SmallImage"/>
+						</StackPanel>
+						<StackPanel Grid.Row="1" Orientation="Horizontal">
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceContentAddCommand}">
+								<Image Source="/Assets/add-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceContentChangeCommand}">
+								<Image Source="/Assets/edit-icon.png"/>
+							</Button>
+							<Button Classes="ToolButton" Command="{Binding OnInvoiceContentDeleteCommand}">
+								<Image Source="/Assets/delete-icon.png"/>
+							</Button>
+						</StackPanel>
+						<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+								  Items="{Binding InvoicesContent}" SelectedItem="{Binding SelectedInvoiceContent}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Номер счет-фактуры" Binding="{Binding InvoiceId}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ProductIN}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Количество купленного товара" Binding="{Binding Quantity}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="Аналитика" HorizontalAlignment="Center">
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+							<Image Source="/Assets/analytic-img.png" Classes="SmallImage"/>
+						</StackPanel>
+						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+							<Label FontSize="20" VerticalAlignment="Center">Топ 5 товаров по наличию на складе</Label>
+						</StackPanel>
+						<DataGrid Grid.Row="2" AutoGenerateColumns="False"
+								  Items="{Binding TopFiveProductsByStockAvailability}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Код товара" Binding="{Binding ItemNumber}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Наименование" Binding="{Binding Title}"/>
+							</DataGrid.Columns>
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="Auto" Header="Количество товара" Binding="{Binding Quantity}"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+				</ScrollViewer>
+			</TabItem>
+		</TabControl>
+	</Grid>
 </Window>

@@ -14,6 +14,7 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\add-icon.png" />
+    <None Remove="Assets\analytic-img.png" />
     <None Remove="Assets\delete-icon.png" />
     <None Remove="Assets\edit-icon.png" />
     <None Remove="Assets\edit-product-icon.png" />
@@ -29,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="EnterpriseWarehouseClient" />
+    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="EnterpriseWarehouse.Client" />
   </ItemGroup>
 
   <ItemGroup>

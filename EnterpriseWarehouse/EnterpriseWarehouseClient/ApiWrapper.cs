@@ -98,4 +98,9 @@ internal class ApiWrapper
     {
         return _client.InvoiceContentDELETEAsync(id);
     }
+
+    public Task<ICollection<ProductGetDto>> GetTopFiveProductsByStockAvailabilityAsync()
+    {
+        return _client.GetTopFiveProductsByStockAvailabilityAsync();
+    }
 }

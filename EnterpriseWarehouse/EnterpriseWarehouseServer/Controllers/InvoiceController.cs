@@ -181,7 +181,7 @@ public class InvoiceController : ControllerBase
             {
                 if (_context.InvoicesContent != null && _context.Products != null)
                 {
-                    var invoicesContent = await _context.InvoicesContent.Where(product => (product.InvoiceId == invoice.Id)).FirstAsync();
+                    var invoicesContent = await _context.InvoicesContent.Where(product => product.InvoiceId == invoice.Id).FirstAsync();
                     if (invoicesContent != null)
                     {
                         var newProduct = await _context.Products.FirstOrDefaultAsync(_product => _product.ItemNumber == elem.Key);

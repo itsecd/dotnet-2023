@@ -23,4 +23,9 @@
 		<Setter Property="VerticalAlignment" Value="Center"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 	</Style>
+
+	<Style Selector="Image.SmallImage">
+		<Setter Property="Width" Value="50"/>
+		<Setter Property="Height" Value="50"/>
+	</Style>
 </Styles>

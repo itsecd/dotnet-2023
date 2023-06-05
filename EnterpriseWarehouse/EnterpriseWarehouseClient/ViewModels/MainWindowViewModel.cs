@@ -20,6 +20,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<InvoiceContentViewModel> InvoicesContent { get; } = new();
 
+    public ObservableCollection<ProductViewModel> TopFiveProductsByStockAvailability { get; } = new();
+
     private ProductViewModel? _selectedProduct;
     public ProductViewModel? SelectedProduct
     {
@@ -372,6 +374,12 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var invoiceContent in invoicesContent)
         {
             InvoicesContent.Add(_mapper.Map<InvoiceContentViewModel>(invoiceContent));
+        }
+
+        var topFiveProductsByStockAvailability = await _apiClient.GetTopFiveProductsByStockAvailabilityAsync();
+        foreach (var elem in topFiveProductsByStockAvailability)
+        {
+            TopFiveProductsByStockAvailability.Add(_mapper.Map<ProductViewModel>(elem));
         }
     }
 }

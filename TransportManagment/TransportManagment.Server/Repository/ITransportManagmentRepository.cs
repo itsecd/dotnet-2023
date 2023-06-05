@@ -1,4 +1,4 @@
-﻿using TransportManagment.Model;
+﻿using TransportManagment.Models;
 
 namespace TransportManagment.Server.Repository;
 /// <summary>
@@ -7,6 +7,6 @@ namespace TransportManagment.Server.Repository;
 public interface ITransportManagmentRepository
 {
     List<Driver> Drivers { get; }
-    List<Model.Route> Routes { get; }
+    List<Models.Route> Routes { get; }
     List<Transport> Transports { get; }
 }

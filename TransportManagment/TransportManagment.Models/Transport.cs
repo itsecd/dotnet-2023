@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TransportManagment.Model;
+namespace TransportManagment.Models;
 /// <summary>
 /// Class of transports
 /// </summary>

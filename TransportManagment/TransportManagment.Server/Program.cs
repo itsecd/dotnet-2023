@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using TransportManagment.Model;
+using TransportManagment.Models;
 using TransportManagment.Server;
 using TransportManagment.Server.Repository;
 var builder = WebApplication.CreateBuilder(args);

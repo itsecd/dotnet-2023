@@ -1,4 +1,4 @@
-﻿using TransportManagment.Model;
+﻿using TransportManagment.Models;
 
 namespace TransportManagment.Server.Dto;
 /// <summary>

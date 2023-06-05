@@ -1,4 +1,4 @@
-﻿using TransportManagment.Model;
+﻿using TransportManagment.Models;
 
 namespace TransportManagment.Server.Repository;
 
@@ -6,7 +6,7 @@ public class TransportManagmentRepository : ITransportManagmentRepository
 {
     private readonly List<Transport> _transports;
     private readonly List<Driver> _drivers;
-    private readonly List<Model.Route> _routes;
+    private readonly List<Models.Route> _routes;
     public TransportManagmentRepository()
     {
         _transports = new List<Transport>()
@@ -27,15 +27,15 @@ public class TransportManagmentRepository : ITransportManagmentRepository
              new Driver (15, "Adry", "Tarasov", "Sergeivich", 199321, 2784, 2522290),
              new Driver (16, "Bill", "Pechorin", "Andeivich", 300965, 1234, 3668090),
         };
-        _routes = new List<Model.Route>()
+        _routes = new List<Models.Route>()
         {
-            new Classes.Route(100, new DateTime(2022, 02, 11), 480, 1050, 1, 11),
-            new Classes.Route(111, new DateTime(2022, 02, 11), 540, 960, 2, 12),
-            new Classes.Route(112, new DateTime(2022, 02, 11), 960, 1350, 2, 13),
-            new Classes.Route(123, new DateTime(2022, 02, 11), 450, 870, 3, 14),
-            new Classes.Route(133, new DateTime(2022, 02, 11), 900, 1380, 4, 14),
-            new Classes.Route(144, new DateTime(2022, 02, 11), 360, 1080, 5, 15),
-            new Classes.Route(155, new DateTime(2022, 02, 12), 390, 1080, 6, 16),
+            new Models.Route(100, new DateTime(2022, 02, 11), 480, 1050, 1, 11),
+            new Models.Route(111, new DateTime(2022, 02, 11), 540, 960, 2, 12),
+            new Models.Route(112, new DateTime(2022, 02, 11), 960, 1350, 2, 13),
+            new Models.Route(123, new DateTime(2022, 02, 11), 450, 870, 3, 14),
+            new Models.Route(133, new DateTime(2022, 02, 11), 900, 1380, 4, 14),
+            new Models.Route(144, new DateTime(2022, 02, 11), 360, 1080, 5, 15),
+            new Models.Route(155, new DateTime(2022, 02, 12), 390, 1080, 6, 16),
         };
         _routes[0].Driver = _drivers[0];
         _routes[0].Transport = _transports[0];
@@ -68,5 +68,5 @@ public class TransportManagmentRepository : ITransportManagmentRepository
     }
     public List<Transport> Transports => _transports;
     public List<Driver> Drivers => _drivers;
-    public List<Model.Route> Routes => _routes;
+    public List<Models.Route> Routes => _routes;
 }

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TransportManagment.Classes\TransportManagment.Model.csproj" />
+    <ProjectReference Include="..\TransportManagment.Models\TransportManagment.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

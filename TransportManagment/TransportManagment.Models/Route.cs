@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TransportManagment.Model;
+namespace TransportManagment.Models;
 /// <summary>
 /// Class of routes
 /// </summary>

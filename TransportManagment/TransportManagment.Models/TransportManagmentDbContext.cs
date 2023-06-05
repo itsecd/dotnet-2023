@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TransportManagment.Model;
+namespace TransportManagment.Models;
 /// <summary>
 /// Class for mapping database on local classes
 /// </summary>
@@ -57,13 +57,13 @@ public class TransportManagmentDbContext : DbContext
         };
         var routes = new List<Route>
         {
-            new Classes.Route{ RouteId = 100, Date = new DateTime(2022, 02, 11), TimeTo = 480, TimeFrom = 1050, TransportId = 1, DriverId = 11},//, transports[0], drivers[0]
-            new Classes.Route{ RouteId = 111, Date = new DateTime(2022, 02, 11), TimeTo = 540, TimeFrom = 960, TransportId = 2, DriverId = 12},//, transports[1], drivers[1]
-            new Classes.Route{ RouteId = 112, Date = new DateTime(2022, 02, 11), TimeTo = 960, TimeFrom = 1350, TransportId = 2, DriverId = 13},//, transports[1], drivers[2]
-            new Classes.Route{ RouteId = 123, Date = new DateTime(2022, 02, 11), TimeTo = 450, TimeFrom = 870, TransportId = 3, DriverId = 14},//, transports[2], drivers[3]
-            new Classes.Route{ RouteId = 133, Date = new DateTime(2022, 02, 11), TimeTo = 900, TimeFrom = 1380, TransportId = 4, DriverId = 14},//, transports[3], drivers[3]
-            new Classes.Route{ RouteId = 144, Date = new DateTime(2022, 02, 11), TimeTo = 360, TimeFrom = 1080, TransportId = 5, DriverId = 15},//, transports[4], drivers[4]
-            new Classes.Route{ RouteId = 155, Date = new DateTime(2022, 02, 12), TimeTo = 390, TimeFrom = 1080, TransportId = 6, DriverId = 16},//, transports[5], drivers[5]
+            new Route{ RouteId = 100, Date = new DateTime(2022, 02, 11), TimeTo = 480, TimeFrom = 1050, TransportId = 1, DriverId = 11},//, transports[0], drivers[0]
+            new Route{ RouteId = 111, Date = new DateTime(2022, 02, 11), TimeTo = 540, TimeFrom = 960, TransportId = 2, DriverId = 12},//, transports[1], drivers[1]
+            new Route{ RouteId = 112, Date = new DateTime(2022, 02, 11), TimeTo = 960, TimeFrom = 1350, TransportId = 2, DriverId = 13},//, transports[1], drivers[2]
+            new Route{ RouteId = 123, Date = new DateTime(2022, 02, 11), TimeTo = 450, TimeFrom = 870, TransportId = 3, DriverId = 14},//, transports[2], drivers[3]
+            new Route{ RouteId = 133, Date = new DateTime(2022, 02, 11), TimeTo = 900, TimeFrom = 1380, TransportId = 4, DriverId = 14},//, transports[3], drivers[3]
+            new Route{ RouteId = 144, Date = new DateTime(2022, 02, 11), TimeTo = 360, TimeFrom = 1080, TransportId = 5, DriverId = 15},//, transports[4], drivers[4]
+            new Route{ RouteId = 155, Date = new DateTime(2022, 02, 12), TimeTo = 390, TimeFrom = 1080, TransportId = 6, DriverId = 16},//, transports[5], drivers[5]
         };
         modelBuilder.Entity<Driver>().HasData(drivers);
         modelBuilder.Entity<Transport>().HasData(transports);

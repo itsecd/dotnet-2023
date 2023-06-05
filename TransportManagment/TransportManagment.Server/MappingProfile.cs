@@ -1,5 +1,5 @@
 using AutoMapper;
-using TransportManagment.Model;
+using TransportManagment.Models;
 using TransportManagment.Server.Dto;
 namespace TransportManagment.Server;
 /// <summary>
@@ -12,8 +12,8 @@ public class MappingProfile : Profile
     /// </summary>
     public MappingProfile() 
     {
-        CreateMap<Model.Route, RouteGetDto>();
-        CreateMap<RoutePostDto, Model.Route>();
+        CreateMap<Models.Route, RouteGetDto>();
+        CreateMap<RoutePostDto, Models.Route>();
         CreateMap<Transport, TransportGetDto>();
         CreateMap<TransportPostDto, Transport>();
         CreateMap<Driver, DriverGetDto>();

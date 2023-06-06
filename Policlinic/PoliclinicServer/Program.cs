@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Policlinic;
 using PoliclinicServer;
-using PoliclinicServer.Repository;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -16,8 +15,6 @@ builder.Services.AddDbContextFactory<PoliclinicDbContext>(options =>
 var mapConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
-
-builder.Services.AddSingleton<IPoliclinicRepository, PoliclinicRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddControllers().AddJsonOptions(options =>

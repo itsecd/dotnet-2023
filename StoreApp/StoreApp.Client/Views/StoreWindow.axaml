@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="StoreApp.Client.Views.StoreWindow"
+        xmlns:vm="using:StoreApp.Client.ViewModels"
+		Title="Сведения о магазине"
+		Icon="/Assets/store.ico"
+		MaxWidth="500"
+		SizeToContent="Height">
+	
+	<Design.DataContext>
+		<vm:ProductViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/StoreAppStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Название магазина</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StoreName}"/>
+		
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Адрес магазина</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StoreAddress}"/>
+
+
+		<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommandStore}">ОК</Button>
+			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="StoreApp.Client.Views.ProductWindow"
+        xmlns:vm="using:StoreApp.Client.ViewModels"
+		Title="Сведения о продукте"
+		Icon="/Assets/store.ico"
+		MaxWidth="500"
+		SizeToContent="Height">
+	
+	<Design.DataContext>
+		<vm:ProductViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/StoreAppStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto *" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Группа товара</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProductGroup}"/>
+		
+		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Наименование</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProductName}"/>
+		
+		<Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Вес</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProductWeight}"/>
+		
+		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Тип</Label>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ProductType}"/>
+		
+		<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Цена</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ProductPrice}"/>
+		
+		<Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Срок годности</Label>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding DateStorage}"/>
+
+
+		<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommandProduct}">ОК</Button>
+			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>
+		</StackPanel>
+	</Grid>
+</Window>

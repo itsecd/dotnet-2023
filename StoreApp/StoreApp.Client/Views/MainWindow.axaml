@@ -1,0 +1,101 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:StoreApp.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="StoreApp.Client.Views.MainWindow"
+        Icon="/Assets/store.ico"
+        Title="StoreApp">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/StoreAppStyles.axaml"/>
+	</Window.Styles>
+	<TabControl>
+		<TabItem Header="Продукты" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCommandProduct}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCommandProduct}">
+						<Image Source="/Assets/edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCommandProduct}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Products}"
+						  SelectedItem="{Binding SelectedProduct}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Товарная группа" Binding="{Binding ProductGroup}"/>
+						<DataGridTextColumn Header="Наименование" Binding="{Binding ProductName}"/>
+						<DataGridTextColumn Header="Вес" Binding="{Binding ProductWeight}"/>
+						<DataGridTextColumn Header="Тип" Binding="{Binding ProductType}"/>
+						<DataGridTextColumn Header="Цена" Binding="{Binding ProductPrice}"/>
+						<DataGridTextColumn Header="Срок годности" Binding="{Binding DateStorage}"/>
+					</DataGrid.Columns>
+			
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Покупатели" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCommandCustomer}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCommandCustomer}">
+						<Image Source="/Assets/edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCommandCustomer}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Customers}"
+						  SelectedItem="{Binding SelectedCustomer}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Имя покупателя" Binding="{Binding CustomerName}"/>
+						<DataGridTextColumn Header="Номер карты" Binding="{Binding CustomerCardNumber}"/>
+					</DataGrid.Columns>
+
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Магазины" VerticalContentAlignment="Center">
+			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Command="{Binding OnAddCommandStore}">
+						<Image Source="/Assets/add.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnChangeCommandStore}">
+						<Image Source="/Assets/edit.png"/>
+					</Button>
+					<Button Classes="ToolButton" Command="{Binding OnDeleteCommandStore}">
+						<Image Source="/Assets/delete.png"/>
+					</Button>
+
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						  Items="{Binding Stores}"
+						  SelectedItem="{Binding SelectedStore}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Название магазина" Binding="{Binding StoreName}"/>
+						<DataGridTextColumn Header="Адрес" Binding="{Binding StoreAddress}"/>
+					</DataGrid.Columns>
+
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+					
+
+</Window>

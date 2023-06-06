@@ -29,11 +29,7 @@
 
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/5ca3452b-73ed-4006-9bc1-058f9f384b6f)
 
-Окно продавцов музыкального магазина
-
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/32c61756-8d00-4932-8c42-698be8a02225)
-
-Окно продавцов с заполнением
+Окно продавцов музыкального магазина 
 
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/cb0f268b-365e-4e9a-a03b-cb89b92398b8)
 

@@ -19,3 +19,10 @@
 4) Вывести топ 5 покупок по общей сумме продажи.
 5) Вывести все сведения о товарах, превышающих предельную дату хранения, с указанием магазина.
 6) Вывести список магазинов, в которых за месяц было продано товаров на сумму, превышающую заданную.
+
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/mainCustomer.png)
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/mainProduct.png)
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/mainStore.png)
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/editCustomer.png)
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/editProduct.png)
+![image](https://github.com/yarik1811/dotnet-2023/blob/main/Pictures/editStore.png)

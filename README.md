@@ -35,7 +35,7 @@
 
 Окно добавления/редактирования покупателя в системе
 
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/e3db6555-7930-4495-8962-9ec8478d30f6)
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/426e6fc3-a29a-491e-b466-5ed057f5f354)
 
 Окно добавления/редактирования совершенной покупки в системе
 

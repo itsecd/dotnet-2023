@@ -27,7 +27,7 @@
 # Внешний вид приложения
 Окно товаров музыкального магазина
 
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/598ca4e6-829c-489f-8dbf-f8c78841756f)
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/5ca3452b-73ed-4006-9bc1-058f9f384b6f)
 
 Окно продавцов музыкального магазина
 

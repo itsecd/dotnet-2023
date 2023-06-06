@@ -45,6 +45,10 @@
 
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/36496a2a-544e-4769-ab76-23039d68fa7b)
 
+Окно добавления/редактирования продукта
+
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/1b1473fb-c892-4d86-987f-8830e8518be4)
+
 Окно добавления/редактирования покупателя в системе
 
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/426e6fc3-a29a-491e-b466-5ed057f5f354)

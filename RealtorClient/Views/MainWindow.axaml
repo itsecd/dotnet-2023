@@ -1,0 +1,121 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RealtorClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RealtorClient.Views.MainWindow"
+        Icon="/Assets/2.png"
+        Title="RealtorClient">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+	<Window.Styles>
+		<StyleInclude Source="/RealtorStyle.axaml"/>
+	</Window.Styles>
+		<TabControl>
+			<TabItem Header="House" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddHouseCommand}">
+							<Image Source="/Assets/add.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnChangeHouseCommand}">
+							<Image Source="/Assets/edit.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteHouseCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						Items="{Binding Houses}" SelectedItem="{Binding SelectedHouse}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+							<DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
+							<DataGridTextColumn Header="Square" Binding="{Binding Square}"/>
+							<DataGridTextColumn Header="Rooms" Binding="{Binding Rooms}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Application" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddApplicationCommand}">
+							<Image Source="/Assets/add.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnChangeApplicationCommand}">
+							<Image Source="/Assets/edit.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteApplicationCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+						Items="{Binding Applications}" SelectedItem="{Binding SelectedApplication}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+							<DataGridTextColumn Header="Cost" Binding="{Binding Cost}"/>
+							<DataGridTextColumn Header="Data" Binding="{Binding Data}"/>
+							<DataGridTextColumn Header="ClientId" Binding="{Binding ClientId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Client" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddClientCommand}">
+							<Image Source="/Assets/add.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnChangeClientCommand}">
+							<Image Source="/Assets/edit.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteClientCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding Clients}" SelectedItem="{Binding SelectedClient}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+							<DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+							<DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+							<DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+							<DataGridTextColumn Header="Registration" Binding="{Binding Registration}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="Application_Has_House" VerticalContentAlignment="Center">
+				<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<Button Classes="ToolButton" Command="{Binding OnAddApplicationHasHouseCommand}">
+							<Image Source="/Assets/add.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnChangeApplicationHasHouseCommand}">
+							<Image Source="/Assets/edit.png"/>
+						</Button>
+						<Button Classes="ToolButton" Command="{Binding OnDeleteApplicationHasHouseCommand}">
+							<Image Source="/Assets/delete.png"/>
+						</Button>
+					</StackPanel>
+					<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+							Items="{Binding ApplicationHasHouses}" SelectedItem="{Binding SelectedApplicationHasHouse}">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+							<DataGridTextColumn Header="ApplicationId" Binding="{Binding ApplicationId}"/>
+							<DataGridTextColumn Header="HouseId" Binding="{Binding HouseId}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+		</TabControl>
+</Window>

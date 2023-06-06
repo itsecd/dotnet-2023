@@ -1,0 +1,1170 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "RealtorServer",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/clients-buyers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "first request - information about all clients looking for real estate of a given type",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/clients-seller": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "second request - all sellers who left orders for a given period",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/seller-object": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "third request - information about sellers and real estate objects that correspond to a specific buyer's request",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/count application": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "fourth request - information about the number of applications for each type of property",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/topClients": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "fifth request - Display the top 5 clients by the number of applications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/clients-minApplicationCost": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "sixth request - information about clients who opened orders with the minimum cost",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ApplicationHasHouses": {
+      "get": {
+        "tags": [
+          "ApplicationHasHouses"
+        ],
+        "summary": "Get method for ApplicationHasHouses table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ApplicationHasHouses"
+        ],
+        "summary": "Post method for ApplicationHasHouses table",
+        "requestBody": {
+          "description": "ApplicationHasHouses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ApplicationHasHouses/{id}": {
+      "get": {
+        "tags": [
+          "ApplicationHasHouses"
+        ],
+        "summary": "Get by id method for ApplicationHasHouses table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ApplicationHasHouses id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationHasHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationHasHouses"
+        ],
+        "summary": "Change ApplicationHasHouses info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ApplicationHasHouses id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing ApplicationHasHouses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationHasHouseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ApplicationHasHouses"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of ApplicationHasHouses which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Applications": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Get method for application table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Post method for application table",
+        "requestBody": {
+          "description": "application",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Applications/{id}": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Get by id method for application table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Change application info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "application id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing application",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of application which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get method for clients table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Post method for clients table",
+        "requestBody": {
+          "description": "client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Clients/{id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get client info by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Change client info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of client which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Houses": {
+      "get": {
+        "tags": [
+          "Houses"
+        ],
+        "summary": "Get method for houses table",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HouseGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HouseGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HouseGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Houses"
+        ],
+        "summary": "Post method for houses table",
+        "requestBody": {
+          "description": "House",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Houses/{id}": {
+      "get": {
+        "tags": [
+          "Houses"
+        ],
+        "summary": "Get by id method for houses table",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "house id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Houses"
+        ],
+        "summary": "Change house info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "House id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Changing house",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HousePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Houses"
+        ],
+        "summary": "Delete method",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "An id of house which would be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApplicationGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id -int typed value for storing Id of the room",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type - string typed value representing a type of the room",
+            "nullable": true
+          },
+          "cost": {
+            "type": "integer",
+            "description": "Cost - uint for storing a cost of the room",
+            "format": "int32"
+          },
+          "data": {
+            "type": "string",
+            "description": "Data - DateTime typed value for storing a date of application",
+            "format": "date-time"
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "ClientId - int typed value for storing Id of the client",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ApplicationGetDto for HTTP GET request"
+      },
+      "ApplicationHasHouseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id -int typed value for storing Id of the apllicationHasHouse",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ApplicationHasHouseGetDto for HTTP GET request"
+      },
+      "ApplicationPostDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type - string typed value representing a type of the room",
+            "nullable": true
+          },
+          "cost": {
+            "type": "integer",
+            "description": "Cost - uint for storing a cost of the room",
+            "format": "int32"
+          },
+          "data": {
+            "type": "string",
+            "description": "Data - DateTime typed value for storing a date of application",
+            "format": "date-time"
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "ClientId - int typed value for storing Id of the client",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ApplicationPostDto for HTTP GET request"
+      },
+      "ClientGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - int typed value for storing Id of the client",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "string",
+            "description": "Passport - a string representing passport number",
+            "nullable": true
+          },
+          "number": {
+            "type": "string",
+            "description": "Number - a string for contact number",
+            "nullable": true
+          },
+          "registration": {
+            "type": "string",
+            "description": "Registration- a string for customer registration address",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name, Surname - a string for name and surname optionally",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ClientGetDto for HTTP GET request"
+      },
+      "ClientPostDto": {
+        "type": "object",
+        "properties": {
+          "passport": {
+            "type": "string",
+            "description": "Passport - a string representing passport number",
+            "nullable": true
+          },
+          "number": {
+            "type": "string",
+            "description": "Number - a string for contact number",
+            "nullable": true
+          },
+          "registration": {
+            "type": "string",
+            "description": "Registration- a string for customer registration address",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name, Surname - a string for name and surname optionally",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "ClientPostDto for HTTP GET request"
+      },
+      "HouseGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - int typed value for storing Id of the houses",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type - a string type of object for sale - residential or non-residential",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - a string for address of the property being sold",
+            "nullable": true
+          },
+          "square": {
+            "type": "integer",
+            "description": "Square - uint value for object area",
+            "format": "int32"
+          },
+          "rooms": {
+            "type": "integer",
+            "description": "Rooms - uint value for storing an amount of rooms of this type",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "HouseGetDto for HTTP GET request"
+      },
+      "HousePostDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type - a string type of object for sale - residential or non-residential",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "description": "Address - a string for address of the property being sold",
+            "nullable": true
+          },
+          "square": {
+            "type": "integer",
+            "description": "Square - uint value for object area",
+            "format": "int32"
+          },
+          "rooms": {
+            "type": "integer",
+            "description": "Rooms - uint value for storing an amount of rooms of this type",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "HouseGetDto for HTTP GET request"
+      }
+    }
+  }
+}

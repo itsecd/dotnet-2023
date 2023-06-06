@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:vm="using:RealtorClient.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RealtorClient.Views.ApplicationHasHouseWindow"
+        MaxWidth="500"
+        Title="Edit the rented car"
+		Icon="/Assets/2.png"
+		SizeToContent="Height">
+
+	<Design.DataContext>
+		<vm:ApplicationHasHouseViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/RealtorStyle.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*" >
+		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Id</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
+		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">ApplicationId</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ApplicationId}"/>
+		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">HouseId</Label>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding HouseId}"/>
+		
+		
+
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

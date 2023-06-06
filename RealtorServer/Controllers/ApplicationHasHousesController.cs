@@ -67,7 +67,7 @@ public class ApplicationHasHousesController : ControllerBase
     /// <param name="applicationHasHouses">Changing ApplicationHasHouses</param>
     /// <returns>Action result</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutApplication(int id, ApplicationHasHouse applicationHasHouses)
+    public async Task<IActionResult> PutApplication(int id, ApplicationHasHouseDto applicationHasHouses)
     {
         if (_context.ApplicationHasHouses == null)
         {
@@ -92,7 +92,7 @@ public class ApplicationHasHousesController : ControllerBase
     ///     Create ApplicationHasHouses
     /// </returns>
     [HttpPost]
-    public async Task<ActionResult<ApplicationHasHouseDto>> PostApplication(ApplicationHasHouse applicationHasHouses)
+    public async Task<ActionResult<ApplicationHasHouseDto>> PostApplication(ApplicationHasHouseDto applicationHasHouses)
     {
         if (_context.ApplicationHasHouses == null)
         {

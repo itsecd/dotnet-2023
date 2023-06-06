@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:RealtorClient.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RealtorClient.Views.ClientWindow"
+		MaxWidth="500"
+        Title="Edit the client"
+		Icon="/Assets/2.png"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:ClientViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/RealtorStyle.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto, *" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*" >
+		<Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Name</Label>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Surname</Label>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Surname}"/>
+		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Number</Label>
+		<DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Number}"/>
+		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Registration</Label>
+		<DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding Registration}"/>
+		<Label VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Passport</Label>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Passport}"/>
+
+		<StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+					HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">OK</Button>
+			<Button IsCancel="True" Click="CancelButton_OnClick">Cancel</Button>
+		</StackPanel>
+	</Grid>
+</Window>

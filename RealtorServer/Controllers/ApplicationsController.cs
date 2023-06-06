@@ -70,7 +70,7 @@ public class ApplicationsController : ControllerBase
     /// <param name="application">Changing application</param>
     /// <returns>Action result</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutApplication(int id, Application application)
+    public async Task<IActionResult> PutApplication(int id, ApplicationPostDto application)
     {
         if (_context.Applications== null)
         {
@@ -95,7 +95,7 @@ public class ApplicationsController : ControllerBase
     ///     Create application
     /// </returns>
     [HttpPost]
-    public async Task<ActionResult<ApplicationGetDto>> PostApplication(Application application)
+    public async Task<ActionResult<ApplicationGetDto>> PostApplication(ApplicationPostDto application)
     {
         if (_context.Applications == null)
         {

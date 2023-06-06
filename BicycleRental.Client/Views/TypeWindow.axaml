@@ -14,7 +14,7 @@
 		<StyleInclude Source="/BicycleRentalStyles.axaml"/>
 	</Window.Styles>
 
-	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="Auto, *">
+	<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
 		<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">TypeId</Label>
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TypeId}"/>
 		<Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">TypeName</Label>

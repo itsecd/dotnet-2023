@@ -1,5 +1,4 @@
-﻿using BicycleRental.Client.ViewModels;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 

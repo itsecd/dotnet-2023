@@ -1,5 +1,4 @@
-﻿
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 

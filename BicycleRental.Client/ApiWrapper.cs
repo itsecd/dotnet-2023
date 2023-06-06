@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BicycleRental.Client;
@@ -88,6 +86,11 @@ public class ApiWrapper
     public async Task<ICollection<BicycleTypeGetDto>> GetTypesAsync()
     {
         return await _client.BicycleTypeAllAsync();
+    }
+
+    public async Task<ICollection<BicycleGetDto>> GetSportAsync()
+    {
+        return await _client.GetSportBicyclesAsync();
     }
 }
 

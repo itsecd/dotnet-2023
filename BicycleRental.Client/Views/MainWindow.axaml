@@ -16,89 +16,120 @@
 		<StyleInclude Source="/BicycleRentalStyles.axaml"/>
 	</Window.Styles>
 
-	<TabControl>
-		<TabItem Header="Bicycle" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddBicycleCommand}">
-						<Image Source="/Assets/add.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeBicycleCommand}">
-						<Image Source="/Assets/setting.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteBicycleCommand}">
-						<Image Source="/Assets/remove.png"/>
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							Items="{Binding Bicycles}"
-							SelectedItem="{Binding SelectedBicycle}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
-						<DataGridTextColumn Header="TypeId" Binding="{Binding TypeId}"/>
-						<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
-						<DataGridTextColumn Header="Color" Binding="{Binding Color}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Customer" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
-						<Image Source="/Assets/add.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
-						<Image Source="/Assets/setting.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
-						<Image Source="/Assets/remove.png"/>
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							Items="{Binding Customers}"
-							SelectedItem="{Binding SelectedCustomer}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-						<DataGridTextColumn Header="FullName" Binding="{Binding FullName}"/>
-						<DataGridTextColumn Header="BirthYear" Binding="{Binding BirthYear}"/>
-						<DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Rental" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-				<StackPanel Grid.Row="0" Orientation="Horizontal">
-					<Button Classes="ToolButton" Command="{Binding OnAddRentalCommand}">
-						<Image Source="/Assets/add.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnChangeRentalCommand}">
-						<Image Source="/Assets/setting.png"/>
-					</Button>
-					<Button Classes="ToolButton" Command="{Binding OnDeleteRentalCommand}">
-						<Image Source="/Assets/remove.png"/>
-					</Button>
-				</StackPanel>
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							Items="{Binding Rentals}"
-							SelectedItem="{Binding SelectedRental}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="RentalId" Binding="{Binding RentalId}"/>
-						<DataGridTextColumn Header="CustomerId" Binding="{Binding CustomerId}"/>
-						<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
-						<DataGridTextColumn Header="RentalTime" Binding="{Binding RentalTime}"/>
-					</DataGrid.Columns>
-				</DataGrid>
-			</Grid>
-		</TabItem>
-		<TabItem Header="Type" VerticalContentAlignment="Center">
-			<Grid Classes="MainGrid" RowDefinitions="Auto, *">
-				<DataGrid Grid.Row="1" AutoGenerateColumns="False"
-							Items="{Binding Types}"
-						    SelectedItem="{Binding SelectedType}">	
-				</DataGrid>
-			</Grid>
-		</TabItem>
-	</TabControl>
+	
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+		<Grid Classes="MainGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, 
+			  Auto, Auto, Auto, Auto, Auto, Auto, *">
+
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Label>Types</Label>
+			</StackPanel>
+
+			<DataGrid Grid.Row="1" AutoGenerateColumns="False"
+					  Items="{Binding Types}"
+					  SelectedItem="SelectedType">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding TypeId}"/>
+					<DataGridTextColumn Header="Type Name" Binding="{Binding TypeName}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="2" Orientation="Horizontal">
+				<Label>Bicycles</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="3" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddBicycleCommand}">
+					<Image Source="/Assets/add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeBicycleCommand}">
+					<Image Source="/Assets/setting.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteBicycleCommand}">
+					<Image Source="/Assets/remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="4" AutoGenerateColumns="False"
+					  Items="{Binding Bicycles}"
+					  SelectedItem="{Binding SelectedBicycle}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
+					<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+					<DataGridTextColumn Header="Color" Binding="{Binding Color}"/>
+					<DataGridTextColumn Header="TypeId" Binding="{Binding TypeId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="5" Orientation="Horizontal">
+				<Label>Customers</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="6" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddCustomerCommand}">
+					<Image Source="/Assets/add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeCustomerCommand}">
+					<Image Source="/Assets/setting.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteCustomerCommand}">
+					<Image Source="/Assets/remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="7" AutoGenerateColumns="False"
+					  Items="{Binding Customers}"
+					  SelectedItem="{Binding SelectedCustomer}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Full Name" Binding="{Binding FullName}"/>
+					<DataGridTextColumn Header="Birth Year" Binding="{Binding BirthYear}"/>
+					<DataGridTextColumn Header="Phone Number" Binding="{Binding Phone}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="8" Orientation="Horizontal">
+				<Label>Rentals</Label>
+			</StackPanel>
+
+			<StackPanel Grid.Row="9" Orientation="Horizontal">
+				<Button Classes="ToolButton" Command="{Binding OnAddRentalCommand}">
+					<Image Source="/Assets/add.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnChangeRentalCommand}">
+					<Image Source="/Assets/setting.png"/>
+				</Button>
+				<Button Classes="ToolButton" Command="{Binding OnDeleteRentalCommand}">
+					<Image Source="/Assets/remove.png"/>
+				</Button>
+			</StackPanel>
+
+			<DataGrid Grid.Row="10" AutoGenerateColumns="False"
+					  Items="{Binding Rentals}"
+					  SelectedItem="{Binding SelectedRental}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding RentalId}"/>
+					<DataGridTextColumn Header="Customer Id" Binding="{Binding CustomerId}"/>
+					<DataGridTextColumn Header="Bicycle Id" Binding="{Binding SerialNumber}"/>
+					<DataGridTextColumn Header="Rent Time" Binding="{Binding RentalTime}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Grid.Row="11" Orientation="Horizontal">
+				<Label>Info about all sport bicycles</Label>
+			</StackPanel>
+
+			<DataGrid Grid.Row="12" AutoGenerateColumns="False"
+					  Items="{Binding SportBicycles}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="SerialNumber" Binding="{Binding SerialNumber}"/>
+					<DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
+					<DataGridTextColumn Header="Color" Binding="{Binding Color}"/>
+					<DataGridTextColumn Header="TypeId" Binding="{Binding TypeId}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+
+		</Grid>
+	</ScrollViewer>
 </Window>

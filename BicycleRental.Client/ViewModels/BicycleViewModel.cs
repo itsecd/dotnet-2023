@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using ReactiveUI;
-using BicycleRental.Client.ViewModels;
 using System.Reactive;
 
 namespace BicycleRental.Client.ViewModels;

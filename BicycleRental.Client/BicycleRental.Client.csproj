@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="BicycleRental.Client" ClassName="ApiClient" />
+    <OpenApiReference Include="swagger.json" ClassName="ApiClient" CodeGenerator="NSwagCSharp" Namespace="BicycleRental.Client" />
   </ItemGroup>
 
   <ItemGroup>

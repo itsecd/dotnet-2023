@@ -24,7 +24,7 @@
 		<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Phone</Label>
 		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone}"/>
 
-		<StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+		<StackPanel Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2"
 					HorizontalAlignment="Right" Orientation="Horizontal">
 			<Button IsDefault="True" Command="{Binding OnSubmitCommand}">Ok</Button>
 			<Button IsCancel="True" Click="CancelButtonOnClick">Отмена</Button>

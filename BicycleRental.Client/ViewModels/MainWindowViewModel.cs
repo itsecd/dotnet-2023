@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ReactiveUI;
 using Splat;
-using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -12,15 +11,18 @@ namespace BicycleRental.Client.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<BicycleViewModel> Bicycles { get; } = new();
+    public ObservableCollection<CustomerViewModel> Customers { get; } = new();
+    public ObservableCollection<BicycleRentalViewModel> Rentals { get; } = new();
+    public ObservableCollection<BicycleTypeViewModel> Types { get; } = new();
+    public ObservableCollection<BicycleViewModel> SportBicycles { get; } = new();
+
 
     private BicycleViewModel? _selectedBicycle;
     public BicycleViewModel? SelectedBicycle
     {
         get => _selectedBicycle;
         set => this.RaiseAndSetIfChanged(ref _selectedBicycle, value);
-    }
-
-    public ObservableCollection<CustomerViewModel> Customers { get; } = new();
+    }   
 
     private CustomerViewModel? _selectedCustomer;
     public CustomerViewModel? SelectedCustomer
@@ -28,8 +30,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedCustomer;
         set => this.RaiseAndSetIfChanged(ref _selectedCustomer, value);
     }
-
-    public ObservableCollection<BicycleRentalViewModel> Rentals { get; } = new();
+   
 
     private BicycleRentalViewModel? _selectedRental;
     public BicycleRentalViewModel? SelectedRental
@@ -37,7 +38,6 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedRental;
         set => this.RaiseAndSetIfChanged(ref _selectedRental, value);
     }
-    public ObservableCollection<BicycleTypeViewModel> Types { get; } = new();
 
     private BicycleTypeViewModel? _selectedType;
     public BicycleTypeViewModel? SelectedType
@@ -46,6 +46,7 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedType, value);
     }
 
+   
     private readonly ApiWrapper _apiClient;
 
     private readonly IMapper _mapper;
@@ -89,7 +90,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newBicycle = _mapper.Map<BicyclePostDto>(bicycleViewModel);
                 await _apiClient.AddBicycleAsync(newBicycle);
                 Bicycles.Add(bicycleViewModel);
-                RxApp.MainThreadScheduler.Schedule(LoadBicyclesAsync);
+                
             }
         });
 
@@ -110,7 +111,6 @@ public class MainWindowViewModel : ViewModelBase
 
         }, this.WhenAnyValue(vm => vm.SelectedBicycle).Select(selectBicycle => selectBicycle != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadBicyclesAsync);
 
         ShowCustomerDialog = new Interaction<CustomerViewModel, CustomerViewModel?>();
 
@@ -122,7 +122,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newCustomer = _mapper.Map<CustomerPostDto>(customerViewModel);
                 await _apiClient.AddCustomerAsync(newCustomer);
                 Customers.Add(customerViewModel);
-                RxApp.MainThreadScheduler.Schedule(LoadCustomersAsync);
+                
             }
         });
 
@@ -142,7 +142,6 @@ public class MainWindowViewModel : ViewModelBase
             Customers.Remove(SelectedCustomer);
         }, this.WhenAnyValue(vm => vm.SelectedCustomer).Select(selectCustomer => selectCustomer != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadCustomersAsync);
 
         ShowRentalDialog = new Interaction<BicycleRentalViewModel, BicycleRentalViewModel?>();
 
@@ -154,7 +153,7 @@ public class MainWindowViewModel : ViewModelBase
                 var newRental = _mapper.Map<RentalPostDto>(rentalViewModel);
                 await _apiClient.AddRentalAsync(newRental);
                 Rentals.Add(rentalViewModel);
-                RxApp.MainThreadScheduler.Schedule(LoadRentalsAsync);
+               
             }
         });
 
@@ -174,48 +173,39 @@ public class MainWindowViewModel : ViewModelBase
             Rentals.Remove(SelectedRental);
         }, this.WhenAnyValue(vm => vm.SelectedRental).Select(selectRental => selectRental != null));
 
-        RxApp.MainThreadScheduler.Schedule(LoadRentalsAsync);
-
-        RxApp.MainThreadScheduler.Schedule(LoadTypesAsync);
+        RxApp.MainThreadScheduler.Schedule(LoadAllAsync);
     }
 
-    private async void LoadBicyclesAsync()
+    private async void LoadAllAsync()
     {
-        Bicycles.Clear();
         var bicycles = await _apiClient.GetBicyclesAsync();
         foreach (var bicycle in bicycles)
         {
             Bicycles.Add(_mapper.Map<BicycleViewModel>(bicycle));
         }
-    }
 
-    private async void LoadCustomersAsync()
-    {
-        Customers.Clear();
         var customers = await _apiClient.GetCustomerAsync();
         foreach (var customer in customers)
         {
             Customers.Add(_mapper.Map<CustomerViewModel>(customer));
         }
-    }
 
-    private async void LoadRentalsAsync()
-    {
-        Rentals.Clear();
         var rentals = await _apiClient.GetRentalsAsync();
         foreach (var rental in rentals)
         {
             Rentals.Add(_mapper.Map<BicycleRentalViewModel>(rental));
         }
-    }
 
-    private async void LoadTypesAsync()
-    {
-        Types.Clear();
         var types = await _apiClient.GetTypesAsync();
         foreach (var type in types)
         {
             Types.Add(_mapper.Map<BicycleTypeViewModel>(type));
+        }
+
+        var sports = await _apiClient.GetSportAsync();
+        foreach (var sport in sports)
+        {
+            SportBicycles.Add(_mapper.Map<BicycleViewModel>(sport));
         }
     }
 }

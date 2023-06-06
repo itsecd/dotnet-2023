@@ -10,7 +10,7 @@ public class Seller
     /// <summary>
     /// ID Продавца.
     /// </summary>
-    [Key] 
+    [Key]
     public int Id { get; set; } = 0;
 
     /// <summary>

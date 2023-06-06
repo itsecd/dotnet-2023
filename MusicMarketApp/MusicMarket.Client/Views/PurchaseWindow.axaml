@@ -6,8 +6,8 @@
         x:Class="MusicMarket.Client.Views.PurchaseWindow"
         Title="MusicMarketWindow"
 	xmlns:vm="using:MusicMarket.Client.ViewModels"
-	MinHeight="350" MinWidth="550"
-	MaxHeight="350" MaxWidth="850"
+	MinHeight="200" MinWidth="550"
+	MaxHeight="300" MaxWidth="850"
 
 	SizeToContent="Height">
 	<Design.DataContext>

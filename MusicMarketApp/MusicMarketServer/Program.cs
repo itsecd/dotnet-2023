@@ -11,7 +11,6 @@ var mapperConfig = new MapperConfiguration(config => config.AddProfile(new Mappi
 var mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
-builder.Services.AddSingleton<IMusicMarketRepository, MusicMarketRepository>();
 
 builder.Services.AddDbContextFactory<MusicMarketDbContext>(options =>
 options.UseMySQL(builder.Configuration.GetConnectionString("MusicMarket")!));

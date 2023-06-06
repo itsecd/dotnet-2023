@@ -6,8 +6,8 @@
         x:Class="MusicMarket.Client.Views.ProductWindow"
         Title="ProductWindow"
 		xmlns:vm="using:MusicMarket.Client.ViewModels"
-	    MinHeight="300" MinWidth="450"
-		MaxHeight="300" MaxWidth="450"
+	    MinHeight="100" MinWidth="1050"
+		MaxHeight="800" MaxWidth="850"
 
 	    SizeToContent="Height">
 	<Design.DataContext>
@@ -20,15 +20,15 @@
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">
 		<Label Grid.Row="0" Grid.Column="0">Id</Label>
-		<Label Grid.Row="1" Grid.Column="0">Тип аудионосителя: диск|кассета|виниловая пластинка</Label>
-		<Label Grid.Row="2" Grid.Column="0">Тип издания: альбом|сингл</Label>
-		<Label Grid.Row="3" Grid.Column="0">Исполнитель</Label>
-		<Label Grid.Row="4" Grid.Column="0">Наименование товара</Label>
-		<Label Grid.Row="5" Grid.Column="0">Страна издания</Label>
-		<Label Grid.Row="6" Grid.Column="0">Cостояние аудионосителя: новое || отличное || хорошее || удовлетворительное || плохое</Label>
-		<Label Grid.Row="7" Grid.Column="0">Cостояние упаковки: новое || отличное || хорошее || удовлетворительное || плохое</Label>
-		<Label Grid.Row="8" Grid.Column="0">Цена</Label>
-		<Label Grid.Row="9" Grid.Column="0">Cтатус: в продаже || продан</Label>
+		<Label Grid.Row="1" Grid.Column="0">Тип аудионосителя:</Label>
+		<Label Grid.Row="2" Grid.Column="0">Тип издания:</Label>
+		<Label Grid.Row="3" Grid.Column="0">Исполнитель:</Label>
+		<Label Grid.Row="4" Grid.Column="0">Наименование товара:</Label>
+		<Label Grid.Row="5" Grid.Column="0">Страна издания:</Label>
+		<Label Grid.Row="6" Grid.Column="0">Cостояние аудионосителя:</Label>
+		<Label Grid.Row="7" Grid.Column="0">Cостояние упаковки:</Label>
+		<Label Grid.Row="8" Grid.Column="0">Цена: </Label>
+		<Label Grid.Row="9" Grid.Column="0">Cтатус:</Label>
 		<Label Grid.Row="10" Grid.Column="0">ID Продавца</Label>
 
 

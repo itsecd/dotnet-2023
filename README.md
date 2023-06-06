@@ -51,8 +51,8 @@
 
 Окно добавления/редактирования покупателя в системе
 
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/426e6fc3-a29a-491e-b466-5ed057f5f354)
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/df59bf59-6a3c-4d71-8449-8c3799ec6738)
 
 Окно добавления/редактирования совершенной покупки в системе
 
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/a72d5b98-a144-4cdd-add6-9c9ff82f3465)
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/8d8fbf12-9704-42ed-9c4a-df28303582f6)

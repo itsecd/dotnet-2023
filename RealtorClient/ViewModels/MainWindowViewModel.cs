@@ -232,9 +232,11 @@ public class MainWindowViewModel : ViewModelBase
         }
 
         var buyers = await _apiClient.GetBuyers();
-         Buyers.Add(_mapper.Map<BuyersViewModel>(buyers));
-        
-        
+        foreach(var buyer in buyers)
+        {
+            Buyers.Add(_mapper.Map<BuyersViewModel>(buyer));
+
+        }
 
     }
 }

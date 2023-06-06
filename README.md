@@ -27,9 +27,12 @@
 # Внешний вид приложения
 Окно с имеющимися в продаже товарами
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/598ca4e6-829c-489f-8dbf-f8c78841756f)
+
 Окно продавцов магазина
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/cb0f268b-365e-4e9a-a03b-cb89b92398b8)
+
 Окно добавления/редактирования покупателя в системе
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/e3db6555-7930-4495-8962-9ec8478d30f6)
+
 Окно добавления/редактирования совершенной покупки в системе
 ![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/f6fcc20f-4725-4008-956d-44d391f690f5)

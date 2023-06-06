@@ -18,6 +18,7 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ClientViewModel> Clients { get; } = new();
     public ObservableCollection<ApplicationViewModel> Applications { get; } = new();
     public ObservableCollection<ApplicationHasHouseViewModel> ApplicationHasHouses { get; } = new();
+    public ObservableCollection<BuyersViewModel> Buyers { get; } = new();
     private HouseViewModel? _selectedHouse;
     public HouseViewModel? SelectedHouse
     {
@@ -89,7 +90,7 @@ public class MainWindowViewModel : ViewModelBase
                 Applications.Clear();
                 Clients.Clear();
                 ApplicationHasHouses.Clear();
-                //TopCars.Clear();
+                Buyers.Clear();
                 LoadAsync();
             }
         });
@@ -121,7 +122,7 @@ public class MainWindowViewModel : ViewModelBase
                 Applications.Clear();
                 Clients.Clear();
                 ApplicationHasHouses.Clear();
-                //TopCars.Clear();
+                Buyers.Clear();
                 LoadAsync();
             }
         });
@@ -152,7 +153,7 @@ public class MainWindowViewModel : ViewModelBase
                 Applications.Clear();
                 Clients.Clear();
                 ApplicationHasHouses.Clear();
-                //TopCars.Clear();
+                Buyers.Clear();
                 LoadAsync();
             }
         });
@@ -183,7 +184,7 @@ public class MainWindowViewModel : ViewModelBase
                 Applications.Clear();
                 Clients.Clear();
                 ApplicationHasHouses.Clear();
-               // TopCars.Clear();
+               Buyers.Clear();
                 LoadAsync();
             }
         });
@@ -230,12 +231,10 @@ public class MainWindowViewModel : ViewModelBase
             ApplicationHasHouses.Add(_mapper.Map<ApplicationHasHouseViewModel>(applicationHasHouse));
         }
 
-        /*var topCars = await _apiClient.TopFiveCars();
-        foreach (var topCar in topCars)
-        {
-            TopCars.Add(_mapper.Map<QueryViewModel>(topCar));
-        }
-        */
+        var buyers = await _apiClient.GetBuyers();
+         Buyers.Add(_mapper.Map<BuyersViewModel>(buyers));
+        
+        
 
     }
 }

@@ -38,7 +38,8 @@ public partial class App : Application
 
                 cfg.CreateMap<ApplicationHasHouseDto, ApplicationHasHouseViewModel>();
                 cfg.CreateMap<ApplicationHasHouseViewModel, ApplicationHasHouseDto>();
-
+                cfg.CreateMap<ClientGetDto,BuyersViewModel>();
+                cfg.CreateMap<BuyersViewModel, ClientGetDto>();
             });
             Locator.CurrentMutable.RegisterConstant(new ApiWrapper());
             Locator.CurrentMutable.RegisterConstant(config.CreateMapper(), typeof(IMapper));

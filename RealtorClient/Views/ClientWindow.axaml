@@ -23,9 +23,9 @@
 		<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Surname</Label>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Surname}"/>
 		<Label VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Number</Label>
-		<DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Number}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Number}"/>
 		<Label VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Registration</Label>
-		<DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding Registration}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Registration}"/>
 		<Label VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Passport</Label>
 		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Passport}"/>
 

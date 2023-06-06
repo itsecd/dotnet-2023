@@ -26,8 +26,8 @@ public class ApplicationViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _cost, value);
     }
 
-    private DateTime _data;
-    public DateTime Data
+    private DateTimeOffset _data;
+    public DateTimeOffset Data
     {
         get => _data;
         set => this.RaiseAndSetIfChanged(ref _data, value);

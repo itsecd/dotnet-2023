@@ -86,7 +86,6 @@
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 							<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 							<DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
-							<DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
 							<DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
 							<DataGridTextColumn Header="Registration" Binding="{Binding Registration}"/>
 						</DataGrid.Columns>
@@ -111,8 +110,6 @@
 							Items="{Binding ApplicationHasHouses}" SelectedItem="{Binding SelectedApplicationHasHouse}">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-							<DataGridTextColumn Header="ApplicationId" Binding="{Binding ApplicationId}"/>
-							<DataGridTextColumn Header="HouseId" Binding="{Binding HouseId}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>

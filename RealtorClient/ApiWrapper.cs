@@ -91,4 +91,8 @@ public class ApiWrapper
     {
         return _client.ApplicationHasHouses4Async(id);
     }
+    public async Task<ClientGetDto> GetBuyers()
+    {
+        return await _client.ClientsBuyersAsync();
+    }
 }

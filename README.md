@@ -39,4 +39,4 @@
 
 Окно добавления/редактирования совершенной покупки в системе
 
-![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/f6fcc20f-4725-4008-956d-44d391f690f5)
+![image](https://github.com/Nadia-Snitenko/industrial-programming/assets/90641953/a72d5b98-a144-4cdd-add6-9c9ff82f3465)

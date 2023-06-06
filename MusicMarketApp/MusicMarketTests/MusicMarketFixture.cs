@@ -205,11 +205,11 @@ public class MusicMarketFixture
             purchase3.IdProduct = 4;
             purchase4.IdProduct = 5;
 
-            purchase0.Date = DateTime.Parse("2023/05/21");
+            purchase0.Date = DateTime.Parse("2023/05/31");
             purchase1.Date = DateTime.Parse("2023/05/4");
-            purchase2.Date = DateTime.Parse("2023/05/9");
-            purchase3.Date = DateTime.Parse("2023/05/19");
-            purchase4.Date = DateTime.Parse("2023/05/11");
+            purchase2.Date = DateTime.Parse("2023/06/3");
+            purchase3.Date = DateTime.Parse("2023/06/4");
+            purchase4.Date = DateTime.Parse("2023/06/5");
 
             purchases.Add(purchase0);
             purchases.Add(purchase1);

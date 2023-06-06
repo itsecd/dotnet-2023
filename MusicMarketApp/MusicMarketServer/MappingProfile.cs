@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MusicMarket;
+using MusicMarketplace;
 using MusicMarketServer.Dto;
 
 namespace MusicMarketServer;

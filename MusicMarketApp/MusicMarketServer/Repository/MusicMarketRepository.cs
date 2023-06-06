@@ -1,4 +1,4 @@
-﻿using MusicMarket;
+﻿using MusicMarketplace;
 
 namespace MusicMarketServer.Repository;
 

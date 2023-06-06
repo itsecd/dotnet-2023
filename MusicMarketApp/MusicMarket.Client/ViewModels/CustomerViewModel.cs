@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using ReactiveUI;
-using Newtonsoft.Json.Linq;
 using System.Reactive;
 
 namespace MusicMarket.Client.ViewModels;

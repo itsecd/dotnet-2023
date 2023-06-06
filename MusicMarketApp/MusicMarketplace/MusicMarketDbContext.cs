@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicMarket;
 
 namespace MusicMarketplace;
 /// <summary>

@@ -1,8 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using ReactiveUI;
-using Newtonsoft.Json.Linq;
 using System.Reactive;
 
 namespace MusicMarket.Client.ViewModels;
@@ -58,8 +55,8 @@ public class ProductViewModel : ViewModelBase
     [Required]
     public string MediaStatus
     {
-    get => _mediaStatus;
-    set => this.RaiseAndSetIfChanged(ref _mediaStatus, value);
+        get => _mediaStatus;
+        set => this.RaiseAndSetIfChanged(ref _mediaStatus, value);
     }
 
     private string _packagingCondition = string.Empty;
@@ -85,8 +82,8 @@ public class ProductViewModel : ViewModelBase
         get => _status;
         set => this.RaiseAndSetIfChanged(ref _status, value);
     }
-    
-    private int _idSeller ;
+
+    private int _idSeller;
     [Required]
     public int IdSeller
     {

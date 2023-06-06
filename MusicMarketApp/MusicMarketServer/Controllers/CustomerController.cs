@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MusicMarket;
 using MusicMarketplace;
 using MusicMarketServer.Dto;
 

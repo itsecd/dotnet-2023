@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MusicMarket;
 using MusicMarketplace;
 using MusicMarketServer.Dto;
 
@@ -155,23 +154,23 @@ public class AnalyticsController : ControllerBase
         _logger.LogInformation("Get top 5 customers");
 
         var customerPurchases = await (from customer in context.Customers
-                                 from purchase in context.Purchases
-                                 from product in context.Products
-                                 from seller in context.Sellers
-                                 where customer.Id == purchase.IdCustomer && purchase.IdProduct == product.Id && seller.Id == product.IdSeller
-                                 select new
-                                 {
-                                     customer.Id,
-                                     PurchaseCost = product.Price + seller.Price
-                                 }).ToListAsync();
+                                       from purchase in context.Purchases
+                                       from product in context.Products
+                                       from seller in context.Sellers
+                                       where customer.Id == purchase.IdCustomer && purchase.IdProduct == product.Id && seller.Id == product.IdSeller
+                                       select new
+                                       {
+                                           customer.Id,
+                                           PurchaseCost = product.Price + seller.Price
+                                       }).ToListAsync();
         var customerAvgPurchases =
             (from customerPurchase in customerPurchases
-            group customerPurchase by customerPurchase.Id into customer
-            select new
-            {
-                customer.Key,
-                AvgCost = customer.Average(cust => cust.PurchaseCost)
-            }).ToList();
+             group customerPurchase by customerPurchase.Id into customer
+             select new
+             {
+                 customer.Key,
+                 AvgCost = customer.Average(cust => cust.PurchaseCost)
+             }).ToList();
         var result = customerAvgPurchases.OrderBy(customer => customer.AvgCost).Take(5).Reverse().ToList();
 
         if (result.Count == 0)

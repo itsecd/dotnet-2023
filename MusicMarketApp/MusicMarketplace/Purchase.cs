@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MusicMarket;
-
+namespace MusicMarketplace;
 /// <summary>
 /// Покупка.
 /// </summary>

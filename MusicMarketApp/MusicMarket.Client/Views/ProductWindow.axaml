@@ -15,7 +15,7 @@
 	</Design.DataContext>
 
 	<Window.Styles>
-		<StyleInclude Source="/ShopsStyle.axaml"/>
+		<StyleInclude Source="/MusicMarketStyles.axaml"/>
 	</Window.Styles>
 
 	<Grid Classes="MainGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="Auto,*">

@@ -20,5 +20,4 @@
 Запросы <br />
 ![image](https://github.com/JirenMTA/dotnet-2023/assets/91962461/158adf03-3218-43b2-9f31-e7750471ed9b)
 
-https://github.com/JirenMTA/dotnet-2023/assets/91962461/043b34a4-f28a-47df-a997-c78488deed0b
 

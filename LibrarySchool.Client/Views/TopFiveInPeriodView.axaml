@@ -3,12 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="260"
-		xmlns:vm="using:LibrarySchool.Client.ViewModels"
+		xmlns:vm="using:LibrarySchool.Desktop.ViewModels"
 		Width="450"
 		Height="260"
 		SizeToContent="WidthAndHeight"
 		WindowStartupLocation="CenterScreen"
-        x:Class="LibrarySchool.Client.Views.TopFiveInPeriodView"
+        x:Class="LibrarySchool.Desktop.Views.TopFiveInPeriodView"
         Title="TopFiveInPeriodView">
 	<Design.DataContext>
 		<vm:TopFiveInPeriodViewModel/>

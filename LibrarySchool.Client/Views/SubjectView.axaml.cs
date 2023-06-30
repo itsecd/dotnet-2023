@@ -1,10 +1,10 @@
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using LibrarySchool.Client.ViewModels;
+using LibrarySchool.Desktop.ViewModels;
 using ReactiveUI;
 using System;
 
-namespace LibrarySchool.Client.Views;
+namespace LibrarySchool.Desktop.Views;
 
 /// <summary>
 /// View of class subject

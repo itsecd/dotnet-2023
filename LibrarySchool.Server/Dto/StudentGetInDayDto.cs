@@ -1,11 +1,15 @@
-﻿namespace LibrarySchoolServer.Dto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using LibrarySchoolServer.Dto;
+
+namespace LibrarySchool.Server.Dto;
 
 /// <summary>
-/// GetDto type of class student
+/// Create seeding data for testing controller
 /// </summary>
-
-public class StudentGetDto
+public class StudentGetInDayDto
 {
+    
     ///<summary>
     /// StudentId - guid typed value for storing Id of the student
     ///</summary>
@@ -30,4 +34,9 @@ public class StudentGetDto
     /// ClassId - Id of the class where student studing
     /// </summary>
     public int ClassId { get; set; }
+
+    /// <summary>
+    /// Marks - list mark that student received
+    /// </summary>
+    public List<MarkInStudentDto> Marks { get; set; } = null!;
 }

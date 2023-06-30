@@ -1,6 +1,4 @@
-﻿using LibrarySchool.Client;
-
-namespace LibrarySchool.Client.Models;
+﻿namespace LibrarySchool.Desktop.Models;
 
 /// <summary>
 /// Model of class max, min average subject with subject id and subject name 

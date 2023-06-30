@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LibrarySchool;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Dto;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,33 @@ public class QueryController : Controller
     }
 
     /// <summary>
+    /// Display information about all students who received grades on the specified day.
+    /// </summary>
+    /// <returns>
+    /// Return: list student
+    /// </returns>
+    [HttpGet("ListStudentInDay/{day}")]
+    public async Task<ActionResult<IEnumerable<StudentGetInDayDto>>> GetListStudent(DateTime day)
+    {
+        _logger.LogInformation("Get list student by time receive mark");
+        var ctx = await _dbContextFactory.CreateDbContextAsync();
+        var studentReceiveInDay = ctx.Students.Select(student =>
+                                            new StudentGetInDayDto()
+                                            {
+                                                StudentId = student.StudentId,
+                                                StudentName = student.StudentName,
+                                                ClassId = student.ClassId,
+                                                DateOfBirth = student.DateOfBirth,
+                                                Passport = student.Passport,
+                                                Marks = _mapper.Map<List<MarkInStudentDto>>(student.Marks.Where(mark => mark.TimeReceive == day))
+                                            }).ToList();
+        var studentNonEmptyMarkInDay = studentReceiveInDay.Where(student => student.Marks.Any()).ToList();
+        if (!studentNonEmptyMarkInDay.Any())
+            return NotFound();
+        return Ok(studentNonEmptyMarkInDay);
+    }
+
+    /// <summary>
     /// Display information about all subjects
     /// </summary>
     /// <returns>
@@ -82,9 +110,14 @@ public class QueryController : Controller
         var markInSubject = foundSubject.Marks.Select(mark => mark.MarkValue);
         if (!markInSubject.Any())
         {
-            return Ok(new MaxMinAverageMarkDto(0, 0, 0));
+            return Ok(new MaxMinAverageMarkDto { Max = 0, Min = 0, Average = 0 });
         }
-        return Ok(new MaxMinAverageMarkDto(markInSubject.Max(), markInSubject.Min(), markInSubject.Average()));
+        return Ok(new MaxMinAverageMarkDto
+        {
+            Max = markInSubject.Max(),
+            Min = markInSubject.Min(),
+            Average = markInSubject.Average()
+        });
     }
     /// <summary>
     /// Display the top 5 students by GPA in period
@@ -115,14 +148,14 @@ public class QueryController : Controller
         }
         var topInPeriod = listStudentInPeriod.Select(student =>
                                       new StudentGetAverageDto
-                                      (
-                                          student.StudentId,
-                                          student.Passport,
-                                          student.StudentName,
-                                          student.DateOfBirth,
-                                          student.ClassId,
-                                          student.Marks.Any()? student.Marks.Average(mark => mark.MarkValue): 0
-                                      ));
+                                      {
+                                          ClassId = student.ClassId,
+                                          StudentId = student.StudentId,
+                                          StudentName = student.StudentName,
+                                          DateOfBirth = student.DateOfBirth,
+                                          Passport = student.Passport,
+                                          AverageMark = student.Marks.Any()? student.Marks.Average(mark => mark.MarkValue): 0
+                                      });
         if (!topInPeriod.Any()) { return NotFound(); }
         return Ok(topInPeriod.OrderByDescending(x => x.AverageMark).Take(5));
     }
@@ -140,19 +173,17 @@ public class QueryController : Controller
         var listStudent = ctx.Students
                             .Include(student => student.Marks)
                             .Select(student =>
-                                    new StudentGetAverageDto
-                                      (
-                                          student.StudentId,
-                                          student.Passport,
-                                          student.StudentName,
-                                          student.DateOfBirth,
-                                          student.ClassId,
-                                          student.Marks.Any() ? student.Marks.Average(mark => mark.MarkValue) : 0
-                                      ))
-                            .ToList()
-                            .OrderByDescending(student => student.AverageMark)
+                            new StudentGetAverageDto
+                            {
+                                ClassId = student.ClassId,
+                                StudentId = student.StudentId,
+                                StudentName = student.StudentName,
+                                DateOfBirth = student.DateOfBirth,
+                                Passport = student.Passport,
+                                AverageMark = student.Marks.Any()? student.Marks.Average(mark=>mark.MarkValue): 0 
+                            })
+                            .OrderByDescending(student => student.AverageMark).ToList()
                             .Take(5);
-
         if (listStudent != null)
         {
             return Ok(listStudent);

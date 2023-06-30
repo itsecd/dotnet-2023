@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="swagger.json" ClassName="LibrarySchoolClient" CodeGenerator="NSwagCSharp" />
+    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" ClassName="LibrarySchoolClient" />
   </ItemGroup>
 
   <ItemGroup>

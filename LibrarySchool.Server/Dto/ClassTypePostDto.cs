@@ -1,8 +1,17 @@
 ﻿namespace LibrarySchoolServer.Dto;
 
 /// <summary>
-/// ClassPostDto for ClassType
+/// GetDto type of class ClassTypes
 /// </summary>
-public record ClassTypePostDto(int Number,
-                               string Letter);
+public class ClassTypePostDto
+{
+    ///<summary>
+    /// Number - number of class, example: 6312,...
+    ///</summary>
+    public int Number { get; set; }
 
+    ///<summary>
+    /// Letter - letter of speciality, example: 10-05-03D,...
+    ///</summary>
+    public string Letter { get; set; } = "";
+}

@@ -9,7 +9,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace LibrarySchool.Client.ViewModels;
+namespace LibrarySchool.Desktop.ViewModels;
 /// <summary>
 /// ViewModel of class main window
 /// </summary>

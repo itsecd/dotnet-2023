@@ -1,13 +1,27 @@
 ﻿namespace LibrarySchoolServer.Dto;
 
 /// <summary>
-/// Post Dto of student
+/// PostDto type of student
 /// </summary>
-/// <param name="Passport"></param>
-/// <param name="StudentName"></param>
-/// <param name="DateOfBirth"></param>
-/// <param name="ClassId"></param>
-public record StudentPostDto(string Passport,
-                             string StudentName,
-                             DateTime DateOfBirth,
-                             int ClassId);
+public class StudentPostDto
+{
+    /// <summary>
+    /// Passport - string type number passport of the student
+    /// </summary>
+    public string Passport { get; set; } = "";
+
+    /// <summary>
+    /// StudentName - string type name of the student
+    /// </summary>
+    public string StudentName { get; set; } = "";
+
+    /// <summary>
+    /// DateOfBirth - student's date of birth
+    /// </summary>
+    public DateTime DateOfBirth { get; set; } = new DateTime(1, 1, 1);
+
+    /// <summary>
+    /// ClassId - Id of the class where student studing
+    /// </summary>
+    public int ClassId { get; set; }
+}

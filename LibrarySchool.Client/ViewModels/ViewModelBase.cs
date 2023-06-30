@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace LibrarySchool.Client.ViewModels;
+namespace LibrarySchool.Desktop.ViewModels;
 
 /// <summary>
 /// Base of all class ViewModel

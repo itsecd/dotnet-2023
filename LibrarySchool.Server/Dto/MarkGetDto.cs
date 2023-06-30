@@ -4,13 +4,30 @@ namespace LibrarySchoolServer.Dto;
 /// <summary>
 /// PostDto type of class Marks
 /// </summary>
-/// <param name="MarkId"></param>
-/// <param name="StudentId"></param>
-/// <param name="MarkValue"></param>
-/// <param name="SubjectId"></param>
-/// <param name="TimeReceive"></param>
-public record MarkGetDto(int MarkId,
-                         int StudentId,
-                         int MarkValue,
-                         int SubjectId,
-                         DateTime TimeReceive);
+public class MarkGetDto
+{
+    ///<summary>
+    /// MarkId - Id mark 
+    ///</summary>
+    public int MarkId { get; set; }
+
+    ///<summary>
+    /// StudentId - Id student
+    ///</summary>
+    public int StudentId { get; set; }
+
+    ///<summary>
+    /// MarkValue - value of mark student received
+    ///</summary>
+    public int MarkValue { get; set; }
+
+    ///<summary>
+    /// SubjectId - Id subject
+    ///</summary>
+    public int SubjectId { get; set; }
+
+    ///<summary>
+    /// TimeReceive - time when student receive mark
+    ///</summary>
+    public DateTime TimeReceive { get; set; }
+}

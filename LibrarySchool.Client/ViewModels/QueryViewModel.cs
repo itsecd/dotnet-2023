@@ -1,4 +1,4 @@
-﻿using LibrarySchool.Desktop.Models;
+﻿using LibrarySchool.Client.Models;
 using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 using System;
@@ -7,7 +7,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace LibrarySchool.Desktop.ViewModels;
+namespace LibrarySchool.Client.ViewModels;
 
 /// <summary>
 /// ViewModel of window query

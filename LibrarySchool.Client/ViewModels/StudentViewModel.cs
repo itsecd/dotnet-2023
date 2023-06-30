@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 
-namespace LibrarySchool.Desktop.ViewModels;
+namespace LibrarySchool.Client.ViewModels;
 
 /// <summary>
 /// ViewModel of class Student

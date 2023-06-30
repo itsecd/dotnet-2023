@@ -411,56 +411,6 @@
         }
       }
     },
-    "/api/Query/ListStudentInDay/{day}": {
-      "get": {
-        "tags": [
-          "Query"
-        ],
-        "summary": "Display information about all students who received grades on the specified day.",
-        "parameters": [
-          {
-            "name": "day",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentGetInDayDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentGetInDayDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentGetInDayDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Query/InformationAllsubject": {
       "get": {
         "tags": [
@@ -1000,17 +950,17 @@
         "properties": {
           "classId": {
             "type": "integer",
-            "description": "ClassId - Id class",
+            "description": "",
             "format": "int32"
           },
           "number": {
             "type": "integer",
-            "description": "Number - number of class, example: 6312,...",
+            "description": "",
             "format": "int32"
           },
           "letter": {
             "type": "string",
-            "description": "Letter - letter of speciality, example: 10-05-03D,...",
+            "description": "",
             "nullable": true
           }
         },
@@ -1022,88 +972,69 @@
         "properties": {
           "number": {
             "type": "integer",
-            "description": "Number - number of class, example: 6312,...",
             "format": "int32"
           },
           "letter": {
             "type": "string",
-            "description": "Letter - letter of speciality, example: 10-05-03D,...",
             "nullable": true
           }
         },
         "additionalProperties": false,
-        "description": "GetDto type of class ClassTypes"
+        "description": "ClassPostDto for ClassType"
       },
       "MarkGetDto": {
         "type": "object",
         "properties": {
           "markId": {
             "type": "integer",
-            "description": "MarkId - Id mark",
+            "description": "",
             "format": "int32"
           },
           "studentId": {
             "type": "integer",
-            "description": "StudentId - Id student",
+            "description": "",
             "format": "int32"
           },
           "markValue": {
             "type": "integer",
-            "description": "MarkValue - value of mark student received",
+            "description": "",
             "format": "int32"
           },
           "subjectId": {
             "type": "integer",
-            "description": "SubjectId - Id subject",
+            "description": "",
             "format": "int32"
           },
           "timeReceive": {
             "type": "string",
-            "description": "TimeReceive - time when student receive mark",
+            "description": "",
             "format": "date-time"
           }
         },
         "additionalProperties": false,
         "description": "PostDto type of class Marks"
       },
-      "MarkInStudentDto": {
-        "type": "object",
-        "properties": {
-          "markValue": {
-            "type": "integer",
-            "description": "MarkValue - value of mark student received",
-            "format": "int32"
-          },
-          "subjectId": {
-            "type": "integer",
-            "description": "SubjectId - Id subject",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Dto type of class Marks"
-      },
       "MarkPostDto": {
         "type": "object",
         "properties": {
           "studentId": {
             "type": "integer",
-            "description": "StudentId - Id student",
+            "description": "",
             "format": "int32"
           },
           "markValue": {
             "type": "integer",
-            "description": "MarkValue - value of mark student received",
+            "description": "",
             "format": "int32"
           },
           "subjectId": {
             "type": "integer",
-            "description": "SubjectId - Id subject",
+            "description": "",
             "format": "int32"
           },
           "timeReceive": {
             "type": "string",
-            "description": "TimeReceive - time when student receive mark",
+            "description": "",
             "format": "date-time"
           }
         },
@@ -1115,17 +1046,17 @@
         "properties": {
           "max": {
             "type": "number",
-            "description": "Max of mark value in subject",
+            "description": "",
             "format": "double"
           },
           "min": {
             "type": "number",
-            "description": "Min of mark value in subject",
+            "description": "",
             "format": "double"
           },
           "average": {
             "type": "number",
-            "description": "Average of mark value in subject",
+            "description": "",
             "format": "double"
           }
         },
@@ -1137,32 +1068,32 @@
         "properties": {
           "studentId": {
             "type": "integer",
-            "description": "StudentId - guid typed value for storing Id of the student",
+            "description": "",
             "format": "int32"
           },
           "passport": {
             "type": "string",
-            "description": "Passport - string type number passport of the student",
+            "description": "",
             "nullable": true
           },
           "studentName": {
             "type": "string",
-            "description": "StudentName - string type name of the student",
+            "description": "",
             "nullable": true
           },
           "dateOfBirth": {
             "type": "string",
-            "description": "DateOfBirth - student's date of birth",
+            "description": "",
             "format": "date-time"
           },
           "classId": {
             "type": "integer",
-            "description": "ClassId - Id of the class where student studing",
+            "description": "",
             "format": "int32"
           },
           "averageMark": {
             "type": "number",
-            "description": "GPA - average mark that student received",
+            "description": "",
             "format": "double"
           }
         },
@@ -1174,116 +1105,76 @@
         "properties": {
           "studentId": {
             "type": "integer",
-            "description": "StudentId - guid typed value for storing Id of the student",
+            "description": "",
             "format": "int32"
           },
           "passport": {
             "type": "string",
-            "description": "Passport - string type number passport of the student",
+            "description": "",
             "nullable": true
           },
           "studentName": {
             "type": "string",
-            "description": "StudentName - string type name of the student",
+            "description": "",
             "nullable": true
           },
           "dateOfBirth": {
             "type": "string",
-            "description": "DateOfBirth - student's date of birth",
+            "description": "",
             "format": "date-time"
           },
           "classId": {
             "type": "integer",
-            "description": "ClassId - Id of the class where student studing",
+            "description": "",
             "format": "int32"
           }
         },
         "additionalProperties": false,
-        "description": "GetDto type of class student"
-      },
-      "StudentGetInDayDto": {
-        "type": "object",
-        "properties": {
-          "studentId": {
-            "type": "integer",
-            "description": "StudentId - guid typed value for storing Id of the student",
-            "format": "int32"
-          },
-          "passport": {
-            "type": "string",
-            "description": "Passport - string type number passport of the student",
-            "nullable": true
-          },
-          "studentName": {
-            "type": "string",
-            "description": "StudentName - string type name of the student",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "description": "DateOfBirth - student's date of birth",
-            "format": "date-time"
-          },
-          "classId": {
-            "type": "integer",
-            "description": "ClassId - Id of the class where student studing",
-            "format": "int32"
-          },
-          "marks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MarkInStudentDto"
-            },
-            "description": "Marks - list mark that student received",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "Create seeding data for testing controller"
+        "description": "Dto get Student"
       },
       "StudentPostDto": {
         "type": "object",
         "properties": {
           "passport": {
             "type": "string",
-            "description": "Passport - string type number passport of the student",
+            "description": "",
             "nullable": true
           },
           "studentName": {
             "type": "string",
-            "description": "StudentName - string type name of the student",
+            "description": "",
             "nullable": true
           },
           "dateOfBirth": {
             "type": "string",
-            "description": "DateOfBirth - student's date of birth",
+            "description": "",
             "format": "date-time"
           },
           "classId": {
             "type": "integer",
-            "description": "ClassId - Id of the class where student studing",
+            "description": "",
             "format": "int32"
           }
         },
         "additionalProperties": false,
-        "description": "PostDto type of student"
+        "description": "Post Dto of student"
       },
       "SubjectGetDto": {
         "type": "object",
         "properties": {
           "subjectId": {
             "type": "integer",
-            "description": "SubjectId - Id of subject",
+            "description": "",
             "format": "int32"
           },
           "subjectName": {
             "type": "string",
-            "description": "SubjectName - Name of the subject",
+            "description": "",
             "nullable": true
           },
           "yearStudy": {
             "type": "integer",
-            "description": "YearStudy - the year when start study subject",
+            "description": "",
             "format": "int32"
           }
         },
@@ -1295,17 +1186,17 @@
         "properties": {
           "subjectName": {
             "type": "string",
-            "description": "SubjectName - Name of the subject",
+            "description": "",
             "nullable": true
           },
           "yearStudy": {
             "type": "integer",
-            "description": "YearStudy - the year when start study subject",
+            "description": "",
             "format": "int32"
           }
         },
         "additionalProperties": false,
-        "description": "DtoPostType of class Subjects"
+        "description": "ClassPostDto of Subject"
       }
     }
   }

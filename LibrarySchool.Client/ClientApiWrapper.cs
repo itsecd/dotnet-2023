@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LibrarySchool.Client;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace LibrarySchool.Desktop;
+namespace LibrarySchool.Client;
 
 /// <summary>
 /// Class for renaming RESTful methods in server

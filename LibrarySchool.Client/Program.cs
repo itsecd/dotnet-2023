@@ -2,7 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
-namespace LibrarySchool.Desktop;
+namespace LibrarySchool.Client;
 
 internal class Program
 {

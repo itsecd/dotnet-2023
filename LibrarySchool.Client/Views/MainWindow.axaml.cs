@@ -1,9 +1,9 @@
 using Avalonia.ReactiveUI;
-using LibrarySchool.Desktop.ViewModels;
+using LibrarySchool.Client.ViewModels;
 using ReactiveUI;
 using System.Threading.Tasks;
 
-namespace LibrarySchool.Desktop.Views;
+namespace LibrarySchool.Client.Views;
 
 /// <summary>
 /// View of main window

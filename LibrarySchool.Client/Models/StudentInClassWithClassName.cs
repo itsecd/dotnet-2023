@@ -1,4 +1,4 @@
-﻿namespace LibrarySchool.Desktop.Models;
+﻿namespace LibrarySchool.Client.Models;
 
 /// <summary>
 /// Model of student dto with class number and class letter 

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchool.Domain.Test",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchool.Server", "LibrarySchool.Server\LibrarySchool.Server.csproj", "{C44E5C40-9BA1-4335-A109-94F422559395}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrarySchool.Client", "LibrarySchool.Client\LibrarySchool.Client.csproj", "{2B861546-8C44-4F0D-9503-E08CDA088DE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarySchool.Client", "LibrarySchool.Client\LibrarySchool.Client.csproj", "{2B861546-8C44-4F0D-9503-E08CDA088DE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

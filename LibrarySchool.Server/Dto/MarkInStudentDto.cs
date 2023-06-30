@@ -3,15 +3,6 @@
 /// <summary>
 /// Dto type of class Marks
 /// </summary>
-public class MarkInStudentDto
-{
-    ///<summary>
-    /// MarkValue - value of mark student received
-    ///</summary>
-    public int MarkValue { get; set; }
-
-    ///<summary>
-    /// SubjectId - Id subject
-    ///</summary>
-    public int SubjectId { get; set; }
-}
+/// <param name="MarkValue"></param>
+/// <param name="SubjectId"></param>
+public record MarkInStudentDto(int MarkValue, int SubjectId);

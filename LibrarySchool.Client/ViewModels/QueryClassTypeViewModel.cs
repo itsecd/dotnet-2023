@@ -1,7 +1,7 @@
 ﻿using ReactiveUI;
 using System.Reactive;
 
-namespace LibrarySchool.Desktop.ViewModels;
+namespace LibrarySchool.Client.ViewModels;
 
 /// <summary>
 /// ViewMode of QueryClass in query window

@@ -4,10 +4,10 @@ using LibrarySchool.Domain;
 using LibrarySchool.Server.Dto.Validator;
 using LibrarySchoolServer;
 using LibrarySchoolServer.Dto;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+// 3 issue
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

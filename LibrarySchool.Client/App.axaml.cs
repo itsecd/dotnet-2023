@@ -2,11 +2,11 @@ using AutoMapper;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using LibrarySchool.Desktop.ViewModels;
-using LibrarySchool.Desktop.Views;
+using LibrarySchool.Client.ViewModels;
+using LibrarySchool.Client.Views;
 using Splat;
 
-namespace LibrarySchool.Desktop;
+namespace LibrarySchool.Client;
 public partial class App : Application
 {
     public override void Initialize()

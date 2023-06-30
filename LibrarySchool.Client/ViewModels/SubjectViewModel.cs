@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 
-namespace LibrarySchool.Desktop.ViewModels;
+namespace LibrarySchool.Client.ViewModels;
 
 /// <summary>
 /// ViewModel of class subject

@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using LibrarySchool.Desktop.ViewModels;
+using LibrarySchool.Client.ViewModels;
 using System;
 
-namespace LibrarySchool.Desktop;
+namespace LibrarySchool.Client;
 public class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)

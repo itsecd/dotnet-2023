@@ -2,7 +2,7 @@
 using System;
 using System.Reactive;
 
-namespace LibrarySchool.Desktop.ViewModels;
+namespace LibrarySchool.Client.ViewModels;
 
 /// <summary>
 /// ViewModel of class type

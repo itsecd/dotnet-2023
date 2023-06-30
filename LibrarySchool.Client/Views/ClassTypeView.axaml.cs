@@ -1,10 +1,10 @@
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using LibrarySchool.Desktop.ViewModels;
+using LibrarySchool.Client.ViewModels;
 using ReactiveUI;
 using System;
 
-namespace LibrarySchool.Desktop.Views;
+namespace LibrarySchool.Client.Views;
 #pragma warning disable CS1591
 public partial class ClassTypeView : ReactiveWindow<ClassTypeViewModel>
 {

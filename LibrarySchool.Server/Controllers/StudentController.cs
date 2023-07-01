@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>
@@ -17,18 +19,20 @@ public class StudentController : ControllerBase
     private readonly ILogger<ClassTypeController> _logger;
     private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
-
-   /// <summary>
-   /// Constructor of controller Students
-   /// </summary>
-   /// <param name="logger"></param>
-   /// <param name="contextFactory"></param>
-   /// <param name="mapper"></param>
-   public StudentController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
+    private readonly IValidator<StudentPostDto> _validator;
+    /// <summary>
+    /// Constructor of controller Students
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="contextFactory"></param>
+    /// <param name="mapper"></param>
+    /// <param name="validator"></param>
+    public StudentController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper, IValidator<StudentPostDto> validator)
    {
         _logger = logger;
         _mapper = mapper;
         _contextFactory = contextFactory;
+        _validator = validator;
    }
     /// <summary>
     /// Get list student
@@ -72,6 +76,9 @@ public class StudentController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] StudentPostDto studentPostDto)
     {
+        var validationResult = await _validator.ValidateAsync(studentPostDto);
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors.First().ErrorMessage);
         var ctx = await _contextFactory.CreateDbContextAsync();
         var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
         if (founClassType == null)

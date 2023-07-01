@@ -9,7 +9,7 @@ namespace LibrarySchool.Server.Dto.Validator;
 public class StudentPostDtoValidator : AbstractValidator<StudentPostDto>
 {
     /// <summary>
-    /// Constructor class StudentPostDtoValidator
+    /// Constructor of class StudentPostDtoValidator
     /// </summary>
     public StudentPostDtoValidator()
     {

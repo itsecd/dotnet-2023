@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
@@ -16,6 +17,7 @@ public class MarkController : Controller
     private readonly ILogger<ClassTypeController> _logger;
     private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
+    private readonly IValidator<MarkPostDto> _validator;
 
     /// <summary>
     /// Constructor for class MakrController
@@ -23,11 +25,13 @@ public class MarkController : Controller
     /// <param name="logger"></param>
     /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public MarkController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
+    /// <param name="validator"></param>
+    public MarkController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper, IValidator<MarkPostDto> validator)
     {
         _logger = logger;
         _mapper = mapper;
         _contextFactory = contextFactory;
+        _validator= validator;
     }
     /// <summary>
     /// Get list mark
@@ -69,6 +73,11 @@ public class MarkController : Controller
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] MarkPostDto markToPost)
     {
+        var validationResult = await _validator.ValidateAsync(markToPost);
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors.First().ErrorMessage);
+        }
         var ctx = await _contextFactory.CreateDbContextAsync();  
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == markToPost.StudentId);
         if (foundStudent == null)

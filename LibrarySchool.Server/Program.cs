@@ -18,7 +18,9 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 builder.Services.AddScoped<IValidator<StudentPostDto>, StudentPostDtoValidator>();
-
+builder.Services.AddScoped<IValidator<ClassTypePostDto>, ClassTypePostDtoValidator>();
+builder.Services.AddScoped<IValidator<SubjectPostDto>, SubjectPostDtoValidator>();
+builder.Services.AddScoped<IValidator<MarkPostDto>, MarkPostDtoValidator>();
 builder.Services.AddDbContextFactory<LibrarySchoolContext>(optionsBuilder =>
 {
     var connectionString = builder.Configuration.GetConnectionString(nameof(LibrarySchool));

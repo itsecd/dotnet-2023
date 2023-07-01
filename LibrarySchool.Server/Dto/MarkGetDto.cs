@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace LibrarySchoolServer.Dto;
+﻿namespace LibrarySchoolServer.Dto;
 /// <summary>
 /// PostDto type of class Marks
 /// </summary>

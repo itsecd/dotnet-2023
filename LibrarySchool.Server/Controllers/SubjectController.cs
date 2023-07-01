@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
@@ -16,18 +17,20 @@ public class SubjectController : ControllerBase
     private readonly ILogger<SubjectController> _logger;
     private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
-    
+    private readonly IValidator<SubjectPostDto> _validator;
     /// <summary>
     /// Contructor controller
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public SubjectController(ILogger<SubjectController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
+    /// <param name="validator"></param>
+    public SubjectController(ILogger<SubjectController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper, IValidator<SubjectPostDto> validator)
     {
         _logger = logger;
         _contextFactory = contextFactory;
         _mapper = mapper;
+        _validator = validator;
     }
 
     /// <summary>
@@ -70,12 +73,16 @@ public class SubjectController : ControllerBase
     /// </summary>
     /// <param name="subjectPostDto"></param>
     [HttpPost]
-    public async Task Post([FromBody] SubjectPostDto subjectPostDto)
+    public async Task<IActionResult> Post([FromBody] SubjectPostDto subjectPostDto)
     {
+        var validationResult = _validator.Validate(subjectPostDto);
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors.First().ErrorMessage);
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.Subjects.AddAsync(_mapper.Map<Subject>(subjectPostDto));
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Successfuly add new subject");
+        return Ok();
     }
 
     /// <summary>

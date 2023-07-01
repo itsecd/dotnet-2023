@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Dto.Validator;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +19,20 @@ public class ClassTypeController : Controller
     private readonly ILogger<ClassTypeController> _logger;
     private readonly IDbContextFactory<LibrarySchoolContext> _contextFactory;
     private readonly IMapper _mapper;
-
+    private readonly IValidator<ClassTypePostDto> _validator;
     /// <summary>
     /// Contructor for controller
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="contextFactory"></param>
     /// <param name="mapper"></param>
-    public ClassTypeController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper)
+    /// <param name="validator"></param>
+    public ClassTypeController(ILogger<ClassTypeController> logger, IDbContextFactory<LibrarySchoolContext> contextFactory, IMapper mapper, IValidator<ClassTypePostDto> validator)
     {
         _logger = logger;
         _mapper = mapper;
         _contextFactory = contextFactory;
+        _validator = validator;
     }
 
     /// <summary>
@@ -74,12 +78,16 @@ public class ClassTypeController : Controller
     /// Class with certain Id
     /// </returns>
     [HttpPost]
-    public async Task Post(ClassTypePostDto classTypeToPost)
+    public async Task<IActionResult> Post(ClassTypePostDto classTypeToPost)
     {
+        var validationResult = await _validator.ValidateAsync(classTypeToPost);
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors.First().ErrorMessage);
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.ClassTypes.AddAsync(_mapper.Map<ClassType>(classTypeToPost));
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Successfuly add new class-type");
+        return Ok();
     }
 
     /// <summary>

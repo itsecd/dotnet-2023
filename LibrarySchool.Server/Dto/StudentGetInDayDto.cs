@@ -3,13 +3,13 @@
 /// <summary>
 /// DtoClassOfStudent who get mark in day
 /// </summary>
-/// <param name="StudentId"></param>
-/// <param name="StudentName"></param>
-/// <param name="SubjectId"></param>
-/// <param name="SubjectName"></param>
-/// <param name="MarkValue"></param>
+/// <param name="StudentId">Id of student</param>
+/// <param name="StudentName">Name of student</param>
+/// <param name="SubjectId">Id of subject</param>
+/// <param name="SubjectName">Name of subject</param>
+/// <param name="MarkValue">Value of mark</param>
 public record StudentGetInDayDto(int StudentId,
                                  string StudentName,
                                  int SubjectId,
-                                 int SubjectName,
+                                 string SubjectName,
                                  int MarkValue);

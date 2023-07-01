@@ -3,9 +3,9 @@
 /// <summary>
 /// GetDto type of class ClassTypes
 /// </summary>
-/// <param name="ClassId"></param>
-/// <param name="Number"></param>
-/// <param name="Letter"></param>
+/// <param name="ClassId">Id group</param>
+/// <param name="Number">Number group</param>
+/// <param name="Letter">Letter of group</param>
 public record ClassTypeGetDto(int ClassId,
                               int Number,
                               string Letter);

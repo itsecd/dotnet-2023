@@ -2,10 +2,10 @@
 /// <summary>
 /// PostDto type of class Marks
 /// </summary>
-/// <param name="StudentId"></param>
-/// <param name="MarkValue"></param>
-/// <param name="SubjectId"></param>
-/// <param name="TimeReceive"></param>
+/// <param name="StudentId">Id of student</param>
+/// <param name="MarkValue">Value of mark</param>
+/// <param name="SubjectId">Id of subject</param>
+/// <param name="TimeReceive">Time recive mark</param>
 public record MarkPostDto(int StudentId,
                           int MarkValue,
                           int SubjectId,

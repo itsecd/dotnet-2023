@@ -3,7 +3,6 @@ using LibrarySchool.Domain;
 using LibrarySchoolServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 //2 - issue
 var builder = WebApplication.CreateBuilder(args);

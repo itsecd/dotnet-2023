@@ -16,6 +16,8 @@ public class MappingProfile : Profile
         CreateMap<ClassType, ClassTypeGetDto>();
         CreateMap<ClassType, ClassTypePostDto>();
         CreateMap<ClassTypePostDto, ClassType>();
+        
+
 
         CreateMap<Mark, MarkPostDto>();
         CreateMap<MarkPostDto, Mark>();

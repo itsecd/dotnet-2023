@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LibrarySchool;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Dto;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -159,4 +160,33 @@ public class QueryController : Controller
         }
         return NotFound();
     }
+
+    /// <summary>
+    /// Display information about all students who received grades on the specified day.
+    /// </summary>
+    /// <returns>
+    /// Return: list student
+    /// </returns>
+    [HttpGet("ListStudentInDay/{day}")]
+    public async Task<ActionResult<IEnumerable<StudentGetInDayDto>>> GetListStudent(DateTime day)
+    {
+        _logger.LogInformation("Get list student by time receive mark");
+        var ctx = await _dbContextFactory.CreateDbContextAsync();
+        
+        var studentReceiveInDay = ctx.Marks.Include(mark => mark.Student)
+                                           .Include(mark => mark.Subject)
+                                           .Where(mark => mark.TimeReceive == day)
+                                           .Select(mark =>
+                                            new StudentGetInDayDto
+                                            (
+                                                mark.StudentId,
+                                                mark.Student.StudentName,
+                                                mark.SubjectId,
+                                                mark.Subject.SubjectName,
+                                                mark.MarkValue
+                                            ))
+                                           .ToList();;
+        return Ok(studentReceiveInDay);
+    }
+
 }

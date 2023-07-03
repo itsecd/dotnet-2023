@@ -1,7 +1,9 @@
 using AutoMapper;
+using FluentValidation;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Dto.Validator;
 using LibrarySchoolServer;
-using Microsoft.AspNetCore.Builder;
+using LibrarySchoolServer.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -15,6 +17,12 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 
 });
+
+builder.Services.AddScoped<IValidator<StudentPostDto>, StudentPostDtoValidator>();
+builder.Services.AddScoped<IValidator<ClassTypePostDto>, ClassTypePostDtoValidator>();
+builder.Services.AddScoped<IValidator<SubjectPostDto>, SubjectPostDtoValidator>();
+builder.Services.AddScoped<IValidator<MarkPostDto>, MarkPostDtoValidator>();
+
 
 builder.Services.AddDbContextFactory<LibrarySchoolContext>(optionsBuilder =>
 {

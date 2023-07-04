@@ -7,7 +7,7 @@
 
 ## Описание сущностей модели
 1. `LibrarySchool.Domain` - Библиотеки, объявляющие используемые классы (`Student`, `ClassType`, `Mark`, `Subject`).
-2. `LibrarySchool.Test` - `Unit test` для методы сервера
+2. `LibrarySchool.Test` - `Unit test` для методов сервера
 3. `LibrarySchool.Server` - Сервер `Web API`, подключаюший к базе данных `MySQL`
 4. `LibrarySchool.Client` - Клиент, создаваемый с использованием `avaloniaUI`
 

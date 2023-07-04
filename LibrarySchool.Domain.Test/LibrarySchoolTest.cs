@@ -111,7 +111,7 @@ public class LibrarySchoolTest
     [Fact]
     public void TestListClass()
     {
-        Assert.Equal(63113, _classes.ElementAt(0).Number);
+        Assert.Equal(6311, _classes.ElementAt(0).Number);
         Assert.Equal(6312, _classes.ElementAt(1).Number);
         Assert.Equal("10-05-03D", _classes.ElementAt(0).Letter);
     }

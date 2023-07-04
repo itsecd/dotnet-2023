@@ -2,8 +2,10 @@
 using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Exceptions;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
@@ -60,11 +62,8 @@ public class StudentController : ControllerBase
         var ctx = await _contextFactory.CreateDbContextAsync();
         _logger.LogInformation("Get student by id");
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == id);
-        if (foundStudent == null) 
-        {
-            _logger.LogInformation("Not found student id: {id}", id);
-            return NotFound();
-        }
+        if (foundStudent == null)
+            throw new NotFoundException("Not found student");
         return Ok(_mapper.Map<StudentGetDto>(foundStudent));
     }
 
@@ -78,11 +77,11 @@ public class StudentController : ControllerBase
     {
         var validationResult = await _validator.ValidateAsync(studentPostDto);
         if (!validationResult.IsValid)
-            return BadRequest(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(validationResult.Errors.First().ErrorMessage);
         var ctx = await _contextFactory.CreateDbContextAsync();
         var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
         if (founClassType == null)
-            return StatusCode(500, $"Not found class id: {studentPostDto.ClassId}");
+            throw new NotFoundException($"Not found class id: {studentPostDto.ClassId}");
         await ctx.Students.AddAsync(_mapper.Map<Student>(studentPostDto));
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Successfuly add new student");
@@ -104,7 +103,7 @@ public class StudentController : ControllerBase
         if (foundStudent == null)
         {
             _logger.LogInformation("Not found student id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found student {id}");
         }
         ctx.Students.Remove(foundStudent);
         await ctx.SaveChangesAsync();
@@ -126,11 +125,11 @@ public class StudentController : ControllerBase
         if (foundStudent == null)
         {
             _logger.LogInformation("Not found student id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found student {id}");
         }
         var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
         if (founClassType == null)
-            return StatusCode(500, $"Not found class id: {studentPostDto.ClassId}");
+            throw new Exception($"Not found class id: {studentPostDto.ClassId}");
         _mapper.Map(studentPostDto, foundStudent);
         ctx.Students.Update(_mapper.Map<Student>(foundStudent));
         await ctx.SaveChangesAsync();

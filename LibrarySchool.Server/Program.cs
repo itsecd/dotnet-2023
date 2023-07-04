@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using LibrarySchool.Domain;
 using LibrarySchool.Server.Dto.Validator;
+using LibrarySchool.Server.Middlewares;
 using LibrarySchoolServer;
 using LibrarySchoolServer.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ builder.Services.AddDbContextFactory<LibrarySchoolContext>(optionsBuilder =>
 var mapperConfig = new MapperConfiguration(config => config.AddProfile(new MappingProfile()));
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
+builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 
 
 var app = builder.Build();
@@ -43,9 +45,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
 
 app.MapControllers();
 

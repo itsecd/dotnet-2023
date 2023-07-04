@@ -78,7 +78,7 @@ public class SubjectController : ControllerBase
     {
         var validationResult = _validator.Validate(subjectPostDto);
         if (!validationResult.IsValid)
-            throw new BadRequestException(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.Subjects.AddAsync(_mapper.Map<Subject>(subjectPostDto));
         await ctx.SaveChangesAsync();

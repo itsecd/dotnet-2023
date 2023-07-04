@@ -1,4 +1,5 @@
 ﻿using LibrarySchool.Server.Exceptions;
+using Newtonsoft.Json;
 
 namespace LibrarySchool.Server.Middlewares;
 
@@ -34,19 +35,32 @@ public class GlobalExeptionHandlingMiddleware : IMiddleware
         {
             _logger.LogError(ex, ex.Message);
             context.Response.StatusCode = ex.ErrorCode;
-            await context.Response.WriteAsync(ex.Message);
+            await WriteResponseAsync(context, ex.Message, ex.ErrorCode);
         }
         catch (BadRequestException ex)
         {
             _logger.LogError(ex, ex.Message);
             context.Response.StatusCode = ex.ErrorCode;
-            await context.Response.WriteAsync(ex.Message);
+            await WriteResponseAsync(context, ex.Message, ex.ErrorCode);
         }
         catch(Exception ex)
         {
             _logger.LogError(ex, ex.Message);
             context.Response.StatusCode = 500;
-            await context.Response.WriteAsync("Some thing went wrong");
+            await WriteResponseAsync(context, ex.Message, context.Response.StatusCode);
         }
+    }
+
+    private async Task WriteResponseAsync(HttpContext context, string message, int statusCode)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = statusCode;
+
+        var errorResponse = new
+        {
+            Error = message
+        };
+
+        await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
     }
 }

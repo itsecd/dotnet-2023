@@ -77,7 +77,7 @@ public class StudentController : ControllerBase
     {
         var validationResult = await _validator.ValidateAsync(studentPostDto);
         if (!validationResult.IsValid)
-            throw new BadRequestException(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         var ctx = await _contextFactory.CreateDbContextAsync();
         var founClassType = await ctx.ClassTypes.FirstOrDefaultAsync(classType => classType.ClassId == studentPostDto.ClassId);
         if (founClassType == null)

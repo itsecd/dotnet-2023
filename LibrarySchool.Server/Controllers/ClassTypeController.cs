@@ -2,7 +2,6 @@
 using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
-using LibrarySchool.Server.Dto.Validator;
 using LibrarySchool.Server.Exceptions;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +82,7 @@ public class ClassTypeController : Controller
     {
         var validationResult = await _validator.ValidateAsync(classTypeToPost);
         if (!validationResult.IsValid)
-            throw new BadRequestException(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ",validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.ClassTypes.AddAsync(_mapper.Map<ClassType>(classTypeToPost));
         await ctx.SaveChangesAsync();

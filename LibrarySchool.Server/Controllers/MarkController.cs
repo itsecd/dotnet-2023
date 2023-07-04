@@ -77,7 +77,7 @@ public class MarkController : Controller
         var validationResult = await _validator.ValidateAsync(markToPost);
         if (!validationResult.IsValid)
         {
-            throw new BadRequestException(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         }
         var ctx = await _contextFactory.CreateDbContextAsync();  
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == markToPost.StudentId);

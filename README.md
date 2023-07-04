@@ -70,4 +70,8 @@
     <td>Запрос - Вывести информацию о минимальном, среднем и максимальном балле по каждому предмету</td>
     <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/ec6b1b13-75b4-465d-be16-5f2d182f4357" alt="image"></td>
   </td>
+ <tr>
+    <td>А это я когда учусь docker</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/014c77bc-b2bf-4da5-b1fb-85806d733755" alt="image"></td>
+  </td>
 </table>

@@ -50,7 +50,24 @@
     <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/9149d624-aee4-4b19-96fd-a19f80cf11de" alt="image"></td>
   </tr>
   <tr>
-    <td>Запросы</td>
-    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/158adf03-3218-43b2-9f31-e7750471ed9b" alt="image"></td>
-  </tr>
+   <tr>
+    <td>Запрос - Вывести информацию обо всех учениках в указанном классе, упорядочить по ФИО</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/5b9bcb45-7d0a-4afb-918c-6cd8450f4f5c" alt="image"></td>
+  </td>
+  <tr>
+    <td>Запрос - Вывести информацию обо всех предметах</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/97f5588b-11e9-4549-b2e6-fa9e2ab350c4" alt="image"></td>
+  </td>
+  <tr>
+    <td>Запрос - Вывести топ 5 учеников по среднему баллу</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/8f4647a3-4936-496d-a472-4f220559b727" alt="image"></td>
+  </td>
+  <tr>
+    <td>Запрос - Вывести учеников с максимальным средним баллом за указанный период</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/14b127ba-13aa-4965-b022-d32d5d8e71cc" alt="image"></td>
+  </td>
+  <tr>
+    <td>Запрос - Вывести информацию о минимальном, среднем и максимальном балле по каждому предмету</td>
+    <td><img src="https://github.com/JirenMTA/dotnet-2023/assets/91962461/ec6b1b13-75b4-465d-be16-5f2d182f4357" alt="image"></td>
+  </td>
 </table>

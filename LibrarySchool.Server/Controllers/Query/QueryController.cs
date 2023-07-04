@@ -2,6 +2,7 @@
 using LibrarySchool;
 using LibrarySchool.Domain;
 using LibrarySchool.Server.Dto;
+using LibrarySchool.Server.Exceptions;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ public class QueryController : Controller
         var foundClassType = await ctx.ClassTypes.Include(classType => classType.Students)
                                            .FirstOrDefaultAsync(classType => classType.ClassId == classId);
         if (foundClassType == null)
-            return NotFound();
+            throw new NotFoundException($"Not found class {classId}");
         return Ok(_mapper.Map<IEnumerable<StudentGetDto>>(foundClassType.Students.OrderBy(student => student.StudentName)));
     }
 
@@ -78,7 +79,7 @@ public class QueryController : Controller
         if (foundSubject == null)
         {
             _logger.LogInformation("Not found subject id: {id}", idSubject);
-            return NotFound();
+            throw new NotFoundException($"Not found subject id: {idSubject}");
         }
         var markInSubject = foundSubject.Marks.Select(mark => mark.MarkValue);
         if (!markInSubject.Any())
@@ -112,7 +113,7 @@ public class QueryController : Controller
 
         if (!listStudentInPeriod.Any())
         {
-            return NotFound();
+            throw new NotFoundException("List student empty");
         }
         var topInPeriod = listStudentInPeriod.Select(student =>
                                       new StudentGetAverageDto
@@ -124,7 +125,8 @@ public class QueryController : Controller
                                           student.ClassId,
                                           student.Marks.Any()? student.Marks.Average(mark => mark.MarkValue): 0
                                       ));
-        if (!topInPeriod.Any()) { return NotFound(); }
+        if (!topInPeriod.Any()) 
+        { throw new NotFoundException("List student empty"); }
         return Ok(topInPeriod.OrderByDescending(x => x.AverageMark).Take(5));
     }
     /// <summary>
@@ -158,7 +160,7 @@ public class QueryController : Controller
         {
             return Ok(listStudent);
         }
-        return NotFound();
+        throw new NotFoundException("List student empty");
     }
 
     /// <summary>

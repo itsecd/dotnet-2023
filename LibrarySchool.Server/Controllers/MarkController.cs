@@ -2,6 +2,7 @@
 using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
+using LibrarySchool.Server.Exceptions;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -76,15 +77,15 @@ public class MarkController : Controller
         var validationResult = await _validator.ValidateAsync(markToPost);
         if (!validationResult.IsValid)
         {
-            return BadRequest(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         }
         var ctx = await _contextFactory.CreateDbContextAsync();  
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == markToPost.StudentId);
         if (foundStudent == null)
-            return StatusCode(500, $"Not found student id: {markToPost.StudentId}");
+           throw new Exception($"Not found student id: {markToPost.StudentId}");
         var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == markToPost.SubjectId);
         if (foundSubject == null)
-            return StatusCode(500, $"Not found subject id: {markToPost.SubjectId}");
+            throw new Exception ($"Not found subject id: {markToPost.SubjectId}");
         await ctx.Marks.AddAsync(_mapper.Map<Mark>(markToPost));
         await ctx.SaveChangesAsync();
         _logger.LogInformation("Successfuly add new mark");
@@ -107,14 +108,14 @@ public class MarkController : Controller
         if (markToFix == null)
         {
             _logger.LogInformation("Not found mark {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found mark {id}");
         }
         var foundStudent = await ctx.Students.FirstOrDefaultAsync(student => student.StudentId == fixedMark.StudentId);
         if (foundStudent == null)
-            return StatusCode(500, $"Not found student id: {fixedMark.StudentId}");
+            throw new Exception($"Not found student id: {fixedMark.StudentId}");
         var foundSubject = await ctx.Subjects.FirstOrDefaultAsync(subject => subject.SubjectId == fixedMark.SubjectId);
         if (foundSubject == null)
-            return StatusCode(500, $"Not found subject id: {fixedMark.SubjectId}");
+            throw new Exception ($"Not found subject id: {fixedMark.SubjectId}");
         _mapper.Map(fixedMark, markToFix);
         ctx.Update(_mapper.Map<Mark>(markToFix));
         await ctx.SaveChangesAsync();
@@ -138,7 +139,7 @@ public class MarkController : Controller
         if (foundMark == null)
         {
             _logger.LogInformation("Not found mark id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found mark id: {id}");
         }
         ctx.Remove(foundMark);
         await ctx.SaveChangesAsync();

@@ -2,7 +2,7 @@
 using FluentValidation;
 using LibrarySchool;
 using LibrarySchool.Domain;
-using LibrarySchool.Server.Dto.Validator;
+using LibrarySchool.Server.Exceptions;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +65,7 @@ public class ClassTypeController : Controller
         if (foundClassType == null)
         {
             _logger.LogInformation("Not found class-type {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found class-type {id}");
         }
         return Ok(_mapper.Map<ClassTypeGetDto>(foundClassType));
     }
@@ -82,7 +82,7 @@ public class ClassTypeController : Controller
     {
         var validationResult = await _validator.ValidateAsync(classTypeToPost);
         if (!validationResult.IsValid)
-            return BadRequest(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ",validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.ClassTypes.AddAsync(_mapper.Map<ClassType>(classTypeToPost));
         await ctx.SaveChangesAsync();
@@ -104,7 +104,7 @@ public class ClassTypeController : Controller
         if (foundClassType == null)
         {
             _logger.LogInformation("Not found class-type id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found class-type id: {id}");
         }
         _mapper.Map(fixedClassType, foundClassType);
         ctx.Update(_mapper.Map<ClassType>(foundClassType));
@@ -130,7 +130,7 @@ public class ClassTypeController : Controller
         if (foundClassType == null)
         {
             _logger.LogInformation("Not found class-type id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found class-type id: {id}");
         }
         ctx.ClassTypes.Remove(foundClassType);
         await ctx.SaveChangesAsync();

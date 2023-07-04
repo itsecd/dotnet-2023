@@ -5,6 +5,7 @@ using LibrarySchool.Domain;
 using LibrarySchoolServer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using LibrarySchool.Server.Exceptions;
 
 namespace LibrarySchoolServer.Controllers;
 /// <summary>
@@ -63,7 +64,7 @@ public class SubjectController : ControllerBase
         if (foundSubject == null)
         {
             _logger.LogInformation("Not found subject {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found subject {id}");
         }
         return Ok(_mapper.Map<SubjectGetDto>(foundSubject));
     }
@@ -77,7 +78,7 @@ public class SubjectController : ControllerBase
     {
         var validationResult = _validator.Validate(subjectPostDto);
         if (!validationResult.IsValid)
-            return BadRequest(validationResult.Errors.First().ErrorMessage);
+            throw new BadRequestException(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage).ToList()));
         var ctx = await _contextFactory.CreateDbContextAsync();
         await ctx.Subjects.AddAsync(_mapper.Map<Subject>(subjectPostDto));
         await ctx.SaveChangesAsync();
@@ -99,7 +100,7 @@ public class SubjectController : ControllerBase
         if (foundSubject == null)
         {
             _logger.LogInformation("Not found subject id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found subject id: {id}");
         }
         _mapper.Map(subjectPostDto, foundSubject);
         ctx.Subjects.Update(foundSubject);
@@ -122,7 +123,7 @@ public class SubjectController : ControllerBase
         if (foundSubject == null)
         {
             _logger.LogInformation("Not found subject id: {id}", id);
-            return NotFound();
+            throw new NotFoundException($"Not found subject id: {id}");
         }
         ctx.Subjects.Remove(foundSubject);
         await ctx.SaveChangesAsync();

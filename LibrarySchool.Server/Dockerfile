@@ -38,7 +38,7 @@ ENTRYPOINT ["dotnet", "LibrarySchool.Server.dll"]
 # 3. Run container:
 # docker compose up
 # Web app server run on https://localhost:7097
-# Database in volume run listen on https://localhost:3307
+# Database in volume listen on https://localhost:3307
 # To see data in volume: modify connection string in appsettings.json to:
 # "ConnectionStrings": {
 #    "LibrarySchool": "Server=localhost;Port=3307;Database=libraryschool;Uid=root;Pwd=hungvip2000;"

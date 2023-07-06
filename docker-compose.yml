@@ -1,0 +1,30 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./LibrarySchool.Server/Dockerfile
+    container_name: my-server-container
+    environment:
+      - ConnectionStrings__LibrarySchool=Server=my-sql-container;Database=libraryschool;Uid=root;Pwd=hungvip2000;
+    image: myserverimage:latest
+    ports:
+      - "7096:80"
+      - "7097:443"
+    depends_on:
+      - database
+    volumes:
+      - ./temp:/app/temp  # Mount the local certs folder into the container
+    restart: on-failure
+  database:
+    image: mysql:latest
+    container_name: my-sql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=hungvip2000
+      - MYSQL_DATABASE=libraryschool
+    volumes:
+      - my-datavolume:/var/lib/mysql
+    ports:
+      - 3307:3306
+volumes:
+  my-datavolume:

@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <None Remove="Assets\DepartmentsAddChangeWindow.png" />
+    <None Remove="Assets\DepartmentsDatabaseWindow.png" />
+    <None Remove="Assets\JobsAddChangeWindow.png" />
+    <None Remove="Assets\JobsDatabaseWindow.png" />
+    <None Remove="Assets\VacationsAddChangeWindow.png" />
+    <None Remove="Assets\VacationsDatabaseWindow.png" />
+    <None Remove="Assets\VacationSpotsAddChangeWindow.png" />
+    <None Remove="Assets\VacationSpotsDatabaseWindow.png" />
+    <None Remove="Assets\WorkersAddChangeWindow.png" />
+    <None Remove="Assets\WorkersAndDepartmentsAddChangeWindow.png" />
+    <None Remove="Assets\WorkersAndDepartmentsDatabaseWindow.png" />
+    <None Remove="Assets\WorkersAndJobsAddChangeWindow.png" />
+    <None Remove="Assets\WorkersAndJobsDatabaseWindow.png" />
+    <None Remove="Assets\WorkersAndVacationsAddChangeWindow.png" />
+    <None Remove="Assets\WorkersAndVacationsDatabaseWindow.png" />
+    <None Remove="Assets\WorkersDatabaseWindow.png" />
+    <None Remove="Assets\WorkshopsAddChangeWindow.png" />
+    <None Remove="Assets\WorkshopsDatabaseWindow.png" />
+    <None Remove="swagger.json" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="Company.Client" ClassName="ApiClient" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.18.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\WorkerWindow.axaml.cs">
+      <DependentUpon>WorkerWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

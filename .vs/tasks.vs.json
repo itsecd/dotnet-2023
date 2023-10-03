@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "задача-dotnet-2023",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "задача-dotnet-2023",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

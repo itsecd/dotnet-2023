@@ -1,0 +1,172 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Company.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Company.Client.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Company.Client.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Company.Client"
+		MaxWidth="1000">
+	<Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/CompanyStyles.axaml"/>
+	</Window.Styles>
+
+	<TabControl TabStripPlacement="Left">
+		<TabItem Header="Workers">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddWorkerCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateWorkerCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteWorkerCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Workers}" SelectedItem="{Binding SelectedWorker}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="RegistrationNumber" Binding="{Binding RegistrationNumber}"/>
+						<DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+						<DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+						<DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+						<DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate}"/>
+						<DataGridTextColumn Header="Sex" Binding="{Binding Sex}"/>
+						<DataGridTextColumn Header="WorkshopId" Binding="{Binding WorkshopId}"/>
+						<DataGridTextColumn Header="HomeAddress" Binding="{Binding HomeAddress}"/>
+						<DataGridTextColumn Header="HomeTelephone" Binding="{Binding HomeTelephone}"/>
+						<DataGridTextColumn Header="WorkTelephone" Binding="{Binding WorkTelephone}"/>
+						<DataGridTextColumn Header="MaritalStatus" Binding="{Binding MaritalStatus}"/>
+						<DataGridTextColumn Header="PeopleInFamily" Binding="{Binding PeopleInFamily}"/>
+						<DataGridTextColumn Header="ChildrenInFamily" Binding="{Binding ChildrenInFamily}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Departments">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddDepartmentCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateDepartmentCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteDepartmentCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Workshops">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddWorkshopCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateWorkshopCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteWorkshopCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Workshops}" SelectedItem="{Binding SelectedWorkshop}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Jobs">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddJobCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateJobCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteJobCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="Vacations">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddVacationCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateVacationCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteVacationCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Vacations}" SelectedItem="{Binding SelectedVacation}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="VacationSpotId" Binding="{Binding VacationSpotId}"/>
+						<DataGridTextColumn Header="IssueDate" Binding="{Binding IssueDate}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="VacationSpots">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddVacationSpotCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateVacationSpotCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteVacationSpotCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding VacationSpots}" SelectedItem="{Binding SelectedVacationSpot}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="WorkersAndDepartments">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddWorkersAndDepartmentsCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateWorkersAndDepartmentsCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteWorkersAndDepartmentsCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding WorkersAndDepartments}" SelectedItem="{Binding SelectedWorkersAndDepartments}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="WorkerId" Binding="{Binding WorkerId}"/>
+						<DataGridTextColumn Header="DepartmentId" Binding="{Binding DepartmentId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="WorkersAndJobs">
+			<Grid Classes="MainGrid"  RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddWorkersAndJobsCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateWorkersAndJobsCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteWorkersAndJobsCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding WorkersAndJobs}" SelectedItem="{Binding SelectedWorkersAndJobs}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="HireDate" Binding="{Binding HireDate}"/>
+						<DataGridTextColumn Header="DismissalDate" Binding="{Binding DismissalDate}"/>
+						<DataGridTextColumn Header="WorkerId" Binding="{Binding WorkerId}"/>
+						<DataGridTextColumn Header="JobId" Binding="{Binding JobId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+		<TabItem Header="WorkersAndVacations">
+			<Grid Classes="MainGrid" RowDefinitions="Auto,*">
+				<StackPanel Grid.Row="0" Orientation="Horizontal">
+					<Button Classes="ToolButton" Content="Add" Command="{Binding OnAddWorkersAndVacationsCommand}"/>
+					<Button Classes="ToolButton" Content="Update" Command="{Binding OnUpdateWorkersAndVacationsCommand}"/>
+					<Button Classes="ToolButton" Content="Delete" Command="{Binding OnDeleteWorkersAndVacationsCommand}"/>
+				</StackPanel>
+				<DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding WorkersAndVacations}" SelectedItem="{Binding SelectedWorkersAndVacations}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="WorkerId" Binding="{Binding WorkerId}"/>
+						<DataGridTextColumn Header="VacationId" Binding="{Binding VacationId}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</TabItem>
+	</TabControl>
+</Window>

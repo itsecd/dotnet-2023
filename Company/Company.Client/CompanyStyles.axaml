@@ -1,0 +1,61 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+        </Border>
+    </Design.PreviewWith>
+
+	
+	<Style Selector="TabControl">
+		<Setter Property="Background" Value="#F2F2F2"/>
+	</Style>
+	<Style Selector="TabControl WrapPanel">
+		<Setter Property="Background" Value="#B3E5FC"/>
+	</Style>
+
+	<Style Selector="TabItem">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
+
+	<Style Selector="Grid.MainGrid">
+		<Setter Property="Margin" Value="8"/>
+	</Style>
+	
+	<Style Selector="Button.ToolButton">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Margin" Value="0,5,0,10"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+	</Style>
+
+	<Style Selector="Button">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Width" Value="100"/>
+		<Setter Property="Margin" Value="5,10,5,0"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+	</Style>
+
+
+	<Style Selector="TextBox">
+		<Setter Property="Grid.Column" Value="1"/>
+	</Style>
+
+	<Style Selector="NumericUpDown">
+		<Setter Property="Minimum" Value="1"/>
+		<Setter Property="Increment" Value="1"/>
+		<Setter Property="Grid.Column" Value="1"/>
+		<Setter Property="Height" Value="30"/>
+	</Style>
+
+	<Style Selector="DatePicker">
+		<Setter Property="Grid.Column" Value="1"/>
+	</Style>
+
+	<Style Selector="Label">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="0,0,10,0"/>
+		<Setter Property="Grid.Column" Value="0"/>
+	</Style>
+</Styles>

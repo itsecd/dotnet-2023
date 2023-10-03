@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:Company.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="800"
+        x:Class="Company.Client.Views.WorkerWindow"
+        Title="Worker"
+		SizeToContent="WidthAndHeight">
+	<Design.DataContext>
+		<vm:WorkerViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/CompanyStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*">
+		<Label Grid.Row="0" Content="RegistrationNumber"/>
+		<NumericUpDown Grid.Row="0" Value="{Binding RegistrationNumber}" Minimum="1000" Maximum="9999" Increment="1"/>
+
+		<Label Grid.Row="1" Content="LastName"/>
+		<TextBox Grid.Row="1" Text="{Binding LastName}" Margin="0,10,0,10"/>
+
+		<Label Grid.Row="2" Content="FirstName"/>
+		<TextBox Grid.Row="2" Text="{Binding FirstName}"/>
+
+		<Label Grid.Row="3" Content="Patronymic"/>
+		<TextBox Grid.Row="3" Text="{Binding Patronymic}" Margin="0,10,0,10"/>
+
+		<Label Grid.Row="4" Content="BirthDate"/>
+		<DatePicker Grid.Row="4" SelectedDate="{Binding BirthDate}"/>
+
+		<Label Grid.Row="5" Content="Sex"/>
+		<TextBox Grid.Row="5" Text="{Binding Sex}" Margin="0,10,0,10"/>
+		
+		<Label Grid.Row="6" Content="WorkshopId"/>
+		<NumericUpDown Grid.Row="6" Value="{Binding WorkshopId}"/>
+
+		
+		
+		<Label Grid.Row="0" Grid.Column="2" Content="HomeAddress" Margin="20,0,10,0"/>
+		<TextBox Grid.Row="0" Grid.Column="3" Text="{Binding HomeAddress}"/>
+
+		<Label Grid.Row="1" Grid.Column="2" Content="HomeTelephone" Margin="20,0,10,0"/>
+		<TextBox Grid.Row="1" Grid.Column="3" Text="{Binding HomeTelephone}" Margin="0,10,0,10"/>
+
+		<Label Grid.Row="2" Grid.Column="2" Content="WorkTelephone" Margin="20,0,10,0"/>
+		<TextBox Grid.Row="2" Grid.Column="3" Text="{Binding WorkTelephone}"/>
+
+		<Label Grid.Row="3" Grid.Column="2" Content="MaritalStatus" Margin="20,0,10,0"/>
+		<TextBox Grid.Row="3" Grid.Column="3" Text="{Binding MaritalStatus}" Margin="0,10,0,10"/>
+
+		<Label Grid.Row="4" Grid.Column="2" Content="PeopleInFamily" Margin="20,0,10,0"/>
+		<NumericUpDown Grid.Row="4" Grid.Column="3" Value="{Binding PeopleInFamily}"/>
+		
+		<Label Grid.Row="5" Grid.Column="2" Content="ChildrenInFamily" Margin="20,0,10,0"/>
+		<NumericUpDown Grid.Row="5" Grid.Column="3" Value="{Binding ChildrenInFamily}" Minimum="0" Margin="0,10,0,10"/>
+
+		
+		
+		<StackPanel Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button Content="Ok" Command="{Binding OnSubmitCommand}" IsDefault="True"/>
+			<Button Content="Cancel" Click="CancelButtonOnClick" IsCancel="True"/>
+		</StackPanel>
+	</Grid>
+</Window>

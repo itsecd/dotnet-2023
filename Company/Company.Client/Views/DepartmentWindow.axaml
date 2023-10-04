@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:Company.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Company.Client.Views.DepartmentWindow"
+        Title="Department"
+		MaxWidth="500"
+		SizeToContent="Height">
+	<Design.DataContext>
+		<vm:DepartmentViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<StyleInclude Source="/CompanyStyles.axaml"/>
+	</Window.Styles>
+
+	<Grid Classes="MainGrid" RowDefinitions="*,*" ColumnDefinitions="Auto, *">
+		<Label Grid.Row="0" Content="Name"/>
+		<TextBox Grid.Row="0" Text="{Binding Name}"/>
+
+		<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button Content="Ok" Command="{Binding OnSubmitCommand}" IsDefault="True"/>
+			<Button Content="Cancel" Click="CancelButtonOnClick" IsCancel="True"/>
+		</StackPanel>
+	</Grid>
+</Window>

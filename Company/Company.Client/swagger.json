@@ -1,0 +1,2641 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Company.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Department": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Method returns all Departments in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Method adds Department in Company",
+        "requestBody": {
+          "description": "New Department",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Department/{id}": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Method returns Department by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartmentGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Method updates Department information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about Department",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Method deletes Department by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Job": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Method returns all Jobs in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Method adds Job in Company",
+        "requestBody": {
+          "description": "New Job",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Job/{id}": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Method returns Job by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Job",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Method updates Job information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Job",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about Job",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Method deletes Job by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Job",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Requests/Request1/{id}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #1 outputs all Workers of the given Department",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Department",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Request2": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #2 outputs all Workers working in more than 1 Department; the result is sorted by last name, first name, patronymic name",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request2Dto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request2Dto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request2Dto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Request3": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #3 outputs the archive of dismissals, including registration number, first name, last name, \r\npatronymic, birth date, workshop, department and job of the worker",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request3Dto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request3Dto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request3Dto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Request4": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #4 outputs an average age of Workers for each department",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request4Dto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request4Dto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request4Dto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Request5": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #5 outputs the info about Workers, who received a vacation in past year",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request5Dto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request5Dto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request5Dto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Requests/Request6": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Request #6 outputs the top-5 Workers, who have the longest working experience it the company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request6Dto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request6Dto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request6Dto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vacation": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Method returns all Vacations in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Method adds Vacation in Company",
+        "requestBody": {
+          "description": "New Vacation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Vacation/{id}": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Method returns Vacation by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Vacation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Method updates Vacation information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Vacation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about Vacation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Method deletes Vacation by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Vacation",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/VacationSpot": {
+      "get": {
+        "tags": [
+          "VacationSpot"
+        ],
+        "summary": "Method returns all VacationSpots in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationSpotGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationSpotGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacationSpotGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "VacationSpot"
+        ],
+        "summary": "Method adds VacationSpot in Company",
+        "requestBody": {
+          "description": "New VacationSpot",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VacationSpot/{id}": {
+      "get": {
+        "tags": [
+          "VacationSpot"
+        ],
+        "summary": "Method returns VacationSpot by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of VacationSpot",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSpotGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VacationSpot"
+        ],
+        "summary": "Method updates VacationSpot information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of VacationSpot",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about VacationSpot",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSpotPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VacationSpot"
+        ],
+        "summary": "Method deletes VacationSpot by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of VacationSpot",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Worker": {
+      "get": {
+        "tags": [
+          "Worker"
+        ],
+        "summary": "Method returns all Workers in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkerGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Worker"
+        ],
+        "summary": "Method adds Worker in Company",
+        "requestBody": {
+          "description": "New Worker",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Worker/{id}": {
+      "get": {
+        "tags": [
+          "Worker"
+        ],
+        "summary": "Method returns Worker by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Worker",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkerGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Worker"
+        ],
+        "summary": "Method updates Worker information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Worker",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about Worker",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkerPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Worker"
+        ],
+        "summary": "Method deletes Worker by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Worker",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/WorkersAndDepartments": {
+      "get": {
+        "tags": [
+          "WorkersAndDepartments"
+        ],
+        "summary": "Method returns all elements of WorkersAndDepartments database",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "WorkersAndDepartments"
+        ],
+        "summary": "Method adds element to WorkersAndDepartments database",
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkersAndDepartments/{id}": {
+      "get": {
+        "tags": [
+          "WorkersAndDepartments"
+        ],
+        "summary": "Method returns element from WorkersAndDepartments database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndDepartments database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndDepartmentsGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WorkersAndDepartments"
+        ],
+        "summary": "Method updates element from WorkersAndDepartments database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndDepartments database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndDepartmentsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WorkersAndDepartments"
+        ],
+        "summary": "Method deletes element from WorkersAndDepartments database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndDepartments database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/WorkersAndJobs": {
+      "get": {
+        "tags": [
+          "WorkersAndJobs"
+        ],
+        "summary": "Method returns all elements of WorkersAndJobs database",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "WorkersAndJobs"
+        ],
+        "summary": "Method adds element to WorkersAndJobs database",
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkersAndJobs/{id}": {
+      "get": {
+        "tags": [
+          "WorkersAndJobs"
+        ],
+        "summary": "Method returns element from WorkersAndJobs database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndJobs database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndJobsGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WorkersAndJobs"
+        ],
+        "summary": "Method updates element from WorkersAndJobs database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndJobs database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndJobsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WorkersAndJobs"
+        ],
+        "summary": "Method deletes element from WorkersAndJobs database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndJobs database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/WorkersAndVacations": {
+      "get": {
+        "tags": [
+          "WorkersAndVacations"
+        ],
+        "summary": "Method returns all elements of WorkersAndVacations database",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "WorkersAndVacations"
+        ],
+        "summary": "Method adds element to WorkersAndVacations database",
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkersAndVacations/{id}": {
+      "get": {
+        "tags": [
+          "WorkersAndVacations"
+        ],
+        "summary": "Method returns element from WorkersAndVacations database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndVacations database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkersAndVacationsGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WorkersAndVacations"
+        ],
+        "summary": "Method updates element from WorkersAndVacations database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndVacations database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New element",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkersAndVacationsPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WorkersAndVacations"
+        ],
+        "summary": "Method deletes element from WorkersAndVacations database by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of element from WorkersAndVacations database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Workshop": {
+      "get": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "Method returns all Workshops in the Company",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkshopGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkshopGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkshopGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "Method adds Workshop in Company",
+        "requestBody": {
+          "description": "New Workshop",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workshop/{id}": {
+      "get": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "Method returns Workshop by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Workshop",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopGetDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "Method updates Workshop information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Workshop",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New information about Workshop",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workshop"
+        ],
+        "summary": "Method deletes Workshop by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of Workshop",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DepartmentGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the Department",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DepartmentGetDto - narrows the Department class for Get method in controller"
+      },
+      "DepartmentPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Department",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DepartmentPostDto - narrows the Department class for Post method in controller"
+      },
+      "JobGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the Job",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Job",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "JobGetDto - narrows the Job class for Get method in controller"
+      },
+      "JobPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Job",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "JobPostDto - narrows the Job class for Post method in controller"
+      },
+      "Request2Dto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Worker",
+            "format": "int32"
+          },
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "LastName - patronymic name of a Worker",
+            "nullable": true
+          },
+          "numberOfDepartments": {
+            "type": "integer",
+            "description": "NumberOfDepartments - number of Worker's Departments",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сontains data on request #2 (learn more in the RequestsController)"
+      },
+      "Request3Dto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Worker",
+            "format": "int32"
+          },
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "LastName - patronymic name of a Worker",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of a Worker",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departmentName": {
+            "type": "string",
+            "description": "DepartmentName - name of Department of the Worker",
+            "nullable": true
+          },
+          "jobName": {
+            "type": "string",
+            "description": "JobName - name of Job of the Worker",
+            "nullable": true
+          },
+          "workshopName": {
+            "type": "string",
+            "description": "WorkshopName - name of Workshop of the Worker",
+            "nullable": true
+          },
+          "dismissalDate": {
+            "type": "string",
+            "description": "DismissalDate - a date, when a Worker was dismissed from the Job\r\n(can be 9999.12.31, if the Worker is still working on that Job)",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сontains data on request #3 (learn more in the RequestsController)"
+      },
+      "Request4Dto": {
+        "type": "object",
+        "properties": {
+          "departmentName": {
+            "type": "string",
+            "description": "DepartmentName - name of Department of the Worker",
+            "nullable": true
+          },
+          "averageAge": {
+            "type": "number",
+            "description": "AverageAge - average age of Workers in the Department",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сontains data on request #4 (learn more in the RequestsController)"
+      },
+      "Request5Dto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Worker",
+            "format": "int32"
+          },
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "issueDate": {
+            "type": "string",
+            "description": "IssueDate - a date of the issue",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сontains data on request #5 (learn more in the RequestsController)"
+      },
+      "Request6Dto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Worker",
+            "format": "int32"
+          },
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "LastName - patronymic name of a Worker",
+            "nullable": true
+          },
+          "workExperience": {
+            "type": "number",
+            "description": "WorkExperience - work experience of a Worker",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Сontains data on request #6 (learn more in the RequestsController)"
+      },
+      "VacationGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the Vacation",
+            "format": "int32"
+          },
+          "vacationSpotId": {
+            "type": "integer",
+            "description": "Id - an id of the VacationSpot",
+            "format": "int32"
+          },
+          "issueDate": {
+            "type": "string",
+            "description": "IssueDate - a date of the issue",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "VacationGetDto - narrows the Vacation class for Get method in controller"
+      },
+      "VacationPostDto": {
+        "type": "object",
+        "properties": {
+          "vacationSpotId": {
+            "type": "integer",
+            "description": "Id - an id of the VacationSpot",
+            "format": "int32"
+          },
+          "issueDate": {
+            "type": "string",
+            "description": "IssueDate - a date of the issue",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "VacationPostDto - narrows the Vacation class for Post method in controller"
+      },
+      "VacationSpotGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the VacationSpot",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the VacationSpot",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "VacationSpotGetDto - narrows the VacationSpot class for Get method in controller"
+      },
+      "VacationSpotPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the VacationSpot",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "VacationSpotPostDto - narrows the VacationSpot class for Post method in controller"
+      },
+      "WorkerGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - Identificator for each Worker",
+            "format": "int32"
+          },
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "LastName - patronymic name of a Worker",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of a Worker",
+            "format": "date-time"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Sex - sex of a Worker (ex. \"male\", \"female\")",
+            "nullable": true
+          },
+          "workshopId": {
+            "type": "integer",
+            "description": "WorkshopId - an id of the Workshop",
+            "format": "int32"
+          },
+          "homeAddress": {
+            "type": "string",
+            "description": "HomeAddress - home address of a Worker",
+            "nullable": true
+          },
+          "homeTelephone": {
+            "type": "string",
+            "description": "HomeTelephone - home telephone of a Worker",
+            "nullable": true
+          },
+          "workTelephone": {
+            "type": "string",
+            "description": "WorkTelephone - work telephone of a Worker",
+            "nullable": true
+          },
+          "maritalStatus": {
+            "type": "string",
+            "description": "MaritalStatus - family status of a Worker (ex. \"married\", \"single\")",
+            "nullable": true
+          },
+          "peopleInFamily": {
+            "type": "integer",
+            "description": "PeopleInFamily - number of people in the Worker's family",
+            "format": "int32"
+          },
+          "childrenInFamily": {
+            "type": "integer",
+            "description": "ChildrenInFamily - number of the Worker's children",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkerGetDto - narrows the Worker class for Get method in controller"
+      },
+      "WorkerPostDto": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "integer",
+            "description": "RegistrationNumber - registration number of a Worker",
+            "format": "int32"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "LastName - last name of a Worker",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "FirstName - first name of a Worker",
+            "nullable": true
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "LastName - patronymic name of a Worker",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "BirthDate - birth date of a Worker",
+            "format": "date-time"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Sex - sex of a Worker (ex. \"male\", \"female\")",
+            "nullable": true
+          },
+          "workshopId": {
+            "type": "integer",
+            "description": "WorkshopId - an id of the Workshop",
+            "format": "int32"
+          },
+          "homeAddress": {
+            "type": "string",
+            "description": "HomeAddress - home address of a Worker",
+            "nullable": true
+          },
+          "homeTelephone": {
+            "type": "string",
+            "description": "HomeTelephone - home telephone of a Worker",
+            "nullable": true
+          },
+          "workTelephone": {
+            "type": "string",
+            "description": "WorkTelephone - work telephone of a Worker",
+            "nullable": true
+          },
+          "maritalStatus": {
+            "type": "string",
+            "description": "MaritalStatus - family status of a Worker (ex. \"married\", \"single\")",
+            "nullable": true
+          },
+          "peopleInFamily": {
+            "type": "integer",
+            "description": "PeopleInFamily - number of people in the Worker's family",
+            "format": "int32"
+          },
+          "childrenInFamily": {
+            "type": "integer",
+            "description": "ChildrenInFamily - number of the Worker's children",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkerPostDto - narrows the Worker class for Post method in controller"
+      },
+      "WorkersAndDepartmentsGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the link",
+            "format": "int32"
+          },
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "departmentId": {
+            "type": "integer",
+            "description": "DepartmentId - an id of Department object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndDepartmentsGetDto - narrows the WorkersAndDepartments class for Get method in controller"
+      },
+      "WorkersAndDepartmentsPostDto": {
+        "type": "object",
+        "properties": {
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "departmentId": {
+            "type": "integer",
+            "description": "DepartmentId - an id of Department object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndDepartmentsPostDto - narrows the WorkersAndDepartments class for Post method in controller"
+      },
+      "WorkersAndJobsGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the class object",
+            "format": "int32"
+          },
+          "hireDate": {
+            "type": "string",
+            "description": "HireDate - a date, when a Worker was hired on the Job",
+            "format": "date-time"
+          },
+          "dismissalDate": {
+            "type": "string",
+            "description": "DismissalDate - a date, when a Worker was dismissed from the Job\r\n(can be null, if the Worker is still working on that Job)",
+            "format": "date-time"
+          },
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "jobId": {
+            "type": "integer",
+            "description": "JobId - an id of Job object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndJobsGetDto - narrows the WorkersAndJobs class for Get method in controller"
+      },
+      "WorkersAndJobsPostDto": {
+        "type": "object",
+        "properties": {
+          "hireDate": {
+            "type": "string",
+            "description": "HireDate - a date, when a Worker was hired on the Job",
+            "format": "date-time"
+          },
+          "dismissalDate": {
+            "type": "string",
+            "description": "DismissalDate - a date, when a Worker was dismissed from the Job\r\n(can be null, if the Worker is still working on that Job)",
+            "format": "date-time"
+          },
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "jobId": {
+            "type": "integer",
+            "description": "JobId - an id of Job object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndJobsPostDto - narrows the WorkersAndJobs class for Post method in controller"
+      },
+      "WorkersAndVacationsGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the link",
+            "format": "int32"
+          },
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "vacationId": {
+            "type": "integer",
+            "description": "VacationId - an id of Vacation object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndVacationsGetDto - narrows the WorkersAndVacations class for Get method in controller"
+      },
+      "WorkersAndVacationsPostDto": {
+        "type": "object",
+        "properties": {
+          "workerId": {
+            "type": "integer",
+            "description": "WorkerId - an id of Worker object",
+            "format": "int32"
+          },
+          "vacationId": {
+            "type": "integer",
+            "description": "VacationId - an id of Vacation object",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkersAndVacationsPostDto - narrows the WorkersAndVacations class for Post method in controller"
+      },
+      "WorkshopGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id - an id of the Workshop",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Workshop",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkshopGetDto - narrows the Workshop class for Get method in controller"
+      },
+      "WorkshopPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name - a name of the Workshop",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "WorkshopPostDto - narrows the Workshop class for Post method in controller"
+      }
+    }
+  }
+}

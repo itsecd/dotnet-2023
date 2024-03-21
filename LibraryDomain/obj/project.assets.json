@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/metalynx/Projects/dotnet-2023/LibraryDomain/LibraryDomain.csproj",
-      "projectName": "LibraryDomain",
-      "projectPath": "/Users/metalynx/Projects/dotnet-2023/LibraryDomain/LibraryDomain.csproj",
+      "projectUniqueName": "/Users/metalynx/Projects/dotnet-2023/LibraryDomain/Library.Domain.csproj",
+      "projectName": "Library.Domain",
+      "projectPath": "/Users/metalynx/Projects/dotnet-2023/LibraryDomain/Library.Domain.csproj",
       "packagesPath": "/Users/metalynx/.nuget/packages/",
       "outputPath": "/Users/metalynx/Projects/dotnet-2023/LibraryDomain/obj/",
       "projectStyle": "PackageReference",
